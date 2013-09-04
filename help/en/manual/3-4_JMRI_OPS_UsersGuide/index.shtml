@@ -1,181 +1,279 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en"><head>
-<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ --><title>Operations: Index</title><!-- Style -->
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ --><title>Operations: Index</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
-
-<a name="Top"></a>
+<div id="mainContent"><a name="Top"></a>
 <h1>JMRI® v3.4 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>9/3//2013</h3>
+<h3>9/4//2013</h3>
 <p>&nbsp;</p>
-<p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
-<p><strong>The programming of Digital
-  Command Control (DCC) decoders, (DecoderPro®).<br>
-  Programming decoders and using throttle run trains, DecoderPro3®</strong><strong><br>
-    Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro®
-    ).<br>
-    Controlling the layout , (Layout Editor).<br>
-    Creating train manifests for duplicating railroad  operations, Operations<br>
-    Controlling the signals on the layout<br>
-    Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro®)</strong></p>
-<p>All this capability is contained in one program (JMRI) which has  several &#8220;start-up&#8221; screens for the various applications. </p>
-<p>The JMRI Operations Program is contained within the DecoderPro® and PanelPro® Programs and accessable through their main menu.</p>
+<p><strong>JMRI is a Java-based cross-platform application
+for model railroaders. JMRi contains applications for:</strong></p>
+<p><strong>The programming of Digital Command Control (DCC)
+decoders, (DecoderPro®).<br>
+Programming decoders and using throttle run trains, DecoderPro3®</strong><strong><br>
+Drawing computer based panels for depicting a model railroad&nbsp;
+layout , (PanelPro® ).<br>
+Controlling the layout , (Layout Editor).<br>
+Creating train manifests for duplicating railroad operations, Operations<br>
+Controlling the signals on the layout<br>
+Controlling&nbsp; lighting and sound in the room, and so forth.
+(SoundPro®)</strong></p>
+<p>All this capability is contained in one program (JMRI) which
+has several &#8220;start-up&#8221; screens for the various applications. </p>
+<p>The JMRI Operations Program is contained within the
+DecoderPro® and PanelPro® Programs and accessable through their main
+menu.</p>
 <p>&nbsp;</p>
-
 <hr>
-&nbsp;JMRI® can run on any computer system that will run Java 1.6.0 or
+&nbsp;JMRI® can run on any computer system that will run Java 1.6.0
+or
 later, whether it is Macintosh, Windows, or Linux based. It does
 require that Java be installed on the computer. You can get Java as a
 free (but very large...) download at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
-</p><p>If  this is your first visit to our manual we suggest that you take the Decoder Pro® tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-  to get an overview of what we&#8217;re about to cover..
-</p><p>Note: All screen shots in this manual are from a Windows machine
+</p>
+<p>If this is your first visit to our manual we suggest that you
+take the Decoder Pro® tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+to get an overview of what we&#8217;re about to cover..
+</p>
+<p>Note: All screen shots in this manual are from a Windows
+machine
 using the "Metal" User Interface option . While your screens will
 probably differ in some layout details, they will be essentially the
 same. All programming examples shown are with Digitrax PR3(MS100 mode)
 connected to Digitrax Super Chief Radio Command Station. Most of the
 decoders in locomotive samples will be Digitrax, except for sound
 examples.
-</p><p>Note: This entire manual has been updated to correspond to
+</p>
+<p>Note: This entire manual has been updated to correspond to
 DecoderPro 3.2 and the HTML verified using HTML4 and Cascading Style
 Sheets. If the formatting looks odd, you probably need to update your
 browser. </p>
 <h2>Table of Contents</h2>
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
-<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
-<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a>
-</li></ul>
-<h4><a name="startOps"></a>Starting Operations Program</h4>
+<li><a href="Installing_JMRI.shtml">Preparing to
+Install JMRI</a></li>
+<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing
+JMRI Software</a>
+</li>
+</ul>
+<h4><a name="startOps"></a>Starting Operations
+Program</h4>
 <ul>
-  <li>    <a href="Start_DecoderPro.shtml">Starting DecoderPro® and Operations Program</a></li>
-  <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
-  <li><a href="Ops_Start.shtml">What does Operations do?</a></li>
+<li> <a href="Start_DecoderPro.shtml">Starting
+DecoderPro® and Operations Program</a></li>
+<li><a href="Start_Preferences.shtml">How do I set
+up my preferences?</a></li>
+<li><a href="Ops_Start.shtml">What does Operations
+do?</a></li>
 </ul>
 <h4><a name="Main"></a>DecoderPro® Main Window</h4>
 <ul>
-  <li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
-  <li style="font-weight: bold;"><a href="Main_Menu.shtml">Menu Overview</a></li>
-  <ul><li><span style="font-weight: bold;">Tools Menu</span>
-    <ul>
-      <li style="font-weight: bold;"><br>
+<li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
+<li style="font-weight: bold;"><a href="Main_Menu.shtml">Menu Overview</a></li>
+<ul>
+<li><span style="font-weight: bold;">Tools Menu</span>
+<ul>
+<li style="font-weight: bold;"><br>
 </li>
-      <li style="font-weight: bold;"><br>
+<li style="font-weight: bold;"><br>
 </li>
-      <li style="font-weight: bold;"><br>
+<li style="font-weight: bold;"><br>
 </li>
-      <li style="font-weight: bold;">Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20">        
-        <ul>
-          <li><a href="Ops_Settings.shtml">Settings</a> </li>
-          <li><a href="Ops_Locations.shtml">Locations</a> </li>
-          <li><a href="Ops_Cars.shtml">Cars</a></li>
-          <li><a target="_blank" href="Ops_Engines.shtml">locomotives</a></li>
-          <li><a href="Ops_Routes.shtml">Routes</a></li>
-          <li><a href="Ops_Trains.shtml">Trains</a></li>
-        </ul>
-      </li>
-      <li><br>
+<li style="font-weight: bold;">Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20">
+<ul>
+<li><a href="Ops_Settings.shtml">Settings</a>
 </li>
-      <li><br>
+<li><a href="Ops_Locations.shtml">Locations</a>
 </li>
-      <li><br>
-</li>
-    </ul>
-  </li></ul>
-  <ul><li><span style="font-weight: bold;">Operations Menu</span>
-    <ul>
-      <li style="font-weight: bold;"><a href="Ops_Settings.shtml">Settings</a>
-        
-      </li>
-      <ul style="font-weight: bold;"><li><a style="font-weight: normal; font-style: italic;" href="Ops_Settings_menubar.shtml">Menu Bar</a></li><ul><li><span style="font-weight: normal; font-style: italic;">Tools</span></li><ul><li><a href="Ops_Settings_Tools_Options.shtml"><span style="font-weight: normal; font-style: italic;">Options</span></a></li><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></span></li></ul></ul></ul><li style="font-weight: bold;"><a href="Ops_Locations.shtml">Locations</a>
-        
-      </li>
-      <ul><li style="font-weight: bold;"><a href="Ops_Locations_Menu.shtml"><span style="font-style: italic; font-weight: normal;">Menu Bar</span></a></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;">Tools</span></li></ul></ul></ul><ul><ul><ul><ul><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_schedule.shtml#Schedules">Schedules</a></span></li></ul></ul></ul></ul><ul><ul><ul><ul><li style="font-weight: bold;"><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic; font-weight: normal;">Modify Locations by Car Type</span></a></li></ul><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Cars.shtml">Show Cars</a><br></span></li></ul></ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_List.shtml">Locations List</a></span></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster button</a></span></li><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-style: italic; font-weight: normal;">Edit Location button</span></a></li></ul><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddLocations.shtml">Add Locations</a></span></li><ul><li style="font-weight: bold;"><a href="Ops_AddSiding.shtml"><span style="font-weight: normal; font-style: italic;">Add Spur Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddYard.shtml"><span style="font-weight: normal; font-style: italic;">Add Yard Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddInterchange.shtml"><span style="font-weight: normal; font-style: italic;">Add Classification / Interchange Track</span></a></li><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></span></li></ul>
-          <li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;">Edit Locations</span></li>
-          <ul>
-            <li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-weight: normal; font-style: italic;">Edit Loction</span></a></li>
-            <li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_EditLocation_track.shtml">Edit Track at a Location</a><br>
-</span></li>
-          </ul>
-</ul><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml">Cars</a></li>
-        <li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"></a>
-        <ul></ul>
-      </li>
-
-      
-        <ul>
-          <li style="font-weight: bold;"><a style="font-weight: normal;" href="Ops_Cars_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li>
-          <ul>
-            <li style="font-weight: bold;"><span style="font-style: italic;"><a style="font-weight: normal;" href="Ops_ImportCarsFile.shtml">Import from File</a></span></li>
-            <li><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic;">Modify Locations by Car Type</span></a></li>
-            <li><a href="Ops_Locations_Modify_Trains.shtml"><span style="font-style: italic;">Modify Trains by Car Type</span></a></li>
-            <li style="font-weight: bold;"><span style="font-style: italic;"><a href="Ops_Locations_setCars.shtml"><span style="font-weight: normal;">Set Cars</span></a></span></li>
-          </ul>
-          <li style="font-weight: bold;"><a href="Ops_AddCars.shtml"><span style="font-style: italic;"><span style="font-weight: normal;">Add Car</span></span></a></li>
-          <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_AddCars.shtml">Edit Car</a></span></span></li>
-          <ul>
-            <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_CarAttributes.shtml">Edit Car Attributes</a></span></span></li>
-            <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR Railroad Reporting Marks</a><br>
-              </span></span></li>
-          </ul>
-        </ul>
-        <li style="font-weight: bold;"><a href="Ops_Engines.shtml">Locomotives</a>
-        <ul></ul>
-      </li>
-
-      <li style="font-weight: bold;"><a href="Ops_Routes.shtml">Routes</a>
-        <ul></ul>
-      </li>
-      <li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
-        <ul></ul>
-      </li>
-    </ul>
-  </li></ul>
-  <li><strong><a href="Ops_TripThruOperations.shtml">A Tripp Through Operations</a></strong></li>
+<li><a href="Ops_Cars.shtml">Cars</a></li>
+<li><a target="_blank" href="Ops_Engines.shtml">locomotives</a></li>
+<li><a href="Ops_Routes.shtml">Routes</a></li>
+<li><a href="Ops_Trains.shtml">Trains</a></li>
 </ul>
-<table style="width: 90%; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="1">
-<caption>
-    Revisions
-  </caption>
-  <tbody><tr>
-    <th scope="col" width="8%">Version</th>
-    <th scope="col" width="8%">Revision Date</th>
-    <th scope="col" width="13%">Editors</th>
-    <th scope="col" width="71%">Major Revisions</th>
-  </tr>
-  <tr>
-    <td align="left" valign="top">3.0</td>
-    <td align="left" valign="top">1/5/2013</td>
-    <td align="left" valign="top">Dale A. Tripp<br>
-      Bruce Shanks</td>
-    <td align="left" valign="top">Updated from JMRI 2.14.1 and removed from DecoderPro® as separate Guide</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top">3.2</td>
-    <td align="left" valign="top">8/17/2013</td>
-    <td align="left" valign="top">Dale A. Tripp</td>
-    <td align="left" valign="top">Updated from Version 3.0</td>
-  </tr><tr><td>3.4</td><td>8/?/2013</td><td>Dale A. Tripp</td><td>Updated from Version 3.2. &nbsp;Restructed Settings, Locations pages.</td></tr>
-</tbody></table>
-<p>
-</p><hr>
-<div align="right">Go to the
-<a href="http://groups.yahoo.com/group/jmriusers/">
-JMRI Users home page on Yahoo Groups</a></div>
+</li>
+<li><br>
+</li>
+<li><br>
+</li>
+<li><br>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><span style="font-weight: bold;">Operations
+Menu</span>
+<ul>
+<li style="font-weight: bold;"><a href="Ops_Settings.shtml">Settings</a> </li>
+<ul style="font-weight: bold;">
+<li><a style="font-weight: normal; font-style: italic;" href="Ops_Settings_menubar.shtml">Menu Bar</a></li>
+<ul>
+<li><span style="font-weight: normal; font-style: italic;">Tools</span></li>
+<ul>
+<li><a href="Ops_Settings_Tools_Options.shtml"><span style="font-weight: normal; font-style: italic;">Options</span></a></li>
+<li><span style="font-weight: normal; font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></span></li>
+</ul>
+</ul>
+</ul>
+<li style="font-weight: bold;"><a href="Ops_Locations.shtml">Locations</a> </li>
+<ul>
+<li style="font-weight: bold;"><a href="Ops_Locations_Menu.shtml"><span style="font-style: italic; font-weight: normal;">Menu Bar</span></a></li>
+<ul>
+<li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;">Tools</span></li>
+</ul>
+</ul>
+</ul>
+<ul>
+<ul>
+<ul>
+<ul>
+<li><span style="font-weight: normal; font-style: italic;"><a href="Ops_schedule.shtml#Schedules">Schedules</a></span></li>
+</ul>
+</ul>
+</ul>
+</ul>
+<ul>
+<ul>
+<ul>
+<ul>
+<li style="font-weight: bold;"><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic; font-weight: normal;">Modify
+Locations by Car Type</span></a></li>
+</ul>
+<ul>
+<li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Cars.shtml">Show Cars</a><br>
+</span></li>
+</ul>
+</ul>
+<li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_List.shtml">Locations List</a></span></li>
+<ul>
+<li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster button</a></span></li>
+<li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-style: italic; font-weight: normal;">Edit
+Location button</span></a></li>
+</ul>
+<li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddLocations.shtml">Add Locations</a></span></li>
+<ul>
+<li style="font-weight: bold;"><a href="Ops_AddSiding.shtml"><span style="font-weight: normal; font-style: italic;">Add Spur
+Track</span></a></li>
+<li style="font-weight: bold;"><a href="Ops_AddYard.shtml"><span style="font-weight: normal; font-style: italic;">Add Yard
+Track</span></a></li>
+<li style="font-weight: bold;"><a href="Ops_AddInterchange.shtml"><span style="font-weight: normal; font-style: italic;">Add
+Classification / Interchange Track</span></a></li>
+<li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></span></li>
+</ul>
+<li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;">Edit
+Locations</span></li>
+<ul>
+<li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-weight: normal; font-style: italic;">Edit Loction</span></a></li>
+<li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_EditLocation_track.shtml">Edit Track at a Location</a><br>
+</span></li>
+</ul>
+</ul>
+<li style="font-weight: bold;"><a href="Ops_EditLocation.shtml">Cars</a></li>
+<li style="font-weight: bold;"> </li>
+<ul>
+<li style="font-weight: bold;"><a style="font-weight: normal;" href="Ops_Cars_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li>
+<ul>
+<li style="font-weight: bold;"><span style="font-style: italic;"><a style="font-weight: normal;" href="Ops_ImportCarsFile.shtml">Import
+from File</a></span></li>
+<li><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic;">Modify Locations by Car Type</span></a></li>
+<li><a href="Ops_Locations_Modify_Trains.shtml"><span style="font-style: italic;">Modify Trains by Car Type</span></a></li>
+<li style="font-weight: bold;"><span style="font-style: italic;"><a href="Ops_Locations_setCars.shtml"><span style="font-weight: normal;">Set Cars</span></a></span></li>
+</ul>
+<li style="font-weight: bold;"><a href="Ops_AddCars.shtml"><span style="font-style: italic;"><span style="font-weight: normal;">Add Car</span></span></a></li>
+<li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_AddCars.shtml">Edit
+Car</a></span></span></li>
+<ul>
+<li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_CarAttributes.shtml">Edit Car Attributes</a></span></span></li>
+<li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR
+Railroad Reporting Marks</a><br>
+</span></span></li>
+</ul>
+</ul>
+</ul>
+<ul style="font-weight: bold;">
+<li><a href="Ops_Engines.shtml">Locomotives</a></li>
+</ul>
+<ul>
+<li style="font-weight: bold;">
+<ul>
+</ul>
+</li>
+</ul>
+</li>
+<ul>
+<ul><li><a href="Ops_Engines_menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><ul><li><a href="Ops_ImportEngines_FromRoster.shtml"><span style="font-style: italic;">Import from JMRI &nbsp;Roster</span></a></li></ul><li><a href="Ops_ImportEngines_FromFiles.shtml"><span style="font-style: italic;">Import from JMRI File</span></a></li></ul>
+<ul>
 
+
+</ul>
+<li><a href="Ops_AddEngine.shtml"><span style="font-style: italic;">Add Locomotive</span></a></li>
+<li><span style="font-style: italic;"><a href="Ops_SetEngines.shtml">Set Locomotive Location</a><br>
+</span></li>
+<li><span style="font-style: italic;"><a href="Ops_EditEngines.shtml">Edit Locomotive</a><br>
+</span></li>
+</ul>
+<li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
+<ul>
+</ul>
+</li>
+</ul>
+
+</ul>
+<li><strong><a href="Ops_TripThruOperations.shtml">A
+Tripp Through Operations</a></strong></li>
+
+<table style="width: 90%; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="1">
+<caption> Revisions </caption> <tbody>
+<tr>
+<th scope="col" width="8%">Version</th>
+<th scope="col" width="8%">Revision Date</th>
+<th scope="col" width="13%">Editors</th>
+<th scope="col" width="71%">Major Revisions</th>
+</tr>
+<tr>
+<td align="left" valign="top">3.0</td>
+<td align="left" valign="top">1/5/2013</td>
+<td align="left" valign="top">Dale A. Tripp<br>
+Bruce Shanks</td>
+<td align="left" valign="top">Updated from
+JMRI 2.14.1 and removed from DecoderPro® as separate Guide</td>
+</tr>
+<tr>
+<td align="left" valign="top">3.2</td>
+<td align="left" valign="top">8/17/2013</td>
+<td align="left" valign="top">Dale A. Tripp</td>
+<td align="left" valign="top">Updated from
+Version 3.0</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td>8/?/2013</td>
+<td>Dale A. Tripp</td>
+<td>Updated from Version 3.2. &nbsp;Restructed
+Settings, Locations, cars, locomotive pages.</td>
+</tr>
+</tbody>
+</table>
+<p>
+</p>
+<hr>
+<div align="right">Go to the
+<a href="http://groups.yahoo.com/group/jmriusers/">JMRI
+Users home page on Yahoo Groups</a></div>
 <!--#include virtual="/Footer" -->
-</div></body></html>
+</div>
+</body></html>

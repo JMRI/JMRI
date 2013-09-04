@@ -1,14 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
 
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<title>Decoder Pro Manual: Index</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
@@ -108,11 +109,11 @@ Version 3.4</span></td>
 <tr>
 <td>&nbsp;</td>
 <td style="font-weight: bold;"><a href="3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">&nbsp;JMRI® Operations Program 3.4 &nbsp;</a></td>
-<td>In work 9/3/2013 </td>
+<td>In work 9/4/2013 </td>
 </tr>
 </tbody>
 </table>
-<h4>Updated 9/3/2013</h4>
+<h4>Updated 9/4/2013</h4>
 <p>&nbsp;
 </p>
 <p><strong>JMRI is a Java-based cross-platform application
