@@ -1,22 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ --><title>Operations: Index</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+<title>Operations: Index</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
 <h1>JMRI® v3.4 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>9/4//2013</h3>
+<h3>9/5//2013</h3>
 <p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application
 for model railroaders. JMRi contains applications for:</strong></p>
@@ -226,7 +224,7 @@ Railroad Reporting Marks</a><br>
 <li><span style="font-style: italic;"><a href="Ops_EditEngines.shtml">Edit Locomotive</a><br>
 </span></li>
 </ul>
-<li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
+<li><a style="font-weight: bold;" href="Ops_Routes.shtml">Routes</a></li><ul><li><a href="Ops_Routes_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><li><a href="Ops_EditRoutes.shtml"><span style="font-style: italic;">Edit Route</span></a></li><li><span style="font-style: italic;"><a href="Ops_AddRoutes.shtml">Add Route</a><br></span></li></ul><li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
 <ul>
 </ul>
 </li>
@@ -264,7 +262,7 @@ Version 3.0</td>
 <td>8/?/2013</td>
 <td>Dale A. Tripp</td>
 <td>Updated from Version 3.2. &nbsp;Restructed
-Settings, Locations, cars, locomotive pages.</td>
+Settings, Locations, cars, locomotive, Route pages.</td>
 </tr>
 </tbody>
 </table>
