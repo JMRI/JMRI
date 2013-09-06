@@ -1,16 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ --><title>Operations-Edit Train</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
 
-<!-- Style -->
-<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+
+
+<title>Operations-Edit Train</title><!-- Style --><meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link media="screen" href="/css/default.css" type="text/css" rel="stylesheet">
 <link media="print" href="/css/print.css" type="text/css" rel="stylesheet">
 <link type="image/png" href="/images/jmri.ico" rel="icon">
-<link href="/" title="Home" rel="home">
-<!-- /Style -->
-</head>
-
+<link href="/" title="Home" rel="home"><!-- /Style --></head>
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
@@ -43,7 +40,7 @@ Edit button for any train in the list.</p>
 </tr>
 <tr>
 <td valign="top"><a manifest="" options=""><span style="font-weight: bold;">Manifest Options --<br>
-</span></a><span style="font-weight: bold;"><img style="width: 305px; height: 162px;" alt="Manifest opptions" src="images/Ops_AddTrainOption.png"><br>
+</span></a><span style="font-weight: bold;"><img style="width: 407px; height: 300px;" alt="option" src="images/Ops_AddTrainOption.png"><br>
 </span></td>
 </tr>
 <tr>
@@ -56,7 +53,7 @@ Scripts window allow scripts to be added to the build</td>
 <tr>
 <td height="137"><strong>Show Car Types
 Serviced</strong><br>
-<img src="images/Ops_CarsServiced.01.png" height="273" width="405"> <br>
+<img src="images/Ops_CarsServiced.01.png" height="273" width="405"> <br><span style="font-weight: bold;">Train Conductor</span><br><img style="width: 600px; height: 500px;" alt="conductor" src="images/Ops_train_conductor.png"><br>
 </td>
 </tr>
 <tr>

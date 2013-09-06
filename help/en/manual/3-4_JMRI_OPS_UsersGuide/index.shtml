@@ -14,7 +14,7 @@
 <div id="mainContent"><a name="Top"></a>
 <h1>JMRI® v3.4 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>9/5//2013</h3>
+<h3>Revised 9/6//2013</h3>
 <p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application
 for model railroaders. JMRi contains applications for:</strong></p>
@@ -224,14 +224,14 @@ Railroad Reporting Marks</a><br>
 <li><span style="font-style: italic;"><a href="Ops_EditEngines.shtml">Edit Locomotive</a><br>
 </span></li>
 </ul>
-<li><a style="font-weight: bold;" href="Ops_Routes.shtml">Routes</a></li><ul><li><a href="Ops_Routes_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><li><a href="Ops_EditRoutes.shtml"><span style="font-style: italic;">Edit Route</span></a></li><li><span style="font-style: italic;"><a href="Ops_AddRoutes.shtml">Add Route</a><br></span></li></ul><li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
+<li><a style="font-weight: bold;" href="Ops_Routes.shtml">Routes</a></li><ul><li><a href="Ops_Routes_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><li><a href="Ops_EditRoutes.shtml"><span style="font-style: italic;">Edit Route</span></a></li><li><span style="font-style: italic;"><a href="Ops_AddRoutes.shtml">Add Route</a><br></span></li></ul></ul></ul><ul><ul><li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a></li></ul></ul><ul><ul><ul><li><a href="Ops_Trains_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><ul><li><a href="Ops_PrintOptions.shtml"><span style="font-style: italic;">Manifest Print Options</span></a><a style="font-weight: bold;" href="Ops_Trains.shtml"><span style="font-style: italic;"></span></a></li><li><a style="font-style: italic;" href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li><li><a href="Ops_Trains_Timetable.shtml"><span style="font-style: italic;">Timetable</span><br></a>
 <ul>
 </ul>
-</li>
+</li></ul></ul>
 </ul>
 
 </ul>
-<li><strong><a href="Ops_TripThruOperations.shtml">A
+</div><ul><ul><ul><li><a href="Ops_EditTrain.shtml"><span style="font-style: italic;">Edit Train</span></a></li><li><span style="font-style: italic;"><a href="Ops_AddTrain.shtml">Add Trains</a></span></li><li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Build Trains</a></span></li><ul><li><span style="font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a><br></span></li></ul><ul><li><span style="font-style: italic;"><a href="Ops_BuildReportPrint.shtml">Build Reports</a></span></li></ul><li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a><br></span></li></ul></ul></ul><div id="mainContent"><li><strong><a href="Ops_TripThruOperations.shtml">A
 Tripp Through Operations</a></strong></li>
 
 <table style="width: 90%; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="1">
@@ -259,10 +259,10 @@ Version 3.0</td>
 </tr>
 <tr>
 <td>3.4</td>
-<td>8/?/2013</td>
+<td>9/6/2013</td>
 <td>Dale A. Tripp</td>
 <td>Updated from Version 3.2. &nbsp;Restructed
-Settings, Locations, cars, locomotive, Route pages.</td>
+Settings, Locations, cars, locomotive, Route, Trains&nbsp; pages.</td>
 </tr>
 </tbody>
 </table>
