@@ -37,7 +37,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     private DetectionPanel  _detectPanel;
     private JPanel          _tablePanel;
-    private JTextField 		_familyName;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
     protected HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
     
