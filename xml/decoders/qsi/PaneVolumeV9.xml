@@ -14,7 +14,7 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-<pane name="Component Volume">
+<pane name="Component Volume" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
