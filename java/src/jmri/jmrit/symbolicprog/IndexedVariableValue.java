@@ -160,6 +160,13 @@ public class IndexedVariableValue extends VariableValue
         else if (format.equals("hslider")) {
             IndexedVarSlider b = new IndexedVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.HORIZONTAL);
+            sliders.add(b);
+            updateRepresentation(b);
+            return b;
+        }
+        else if (format.equals("hslider-percent")) {
+            IndexedVarSlider b = new IndexedVarSlider(this, _minVal, _maxVal);
+            b.setOrientation(JSlider.HORIZONTAL);
             if (_maxVal > 20) {
                 b.setMajorTickSpacing(_maxVal/2);
                 b.setMinorTickSpacing((_maxVal+1)/8);

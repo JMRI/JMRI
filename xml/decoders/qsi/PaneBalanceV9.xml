@@ -36,7 +36,7 @@
           <column>
             <row>
               <display item="CV128.10.0 Value" layout="above" label=""/>
-              <display item="CV128.10.0 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.0 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -49,7 +49,7 @@
           <column>
             <row>
               <display item="CV128.10.10 Value" layout="above" label=""/>
-              <display item="CV128.10.10 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.10 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -62,7 +62,7 @@
           <column>
             <row>
               <display item="CV128.10.20 Value" layout="above" label=""/>
-              <display item="CV128.10.20 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.20 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -75,7 +75,7 @@
           <column>
             <row>
               <display item="CV128.10.30 Value" layout="above" label=""/>
-              <display item="CV128.10.30 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.30 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -88,7 +88,7 @@
           <column>
             <row>
               <display item="CV128.10.60 Value" layout="above" label=""/>
-              <display item="CV128.10.60 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.60 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -101,7 +101,7 @@
           <column>
             <row>
               <display item="CV128.10.70 Value" layout="above" label=""/>
-              <display item="CV128.10.70 Value" layout="above" format="hslider"/>
+              <display item="CV128.10.70 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -119,7 +119,7 @@
           <column>
             <row>
               <display item="CV128.11.0 Value" layout="above" label=""/>
-              <display item="CV128.11.0 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.0 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -132,7 +132,7 @@
           <column>
             <row>
               <display item="CV128.11.10 Value" layout="above" label=""/>
-              <display item="CV128.11.10 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.10 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -145,7 +145,7 @@
           <column>
             <row>
               <display item="CV128.11.20 Value" layout="above" label=""/>
-              <display item="CV128.11.20 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.20 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -158,7 +158,7 @@
           <column>
             <row>
               <display item="CV128.11.30 Value" layout="above" label=""/>
-              <display item="CV128.11.30 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.30 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -171,7 +171,7 @@
           <column>
             <row>
               <display item="CV128.11.60 Value" layout="above" label=""/>
-              <display item="CV128.11.60 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.60 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -184,7 +184,7 @@
           <column>
             <row>
               <display item="CV128.11.70 Value" layout="above" label=""/>
-              <display item="CV128.11.70 Value" layout="above" format="hslider"/>
+              <display item="CV128.11.70 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>

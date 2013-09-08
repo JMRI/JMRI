@@ -59,7 +59,7 @@
           <column>
             <row>
               <display item="CV51.15 Value" layout="above" label=""/>
-              <display item="CV51.15 Value" layout="above" format="hslider"/>
+              <display item="CV51.15 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -74,7 +74,7 @@
           <column>
             <row>
               <display item="CV118.8 Value 16" layout="above" label=""/>
-              <display item="CV118.8 Value 16" layout="above" format="hslider"/>
+              <display item="CV118.8 Value 16" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -87,7 +87,7 @@
           <column>
             <row>
               <display item="CV118.10 Value" layout="above" label=""/>
-              <display item="CV118.10 Value" layout="above" format="hslider"/>
+              <display item="CV118.10 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -99,7 +99,7 @@
           <column>
             <row>
               <display item="CV118.10 Value 16" layout="above" label=""/>
-              <display item="CV118.10 Value 16" layout="above" format="hslider"/>
+              <display item="CV118.10 Value 16" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -112,7 +112,7 @@
           <column>
             <row>
               <display item="CV118.11 Value" layout="above" label=""/>
-              <display item="CV118.11 Value" layout="above" format="hslider"/>
+              <display item="CV118.11 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -124,7 +124,7 @@
           <column>
             <row>
               <display item="CV118.11 Value 16" layout="above" label=""/>
-              <display item="CV118.11 Value 16" layout="above" format="hslider"/>
+              <display item="CV118.11 Value 16" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>

@@ -417,7 +417,7 @@
 <!ATTLIST display label   CDATA #IMPLIED>   <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>   <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->
-<!ATTLIST display format ( default | vslider | hslider | radiobuttons | checkbox |
+<!ATTLIST display format ( default | vslider | hslider | hslider-percent | radiobuttons | checkbox |
                                          onradiobutton | offradiobutton) "default" >
 <!ATTLIST display comment CDATA #IMPLIED >
 
