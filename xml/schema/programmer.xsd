@@ -140,7 +140,7 @@
                 <xs:enumeration value="default" />
                 <xs:enumeration value="vslider" />
                 <xs:enumeration value="hslider" />
-                <xs:enumeration value="hxslider-percent" />
+                <xs:enumeration value="hslider-percent" />
                 <xs:enumeration value="radiobuttons" />
                 <xs:enumeration value="checkbox" />
                 <xs:enumeration value="onradiobutton" />
