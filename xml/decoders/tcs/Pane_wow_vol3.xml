@@ -25,7 +25,7 @@
 				<label label="Must have JMRI 3.3.6 or later."/>
 				<label label="   "/>
 				<label label="To set individual sound volume to level 3"/>
-				<label label="Pick sound high byte first then from list of sounds of for that high byte"/>
+				<label label="Pick sound group (high byte) first then from list of sounds of just that group"/>
 				<label label="Then press Write full sheet"/>
 				<label label="Repeat for other sounds"/>
 				<label label="To change to different volume level, choose different Volume Level tab"/>

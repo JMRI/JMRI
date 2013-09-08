@@ -21,8 +21,10 @@
     <column>
 		<label label="Must have JMRI 3.3.6 or later."/>
 		<label label="   "/>
-		<label label="Chuff Rate"/>
+			<display item="Chuff rate adjustment" />
+			<display item="Chuff rate adjustment" label="" format="hslider"/>
 		<label label="   "/>
+		<label label="Individual Chuff Rates"/>
         <row>
 			<column>
 				<display item="Step 1 Chuff Rate" layout="above" label=""/> 

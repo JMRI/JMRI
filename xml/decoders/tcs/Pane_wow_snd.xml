@@ -32,7 +32,7 @@
 		</row>
 		<row>
 			<column>
-				<label label="Pick sound high byte first then from list of sounds of just that high byte"/>
+				<label label="Pick sound group (high byte) first then from list of sounds of just that group"/>
 				<label label="   "/>
 				<row>
 					<column>
