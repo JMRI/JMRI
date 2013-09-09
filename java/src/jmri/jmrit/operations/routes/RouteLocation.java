@@ -196,14 +196,14 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 * When true allow car drops at this location
 	 * @param drops when true drops allowed at this location
 	 */
-	public void setCanDrop (boolean drops){
+	public void setDropAllowed (boolean drops){
 		boolean old = _drops;
 		_drops = drops;
 		if (old != drops)
 			setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old?"true":"false", drops?"true":"false"); // NOI18N
 	}
 	
-	public boolean canDrop(){
+	public boolean isDropAllowed(){
 		return _drops;
 	}
 	
@@ -211,7 +211,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 * When true allow car pick ups at this location
 	 * @param pickups when true pick ups allowed at this location
 	 */
-	public void setCanPickup (boolean pickups){
+	public void setPickUpAllowed (boolean pickups){
 		boolean old = _pickups;
 		_pickups = pickups;
 		if (old != pickups)
@@ -219,7 +219,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	}
 	
-	public boolean canPickup(){
+	public boolean isPickUpAllowed(){
 		return _pickups;
 	}
 	
@@ -406,8 +406,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	e.setAttribute(Xml.MAX_TRAIN_LENGTH, Integer.toString(getMaxTrainLength()));
     	e.setAttribute(Xml.GRADE, Double.toString(getGrade()));
        	e.setAttribute(Xml.MAX_CAR_MOVES, Integer.toString(getMaxCarMoves()));
-       	e.setAttribute(Xml.PICKUPS, canPickup()?Xml.YES:Xml.NO);
-       	e.setAttribute(Xml.DROPS, canDrop()?Xml.YES:Xml.NO);
+       	e.setAttribute(Xml.PICKUPS, isPickUpAllowed()?Xml.YES:Xml.NO);
+       	e.setAttribute(Xml.DROPS, isDropAllowed()?Xml.YES:Xml.NO);
     	e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
     	e.setAttribute(Xml.DEPART_TIME, getDepartureTime());
        	e.setAttribute(Xml.TRAIN_ICON_X, Integer.toString(getTrainIconX()));

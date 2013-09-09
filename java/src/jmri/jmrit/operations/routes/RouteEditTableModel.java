@@ -268,12 +268,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Integer.toString(rl.getMaxCarMoves());
 		case PICKUPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canPickup() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
+			cb.setSelectedItem(rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case DROPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canDrop() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
+			cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case WAITCOLUMN: {
@@ -418,13 +418,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void setDrop(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setCanDrop(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
+		rl.setDropAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
 				.getMessage("yes")));
 	}
 
 	private void setPickup(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setCanPickup(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
+		rl.setPickUpAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
 				.getMessage("yes")));
 	}
 

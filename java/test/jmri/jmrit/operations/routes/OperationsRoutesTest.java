@@ -173,22 +173,22 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("RouteLocation Train Direction South", 8, rl1.getTrainDirection());
 
 //                rl1.setCanDrop(true);
-		Assert.assertEquals("RouteLocation Train can drop initial", true, rl1.canDrop());
+		Assert.assertEquals("RouteLocation Train can drop initial", true, rl1.isDropAllowed());
 
-                rl1.setCanDrop(false);
-		Assert.assertEquals("RouteLocation Train can drop false", false, rl1.canDrop());
+                rl1.setDropAllowed(false);
+		Assert.assertEquals("RouteLocation Train can drop false", false, rl1.isDropAllowed());
 
-                rl1.setCanDrop(true);
-		Assert.assertEquals("RouteLocation Train can drop true", true, rl1.canDrop());
+                rl1.setDropAllowed(true);
+		Assert.assertEquals("RouteLocation Train can drop true", true, rl1.isDropAllowed());
 
 //                rl1.setCanPickup(true);
-		Assert.assertEquals("RouteLocation Train can Pickup initial", true, rl1.canPickup());
+		Assert.assertEquals("RouteLocation Train can Pickup initial", true, rl1.isPickUpAllowed());
 
-                rl1.setCanPickup(false);
-		Assert.assertEquals("RouteLocation Train can Pickup false", false, rl1.canPickup());
+                rl1.setPickUpAllowed(false);
+		Assert.assertEquals("RouteLocation Train can Pickup false", false, rl1.isPickUpAllowed());
 
-                rl1.setCanPickup(true);
-		Assert.assertEquals("RouteLocation Train can Pickup true", true, rl1.canPickup());
+                rl1.setPickUpAllowed(true);
+		Assert.assertEquals("RouteLocation Train can Pickup true", true, rl1.isPickUpAllowed());
 	}
 
 	// test route location management
@@ -562,8 +562,8 @@ public class OperationsRoutesTest extends TestCase {
 		r1.addLocation(Bedford);
 		r1.addLocation(Acton);
 		
-		r1l1.setCanDrop(false);
-		r1l1.setCanPickup(false);
+		r1l1.setDropAllowed(false);
+		r1l1.setPickUpAllowed(false);
 		r1l1.setCarMoves(3);	// this value isn't saved
 		r1l1.setComment("rl1 comment");
 		r1l1.setGrade(Double.valueOf("5"));
@@ -581,8 +581,8 @@ public class OperationsRoutesTest extends TestCase {
 		r2.addLocation(Chelmsford);
 		RouteLocation r2l4 = r2.addLocation(Bedford);
 		
-		r2l2.setCanDrop(false);
-		r2l2.setCanPickup(true);
+		r2l2.setDropAllowed(false);
+		r2l2.setPickUpAllowed(true);
 		r2l2.setCarMoves(3);	// this value isn't saved
 		r2l2.setComment("r2l2 comment");
 		r2l2.setGrade(Double.valueOf("1"));
@@ -594,8 +594,8 @@ public class OperationsRoutesTest extends TestCase {
 		r2l2.setTrainLength(234); // this value isn't saved
 		r2l2.setTrainWeight(987); // this value isn't saved	
 		
-		r2l4.setCanDrop(true);
-		r2l4.setCanPickup(false);
+		r2l4.setDropAllowed(true);
+		r2l4.setPickUpAllowed(false);
 		r2l4.setCarMoves(3);	// this value isn't saved
 		r2l4.setComment("r2l4 comment");
 		r2l4.setGrade(Double.valueOf("2"));
@@ -643,8 +643,8 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("number of locations in route r1", 5, locs.size());
 		
 		RouteLocation rl1 = r1.getLocationById(locs.get(0));
-		Assert.assertEquals("rl1 can drop", false, rl1.canDrop());
-		Assert.assertEquals("rl1 can pickup", false, rl1.canPickup());
+		Assert.assertEquals("rl1 can drop", false, rl1.isDropAllowed());
+		Assert.assertEquals("rl1 can pickup", false, rl1.isPickUpAllowed());
 		Assert.assertEquals("rl1 car moves", 0, rl1.getCarMoves());	// default
 		Assert.assertEquals("rl1 comment", "rl1 comment", rl1.getComment());
 		Assert.assertEquals("rl1 grade", Double.valueOf("5"), rl1.getGrade());
@@ -661,8 +661,8 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("number of locations in route r2", 4, locs.size());
 		
 		RouteLocation rl2 = r2.getLocationById(locs.get(1));
-		Assert.assertEquals("rl2 can drop", false, rl2.canDrop());
-		Assert.assertEquals("rl2 can pickup", true, rl2.canPickup());
+		Assert.assertEquals("rl2 can drop", false, rl2.isDropAllowed());
+		Assert.assertEquals("rl2 can pickup", true, rl2.isPickUpAllowed());
 		Assert.assertEquals("rl2 car moves", 0, rl2.getCarMoves());	// default
 		Assert.assertEquals("rl2 comment", "r2l2 comment", rl2.getComment());
 		Assert.assertEquals("rl2 grade", Double.valueOf("1"), rl2.getGrade());
@@ -675,8 +675,8 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("rl2 train weight", 0, rl2.getTrainWeight()); // default
 		
 		RouteLocation rl4 = r2.getLocationById(locs.get(3));
-		Assert.assertEquals("rl4 can drop", true, rl4.canDrop());
-		Assert.assertEquals("rl4 can pickup", false, rl4.canPickup());
+		Assert.assertEquals("rl4 can drop", true, rl4.isDropAllowed());
+		Assert.assertEquals("rl4 can pickup", false, rl4.isPickUpAllowed());
 		Assert.assertEquals("rl4 car moves", 0, rl4.getCarMoves());	// default
 		Assert.assertEquals("rl4 comment", "r2l4 comment", rl4.getComment());
 		Assert.assertEquals("rl4 grade", Double.valueOf("2"), rl4.getGrade());

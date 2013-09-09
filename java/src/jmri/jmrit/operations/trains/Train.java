@@ -1344,8 +1344,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			// single location in this train's route?
 			if (rLocations.size() == 1) {
 				RouteLocation rLoc = route.getLocationById(rLocations.get(0));
-				if (rLoc.getName().equals(car.getLocationName()) && rLoc.canPickup()
-						&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId()) && rLoc.canDrop()) {
+				if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
+						&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId()) && rLoc.isDropAllowed()) {
 					if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)) {
 						return false;
 					}
@@ -1363,7 +1363,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			// Multiple locations in the train's route
 			for (int j = 0; j < rLocations.size() - 1; j++) {
 				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
-				if (rLoc.getName().equals(car.getLocationName()) && rLoc.canPickup()
+				if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
 						&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId())
 						&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
 					if (car.getTrack() != null) {
@@ -1389,7 +1389,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					// now check car's destination
 					for (int k = j; k < rLocations.size(); k++) {
 						rLoc = route.getLocationById(rLocations.get(k));
-						if (rLoc.getName().equals(car.getDestinationName()) && rLoc.canDrop()
+						if (rLoc.getName().equals(car.getDestinationName()) && rLoc.isDropAllowed()
 								&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId())
 								&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
 							// found a destination, now check destination track

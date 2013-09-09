@@ -325,7 +325,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 
 		// now test by modifying the route
-		rlA.setCanPickup(false);		
+		rlA.setPickUpAllowed(false);		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Acton);
@@ -333,11 +333,11 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertFalse("Try routing with train that doesn't pickup cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
-		rlA.setCanPickup(true);
+		rlA.setPickUpAllowed(true);
 		Assert.assertTrue("Try routing with train that that can pickup cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
-		rlA.setCanDrop(false);		
+		rlA.setDropAllowed(false);		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Acton);
@@ -345,7 +345,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertFalse("Try routing with train that doesn't drop cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
-		rlA.setCanDrop(true);
+		rlA.setDropAllowed(true);
 		Assert.assertTrue("Try routing with train that that can drop cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
@@ -552,25 +552,25 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 
 		// now test by modifying the route
-		rlActon.setCanPickup(false);		
+		rlActon.setPickUpAllowed(false);		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't pickup cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
-		rlActon.setCanPickup(true);
+		rlActon.setPickUpAllowed(true);
 		Assert.assertTrue("Try routing with train that that can pickup cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 		
-		rlBedford.setCanDrop(false);		
+		rlBedford.setDropAllowed(false);		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't drop cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
-		rlBedford.setCanDrop(true);
+		rlBedford.setDropAllowed(true);
 		Assert.assertTrue("Try routing with train that that can drop cars", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 		
@@ -835,7 +835,7 @@ public class OperationsCarRouterTest extends TestCase {
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Essex);
 		// don't allow train 2 to pickup
-		rlA2.setCanPickup(false);
+		rlA2.setPickUpAllowed(false);
 		// routing should work using train 1, but destinations and track should not be set
 		Assert.assertTrue("Try routing five trains", router.setDestination(c3, ActonTrain2, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());

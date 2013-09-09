@@ -99,8 +99,8 @@ public class PrintRouteAction  extends AbstractAction {
     			s = name 
     			+ TAB + rl.getTrainDirectionString() 
     			+ TAB + rl.getMaxCarMoves()
-    			+ TAB + (rl.canPickup()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
-    			+ TAB + (rl.canDrop()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
+    			+ TAB + (rl.isPickUpAllowed()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
+    			+ TAB + (rl.isDropAllowed()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
     			+ TAB + rl.getWait()
     			+ TAB + rl.getMaxTrainLength()
     			+ TAB + rl.getGrade()

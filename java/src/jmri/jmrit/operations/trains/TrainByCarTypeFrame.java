@@ -172,7 +172,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 					op.setText(Bundle.getMessage("X(TrainOwner)"));
 				else if (train.skipsLocation(rl.getId()))
 					op.setText(Bundle.getMessage("X(TrainSkips)"));
-				else if (!rl.canDrop() && !rl.canPickup())
+				else if (!rl.isDropAllowed() && !rl.isPickUpAllowed())
 					op.setText(Bundle.getMessage("X(Route)"));
 				else if (rl.getMaxCarMoves() <= 0)
 					op.setText(Bundle.getMessage("X(RouteMoves)"));
@@ -205,21 +205,21 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 					op.setText(Bundle.getMessage("X(Schedule)"));
 				else if (!track.acceptsPickupTrain(train)) {
 					// can the train drop off car?
-					if (rl.canDrop() && track.acceptsDropTrain(train))
+					if (rl.isDropAllowed() && track.acceptsDropTrain(train))
 						op.setText(Bundle.getMessage("DropOnly"));
 					else
 						op.setText(Bundle.getMessage("X(TrainPickup)"));
 				} else if (!track.acceptsDropTrain(train))
 					// can the train pick up car?
-					if (rl.canPickup() && track.acceptsPickupTrain(train))
+					if (rl.isPickUpAllowed() && track.acceptsPickupTrain(train))
 						op.setText(Bundle.getMessage("PickupOnly"));
 					else
 						op.setText(Bundle.getMessage("X(TrainDrop)"));
-				else if (rl.canDrop() && rl.canPickup())
+				else if (rl.isDropAllowed() && rl.isPickUpAllowed())
 					op.setText(Bundle.getMessage("OK"));
-				else if (rl.canDrop())
+				else if (rl.isDropAllowed())
 					op.setText(Bundle.getMessage("DropOnly"));
-				else if (rl.canPickup())
+				else if (rl.isPickUpAllowed())
 					op.setText(Bundle.getMessage("PickupOnly"));
 				else
 					op.setText("X"); // default shouldn't occur

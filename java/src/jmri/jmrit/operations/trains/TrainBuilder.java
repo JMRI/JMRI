@@ -208,16 +208,16 @@ public class TrainBuilder extends TrainCommon {
 				// we're going to use this location, so initialize the location
 				rl.setCarMoves(0); // clear the number of moves				
 				// show the type of moves allowed at this location
-				if (!rl.canDrop() && !rl.canPickup()) {
+				if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
 					addLine(buildReport, THREE, MessageFormat.format(Bundle
 							.getMessage("buildLocNoDropsOrPickups"), new Object[] { rl.getName() }));
 				} else {
 					requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
-					if (rl.canDrop() && rl.canPickup())
+					if (rl.isDropAllowed() && rl.isPickUpAllowed())
 						addLine(buildReport, THREE, MessageFormat.format(Bundle
 								.getMessage("buildLocRequestMoves"), new Object[] { rl.getName(),
 								rl.getMaxCarMoves() }));
-					else if (!rl.canDrop())
+					else if (!rl.isDropAllowed())
 						addLine(buildReport, THREE, MessageFormat.format(Bundle
 								.getMessage("buildLocRequestPickups"), new Object[] { rl.getName(),
 								rl.getMaxCarMoves() }));
@@ -1489,7 +1489,7 @@ public class TrainBuilder extends TrainCommon {
 		for (int i = 1; i < routeList.size(); i++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
 			int possibleMoves = rl.getMaxCarMoves() - rl.getCarMoves();
-			if (rl.canDrop() && possibleMoves > 0) {
+			if (rl.isDropAllowed() && possibleMoves > 0) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockLocationHasMoves"),
 						new Object[] { rl.getName(), possibleMoves }));
 			}
@@ -1635,7 +1635,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { rl.getName(), train.getName() }));
 				continue;
 			}
-			if (!rl.canPickup()) {
+			if (!rl.isPickUpAllowed()) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocNoPickups"),
 						new Object[] { train.getRoute().getName(), rl.getName() }));
 				continue;
@@ -3024,7 +3024,7 @@ public class TrainBuilder extends TrainCommon {
 			locCount++; // show when this car would be dropped at location
 			log.debug("Car (" + car.toString() + ") found a destination in train's route");
 			// are drops allows at this location?
-			if (!rld.canDrop()) {
+			if (!rld.isDropAllowed()) {
 				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildRouteNoDropsStop"),
 						new Object[] { train.getRoute().getName(), rld.getName(), locCount }));
 				continue;
@@ -3257,7 +3257,7 @@ public class TrainBuilder extends TrainCommon {
 			if (checkForLaterPickUp(rl, rld, car)) {
 				multiplePickup = true;
 			}
-			if (rld.canDrop() || car.hasFred() || car.isCaboose()) {
+			if (rld.isDropAllowed() || car.hasFred() || car.isCaboose()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchingLocation"),
 						new Object[] { rld.getName(), }));
 			} else {
@@ -3523,7 +3523,7 @@ public class TrainBuilder extends TrainCommon {
 						if (rle == rld)
 							break; // done
 						if (rle.getName().equals(rld.getName())
-								&& (rle.getMaxCarMoves() - rle.getCarMoves() > 0) && rle.canDrop()
+								&& (rle.getMaxCarMoves() - rle.getCarMoves() > 0) && rle.isDropAllowed()
 								&& checkDropTrainDirection(car, rle, trackTemp)) {
 							log.debug("Found an earlier drop for car (" + car.toString() + ") destination ("
 									+ rle.getName() + ")"); // NOI18N
@@ -3586,7 +3586,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
 				return false;
 			}
-			if (!rld.canPickup()) {
+			if (!rld.isPickUpAllowed()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLater"),
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
 				// log.debug("Later pick up for car ("+car.toString()+") from route location ("+rld.getName()+") id "+

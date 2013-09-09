@@ -4232,7 +4232,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		// test route pickup and drop controls
 		train3.setRequirements(Train.CABOOSE);
-		r1l1.setCanPickup(false);
+		r1l1.setPickUpAllowed(false);
 		train3.build();
 
 		Assert.assertEquals("c1 destination 8", "", c1.getDestinationTrackName());
@@ -4240,8 +4240,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c3 destination 8", "", c3.getDestinationTrackName());
 		Assert.assertEquals("c13 destination 8", "Bedford Yard 1", c13.getDestinationTrackName());
 
-		r1l1.setCanPickup(true);
-		r1l2.setCanPickup(false);
+		r1l1.setPickUpAllowed(true);
+		r1l2.setPickUpAllowed(false);
 		train3.build();
 
 		Assert.assertEquals("c1 destination 9", "", c1.getDestinationTrackName());
@@ -4249,8 +4249,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c3 destination 9", "Chelmsford Interchange 1", c3.getDestinationTrackName());
 		Assert.assertEquals("c13 destination 9", "Bedford Yard 1", c13.getDestinationTrackName());
 
-		r1l2.setCanPickup(true);
-		r1l2.setCanDrop(false); // Old Chelmsford
+		r1l2.setPickUpAllowed(true);
+		r1l2.setDropAllowed(false); // Old Chelmsford
 		train3.build();
 
 		Assert.assertEquals("c1 destination 10", "Bedford Yard 1", c1.getDestinationTrackName());
@@ -4270,7 +4270,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertNull("c1 next destination track should be null", c1.getFinalDestinationTrack());
 
 		// try without moves
-		r1l2.setCanDrop(true);
+		r1l2.setDropAllowed(true);
 		r1l2.setMaxCarMoves(0);
 		c1.setDestination(loc2, null);
 		train3.build();
@@ -4278,7 +4278,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		c1.setDestination(null, null);
 		r1l2.setMaxCarMoves(6);
-		r1l3.setCanDrop(false); // Should be able to drop off caboose
+		r1l3.setDropAllowed(false); // Should be able to drop off caboose
 		train3.build();
 
 		Assert.assertEquals("c1 destination 11", "Chelmsford Interchange 1", c1.getDestinationTrackName());
@@ -4595,7 +4595,7 @@ public class OperationsTrainsTest extends TestCase {
 		// no engines, so the caboose with least moves should be used
 		train1.setRequirements(Train.CABOOSE);
 		// don't allow pickups at second location Arlington
-		rl2.setCanPickup(false);
+		rl2.setPickUpAllowed(false);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
 
@@ -4643,7 +4643,7 @@ public class OperationsTrainsTest extends TestCase {
 		// should default to the caboose with the least moves
 		e1.setRoadName("X");
 		// allow pickups at Arlington
-		rl2.setCanPickup(true);
+		rl2.setPickUpAllowed(true);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
 
@@ -4666,7 +4666,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e2 destination 4", "Boston Engine Yard", e2.getDestinationTrackName());
 
 		// don't allow drops at Boston, caboose and engines should still drop there
-		rl3.setCanDrop(false);
+		rl3.setDropAllowed(false);
 		// should not take NH caboose
 		e1.setRoadName("NH");
 		// now require a SP caboose
@@ -4692,7 +4692,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e2 destination 5", "Boston Engine Yard", e2.getDestinationTrackName());
 
 		// allow drops at Boston
-		rl3.setCanDrop(true);
+		rl3.setDropAllowed(true);
 		// should take car with FRED and road SP
 		train1.setRequirements(Train.FRED);
 		train1.build();
@@ -4881,7 +4881,7 @@ public class OperationsTrainsTest extends TestCase {
 		rl2.setMaxCarMoves(7);
 		rl3.setMaxCarMoves(7);
 		// don't allow drops at Boston
-		rl3.setCanDrop(false);
+		rl3.setDropAllowed(false);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 14", true, train1.isBuilt());
 
@@ -5246,8 +5246,8 @@ public class OperationsTrainsTest extends TestCase {
 		rl4.setTrainIconY(175);
 
 		// don't allow pickup or drops at Arlington
-		rl2.setCanDrop(false);
-		rl2.setCanPickup(false);
+		rl2.setDropAllowed(false);
+		rl2.setPickUpAllowed(false);
 
 		// Create train
 		Train train1 = tmanager.newTrain("Harvard to Chelmsford");
