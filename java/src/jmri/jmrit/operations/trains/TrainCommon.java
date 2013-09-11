@@ -414,7 +414,7 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		String s = buf.toString();
-		if (!s.equals(TAB))
+		if (s.trim().length() != 0)
 			addLine(file, s);
 	}
 
@@ -498,7 +498,7 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		String s = buf.toString();
-		if (!s.equals(TAB))
+		if (s.trim().length() != 0)
 			addLine(file, s);
 	}
 
