@@ -68,11 +68,7 @@ public class TrainCommon {
 				newLine(fileOut, pickupEngine(engine).trim(), isManifest);
 			}
 			if (engine.getRouteDestination() == rl) {
-				int lineLength;
-				if (isManifest)
-					lineLength = getLineLength(Setup.getManifestOrientation());
-				else
-					lineLength = getLineLength(Setup.getSwitchListOrientation());
+				int lineLength = getLineLength(isManifest);
 				String s = padString("", lineLength / 2);
 				s = s + " |" + dropEngine(engine);
 				if (s.length() > lineLength)
@@ -246,11 +242,7 @@ public class TrainCommon {
 	protected void blockCarsByTrackTwoColumn(PrintWriter fileOut, Train train, List<String> carList,
 			List<String> routeList, RouteLocation rl, int r, boolean isManifest) {
 		index = 0;
-		int lineLength;
-		if (isManifest)
-			lineLength = getLineLength(Setup.getManifestOrientation());
-		else
-			lineLength = getLineLength(Setup.getSwitchListOrientation());
+		int lineLength = getLineLength(isManifest);
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
 		clearUtilityCarTypes(); // list utility cars by quantity
@@ -357,11 +349,7 @@ public class TrainCommon {
 		} else {
 			newS = newS + dropCar(car, isManifest);
 		}
-		int lineLength;
-		if (isManifest)
-			lineLength = getLineLength(Setup.getManifestOrientation());
-		else
-			lineLength = getLineLength(Setup.getSwitchListOrientation());
+		int lineLength = getLineLength(isManifest);
 		if (newS.length() > lineLength)
 			newS = newS.substring(0, lineLength);
 		return newS;
@@ -763,7 +751,7 @@ public class TrainCommon {
 	
 	// only used by build report
 	private static void printLine(PrintWriter file, String level, String string) {
-		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize());
+		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), "Monospaced");
 		if (string.length() > lineLengthMax) {
 			String[] s = string.split(SPACE);
 			StringBuffer sb = new StringBuffer();
@@ -1121,12 +1109,13 @@ public class TrainCommon {
 		return buf.toString();
 	}
 	
-	// used by manifests
-	protected int getLineLength(String orientation) {
-		return getLineLength(orientation, Setup.getManifestFontSize());
+	protected int getLineLength(boolean isManifest) {
+		if (isManifest)
+			return getLineLength(Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.getFontName());
+		return getLineLength(Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.getFontName());
 	}
 	
-	private static int getLineLength(String orientation, int fontSize) {
+	private static int getLineLength(String orientation, int fontSize, String fontName) {
 		// page size has been adjusted to account for margins of .5
 		Dimension pagesize = new Dimension(540, 792); // Portrait
 		if (orientation.equals(Setup.LANDSCAPE))
@@ -1135,7 +1124,7 @@ public class TrainCommon {
 			pagesize = new Dimension(206, 792);
 		// Metrics don't always work for the various font names, so use
 		// Monospaced
-		Font font = new Font("Monospaced", Font.PLAIN, fontSize); // NOI18N
+		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
 		int charwidth = metrics.charWidth('m');
