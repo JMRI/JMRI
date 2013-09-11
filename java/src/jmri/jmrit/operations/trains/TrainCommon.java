@@ -751,7 +751,7 @@ public class TrainCommon {
 	
 	// only used by build report
 	private static void printLine(PrintWriter file, String level, String string) {
-		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), "Monospaced");
+		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), Setup.MONOSPACED);
 		if (string.length() > lineLengthMax) {
 			String[] s = string.split(SPACE);
 			StringBuffer sb = new StringBuffer();
