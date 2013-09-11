@@ -311,7 +311,7 @@ public class TrainCommon {
 			s = appendSetoutString(s, carList, rl, false, isManifest);
 			String test = s.trim();
 			if (test.length() > 0)
-				newLine(fileOut, s, isManifest);
+				addLine(fileOut, s);
 		}
 	}
 	
