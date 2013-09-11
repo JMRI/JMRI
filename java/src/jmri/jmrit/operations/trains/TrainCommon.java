@@ -299,7 +299,7 @@ public class TrainCommon {
 						} else {
 							s = appendSetoutString(s, carList, rl, true, isManifest);
 						}
-						newLine(fileOut, s, isManifest);
+						addLine(fileOut, s);
 					}
 				}
 			}
