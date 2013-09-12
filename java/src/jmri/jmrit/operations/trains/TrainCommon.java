@@ -913,7 +913,7 @@ public class TrainCommon {
 	 */
 	public static boolean isThereWorkAtLocation(Train train, Location location) {
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getByTrainDestinationList(train);
+		List<String> carList = carManager.getByTrainList(train);
 		for (int i = 0; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
 			if ((car.getRouteLocation() != null && car.getTrack() != null && TrainCommon.splitString(

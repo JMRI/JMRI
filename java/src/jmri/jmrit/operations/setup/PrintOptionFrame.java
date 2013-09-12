@@ -563,6 +563,8 @@ public class PrintOptionFrame extends OperationsFrame {
 		if (ae.getSource() == formatSwitchListCheckBox) {
 			log.debug("Switch list check box activated");
 			setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
+			setPreferredSize(null);
+			pack();
 		}
 	}
 
