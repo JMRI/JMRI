@@ -154,6 +154,7 @@ public class Router extends TrainCommon {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
 					new Object[] { car.toString(), clone.getDestinationName(),
 				clone.getDestinationTrackName(), _status }));
+			// TODO should we move a car to the alternate or yard track if already at the final destination?
 			// state that alternative and yard track options are not available if car is at final destination
 			if (car.getLocation() == clone.getDestination())
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterIgnoreAlternate"),

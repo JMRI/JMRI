@@ -651,32 +651,54 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			_car.setColor(colorComboBox.getSelectedItem().toString());
 		_car.setWeight(weightTextField.getText());
 		_car.setWeightTons(weightTonsTextField.getText());
-		try {
-			int blocking = Integer.parseInt(blockingTextField.getText());
-			// only allow numbers between 0 and 100
-			if (blocking >= 0 && blocking <= 100)
-				_car.setBlocking(blocking);
-		} catch (Exception e) {
 
-		}
 		// ask if all cars of this type should be passenger
 		if (_car.isPassenger() ^ passengerCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					passengerCheckBox.isSelected() ? Bundle.getMessage("carModifyTypePassenger")
-							: Bundle.getMessage("carRemoveTypePassenger"), new Object[] { _car
-							.getTypeName() }), MessageFormat.format(
-					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
+					passengerCheckBox.isSelected() ? Bundle.getMessage("carModifyTypePassenger") : Bundle
+							.getMessage("carRemoveTypePassenger"), new Object[] { _car.getTypeName() }), MessageFormat
+					.format(Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				// go through the entire list and change the caboose setting for all cars of this type
+				// go through the entire list and change the passenger setting
+				// for all cars of this type
 				List<String> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
 					Car c = carManager.getById(cars.get(i));
-					if (c.getTypeName().equals(_car.getTypeName()))
+					if (c.getTypeName().equals(_car.getTypeName())) {
 						c.setPassenger(passengerCheckBox.isSelected());
+					}
 				}
 			}
 		}
 		_car.setPassenger(passengerCheckBox.isSelected());
+		int blocking = 0;
+		try {
+			blocking = Integer.parseInt(blockingTextField.getText());
+			// only allow numbers between 0 and 100
+			if (blocking < 0 || blocking > 100)
+				blocking = 0;
+		} catch (Exception e) {
+
+		}
+		if (passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
+			if (JOptionPane.showConfirmDialog(
+					this,
+					MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
+							new Object[] { blocking, _car.getTypeName() }),
+					MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				// go through the entire list and change the passenger setting
+				// for all cars of this type
+				List<String> cars = carManager.getList();
+				for (int i = 0; i < cars.size(); i++) {
+					Car c = carManager.getById(cars.get(i));
+					if (c.isPassenger() && c.getTypeName().equals(_car.getTypeName())) {
+						c.setBlocking(blocking);
+					}
+				}
+			}
+		}
+		_car.setBlocking(blocking);
 		// ask if all cars of this type should be caboose
 		if (_car.isCaboose() ^ cabooseCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
