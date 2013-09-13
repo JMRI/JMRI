@@ -503,7 +503,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (car.hasFred())
 				buf.append(" " + Bundle.getMessage("(F)"));
 			if (car.isPassenger())
-				buf.append(" " + Bundle.getMessage("(P)"));
+				buf.append(" " + Bundle.getMessage("(P)") + " " +car.getBlocking());
 			if (car.isUtility())
 				buf.append(" " + Bundle.getMessage("(U)"));
 			if (car.isHazardous())
