@@ -29,7 +29,8 @@ public class Car extends RollingStock {
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
-	protected int _order = 0; // interchange service ordering
+	protected int _order = 0; // track service ordering
+	protected int _blocking = 0;
 
 	protected Location _rweDestination = null; // return when empty destination
 	protected Track _rweDestTrack = null; // return when empty track
@@ -227,6 +228,17 @@ public class Car extends RollingStock {
 
 	public int getOrder() {
 		return _order;
+	}
+	
+	public void setBlocking(int number) {
+		int old = _blocking;
+		_blocking = number;
+		if (old != number)
+			firePropertyChange("car blocking changed", old, number); // NOI18N
+	}
+
+	public int getBlocking() {
+		return _blocking;
 	}
 
 	public void setNextWait(int count) {
@@ -668,6 +680,9 @@ public class Car extends RollingStock {
 		if ((a = e.getAttribute(Xml.ORDER)) != null) {
 			_order = Integer.parseInt(a.getValue());
 		}
+		if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
+			_blocking = Integer.parseInt(a.getValue());
+		}
 		addPropertyChangeListeners();
 	}
 
@@ -737,6 +752,9 @@ public class Car extends RollingStock {
 		}
 
 		e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
+		
+		if (getBlocking() != 0)
+			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
 
 		return e;
 	}

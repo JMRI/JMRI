@@ -316,12 +316,23 @@ public class CarManager extends RollingStockManager {
 				if (car.isCaboose() || car.hasFred()) {
 					out.add(inTrain.get(i)); // place at end of list
 					lastCarsIndex++;
+				} else if (car.isPassenger()) {
+					// block passenger cars
+					int index = 0;
+					for (int k = 0; k < lastCarsIndex; k++) {
+						Car carTest = getById(out.get(out.size() - 1 - k));
+						log.debug("Car (" + carTest.toString() + ") has blocking number: " + carTest.getBlocking());
+						if (carTest.isPassenger() && !carTest.isCaboose() && !carTest.hasFred()
+								&& carTest.getBlocking() < car.getBlocking())
+							break;
+						index++;
+					}		
+					out.add(out.size() - index, inTrain.get(i));
+					lastCarsIndex++;
 				} else {
 					out.add(out.size() - lastCarsIndex, inTrain.get(i));
 				}
-				if (car.isPassenger()) {
-					lastCarsIndex++;
-				}
+
 			}
 		}
 		return out;

@@ -3694,7 +3694,7 @@ public class TrainBuilder extends TrainCommon {
 		if (!Setup.isBuildAggressive())
 			return false;
 		boolean redirected = false;
-		List<String> cars = carManager.getByTrainDestinationList(train);
+		List<String> cars = carManager.getByTrainList(train);
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = carManager.getById(cars.get(i));
 			// does the car have a final destination and the destination is this one?
