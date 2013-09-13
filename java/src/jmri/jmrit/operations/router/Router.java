@@ -154,6 +154,10 @@ public class Router extends TrainCommon {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
 					new Object[] { car.toString(), clone.getDestinationName(),
 				clone.getDestinationTrackName(), _status }));
+			// state that alternative and yard track options are not available if car is at final destination
+			if (car.getLocation() == clone.getDestination())
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterIgnoreAlternate"),
+						new Object[] { car.toString(), car.getLocationName() }));
 			// check to see if an alternative track was specified
 			if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Track.SCHEDULE)) && car.getLocation() != clone.getDestination()
 					&& clone.getDestinationTrack() != null
