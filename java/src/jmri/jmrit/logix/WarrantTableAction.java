@@ -1528,6 +1528,8 @@ public class WarrantTableAction extends AbstractAction {
                 	} else {
                         setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), Color.green);               	                		                		
                 	}
+                } else if (e.getPropertyName().equals("throttleFail")) {
+                    setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(),(String)e.getNewValue()), Color.red);               	                		                	
                 }
             }
             if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
