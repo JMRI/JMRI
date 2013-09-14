@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
+<!-- $Id: Massoth_pulsed_smoke.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz 493rdafa@gmail.com" version="1.0" lastUpdated="20130902"/>
+<!-- 
+      This decoder XML is meant to be used with the "Custom" programmer format.
+      The pane definitions are included below the decoder definition.  The Massoth
+      decoders seem to fit the description of "weird" as mentioned in that
+      programmer.  Also, this allows the tooltips from this decoder file to be
+      displayed for the user.
+
+      This definition was based on the Massoth document "Gepulster Verdampfer/Pulsed Smoke Generator/
+      8413101, 8413501",  991061 BDA 8413101, 8413501 2013.05.
+
+      I tried to match DecoderPro "item" names when I was fairly certain they were
+      correct.  The "label" names tried to match the names used in the Massoth
+      documentation (except for a few cases where I hope I was improving the translation).
+
+      Any and all feedback on this file would be appreciated.
+
+      Version History:
+
+        1.0 - Initial release 2 Sep 2013
+-->
+  <decoder>
+    <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH">
+      <model model="Pulsed Smoke Unit" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1600 mA" numOuts="0" numFns="18" formFactor="G" connector="other">
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+        <shortAddressVal/>
+        <label>Short Address</label>
+      </variable>
+      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+        <decVal/>
+        <label>Software Version Number</label>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable label="Programming lock - unlock" CV="15" default="160" tooltip="unlock programming lock CV15">
+        <decVal/>
+      </variable>
+      <variable label="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual) CV16">
+        <decVal/>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) CV17-18">
+        <longAddressVal/>
+        <label>Long Address</label>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+        <enumVal>
+          <enumChoice choice="Short Address (CV1)">
+            <choice>Short Address (CV1)</choice>
+          </enumChoice>
+          <enumChoice choice="Long Address (CV17+18)">
+            <choice>Long Address (CV17+18)</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Bus Type" CV="49" mask="XXXVXXXX" default="0"
+         tooltip="Determines which protocol is used on the bus connection to other devices. CV49" >
+        <enumVal>
+          <enumChoice choice="Massoth"/>
+          <enumChoice choice="SUSI"/>
+        </enumVal>
+      </variable>
+      <variable label="Digital diesel mode" CV="49" mask="VXXXXXXX" default="0"
+         tooltip="Determines mode for digital diesel operation. CV49" >
+        <enumVal>
+          <enumChoice choice="Track"/>
+          <enumChoice choice="Bus"/>
+        </enumVal>
+      </variable>
+      <variable label="Preheating heater element" CV="60" default="0" tooltip="Range 0-32. CV60">
+        <decVal min="0" max="32"/>
+      </variable>
+      <variable label="Fan speed stop" CV="61" default="30" tooltip="Range 0-100. CV61">
+        <decVal min="0" max="100"/>
+      </variable>
+      <variable label="Fan speed start up" CV="62" default="100" tooltip="Range 0-100. CV62">
+        <decVal min="0" max="100"/>
+      </variable>
+      <variable label="Fan speed drive" CV="63" default="100" tooltip="Range 0-100. CV63">
+        <decVal min="0" max="100"/>
+      </variable>
+      <variable label="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100. CV64">
+        <decVal min="0" max="100"/>
+      </variable>
+      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended 4 digit address for programming on the Main (Range 128-10239) CV107-108">
+        <longAddressVal/>
+        <label>Long Address</label>
+      </variable>
+      <variable label="Preheating function key" CV="110" default="0" tooltip="Function key which switches preheating CV110">
+        <enumVal>
+          <enumChoice choice="F0" value="0">
+            <choice>F0</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Smoke Generator type" CV="113" default="20"
+         tooltip="Must be changed if voltage of heating element changed. CV113" >
+        <enumVal>
+          <enumChoice choice="Analog" value="5"/>
+          <enumChoice choice="Digital" value="20"/>
+        </enumVal>
+      </variable>
+      <variable label="Fan function key" CV="120" default="7" tooltip="Function key which switches preheating CV120">
+        <enumVal>
+          <enumChoice choice="F0" value="0">
+            <choice>F0</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Fan delay" CV="124"  tooltip="0,5 sec. per value CV124">
+        <decVal/>
+      </variable>
+      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" default="160" 
+        item="Product Number"
+        tooltip="New ID for Decoder Type (read only)(Only needed for Software Update) CV255">
+        <decVal/>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset basic settings" CV="7" default="55"/>
+      <factReset label="Reset lights and functions" CV="7" default="77"/>
+    </resets>
+  </decoder>
+  <pane name="Basic">
+    <column>
+      <dccaddress/>
+      <label label=" "/>
+      <display item="Short Address"/>
+      <display item="Extended Address"/>
+      <display item="Address Format"/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Programming address POM"/>
+      <label label=" "/>
+      <label label=" "/>
+    </column>
+    <column>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <separator/>
+      <label label=" "/>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <display item="Product Number"/>
+    </column>
+    <name>Basic</name>
+  </pane>
+  <pane name="Pulsed Smoke Unit">
+    <column>
+      <display item="Bus Type"/>
+      <display item="Digital diesel mode"/>
+      <label label=" "/>
+      <display item="Programming lock - unlock"/>
+      <display item="Programming lock - lock"/>
+      <label label=" "/>
+      <display item="Preheating heater element"/>
+      <display item="Preheating function key"/>
+      <label label=" "/>
+      <display item="Fan speed stop"/>
+      <display item="Fan speed start up"/>
+      <display item="Fan speed drive"/>
+      <display item="Fan speed roll out"/>
+      <display item="Fan delay"/>
+      <display item="Fan function key"/>
+      <label label=" "/>
+      <display item="Smoke Generator type"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="CVs">
+    <column>
+      <cvtable/>
+    </column>
+    <name>CVs</name>
+  </pane>
+</decoder-config>
