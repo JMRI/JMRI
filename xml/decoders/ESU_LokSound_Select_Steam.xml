@@ -40,6 +40,8 @@
   <version author="Dave Heap" version="9" lastUpdated="20130606"/>
    <!-- ver10 Add warning to CV reset -->
   <version author="Dave Heap" version="10" lastUpdated="20130626"/>
+  <!-- ver10 new Function Outputs and Info panes, miscellaneous changes and corrections -->
+  <version author="Dave Heap" version="11" lastUpdated="20130910"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Big Boy 4-8-8-4" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
@@ -488,196 +490,7 @@
         </enumVal>
         <label>Brake Squeal</label>
       </variable>
-      <!-- Indexed variables -->
-      <constant item="PICV" default="31" comment="CV used for Primary Index"/>
-      <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-      <!-- Light output config -->
-      <ivariable label="Headlight Mode" CVname="259.16.0" CV="259" PI="16" SI="0" default="2" item="Function F0F effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Headlight Brightness" CVname="262.16.0" CV="262" PI="16" SI="0" default="31" item="Function F0F behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Headlight Phase" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="Function F0F options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Headlight Grade Crossing" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="Function F0F check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Headlight Rule 17 Fwd" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="Function F0F check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Headlight Rule 17 Rev" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="Function F0F check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Headlight Dimmer" CVname="263.16.0" CV="263" PI="16" SI="0" default="1" item="Function F0F check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Headlight LED Mode" CVname="263.16.0" CV="263" PI="16" SI="0" default="0" item="Function F0F check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light Mode" CVname="267.16.0" CV="267" PI="16" SI="0" default="2" item="Function F0R effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light Brightness" CVname="270.16.0" CV="270" PI="16" SI="0" default="31" item="Function F0R behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="Backup Light Phase" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="Function F0R options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Backup Light Grade Crossing" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="Function F0R check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light Rule 17 Fwd" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="Function F0R check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light Rule 17 Rev" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="Function F0R check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light Dimmer" CVname="271.16.0" CV="271" PI="16" SI="0" default="1" item="Function F0R check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Backup Light LED Mode" CVname="271.16.0" CV="271" PI="16" SI="0" default="0" item="Function F0R check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 Mode" CVname="275.16.0" CV="275" PI="16" SI="0" default="9" item="Function 1 effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 Brightness" CVname="278.16.0" CV="278" PI="16" SI="0" default="31" item="Function 1 behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="AUX1 Phase" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="Function 1 options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="AUX1 Grade Crossing" CVname="279.16.0" CV="279" PI="16" SI="0" default="1" item="Function 1 check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 Rule 17 Fwd" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="Function 1 check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 Rule 17 Rev" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="Function 1 check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 Dimmer" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="Function 1 check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX1 LED Mode" CVname="279.16.0" CV="279" PI="16" SI="0" default="0" item="Function 1 check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 Mode" CVname="283.16.0" CV="283" PI="16" SI="0" default="9" item="Function 2 effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 Brightness" CVname="286.16.0" CV="286" PI="16" SI="0" default="31" item="Function 2 behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="AUX2 Phase" CVname="287.16.0" CV="287" PI="16" SI="0" default="1" item="Function 2 options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="AUX2 Grade Crossing" CVname="287.16.0" CV="287" PI="16" SI="0" default="1" item="Function 2 check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 Rule 17 Fwd" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="Function 2 check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 Rule 17 Rev" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="Function 2 check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 Dimmer" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="Function 2 check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX2 LED Mode" CVname="287.16.0" CV="287" PI="16" SI="0" default="0" item="Function 2 check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 Mode" CVname="291.16.0" CV="291" PI="16" SI="0" default="13" item="Function 3 effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 Brightness" CVname="294.16.0" CV="294" PI="16" SI="0" default="31" item="Function 3 behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="AUX3 Phase" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="AUX3 Grade Crossing" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 Rule 17 Fwd" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 Rule 17 Rev" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 Dimmer" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX3 LED Mode" CVname="295.16.0" CV="295" PI="16" SI="0" default="0" item="Function 3 check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 Mode" CVname="299.16.0" CV="299" PI="16" SI="0" default="1" item="Function 4 effect generated" mask="XXXXVVVV">
-        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 Brightness" CVname="302.16.0" CV="302" PI="16" SI="0" default="31" item="Function 4 behavior">
-        <indexedVal max="31"/>
-      </ivariable>
-      <ivariable label="AUX4 Phase" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 options" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Normal">
-            <choice>Normal</choice>
-          </ienumChoice>
-          <ienumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="AUX4 Grade Crossing" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 check 1" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 Rule 17 Fwd" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 check 2" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 Rule 17 Rev" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 check 3" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 Dimmer" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 check 4" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="AUX4 LED Mode" CVname="303.16.0" CV="303" PI="16" SI="0" default="0" item="Function 4 check 5" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
+      <!-- More Indexed variables -->
       <!-- Volumes -->
       <ivariable label="Chuff Right volume" CVname="259.16.1" CV="259" PI="16" SI="1" default="99" item="Sound Setting 2">
         <indexedVal max="128"/>
@@ -2746,6 +2559,7 @@
       <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <pane name="Indexed CVs">
     <column>
       <row>
@@ -2766,5 +2580,6 @@
     </column>
     <name>Indexed CVs</name>
   </pane>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
 </decoder-config>

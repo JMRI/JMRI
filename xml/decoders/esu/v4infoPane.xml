@@ -1,0 +1,74 @@
+  <pane name="Read Me - IMPORTANT ">
+    <column>
+      <label label="JMRI 3.5.3 or later is required to use this definition."/>
+      <label label=" "/>
+      <label label="ESU V4/Select Decoders Important Information:"/>
+      <separator/>
+      <separator/>
+      <label label="Factory Reset Warning:"/>
+      <label label=" "/>
+      <label label="Performing a Factory Reset on any ESU sound decoder may render the sound project inoperable!"/>
+      <label label=" "/>
+      <label label="ESU sound decoders are manufactured blank and the sound project is loaded, often"/>
+      <label label="by a dealer or other party. If the project installer forgets to select the"/>
+      <label label="optional step to write new 'factory' defaults suited to the project, a"/>
+      <label label="subsequent reset will most likely render the sounds inoperable due to incorrect"/>
+      <label label="CV defaults. If in doubt, consult your dealer."/>
+      <separator/>
+      <label label="These decoders are probably the most complex (and versatile) DCC decoders"/>
+      <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses"/>
+      <label label="extra challenges for JMRI coding. These defintions are a work in progress."/>
+      <label label=" "/>
+      <label label="Further information is found below."/>
+      <label label=" "/>
+       <separator/>
+      <label label="The following tabs are (to the best of our knowledge) correct:"/>
+      <label label=" "/>
+      <label label="Roster Entry, Function Labels, Roster Media, Basic, Motor, Basic Speed Control,"/>
+      <label label="Speed Table, Analog Controls, Consist, Advanced, Sound, Function Outputs, ESU Misc."/>
+      <separator/>
+      <label label="The Function Map and Output Map tabs are far from correct:"/>
+      <label label=" "/>
+      <label label="The ESU Function Map has 40 lines and these lines are not sequentially mapped to"/>
+      <label label="functions. Instead, any line can be set to be activated by any one or"/>
+      <label label="combination of function buttons. There are 640 CVs involved and 5,120 checkboxes"/>
+      <label label="would be required. This is not possible with the current JMRI code. We are"/>
+      <label label="planning to write special JMRI code to implement a correct function mapping tab"/>
+      <label label="but this is a big job and will take time. Results from the using the current"/>
+      <label label="Function Map and Output Map tabs are unpredictable."/>
+      <separator/>
+      <label label="The Speed Table:"/>
+      <label label=" "/>
+      <label label="The ESU V4/Select Decoders implement the mfx&#174; style speed table rather than"/>
+      <label label="the NMRA version. This style can do everything the NMRA stlye does and is every"/>
+      <label label="bit as versatile and easy to use."/>
+      <label label=" "/>
+      <label label=" The difference is that Vstart (CV 2) and Vhigh (CV 5) are ALWAYS used as well"/>
+      <label label=" as the speed table CVs. The curve shape defined in the speed table CVs is"/>
+      <label label=" squeezed to fit between Vstart and Vhigh."/>
+      <label label=" "/>
+      <label label="The procedure to set up a speed curve is to pick the curve shape you desire on"/>
+      <label label="the speed table AND use Vstart (CV 2) and Vhigh (CV 5) to set the Minimum and"/>
+      <label label="Maximum speeds."/>
+      <label label=" "/>
+      <label label="When speed matching to a loco the Minimum and Maximum speeds MUST be matched"/>
+      <label label="first using CVs 2 and 5 ONLY on the LokSound decoder. Then use CVs 68 to 93"/>
+      <label label="to match the remaining 26 speed steps. CVs 2 and 5 MUST be set first when speed"/>
+      <label label="matching to another loco."/>
+      <label label=" "/>
+      <label label="The Minimum and Maximum speeds cannot be set by using the speed table steps 1"/>
+      <label label="and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at"/>
+      <label label="1 and 255 respectively."/>
+      <separator/>
+      <label label="In the event of any problems being encountered, please report back to us by posting"/>
+      <label label="to either the JMRI or LokSound Yahoo&#174; groups or by logging a bug report on"/>
+      <label label="the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
+      <separator/>
+      <label label="Decoder Information"/>
+      <label label=" "/>
+            <display item="Firmware Major Version"/>
+            <display item="Firmware Minor Version"/>
+            <display item="Firmware Build Number"/>
+      <separator/>
+    </column>
+  </pane>

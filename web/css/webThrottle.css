@@ -1,0 +1,417 @@
+/**********************************************************************************************
+* 
+* CSS for 'webThrottle.html'
+* 
+* This CSS defines the web throttle look.
+* 
+* >>> This file version: 1.0 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* 
+**********************************************************************************************/
+
+/* Global ************************************************************************************/
+
+html {}
+
+body {
+	background-color:rgb(168, 168, 168);
+	color:rgb(248, 248, 248);
+	font-family:tahoma, arial, helvetica, sans-serif;	/* verdana ?! (use only unicode fonts with IPA Extensions (96: 0250�02AF) */
+/*	font-size:16px;	[managed internally - standard is 16px and is equal to 1em] */
+}
+
+*, *:before, *:after {	/* box model width and height contains borders and paddings */
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	margin:0;
+	padding:0;
+}
+
+#bodyFrames {
+	overflow:hidden;
+	background-color:black;
+}
+
+.frame {
+	position:absolute;
+	margin:1px;
+	border:0;
+}
+
+#bodyFrameOuter {
+	position:absolute;
+	overflow-y:auto;
+	overflow-x:hidden;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+#bodyFrameInner {
+	position:absolute;
+	overflow:hidden;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.fadeIn {-webkit-animation:fadeIn 1s; -moz-animation:fadeIn 1s; animation:fadeIn 1s;}
+
+@-webkit-keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+@-moz-keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+.fadeOut {-webkit-animation:fadeOut 2s; -moz-animation:fadeOut 2s; animation:fadeOut 2s;}
+
+@-webkit-keyframes fadeOut {from {opacity:1;} to {opacity:0;}}
+
+@-moz-keyframes fadeOut {from {opacity:1;} to {opacity:0;}}
+
+@keyframes fadeOut {from {opacity:1;} to {opacity:0;}}
+
+.selectionList {
+	background-clip: padding-box;
+	position:fixed;
+	height:auto;
+	width:auto;
+	background-color:rgb(255, 255, 255);
+    border:15px solid rgb(255, 255, 255);
+	border:15px solid rgba(255, 255, 255, 0.5);
+	border-radius:5px;
+	padding:5px;
+	color:black;
+	text-align:center;
+	opacity:0.9;
+	z-index:+10;
+}
+
+.selectionListItem {
+	height:auto;
+	width:auto;
+	overflow:hidden;
+    white-space:nowrap;
+	margin:5px;
+	opacity:1;
+	cursor:pointer;
+}
+
+#selectionListTitle {
+	font-size:120%;
+	text-decoration:underline;
+	font-weight:bold;
+	cursor:auto;
+}
+
+.activeListItem {
+	font-weight:bold;
+}
+
+#selectionListItemBlank {
+	cursor:auto;
+}
+
+#selectionListCancel {
+	background-color:rgb(128, 128, 128);
+	font-weight:bold;
+}
+
+.imageContainer {position:absolute; overflow:hidden;}
+
+.imageInitial {display:block; margin:auto; /* [managed internally] */}
+
+.image {display:block; margin:auto;/* [managed internally] */}
+
+.locoName, .locoRoad, .locoMfg, .panelName {
+	position:absolute;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    white-space:nowrap;
+	text-align:center;
+}
+
+.smoothAlert {
+	background-clip: padding-box;
+	position:fixed;
+	height:auto;
+	width:auto;
+	background-color:rgb(255, 255, 255);
+    border:5px double rgb(128, 128, 128);
+	border:5px double rgba(128, 128, 128, 0.3);
+	border-radius:10px;
+	padding:5px;
+	color:black;
+	cursor:pointer;
+}
+
+.smoothAlertLine {
+	height:auto;
+	width:auto;
+	overflow:hidden;
+    white-space:nowrap;
+	margin:5px;
+}
+
+.button {
+	position:absolute;
+	overflow:hidden;
+	margin:2px;
+	border-radius:5px;
+	color:black;
+	cursor:pointer;
+}
+
+.button:active {color:rgb(248, 248, 248);}
+
+.buttonText {
+	position:absolute;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    white-space:nowrap;
+	text-align:center;
+}
+
+#header {
+	position:absolute;
+	overflow:hidden;
+	padding:2px;
+}
+
+#power {font-size:150%;}
+
+.powerUnknown {background-color:yellow;}
+
+.powerOff {background-color:red;}
+
+.powerOn {background-color:lime;}
+
+#toFrame {background-color:rgb(128, 128, 128); color:rgb(248, 248, 248); font-size:120%;}
+
+#removeFrame {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#speedPosition {background-color:rgb(128, 128, 128); font-size:150%;}
+
+#speedPosition:active {background-color:rgb(48, 48, 48);}
+
+#fontSmaller {background-color:rgb(128, 128, 128); font-size:80%;}
+
+#fontSmaller:active {background-color:rgb(48, 48, 48);}
+
+#fontLarger {background-color:rgb(128, 128, 128); font-size:150%;}
+
+#fontLarger:active {background-color:rgb(48, 48, 48);}
+
+#help {color:yellow; font-size:150%;}
+
+/* Roster / Panels ***************************************************************************/
+
+#buttons {position:absolute; overflow:hidden;}
+
+#groups {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#groups:active {background-color:rgb(48, 48, 48);}
+
+#turnouts {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#turnouts:active {background-color:rgb(48, 48, 48);}
+
+#routes {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#routes:active {background-color:rgb(48, 48, 48);}
+
+#panels {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#panels:active {background-color:rgb(48, 48, 48);}
+
+.rosterCell {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(48, 48, 48);
+	margin:2px;
+	border-radius:5px;
+	padding:5px;
+	cursor:pointer;
+}
+
+.panelCell {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(48, 48, 48);
+	margin:2px;
+	border-radius:5px;
+	padding:5px;
+	cursor:pointer;
+}
+
+/* Throttle **********************************************************************************/
+
+#movementActive {background-color:rgb(128, 128, 128); font-size:120%;}
+
+#movementActive:active {background-color:rgb(48, 48, 48);}
+
+#emergencyStop {font-size:120%; background-color:red;}
+
+.speed {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(128, 128, 128);
+}
+
+#speedGrid {
+	position:absolute;
+	overflow:hidden;
+}
+
+#speedLimits {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(48, 48, 48);
+	margin:10px;
+	border-radius:5px;
+}
+
+#speedBar {
+	position:absolute;
+	overflow:hidden;
+	background-color:darkorange;
+	margin:10px;
+	border-radius:5px;
+	z-index:+5;
+}
+
+#speedTouch {
+	position:absolute;
+	overflow:hidden;
+	background-color:transparent;
+	z-index:+6;
+	cursor:pointer;
+}
+
+.direction {
+	background-color:rgb(48, 48, 48);
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+	transform:rotate(90deg);
+	font-size:200%;
+	font-weight:bold;
+	color:yellow;
+}
+
+.direction:active {color:rgb(248, 248, 248);}
+
+.directionActive {color:lime;}
+
+.directionActive:active {color:rgb(248, 248, 248);}
+
+.directionInactive {color:red;}
+
+.directionInactive:active {color:rgb(248, 248, 248);}
+
+.functionsOuter {
+	position:absolute;
+	overflow-y:auto;
+	overflow-x:hidden;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.functionsInner {
+	position:absolute;
+	overflow:hidden;
+	color: black;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.functionButton {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(48, 48, 48);
+	color:rgb(192, 192, 192);
+	margin:2px;
+	border-radius:5px;
+	cursor:pointer;
+}
+
+.functionButton:active {color:rgb(248, 248, 248);}
+
+.funcLabel {
+	position:absolute;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	text-align:center;
+}
+
+.funcState {
+	position:absolute;
+	margin:2px;
+	border-radius:5px;
+}
+
+.funcOn {background-color:lime;}
+
+.funcOff {background-color:rgb(48, 48, 48);}
+
+#locoName {
+	background-color:rgb(48, 48, 48);
+	color:rgb(192, 192, 192);
+	margin:2px;
+	border-radius:5px;
+	cursor:pointer;
+}
+
+.locoCell {
+	position:absolute;
+	overflow:hidden;
+	margin:2px;
+}
+
+/* Panel *************************************************************************************/
+
+.panel {
+	position:absolute;
+	overflow:hidden;
+	border:0;
+}
+
+/* Turnouts and Routes ***********************************************************************/
+
+.trCell {
+	position:absolute;
+	overflow:hidden;
+	background-color:rgb(48, 48, 48);
+	margin:2px;
+	border-radius:5px;
+	padding:5px;
+}
+
+.trName {
+	position:absolute;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    white-space:nowrap;
+	text-align:left;
+}
+
+.trStatus {
+	position:absolute;
+	overflow:hidden;
+	text-overflow:ellipsis;
+    white-space:nowrap;
+	text-align:right;
+	cursor:pointer;
+}
+
+.turnoutThrown, .routeInactive {color:red;}
+
+.turnoutClosed, .routeActive {color:lime;}
+
+.turnoutUndefined, .routeUndefined {color:yellow;}
+
+.routeDisabled {color:gray;}
+
+/* END ***************************************************************************************/

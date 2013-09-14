@@ -48,7 +48,7 @@ public class IconDialog extends ItemDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IconDialog(String type, String family, FamilyItemPanel parent, HashMap <String, NamedIcon> iconMap ) {
-        super(type, Bundle.getMessage("ShowIconsTitle", type));
+        super(type, Bundle.getMessage("ShowIconsTitle", family));
         if (log.isDebugEnabled()) log.debug("IconDialog ctor: for "+type+" Family "+family);        
         _family = family;
         _parent = parent;
