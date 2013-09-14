@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130821-1735-jake on Wed Aug 21 20:35:45 EEST 2013 $Id$-->
-  <decoderIndex version="287">
+  <!--Written by JMRI version 20130914-0517-jake on Fri Sep 13 22:17:41 PDT 2013 $Id$-->
+  <decoderIndex version="289">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3290,16 +3290,26 @@
         </model>
         <model model="LE1014" numOuts="4" numFns="8" />
       </family>
-      <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="61" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Gold.xml">
-        <model model="Gold Mini" numOuts="2" numFns="8" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
+      <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="72" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Gold.xml">
+        <model model="Gold Mini" numOuts="2" numFns="10" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
-        <model model="Gold" numOuts="4" numFns="12" lowVersionID="61" nmraWarrant="yes" nmraWarrantStart="200604" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+        <model model="Gold" numOuts="4" numFns="14" lowVersionID="61" nmraWarrant="yes" nmraWarrantStart="200604" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
           <output name="3" label="C - Green" />
           <output name="4" label="D - Violet" />
+        </model>
+        <model model="Gold Maxi" numOuts="8" numFns="14" lowVersionID="72" maxMotorCurrent="3.0A (peak=5.0A)" formFactor="G">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
+          <output name="6" label="F" />
+          <output name="7" label="G" />
+          <output name="8" label="H" />
         </model>
       </family>
       <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" file="Lenz_LE077XF.xml">
@@ -3367,45 +3377,62 @@
           <output name="6" label="F - Pink" />
         </model>
       </family>
-      <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="95" lowVersionID="95" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Plus_2010.xml">
-        <model model="Gold small wired - #10410-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
+      <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Plus_2010.xml">
+        <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+        </model>
+        <model model="Silver+ mini wired 10310-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
-        <model model="Gold small plugin - #10411-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Purple" />
-          <output name="5" label="E - Brown" />
+        <model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
         </model>
-        <model model="Gold JST - #10432-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Purple" />
-          <output name="5" label="E - Brown" />
+        <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
         </model>
-        <model model="Gold NMRA - #10433-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Purple" />
-          <output name="5" label="E - Brown" />
+        <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
         </model>
-        <model model="Gold MAXI - #10440-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="3.0A (peak=5.0A)" formFactor="HO">
-          <output name="1" label="A - White" />
-          <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Purple" />
-          <output name="5" label="E - Brown" />
+        <model model="Silver+ 21 10321-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
         </model>
-        <model model="Silver direct+ - #10330-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
+        <model model="Silver+ direct 10330-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
+        </model>
+        <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
-          <output name="3" label="C - Green" />
-          <output name="4" label="D - Purple" />
-          <output name="5" label="E - Brown" />
+        </model>
+        <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="30" maxMotorCurrent="0.5A" formFactor="N">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+        </model>
+        <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
+          <output name="1" label="A" />
+          <output name="2" label="B" />
+          <output name="3" label="C" />
+          <output name="4" label="D" />
+          <output name="5" label="E" />
         </model>
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver.xml">
@@ -4375,6 +4402,9 @@
           <output name="8" label="F8 " maxcurrent="2.5 mA" connection="solder" />
           <size length="100" width="15" height="12" units="mm" />
         </model>
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_pulsed_smoke.xml">
+        <model model="Pulsed Smoke Unit" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1600 mA" numOuts="0" numFns="18" formFactor="G" connector="other" />
       </family>
       <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="5" highVersionID="255" file="Mistral_GOLD_V6.xml">
         <model model="GOLD V6" />
@@ -12363,8 +12393,8 @@
           <output name="4" maxcurrent="100 mA" />
         </model>
       </family>
-      <family name="Wekomm for LSM" mfg="Wekomm" type="locomotive" file="Wekomm_RRR.xml">
-        <model model="Wekomm_RRR" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      <family name="Wekomm for LSM" mfg="Wekomm" file="Wekomm_RRR.xml">
+        <model model="Wekomm_RRR" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Cab Lights</functionlabel>
           <functionlabel num="1" lockable="true">Trailing Lights</functionlabel>
