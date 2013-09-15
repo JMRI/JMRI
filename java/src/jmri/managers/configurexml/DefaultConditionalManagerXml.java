@@ -159,41 +159,39 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         ConditionalManager tm = InstanceManager.conditionalManagerInstance();
 
         for (int i=0; i<conditionalList.size(); i++) {
-
-            String sysName = getSystemName(conditionalList.get(i));
+            Element condElem = conditionalList.get(i);
+            String sysName = getSystemName(condElem);
             if (sysName == null) {
-                log.warn("unexpected null in systemName "+conditionalList.get(i));
+                log.warn("unexpected null in systemName "+condElem);
                 break;
             }
 
             String userName = "";  // omitted username is treated as empty, not null
-            if (conditionalList.get(i).getAttribute("userName") != null)
-                userName = conditionalList.get(i).getAttribute("userName").
-																				getValue();
+            if (condElem.getAttribute("userName") != null)
+                userName = condElem.getAttribute("userName").getValue();
 				
 			if (log.isDebugEnabled()) log.debug("create conditional: ("+sysName+")("+
 										(userName==null?"<null>":userName)+")");
             Conditional c = tm.createNewConditional(sysName, userName);
             if (c!=null) {
                 // load common parts
-                loadCommon(c, conditionalList.get(i));
+                loadCommon(c, condElem);
 
                 String ant = "";
                 int logicType = Conditional.ALL_AND;
-                if (conditionalList.get(i).getAttribute("antecedent") != null)
+                if (condElem.getAttribute("antecedent") != null)
                 {
-                    ant = conditionalList.get(i).getAttribute("antecedent").getValue();
+                    ant = condElem.getAttribute("antecedent").getValue();
                 }
-                if (conditionalList.get(i).getAttribute("logicType") != null)
+                if (condElem.getAttribute("logicType") != null)
                 {
                     logicType = Integer.parseInt(
-                        conditionalList.get(i).getAttribute("logicType").getValue());
+                        condElem.getAttribute("logicType").getValue());
                 }
                 c.setLogicType(logicType, ant);
                 
 				// load state variables, if there are any
-                List<Element> conditionalVarList = conditionalList.get(i).
-												getChildren("conditionalStateVariable");
+                List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
 
 				if (conditionalVarList.size() == 0) {
                     log.warn("No state variables found for conditional "+sysName);
@@ -251,8 +249,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 c.setStateVariables(variableList);
 
 				// load actions - there better be some
-                List<Element> conditionalActionList = conditionalList.get(i).
-												getChildren("conditionalAction");
+                List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
 
                 // Really OK, since a user may use such conditionals to define a reusable
                 // expression of state variables.  These conditions are then used as a 
@@ -323,8 +320,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 			    // However, for conditionals with actions that toggle on change of state
 			    // the old policy should be used.
 			    boolean triggerOnChange = false;
-                if (conditionalList.get(i).getAttribute("triggerOnChange") != null) {
-                	if ("yes".equals(conditionalList.get(i).getAttribute("triggerOnChange").getValue())) {
+                if (condElem.getAttribute("triggerOnChange") != null) {
+                	if ("yes".equals(condElem.getAttribute("triggerOnChange").getValue())) {
                 		triggerOnChange = true;
                 	}               	
                 } else {
@@ -341,7 +338,15 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 c.setTriggerOnChange(triggerOnChange);			    
             } else {
-                log.error("createNewConditional failed for " + sysName + ", " +userName);
+                log.warn("Conditional \""+sysName+"\", \""+userName+"\" already exists. This version not loaded.");
+                List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
+                List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
+                c = tm.getBySystemName(sysName);
+                // a cursory check
+                if (c.getCopyOfStateVariables().size()!=conditionalVarList.size() ||
+                		c.getCopyOfActions().size()!=conditionalActionList.size()) {
+                	log.error("Additional version of \""+sysName+"\", \""+userName+"\" is diferent from loaded version!");
+                }
             }
         }
 	}

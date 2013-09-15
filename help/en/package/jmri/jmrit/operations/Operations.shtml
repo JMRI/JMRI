@@ -1795,6 +1795,16 @@
    transporting hazardous materials. Your railroad's policy regarding hazardous materials can than
    be applied to this car!
 
+   <P>When the passenger checkbox is selected, a new field called "Passenger Car Blocking Order"
+    will appear. The text box allows you to enter a number between 0 and 100 and this gives you
+    control where in the train's manifest a car will be placed. Lower numbers will place the car
+    near the front of the train, and higher numbers towards the rear. We recommend that you start
+    off using numbers cleanly divisible by 10. For example, you might what to place an observation
+    car at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car
+    to be the first car in the passenger train, a value of "10" would be a good value, cars in the
+    middle of the train could use "50".  Later you can fine turn your passenger trains by using
+    the other numbers that are available.</P>
+
    <P>When the utility checkbox is selected, it instructions the program when printing manifests
     and switch lists to not show the individual car's road and road number, but rather the quantity
     of cars needed of that type. For example, prototype trains when shipping coal don't normally
