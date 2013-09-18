@@ -258,6 +258,7 @@ public class JsonUtil {
         data.put(DESTINATION, engine.getRouteDestinationId());
         data.put(DESTINATION_TRACK, engine.getDestinationTrackName());
         data.put(MODEL, engine.getModel());
+        data.put(LENGTH, engine.getLength());
         data.put(COMMENT, engine.getComment());
         return root;
     }
