@@ -302,8 +302,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
 		_departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
-		setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour + ":" + oldMinute, hour + ":"
-				+ minute);
+		setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour + ":" + oldMinute, hour + ":" + minute);
 	}
 
 	public String getDepartureTimeHour() {
@@ -338,9 +337,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		int minutes = getExpectedTravelTimeInMinutes(routeLocation);
 		if (minutes == -1)
 			return "-1"; // NOI18N
-		log.debug("Calculate departure time for train (" + getName() + ") at (" + routeLocation.getName()
-				+ ")");
-		
+		log.debug("Calculate departure time for train (" + getName() + ") at (" + routeLocation.getName() + ")");
+
 		// figure out the work at this location, note that there can be consecutive locations with the same name
 		if (getRoute() != null) {
 			List<String> routeList = getRoute().getLocationsBySequenceList();
@@ -360,7 +358,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		return parseTime(minutes);
 	}
-	
+
 	private int calculateWorkAtLocation(RouteLocation routeLocation) {
 		CarManager carManager = CarManager.instance();
 		List<String> carList = carManager.getByTrainList(this);
@@ -762,15 +760,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_skipLocationsList.add(0, locationId);
 		log.debug("train does not stop at " + locationId);
-		setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1,
-				_skipLocationsList.size());
+		setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1, _skipLocationsList.size());
 	}
 
 	public void deleteTrainSkipsLocation(String locationId) {
 		_skipLocationsList.remove(locationId);
 		log.debug("train will stop at " + locationId);
-		setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() + 1,
-				_skipLocationsList.size());
+		setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() + 1, _skipLocationsList.size());
 	}
 
 	/**
@@ -797,7 +793,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			types[i] = _typeList.get(i);
 		return types;
 	}
-	
+
 	protected String[] getCarTypeNames() {
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < _typeList.size(); i++) {
@@ -809,7 +805,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			types[i] = list.get(i);
 		return types;
 	}
-	
+
 	protected String[] getLocoTypeNames() {
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < _typeList.size(); i++) {
@@ -855,7 +851,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!_typeList.contains(type))
 			return;
 		_typeList.remove(type);
-		log.debug("train (" + getName() + ") delete car type (" + type +")");
+		log.debug("train (" + getName() + ") delete car type (" + type + ")");
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
 	}
 
@@ -1259,8 +1255,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		try {
 			s = Integer.parseInt(getBuiltStartYear());
 		} catch (NumberFormatException e1) {
-			log.debug("Train (" + getName() + ") built start date not initialized, start: "
-					+ getBuiltStartYear());
+			log.debug("Train (" + getName() + ") built start date not initialized, start: " + getBuiltStartYear());
 		}
 		try {
 			e = Integer.parseInt(getBuiltEndYear());
@@ -1306,9 +1301,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean services(Car car) {
 		return services(null, car);
 	}
-	
+
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
-	
+
 	public boolean services(PrintWriter buildReport, Car car) {
 		boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
 		// check to see if train can carry car
@@ -1329,11 +1324,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!acceptsBuiltDate(car.getBuilt()) || !acceptsOwnerName(car.getOwner())
 				|| !acceptsRoadName(car.getRoadName())) {
 			if (addToReport)
-				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-						.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString() }));
+				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(
+						Bundle.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString() }));
 			return false;
 		}
-		
+
 		int length = car.getTotalLength();
 		// car can be a kernel so get total length
 		if (car.getKernel() != null)
@@ -1342,32 +1337,35 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (route != null) {
 			List<String> rLocations = route.getLocationsBySequenceList();
 			// single location in this train's route?
-			if (rLocations.size() == 1) {
-				RouteLocation rLoc = route.getLocationById(rLocations.get(0));
-				if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
-						&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId()) && rLoc.isDropAllowed()) {
-					if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)) {
-						return false;
-					}
-					if (car.getDestination() != null && !rLoc.getName().equals(car.getDestinationName()))
-						return false;
-					if (car.getDestinationTrack() != null && !car.getDestinationTrack().acceptsDropTrain(this)) {
-						return false;
-					}
-					if (debugFlag)
-						log.debug("Local switcher " + getName() + " for location " + rLoc.getName());
-					return true;
-				}
-				return false;
-			}
+			// TODO local switcher can have more than one location
+			// if (rLocations.size() == 1) {
+			// RouteLocation rLoc = route.getLocationById(rLocations.get(0));
+			// if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
+			// && rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId()) && rLoc.isDropAllowed()) {
+			// if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)) {
+			// return false;
+			// }
+			// if (car.getDestination() != null && !rLoc.getName().equals(car.getDestinationName()))
+			// return false;
+			// if (car.getDestinationTrack() != null && !car.getDestinationTrack().acceptsDropTrain(this)) {
+			// return false;
+			// }
+			// if (debugFlag)
+			// log.debug("Local switcher (" + getName() + ") for location (" + rLoc.getName() +")");
+			// return true;
+			// }
+			// return false;
+			// }
 			// Multiple locations in the train's route
-			for (int j = 0; j < rLocations.size() - 1; j++) {
+			for (int j = 0; j < rLocations.size(); j++) {
 				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
-				if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
-						&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId())
-						&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
+				if (rLoc.getName().equals(car.getLocationName())
+						&& rLoc.isPickUpAllowed()
+						&& rLoc.getMaxCarMoves() > 0
+						&& !skipsLocation(rLoc.getId())
+						&& ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
 					if (car.getTrack() != null) {
-						if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+						if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
 								|| !car.getTrack().acceptsPickupTrain(this))
 							continue;
 					}
@@ -1389,17 +1387,19 @@ public class Train implements java.beans.PropertyChangeListener {
 					// now check car's destination
 					for (int k = j; k < rLocations.size(); k++) {
 						rLoc = route.getLocationById(rLocations.get(k));
-						if (rLoc.getName().equals(car.getDestinationName()) && rLoc.isDropAllowed()
-								&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId())
-								&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
+						if (rLoc.getName().equals(car.getDestinationName())
+								&& rLoc.isDropAllowed()
+								&& rLoc.getMaxCarMoves() > 0
+								&& !skipsLocation(rLoc.getId())
+								&& ((car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
 							// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
-								if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+								if (((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
 										|| !car.getDestinationTrack().acceptsDropTrain(this)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
-												getName(), car.toString(), car.getDestinationTrackName(),
+												.getMessage("trainCanNotDeliverToTrack"), new Object[] { getName(),
+												car.toString(), car.getDestinationTrackName(),
 												car.getDestinationName(), rLocations.get(k) }));
 									continue;
 								}
@@ -1407,20 +1407,17 @@ public class Train implements java.beans.PropertyChangeListener {
 									&& getStatus().equals(BUILDING) && getTerminationTrack() != null
 									&& getTerminationTrack().getLocation() == rLoc.getLocation()) {
 								if (debugFlag)
-									log.debug("Car (" + car.toString()
-											+ ") destination is staging, check train (" + getName() // NOI18N
-											+ ") termination track (" + getTerminationTrack().getName() // NOI18N
+									log.debug("Car (" + car.toString() + ") destination is staging, check train ("
+											+ getName() + ") termination track (" + getTerminationTrack().getName() // NOI18N
 											+ ")");
 								String status = car.testDestination(getTerminationTrack().getLocation(),
 										getTerminationTrack());
 								if (!status.equals(Track.OKAY)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
-												getName(), car.toString(),
-												getTerminationTrack().getName(), 
-												getTerminationTrack().getLocation().getName(),
-												rLocations.get(k) }));
+												.getMessage("trainCanNotDeliverToTrack"), new Object[] { getName(),
+												car.toString(), getTerminationTrack().getName(),
+												getTerminationTrack().getLocation().getName(), rLocations.get(k) }));
 									continue;
 								}
 							} else {
@@ -1432,7 +1429,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								List<String> trackIds = rLoc.getLocation().getTrackIdsByIdList();
 								for (int i = 0; i < trackIds.size(); i++) {
 									Track track = rLoc.getLocation().getTrackById(trackIds.get(i));
-									if ((track.getTrainDirections() & rLoc.getTrainDirection()) == 0
+									if (((track.getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
 											|| !track.acceptsDropTrain(this))
 										continue;
 									// will the track accept this car?
@@ -1452,42 +1449,38 @@ public class Train implements java.beans.PropertyChangeListener {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("trainCanNotDeliverNoTracks"), new Object[] { getName(),
-												car.toString(), car.getDestinationName() }));																		
+												car.toString(), car.getDestinationName() }));
 									continue;
 								}
 							}
 							// is this a local move?
-							if (!isAllowLocalMovesEnabled() && !car.isCaboose() && !car.hasFred()
-									&& !car.isPassenger()
+							if (!isAllowLocalMovesEnabled() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()
 									&& car.getLocationName().equals(car.getDestinationName())) {
 								if (debugFlag)
 									log.debug("Local moves is disabled");
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-											.getMessage("trainCanNotPerformLocalMove"), new Object[] {
-											getName(), car.toString(), car.getLocationName() }));
+											.getMessage("trainCanNotPerformLocalMove"), new Object[] { getName(),
+											car.toString(), car.getLocationName() }));
 								continue;
 							}
 							if (!isAllowThroughCarsEnabled() && j == 0 && k == rLocations.size() - 1
-									&& !isLocalSwitcher() && !car.isCaboose() && !car.hasFred()
-									&& !car.isPassenger()) {
+									&& !isLocalSwitcher() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
 								if (debugFlag)
 									log.debug("Through car (" + car.toString() + ") not allowed");
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-											.getMessage("trainDoesNotCarryOriginTerminal"), new Object[] {
-											getName(), car.getLocationName(), car.getDestinationName() }));
+											.getMessage("trainDoesNotCarryOriginTerminal"), new Object[] { getName(),
+											car.getLocationName(), car.getDestinationName() }));
 								continue;
 							}
 							// check to see if moves are available
-							if (getStatus().equals(BUILDING)
-									&& rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
+							if (getStatus().equals(BUILDING) && rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
 								if (debugFlag)
 									log.debug("No available moves for destination " + rLoc.getName());
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-											.getMessage("trainNoMoves"), new Object[] { getName(),
-											rLoc.getName() }));
+											.getMessage("trainNoMoves"), new Object[] { getName(), rLoc.getName() }));
 								continue;
 							}
 							if (debugFlag)
@@ -1497,16 +1490,15 @@ public class Train implements java.beans.PropertyChangeListener {
 							return true;
 						}
 						// check to see if train length is okay
-						if (getStatus().equals(BUILDING)
-								&& rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
+						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
 							if (debugFlag)
-								log.debug("Car (" + car.toString()
-										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing (" // NOI18N
+								log.debug("Car (" + car.toString() + ") exceeds maximum train length "
+										+ rLoc.getMaxTrainLength() + " when departing (" // NOI18N
 										+ rLoc.getName() + ")");
 							if (addToReport)
 								TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-										.getMessage("trainExceedsMaximumLength"), new Object[] {
-										getName(), rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
+										.getMessage("trainExceedsMaximumLength"), new Object[] { getName(),
+										rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
 							return false;
 						}
 					}
@@ -1555,7 +1547,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		return number;
 	}
 
-	
 	/**
 	 * Gets the number of cars in the train when train departs the route location.
 	 * 
@@ -1582,10 +1573,10 @@ public class Train implements java.beans.PropertyChangeListener {
 					break;
 			}
 		}
-	
+
 		return number;
 	}
-	
+
 	/**
 	 * Gets the number of empty cars in the train when train departs the route location.
 	 * 
@@ -1615,10 +1606,9 @@ public class Train implements java.beans.PropertyChangeListener {
 					break;
 			}
 		}
-	
+
 		return number;
 	}
-
 
 	/**
 	 * Gets the train's length at the current location in the train's route.
@@ -2482,7 +2472,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			TrainPrintUtilities.editReport(buildFile, getName());
 		else
 			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(Bundle.getMessage("buildReport"),
-					new Object[] { getDescription() }), isPreview, "", true, "", "", Setup.PORTRAIT, Setup.getBuildReportFontSize());
+					new Object[] { getDescription() }), isPreview, "", true, "", "", Setup.PORTRAIT, Setup
+					.getBuildReportFontSize());
 		return true;
 	}
 
@@ -2558,8 +2549,9 @@ public class Train implements java.beans.PropertyChangeListener {
 			logoURL = Setup.getManifestLogoURL();
 		Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
 		String printerName = departs.getDefaultPrinterName();
-		TrainPrintUtilities.printReport(file, Bundle.getMessage("TrainManifest") + " " + getDescription(),
-				isPreview, Setup.getFontName(), false, logoURL, printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
+		TrainPrintUtilities.printReport(file, Bundle.getMessage("TrainManifest") + " " + getDescription(), isPreview,
+				Setup.getFontName(), false, logoURL, printerName, Setup.getManifestOrientation(), Setup
+						.getManifestFontSize());
 		if (!isPreview)
 			setPrinted(true);
 		return true;
@@ -2576,12 +2568,12 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.warn("CSV manifest file missing for train " + getName());
 			return false;
 		}
-	
+
 		TrainUtilities.openDesktop(file);
 
 		return true;
 	}
-	
+
 	public boolean runFile() {
 		if (isModified()) {
 			new TrainManifest(this);
@@ -2593,13 +2585,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.warn("CSV manifest file missing for train " + getName());
 			return false;
 		}
-	
+
 		// Set up to process the CSV file by the external Manifest program
 		TrainCustomManifest.addCVSFile(file);
 		if (!TrainCustomManifest.process()) {
 			if (!TrainCustomManifest.manifestCreatorFileExists()) {
-				log.warn("Manifest creator file not found!, directory name: "
-						+ TrainCustomManifest.getDirectoryName() + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+				log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
+						+ ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
 			}
 			TrainUtilities.openDesktop(file);
 			return false;
@@ -2683,7 +2675,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void move() {
 		log.debug("Move train (" + getName() + ")");
 		if (getRoute() == null || getCurrentLocation() == null) {
-			setBuilt(false);	// break terminate loop
+			setBuilt(false); // break terminate loop
 			return;
 		}
 		List<String> routeList = getRoute().getLocationsBySequenceList();
@@ -2850,23 +2842,22 @@ public class Train implements java.beans.PropertyChangeListener {
 					_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
 				}
 				if (getCurrentLocation() != null)
-					_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation()
-							.getTrainIconY());
+					_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
 				// add throttle if there's a throttle manager
 				if (jmri.InstanceManager.throttleManagerInstance() != null) {
 					// add throttle if JMRI loco roster entry exist
 					RosterEntry entry = null;
 					if (getLeadEngine() != null) {
 						// first try and find a match based on loco road number
-						List<RosterEntry> entries = Roster.instance().matchingList(null,
-								getLeadEngine().getNumber(), null, null, null, null, null);
+						List<RosterEntry> entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(),
+								null, null, null, null, null);
 						if (entries.size() > 0) {
 							entry = entries.get(0);
 						}
 						if (entry == null) {
 							// now try finding a match based on DCC address
-							entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(),
-									null, null, null, null);
+							entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null,
+									null, null, null);
 							if (entries.size() > 0) {
 								entry = entries.get(0);
 							}
@@ -3207,7 +3198,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			_leadEngineId = a.getValue();
 		if ((a = e.getAttribute(Xml.STATUS)) != null)
 			_status = a.getValue();
-		if ((a = e.getAttribute(Xml.COMMENT)) != null)			
+		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = OperationsXml.convertFromXmlComment(a.getValue());
 		if (_route != null) {
 			if ((a = e.getAttribute(Xml.CURRENT)) != null)
@@ -3272,8 +3263,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		// check for optional railroad name and logo
-		if ((e.getChild(Xml.RAIL_ROAD) != null)
-				&& (a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
+		if ((e.getChild(Xml.RAIL_ROAD) != null) && (a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
 			String name = a.getValue();
 			setRailroadName(name);
 		}
@@ -3387,8 +3377,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			StringBuffer buf = new StringBuffer();
 			for (int i = 0; i < types.length; i++) {
 				// remove types that have been deleted by user
-				if (CarTypes.instance().containsName(types[i])
-						|| EngineTypes.instance().containsName(types[i]))
+				if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
 					buf.append(types[i] + "%%"); // NOI18N
 			}
 			e.setAttribute(Xml.CAR_TYPES, buf.toString());

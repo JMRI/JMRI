@@ -61,7 +61,7 @@ public class TrainBuilder extends TrainCommon {
 	List<String> carList; // list of cars available for this train
 	List<String> routeList; // list of locations from departure to termination served by this train
 	Hashtable<String, Integer> numOfBlocks; // Number of blocks of cars departing staging.
-	int moves; // the number of pick up car moves for a location
+	int completedMoves; // the number of pick up car moves for a location
 	double maxWeight = 0; // the maximum weight of cars in train
 	int reqNumOfMoves; // the requested number of car moves for a location
 	Location departLocation; // train departs this location
@@ -1640,10 +1640,11 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { train.getRoute().getName(), rl.getName() }));
 				continue;
 			}
+			// the next check provides build messages if there's an issue with the train direction
 			if (!checkPickUpTrainDirection(rl)) {
 				continue;
 			}
-			moves = 0; // the number of moves for this location
+			completedMoves = 0; // the number of moves completed for this location
 			success = true; // true when done with this location
 			reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves(); // the number of moves requested
 			int saveReqMoves = reqNumOfMoves; // save a copy for status message
@@ -1695,7 +1696,7 @@ public class TrainBuilder extends TrainCommon {
 			
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStatusMsg"), new Object[] {
 					(success ? Bundle.getMessage("Success") : Bundle.getMessage("Partial")),
-					Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName() }));
+					Integer.toString(completedMoves), Integer.toString(saveReqMoves), rl.getName(), train.getName() }));
 			
 			reportCarsNotMoved(rl, percent);
 		}
@@ -1965,7 +1966,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 		numberCars++; // bump number of cars moved by this train
-		moves++; // bump number of car pick up moves for the location
+		completedMoves++; // bump number of car pick up moves for the location
 		reqNumOfMoves--; // decrement number of moves left for the location
 		if (reqNumOfMoves <= 0)
 			success = true; // done with this location!
@@ -3707,13 +3708,15 @@ public class TrainBuilder extends TrainCommon {
 			if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
 				Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
 				if (alternate != null && alternate.getLocType().equals(Track.YARD)
-						&& car.getDestinationTrack() == alternate) {
+						&& car.getDestinationTrack() == alternate 
+						&& checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack())
+						&& checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
 					log.debug("Car (" + car.toString() + ") alternate track ("
 							+ car.getDestinationTrackName()
 							+ ") can be redirected to final destination track (" // NOI18N
 							+ car.getFinalDestinationTrackName() + ")");
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
-							.getMessage("buildRedirectFromAlternate"), new Object[] {
+							.getMessage("buildRedirectFromAlternate"), new Object[] { car.getFinalDestinationName(), 
 							car.getFinalDestinationTrackName(), car.toString(), car.getDestinationTrackName() }));
 					car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
 					redirected = true;
@@ -3725,10 +3728,12 @@ public class TrainBuilder extends TrainCommon {
 	
 	// report any cars left at location
 	private void reportCarsNotMoved(RouteLocation rl, int percent) {
+		// only report if requested moves completed and final pass
 		if (!success || percent != 100)
 			return;
 		if (carIndex < 0)
 			carIndex = 0;
+		// cars up this point have build report messages, only show the cars that aren't in the build report
 		boolean printHeader = true;
 		for (int i = carIndex; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
