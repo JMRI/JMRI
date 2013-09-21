@@ -4,14 +4,14 @@ package jmri.jmrit.operations.rollingstock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-
 import jmri.jmrit.operations.trains.Train;
 
 import java.util.Enumeration;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -597,10 +597,14 @@ public class RollingStockManager {
 			for (int i = 0; i < routeList.size() - 1; i++) {
 				test = route.getLocationById(routeList.get(i));
 				if (destination.getName().equals(test.getName())) {
-					destination = null;
+					destination = null; //include cars at destination
 					break;
 				}
 			}
+			// pickup allowed at destination? Don't include cars in staging
+			if (destination != null && destination.isPickUpAllowed()
+					&& destination.getLocation().getLocationOps() != Location.STAGING)
+				destination = null; // include cars at destination
 		}
 		// get rolling stock by moves list
 		List<String> sortByMoves = getByMovesList();

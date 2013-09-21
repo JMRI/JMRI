@@ -720,6 +720,7 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation rl5 = r1.addLocation(l1);
 		rl5.setTrainIconX(225); // set the train icon coordinates
 		rl5.setTrainIconY(225);
+		rl5.setPickUpAllowed(false); // don't include cars at destination
 
 		// turn off build fail messages
 		tmanager.setBuildMessagesEnabled(false);

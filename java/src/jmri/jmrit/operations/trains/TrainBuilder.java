@@ -70,7 +70,6 @@ public class TrainBuilder extends TrainCommon {
 	Track terminateStageTrack; // terminate staging track (null if not staging)
 	boolean success; // true when enough cars have been picked up from a location
 	PrintWriter buildReport; // build report for this train
-	boolean noMoreMoves; // when true there aren't any more moves for a location
 
 	// managers
 	CarManager carManager = CarManager.instance();
@@ -1622,13 +1621,8 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 			addLine(buildReport, THREE, Bundle.getMessage("buildFinalPass"));
 		}
-		noMoreMoves = false; // need to reset this in case noMoreMoves is true on first pass
-		// determine how many locations are serviced by this train
-		int numLocs = routeList.size();
-		if (numLocs > 1) // don't find car destinations for the last location in the route
-			numLocs--;
 		// now go through each location starting at departure and place cars as requested
-		for (int routeIndex = 0; routeIndex < numLocs; routeIndex++) {
+		for (int routeIndex = 0; routeIndex < routeList.size(); routeIndex++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(routeIndex));
 			if (train.skipsLocation(rl.getId())) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocSkipped"),
@@ -1640,7 +1634,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { train.getRoute().getName(), rl.getName() }));
 				continue;
 			}
-			// the next check provides build messages if there's an issue with the train direction
+			// the next check provides a build report message if there's an issue with the train direction
 			if (!checkPickUpTrainDirection(rl)) {
 				continue;
 			}
@@ -1731,7 +1725,6 @@ public class TrainBuilder extends TrainCommon {
 			// add message that we're on the second pass for this location
 			if (secondPass && messageFlag) {
 				messageFlag = false;
-				noMoreMoves = false; // we're on a second pass, there might be moves now
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildExtraPassForLocation"), new Object[] { rl.getName() }));
 				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
@@ -1842,11 +1835,6 @@ public class TrainBuilder extends TrainCommon {
 					car.reset();
 				}
 				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
-			}
-		// are there still moves available?
-			if (noMoreMoves) {
-				addLine(buildReport, FIVE, Bundle.getMessage("buildNoAvailableDestinations"));
-				break;
 			}
 		}
 	}
@@ -3240,7 +3228,6 @@ public class TrainBuilder extends TrainCommon {
 		RouteLocation rld = null; // the route location destination being checked for the car
 		RouteLocation rldSave = null; // holds the best route location destination for the car
 		Track trackSave = null; // holds the best track at destination for the car
-		noMoreMoves = true; // false when there are are locations with moves
 		boolean multiplePickup = false; // true when car can be picked up from two or more locations in the route
 
 		// more than one location in this route?
@@ -3280,7 +3267,6 @@ public class TrainBuilder extends TrainCommon {
 						.getMessage("buildNoAvailableMovesDest"), new Object[] { rld.getName() }));
 				continue;
 			}
-			noMoreMoves = false;
 			Location destinationTemp = null;
 			Track trackTemp = null;
 			

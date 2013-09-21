@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -541,7 +542,7 @@ public class OperationsCarsTest extends TestCase {
         Route r = new Route("id","Test");
         r.addLocation(l1);
         r.addLocation(l2);
-        r.addLocation(l3);
+        RouteLocation last = r.addLocation(l3);
         
         Train t1 = new Train("id1", "F");
         t1.setRoute(r);
@@ -690,6 +691,14 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("Number of Cars available for t1", 1, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, manager.getById(carList.get(0)));
 
+        carList = manager.getAvailableTrainList(t3);
+        Assert.assertEquals("Number of Cars available for t3", 3, carList.size());
+        Assert.assertEquals("1st car in list available for t3", c5, manager.getById(carList.get(0)));
+        Assert.assertEquals("2nd car in list available for t3", c2, manager.getById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by t3 by dest", c3, manager.getById(carList.get(2)));
+        
+        // now don't allow pickups at the last location in the train's route
+        last.setPickUpAllowed(false);
         carList = manager.getAvailableTrainList(t3);
         Assert.assertEquals("Number of Cars available for t3", 2, carList.size());
         Assert.assertEquals("1st car in list available for t3", c2, manager.getById(carList.get(0)));
