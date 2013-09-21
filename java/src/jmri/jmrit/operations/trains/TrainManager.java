@@ -262,10 +262,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void dispose() {
 		_trainHashTable.clear();
 		_id = 0;
-		_instance = null;
+		_instance = null;	// we need to reset the instance for testing purposes
 	}
 
 	// stores known Train instances by id
