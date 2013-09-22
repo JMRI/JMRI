@@ -163,6 +163,12 @@ public class ProgDebugger implements Programmer  {
 
     public boolean getCanRead() { return true; }
 
+    /**
+     * By default, the highest test CV is 256 so that
+     * we can test composite operations
+     */
+    public int getMaxCvAddr() { return 256; }
+
     // data members to hold contact with the property listeners
     private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
 

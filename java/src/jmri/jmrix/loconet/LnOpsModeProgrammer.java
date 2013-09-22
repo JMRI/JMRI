@@ -69,6 +69,11 @@ public class LnOpsModeProgrammer implements Programmer  {
         return true;
     }
 
+    /**
+     * Digitrax command stations can go to 2048
+     */
+    public int getMaxCvAddr() { return 2048; }
+
     public void addPropertyChangeListener(PropertyChangeListener p) {
         mSlotMgr.addPropertyChangeListener(p);
     }

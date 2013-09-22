@@ -54,6 +54,7 @@ public class ProgrammerScaffold implements Programmer  {
     public boolean getCanRead() {
         return true;
     }
+    public int getMaxCvAddr() { return 256; }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {}
     public void removePropertyChangeListener(PropertyChangeListener p) {}

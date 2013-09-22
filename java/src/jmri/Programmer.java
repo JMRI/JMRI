@@ -171,6 +171,15 @@ public interface Programmer  {
 
     public boolean getCanRead();
 
+    /**
+     * Provide the highest CV number that can be programmed.
+     *<p>
+     * Access above this in readCV, writeCV, confirmCV will
+     * throw an exception, but this allows you to check without
+     * attempting an operation.
+     */
+    public int getMaxCvAddr();
+    
     public void addPropertyChangeListener(PropertyChangeListener p);
     public void removePropertyChangeListener(PropertyChangeListener p);
 

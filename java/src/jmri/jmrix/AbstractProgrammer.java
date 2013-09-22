@@ -13,7 +13,7 @@ import java.util.Vector;
 /**
  * Common implementations for the Programmer interface.
  *
- * @author	Bob Jacobsen  Copyright (C) 2001, 2012
+ * @author	Bob Jacobsen  Copyright (C) 2001, 2012, 2013
  * @version     $Revision$
  */
 public abstract class AbstractProgrammer implements Programmer {
@@ -58,6 +58,11 @@ public abstract class AbstractProgrammer implements Programmer {
             propListeners.removeElement(l);
         }
     }
+
+    /**
+     * By default, the highest CV that can be programmed is 2048.
+     */
+    public int getMaxCvAddr() { return 2048; }
 
     /**
      * Internal routine to start timer to protect the mode-change.
