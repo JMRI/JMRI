@@ -759,7 +759,9 @@ public class PanelEditor extends Editor implements ItemListener {
                 List <Positionable> selections = getSelectedItems(event);
                 if (selections.size() > 0) {
                     if (selections.get(0)!=_currentSelection) {
-                        _currentSelection.doMouseReleased(event);
+                        _currentSelection.doMouseReleased(event);                       
+                    } else {
+                    	_currentSelection.doMouseDragged(event);
                     }
                 } else {
                     _currentSelection.doMouseReleased(event);

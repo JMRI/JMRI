@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.routes;
 
+import java.awt.Point;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsXml;
@@ -331,6 +333,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 			setTrainIconX(l.getTrainIconSouth().x);
 			setTrainIconY(l.getTrainIconSouth().y);
 		}
+	}
+	
+	public Point getTrainIconCoordinates() {
+		return new Point(getTrainIconX(), getTrainIconY());
 	}
 
     public void dispose(){

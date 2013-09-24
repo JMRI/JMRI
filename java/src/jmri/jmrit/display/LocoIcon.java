@@ -67,7 +67,7 @@ public class LocoIcon extends PositionableLabel {
 
     public Positionable finishClone(Positionable p) {
         LocoIcon pos = (LocoIcon)p;
-        if (entry!=null) {
+        if (_entry!=null) {
             pos.setRosterEntry(getRosterEntry());       	
         }
     	pos.setText(getText());
@@ -91,11 +91,11 @@ public class LocoIcon extends PositionableLabel {
      * Pop-up only if right click and not dragged 
      */
     public boolean showPopUp(JPopupMenu popup) {
-        if (entry != null) {
+        if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 public void actionPerformed(ActionEvent e) {
                     tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-                    tf.getAddressPanel().setRosterEntry(entry);
+                    tf.getAddressPanel().setRosterEntry(_entry);
                     tf.toFront();
                 }
             });
@@ -109,7 +109,7 @@ public class LocoIcon extends PositionableLabel {
             getPopupUtility().setTextFontMenu(popup);
         } else {
         	setRotateMenu(popup);
-            if (entry==null) {
+            if (_entry==null) {
                 setTextEditMenu(popup);
             }
             popup.add(makeDockMenu());
@@ -195,14 +195,14 @@ public class LocoIcon extends PositionableLabel {
     	return colors;
     }
     
-    protected RosterEntry entry = null;
+    protected RosterEntry _entry = null;
     
     public void setRosterEntry (RosterEntry entry){
-    	this.entry = entry;
+    	_entry = entry;
     }
     
     public RosterEntry getRosterEntry (){
-    	return entry;
+    	return _entry;
     }
     
     protected JMenuItem makeDockingMenu() {
