@@ -338,14 +338,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 c.setTriggerOnChange(triggerOnChange);			    
             } else {
-                log.warn("Conditional \""+sysName+"\", \""+userName+"\" already exists. This version not loaded.");
+                log.warn("Conditional \""+sysName+"("+userName+")\" already exists. This version not loaded.");
                 List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
                 List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
                 c = tm.getBySystemName(sysName);
                 // a cursory check
                 if (c.getCopyOfStateVariables().size()!=conditionalVarList.size() ||
                 		c.getCopyOfActions().size()!=conditionalActionList.size()) {
-                	log.error("Additional version of \""+sysName+"\", \""+userName+"\" is diferent from loaded version!");
+                	log.error("Additional version of \""+sysName+"\"("+userName+")\" is diferent from loaded version!");
                 }
             }
         }

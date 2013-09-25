@@ -646,12 +646,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         String pName = path.getName();
         if (log.isDebugEnabled()) log.debug("addPath \""+pName+"\" to OBlock "+getSystemName());
         List <Path> list = getPaths();
-        boolean addPath = true;
-        for (int i=0; i<list.size(); i++) {
-            if (pName.equals(((OPath)list.get(i)).getName())) {
-                if (log.isDebugEnabled()) log.debug("\""+pName+"\" duplicated in OBlock "+getSystemName());
-                addPath = false;
-            }
+         for (int i=0; i<list.size(); i++) {
+//          if (pName.equals(((OPath)list.get(i)).getName())) {
+        	if (((OPath)list.get(i)).equals(path)) {
+        		log.info("\""+pName+"\" duplicated in OBlock "+getSystemName());
+             }
         }
         path.setBlock(this);
         Portal portal = path.getFromPortal();
@@ -669,11 +668,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
         }
         int oldSize = list.size();
-        if (addPath) {        	
-            super.addPath(path);
-        }
+        super.addPath(path);
         firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
-        return addPath;
+        return true;
     }
 
     public void removePath(Path path) {

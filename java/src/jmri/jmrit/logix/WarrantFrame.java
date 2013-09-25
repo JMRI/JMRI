@@ -777,10 +777,12 @@ public class WarrantFrame extends WarrantRoute {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
         } else {
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
         panel.add(l);
         if (!vertical) {
@@ -789,6 +791,11 @@ public class WarrantFrame extends WarrantRoute {
         textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
         textField.setMinimumSize(new Dimension(200, textField.getPreferredSize().height));
         panel.add(textField);
+        if (vertical) {
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));        	
+        } else {
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));        	
+        }
         return panel;
     }
 
@@ -1099,22 +1106,43 @@ public class WarrantFrame extends WarrantRoute {
 
     private DccLocoAddress getLocoAddress() {
         String addr = _dccNumBox.getText();
+        String msg = null;
         if (addr!= null && addr.length() != 0) {
-            try {
-                char ch = Character.toUpperCase(addr.charAt(addr.length()-1));
-                boolean isLong = true;
-                int n = 0;
-                if (Character.isDigit(ch)){
-                    n = Integer.parseInt(addr);
-                } else {
-                    isLong = (ch == 'L');
-                    n = Integer.parseInt(addr.substring(0, addr.length()-1));
-                }
-                return new DccLocoAddress(n, isLong);
+            boolean isLong = false;
+            int dccNum = 0;
+        	addr = addr.toUpperCase().trim();
+    		Character ch = addr.charAt(addr.length()-1);
+    		try {
+        		if (!Character.isDigit(ch)) {
+        			if (ch!='S' && ch!='L' && ch!=')') {
+        				msg = Bundle.getMessage("BadDccAddress", addr);
+        			}
+        			if (ch==')') {
+                    	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
+                    	ch = addr.charAt(addr.length()-2);
+                    	isLong = (ch=='L');
+        			} else {
+                    	dccNum = Integer.parseInt(addr.substring(0, addr.length()-1));        				
+                    	isLong = (ch=='L');
+        			}
+        		} else {
+            		dccNum = Integer.parseInt(addr);
+            		ch = addr.charAt(0);
+                    isLong = (ch=='0' || dccNum>255);  // leading zero means long
+                    addr = addr + (isLong?"L":"S");
+        		}
+        		if (msg==null) {
+                    return new DccLocoAddress(dccNum, isLong);
+        		}
             } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("BadDccAddress",addr),
-                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                msg = Bundle.getMessage("BadDccAddress", addr);
             }
+        } else {
+        	msg = Bundle.getMessage("NoAddress", _warrant.getDisplayName());
+        }
+        if (msg!=null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);        	
         }
         return null;
     }
