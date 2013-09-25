@@ -19,10 +19,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -80,7 +77,7 @@ public class IconDialog extends ItemDialog {
         p.add(panel);
         _catalog = CatalogPanel.makeDefaultCatalog();
         _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        p.add(new JScrollPane(_catalog));
+        p.add(_catalog);
 
         setContentPane(p);
         pack();

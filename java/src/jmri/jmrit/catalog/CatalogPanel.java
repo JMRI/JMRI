@@ -36,7 +36,6 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.BorderLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.datatransfer.Transferable; 
@@ -46,7 +45,6 @@ import java.awt.dnd.*;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 

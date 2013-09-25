@@ -180,15 +180,15 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             case ROUTE_COLUMN:
                 return new JTextField(25).getPreferredSize().width;
             case ADDRESS_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
+                return new JTextField(7).getPreferredSize().width;
             case ALLOCATE_COLUMN:
             case DEALLOC_COLUMN:
             case SET_COLUMN:
             case AUTO_RUN_COLUMN:
             case MANUAL_RUN_COLUMN:
-                return new JButton("XX").getPreferredSize().width;
+                return new JButton("Xxxx").getPreferredSize().width;
             case CONTROL_COLUMN:
-                return new JTextField(40).getPreferredSize().width;
+                return new JTextField(45).getPreferredSize().width;
             case EDIT_COLUMN:
             case DELETE_COLUMN:
                 return new JButton("DELETE").getPreferredSize().width;
