@@ -220,7 +220,7 @@ public class TrainIcon extends LocoIcon {
 			if (next != null && ((nextPoint = next.getTrainIconCoordinates()) != null)) {
 				log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
 				if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
-					log.debug("Train icon within range of (" + next.getName() + ")");
+					log.debug("Train icon ("+_train.getName()+") within range of (" + next.getName() + ")");
 					if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
 							new Object[] { next.getName() }), MessageFormat.format(Bundle.getMessage("MoveTrain"),
 							new Object[] { _train.getIconName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

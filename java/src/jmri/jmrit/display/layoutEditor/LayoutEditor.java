@@ -3539,6 +3539,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 whenReleased = event.getWhen();
             }
         }
+		// train icon needs to know when moved
+		if (event.isPopupTrigger() && isDragging) {
+			List<Positionable> selections = getSelectedItems(event);
+			if (selections.size() > 0) {
+				selections.get(0).doMouseDragged(event);
+			}
+		}
 		if (selectedObject!=null) {
 			// An object was selected, deselect it
 			prevSelectedObject = selectedObject;
