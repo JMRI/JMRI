@@ -327,7 +327,7 @@ public class NXFrame extends WarrantRoute {
         try {
             depth = Integer.parseInt(_searchDepth.getText());
         } catch (NumberFormatException nfe) {
-        	depth = 10;;
+        	depth = 10;
         }
         msg = findRoute(depth);
         if (msg!=null) {
