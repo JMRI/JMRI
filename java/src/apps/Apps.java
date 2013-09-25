@@ -1037,7 +1037,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         while (e.hasMoreElements()) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender) e.nextElement();
             if (a instanceof org.apache.log4j.RollingFileAppender) {
-                log.info("This log is stored in file: {}", ((org.apache.log4j.RollingFileAppender) a).getFile());
+                log.info("This log is appended to file: {}", ((org.apache.log4j.RollingFileAppender) a).getFile());
             } else if (a instanceof org.apache.log4j.FileAppender) {
                 log.info("This log is stored in file: {}", ((org.apache.log4j.FileAppender) a).getFile());
             }
