@@ -140,7 +140,8 @@
 
    <A NAME="newUserAdvice"></A>
    <H3>New User Advice</H3>
-
+   
+   The program has been designed to create car movements that make sense to you and your operators.
    If you've never used a computer program to generate manifests and switch lists, we recommend that
    you load and use the
    <A HREF="#demo">demo files</A> provided. Please read the <A
@@ -167,8 +168,8 @@
     cars. If you do decide to use schedules, the first thing to understand is that you don't need
     schedules for all of your industries. So again start off small and only do a couple of
     industries and see what the results are. Adding schedules can not increase car movement, and in
-    most cases will reduce car movement! So our advice is please learn to walk before your try to
-    run.
+    most cases will reduce car movement! So our advice is start off using the basic features of the
+    program and later once you get good car movement, try the more advanced features.
    </P>
 
    <A NAME="demo"></A>
@@ -284,8 +285,12 @@
    </P>
 
    <P>
-    You should now be well on your way with regards to JMRI operations. Help is also available at
-    the <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A>
+    You should now be well on your way with regards to JMRI operations. Each window in operations
+    has a "Help" item on the menu bar which will direct you to the section in this document that
+    covers that window's capabilities. Help is also available at the
+    <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list.</A> And finally under the
+    "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
+    contents of the window.
    </P>
 
    <A NAME="BritishRailways"></A>
