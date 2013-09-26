@@ -433,11 +433,13 @@
 
  </indexitem>
  <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain">
+  <indexitem text="iPhone/iPod as Throttle " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
+
   <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
 
-  <indexitem text="inControl - Web Throttles and Panels " target="package.jmri.jmrit.inControl.inControl"/>
+  <indexitem text="webThrottle - Web Throttles and Panels " target="package.jmri.jmrit.webThrottle.webThrottle"/>
 
-  <indexitem text="iPhone/iPod as Throttle " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
+  <indexitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 
   <indexitem text="USB Joypad as Throttle " target="html.tools.throttle.AdvancedThrottleControl_joypad"/>
 

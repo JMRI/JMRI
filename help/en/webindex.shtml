@@ -2,14 +2,14 @@
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <TITLE>JMRI Help System: Index</TITLE>
-<META CONTENT="text/html; charset=iso-8859-1" HTTP-EQUIV="Content-Type">
-<META NAME="Author" CONTENT="Bob Jacobsen">
-<META CONTENT="JMRI help Route Add Edit" NAME="keywords">
-<META CONTENT="text/html; charset=iso-8859-1" HTTP-EQUIV="Content-Type">
-<LINK MEDIA="screen" HREF="/css/default.css" TYPE="text/css" REL="stylesheet">
-<LINK MEDIA="print" HREF="/css/print.css" TYPE="text/css" REL="stylesheet">
-<LINK TYPE="image/png" HREF="/images/jmri.ico" REL="icon">
-<LINK HREF="/" TITLE="Home" REL="home">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Route Add Edit">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
 </HEAD>
 <BODY>
 <!--#include virtual="/Header" -->
@@ -1319,19 +1319,25 @@
 <ul>
   
 <li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod as Throttle </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android Phone as Throttle </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/inControl/inControl.shtml">inControl - Web Throttles and Panels </a>
+<a href="package/jmri/jmrit/webThrottle/webThrottle.shtml">webThrottle - Web Throttles and Panels </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod as Throttle </a>
+<a href="package/jmri/jmrit/inControl/inControl.shtml">inControl - Web Throttles and Panels (older version) </a>
 <ul></ul>
 </li>
 

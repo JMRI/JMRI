@@ -4,7 +4,7 @@
 * 
 * This CSS defines the web throttle look.
 * 
-* >>> This file version: 1.0 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 1.1 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 **********************************************************************************************/
 
@@ -267,7 +267,7 @@ body {
 	position:absolute;
 	overflow:hidden;
 	background-color:rgb(48, 48, 48);
-	margin:10px;
+	margin:15px;
 	border-radius:5px;
 }
 
@@ -275,7 +275,7 @@ body {
 	position:absolute;
 	overflow:hidden;
 	background-color:darkorange;
-	margin:10px;
+	margin:15px;
 	border-radius:5px;
 	z-index:+5;
 }

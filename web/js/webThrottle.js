@@ -4,7 +4,7 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 1.0 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 1.1 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * This script relies on 'jquery.jmriConnect.js' (read its header for dependencies).
 * 
@@ -62,7 +62,7 @@ var $headerHeightRef = 40;													// px
 var $buttonsHeightRef = 40;													// px
 var $cellHeightRef = 100;													// px
 var $cellWidthRef = 500;													// px
-var $speedWidthRef = 100;													// px
+var $speedWidthRef = 80;													// px
 var $functionHeightRef = 80;												// px
 var $functionWidthRef = 250;												// px
 var $buttonDelayTimeout = 1000;												// ms
@@ -411,9 +411,10 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 	if ($throttleType == 'loco' && !$pageInFrame) {	// Button to select speed control position
 		var speedPosition;
 		speedPosition = $('<div>').addClass('button').attr('id', 'speedPosition');
-		speedPosition.append($('<div>').text($speedPosition ? '::|' : '|::').addClass('buttonText'));
+		speedPosition.append($('<div>').text('xxx').addClass('buttonText'));
 		speedPosition.on('click', function(event) {manageSpeedPosition(event)});
 		header.append(speedPosition);
+		changeSpeedPosition($speedPosition);
 	}
 	if ($throttleType == 'roster' || !$pageInFrame) {	// Is master or isn't in a frame
 		var fontSmaller = $('<div>').addClass('button').attr('id', 'fontSmaller');
@@ -432,7 +433,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 	switch ($throttleType) {
 		case 'roster':
 			var rg = loadLocalInfo('webThrottle.rosterGroup');
-			if (rg) $rosterGroup = rg; else saveLocalInfo('webThrottle.rosterGroup', $rosterGroup);
+			if (rg || rg == '') $rosterGroup = rg; else saveLocalInfo('webThrottle.rosterGroup', $rosterGroup);
 			$help.push(
 				'Web Throttle for JMRI ' + jmriVersion + ' controlling \'' + railroadName + '\'' +
 				'\n' +
@@ -555,7 +556,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 				header.append(emergencyStop);
 				if ($hasMovement) {
 					var movementActive = $('<div>').addClass('button').attr('id', 'movementActive');
-					movementActive.append($('<div>').text($movementActive ? 'tilt' : 'normal').addClass('buttonText'));
+					movementActive.append($('<div>').text('xxx').addClass('buttonText'));
 					movementActive.on('click', function(event) {manageMovementActive(event);});
 					header.append(movementActive);
 				}
@@ -569,10 +570,8 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 				speedGrid.append($('<div>').attr('id', 'speedBar'));
 				var speedTouch = $('<div>');
 				speedGrid.append(speedTouch.attr('id', 'speedTouch'));
-				if ($movementActive) {
-					speedTouch.on('touchstart', function(event) {speedPressedTiltTouch(event.originalEvent);});
-					speedTouch.on('touchend', function(event) {speedReleasedTiltTouch(event.originalEvent);});
-				} else {
+				if ($hasMovement) changeMovementActive($movementActive);
+				else {
 					if ($hasTouch) {
 						speedTouch.on('touchstart', function(event) {speedPressedTouch(event.originalEvent, $(this));});
 						speedTouch.on('touchmove', function(event) {speedMovingTouch(event.originalEvent, $(this));});
@@ -709,6 +708,10 @@ var checkLayoutSizeChange = function() {
 	checkSmoothAlertEnd();
 	var h = $(window).height();
 	var w = $(window).width();
+	var speedPosition = loadLocalInfo('webThrottle.speedPosition');
+	if (speedPosition == 'true' || speedPosition == 'false') if ($speedPosition != (speedPosition == 'true')) changeSpeedPosition(!$speedPosition);
+	var movementActive = loadLocalInfo('webThrottle.movementActive');
+	if (movementActive == 'true' || movementActive == 'false') if ($movementActive != (movementActive == 'true')) changeMovementActive(!$movementActive);
 	var fS = loadLocalInfo('webThrottle.fontSize');
 	if ($fontSize != Number(fS)) {
 		$fontChanged = true;
@@ -892,7 +895,6 @@ var resizeRosterLayout = function() {
 	var l = 0;
 	if ($isRoster) {	// Roster
 		var rosterCell = $('.rosterCell');
-		if (!rosterCell.length) return;
 		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef;
 		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl);
 		var cellWidth = (horizontalCells == 0) ? bodyFrameInner.width() : bodyFrameInner.width() / horizontalCells;
@@ -960,7 +962,6 @@ var resizeRosterLayout = function() {
 		});
 	} else {	// Panels
 		var panelCell = $('.panelCell');
-		if (!panelCell.length) return;
 		var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 2;
 		var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
 		var cellWidth = bodyFrameInner.width() / horizontalCells;
@@ -1003,13 +1004,22 @@ var resizeRosterLayout = function() {
 
 //----------------------------------------- [from 'checkLayoutSizeChange()'] Throttle layout resize when screen or font changes size
 var resizeThrottleLayout = function() {
-	if ($pageInFrame) $speedPosition = window.parent.$('#' + encodeId(document.URL)).attr('rightSide');
-	if ($speedPosition == 'true' || $speedPosition == 'false') $speedPosition = ($speedPosition == 'true');
 	var h = $(window).height();
 	var w = $(window).width();
+	var bodyFrameOuter = $('#bodyFrameOuter');
+	var bodyFrameInner = $('#bodyFrameInner');
+	bodyFrameOuter.css('top', 0).css('left', 0);
+	setOuterHeight(bodyFrameOuter, h, true);
+	setOuterWidth(bodyFrameOuter, w, true);
+	bodyFrameInner.css('top', 0).css('left', 0);
+	setOuterHeight(bodyFrameInner, bodyFrameOuter.height(), true);
+	setOuterWidth(bodyFrameInner, bodyFrameOuter.width(), true);
+	var emergencyStop = $('#emergencyStop');
+	if (!emergencyStop.length) return;
+	if ($pageInFrame) $speedPosition = window.parent.$('#' + encodeId(document.URL)).attr('rightSide');
+	if ($speedPosition == 'true' || $speedPosition == 'false') $speedPosition = ($speedPosition == 'true');
 	var headerHeight = $sizeCtrlPercent * $headerHeightRef;
 	var header = $('#header');
-	var emergencyStop = $('#emergencyStop');
 	setOuterHeight(emergencyStop, header.height(), true);
 	setOuterWidth(emergencyStop, header.height() * 2, true);
 	setTopFromParentContent(emergencyStop, 0);
@@ -1029,18 +1039,9 @@ var resizeThrottleLayout = function() {
 		setLeftFromParentContent(movementActiveText, 0);
 		setOuterWidth(movementActiveText, movementActive.width(), true);
 	}
-	var bodyFrameOuter = $('#bodyFrameOuter');
-	var bodyFrameInner = $('#bodyFrameInner');
-	bodyFrameOuter.css('top', 0).css('left', 0);
-	setOuterHeight(bodyFrameOuter, h, true);
-	setOuterWidth(bodyFrameOuter, w, true);
-	bodyFrameInner.css('top', 0).css('left', 0);
-	setOuterHeight(bodyFrameInner, bodyFrameOuter.height(), true);
-	setOuterWidth(bodyFrameInner, bodyFrameOuter.width(), true);
 	var speed = $('.speed');
-	if (!speed.length) return;
 	var speedWidth = $sizeCtrlPercent * $speedWidthRef;
-	if (speedWidth < bodyFrameInner.width() / 6) speedWidth = bodyFrameInner.width() / 6;
+	if (speedWidth < bodyFrameInner.width() / 8) speedWidth = bodyFrameInner.width() / 8;
 	speed.css('top', $nextBlockTop).css('left', $speedPosition ? bodyFrameInner.width() - speedWidth : 0);
 	setOuterHeight(speed, bodyFrameInner.height() - $nextBlockTop, true);
 	setOuterWidth(speed, speedWidth, true);
@@ -1148,7 +1149,6 @@ var resizeTurnoutsRoutesLayout = function() {
 	bodyFrameInner.css('top', 0).css('left', 0);
 	setOuterWidth(bodyFrameInner, bodyFrameOuter.width() - ($showScrollBar ? $vScrollbarWidth : 0), true);
 	var trCell = $('.trCell');
-	if (!trCell.length) return;
 	var cellWidthCtrl = $sizeCtrlPercent * $cellWidthRef * 1.5;
 	var horizontalCells = Math.floor(bodyFrameInner.width() / cellWidthCtrl) + 1;
 	var cellWidth = bodyFrameInner.width() / horizontalCells;
@@ -1383,7 +1383,7 @@ var addToFrameList = function(url) {
 
 //----------------------------------------- Replace URL in frames list {$frameList[]}
 var replaceInFrameList = function(urlOld, urlNew) {
-	for (var i = 0; i < $frameList.length; i++) if ($frameList[i] == urlNew) return;
+	for (var i = 0; i < $frameList.length; i++) if ($frameList[i] == urlNew) return false;
 	for (var i = 0; i < $frameList.length; i++) {
 		if ($frameList[i] == urlOld) {
 			$frameList[i] = urlNew;
@@ -1391,6 +1391,7 @@ var replaceInFrameList = function(urlOld, urlNew) {
 		}
 	}
 	saveFrameList();
+	return true;
 };
 
 //----------------------------------------- Remove URL from frames list {$frameList[]}
@@ -1686,7 +1687,6 @@ var chooseGroup = function(e) {
         if (i == 0) saveLocalInfo('webThrottle.rosterGroup', '');
 		else saveLocalInfo('webThrottle.rosterGroup', $rosterGroups[i]);
 		window.open(document.URL.split('?')[0], '_self');
-		return;
 	};
 	var ai = 0;
 	for (var i = 0; i < $rosterGroups.length; i++) if ($rosterGroups[i] != '' && $rosterGroups[i] == $rosterGroup) ai = i;
@@ -1889,16 +1889,22 @@ var manageSpeedPosition = function(e) {
 	if (!isLeftButton(e)) return;
 	e.preventDefault();
 	e.stopImmediatePropagation();
+	changeSpeedPosition(!$speedPosition);
+	saveLocalInfo('webThrottle.speedPosition', $speedPosition);
+};
+
+//----------------------------------------- Change speed control position
+var changeSpeedPosition = function(speedPos) {
 	var speedPosition = $('#speedPosition');
+	if (!speedPosition.length) return;
 	var speedPositionText = speedPosition.children('.buttonText');
-	if ($speedPosition) {
+	if (!speedPos) {
 		$speedPosition = false;
 		speedPositionText.text('|::');
 	} else {
 		$speedPosition = true;
 		speedPositionText.text('::|');
 	}
-	saveLocalInfo('webThrottle.speedPosition', $speedPosition);
 	$viewportHeight = 0;	// Force rezise
 };
 
@@ -1919,17 +1925,13 @@ var changeLoco = function(e) {
 	var o = $(e.currentTarget);
 	$locoList = [];
 	var rg = loadLocalInfo('webThrottle.rosterGroup');
-	if (rg) $rosterGroup = rg; else saveLocalInfo('webThrottle.rosterGroup', $rosterGroup);
+	if (rg || rg == '') $rosterGroup = rg; else saveLocalInfo('webThrottle.rosterGroup', $rosterGroup);
 	var roster = $jmri.getRoster($rosterGroup);
 	if (roster.length) roster.forEach(function(loco) {$locoList.push(loco.id + ' (' + loco.dccAddress + ')');});
 	var f = function(i) {
 		var url = document.URL.split('?')[0] + '?loconame=' + encodeURI($locoList[i].substring(0, $locoList[i].lastIndexOf(' ')));
 		if (!$inFrame) window.open(url, url);
-		else {
-			replaceInFrameList(document.URL, url + '&inframe');
-			window.open(document.URL.split('?')[0], '_top');
-			return;
-		}
+		else if (replaceInFrameList(document.URL, url + '&inframe')) window.open(url + '&inframe', '_self');
 	};
 	var ai = 0;
 	for (var i = 0; i < $locoList.length; i++) if ($locoList[i] == $('#locoName').text()) ai = i;
@@ -1950,7 +1952,14 @@ var manageMovementActive = function(e) {
 	if (!isLeftButton(e)) return;
 	e.preventDefault();
 	e.stopImmediatePropagation();
+	changeMovementActive(!$movementActive);
+	saveLocalInfo('webThrottle.movementActive', $movementActive);
+};
+
+//----------------------------------------- Change tilt to control speed or not
+var changeMovementActive = function(movActive) {
 	var movementActive = $('#movementActive');
+	if (!movementActive.length) return;
 	var movementActiveText = movementActive.children('.buttonText');
 	var speedTouch = $('#speedTouch');
 	speedTouch.off('touchstart');
@@ -1960,7 +1969,7 @@ var manageMovementActive = function(e) {
 	speedTouch.off('mousemove');
 	speedTouch.off('mouseup');
 	speedTouch.off('mouseout');
-	if ($movementActive) {
+	if (!movActive) {
 		$movementActive = false;
 		movementActiveText.text('normal');
 		if ($hasTouch) {
@@ -1979,7 +1988,6 @@ var manageMovementActive = function(e) {
 		speedTouch.on('touchstart', function(event) {speedPressedTiltTouch(event.originalEvent);});
 		speedTouch.on('touchend', function(event) {speedReleasedTiltTouch(event.originalEvent);});
 	}
-	saveLocalInfo('webThrottle.movementActive', $movementActive);
 };
 
 //----------------------------------------- Orientation changed (device)
