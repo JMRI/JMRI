@@ -136,7 +136,6 @@ public class DrawRectangle extends DrawFrame{
     				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
     	}
 		setPositionableParams(pos);
-//		pos.makeShape();
     }
    
     static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());

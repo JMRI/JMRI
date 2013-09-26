@@ -60,7 +60,9 @@ public class DrawPolygon extends DrawFrame{
 	}
 	
 	protected void closingEvent() {
-		_pShape.editing(false);
+		if (_pShape!=null) {
+			_pShape.editing(false);			
+		}
 		super.closingEvent();
 		repaint();
 	}
@@ -179,8 +181,6 @@ public class DrawPolygon extends DrawFrame{
     
     protected boolean doHandleMove(int hitIndex, Point pt) {
     	Point p = _vertices.get(hitIndex);
-//    	_curX = p.x + pt.x;
-//    	_curY = p.y + pt.y;
     	p.x += pt.x;
     	p.y += pt.y;
         _pShape.setShape(makePath(getStartPoint()));
