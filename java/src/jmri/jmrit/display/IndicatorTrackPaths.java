@@ -98,8 +98,8 @@ import jmri.jmrit.logix.OBlock;
             }
         } else if ((state & OBlock.OCCUPIED)!=0) {
            	status = "OccupiedTrack";       	
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            status = "DontUseTrack";
+//        } else if ((state & Sensor.UNKNOWN)!=0) {
+//            status = "DontUseTrack";
         } else {
         	status = "ClearTrack";             	       	
         }

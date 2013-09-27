@@ -226,6 +226,8 @@ public class IndicatorTrackIcon extends PositionableIcon
         repaint();
         if (_status.equals("DontUseTrack")) {
         	setControlling(false);
+        } else {
+        	setControlling(true);
         }
     }
 

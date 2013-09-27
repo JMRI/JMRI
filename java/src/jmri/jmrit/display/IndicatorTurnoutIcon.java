@@ -387,6 +387,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
         if (_status.equals("DontUseTrack")) {
         	setControlling(false);
+        } else {
+        	setControlling(true);
         }
     }
 
