@@ -37,6 +37,7 @@ public class PackageTest extends TestCase {
 		suite.addTest(DccSignalHeadTest.suite());
 		suite.addTest(SE8cSignalHeadTest.suite());
         suite.addTest(SignalHeadSignalMastTest.suite());
+        suite.addTest(SingleIndexProgrammerFacadeTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
 
