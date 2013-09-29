@@ -53,6 +53,21 @@ public class ProgDebugger implements Programmer  {
         return -1;
     }
     
+    /** 
+     * See if a CV has been written
+     */
+     public boolean hasBeenWritten(int cv) {
+        Integer saw = (mValues.get(Integer.valueOf(cv)));
+        return (saw!=null);
+     }
+    
+    /** 
+     * Clear written status
+     */
+     public void clearHasBeenWritten(int cv) {
+        mValues.remove(Integer.valueOf(cv));
+     }
+
     // write CV values are remembered for later reads
     Hashtable<Integer,Integer> mValues = new Hashtable<Integer,Integer>();
 

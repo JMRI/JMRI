@@ -46,6 +46,26 @@ public class DebugProgrammerTest extends TestCase {
         Assert.assertEquals("CV limit", 256, p.getMaxCvAddr());
     }
     
+    public void testKnowsWrite() throws jmri.ProgrammerException {
+        ProgDebugger p = new ProgDebugger();
+        ProgListener l = new ProgListener(){
+                public void programmingOpReply(int value, int status) {
+                    log.debug("callback value="+value+" status="+status);
+                    replied = true;
+                    readValue = value;
+                }
+            };
+        
+        Assert.assertTrue("initially not written", !p.hasBeenWritten(4));
+        p.writeCV(4, 12, l);
+        Assert.assertTrue("after 1st write", p.hasBeenWritten(4));
+        p.clearHasBeenWritten(4);
+        Assert.assertTrue("now longer written", !p.hasBeenWritten(4));
+        p.writeCV(4, 12, l);
+        Assert.assertTrue("after 2nd write", p.hasBeenWritten(4));
+
+    }
+    
     // from here down is testing infrastructure
 
     synchronized void waitReply() throws InterruptedException {
