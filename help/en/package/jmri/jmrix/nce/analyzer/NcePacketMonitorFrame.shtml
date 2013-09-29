@@ -24,6 +24,14 @@
     <div id="mainContent">
 
 <H1>NCE DCC Packet Analyzer</H1>
+<img src="http://www.ncedcc.com/components/com_virtuemart/shop_image/product/resized/Packet_Analyzer_4a028e2ca69b5_90x90.jpg" height="69" width="90" alt="Packet Analyzer" border="0" align="right"/>
+The NCE DCC Packet Analyzer tool works with the
+<a href="http://www.ncedcc.com/component/virtuemart/?page=shop.product_details&flypage=flypage.tpl&product_id=67&category_id=8">NCE Packet Analyzer<a/>
+product to read and present the DCC packets on your track.
+It connects via a separate serial port from your 
+command station connection.
+
+<h2>Using the Analyzer</h2>
 Select the "Serial port:" and push the "Open" button before using any of
 the radio buttons. The baud rate is fixed at 38.4Kbps. Press the "Init"
 button to initialize the analyzer.
