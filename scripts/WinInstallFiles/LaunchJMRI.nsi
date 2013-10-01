@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.18.0
+; - Check if application is already running with option to continue
+; - or abort
+; -------------------------------------------------------------------------
 ; - Version 0.1.17.0
 ; - Modification to pass JMRI process return code back to caller
 ; -------------------------------------------------------------------------
@@ -119,7 +123,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2013 JMRI Community"   ; Copyright string
-!define VER        "0.1.17.0"                     ; Launcher version
+!define VER        "0.1.18.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -516,7 +520,16 @@ Function .onInit
     IntOp $1 $1 + 1
   appNameDone:
     StrCpy $APPNAME $CLASS "" $1
+
+  ; -- Now check if we've already got an instance of this application running
   
+  System::Call 'kernel32::CreateMutex(i 0, i 0, t "JMRI.$CLASS") ?e'
+  Pop $R0
+  StrCmp $R0 0 okToLaunch
+    MessageBox MB_YESNO|MB_ICONSTOP|MB_DEFBUTTON2 "JMRI $APPNAME is already running. Do you want to continue?" IDYES okToLaunch
+    Abort
+  okToLaunch:
+
   ; -- Copy any remaining commandline parameters to $PARAMETERS
   Push $0
   Call GetParameters
