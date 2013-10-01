@@ -19,6 +19,7 @@ import java.awt.dnd.*;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.HashMap;
@@ -77,6 +78,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private ArrayList <Positionable>_secondSelectionGroup;
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
+    private boolean _disableShapeSelection;
+    private boolean _disablePortalSelection = true;		// only select PortalIcon in CircuitBuilder
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
@@ -84,6 +87,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
+    private JCheckBoxMenuItem disableShapeSelect = new JCheckBoxMenuItem(Bundle.getMessage("disableShapeSelect"));
     private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
@@ -179,6 +183,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeDrawMenu() {
     	if (_drawMenu==null) {
     		_drawMenu = _shapeDrawer.makeMenu();
+            _drawMenu.add(disableShapeSelect);
+            disableShapeSelect.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        _disableShapeSelection = disableShapeSelect.isSelected();
+                    }
+                });
     	}
         _menuBar.add(_drawMenu, 0);
     }
@@ -826,6 +836,21 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             return getCopySelection(event);
         }
         List <Positionable> selections = getSelectedItems(event);
+        if (_disableShapeSelection || _disablePortalSelection) {
+        	ArrayList<Positionable> list = new ArrayList<Positionable>();
+        	Iterator<Positionable> it = selections.iterator();
+        	while (it.hasNext()) {
+        		Positionable pos = it.next();
+        		if (_disableShapeSelection && pos instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape) {
+        			continue;
+        		}
+        		if (_disablePortalSelection && pos instanceof PortalIcon) {
+        			continue;
+        		}
+        		list.add(pos);
+        	}
+        	selections = list;
+        }
         Positionable selection = null;
         if (selections.size() > 0) {
             if (event.isShiftDown() && selections.size() > 1) {
@@ -913,7 +938,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
                             //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
-        _circuitBuilder.saveSelectionGroup(_selectionGroup);
+        boolean circuitBuilder = _circuitBuilder.saveSelectionGroup(_selectionGroup);
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;
@@ -921,9 +946,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         _currentSelection = getCurrentSelection(event);
 
-        if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
-        {
-              if (_shapeDrawer.doMousePressed(event, _currentSelection)) {
+        if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown() && !circuitBuilder) {
+            if (_shapeDrawer.doMousePressed(event, _currentSelection)) {
               	_selectionGroup = null;
               	_currentSelection = null;
               	return;
@@ -946,7 +970,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                     _selectionGroup = null;
                 }
-            }
         } else {
             if (_currentSelection==null || (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
             	_selectionGroup = null;
@@ -961,9 +984,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" pastePending= "+_pastePending+" selectRect "+(_selectRect==null?"=":"!")+"= null");
         //" _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
-        if (_dragging) {
+/*        if (_dragging) {
             mouseDragged(event);
-        }
+        }*/
         Positionable selection = getCurrentSelection(event);
 
         if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) /*&& !_dragging*/) {
@@ -1022,7 +1045,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 //        " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
     }
 
-    long _clickTime;
+    private long _clickTime;
     public void mouseClicked(MouseEvent event) {
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
             long time = System.currentTimeMillis();
@@ -1047,7 +1070,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!_circuitBuilder.doMouseClicked(selection, event)) {
+                if (!_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {
                     selection.doMouseClicked(event);
                 }
                 if (selection instanceof IndicatorTrack) {
@@ -1399,6 +1422,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _optionMenu.setEnabled(false);
         _editMenu.setEnabled(false);
         _fileMenu.setEnabled(false);
+    	_disablePortalSelection = false;
     }
     
     public void resetEditor() {
@@ -1416,6 +1440,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         targetPane.setDefaultColors();
         targetPane.validate();
         setSelectionGroup(null);
+    	_disablePortalSelection = true;
     }
 
     /************************ Called by CircuitBuilder **********************/
@@ -1440,7 +1465,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected ArrayList<Positionable> getSelectionGroup() {
         return _selectionGroup;
     }
-
+    
     /**************************** DnD **************************************/
 
     protected void makeDataFlavors() {

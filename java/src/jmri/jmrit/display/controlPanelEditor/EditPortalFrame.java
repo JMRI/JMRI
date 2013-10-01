@@ -413,11 +413,13 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         OBlock fromBlock = portal.getFromBlock();
         java.util.List<Portal> list = toBlock.getPortals();
         if (list.size()>0) {
-            Portal p = null;
             Iterator<Portal> iter = list.iterator();
             while (iter.hasNext()) {
-            	p = iter.next();
-            	if (       (toBlock.equals(p.getToBlock()) && fromBlock.equals(p.getFromBlock()) )
+            	Portal p = iter.next();
+            	if (p.equals(portal)) {
+            		continue;
+            	}
+            	if ((toBlock.equals(p.getToBlock()) && fromBlock.equals(p.getFromBlock()) )
             	        || (toBlock.equals(p.getFromBlock()) && fromBlock.equals(p.getToBlock()) ) ) {
 
             	    notifyDuplicatePortal(portal, p, toBlock, fromBlock);
@@ -455,7 +457,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         if (log.isDebugEnabled()) log.debug("checkPortalIcons: "+_homeBlock.getDisplayName()+
                                             " has "+portals.size()+" portals, iconMap has "+
                                             iconMap.size()+" icons");
-        boolean close = true;
         for (int i=0; i<portals.size(); i++) {
         	PortalIcon icon = iconMap.get(portals.get(i).getName());
             if (icon==null) {
@@ -467,7 +468,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 }
             }
         }
-        return close;
+        return true;
     }
     
     /**
@@ -525,9 +526,12 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     private void changePortalName() {
         Portal portal = (Portal)_portalList.getSelectedValue();
-        String oldName = portal.getName();
+        String oldName = null;
+        if (portal!=null) {
+            oldName = portal.getName();        	
+        }
         String name = _portalName.getText();
-        if (name==null || name.trim().length()==0 ) {
+        if (oldName==null || name==null || name.trim().length()==0 ) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName"), 
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;

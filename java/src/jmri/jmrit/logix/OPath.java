@@ -2,6 +2,8 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Timer;
 
@@ -44,13 +46,17 @@ public class OPath extends jmri.Path  {
     public OPath(Block owner, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         super(owner, toBlockDirection, fromBlockDirection, setting);
     }
-    public OPath(String name, OBlock owner, Portal entry, int fromBlockDirection,
-                         Portal exit, int toBlockDirection) {
-        super(owner, toBlockDirection, fromBlockDirection);
+    public OPath(String name, OBlock owner, Portal entry, Portal exit, ArrayList<BeanSetting> settings) {
+        super(owner, 0, 0);
         _name = name;
         _fromPortal = entry;
         _toPortal = exit;
-        if (log.isDebugEnabled()) log.debug("Ctor: name= "+name+", block= "+owner.getDisplayName()+
+        if (settings!=null) {
+            for (int i=0; i<settings.size(); i++) {
+                addSetting(settings.get(i));
+            }        	
+        }
+       if (log.isDebugEnabled()) log.debug("Ctor: name= "+name+", block= "+owner.getDisplayName()+
                                 ", fromPortal= "+(_fromPortal==null?"null":_fromPortal.getName())+
                                 ", toPortal= "+(_toPortal==null?"null":_toPortal.getName()));
     }
