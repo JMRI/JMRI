@@ -16,22 +16,23 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
+ *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: "grey-out" screen to indicate loss of server connection
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
+ *  TODO: update drawn track on occupancy and state changes (color, width)
  *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
- *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: diagnose and correct the hover dislocation on rotated images (or turn it off)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
- *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: improve visual of multisensorclick by sending all state changes in one message
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
+ *  TODO: determine proper level (z-index) for canvas layer
  *   
  **********************************************************************************************/
 
@@ -599,8 +600,10 @@ function $drawTrackSegment($widget) {
 	if ($blk != undefined) {
 		if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
 			$color = $blk.occupiedcolor;
+			//if (window.console) console.log("set block color to occupiedcolor " + $color);
 		} else {
 			$color = $blk.trackcolor;
+			//if (window.console) console.log("set block color to trackcolor " + $color);
 		}
 	}
 
@@ -1103,7 +1106,7 @@ var $setElementState = function($element, $name, $newState) {
 		if ($widget.element == $element && $widget.name == $name && $widget.state != $newState) {
 			$setWidgetState($id, $newState);
 		}
-		//if sensor and changed, also check each widget's occupancy sensor and redraw widget's color if matched 
+		//if sensor and it changed, also check each widget's occupancy sensor and redraw widget's color if matched 
 		if ($element == 'sensor' && $widget.occupancysensor == $name && $widget.occupancystate != $newState) {
 			$gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
 			$gWidgets[$widget.id].occupancystate = $newState;
@@ -1388,8 +1391,12 @@ var $requestPanelXML = function($panelName){
 		success: function($r, $s, $x){
 			$processPanelXML($r, $s, $x); //handle returned data
 		},
+		error:function(){ 
+			alert("Timeout waiting for panel xml from server.  Please OK to retry.");
+			window.location = window.location.pathname;
+		},
 		async: true,
-		timeout: 5000,  
+		timeout: 15000,  //very long timeout, since this can be a slow process for complicated panels  
 		dataType: 'xml' //<--dataType
 	});
 };
