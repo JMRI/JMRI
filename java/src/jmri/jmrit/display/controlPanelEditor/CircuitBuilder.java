@@ -91,7 +91,6 @@ public class CircuitBuilder  {
     private JDialog _dialog;
     protected ControlPanelEditor _editor;
 
-//    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
     public final static Color _editGroupColor = new Color(100, 200, 255);
     public final static Color _pathColor = Color.green;
     public final static Color _highlightColor = new Color(255, 100, 200);
@@ -1359,7 +1358,7 @@ public class CircuitBuilder  {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || _editDirectionFrame!=null) {
             return true;     // no dragging when editing
         }
-        if (_editPortalFrame!=null) {
+        if (_editPortalFrame!=null || _editDirectionFrame!=null) {
             if (selection instanceof PortalIcon) {
                 return false;		// OK to drag portal icon
             } else {

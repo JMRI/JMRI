@@ -2,15 +2,11 @@ package jmri.jmrit.display.controlPanelEditor.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.jmrit.display.configurexml.PositionableLabelXml;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
-
-import java.util.Iterator;
-import java.util.List;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -39,6 +35,8 @@ public class PortalIconXml extends PositionableLabelXml {
 
         Element element = new Element("PortalIcon");
         storeCommonAttributes(p, element);
+        element.setAttribute("scale", String.valueOf(p.getScale()));
+        element.setAttribute("rotate", String.valueOf(p.getDegrees()));
 
         // include contents
         Portal portal = p.getPortal();
@@ -50,19 +48,9 @@ public class PortalIconXml extends PositionableLabelXml {
         if (portal.getToBlock()!=null) { 
             element.setAttribute("toBlockName", portal.getToBlockName());
         }
-        element.setAttribute("fromBlockName", portal.getFromBlockName());
-
-        Element elem = new Element("icons");
-        String family = p.getFamily();
-        if (family!=null) {
-            elem.setAttribute("family", family);
-        }        
-        Iterator<String> iter = p.getIconStateNames();
-        while (iter.hasNext()) {
-        	String key = iter.next();
-            elem.addContent(storeIcon(key, p.getIcon(key)));        	
+        if (portal.getFromBlockName()!=null) {
+            element.setAttribute("fromBlockName", portal.getFromBlockName());        	
         }
-        element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
@@ -106,35 +94,29 @@ public class PortalIconXml extends PositionableLabelXml {
         Portal portal = block.getPortalByName(portalName);
         
         PortalIcon l= new PortalIcon(ed, portal);
-
-        try {
-            Element icons = element.getChild("icons");
-            Attribute attr = icons.getAttribute("family");
-            if (attr!=null) {
-                l.setFamily(attr.getValue());
-            }
-            @SuppressWarnings("unchecked")
-            List<Element> iconList = icons.getChildren();
-            for (int i=0; i<iconList.size(); i++) {
-                Element iconElem = iconList.get(i);
-                String name = iconElem.getName();
-                NamedIcon icon = loadIcon(l, name, icons, "PortalIcon \""+portalName+"\": icon \""+name+"\" ", ed);
-                if (icon!=null) {
-                    l.setIcon(name, icon);
-                } else {
-                    log.info("PortalIcon \""+portalName+"\": icon \""+name+"\" removed");
-                }
-            }
-        } catch ( NullPointerException e) { 
-            log.error("incorrect information for portalIcon; missing icons.");
-            ed.loadFailed();
-            return;
-        }
-    	
-//        ed.putPortalIcon(l);
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
-        loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);        
+        loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);
+        Attribute a = element.getAttribute("scale");
+        double scale = 1.0;
+        if ( a!=null ) {
+        	try {
+        		scale = a.getDoubleValue();
+            } catch (org.jdom.DataConversionException dce) {
+            	log.error(l.getNameString()+" can't convert scale "+dce);
+            }
+        }
+        l.setScale(scale);
+        a = element.getAttribute("rotate");
+        int deg = 0;
+        if ( a!=null ) {
+        	try {
+        		deg = a.getIntValue();
+            } catch (org.jdom.DataConversionException dce) {
+            	log.error(l.getNameString()+" can't convert rotate "+dce);
+            }
+        }
+        l.rotate(deg);
      }
 
     static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());

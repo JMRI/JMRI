@@ -1302,6 +1302,22 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }.init(p));
         popup.add(edit);
     }
+    
+    protected void setSelectionsScale(double s, Positionable p) {
+    	if (_circuitBuilder.saveSelectionGroup(_selectionGroup)) {
+            p.setScale(s);    		
+    	} else {
+    		super.setSelectionsScale(s, p);
+    	}
+    }
+        
+    protected void setSelectionsRotation(int k, Positionable p) { 
+    	if (_circuitBuilder.saveSelectionGroup(_selectionGroup)) {
+            p.rotate(k);    		
+    	} else {
+    		super.setSelectionsRotation(k, p);   		
+    	}
+    }
 
     /**
     *  Create popup for a Positionable object
@@ -1328,8 +1344,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 popup.addSeparator();
+                setCopyMenu(p, popup);
             }
-            setCopyMenu(p, popup);
 
             // items with defaults or using overrides
             boolean popupSet = false;
@@ -1368,9 +1384,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             // for Positionables with unique settings
             p.showPopUp(popup);
 
-            setShowTooltipMenu(p, popup);
-
-            setRemoveMenu(p, popup);
+            if (p.doViemMenu()) {
+                setShowTooltipMenu(p, popup);
+                setRemoveMenu(p, popup);
+            }
         } else {
         	if (p instanceof LocoIcon) {
                 setCopyMenu(p, popup);
@@ -1387,29 +1404,46 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private HashMap <String, NamedIcon> _portalIconMap;
     private String _portalIconFamily = "Standard";
 
+    private void makePortalIconMap() {
+		_portalIconMap = new HashMap <String, NamedIcon>();
+		_portalIconMap.put(PortalIcon.VISIBLE, 
+				new NamedIcon("resources/icons/throttles/RoundRedCircle20.png","resources/icons/throttles/RoundRedCircle20.png"));
+		_portalIconMap.put(PortalIcon.PATH, 
+				new NamedIcon("resources/icons/greenSquare.gif","resources/icons/greenSquare.gif"));
+		_portalIconMap.put(PortalIcon.HIDDEN, 
+				new NamedIcon("resources/icons/Invisible.gif","resources/icons/Invisible.gif"));
+		_portalIconMap.put(PortalIcon.TO_ARROW, 
+				new NamedIcon("resources/icons/track/toArrow.gif","resources/icons/track/toArrow.gif"));
+		_portalIconMap.put(PortalIcon.FROM_ARROW, 
+				new NamedIcon("resources/icons/track/fromArrow.gif","resources/icons/track/fromArrow.gif"));    	
+    }
     protected NamedIcon getPortalIcon (String name) {
     	if (_portalIconMap==null) {		// set defaults
-    		_portalIconMap = new HashMap <String, NamedIcon>();
-    		_portalIconMap.put(PortalIcon.VISIBLE, 
-    				new NamedIcon("resources/icons/throttles/RoundRedCircle20.png","resources/icons/throttles/RoundRedCircle20.png"));
-    		_portalIconMap.put(PortalIcon.PATH, 
-    				new NamedIcon("resources/icons/greenSquare.gif","resources/icons/greenSquare.gif"));
-    		_portalIconMap.put(PortalIcon.HIDDEN, 
-    				new NamedIcon("resources/icons/Invisible.gif","resources/icons/Invisible.gif"));
-    		_portalIconMap.put(PortalIcon.TO_ARROW, 
-    				new NamedIcon("resources/icons/track/toArrow.gif","resources/icons/track/toArrow.gif"));
-    		_portalIconMap.put(PortalIcon.FROM_ARROW, 
-    				new NamedIcon("resources/icons/track/fromArrow.gif","resources/icons/track/fromArrow.gif"));
+    		makePortalIconMap();
     	}
         return _portalIconMap.get(name);    	
     }
     
-    protected String getPortalIconFamily() {
+    public HashMap <String, NamedIcon> getPortalIconMap() {
+    	if (_portalIconMap==null) {		// set defaults
+    		makePortalIconMap();
+    	}
+    	return _portalIconMap;
+    }
+    
+    public String getPortalIconFamily() {
     	return _portalIconFamily;
     }
     
     public void setDefaultPortalIcons(HashMap <String, NamedIcon> map) {
     	_portalIconMap = map;
+    	Iterator<Positionable> it = _contents.iterator();
+    	while (it.hasNext()) {
+    		Positionable pos = it.next();
+    		if (pos instanceof PortalIcon) {
+    			((PortalIcon)pos).initMap();
+    		}
+    	}
     }
     
     /********************* Circuitbuilder ************************************/
