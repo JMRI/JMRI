@@ -37,7 +37,7 @@
 </script>
 <script id='rosterItemTemplate' type='text/html'>
     <li class='ui-li-has-thumb' id='name-${safeName}' data-sort='${name}'>
-      <a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
+      <a  class='ui-link-inherit' href='/web/webThrottle.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
         <img class='ui-li-thumb' src='/roster/${safeName}/icon?maxHeight=55' onerror='$(this).hide();'><h3 class='ui-li-heading'>${name}</h3>
       </a>
     </li>
@@ -68,7 +68,7 @@
     </div>
     <div data-role='content'>
        <ul class='roster-list listview' data-role='listview' data-filter='true'></ul>
-       <div class='helpText'>Click on roster name to open an InControl throttle for each loco.  These open in a NEW window or tab.</div>
+       <div class='helpText'>Click on roster name to open a webThrottle for each loco.  These open in a NEW window or tab.</div>
     </div>
     <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed'>
       <a data-role='button' href='#settings' data-inline='true' data-mini='true'>Settings</a>
@@ -191,7 +191,7 @@
 				items you're interested in controlling. Includes:
 				<ul>
 					<li>turnout, route, power and sensor control,</li>
-					<li>links to open InControl throttles for each roster entry</li>
+					<li>links to open webThrottles for each roster entry</li>
 					<li>clickable panels for each open JMRI window</li>
 				</ul>
 			</div>
