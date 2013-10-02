@@ -121,9 +121,11 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	//process all widgets in the panel xml, drawing them on screen, and building persistent arrays
 	$panel.contents().each( 
 			function() {
-				//convert attributes to an object array
 				var $widget = new Array();
 				$widget['widgetType'] = this.nodeName;
+				$widget['scale']  =	"1.0"; //default to no scale
+				$widget['degrees']  =	0.00; //default to no rotation
+				//convert attributes to an object array
 				$(this.attributes).each(function() {
 					$widget[this.name] = this.value;
 				});
@@ -134,8 +136,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				//  icons named based on states returned from xmlio server, 
 				$widget['state'] = UNKNOWN; //initial state is unknown
 				$widget['element']  =	""; //default to no xmlio type (avoid undefined)
-				$widget['scale']  =	"1.0"; //default to no scale
-				$widget['degrees']  =	0.00; //default to no rotation
 				$widget['id'] = "spWidget_" + $gUnique();//set id to a unique value (since same element can be in multiple widgets)
 				$widget['widgetFamily'] = $getWidgetFamily($widget);
 				var $jc = "";
