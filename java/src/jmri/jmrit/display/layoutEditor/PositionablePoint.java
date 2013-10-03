@@ -618,10 +618,11 @@ public class PositionablePoint
 
             if(getConnect2()!=null && getLinkedEditor()!=null){
                 //as we have removed the point, need to force the update on the remote end.
-                getLinkedPoint().setLinkedPoint(null);
-                getLinkedEditor().repaint();
+                LayoutEditor oldLinkedEditor = getLinkedEditor();
                 TrackSegment ts = getConnect2();
-                getLinkedEditor().auxTools.setBlockConnectivityChanged();
+                getLinkedPoint().setLinkedPoint(null);
+                oldLinkedEditor.repaint();
+                oldLinkedEditor.auxTools.setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
             linkedPoint=null;
