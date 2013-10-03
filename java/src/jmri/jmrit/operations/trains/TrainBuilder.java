@@ -1678,7 +1678,10 @@ public class TrainBuilder extends TrainCommon {
 			// this will perform local moves at this location, services off spot tracks
 			// only in aggressive mode, and at least one car has a new destination
 			if (Setup.isBuildAggressive() && saveReqMoves != reqNumOfMoves) {
-				log.debug("Perform extra pass at location "+rl.getName());
+				log.debug("Perform extra pass at location " + rl.getName());
+				// use up to half of the available moves left for this location
+				if (reqNumOfMoves < (rl.getMaxCarMoves() - rl.getCarMoves()) / 2)
+					reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) / 2;
 				findDestinationsForCarsFromLocation(rl, routeIndex, true);
 			}
 
