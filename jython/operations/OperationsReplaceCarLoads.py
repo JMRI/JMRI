@@ -19,9 +19,9 @@
 # names of your tracks.  You can add more, or delete the one you 
 # don't need.
 #
-# The car type, (see self.carType, replace carTypeName)
+# The car type, (see self.carTypeName, replace carTypeName)
 #
-# Car loads, (see self.carLoads, replace carLoadName1, carLoadName2, carLoadName3, etc)
+# Car loads, (see self.carLoadNames, replace carLoadName1, carLoadName2, carLoadName3, etc)
 # The first car will be loaded with carLoadName1, the second carLoadName2, etc, until
 # all loads are used, and then will begin again with carLoadName1.
 #
@@ -42,10 +42,10 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
     self.trackNames = ["trackName1", "trackName2",  "trackName3", "trackName4"]
     
     # car type (use car type name)
-    self.carType = "carTypeName"
+    self.carTypeName = "carTypeName"
     
     # car loads to generate (use load names)
-    self.carLoads = ["carLoadName1", "carLoadName2", "carLoadName3", "carLoadName4"]
+    self.carLoadNames = ["carLoadName1", "carLoadName2", "carLoadName3", "carLoadName4"]
     
     # car loads to replace
     self.carReplaceLoads = ["L", "E"]  
@@ -75,21 +75,21 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
         
     # check car type entered
     ct = jmri.jmrit.operations.rollingstock.cars.CarTypes.instance()
-    if (ct.containsName(self.carType) == False):
-      print "Car type(", self.carType, ") not found"
+    if (ct.containsName(self.carTypeName) == False):
+      print "Car type(", self.carTypeName, ") not found"
       return False 
       
     # check car loads entered
     clm = jmri.jmrit.operations.rollingstock.cars.CarLoads.instance()
-    for i in range(0, len(self.carLoads)):
-      if (clm.containsName(self.carType, self.carLoads[i]) == False):
-        print "Car load (", self.carLoads[i], ") not found for car type (", self.carType, ")"
+    for i in range(0, len(self.carLoadNames)):
+      if (clm.containsName(self.carTypeName, self.carLoadNames[i]) == False):
+        print "Car load (", self.carLoadNames[i], ") not found for car type (", self.carTypeName, ")"
         return False 
         
     # check car replace loads entered
     for i in range(0, len(self.carReplaceLoads)):
-      if (clm.containsName(self.carType, self.carReplaceLoads[i]) == False):
-        print "Car replace load (", self.carReplaceLoads[i], ") not found for car type (", self.carType, ")"
+      if (clm.containsName(self.carTypeName, self.carReplaceLoads[i]) == False):
+        print "Car replace load (", self.carReplaceLoads[i], ") not found for car type (", self.carTypeName, ")"
         return False 
               
     # get a list of cars from the manager
@@ -102,17 +102,17 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
     for carId in carList:
       if (self.number > 0):
         car = cm.getById(carId)
-        if (car.getType() == self.carType):
+        if (car.getTypeName() == self.carTypeName):
           if (car.getLocationName() == self.locationName):
             for replaceLoadName in self.carReplaceLoads:
-              if (car.getLoad() == replaceLoadName):
+              if (car.getLoadName() == replaceLoadName):
                 for trackName in self.trackNames:
                   if (car.getTrackName() == trackName):
-                    print "Car (", car.toString(), ") at location (", self.locationName, ") track (", trackName, ") type (", self.carType, ") old load (", car.getLoad(), ") new load (", self.carLoads[i], ")"
-                    car.setLoad(self.carLoads[i])
+                    print "Car (", car.toString(), ") at location (", self.locationName, ") track (", trackName, ") type (", self.carTypeName, ") old load (", car.getLoadName(), ") new load (", self.carLoadNames[i], ")"
+                    car.setLoadName(self.carLoadNames[i])
                     self.number = self.number - 1
                     i = i + 1
-                    if (i >= len(self.carLoads)):
+                    if (i >= len(self.carLoadNames)):
                       i = 0
 
     return False              # all done, don't repeat again
