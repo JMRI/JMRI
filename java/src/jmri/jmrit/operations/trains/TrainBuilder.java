@@ -1754,11 +1754,10 @@ public class TrainBuilder extends TrainCommon {
 			if (car.getFinalDestination() != null && car.getDestination() == null) {
 				// no local moves for this train?
 				if (!train.isAllowLocalMovesEnabled()
-						&& splitString(car.getLocationName()).equals(
-								splitString(car.getFinalDestinationName()))) {
-					addLine(buildReport, FIVE, MessageFormat.format(Bundle
-							.getMessage("buildCarHasFinalDestNoMove"), new Object[] { car.toString(),
-						car.getFinalDestinationName() }));
+						&& splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName()))
+						&& car.getTrack() != departStageTrack) {
+					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasFinalDestNoMove"),
+							new Object[] { car.toString(), car.getFinalDestinationName() }));
 					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 					log.debug("Removing car (" + car.toString() + ") from list");
 					carList.remove(car.getId());
@@ -1780,10 +1779,16 @@ public class TrainBuilder extends TrainCommon {
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
 							.getMessage("buildThroughTrafficNotAllow"), new Object[] {
 							departLocation.getName(), terminateLocation.getName() }));
+					// don't remove car from list if departing staging
+					if (car.getTrack() == departStageTrack) {
+						addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageDest"),
+								new Object[] { car.toString() }));
+					} else {
+						log.debug("Removing car (" + car.toString() + ") from list");
+						carList.remove(car.getId());
+						carIndex--;
+					}
 					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
-					log.debug("Removing car (" + car.toString() + ") from list");
-					carList.remove(car.getId());
-					carIndex--;
 					continue;
 				}
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
@@ -3607,6 +3612,13 @@ public class TrainBuilder extends TrainCommon {
 		if (stageTrack == null || !stageTrack.getLocType().equals(Track.STAGING)
 				|| !stageTrack.acceptsTypeName(car.getTypeName()) || !stageTrack.acceptsRoadName(car.getRoadName()))
 			return false;
+		// Departing and returning to same track in staging?
+		if (!train.isAllowReturnToStagingEnabled() && !train.isAllowLocalMovesEnabled()
+				&& splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))
+				&& !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
+			log.debug("No local moves allowed for train");
+			return false;
+		}
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getTypeName());
 		// remove the default names
