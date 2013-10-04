@@ -536,9 +536,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        _parent.changePortalName(oldName, name);		// update maps
         String msg = portal.setName(name);
         if (msg==null) {
+            _parent.changePortalName(oldName, name);		// update maps
             _portalListModel.dataChange();
         } else {
             JOptionPane.showMessageDialog(this, msg, 

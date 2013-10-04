@@ -92,6 +92,13 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     	_regular = regular;
     	setStatus(TO_ARROW);
     }
+    
+    public boolean getArrowSwitch() {
+    	return _regular;
+    }
+    public void setArrowSwitch(boolean set) {
+    	_regular = set;
+    }
 
     public Portal getPortal() {
         return _portal;

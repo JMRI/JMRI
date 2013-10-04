@@ -410,6 +410,11 @@ public class CircuitBuilder  {
         	} else {
         		adjacentBlock = portal.getFromBlock();
         	}
+        	if (adjacentBlock==null) {
+                JOptionPane.showMessageDialog(_editor, Bundle.getMessage("invalidPortal", portalName, _currentBlock), 
+                        Bundle.getMessage("ErrorPortal"), JOptionPane.INFORMATION_MESSAGE);
+        		return;
+        	}
             if (_currentBlock!=null) {
                 // checkCircuits();
                 // check icons to be indicator type
@@ -983,6 +988,9 @@ public class CircuitBuilder  {
     * Check if the block being edited has all its icons converted to indicator icons
     */
     protected boolean iconsConverted(OBlock block) {
+    	if (block==null) {
+    		return false;
+    	}
     	java.util.List<Positionable> list = _circuitMap.get(block);
         if (list!=null && list.size()>0) {
             for (int i=0; i<list.size(); i++) {

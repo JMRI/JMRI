@@ -51,6 +51,7 @@ public class PortalIconXml extends PositionableLabelXml {
         if (portal.getFromBlockName()!=null) {
             element.setAttribute("fromBlockName", portal.getFromBlockName());        	
         }
+        element.setAttribute("arrowSwitch", ""+(p.getArrowSwitch()?"yes":"no"));
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
@@ -107,6 +108,7 @@ public class PortalIconXml extends PositionableLabelXml {
             }
         }
         l.setScale(scale);
+        
         a = element.getAttribute("rotate");
         int deg = 0;
         if ( a!=null ) {
@@ -117,6 +119,11 @@ public class PortalIconXml extends PositionableLabelXml {
             }
         }
         l.rotate(deg);
+        
+        boolean value = true;
+        if ((a = element.getAttribute("arrowSwitch"))!=null && a.getValue().equals("no"))
+            value = false;
+        l.setArrowSwitch(value);
      }
 
     static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
