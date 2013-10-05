@@ -1370,7 +1370,8 @@ public class Train implements java.beans.PropertyChangeListener {
 								&& rLoc.isDropAllowed()
 								&& rLoc.getMaxCarMoves() > 0
 								&& !skipsLocation(rLoc.getId())
-								&& (!isSendCarsToTerminalEnabled() || car.getDestinationName().equals(getTrainTerminatesName()))
+								&& (!isSendCarsToTerminalEnabled() || TrainCommon.splitString(car.getDestinationName())
+										.equals(TrainCommon.splitString(getTrainTerminatesName())))
 								&& ((car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
 							// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
@@ -1434,8 +1435,12 @@ public class Train implements java.beans.PropertyChangeListener {
 								}
 							}
 							// is this a local move?
-							if (!isAllowLocalMovesEnabled() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()
-									&& car.getLocationName().equals(car.getDestinationName())) {
+							if (!isAllowLocalMovesEnabled()
+									&& !car.isCaboose()
+									&& !car.hasFred()
+									&& !car.isPassenger()
+									&& TrainCommon.splitString(car.getLocationName()).equals(
+											TrainCommon.splitString(car.getDestinationName()))) {
 								if (debugFlag)
 									log.debug("Local moves is disabled");
 								if (addToReport)
@@ -1444,6 +1449,7 @@ public class Train implements java.beans.PropertyChangeListener {
 											car.toString(), car.getLocationName() }));
 								continue;
 							}
+							// TODO should this be checking departure and termination names?
 							if (!isAllowThroughCarsEnabled() && j == 0 && k == rLocations.size() - 1
 									&& !isLocalSwitcher() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
 								if (debugFlag)
