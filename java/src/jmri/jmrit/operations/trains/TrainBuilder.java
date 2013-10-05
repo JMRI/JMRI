@@ -3612,11 +3612,10 @@ public class TrainBuilder extends TrainCommon {
 		if (stageTrack == null || !stageTrack.getLocType().equals(Track.STAGING)
 				|| !stageTrack.acceptsTypeName(car.getTypeName()) || !stageTrack.acceptsRoadName(car.getRoadName()))
 			return false;
-		// Departing and returning to same track in staging?
-		if (!train.isAllowReturnToStagingEnabled() && !train.isAllowLocalMovesEnabled()
-				&& splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))
-				&& !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
-			log.debug("No local moves allowed for train");
+		// Departing and returning to same location in staging?
+		if (!train.isAllowReturnToStagingEnabled() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()
+				&& splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))) {
+			log.debug("Returning car to staging not allowed");
 			return false;
 		}
 		// figure out which loads the car can use
