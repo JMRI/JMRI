@@ -67,11 +67,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         PositionablePopupUtil util = p.getPopupUtility();
         element.setAttribute("size", ""+util.getFontSize());
         element.setAttribute("style", ""+util.getFontStyle());
-        if (!util.getForeground().equals(Color.black)) {
-            element.setAttribute("red", ""+util.getForeground().getRed());
-            element.setAttribute("green", ""+util.getForeground().getGreen());
-            element.setAttribute("blue", ""+util.getForeground().getBlue());
-        }
+
+        // always write the foreground (text) color
+        element.setAttribute("red", ""+util.getForeground().getRed());
+        element.setAttribute("green", ""+util.getForeground().getGreen());
+        element.setAttribute("blue", ""+util.getForeground().getBlue());
+
         if(p.isOpaque() || p.getSaveOpaque()){
             element.setAttribute("redBack", ""+util.getBackground().getRed());
             element.setAttribute("greenBack", ""+util.getBackground().getGreen());
