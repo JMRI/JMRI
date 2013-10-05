@@ -121,17 +121,14 @@ public class Car extends RollingStock {
 		return _load;
 	}
 	
-	@Deprecated
+	@Deprecated // saved for scripts
 	public void setLoad(String load) {
-		String old = _load;
-		_load = load;
-		if (!old.equals(load))
-			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+		setLoadName(load);
 	}
 	
-	@Deprecated
+	@Deprecated // saved for scripts
 	public String getLoad() {
-		return _load;
+		return getLoadName();
 	}
 
 	/**

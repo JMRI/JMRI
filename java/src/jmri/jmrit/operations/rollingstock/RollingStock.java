@@ -147,9 +147,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		return _type;
 	}
 	
-	@Deprecated
+	@Deprecated	// saved for scripts
 	public String getType() {
-		return _type;
+		return getTypeName();
 	}
 
 	protected boolean _lengthChange = false; // used for loco length change

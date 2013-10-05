@@ -1336,27 +1336,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		Route route = getRoute();
 		if (route != null) {
 			List<String> rLocations = route.getLocationsBySequenceList();
-			// single location in this train's route?
-			// TODO local switcher can have more than one location
-			// if (rLocations.size() == 1) {
-			// RouteLocation rLoc = route.getLocationById(rLocations.get(0));
-			// if (rLoc.getName().equals(car.getLocationName()) && rLoc.isPickUpAllowed()
-			// && rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId()) && rLoc.isDropAllowed()) {
-			// if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)) {
-			// return false;
-			// }
-			// if (car.getDestination() != null && !rLoc.getName().equals(car.getDestinationName()))
-			// return false;
-			// if (car.getDestinationTrack() != null && !car.getDestinationTrack().acceptsDropTrain(this)) {
-			// return false;
-			// }
-			// if (debugFlag)
-			// log.debug("Local switcher (" + getName() + ") for location (" + rLoc.getName() +")");
-			// return true;
-			// }
-			// return false;
-			// }
-			// Multiple locations in the train's route
 			for (int j = 0; j < rLocations.size(); j++) {
 				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
 				if (rLoc.getName().equals(car.getLocationName())
@@ -1391,6 +1370,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								&& rLoc.isDropAllowed()
 								&& rLoc.getMaxCarMoves() > 0
 								&& !skipsLocation(rLoc.getId())
+								&& (!isSendCarsToTerminalEnabled() || car.getDestinationName().equals(getTrainTerminatesName()))
 								&& ((car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
 							// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
