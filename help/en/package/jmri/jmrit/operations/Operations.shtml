@@ -582,14 +582,16 @@
 
    When car routing is enabled, the program will use multiple trains to deliver a car to it final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
-   can use a <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car
-   routing algorithm will search for the most efficient route for the car to travel. The algorithm
-   will attempt to use interchanges and then yards to move cars. If you don't want the router to use
+   can use a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
+   algorithm will search for the most efficient route for the car to travel. The algorithm will
+   attempt to use interchanges and then yards to move cars. If you don't want the router to use
    yards, you can deselect the "Enable Car Routing via Yards" check box. Routing through staging is
    disabled by default. The algorithm will try and find a route using a maximum of five trains to
    complete the car move. Note that the program never gives up trying to route a car. If a car has
-   been assigned a <A HREF="#CarsSet">Final Destination</A> the program will try and route the car
-   after every move. 
+   been assigned a
+   <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
+   will try and route the car after every move. 
    
    <A NAME="LoggingOptions"></A>
    <H3>Logging Options</H3>
@@ -941,7 +943,17 @@
    The program will add the "Hazardous Comment" to the manifests and switch lists when a car has the
    <A HREF="#CabooseFredHazardous">Hazardous</A> checkbox selected in the "Car Edit" window and the
    "Hazardous" message format is selected in your manifest and switch lists print options. You can
-   change the comment if desired, and press "Save" to keep the change. 
+   change the comment if desired, and press "Save" to keep the change.
+
+   <H3>Manifest Print Options Tools</H3>
+
+   The menu bar of the "Manifest Print Options" provides several options listed under "Tools". The
+   first is the ability to control the length of the tab character when using the "Tabular" feature.
+   The other two options "Edit Manifest Text" and "Edit Switch List Text" allow you to modify any of
+   the text found in a manifest or switch list. Each text line used by the program is shown along
+   with a text box with the same message. Edit the text box to change the default message to your
+   liking and press "Save" to complete your change. You can always return the text to the original
+   settings by pressing the "Reset" button followed by "Save". 
    
    <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
@@ -973,6 +985,16 @@
     report. For information on the content of the build report please see <A
      HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A>.
    </p>
+
+   <P>The build report options window can also control the amount of information provided with
+    regards to routing a car with a custom load or final destination. If you're not using schedules,
+    leave the "Router Detail Level" option set to "Normal". You can change this option from "Normal"
+    to "Detailed" or "Very Detailed" when you want to understand why a certain train or trains won't
+    route a car. This set of radio buttons works differently than the "Detail Level" radio buttons
+    in that it controls the amount of information created during the train build process. You will
+    quickly find that the "Detailed" and "Very Detailed" modes can create many extra lines of text
+    in the build report, and unless you have a routing issue, it is best to keep the "Router Detail
+    Level" set to "Normal".</P>
 
    <A NAME="Locations"></A>
    <H2>Locations</H2>
