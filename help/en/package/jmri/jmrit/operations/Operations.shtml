@@ -1874,9 +1874,15 @@
 
    <H3>Optional Fields</H3>
 
-   Finally you can optionally enter the color, build date, owner and comment for this car. The build
+   Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
    
+   <H3>Moves, Built, Owner, Wait and Last</H3>
+
+   You can edit the number of times a car has been moved by the program, built date, owner, wait
+   count, or last time the car was moved directly from the "Cars" window. Double click on the cell
+   in the Cars window to change.
+
    <H3>Add</H3>
 
    Press the "Add" button to enter a new car into your roster. If you have similar cars, you can
@@ -2058,7 +2064,7 @@
    <H2>Locomotives</H2>
 
    The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
-   number, road, model, type, and length. You can optionally add the locomotive's build date and
+   number, road, model, type, and length. You can optionally add the locomotive's built date and
    owner. If you want a group of locomotives to be assigned as a unit, you can create a "consist".
    The locomotive type is used by the program to determine where locomotives are picked up and or
    stored at the various locations on your layout. Some of default locomotive types are electric,
@@ -2130,7 +2136,7 @@
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). If wish this locomotive to be part of a consist, press
     "Edit" across from "Consist" and enter a consist name. Then select the consist name from the
-    menu box. Finally you can optionally enter the build date, owner and comment for this
+    menu box. Finally you can optionally enter the built date, owner and comment for this
     locomotive.</P>
 
    <A NAME="LocomotiveModels"></A>
@@ -2200,16 +2206,23 @@
    <A NAME="EditRoute"></A>
    <H3>Edit Route</H3>
 
-   Each location has the train's departure direction, number of desired car moves, and whether car
-   pick ups and or car set outs are allowed at that location. A car move can be a car pick up or car
-   set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
-   combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
-    HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
-   click directly on the cell in the route table. When entering the desired number of car moves,
-   enter reasonable numbers that reflect what you want the program to do for you. For example, if
-   you want your train to depart with 15 cars, then 15 is the correct value for your moves at the
-   start of the route. At the end of the route, if you want 12 cars in the train when it terminates,
-   then 12 is the right value for the move count for the last location in your train's route.
+   You can modify any location in a train's route by selecting an item in one of the menu boxes or by
+   doubling clicking one of the cells and entering a new value. Press "Save Route" to compelete your
+   change.
+
+   <P>
+    Each location has the train's departure direction, number of desired car moves, and whether car
+    pick ups and or car set outs are allowed at that location. A car move can be a car pick up or
+    car set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
+    combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a <A
+     HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
+    double click directly on the cell in the route table. When entering the desired number of car
+    moves, enter reasonable numbers that reflect what you want the program to do for you. For
+    example, if you want your train to depart with 15 cars, then 15 is the correct value for your
+    moves at the start of the route. At the end of the route, if you want 12 cars in the train when
+    it terminates, then 12 is the right value for the move count for the last location in your
+    train's route.
+   </P>
 
    <P>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
