@@ -168,21 +168,31 @@ public class PositionablePoint
     
 	public String getEastBoundSignal() {
         if(getType()==EDGE_CONNECTOR){
-            if(getConnect1Dir()==Path.EAST || getConnect1Dir()==Path.SOUTH)
+            int dir = getConnect1Dir();
+            if(dir==Path.EAST || dir==Path.SOUTH || dir==Path.SOUTH + Path.EAST)
                 return eastBoundSignalName;
             else if(getLinkedPoint()!=null){
-                return getLinkedPoint().getEastBoundSignal();
+                // Do some checks to find where the connection is here.
+                int linkDir = getLinkedPoint().getConnect1Dir();
+                if(linkDir==Path.SOUTH || linkDir == Path.EAST || linkDir==Path.SOUTH+Path.EAST){
+                    return getLinkedPoint().getEastBoundSignal();
+                }
             }
-            return "";
         }
         return eastBoundSignalName;
     }
 	public void setEastBoundSignal(String signalName) {
         if(getType()==EDGE_CONNECTOR){
-            if(getConnect1Dir()==Path.EAST || getConnect1Dir()==Path.SOUTH)
+            int dir = getConnect1Dir();
+            if(dir==Path.EAST || dir==Path.SOUTH || dir==Path.SOUTH + Path.EAST)
                 eastBoundSignalName = signalName;
             else if(getLinkedPoint()!=null){
-                getLinkedPoint().setEastBoundSignal(signalName);
+                int linkDir = getLinkedPoint().getConnect1Dir();
+                if(linkDir==Path.SOUTH || linkDir == Path.EAST || linkDir==Path.SOUTH+Path.EAST){
+                    getLinkedPoint().setEastBoundSignal(signalName);
+                } else {
+                    eastBoundSignalName = signalName;
+                }
             } else {
                 eastBoundSignalName = signalName;
             }
@@ -192,22 +202,31 @@ public class PositionablePoint
     }
 	public String getWestBoundSignal() {
         if(getType()==EDGE_CONNECTOR){
-            if(getConnect1Dir()==Path.WEST || getConnect1Dir()==Path.NORTH)
+            int dir = getConnect1Dir();
+            if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST)
                 return westBoundSignalName;
             else if(getLinkedPoint()!=null){
-                return getLinkedPoint().getWestBoundSignal();
+                int linkDir = getLinkedPoint().getConnect1Dir();
+                if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST){
+                    return getLinkedPoint().getWestBoundSignal();
+                }
             }
-            return "";
         }
         return westBoundSignalName;
     }
     
 	public void setWestBoundSignal(String signalName) {
         if(getType()==EDGE_CONNECTOR){
-            if(getConnect1Dir()==Path.WEST || getConnect1Dir()==Path.NORTH)
+            int dir = getConnect1Dir();
+            if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST)
                 westBoundSignalName = signalName;
             else if(getLinkedPoint()!=null){
-                getLinkedPoint().setWestBoundSignal(signalName);
+                int linkDir = getLinkedPoint().getConnect1Dir();
+                if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST){
+                    getLinkedPoint().setWestBoundSignal(signalName);
+                } else {
+                    westBoundSignalName = signalName;
+                }
             } else {
                 westBoundSignalName = signalName;
             }
