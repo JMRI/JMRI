@@ -291,7 +291,9 @@ public class OptionsMenu extends JMenu {
 		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
 		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
 		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
-                openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
+        if(dispatcher.getLayoutEditor()!=null){
+            openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
+        }
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
