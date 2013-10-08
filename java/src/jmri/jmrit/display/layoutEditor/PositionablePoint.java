@@ -207,7 +207,7 @@ public class PositionablePoint
                 return westBoundSignalName;
             else if(getLinkedPoint()!=null){
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST){
+                if(linkDir==Path.WEST || linkDir==Path.NORTH || linkDir==Path.NORTH + Path.WEST){
                     return getLinkedPoint().getWestBoundSignal();
                 }
             }
@@ -222,7 +222,7 @@ public class PositionablePoint
                 westBoundSignalName = signalName;
             else if(getLinkedPoint()!=null){
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if(dir==Path.WEST || dir==Path.NORTH || dir==Path.NORTH + Path.WEST){
+                if(linkDir==Path.WEST || linkDir==Path.NORTH || linkDir==Path.NORTH + Path.WEST){
                     getLinkedPoint().setWestBoundSignal(signalName);
                 } else {
                     westBoundSignalName = signalName;
