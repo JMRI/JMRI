@@ -211,6 +211,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxtrainlength") != null) {
                         tInfo.setMaxTrainLength(traininfo.getAttribute("maxtrainlength").getValue());
                     }
+                    if(traininfo.getAttribute("terminatewhendone") !=null){
+                        tInfo.setTerminateWhenDone(false);
+                        if (traininfo.getAttribute("terminatewhendone").getValue().equals("yes")) {
+                            tInfo.setTerminateWhenDone(true);
+                        }
+                    }
                 }
             }
         }
@@ -262,6 +268,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                 traininfo.setAttribute("delayedSensor",tf.getDelaySensor());
             }
         }
+        
+        traininfo.setAttribute("terminatewhendone", (tf.getTerminateWhenDone() ? "yes" : "no"));
         traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
         traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
         traininfo.setAttribute("traintype", tf.getTrainType());

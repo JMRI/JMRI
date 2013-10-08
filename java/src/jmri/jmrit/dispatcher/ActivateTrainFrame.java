@@ -90,6 +90,7 @@ public class ActivateTrainFrame {
 	private JButton saveButton = null;
 	private JButton deleteButton = null;
 	private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
+    private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
 	private JTextField priorityField = new JTextField(6);
 	private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
 	private JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
@@ -288,6 +289,16 @@ public class ActivateTrainFrame {
 			p10.add(reverseAtEndBox);
 			reverseAtEndBox.setToolTipText(Bundle.getMessage("ReverseAtEndBoxHint"));
 			initiatePane.add(p10);
+            reverseAtEndBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    handleReverseAtEndBoxClick(e);
+                }
+            });
+            JPanel p10a = new JPanel();
+            p10a.setLayout(new FlowLayout());
+			p10a.add(terminateWhenDoneBox);
+            initiatePane.add(p10a);
+            
             JPanel p8 = new JPanel(); 
 			p8.setLayout(new FlowLayout());
 			p8.add(new JLabel(Bundle.getMessage("PriorityLabel")+" :"));
@@ -461,8 +472,19 @@ public class ActivateTrainFrame {
                 delayReStartSensorLabel.setVisible(true);
             }
         }
+        handleReverseAtEndBoxClick(e);
         initiateFrame.pack();
     }
+    
+    private void handleReverseAtEndBoxClick(ActionEvent e){
+        if(reverseAtEndBox.isSelected() || resetWhenDoneBox.isSelected()){
+            terminateWhenDoneBox.setSelected(false);
+            terminateWhenDoneBox.setEnabled(false);
+        } else {
+            terminateWhenDoneBox.setEnabled(true);
+        }
+    }
+    
 	private void handleAutoRunClick(ActionEvent e) {
 		if (autoRunBox.isSelected()) {
 			showAutoRunItems();
@@ -665,6 +687,7 @@ public class ActivateTrainFrame {
 		}
         at.setRestartDelaySensor((jmri.Sensor)delayReStartSensor.getSelectedBean());
 		at.setTrainType(trainType);
+        at.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
 		if (autoRunBox.isSelected()) {
 			AutoActiveTrain aat = new AutoActiveTrain(at);
 			setAutoRunItems(aat);
@@ -871,6 +894,7 @@ public class ActivateTrainFrame {
 			}
 		}
         handleDelayStartClick(null);
+        handleReverseAtEndBoxClick(null);
 	}
 	private void saveTrainInfo(ActionEvent e) {
 		TrainInfo info = dialogToTrainInfo();
@@ -965,7 +989,7 @@ public class ActivateTrainFrame {
         setDelayModeBox(info.getDelayedRestart(), delayedReStartBox);
         delayMinField.setText(info.getRestartDelayTime());
         delayReStartSensor.setSelectedBeanByName(info.getRestartDelaySensor());
-        
+        terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
 		setComboBox(trainTypeBox,info.getTrainType());
 		autoRunBox.setSelected(info.getRunAuto());
 		autoTrainInfoToDialog(info);
@@ -999,6 +1023,7 @@ public class ActivateTrainFrame {
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartDelaySensor(delayReStartSensor.getSelectedDisplayName());
         info.setRestartDelayTime(delayMinField.getText());
+        info.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
 		autoRunItemsToTrainInfo(info);
 		return info;
 	}

@@ -48,6 +48,7 @@ public class TrainInfo {
     String restartDelaySensor = null;
     String delayedRestartTime = "0";
 	String trainType = "";
+    boolean terminateWhenDone = false;
 	
 	// instance variables for automatic operation
 	String speedFactor = ""+1.0f;
@@ -81,6 +82,8 @@ public class TrainInfo {
 	protected boolean getTrainFromTrains() {return trainFromTrains;}
 	protected void setTrainFromUser(boolean b) {trainFromUser = b;}
 	protected boolean getTrainFromUser() {return trainFromUser;}
+	protected void setTerminateWhenDone(boolean b) {terminateWhenDone = b;}
+	protected boolean getTerminateWhenDone() {return terminateWhenDone;}
 	protected void setPriority(String s) {priority = s;}
 	protected String getPriority() {return priority;}
 	protected void setRunAuto(boolean b) {autoRun = b;}

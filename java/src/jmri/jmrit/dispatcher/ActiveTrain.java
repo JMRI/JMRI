@@ -187,6 +187,7 @@ public class ActiveTrain {
     private NamedBeanHandle<jmri.Sensor> mStartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
     private NamedBeanHandle<jmri.Sensor> mRestartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
 	private int mTrainType = LOCAL_FREIGHT;
+    private boolean terminateWhenFinished = false;
 	
 	// start up instance variables
 	private boolean mStarted = false;
@@ -237,6 +238,9 @@ public class ActiveTrain {
 				mStatus = status;
 				firePropertyChange("status", Integer.valueOf(old), Integer.valueOf(mStatus));
 			}
+            if(mStatus==DONE && terminateWhenFinished){
+                DispatcherFrame.instance().terminateActiveTrain(this);
+            }
 		}
 		else
 			log.error("Invalid ActiveTrain status - "+status);
@@ -292,6 +296,8 @@ public class ActiveTrain {
     int restartMin = 0;
     public int getRestartDepartHr() { return restartHr; }
     public int getRestartDepartMin() { return restartMin; }
+    
+    public void setTerminateWhenDone(boolean boo) { terminateWhenFinished = boo; }
     
     public jmri.Sensor getDelaySensor() {
         if(mStartSensor==null)
