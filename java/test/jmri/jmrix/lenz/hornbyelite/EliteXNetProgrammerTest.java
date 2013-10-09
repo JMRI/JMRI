@@ -32,16 +32,16 @@ public class EliteXNetProgrammerTest extends TestCase {
 		p.writeCV(10, 20, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 2, t.outbound.size());
-                Assert.assertEquals("write message contents", "23 16 0A 14 2B", t.outbound.elementAt(0).toString());
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        Assert.assertEquals("write message contents", "23 16 0A 14 2B", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
 	}
 
@@ -68,7 +68,7 @@ public class EliteXNetProgrammerTest extends TestCase {
         mr1.setElement(2,0x63);
         t.sendTestMessage(mr1);
 
-	Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+	    Assert.assertEquals("enquire message sent", 2, t.outbound.size());
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
 	}
@@ -86,15 +86,15 @@ public class EliteXNetProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message sent", 2, t.outbound.size());
         Assert.assertEquals("read message contents", "22 15 0A 3D", t.outbound.elementAt(0).toString());
 
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
 	}
 
@@ -120,7 +120,7 @@ public class EliteXNetProgrammerTest extends TestCase {
         mr1.setElement(2,0x63);
         t.sendTestMessage(mr1);
 
-	Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+	    Assert.assertEquals("enquire message sent", 2, t.outbound.size());
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
     }
 
