@@ -6,16 +6,16 @@ import jmri.Programmer;
 import junit.framework.*;
 
 public class SlotManagerTest extends TestCase {
-
+    
     public SlotManagerTest(String s) {
 	super(s);
     }
-
+    
     /**
      * Local member to recall when a SlotListener has been invoked.
      */
     private LocoNetSlot testSlot;
-
+    
     public void testGetDirectFunctionAddressOK() {
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetMessage m1;
@@ -33,8 +33,8 @@ public class SlotManagerTest extends TestCase {
         m1.setElement(9, 0x00);
         m1.setElement(10, 0x62);
         Assert.assertEquals("short 3 sets F9", 3, 
-            slotmanager.getDirectFunctionAddress(m1));
-            
+                            slotmanager.getDirectFunctionAddress(m1));
+        
         m1 = new LocoNetMessage(11);
         m1.setElement(0, 0xED);  // long 513 sets F9
         m1.setElement(1, 0x0B);
@@ -48,7 +48,7 @@ public class SlotManagerTest extends TestCase {
         m1.setElement(9, 0x00);
         m1.setElement(10, 0x35);
         Assert.assertEquals("long 513 sets F9", 513, 
-            slotmanager.getDirectFunctionAddress(m1));
+                            slotmanager.getDirectFunctionAddress(m1));
     }
     
     public void testGetDirectDccPacketOK() {
@@ -68,8 +68,8 @@ public class SlotManagerTest extends TestCase {
         m1.setElement(9, 0x00);
         m1.setElement(10, 0x62);
         Assert.assertEquals("short 3 sets F9", 0xA1, 
-            slotmanager.getDirectDccPacket(m1));
-            
+                            slotmanager.getDirectDccPacket(m1));
+        
         m1 = new LocoNetMessage(11);
         m1.setElement(0, 0xED);  // long 513 sets F9
         m1.setElement(1, 0x0B);
@@ -83,36 +83,36 @@ public class SlotManagerTest extends TestCase {
         m1.setElement(9, 0x00);
         m1.setElement(10, 0x35);
         Assert.assertEquals("long 513 sets F9", 0xA1, 
-            slotmanager.getDirectDccPacket(m1));
+                            slotmanager.getDirectDccPacket(m1));
     }
     
     public void testGetSlotSend()  {
         SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2=  new SlotListener(){
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
-        };
+                public void notifyChangedSlot(LocoNetSlot l) {
+                    testSlot = l;
+                }
+            };
         slotmanager.slotFromLocoAddress(0x2134, p2);
         Assert.assertEquals("slot request message",
 			    "BF 42 34 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
         Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
         Assert.assertEquals("key present", true,
-            slotmanager.mLocoAddrHash.containsKey(Integer.valueOf(0x2134)));
+                            slotmanager.mLocoAddrHash.containsKey(Integer.valueOf(0x2134)));
         Assert.assertEquals("value present", true,
-            slotmanager.mLocoAddrHash.contains(p2));
+                            slotmanager.mLocoAddrHash.contains(p2));
     }
-
+    
     public void testGetSlotRcv() {
         SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2=  new SlotListener(){
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
-        };
+                public void notifyChangedSlot(LocoNetSlot l) {
+                    testSlot = l;
+                }
+            };
         slotmanager.slotFromLocoAddress(0x2134, p2);
         // echo of the original message
         LocoNetMessage m1 = new LocoNetMessage(4);
@@ -143,8 +143,8 @@ public class SlotManagerTest extends TestCase {
         slotmanager.message(m1);
         slotmanager.message(m2);
         Assert.assertEquals("returned slot", null, testSlot);
-     }
-
+    }
+    
     public void testReadCVPaged() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -155,7 +155,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 23 00 00 00 00 02 0B 7F 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testReadCVRegister() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  2;
@@ -166,7 +166,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 13 00 00 00 00 02 01 7F 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testReadCVDirect() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -177,7 +177,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 2B 00 00 00 00 02 0B 7F 7F 7F 00", 
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -187,7 +187,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 2F 00 04 23 00 02 0B 7F 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -197,7 +197,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 2F 00 00 16 00 02 0B 7F 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testWriteCVPaged() throws jmri.ProgrammerException {
 	SlotManager slotmanager = new SlotManager(lnis);
 	int CV1=  12;
@@ -209,7 +209,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 63 00 00 00 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testWriteCVRegister() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  2;
@@ -219,9 +219,9 @@ public class SlotManagerTest extends TestCase {
         slotmanager.writeCV(CV1, val2, p3);
         Assert.assertEquals("write message",
 			    "EF 0E 7C 53 00 00 00 00 00 01 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+                            lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testWriteCVDirect() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -233,7 +233,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 6B 00 00 00 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -244,7 +244,7 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 67 00 04 23 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
+    
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
@@ -255,19 +255,19 @@ public class SlotManagerTest extends TestCase {
 			    "EF 0E 7C 67 00 00 16 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
-
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {SlotManagerTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
-
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(SlotManagerTest.class);
-		return suite;
-	}
-
+    
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {SlotManagerTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+    
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(SlotManagerTest.class);
+        return suite;
+    }
+    
     // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
     protected void setUp() {
@@ -277,5 +277,6 @@ public class SlotManagerTest extends TestCase {
         apps.tests.Log4JFixture.setUp(); 
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-
+    
 }
+
