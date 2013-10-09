@@ -33,38 +33,38 @@ public class XNetProgrammerTest extends TestCase {
 		p.writeCV(29, 34, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-                Assert.assertEquals("write message contents", "23 16 1D 22 0A", t.outbound.elementAt(0).toString());
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        Assert.assertEquals("write message contents", "23 16 1D 22 0A", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
-                // send a result string
-                XNetReply mr2 = new XNetReply();
-                mr2.setElement(0,0x63);
-                mr2.setElement(1,0x14);
-                mr2.setElement(2,0x1D);
-                mr2.setElement(3,0x22);
-                mr2.setElement(4,0x48);
-                t.sendTestMessage(mr2);
+        // send a result string
+        XNetReply mr2 = new XNetReply();
+        mr2.setElement(0,0x63);
+        mr2.setElement(1,0x14);
+        mr2.setElement(2,0x1D);
+        mr2.setElement(3,0x22);
+        mr2.setElement(4,0x48);
+        t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
-                 //failure in this test occurs with the next line.
-                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0); 
-                 Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
+         //failure in this test occurs with the next line.
+         Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0); 
+         Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
     }
 
 	public void testWriteRegisterSequence() throws JmriException {
@@ -78,47 +78,47 @@ public class XNetProgrammerTest extends TestCase {
                         }
                 };
 
-                // set register mode
-                p.setMode(Programmer.REGISTERMODE);
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
 
 		// and do the write
 		p.writeCV(29, 12, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());
-                Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
+        Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
 
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
-                // send a result string
-                XNetReply mr2 = new XNetReply();
-                mr2.setElement(0,0x63);
-                mr2.setElement(1,0x10);
-                mr2.setElement(2,0x05);
-                mr2.setElement(3,0x0C);
-                mr2.setElement(4,0x7A);
-                t.sendTestMessage(mr2);
+        // send a result string
+        XNetReply mr2 = new XNetReply();
+        mr2.setElement(0,0x63);
+        mr2.setElement(1,0x10);
+        mr2.setElement(2,0x05);
+        mr2.setElement(3,0x0C);
+        mr2.setElement(4,0x7A);
+        t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
-                //failure in this test occurs with the next line.
-                Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
+        //failure in this test occurs with the next line.
+        Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
 
-                Assert.assertEquals("Register mode received value",12,l.getRcvdValue());
+        Assert.assertEquals("Register mode received value",12,l.getRcvdValue());
     }
 
 	public void testReadCvSequence() throws JmriException {
@@ -138,39 +138,39 @@ public class XNetProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 15 1D 2A", t.outbound.elementAt(0).toString());
 
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
 
-                // send a result string
-                XNetReply mr2 = new XNetReply();
-                mr2.setElement(0,0x63);
-                mr2.setElement(1,0x14);
-                mr2.setElement(2,0x1D);
-                mr2.setElement(3,0x22);
-                mr2.setElement(4,0x48);
-                t.sendTestMessage(mr2);
+        // send a result string
+        XNetReply mr2 = new XNetReply();
+        mr2.setElement(0,0x63);
+        mr2.setElement(1,0x14);
+        mr2.setElement(2,0x1D);
+        mr2.setElement(3,0x22);
+        mr2.setElement(4,0x48);
+        t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
- 
-                //failure in this test occurs with the next line.
-                Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
-                Assert.assertEquals("Register mode received value",34,l.getRcvdValue());
+        //failure in this test occurs with the next line.
+        Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
+
+        Assert.assertEquals("Register mode received value",34,l.getRcvdValue());
 	}
 
 	public void testReadRegisterSequence() throws JmriException {
@@ -199,7 +199,7 @@ public class XNetProgrammerTest extends TestCase {
         mr1.setElement(2,0x63);
         t.sendTestMessage(mr1);
  
-	Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+	    Assert.assertEquals("inquire message sent", 2, t.outbound.size());
         Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
         // send a result string
@@ -211,14 +211,14 @@ public class XNetProgrammerTest extends TestCase {
         mr2.setElement(4,0x54);
         t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
@@ -226,9 +226,9 @@ public class XNetProgrammerTest extends TestCase {
     }
 	
 
-                // this test is the same as the testWriteCvSequence test, but
-                // it checks the sequence for CVs greater than 256, which use 
-                // different XPressNet commands.
+    // this test is the same as the testWriteCvSequence test, but
+    // it checks the sequence for CVs greater than 256, which use 
+    // different XPressNet commands.
     public void testWriteHighCvSequence() throws JmriException {
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -244,43 +244,43 @@ public class XNetProgrammerTest extends TestCase {
 		p.writeCV(300, 34, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-                Assert.assertEquals("write message contents", "23 1D 2C 22 30", t.outbound.elementAt(0).toString());
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        Assert.assertEquals("write message contents", "23 1D 2C 22 30", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
-                // send a result string
-                XNetReply mr2 = new XNetReply();
-                mr2.setElement(0,0x63);
-                mr2.setElement(1,0x15);
-                mr2.setElement(2,0x2C);
-                mr2.setElement(3,0x22);
-                mr2.setElement(4,0x78);
-                t.sendTestMessage(mr2);
+        // send a result string
+        XNetReply mr2 = new XNetReply();
+        mr2.setElement(0,0x63);
+        mr2.setElement(1,0x15);
+        mr2.setElement(2,0x2C);
+        mr2.setElement(3,0x22);
+        mr2.setElement(4,0x78);
+        t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
-                 //failure in this test occurs with the next line.
-                 Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0); 
-                 Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
+         //failure in this test occurs with the next line.
+         Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0); 
+         Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
     }
 
-                // this test is the same as the testReadCvSequence test, but
-                // it checks the sequence for CVs greater than 256, which use 
-                // different XPressNet commands.
+    // this test is the same as the testReadCvSequence test, but
+    // it checks the sequence for CVs greater than 256, which use 
+    // different XPressNet commands.
 
 	public void testReadCvHighSequence() throws JmriException {
 		// infrastructure objects
@@ -299,39 +299,39 @@ public class XNetProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 19 2C 17", t.outbound.elementAt(0).toString());
 
-                // send reply
-                XNetReply mr1 = new XNetReply();
-                mr1.setElement(0,0x61);
-                mr1.setElement(1,0x02);
-                mr1.setElement(2,0x63);
-                t.sendTestMessage(mr1);
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
 
-	        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
-                Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+        Assert.assertEquals("inquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("inquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
 
 
-                // send a result string
-                XNetReply mr2 = new XNetReply();
-                mr2.setElement(0,0x63);
-                mr2.setElement(1,0x15);
-                mr2.setElement(2,0x2C);
-                mr2.setElement(3,0x22);
-                mr2.setElement(4,0x78);
-                t.sendTestMessage(mr2);
+        // send a result string
+        XNetReply mr2 = new XNetReply();
+        mr2.setElement(0,0x63);
+        mr2.setElement(1,0x15);
+        mr2.setElement(2,0x2C);
+        mr2.setElement(3,0x22);
+        mr2.setElement(4,0x78);
+        t.sendTestMessage(mr2);
 
-                // At this point, the standard XPressNet programmer 
-                // should send a result to the programmer listeners, and 
-                // wait for either the next read/write request or for the 
-                // traffic controller to exit from service mode.  We just
-                // need to wait a few seconds and see that the listener we
-                // registered earlier received the values we expected.
+        // At this point, the standard XPressNet programmer 
+        // should send a result to the programmer listeners, and 
+        // wait for either the next read/write request or for the 
+        // traffic controller to exit from service mode.  We just
+        // need to wait a few seconds and see that the listener we
+        // registered earlier received the values we expected.
 
-                jmri.util.JUnitUtil.releaseThread(this,1000);
- 
-                //failure in this test occurs with the next line.
-                Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
+        jmri.util.JUnitUtil.releaseThread(this,1000);
 
-                Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
+        //failure in this test occurs with the next line.
+        Assert.assertFalse("Receive Called by Programmer",l.getRcvdInvoked()==0);
+
+        Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
 	}
 
 
