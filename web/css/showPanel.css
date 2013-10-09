@@ -3,7 +3,7 @@
 body {
 	font-family: sans-serif;
 }
-.rotatable {
+.rotatable{
 	-webkit-transform-origin: 0% 0%;
 	-moz-transform-origin: 0% 0%;
 	-ms-transform-origin: 0% 0%;

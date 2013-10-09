@@ -1043,6 +1043,15 @@ var $getTextCSSFromObj = function($widget){
     return $retCSS;
 };
 
+//get width of an html element by wrapping a copy in a div, then getting width of div
+function $getElementWidth($e) {
+	o = $e.clone();
+	o.wrap('<div></div>').css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden'}).appendTo($('body'));
+	w = o.width();
+	o.remove();
+	return w;
+}
+
 //place widget in correct position, rotation, z-index and scale. (pass in dom element, to simplify calling from e.load())
 var $setWidgetPosition = function(e) {
 
@@ -1053,6 +1062,9 @@ var $setWidgetPosition = function(e) {
 
 		var $height = e.height() * $widget.scale;
 		var $width =  e.width()  * $widget.scale;
+		if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
+			$width =  $getElementWidth(e)  * $widget.scale;
+		}
 
 		//if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
 		if (e.is("img") && ($widget.degrees != 0 || $widget.scale != 1.0) && $(e).get(0).complete == false ) {
