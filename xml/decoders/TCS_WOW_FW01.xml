@@ -17,6 +17,8 @@
     <version author="Michael Mosher" version="2" lastUpdated="20130711"/>
     <version author="Michael Mosher" version="3" lastUpdated="20130722"/>
     <version author="Michael Mosher" version="4" lastUpdated="20130826"/>
+    <!-- ver 5  workaround indexedPairVal bug, fix max to 65535, a few instersecting highCVnames, qualifier and read/write issues -->
+    <version author="Michael Mosher and Dave Heap" version="5" lastUpdated="20131005"/>
         
     <decoder>
         <family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
@@ -129,6 +131,9 @@
 			<ivariable label="Button 0 Sound" CVname="203.1.0" CV="203" PI="1" SI="0" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
+            </ivariable>
             <ivariable label="Button 0 255" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
@@ -156,6 +161,9 @@
 			<ivariable label="Button 1 Sound" CVname="203.1.1" CV="203" PI="1" SI="1" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
+            </ivariable>
             <ivariable label="Button 1 255" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
@@ -183,6 +191,9 @@
 			<ivariable label="Button 2 Sound" CVname="203.1.2" CV="203" PI="1" SI="2" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.2" CV="204" PI="1" SI="2" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 2 1" CVname="204.1.2" CV="204" PI="1" SI="2" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -210,6 +221,9 @@
 			<ivariable label="Button 3 Sound" CVname="203.1.3" CV="203" PI="1" SI="3" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.3" CV="204" PI="1" SI="3" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 3 1" CVname="204.1.3" CV="204" PI="1" SI="3" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -237,6 +251,9 @@
 			<ivariable label="Button 4 Sound" CVname="203.1.4" CV="203" PI="1" SI="4" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.4" CV="204" PI="1" SI="4" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 4 1" CVname="204.1.4" CV="204" PI="1" SI="4" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -264,6 +281,9 @@
 			<ivariable label="Button 5 Sound" CVname="203.1.5" CV="203" PI="1" SI="5" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.5" CV="204" PI="1" SI="5" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 5 1" CVname="204.1.5" CV="204" PI="1" SI="5" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -291,6 +311,9 @@
 			<ivariable label="Button 6 Sound" CVname="203.1.6" CV="203" PI="1" SI="6" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.6" CV="204" PI="1" SI="6" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 6 1" CVname="204.1.6" CV="204" PI="1" SI="6" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -318,6 +341,9 @@
 			<ivariable label="Button 7 Sound" CVname="203.1.7" CV="203" PI="1" SI="7" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.7" CV="204" PI="1" SI="7" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 7 1" CVname="204.1.7" CV="204" PI="1" SI="7" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -345,6 +371,9 @@
 			<ivariable label="Button 8 Sound" CVname="203.1.8" CV="203" PI="1" SI="8" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.8" CV="204" PI="1" SI="8" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 8 0" CVname="204.1.8" CV="204" PI="1" SI="8" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -372,6 +401,9 @@
 			<ivariable label="Button 9 Sound" CVname="203.1.9" CV="203" PI="1" SI="9" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 9 0" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -399,6 +431,9 @@
 			<ivariable label="Button 10 Sound" CVname="203.1.10" CV="203" PI="1" SI="10" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.10" CV="204" PI="1" SI="10" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 10 1" CVname="204.1.10" CV="204" PI="1" SI="10" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -426,6 +461,9 @@
 			<ivariable label="Button 11 Sound" CVname="203.1.11" CV="203" PI="1" SI="11" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.11" CV="204" PI="1" SI="11" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 11 1" CVname="204.1.11" CV="204" PI="1" SI="11" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -453,6 +491,9 @@
 			<ivariable label="Button 12 Sound" CVname="203.1.12" CV="203" PI="1" SI="12" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.12" CV="204" PI="1" SI="12" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 12 1" CVname="204.1.12" CV="204" PI="1" SI="12" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -480,6 +521,9 @@
 			<ivariable label="Button 13 Sound" CVname="203.1.13" CV="203" PI="1" SI="13" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.13" CV="204" PI="1" SI="13" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 13 1" CVname="204.1.13" CV="204" PI="1" SI="13" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -507,6 +551,9 @@
 			<ivariable label="Button 14 Sound" CVname="203.1.14" CV="203" PI="1" SI="14" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 14 1" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -534,6 +581,9 @@
 			<ivariable label="Button 15 Sound" CVname="203.1.15" CV="203" PI="1" SI="15" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.15" CV="204" PI="1" SI="15" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
+            </ivariable>
             <ivariable label="Button 15 255" CVname="204.1.15" CV="204" PI="1" SI="15" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
@@ -561,6 +611,9 @@
 			<ivariable label="Button 16 Sound" CVname="203.1.16" CV="203" PI="1" SI="16" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.16" CV="204" PI="1" SI="16" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 16 1" CVname="204.1.16" CV="204" PI="1" SI="16" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -588,6 +641,9 @@
 			<ivariable label="Button 17 Sound" CVname="203.1.17" CV="203" PI="1" SI="17" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.17" CV="204" PI="1" SI="17" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 17 1" CVname="204.1.17" CV="204" PI="1" SI="17" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -615,6 +671,9 @@
 			<ivariable label="Button 18 Sound" CVname="203.1.18" CV="203" PI="1" SI="18" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Button 18 1" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -642,6 +701,9 @@
 			<ivariable label="Button 19 Sound" CVname="203.1.19" CV="203" PI="1" SI="19" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.19" CV="204" PI="1" SI="19" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 19 0" CVname="204.1.19" CV="204" PI="1" SI="19" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -669,6 +731,9 @@
 			<ivariable label="Button 20 Sound" CVname="203.1.20" CV="203" PI="1" SI="20" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.20" CV="204" PI="1" SI="20" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 20 0" CVname="204.1.20" CV="204" PI="1" SI="20" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -696,6 +761,9 @@
 			<ivariable label="Button 21 Sound" CVname="203.1.21" CV="203" PI="1" SI="21" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.21" CV="204" PI="1" SI="21" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 21 0" CVname="204.1.21" CV="204" PI="1" SI="21" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -723,6 +791,9 @@
 			<ivariable label="Button 22 Sound" CVname="203.1.22" CV="203" PI="1" SI="22" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.22" CV="204" PI="1" SI="22" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 22 0" CVname="204.1.22" CV="204" PI="1" SI="22" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -750,6 +821,9 @@
 			<ivariable label="Button 23 Sound" CVname="203.1.23" CV="203" PI="1" SI="23" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.23" CV="204" PI="1" SI="23" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 23 0" CVname="204.1.23" CV="204" PI="1" SI="23" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -777,6 +851,9 @@
 			<ivariable label="Button 24 Sound" CVname="203.1.24" CV="203" PI="1" SI="24" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.24" CV="204" PI="1" SI="24" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 24 0" CVname="204.1.24" CV="204" PI="1" SI="24" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -804,6 +881,9 @@
 			<ivariable label="Button 25 Sound" CVname="203.1.25" CV="203" PI="1" SI="25" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.25" CV="204" PI="1" SI="25" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 25 0" CVname="204.1.25" CV="204" PI="1" SI="25" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -831,6 +911,9 @@
 			<ivariable label="Button 26 Sound" CVname="203.1.26" CV="203" PI="1" SI="26" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.26" CV="204" PI="1" SI="26" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 26 0" CVname="204.1.26" CV="204" PI="1" SI="26" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -858,6 +941,9 @@
 			<ivariable label="Button 27 Sound" CVname="203.1.27" CV="203" PI="1" SI="27" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.27" CV="204" PI="1" SI="27" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 27 0" CVname="204.1.27" CV="204" PI="1" SI="27" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -885,6 +971,9 @@
 			<ivariable label="Button 28 Sound" CVname="203.1.28" CV="203" PI="1" SI="28" default="255" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.28" CV="204" PI="1" SI="28" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Button 28 0" CVname="204.1.28" CV="204" PI="1" SI="28" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -912,6 +1001,9 @@
 			<ivariable label="Random 1 Sound" CVname="203.1.29" CV="203" PI="1" SI="29" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.29" CV="204" PI="1" SI="29" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Random 1 1" CVname="204.1.29" CV="204" PI="1" SI="29" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -939,6 +1031,9 @@
 			<ivariable label="Random 2 Sound" CVname="203.1.30" CV="203" PI="1" SI="30" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.30" CV="204" PI="1" SI="30" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Random 2 1" CVname="204.1.30" CV="204" PI="1" SI="30" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -966,6 +1061,9 @@
 			<ivariable label="Random 3 Sound" CVname="203.1.31" CV="203" PI="1" SI="31" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.31" CV="204" PI="1" SI="31" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Random 3 1" CVname="204.1.31" CV="204" PI="1" SI="31" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -993,6 +1091,9 @@
 			<ivariable label="Random 4 Sound" CVname="203.1.32" CV="203" PI="1" SI="32" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.1.32" CV="204" PI="1" SI="32" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Random 4 1" CVname="204.1.32" CV="204" PI="1" SI="32" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1021,6 +1122,9 @@
 			<ivariable label="Volume Level 0" CVname="203.2.0" CV="203" PI="2" SI="0" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.0" CV="204" PI="2" SI="0" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 0 0" CVname="204.2.0" CV="204" PI="2" SI="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
@@ -1048,6 +1152,9 @@
 			<ivariable label="Volume Level 1" CVname="203.2.1" CV="203" PI="2" SI="1" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.1" CV="204" PI="2" SI="1" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 1 1" CVname="204.2.1" CV="204" PI="2" SI="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1075,6 +1182,9 @@
 			<ivariable label="Volume Level 2" CVname="203.2.2" CV="203" PI="2" SI="2" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.2" CV="204" PI="2" SI="2" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 2 1" CVname="204.2.2" CV="204" PI="2" SI="2" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1102,6 +1212,9 @@
 			<ivariable label="Volume Level 3" CVname="203.2.3" CV="203" PI="2" SI="3" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.3" CV="204" PI="2" SI="3" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 3 1" CVname="204.2.3" CV="204" PI="2" SI="3" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1129,6 +1242,9 @@
 			<ivariable label="Volume Level 4" CVname="203.2.4" CV="203" PI="2" SI="4" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.4" CV="204" PI="2" SI="4" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 4 1" CVname="204.2.4" CV="204" PI="2" SI="4" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1156,6 +1272,9 @@
 			<ivariable label="Volume Level 5" CVname="203.2.5" CV="203" PI="2" SI="5" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
+            <ivariable label="Dummy" CVname="204.2.5" CV="204" PI="2" SI="5" writeOnly="yes" comment="To work around sheet operations/qualifiers issue">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+            </ivariable>
             <ivariable label="Volume Level 5 1" CVname="204.2.5" CV="204" PI="2" SI="5" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1181,154 +1300,288 @@
 				</qualifier>
             </ivariable>
 			
-			<ivariable label="Step 1 Chuff Rate" CVname="204.3.1" CV="204" PI="3" SI="1" default="46592" writeOnly="yes" >				<indexedPairVal highCVname="203.3.1" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 2 Chuff Rate" CVname="204.3.2" CV="204" PI="3" SI="2" default="18176" writeOnly="yes" >				<indexedPairVal highCVname="203.3.2" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 3 Chuff Rate" CVname="204.3.3" CV="204" PI="3" SI="3" default="11360" writeOnly="yes" >				<indexedPairVal highCVname="203.3.3" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 4 Chuff Rate" CVname="204.3.4" CV="204" PI="3" SI="4" default="7680" writeOnly="yes" >				<indexedPairVal highCVname="203.3.4" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 5 Chuff Rate" CVname="204.3.5" CV="204" PI="3" SI="5" default="4992" writeOnly="yes" >				<indexedPairVal highCVname="203.3.5" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 6 Chuff Rate" CVname="204.3.6" CV="204" PI="3" SI="6" default="3408" writeOnly="yes" >				<indexedPairVal highCVname="203.3.6" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 7 Chuff Rate" CVname="204.3.7" CV="204" PI="3" SI="7" default="2816" writeOnly="yes" >				<indexedPairVal highCVname="203.3.7" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 8 Chuff Rate" CVname="204.3.8" CV="204" PI="3" SI="8" default="2432" writeOnly="yes" >				<indexedPairVal highCVname="203.3.8" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 9 Chuff Rate" CVname="204.3.9" CV="204" PI="3" SI="9" default="2048" writeOnly="yes" >				<indexedPairVal highCVname="203.3.9" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 10 Chuff Rate" CVname="204.3.10" CV="204" PI="3" SI="10" default="1792" writeOnly="yes" >			<indexedPairVal highCVname="203.3.10" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 11 Chuff Rate" CVname="204.3.11" CV="204" PI="3" SI="11" default="1536" writeOnly="yes" >			<indexedPairVal highCVname="203.3.11" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 12 Chuff Rate" CVname="204.3.12" CV="204" PI="3" SI="12" default="1280" writeOnly="yes" >			<indexedPairVal highCVname="203.3.12" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 13 Chuff Rate" CVname="204.3.13" CV="204" PI="3" SI="13" default="1152" writeOnly="yes" >			<indexedPairVal highCVname="203.3.13" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 14 Chuff Rate" CVname="204.3.14" CV="204" PI="3" SI="14" default="1024" writeOnly="yes" >			<indexedPairVal highCVname="203.3.14" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 15 Chuff Rate" CVname="204.3.15" CV="204" PI="3" SI="15" default="952" writeOnly="yes" >				<indexedPairVal highCVname="203.3.15" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 16 Chuff Rate" CVname="204.3.16" CV="204" PI="3" SI="16" default="904" writeOnly="yes" >				<indexedPairVal highCVname="203.3.16" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 17 Chuff Rate" CVname="204.3.17" CV="204" PI="3" SI="17" default="856" writeOnly="yes" >				<indexedPairVal highCVname="203.3.17" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 18 Chuff Rate" CVname="204.3.18" CV="204" PI="3" SI="18" default="808" writeOnly="yes" >				<indexedPairVal highCVname="203.3.18" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 19 Chuff Rate" CVname="204.3.19" CV="204" PI="3" SI="19" default="760" writeOnly="yes" >				<indexedPairVal highCVname="203.3.19" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 20 Chuff Rate" CVname="204.3.20" CV="204" PI="3" SI="20" default="712" writeOnly="yes" >				<indexedPairVal highCVname="203.3.20" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 21 Chuff Rate" CVname="204.3.21" CV="204" PI="3" SI="21" default="672" writeOnly="yes" >				<indexedPairVal highCVname="203.3.21" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 22 Chuff Rate" CVname="204.3.22" CV="204" PI="3" SI="22" default="648" writeOnly="yes" >				<indexedPairVal highCVname="203.3.22" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 23 Chuff Rate" CVname="204.3.23" CV="204" PI="3" SI="23" default="624" writeOnly="yes" >				<indexedPairVal highCVname="203.3.23" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 24 Chuff Rate" CVname="204.3.24" CV="204" PI="3" SI="24" default="600" writeOnly="yes" >				<indexedPairVal highCVname="203.3.24" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 25 Chuff Rate" CVname="204.3.25" CV="204" PI="3" SI="25" default="576" writeOnly="yes" >				<indexedPairVal highCVname="203.3.25" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 26 Chuff Rate" CVname="204.3.26" CV="204" PI="3" SI="26" default="558" writeOnly="yes" >				<indexedPairVal highCVname="203.3.26" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 27 Chuff Rate" CVname="204.3.27" CV="204" PI="3" SI="27" default="540" writeOnly="yes" >				<indexedPairVal highCVname="203.3.27" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 28 Chuff Rate" CVname="204.3.28" CV="204" PI="3" SI="28" default="522" writeOnly="yes" >				<indexedPairVal highCVname="203.3.28" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 29 Chuff Rate" CVname="204.3.20" CV="204" PI="3" SI="29" default="502" writeOnly="yes" >				<indexedPairVal highCVname="203.3.29" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 30 Chuff Rate" CVname="204.3.30" CV="204" PI="3" SI="30" default="486" writeOnly="yes" >				<indexedPairVal highCVname="203.3.30" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 31 Chuff Rate" CVname="204.3.31" CV="204" PI="3" SI="31" default="470" writeOnly="yes" >				<indexedPairVal highCVname="203.3.31" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 32 Chuff Rate" CVname="204.3.32" CV="204" PI="3" SI="32" default="454" writeOnly="yes" >				<indexedPairVal highCVname="203.3.32" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 33 Chuff Rate" CVname="204.3.33" CV="204" PI="3" SI="33" default="438" writeOnly="yes" >				<indexedPairVal highCVname="203.3.33" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 34 Chuff Rate" CVname="204.3.34" CV="204" PI="3" SI="34" default="422" writeOnly="yes" >				<indexedPairVal highCVname="203.3.34" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 35 Chuff Rate" CVname="204.3.35" CV="204" PI="3" SI="35" default="406" writeOnly="yes" >				<indexedPairVal highCVname="203.3.35" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 36 Chuff Rate" CVname="204.3.36" CV="204" PI="3" SI="36" default="396" writeOnly="yes" >				<indexedPairVal highCVname="203.3.36" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 37 Chuff Rate" CVname="204.3.37" CV="204" PI="3" SI="37" default="386" writeOnly="yes" >				<indexedPairVal highCVname="203.3.37" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 38 Chuff Rate" CVname="204.3.38" CV="204" PI="3" SI="38" default="376" writeOnly="yes" >				<indexedPairVal highCVname="203.3.38" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 39 Chuff Rate" CVname="204.3.39" CV="204" PI="3" SI="39" default="366" writeOnly="yes" >				<indexedPairVal highCVname="203.3.39" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 40 Chuff Rate" CVname="204.3.40" CV="204" PI="3" SI="40" default="356" writeOnly="yes" >				<indexedPairVal highCVname="203.3.40" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 41 Chuff Rate" CVname="204.3.41" CV="204" PI="3" SI="41" default="351" writeOnly="yes" >				<indexedPairVal highCVname="203.3.41" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 42 Chuff Rate" CVname="204.3.42" CV="204" PI="3" SI="42" default="346" writeOnly="yes" >				<indexedPairVal highCVname="203.3.42" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 43 Chuff Rate" CVname="204.3.43" CV="204" PI="3" SI="43" default="341" writeOnly="yes" >				<indexedPairVal highCVname="203.3.43" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 44 Chuff Rate" CVname="204.3.44" CV="204" PI="3" SI="44" default="336" writeOnly="yes" >				<indexedPairVal highCVname="203.3.44" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 45 Chuff Rate" CVname="204.3.45" CV="204" PI="3" SI="45" default="331" writeOnly="yes" >				<indexedPairVal highCVname="203.3.45" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 46 Chuff Rate" CVname="204.3.46" CV="204" PI="3" SI="46" default="326" writeOnly="yes" >				<indexedPairVal highCVname="203.3.46" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 47 Chuff Rate" CVname="204.3.47" CV="204" PI="3" SI="47" default="321" writeOnly="yes" >				<indexedPairVal highCVname="203.3.47" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 48 Chuff Rate" CVname="204.3.48" CV="204" PI="3" SI="48" default="316" writeOnly="yes" >				<indexedPairVal highCVname="203.3.48" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 49 Chuff Rate" CVname="204.3.49" CV="204" PI="3" SI="49" default="311" writeOnly="yes" >				<indexedPairVal highCVname="203.3.49" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 50 Chuff Rate" CVname="204.3.50" CV="204" PI="3" SI="50" default="306" writeOnly="yes" >				<indexedPairVal highCVname="203.3.50" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 51 Chuff Rate" CVname="204.3.51" CV="204" PI="3" SI="51" default="301" writeOnly="yes" >				<indexedPairVal highCVname="203.3.51" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 52 Chuff Rate" CVname="204.3.52" CV="204" PI="3" SI="52" default="296" writeOnly="yes" >				<indexedPairVal highCVname="203.3.52" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 53 Chuff Rate" CVname="204.3.53" CV="204" PI="3" SI="53" default="291" writeOnly="yes" >				<indexedPairVal highCVname="203.3.53" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 54 Chuff Rate" CVname="204.3.54" CV="204" PI="3" SI="54" default="286" writeOnly="yes" >				<indexedPairVal highCVname="203.3.54" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 55 Chuff Rate" CVname="204.3.55" CV="204" PI="3" SI="55" default="281" writeOnly="yes" >				<indexedPairVal highCVname="203.3.55" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 56 Chuff Rate" CVname="204.3.56" CV="204" PI="3" SI="56" default="276" writeOnly="yes" >				<indexedPairVal highCVname="203.3.56" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 57 Chuff Rate" CVname="204.3.57" CV="204" PI="3" SI="57" default="271" writeOnly="yes" >				<indexedPairVal highCVname="203.3.57" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 58 Chuff Rate" CVname="204.3.58" CV="204" PI="3" SI="58" default="266" writeOnly="yes" >				<indexedPairVal highCVname="203.3.58" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 59 Chuff Rate" CVname="204.3.59" CV="204" PI="3" SI="59" default="256" writeOnly="yes" >				<indexedPairVal highCVname="203.3.59" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 60 Chuff Rate" CVname="204.3.60" CV="204" PI="3" SI="60" default="251" writeOnly="yes" >				<indexedPairVal highCVname="203.3.60" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 61 Chuff Rate" CVname="204.3.61" CV="204" PI="3" SI="61" default="247" writeOnly="yes" >				<indexedPairVal highCVname="203.3.61" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 62 Chuff Rate" CVname="204.3.62" CV="204" PI="3" SI="62" default="243" writeOnly="yes" >				<indexedPairVal highCVname="203.3.62" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 63 Chuff Rate" CVname="204.3.63" CV="204" PI="3" SI="63" default="239" writeOnly="yes" >				<indexedPairVal highCVname="203.3.63" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 64 Chuff Rate" CVname="204.3.64" CV="204" PI="3" SI="64" default="235" writeOnly="yes" >				<indexedPairVal highCVname="203.3.64" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 65 Chuff Rate" CVname="204.3.65" CV="204" PI="3" SI="65" default="231" writeOnly="yes" >				<indexedPairVal highCVname="203.3.65" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 66 Chuff Rate" CVname="204.3.66" CV="204" PI="3" SI="66" default="228" writeOnly="yes" >				<indexedPairVal highCVname="203.3.66" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 67 Chuff Rate" CVname="204.3.67" CV="204" PI="3" SI="67" default="225" writeOnly="yes" >				<indexedPairVal highCVname="203.3.67" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 68 Chuff Rate" CVname="204.3.68" CV="204" PI="3" SI="68" default="222" writeOnly="yes" >				<indexedPairVal highCVname="203.3.68" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 69 Chuff Rate" CVname="204.3.69" CV="204" PI="3" SI="69" default="219" writeOnly="yes" >				<indexedPairVal highCVname="203.3.69" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 70 Chuff Rate" CVname="204.3.70" CV="204" PI="3" SI="70" default="216" writeOnly="yes" >				<indexedPairVal highCVname="203.3.70" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 71 Chuff Rate" CVname="204.3.71" CV="204" PI="3" SI="71" default="213" writeOnly="yes" >				<indexedPairVal highCVname="203.3.71" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 72 Chuff Rate" CVname="204.3.72" CV="204" PI="3" SI="72" default="210" writeOnly="yes" >				<indexedPairVal highCVname="203.3.72" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 73 Chuff Rate" CVname="204.3.73" CV="204" PI="3" SI="73" default="207" writeOnly="yes" >				<indexedPairVal highCVname="203.3.73" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 74 Chuff Rate" CVname="204.3.74" CV="204" PI="3" SI="74" default="204" writeOnly="yes" >				<indexedPairVal highCVname="203.3.74" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 75 Chuff Rate" CVname="204.3.75" CV="204" PI="3" SI="75" default="201" writeOnly="yes" >				<indexedPairVal highCVname="203.3.75" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 76 Chuff Rate" CVname="204.3.76" CV="204" PI="3" SI="76" default="198" writeOnly="yes" >				<indexedPairVal highCVname="203.3.76" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 77 Chuff Rate" CVname="204.3.77" CV="204" PI="3" SI="77" default="195" writeOnly="yes" >				<indexedPairVal highCVname="203.3.77" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 78 Chuff Rate" CVname="204.3.78" CV="204" PI="3" SI="78" default="192" writeOnly="yes" >				<indexedPairVal highCVname="203.3.78" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 79 Chuff Rate" CVname="204.3.79" CV="204" PI="3" SI="79" default="189" writeOnly="yes" >				<indexedPairVal highCVname="203.3.79" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 80 Chuff Rate" CVname="204.3.80" CV="204" PI="3" SI="80" default="186" writeOnly="yes" >				<indexedPairVal highCVname="203.3.80" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 81 Chuff Rate" CVname="204.3.81" CV="204" PI="3" SI="81" default="184" writeOnly="yes" >				<indexedPairVal highCVname="203.3.81" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 82 Chuff Rate" CVname="204.3.82" CV="204" PI="3" SI="82" default="182" writeOnly="yes" >				<indexedPairVal highCVname="203.3.82" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 83 Chuff Rate" CVname="204.3.83" CV="204" PI="3" SI="83" default="180" writeOnly="yes" >				<indexedPairVal highCVname="203.3.83" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 84 Chuff Rate" CVname="204.3.84" CV="204" PI="3" SI="84" default="178" writeOnly="yes" >				<indexedPairVal highCVname="203.3.84" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 85 Chuff Rate" CVname="204.3.85" CV="204" PI="3" SI="85" default="176" writeOnly="yes" >				<indexedPairVal highCVname="203.3.85" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 86 Chuff Rate" CVname="204.3.86" CV="204" PI="3" SI="86" default="174" writeOnly="yes" >				<indexedPairVal highCVname="203.3.86" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 87 Chuff Rate" CVname="204.3.87" CV="204" PI="3" SI="87" default="172" writeOnly="yes" >				<indexedPairVal highCVname="203.3.87" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 88 Chuff Rate" CVname="204.3.88" CV="204" PI="3" SI="88" default="170" writeOnly="yes" >				<indexedPairVal highCVname="203.3.88" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 89 Chuff Rate" CVname="204.3.89" CV="204" PI="3" SI="89" default="168" writeOnly="yes" >				<indexedPairVal highCVname="203.3.89" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 90 Chuff Rate" CVname="204.3.90" CV="204" PI="3" SI="90" default="166" writeOnly="yes" >				<indexedPairVal highCVname="203.3.90" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 91 Chuff Rate" CVname="204.3.91" CV="204" PI="3" SI="91" default="164" writeOnly="yes" >				<indexedPairVal highCVname="203.3.91" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 92 Chuff Rate" CVname="204.3.92" CV="204" PI="3" SI="92" default="162" writeOnly="yes" >				<indexedPairVal highCVname="203.3.92" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 93 Chuff Rate" CVname="204.3.93" CV="204" PI="3" SI="93" default="160" writeOnly="yes" >				<indexedPairVal highCVname="203.3.93" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 94 Chuff Rate" CVname="204.3.94" CV="204" PI="3" SI="94" default="158" writeOnly="yes" >				<indexedPairVal highCVname="203.3.94" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 95 Chuff Rate" CVname="204.3.95" CV="204" PI="3" SI="95" default="156" writeOnly="yes" >				<indexedPairVal highCVname="203.3.95" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 96 Chuff Rate" CVname="204.3.96" CV="204" PI="3" SI="96" default="154" writeOnly="yes" >				<indexedPairVal highCVname="203.3.96" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 97 Chuff Rate" CVname="204.3.97" CV="204" PI="3" SI="97" default="152" writeOnly="yes" >				<indexedPairVal highCVname="203.3.97" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 98 Chuff Rate" CVname="204.3.98" CV="204" PI="3" SI="98" default="150" writeOnly="yes" >				<indexedPairVal highCVname="203.3.98" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 99 Chuff Rate" CVname="204.3.99" CV="204" PI="3" SI="99" default="148" writeOnly="yes" >				<indexedPairVal highCVname="203.3.99" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 100 Chuff Rate" CVname="204.3.100" CV="204" PI="3" SI="100" default="147" writeOnly="yes" >				<indexedPairVal highCVname="203.3.100" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 101 Chuff Rate" CVname="204.3.101" CV="204" PI="3" SI="101" default="146" writeOnly="yes" >				<indexedPairVal highCVname="203.3.101" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 102 Chuff Rate" CVname="204.3.102" CV="204" PI="3" SI="102" default="145" writeOnly="yes" >				<indexedPairVal highCVname="203.3.102" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 103 Chuff Rate" CVname="204.3.103" CV="204" PI="3" SI="103" default="144" writeOnly="yes" >				<indexedPairVal highCVname="203.3.103" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 104 Chuff Rate" CVname="204.3.104" CV="204" PI="3" SI="104" default="143" writeOnly="yes" >				<indexedPairVal highCVname="203.3.104" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 105 Chuff Rate" CVname="204.3.105" CV="204" PI="3" SI="105" default="142" writeOnly="yes" >			<indexedPairVal highCVname="203.3.105" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 106 Chuff Rate" CVname="204.3.106" CV="204" PI="3" SI="106" default="141" writeOnly="yes" >			<indexedPairVal highCVname="203.3.106" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 107 Chuff Rate" CVname="204.3.107" CV="204" PI="3" SI="107" default="140" writeOnly="yes" >			<indexedPairVal highCVname="203.3.107" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 108 Chuff Rate" CVname="204.3.108" CV="204" PI="3" SI="108" default="139" writeOnly="yes" >			<indexedPairVal highCVname="203.3.108" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 109 Chuff Rate" CVname="204.3.109" CV="204" PI="3" SI="109" default="138" writeOnly="yes" >			<indexedPairVal highCVname="203.3.109" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 100 Chuff Rate" CVname="204.3.110" CV="204" PI="3" SI="110" default="137" writeOnly="yes" >				<indexedPairVal highCVname="203.3.100" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 111 Chuff Rate" CVname="204.3.111" CV="204" PI="3" SI="111" default="136" writeOnly="yes" >				<indexedPairVal highCVname="203.3.111" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 112 Chuff Rate" CVname="204.3.112" CV="204" PI="3" SI="112" default="135" writeOnly="yes" >				<indexedPairVal highCVname="203.3.112" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 113 Chuff Rate" CVname="204.3.113" CV="204" PI="3" SI="113" default="134" writeOnly="yes" >				<indexedPairVal highCVname="203.3.113" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 114 Chuff Rate" CVname="204.3.114" CV="204" PI="3" SI="114" default="133" writeOnly="yes" >				<indexedPairVal highCVname="203.3.114" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 115 Chuff Rate" CVname="204.3.115" CV="204" PI="3" SI="115" default="132" writeOnly="yes" >			<indexedPairVal highCVname="203.3.115" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 116 Chuff Rate" CVname="204.3.116" CV="204" PI="3" SI="116" default="131" writeOnly="yes" >			<indexedPairVal highCVname="203.3.116" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 117 Chuff Rate" CVname="204.3.117" CV="204" PI="3" SI="117" default="130" writeOnly="yes" >			<indexedPairVal highCVname="203.3.117" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 118 Chuff Rate" CVname="204.3.118" CV="204" PI="3" SI="118" default="129" writeOnly="yes" >			<indexedPairVal highCVname="203.3.118" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 119 Chuff Rate" CVname="204.3.119" CV="204" PI="3" SI="119" default="128" writeOnly="yes" >			<indexedPairVal highCVname="203.3.119" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 120 Chuff Rate" CVname="204.3.120" CV="204" PI="3" SI="120" default="127" writeOnly="yes" >				<indexedPairVal highCVname="203.3.120" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 121 Chuff Rate" CVname="204.3.121" CV="204" PI="3" SI="121" default="126" writeOnly="yes" >				<indexedPairVal highCVname="203.3.121" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 122 Chuff Rate" CVname="204.3.122" CV="204" PI="3" SI="122" default="125" writeOnly="yes" >				<indexedPairVal highCVname="203.3.122" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 123 Chuff Rate" CVname="204.3.123" CV="204" PI="3" SI="123" default="124" writeOnly="yes" >				<indexedPairVal highCVname="203.3.123" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 124 Chuff Rate" CVname="204.3.124" CV="204" PI="3" SI="124" default="123" writeOnly="yes" >				<indexedPairVal highCVname="203.3.124" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 125 Chuff Rate" CVname="204.3.125" CV="204" PI="3" SI="125" default="122" writeOnly="yes" >			<indexedPairVal highCVname="203.3.125" order="highFirst" min="0" max="65536"/>			</ivariable>
-			<ivariable label="Step 126 Chuff Rate" CVname="204.3.126" CV="204" PI="3" SI="126" default="121" writeOnly="yes" >			<indexedPairVal highCVname="203.3.126" order="highFirst" min="0" max="65536"/>			</ivariable>
+			<ivariable label="Step 1 Chuff Rate High Byte" CVname="203.3.1" CV="203" PI="3" SI="1" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 1 Chuff Rate" CVname="204.3.1" CV="204" PI="3" SI="1" default="46592" writeOnly="yes" >				<indexedPairVal highCVname="203.3.1" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 2 Chuff Rate High Byte" CVname="203.3.2" CV="203" PI="3" SI="2" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 2 Chuff Rate" CVname="204.3.2" CV="204" PI="3" SI="2" default="18176" writeOnly="yes" >				<indexedPairVal highCVname="203.3.2" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 3 Chuff Rate High Byte" CVname="203.3.3" CV="203" PI="3" SI="3" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 3 Chuff Rate" CVname="204.3.3" CV="204" PI="3" SI="3" default="11360" writeOnly="yes" >				<indexedPairVal highCVname="203.3.3" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 4 Chuff Rate High Byte" CVname="203.3.4" CV="203" PI="3" SI="4" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 4 Chuff Rate" CVname="204.3.4" CV="204" PI="3" SI="4" default="7680" writeOnly="yes" >				<indexedPairVal highCVname="203.3.4" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 5 Chuff Rate High Byte" CVname="203.3.5" CV="203" PI="3" SI="5" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 5 Chuff Rate" CVname="204.3.5" CV="204" PI="3" SI="5" default="4992" writeOnly="yes" >				<indexedPairVal highCVname="203.3.5" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 6 Chuff Rate High Byte" CVname="203.3.6" CV="203" PI="3" SI="6" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 6 Chuff Rate" CVname="204.3.6" CV="204" PI="3" SI="6" default="3408" writeOnly="yes" >				<indexedPairVal highCVname="203.3.6" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 7 Chuff Rate High Byte" CVname="203.3.7" CV="203" PI="3" SI="7" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 7 Chuff Rate" CVname="204.3.7" CV="204" PI="3" SI="7" default="2816" writeOnly="yes" >				<indexedPairVal highCVname="203.3.7" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 8 Chuff Rate High Byte" CVname="203.3.8" CV="203" PI="3" SI="8" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 8 Chuff Rate" CVname="204.3.8" CV="204" PI="3" SI="8" default="2432" writeOnly="yes" >				<indexedPairVal highCVname="203.3.8" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 9 Chuff Rate High Byte" CVname="203.3.9" CV="203" PI="3" SI="9" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 9 Chuff Rate" CVname="204.3.9" CV="204" PI="3" SI="9" default="2048" writeOnly="yes" >				<indexedPairVal highCVname="203.3.9" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 10 Chuff Rate High Byte" CVname="203.3.10" CV="203" PI="3" SI="10" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 10 Chuff Rate" CVname="204.3.10" CV="204" PI="3" SI="10" default="1792" writeOnly="yes" >			<indexedPairVal highCVname="203.3.10" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 11 Chuff Rate High Byte" CVname="203.3.11" CV="203" PI="3" SI="11" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 11 Chuff Rate" CVname="204.3.11" CV="204" PI="3" SI="11" default="1536" writeOnly="yes" >			<indexedPairVal highCVname="203.3.11" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 12 Chuff Rate High Byte" CVname="203.3.12" CV="203" PI="3" SI="12" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 12 Chuff Rate" CVname="204.3.12" CV="204" PI="3" SI="12" default="1280" writeOnly="yes" >			<indexedPairVal highCVname="203.3.12" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 13 Chuff Rate High Byte" CVname="203.3.13" CV="203" PI="3" SI="13" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 13 Chuff Rate" CVname="204.3.13" CV="204" PI="3" SI="13" default="1152" writeOnly="yes" >			<indexedPairVal highCVname="203.3.13" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 14 Chuff Rate High Byte" CVname="203.3.14" CV="203" PI="3" SI="14" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 14 Chuff Rate" CVname="204.3.14" CV="204" PI="3" SI="14" default="1024" writeOnly="yes" >			<indexedPairVal highCVname="203.3.14" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 15 Chuff Rate High Byte" CVname="203.3.15" CV="203" PI="3" SI="15" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 15 Chuff Rate" CVname="204.3.15" CV="204" PI="3" SI="15" default="952" writeOnly="yes" >				<indexedPairVal highCVname="203.3.15" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 16 Chuff Rate High Byte" CVname="203.3.16" CV="203" PI="3" SI="16" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 16 Chuff Rate" CVname="204.3.16" CV="204" PI="3" SI="16" default="904" writeOnly="yes" >				<indexedPairVal highCVname="203.3.16" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 17 Chuff Rate High Byte" CVname="203.3.17" CV="203" PI="3" SI="17" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 17 Chuff Rate" CVname="204.3.17" CV="204" PI="3" SI="17" default="856" writeOnly="yes" >				<indexedPairVal highCVname="203.3.17" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 18 Chuff Rate High Byte" CVname="203.3.18" CV="203" PI="3" SI="18" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 18 Chuff Rate" CVname="204.3.18" CV="204" PI="3" SI="18" default="808" writeOnly="yes" >				<indexedPairVal highCVname="203.3.18" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 19 Chuff Rate High Byte" CVname="203.3.19" CV="203" PI="3" SI="19" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 19 Chuff Rate" CVname="204.3.19" CV="204" PI="3" SI="19" default="760" writeOnly="yes" >				<indexedPairVal highCVname="203.3.19" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 20 Chuff Rate High Byte" CVname="203.3.20" CV="203" PI="3" SI="20" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 20 Chuff Rate" CVname="204.3.20" CV="204" PI="3" SI="20" default="712" writeOnly="yes" >				<indexedPairVal highCVname="203.3.20" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 21 Chuff Rate High Byte" CVname="203.3.21" CV="203" PI="3" SI="21" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 21 Chuff Rate" CVname="204.3.21" CV="204" PI="3" SI="21" default="672" writeOnly="yes" >				<indexedPairVal highCVname="203.3.21" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 22 Chuff Rate High Byte" CVname="203.3.22" CV="203" PI="3" SI="22" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 22 Chuff Rate" CVname="204.3.22" CV="204" PI="3" SI="22" default="648" writeOnly="yes" >				<indexedPairVal highCVname="203.3.22" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 23 Chuff Rate High Byte" CVname="203.3.23" CV="203" PI="3" SI="23" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 23 Chuff Rate" CVname="204.3.23" CV="204" PI="3" SI="23" default="624" writeOnly="yes" >				<indexedPairVal highCVname="203.3.23" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 24 Chuff Rate High Byte" CVname="203.3.24" CV="203" PI="3" SI="24" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 24 Chuff Rate" CVname="204.3.24" CV="204" PI="3" SI="24" default="600" writeOnly="yes" >				<indexedPairVal highCVname="203.3.24" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 25 Chuff Rate High Byte" CVname="203.3.25" CV="203" PI="3" SI="25" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 25 Chuff Rate" CVname="204.3.25" CV="204" PI="3" SI="25" default="576" writeOnly="yes" >				<indexedPairVal highCVname="203.3.25" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 26 Chuff Rate High Byte" CVname="203.3.26" CV="203" PI="3" SI="26" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 26 Chuff Rate" CVname="204.3.26" CV="204" PI="3" SI="26" default="558" writeOnly="yes" >				<indexedPairVal highCVname="203.3.26" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 27 Chuff Rate High Byte" CVname="203.3.27" CV="203" PI="3" SI="27" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 27 Chuff Rate" CVname="204.3.27" CV="204" PI="3" SI="27" default="540" writeOnly="yes" >				<indexedPairVal highCVname="203.3.27" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 28 Chuff Rate High Byte" CVname="203.3.28" CV="203" PI="3" SI="28" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 28 Chuff Rate" CVname="204.3.28" CV="204" PI="3" SI="28" default="522" writeOnly="yes" >				<indexedPairVal highCVname="203.3.28" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 29 Chuff Rate High Byte" CVname="203.3.29" CV="203" PI="3" SI="29" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 29 Chuff Rate" CVname="204.3.20" CV="204" PI="3" SI="29" default="502" writeOnly="yes" >				<indexedPairVal highCVname="203.3.29" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 30 Chuff Rate High Byte" CVname="203.3.30" CV="203" PI="3" SI="30" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 30 Chuff Rate" CVname="204.3.30" CV="204" PI="3" SI="30" default="486" writeOnly="yes" >				<indexedPairVal highCVname="203.3.30" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 31 Chuff Rate High Byte" CVname="203.3.31" CV="203" PI="3" SI="31" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 31 Chuff Rate" CVname="204.3.31" CV="204" PI="3" SI="31" default="470" writeOnly="yes" >				<indexedPairVal highCVname="203.3.31" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 32 Chuff Rate High Byte" CVname="203.3.32" CV="203" PI="3" SI="32" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 32 Chuff Rate" CVname="204.3.32" CV="204" PI="3" SI="32" default="454" writeOnly="yes" >				<indexedPairVal highCVname="203.3.32" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 33 Chuff Rate High Byte" CVname="203.3.33" CV="203" PI="3" SI="33" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 33 Chuff Rate" CVname="204.3.33" CV="204" PI="3" SI="33" default="438" writeOnly="yes" >				<indexedPairVal highCVname="203.3.33" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 34 Chuff Rate High Byte" CVname="203.3.34" CV="203" PI="3" SI="34" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 34 Chuff Rate" CVname="204.3.34" CV="204" PI="3" SI="34" default="422" writeOnly="yes" >				<indexedPairVal highCVname="203.3.34" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 35 Chuff Rate High Byte" CVname="203.3.35" CV="203" PI="3" SI="35" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 35 Chuff Rate" CVname="204.3.35" CV="204" PI="3" SI="35" default="406" writeOnly="yes" >				<indexedPairVal highCVname="203.3.35" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 36 Chuff Rate High Byte" CVname="203.3.36" CV="203" PI="3" SI="36" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 36 Chuff Rate" CVname="204.3.36" CV="204" PI="3" SI="36" default="396" writeOnly="yes" >				<indexedPairVal highCVname="203.3.36" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 37 Chuff Rate High Byte" CVname="203.3.37" CV="203" PI="3" SI="37" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 37 Chuff Rate" CVname="204.3.37" CV="204" PI="3" SI="37" default="386" writeOnly="yes" >				<indexedPairVal highCVname="203.3.37" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 38 Chuff Rate High Byte" CVname="203.3.38" CV="203" PI="3" SI="38" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 38 Chuff Rate" CVname="204.3.38" CV="204" PI="3" SI="38" default="376" writeOnly="yes" >				<indexedPairVal highCVname="203.3.38" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 39 Chuff Rate High Byte" CVname="203.3.39" CV="203" PI="3" SI="39" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 39 Chuff Rate" CVname="204.3.39" CV="204" PI="3" SI="39" default="366" writeOnly="yes" >				<indexedPairVal highCVname="203.3.39" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 40 Chuff Rate High Byte" CVname="203.3.40" CV="203" PI="3" SI="40" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 40 Chuff Rate" CVname="204.3.40" CV="204" PI="3" SI="40" default="356" writeOnly="yes" >				<indexedPairVal highCVname="203.3.40" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 41 Chuff Rate High Byte" CVname="203.3.41" CV="203" PI="3" SI="41" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 41 Chuff Rate" CVname="204.3.41" CV="204" PI="3" SI="41" default="351" writeOnly="yes" >				<indexedPairVal highCVname="203.3.41" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 42 Chuff Rate High Byte" CVname="203.3.42" CV="203" PI="3" SI="42" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 42 Chuff Rate" CVname="204.3.42" CV="204" PI="3" SI="42" default="346" writeOnly="yes" >				<indexedPairVal highCVname="203.3.42" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 43 Chuff Rate High Byte" CVname="203.3.43" CV="203" PI="3" SI="43" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 43 Chuff Rate" CVname="204.3.43" CV="204" PI="3" SI="43" default="341" writeOnly="yes" >				<indexedPairVal highCVname="203.3.43" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 44 Chuff Rate High Byte" CVname="203.3.44" CV="203" PI="3" SI="44" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 44 Chuff Rate" CVname="204.3.44" CV="204" PI="3" SI="44" default="336" writeOnly="yes" >				<indexedPairVal highCVname="203.3.44" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 45 Chuff Rate High Byte" CVname="203.3.45" CV="203" PI="3" SI="45" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 45 Chuff Rate" CVname="204.3.45" CV="204" PI="3" SI="45" default="331" writeOnly="yes" >				<indexedPairVal highCVname="203.3.45" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 46 Chuff Rate High Byte" CVname="203.3.46" CV="203" PI="3" SI="46" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 46 Chuff Rate" CVname="204.3.46" CV="204" PI="3" SI="46" default="326" writeOnly="yes" >				<indexedPairVal highCVname="203.3.46" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 47 Chuff Rate High Byte" CVname="203.3.47" CV="203" PI="3" SI="47" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 47 Chuff Rate" CVname="204.3.47" CV="204" PI="3" SI="47" default="321" writeOnly="yes" >				<indexedPairVal highCVname="203.3.47" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 48 Chuff Rate High Byte" CVname="203.3.48" CV="203" PI="3" SI="48" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 48 Chuff Rate" CVname="204.3.48" CV="204" PI="3" SI="48" default="316" writeOnly="yes" >				<indexedPairVal highCVname="203.3.48" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 49 Chuff Rate High Byte" CVname="203.3.49" CV="203" PI="3" SI="49" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 49 Chuff Rate" CVname="204.3.49" CV="204" PI="3" SI="49" default="311" writeOnly="yes" >				<indexedPairVal highCVname="203.3.49" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 50 Chuff Rate High Byte" CVname="203.3.50" CV="203" PI="3" SI="50" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 50 Chuff Rate" CVname="204.3.50" CV="204" PI="3" SI="50" default="306" writeOnly="yes" >				<indexedPairVal highCVname="203.3.50" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 51 Chuff Rate High Byte" CVname="203.3.51" CV="203" PI="3" SI="51" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 51 Chuff Rate" CVname="204.3.51" CV="204" PI="3" SI="51" default="301" writeOnly="yes" >				<indexedPairVal highCVname="203.3.51" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 52 Chuff Rate High Byte" CVname="203.3.52" CV="203" PI="3" SI="52" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 52 Chuff Rate" CVname="204.3.52" CV="204" PI="3" SI="52" default="296" writeOnly="yes" >				<indexedPairVal highCVname="203.3.52" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 53 Chuff Rate High Byte" CVname="203.3.53" CV="203" PI="3" SI="53" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 53 Chuff Rate" CVname="204.3.53" CV="204" PI="3" SI="53" default="291" writeOnly="yes" >				<indexedPairVal highCVname="203.3.53" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 54 Chuff Rate High Byte" CVname="203.3.54" CV="203" PI="3" SI="54" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 54 Chuff Rate" CVname="204.3.54" CV="204" PI="3" SI="54" default="286" writeOnly="yes" >				<indexedPairVal highCVname="203.3.54" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 55 Chuff Rate High Byte" CVname="203.3.55" CV="203" PI="3" SI="55" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 55 Chuff Rate" CVname="204.3.55" CV="204" PI="3" SI="55" default="281" writeOnly="yes" >				<indexedPairVal highCVname="203.3.55" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 56 Chuff Rate High Byte" CVname="203.3.56" CV="203" PI="3" SI="56" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 56 Chuff Rate" CVname="204.3.56" CV="204" PI="3" SI="56" default="276" writeOnly="yes" >				<indexedPairVal highCVname="203.3.56" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 57 Chuff Rate High Byte" CVname="203.3.57" CV="203" PI="3" SI="57" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 57 Chuff Rate" CVname="204.3.57" CV="204" PI="3" SI="57" default="271" writeOnly="yes" >				<indexedPairVal highCVname="203.3.57" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 58 Chuff Rate High Byte" CVname="203.3.58" CV="203" PI="3" SI="58" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 58 Chuff Rate" CVname="204.3.58" CV="204" PI="3" SI="58" default="266" writeOnly="yes" >				<indexedPairVal highCVname="203.3.58" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 59 Chuff Rate High Byte" CVname="203.3.59" CV="203" PI="3" SI="59" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 59 Chuff Rate" CVname="204.3.59" CV="204" PI="3" SI="59" default="256" writeOnly="yes" >				<indexedPairVal highCVname="203.3.59" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 60 Chuff Rate High Byte" CVname="203.3.60" CV="203" PI="3" SI="60" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 60 Chuff Rate" CVname="204.3.60" CV="204" PI="3" SI="60" default="251" writeOnly="yes" >				<indexedPairVal highCVname="203.3.60" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 61 Chuff Rate High Byte" CVname="203.3.61" CV="203" PI="3" SI="61" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 61 Chuff Rate" CVname="204.3.61" CV="204" PI="3" SI="61" default="247" writeOnly="yes" >				<indexedPairVal highCVname="203.3.61" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 62 Chuff Rate High Byte" CVname="203.3.62" CV="203" PI="3" SI="62" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 62 Chuff Rate" CVname="204.3.62" CV="204" PI="3" SI="62" default="243" writeOnly="yes" >				<indexedPairVal highCVname="203.3.62" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 63 Chuff Rate High Byte" CVname="203.3.63" CV="203" PI="3" SI="63" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 63 Chuff Rate" CVname="204.3.63" CV="204" PI="3" SI="63" default="239" writeOnly="yes" >				<indexedPairVal highCVname="203.3.63" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 64 Chuff Rate High Byte" CVname="203.3.64" CV="203" PI="3" SI="64" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 64 Chuff Rate" CVname="204.3.64" CV="204" PI="3" SI="64" default="235" writeOnly="yes" >				<indexedPairVal highCVname="203.3.64" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 65 Chuff Rate High Byte" CVname="203.3.65" CV="203" PI="3" SI="65" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 65 Chuff Rate" CVname="204.3.65" CV="204" PI="3" SI="65" default="231" writeOnly="yes" >				<indexedPairVal highCVname="203.3.65" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 66 Chuff Rate High Byte" CVname="203.3.66" CV="203" PI="3" SI="66" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 66 Chuff Rate" CVname="204.3.66" CV="204" PI="3" SI="66" default="228" writeOnly="yes" >				<indexedPairVal highCVname="203.3.66" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 67 Chuff Rate High Byte" CVname="203.3.67" CV="203" PI="3" SI="67" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 67 Chuff Rate" CVname="204.3.67" CV="204" PI="3" SI="67" default="225" writeOnly="yes" >				<indexedPairVal highCVname="203.3.67" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 68 Chuff Rate High Byte" CVname="203.3.68" CV="203" PI="3" SI="68" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 68 Chuff Rate" CVname="204.3.68" CV="204" PI="3" SI="68" default="222" writeOnly="yes" >				<indexedPairVal highCVname="203.3.68" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 69 Chuff Rate High Byte" CVname="203.3.69" CV="203" PI="3" SI="69" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 69 Chuff Rate" CVname="204.3.69" CV="204" PI="3" SI="69" default="219" writeOnly="yes" >				<indexedPairVal highCVname="203.3.69" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 70 Chuff Rate High Byte" CVname="203.3.70" CV="203" PI="3" SI="70" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 70 Chuff Rate" CVname="204.3.70" CV="204" PI="3" SI="70" default="216" writeOnly="yes" >				<indexedPairVal highCVname="203.3.70" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 71 Chuff Rate High Byte" CVname="203.3.71" CV="203" PI="3" SI="71" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 71 Chuff Rate" CVname="204.3.71" CV="204" PI="3" SI="71" default="213" writeOnly="yes" >				<indexedPairVal highCVname="203.3.71" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 72 Chuff Rate High Byte" CVname="203.3.72" CV="203" PI="3" SI="72" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 72 Chuff Rate" CVname="204.3.72" CV="204" PI="3" SI="72" default="210" writeOnly="yes" >				<indexedPairVal highCVname="203.3.72" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 73 Chuff Rate High Byte" CVname="203.3.73" CV="203" PI="3" SI="73" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 73 Chuff Rate" CVname="204.3.73" CV="204" PI="3" SI="73" default="207" writeOnly="yes" >				<indexedPairVal highCVname="203.3.73" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 74 Chuff Rate High Byte" CVname="203.3.74" CV="203" PI="3" SI="74" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 74 Chuff Rate" CVname="204.3.74" CV="204" PI="3" SI="74" default="204" writeOnly="yes" >				<indexedPairVal highCVname="203.3.74" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 75 Chuff Rate High Byte" CVname="203.3.75" CV="203" PI="3" SI="75" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 75 Chuff Rate" CVname="204.3.75" CV="204" PI="3" SI="75" default="201" writeOnly="yes" >				<indexedPairVal highCVname="203.3.75" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 76 Chuff Rate High Byte" CVname="203.3.76" CV="203" PI="3" SI="76" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 76 Chuff Rate" CVname="204.3.76" CV="204" PI="3" SI="76" default="198" writeOnly="yes" >				<indexedPairVal highCVname="203.3.76" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 77 Chuff Rate High Byte" CVname="203.3.77" CV="203" PI="3" SI="77" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 77 Chuff Rate" CVname="204.3.77" CV="204" PI="3" SI="77" default="195" writeOnly="yes" >				<indexedPairVal highCVname="203.3.77" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 78 Chuff Rate High Byte" CVname="203.3.78" CV="203" PI="3" SI="78" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 78 Chuff Rate" CVname="204.3.78" CV="204" PI="3" SI="78" default="192" writeOnly="yes" >				<indexedPairVal highCVname="203.3.78" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 79 Chuff Rate High Byte" CVname="203.3.79" CV="203" PI="3" SI="79" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 79 Chuff Rate" CVname="204.3.79" CV="204" PI="3" SI="79" default="189" writeOnly="yes" >				<indexedPairVal highCVname="203.3.79" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 80 Chuff Rate High Byte" CVname="203.3.80" CV="203" PI="3" SI="80" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 80 Chuff Rate" CVname="204.3.80" CV="204" PI="3" SI="80" default="186" writeOnly="yes" >				<indexedPairVal highCVname="203.3.80" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 81 Chuff Rate High Byte" CVname="203.3.81" CV="203" PI="3" SI="81" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 81 Chuff Rate" CVname="204.3.81" CV="204" PI="3" SI="81" default="184" writeOnly="yes" >				<indexedPairVal highCVname="203.3.81" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 82 Chuff Rate High Byte" CVname="203.3.82" CV="203" PI="3" SI="82" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 82 Chuff Rate" CVname="204.3.82" CV="204" PI="3" SI="82" default="182" writeOnly="yes" >				<indexedPairVal highCVname="203.3.82" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 83 Chuff Rate High Byte" CVname="203.3.83" CV="203" PI="3" SI="83" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 83 Chuff Rate" CVname="204.3.83" CV="204" PI="3" SI="83" default="180" writeOnly="yes" >				<indexedPairVal highCVname="203.3.83" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 84 Chuff Rate High Byte" CVname="203.3.84" CV="203" PI="3" SI="84" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 84 Chuff Rate" CVname="204.3.84" CV="204" PI="3" SI="84" default="178" writeOnly="yes" >				<indexedPairVal highCVname="203.3.84" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 85 Chuff Rate High Byte" CVname="203.3.85" CV="203" PI="3" SI="85" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 85 Chuff Rate" CVname="204.3.85" CV="204" PI="3" SI="85" default="176" writeOnly="yes" >				<indexedPairVal highCVname="203.3.85" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 86 Chuff Rate High Byte" CVname="203.3.86" CV="203" PI="3" SI="86" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 86 Chuff Rate" CVname="204.3.86" CV="204" PI="3" SI="86" default="174" writeOnly="yes" >				<indexedPairVal highCVname="203.3.86" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 87 Chuff Rate High Byte" CVname="203.3.87" CV="203" PI="3" SI="87" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 87 Chuff Rate" CVname="204.3.87" CV="204" PI="3" SI="87" default="172" writeOnly="yes" >				<indexedPairVal highCVname="203.3.87" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 88 Chuff Rate High Byte" CVname="203.3.88" CV="203" PI="3" SI="88" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 88 Chuff Rate" CVname="204.3.88" CV="204" PI="3" SI="88" default="170" writeOnly="yes" >				<indexedPairVal highCVname="203.3.88" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 89 Chuff Rate High Byte" CVname="203.3.89" CV="203" PI="3" SI="89" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 89 Chuff Rate" CVname="204.3.89" CV="204" PI="3" SI="89" default="168" writeOnly="yes" >				<indexedPairVal highCVname="203.3.89" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 90 Chuff Rate High Byte" CVname="203.3.90" CV="203" PI="3" SI="90" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 90 Chuff Rate" CVname="204.3.90" CV="204" PI="3" SI="90" default="166" writeOnly="yes" >				<indexedPairVal highCVname="203.3.90" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 91 Chuff Rate High Byte" CVname="203.3.91" CV="203" PI="3" SI="91" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 91 Chuff Rate" CVname="204.3.91" CV="204" PI="3" SI="91" default="164" writeOnly="yes" >				<indexedPairVal highCVname="203.3.91" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 92 Chuff Rate High Byte" CVname="203.3.92" CV="203" PI="3" SI="92" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 92 Chuff Rate" CVname="204.3.92" CV="204" PI="3" SI="92" default="162" writeOnly="yes" >				<indexedPairVal highCVname="203.3.92" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 93 Chuff Rate High Byte" CVname="203.3.93" CV="203" PI="3" SI="93" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 93 Chuff Rate" CVname="204.3.93" CV="204" PI="3" SI="93" default="160" writeOnly="yes" >				<indexedPairVal highCVname="203.3.93" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 94 Chuff Rate High Byte" CVname="203.3.94" CV="203" PI="3" SI="94" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 94 Chuff Rate" CVname="204.3.94" CV="204" PI="3" SI="94" default="158" writeOnly="yes" >				<indexedPairVal highCVname="203.3.94" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 95 Chuff Rate High Byte" CVname="203.3.95" CV="203" PI="3" SI="95" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 95 Chuff Rate" CVname="204.3.95" CV="204" PI="3" SI="95" default="156" writeOnly="yes" >				<indexedPairVal highCVname="203.3.95" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 96 Chuff Rate High Byte" CVname="203.3.96" CV="203" PI="3" SI="96" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 96 Chuff Rate" CVname="204.3.96" CV="204" PI="3" SI="96" default="154" writeOnly="yes" >				<indexedPairVal highCVname="203.3.96" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 97 Chuff Rate High Byte" CVname="203.3.97" CV="203" PI="3" SI="97" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 97 Chuff Rate" CVname="204.3.97" CV="204" PI="3" SI="97" default="152" writeOnly="yes" >				<indexedPairVal highCVname="203.3.97" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 98 Chuff Rate High Byte" CVname="203.3.98" CV="203" PI="3" SI="98" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 98 Chuff Rate" CVname="204.3.98" CV="204" PI="3" SI="98" default="150" writeOnly="yes" >				<indexedPairVal highCVname="203.3.98" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 99 Chuff Rate High Byte" CVname="203.3.99" CV="203" PI="3" SI="99" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 99 Chuff Rate" CVname="204.3.99" CV="204" PI="3" SI="99" default="148" writeOnly="yes" >				<indexedPairVal highCVname="203.3.99" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 100 Chuff Rate High Byte" CVname="203.3.100" CV="203" PI="3" SI="100" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 100 Chuff Rate" CVname="204.3.100" CV="204" PI="3" SI="100" default="147" writeOnly="yes" >				<indexedPairVal highCVname="203.3.100" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 101 Chuff Rate High Byte" CVname="203.3.101" CV="203" PI="3" SI="101" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 101 Chuff Rate" CVname="204.3.101" CV="204" PI="3" SI="101" default="146" writeOnly="yes" >				<indexedPairVal highCVname="203.3.101" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 102 Chuff Rate High Byte" CVname="203.3.102" CV="203" PI="3" SI="102" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 102 Chuff Rate" CVname="204.3.102" CV="204" PI="3" SI="102" default="145" writeOnly="yes" >				<indexedPairVal highCVname="203.3.102" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 103 Chuff Rate High Byte" CVname="203.3.103" CV="203" PI="3" SI="103" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 103 Chuff Rate" CVname="204.3.103" CV="204" PI="3" SI="103" default="144" writeOnly="yes" >				<indexedPairVal highCVname="203.3.103" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 104 Chuff Rate High Byte" CVname="203.3.104" CV="203" PI="3" SI="104" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 104 Chuff Rate" CVname="204.3.104" CV="204" PI="3" SI="104" default="143" writeOnly="yes" >				<indexedPairVal highCVname="203.3.104" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 105 Chuff Rate High Byte" CVname="203.3.105" CV="203" PI="3" SI="105" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 105 Chuff Rate" CVname="204.3.105" CV="204" PI="3" SI="105" default="142" writeOnly="yes" >			<indexedPairVal highCVname="203.3.105" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 106 Chuff Rate High Byte" CVname="203.3.106" CV="203" PI="3" SI="106" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 106 Chuff Rate" CVname="204.3.106" CV="204" PI="3" SI="106" default="141" writeOnly="yes" >			<indexedPairVal highCVname="203.3.106" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 107 Chuff Rate High Byte" CVname="203.3.107" CV="203" PI="3" SI="107" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 107 Chuff Rate" CVname="204.3.107" CV="204" PI="3" SI="107" default="140" writeOnly="yes" >			<indexedPairVal highCVname="203.3.107" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 108 Chuff Rate High Byte" CVname="203.3.108" CV="203" PI="3" SI="108" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 108 Chuff Rate" CVname="204.3.108" CV="204" PI="3" SI="108" default="139" writeOnly="yes" >			<indexedPairVal highCVname="203.3.108" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 109 Chuff Rate High Byte" CVname="203.3.109" CV="203" PI="3" SI="109" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 109 Chuff Rate" CVname="204.3.109" CV="204" PI="3" SI="109" default="138" writeOnly="yes" >			<indexedPairVal highCVname="203.3.109" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 100 Chuff Rate High Byte" CVname="203.3.100" CV="203" PI="3" SI="100" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 100 Chuff Rate" CVname="204.3.110" CV="204" PI="3" SI="110" default="137" writeOnly="yes" >				<indexedPairVal highCVname="203.3.100" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 111 Chuff Rate High Byte" CVname="203.3.111" CV="203" PI="3" SI="111" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 111 Chuff Rate" CVname="204.3.111" CV="204" PI="3" SI="111" default="136" writeOnly="yes" >				<indexedPairVal highCVname="203.3.111" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 112 Chuff Rate High Byte" CVname="203.3.112" CV="203" PI="3" SI="112" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 112 Chuff Rate" CVname="204.3.112" CV="204" PI="3" SI="112" default="135" writeOnly="yes" >				<indexedPairVal highCVname="203.3.112" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 113 Chuff Rate High Byte" CVname="203.3.113" CV="203" PI="3" SI="113" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 113 Chuff Rate" CVname="204.3.113" CV="204" PI="3" SI="113" default="134" writeOnly="yes" >				<indexedPairVal highCVname="203.3.113" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 114 Chuff Rate High Byte" CVname="203.3.114" CV="203" PI="3" SI="114" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 114 Chuff Rate" CVname="204.3.114" CV="204" PI="3" SI="114" default="133" writeOnly="yes" >				<indexedPairVal highCVname="203.3.114" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 115 Chuff Rate High Byte" CVname="203.3.115" CV="203" PI="3" SI="115" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 115 Chuff Rate" CVname="204.3.115" CV="204" PI="3" SI="115" default="132" writeOnly="yes" >			<indexedPairVal highCVname="203.3.115" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 116 Chuff Rate High Byte" CVname="203.3.116" CV="203" PI="3" SI="116" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 116 Chuff Rate" CVname="204.3.116" CV="204" PI="3" SI="116" default="131" writeOnly="yes" >			<indexedPairVal highCVname="203.3.116" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 117 Chuff Rate High Byte" CVname="203.3.117" CV="203" PI="3" SI="117" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 117 Chuff Rate" CVname="204.3.117" CV="204" PI="3" SI="117" default="130" writeOnly="yes" >			<indexedPairVal highCVname="203.3.117" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 118 Chuff Rate High Byte" CVname="203.3.118" CV="203" PI="3" SI="118" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 118 Chuff Rate" CVname="204.3.118" CV="204" PI="3" SI="118" default="129" writeOnly="yes" >			<indexedPairVal highCVname="203.3.118" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 119 Chuff Rate High Byte" CVname="203.3.119" CV="203" PI="3" SI="119" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 119 Chuff Rate" CVname="204.3.119" CV="204" PI="3" SI="119" default="128" writeOnly="yes" >			<indexedPairVal highCVname="203.3.119" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 120 Chuff Rate High Byte" CVname="203.3.120" CV="203" PI="3" SI="120" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 120 Chuff Rate" CVname="204.3.120" CV="204" PI="3" SI="120" default="127" writeOnly="yes" >				<indexedPairVal highCVname="203.3.120" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 121 Chuff Rate High Byte" CVname="203.3.121" CV="203" PI="3" SI="121" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 121 Chuff Rate" CVname="204.3.121" CV="204" PI="3" SI="121" default="126" writeOnly="yes" >				<indexedPairVal highCVname="203.3.121" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 122 Chuff Rate High Byte" CVname="203.3.122" CV="203" PI="3" SI="122" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 122 Chuff Rate" CVname="204.3.122" CV="204" PI="3" SI="122" default="125" writeOnly="yes" >				<indexedPairVal highCVname="203.3.122" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 123 Chuff Rate High Byte" CVname="203.3.123" CV="203" PI="3" SI="123" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 123 Chuff Rate" CVname="204.3.123" CV="204" PI="3" SI="123" default="124" writeOnly="yes" >				<indexedPairVal highCVname="203.3.123" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 124 Chuff Rate High Byte" CVname="203.3.124" CV="203" PI="3" SI="124" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 124 Chuff Rate" CVname="204.3.124" CV="204" PI="3" SI="124" default="123" writeOnly="yes" >				<indexedPairVal highCVname="203.3.124" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 125 Chuff Rate High Byte" CVname="203.3.125" CV="203" PI="3" SI="125" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 125 Chuff Rate" CVname="204.3.125" CV="204" PI="3" SI="125" default="122" writeOnly="yes" >			<indexedPairVal highCVname="203.3.125" order="highFirst" min="0" max="65535"/>			</ivariable>
+			<ivariable label="Step 126 Chuff Rate High Byte" CVname="203.3.126" CV="203" PI="3" SI="126" writeOnly="yes" >				<indexedVal/>			</ivariable>
+			<ivariable label="Step 126 Chuff Rate" CVname="204.3.126" CV="204" PI="3" SI="126" default="121" writeOnly="yes" >			<indexedPairVal highCVname="203.3.126" order="highFirst" min="0" max="65535"/>			</ivariable>
 						
+			<ivariable label="Cylinder cocks auto turn on time early High Byte" CVname="203.4.0" CV="203" PI="4" SI="0" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Cylinder cocks auto turn on time early" CVname="204.4.0" CV="204" PI="4" SI="0" default="256" writeOnly="yes" item="Sound Setting 31" tooltip="very early decoders only">
 				<indexedPairVal highCVname="203.4.0" order="highFirst" min="0" max="65535"/>
 			</ivariable>
+			<ivariable label="Cylinder cocks shut off speed step High Byte" CVname="203.4.1" CV="203" PI="4" SI="1" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Cylinder cocks shut off speed step" CVname="204.4.1" CV="204" PI="4" SI="1" default="16" writeOnly="yes" item="Sound Setting 33">
 				<indexedPairVal highCVname="203.4.1" order="highFirst" min="0" max="126"/>
 			</ivariable>
+			<ivariable label="Random Sound 1 frequency level High Byte" CVname="203.4.2" CV="203" PI="4" SI="2" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound 1 frequency level" CVname="204.4.2" CV="204" PI="4" SI="2" default="200" writeOnly="yes" item="Sound Setting 21" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
 				<indexedPairVal highCVname="203.4.2" order="highFirst" min="0" max="255"/>
 			</ivariable>
+			<ivariable label="Random Sound 2 frequency level High Byte" CVname="203.4.3" CV="203" PI="4" SI="3" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound 2 frequency level" CVname="204.4.3" CV="204" PI="4" SI="3" default="96" writeOnly="yes" item="Sound Setting 22" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
 				<indexedPairVal highCVname="203.4.3" order="highFirst" min="0" max="255"/>
 			</ivariable>
+			<ivariable label="Random Sound 3 frequency level High Byte" CVname="203.4.4" CV="203" PI="4" SI="4" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound 3 frequency level" CVname="204.4.4" CV="204" PI="4" SI="4" default="64" writeOnly="yes" item="Sound Setting 23" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
 				<indexedPairVal highCVname="203.4.4" order="highFirst" min="0" max="255"/>
 			</ivariable>
+			<ivariable label="Random Sound 4 frequency level High Byte" CVname="203.4.5" CV="203" PI="4" SI="5" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound 4 frequency level" CVname="204.4.5" CV="204" PI="4" SI="5" default="16" writeOnly="yes" item="Sound Setting 24" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
 				<indexedPairVal highCVname="203.4.5" order="highFirst" min="0" max="255"/>
 			</ivariable>
+			<ivariable label="Random Sound Overall Timer High Byte" CVname="203.4.6" CV="203" PI="4" SI="6" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound Overall Timer" CVname="204.4.6" CV="204" PI="4" SI="6" default="768" writeOnly="yes" item="Sound Setting 25" tooltip="2560 is about 1 second between times through random sound routine (pre lighting function use of tmr">
 				<indexedPairVal highCVname="203.4.6" order="highFirst" min="0" max="65535"/>
 			</ivariable>
+			<ivariable label="Random Sound Cutout Speed Step High Byte" CVname="203.4.7" CV="203" PI="4" SI="7" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Random Sound Cutout Speed Step" CVname="204.4.7" CV="204" PI="4" SI="7" default="20" writeOnly="yes" item="Sound Setting 26" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
 				<indexedPairVal highCVname="203.4.7" order="highFirst" min="0" max="126"/>
 			</ivariable>
@@ -1365,9 +1618,11 @@
 					<ienumChoice choice="Horn Nathan K5LA" />
 				</ienumVal>
 			</ivariable>
+			<ivariable label="Proto chuff start speed step High Byte" CVname="203.4.9" CV="203" PI="4" SI="9" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Proto chuff start speed step" CVname="204.4.9" CV="204" PI="4" SI="9" default="10" writeOnly="yes" item="Sound Setting 34" >
 				<indexedPairVal highCVname="203.4.9" order="highFirst" min="0" max="126"/>
 			</ivariable>
+			<ivariable label="Global volume High Byte" CVname="203.4.10" CV="203" PI="4" SI="10" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Global volume" CVname="204.4.10" CV="204" PI="4" SI="10" default="5" writeOnly="yes" item="Sound Setting 1" >
 				<indexedPairVal highCVname="203.4.10" order="highFirst" min="0" max="5"/>
 			</ivariable>
@@ -1423,6 +1678,7 @@
 			<ivariable label="Direction change enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="VXXXXXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
+			<ivariable label="Brake grinding noise start speed High Byte" CVname="203.4.13" CV="203" PI="4" SI="13" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Brake grinding noise start speed" CVname="204.4.13" CV="204" PI="4" SI="13" default="15" writeOnly="yes" item="Sound Setting 35" >
 				<indexedPairVal highCVname="203.4.13" order="highFirst" min="0" max="126"/>
 			</ivariable>
@@ -1474,14 +1730,17 @@
 			<ivariable label="Dual function F6" CVname="204.4.14" CV="204" PI="4" SI="14" default="0" mask="VXXXXXXX" writeOnly="yes" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
+			<ivariable label="BEMF sensitivity High Byte" CVname="203.4.15" CV="203" PI="4" SI="15" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="BEMF sensitivity" CVname="204.4.15" CV="204" PI="4" SI="15" default="1" writeOnly="yes" item="Sound Setting 11" tooltip=" divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
 				<indexedPairVal highCVname="203.4.15" order="highFirst" min="0" max="8"/>
 			</ivariable>
+			<ivariable label="Chuff rate adjustment High Byte" CVname="203.4.16" CV="203" PI="4" SI="16" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Chuff rate adjustment" CVname="204.4.16" CV="204" PI="4" SI="16" default="100" writeOnly="yes" tooltip="Default 100%, Increase value to increase chuff rate, decrease value to decrease chuff rate">
 				<indexedPairVal highCVname="203.4.16" order="highFirst" min="0" max="200"/>
 			</ivariable>
+			<ivariable label="Cylinder cocks auto turn on time High Byte" CVname="203.4.18" CV="203" PI="4" SI="0" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Cylinder cocks auto turn on time" CVname="204.4.18" CV="204" PI="4" SI="18" default="256" writeOnly="yes" item="Sound Setting 32">
-				<indexedPairVal highCVname="203.4.0" order="highFirst" min="0" max="65535"/>
+				<indexedPairVal highCVname="203.4.18" order="highFirst" min="0" max="65535"/>
 			</ivariable>
 			<ivariable label="Cam enable" CVname="204.4.19" CV="204" PI="4" SI="19" default="0" mask="XXXXXXXV" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1501,11 +1760,13 @@
 			<ivariable label="Audio Auto Shutoff Timer" CVname="204.4.19" CV="204" PI="4" SI="19" default="0" mask="XVXXXXXX" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
+			<ivariable label="Articulated Chuff Slip Rate High Byte" CVname="203.4.20" CV="203" PI="4" SI="0" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Articulated Chuff Slip Rate" CVname="204.4.20" CV="204" PI="4" SI="20" default="240" writeOnly="yes" item="Sound Setting 36">
-				<indexedPairVal highCVname="203.4.0" order="highFirst" min="0" max="65535"/>
+				<indexedPairVal highCVname="203.4.20" order="highFirst" min="0" max="65535"/>
 			</ivariable>
+			<ivariable label="Audio Auto Shut-off Time High Byte" CVname="203.4.21" CV="203" PI="4" SI="0" writeOnly="yes" >				<indexedVal/>			</ivariable>
 			<ivariable label="Audio Auto Shut-off Time" CVname="204.4.21" CV="204" PI="4" SI="21" default="256" writeOnly="yes" item="Sound Setting 2">
-				<indexedPairVal highCVname="203.4.0" order="highFirst" min="0" max="65535"/>
+				<indexedPairVal highCVname="203.4.21" order="highFirst" min="0" max="65535"/>
 			</ivariable>
 			
         </variables>
@@ -1524,7 +1785,7 @@
 	<column>
 		<row>
 			<column>
-				<label label="JMRI 3.3.6 or later is required to use this definition"/>
+				<label label="JMRI 3.5.4 or later is required to use this definition"/>
 				<label label="   "/>
 				<label label="*****************************************************************************************"/>
 				<label label="* Programming order is critical, must write full sheet only, do NOT write changes, do NOT write individual CVs. *"/>
