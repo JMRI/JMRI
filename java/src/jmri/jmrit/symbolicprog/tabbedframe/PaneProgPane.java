@@ -681,7 +681,7 @@ public class PaneProgPane extends javax.swing.JPanel
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState+"  label: "+var.label());
             varListIndex++;
-            if (var.isToRead() || vState == VariableValue.UNKNOWN) {        // always read UNKNOWN state
+            if (var.isToRead()) {
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
                 executeRead(var);
 
@@ -696,7 +696,7 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
-            if (cv.isToRead() || cv.getState() == CvValue.UNKNOWN) {  // always read UNKNOWN state
+            if (cv.isToRead()) {  // always read UNKNOWN state
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at read start");
@@ -720,7 +720,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
             indexedCvListIndex++;
-            if (iCv.isToRead() || indxState == VariableValue.UNKNOWN) {
+            if (iCv.isToRead()) {
                 String sz = "start read of indexed cv " +
                     (_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
@@ -878,7 +878,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+VariableValue.stateNameFromValue(vState)
                                                 +" isToWrite: "+var.isToWrite()+" label:"+var.label());
             varListIndex++;
-            if (var.isToWrite() || vState == VariableValue.UNKNOWN) {
+            if (var.isToWrite()) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
 
                 executeWrite(var);
@@ -893,7 +893,7 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
-            if (cv.isToWrite() || cv.getState()== CvValue.UNKNOWN) {
+            if (cv.isToWrite()) {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at write start");
@@ -916,7 +916,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 "nextWrite indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
             indexedCvListIndex++;
-            if (iCv.isToWrite() || indxState == VariableValue.UNKNOWN) {
+            if (iCv.isToWrite()) {
                 String sz = "start write of indexed cv " +
                     (  _indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);

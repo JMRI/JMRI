@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130914-0517-jake on Fri Sep 13 22:17:41 PDT 2013 $Id$-->
-  <decoderIndex version="289">
+  <!--Written by JMRI version 20131010-0522-jake on Wed Oct 09 22:22:30 PDT 2013 $Id$-->
+  <decoderIndex version="291">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4422,8 +4422,8 @@
           <functionlabel num="10" lockable="false">Door</functionlabel>
         </functionlabels>
       </family>
-      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="7" highVersionID="255" file="Mistral_GOLD_V7.xml">
-        <model model="GOLD V7" />
+      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="7" highVersionID="255" type="locomotive" file="Mistral_GOLD_V7.xml">
+        <model model="GOLD V7" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Engine</functionlabel>

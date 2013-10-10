@@ -1,6 +1,6 @@
   <pane name="Read Me - IMPORTANT ">
     <column>
-      <label label="JMRI 3.5.3 or later is required to use this definition."/>
+      <label label="JMRI 3.5.6 or later is required to use this definition."/>
       <label label=" "/>
       <label label="ESU V4/Select Decoders Important Information:"/>
       <separator/>
