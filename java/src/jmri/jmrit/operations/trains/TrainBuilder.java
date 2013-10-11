@@ -3574,8 +3574,10 @@ public class TrainBuilder extends TrainCommon {
 	 * Returns true if car can be picked up later in a train's route
 	 */
 	private boolean checkForLaterPickUp(RouteLocation rl, RouteLocation rld, Car car) {
-		if (rl != rld && rld.getName().equals(car.getLocationName())
-				&& !rld.getName().equals(terminateLocation.getName())) {
+		if (rl != rld && rld.getName().equals(car.getLocationName())) {
+			// don't delay adding a caboose, passenger car, or car with FRED
+			if (car.isCaboose() || car.isPassenger() || car.hasFred())
+				return false;
 			if (!checkPickUpTrainDirection(car, rld)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterDirection"),
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
@@ -3584,15 +3586,11 @@ public class TrainBuilder extends TrainCommon {
 			if (!rld.isPickUpAllowed()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLater"),
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
-				// log.debug("Later pick up for car ("+car.toString()+") from route location ("+rld.getName()+") id "+
-				// rld.getId()+" not possible, no pick ups allowed!");
 				return false;
 			}
 			if (rld.getMaxCarMoves() - rld.getCarMoves() <= 0) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterNoMoves"),
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
-				// log.debug("Later pick up for car ("+car.toString()+") from route location ("+rld.getName()+") id "+
-				// rld.getId()+" not possible, no moves left!");
 				return false;
 			}
 			log.debug("Car (" + car.toString() + ") can be picked up later!");
