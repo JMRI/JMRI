@@ -3004,13 +3004,13 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			// is the car's destination the terminal and is that allowed?
 			if (!train.isAllowThroughCarsEnabled()
-					&& k == routeList.size()-1
 					&& !train.isLocalSwitcher() 
 					&& !car.isCaboose()
 					&& !car.hasFred() 
 					&& !car.isPassenger()
 					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
-					&& splitString(car.getDestinationName()).equals(splitString(terminateLocation.getName()))) {
+					&& splitString(car.getDestinationName()).equals(splitString(terminateLocation.getName()))
+					&& !splitString(departLocation.getName()).equals(splitString(terminateLocation.getName()))) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasDestination"),
 						new Object[] { car.toString(), departLocation.getName(), terminateLocation.getName() }));
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
