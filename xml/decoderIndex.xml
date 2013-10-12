@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20131010-0522-jake on Wed Oct 09 22:22:30 PDT 2013 $Id$-->
+  <!--Written by JMRI version 20131012-0539-jake on Fri Oct 11 22:39:49 PDT 2013 $Id$-->
   <decoderIndex version="291">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -6429,6 +6429,38 @@
           <output name="Bk" label="Brake Key" />
           <size length="13.3" width="10.0" height="3.5" units="mm" />
         </model>
+      </family>
+      <family name="OEM PIKO" mfg="Throttle-Up (SoundTraxx)" comment="These are the PIKO OEM G scale steam decoders" file="SoundTraxx_OEM_PIKO.xml">
+        <model model="Mogul" numOuts="2" numFns="14" connector="other" productID="Mogul">
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="(Not used)" />
+          <output name="Smoke Unit" />
+          <output name="Dynamo" />
+          <output name="Short Whistle" />
+          <output name="Steam Release" />
+          <output name="Inertia Override" />
+          <output name="Headlight Dimmer" />
+          <output name="Mute" />
+          <output name="Half Speed" />
+          <output name="Brake Squeal" />
+          <output name="(Not used 2)" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">(Not used)</functionlabel>
+          <functionlabel num="6" lockable="true">Smoke Unit</functionlabel>
+          <functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Inertia Override</functionlabel>
+          <functionlabel num="10" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal / Brake Release</functionlabel>
+          <functionlabel num="12" lockable="true">(Not used)</functionlabel>
+        </functionlabels>
       </family>
       <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_SHS_F3.xml">
         <model model="F3 Diesel" maxInputVolts="16V" maxMotorCurrent="5A" maxTotalCurrent="6A" formFactor="SHS F3" nmraWarrant="no" connector="other" numOuts="4" numFns="10">

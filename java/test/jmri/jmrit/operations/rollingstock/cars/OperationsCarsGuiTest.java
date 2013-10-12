@@ -73,65 +73,28 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		CarManager cManager = CarManager.instance();
 		// add 5 cars to table
-		Car c1 = cManager.newCar("NH", "1");
-		c1.setBuilt("2009");
-		c1.setColor("Red");
-		c1.setLength("40");
-		c1.setLoadName("L");
-		c1.setMoves(55);
-		c1.setOwner("Owner2");
-		c1.setRfid("RFID 3");
-		c1.setTypeName("Caboose");
-		c1.setWeight("1.4");
-		c1.setWeightTons("Tons of Weight");
-		c1.setCaboose(true);
-		c1.setComment("Test Car NH 1 Comment");
+		loadCars();
+		
+		Car c1 = cManager.getByRoadAndNumber("NH", "1");
+		Assert.assertNotNull(c1);
+
 		Assert.assertEquals("c1 location", Track.OKAY, c1.setLocation(westford, westfordYard));
 		Assert.assertEquals("c1 destination", Track.OKAY, c1.setDestination(boxford, boxfordJacobson));
 
-		Car c2 = cManager.newCar("UP", "2");
-		c2.setBuilt("2004");
-		c2.setColor("Blue");
-		c2.setLength("50");
-		c2.setLoadName("E");
-		c2.setMoves(50);
-		c2.setOwner("AT");
-		c2.setRfid("RFID 2");
-		c2.setTypeName("Boxcar");
+		Car c2 = cManager.getByRoadAndNumber("UP", "2");
 		
-		Car c3 = cManager.newCar("AA", "3");
-		c3.setBuilt("2006");
-		c3.setColor("White");
-		c3.setLength("30");
-		c3.setLoadName("LA");
-		c3.setMoves(40);
-		c3.setOwner("AB");
-		c3.setRfid("RFID 5");
-		c3.setTypeName("Gon");
+		Car c3 = cManager.getByRoadAndNumber("AA", "3");
+		
 		Assert.assertEquals("c3 location", Track.OKAY, c3.setLocation(boxford, boxfordHood));
 		Assert.assertEquals("c3 destination", Track.OKAY, c3.setDestination(boxford, boxfordYard));
 		
-		Car c4 = cManager.newCar("SP", "2");
-		c4.setBuilt("1990");
-		c4.setColor("Black");
-		c4.setLength("45");
-		c4.setLoadName("EA");
-		c4.setMoves(30);
-		c4.setOwner("AAA");
-		c4.setRfid("RFID 4");
-		c4.setTypeName("Tank Food");
+		Car c4 = cManager.getByRoadAndNumber("SP", "2");
+
 		Assert.assertEquals("c4 location", Track.OKAY, c4.setLocation(westford, westfordSiding));
 		Assert.assertEquals("c4 destination", Track.OKAY, c4.setDestination(boxford, boxfordHood));
 		
-		Car c5 = cManager.newCar("NH", "5");
-		c5.setBuilt("1956");
-		c5.setColor("Brown");
-		c5.setLength("25");
-		c5.setLoadName("LL");
-		c5.setMoves(25);
-		c5.setOwner("DAB");
-		c5.setRfid("RFID 1");
-		c5.setTypeName("Coil Car");
+		Car c5 = cManager.getByRoadAndNumber("NH", "5");
+
 		Assert.assertEquals("c5 location", Track.OKAY, c5.setLocation(westford, westfordAble));
 		Assert.assertEquals("c5 destination", Track.OKAY, c5.setDestination(westford, westfordAble));
 		
@@ -346,8 +309,10 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testCarEditFrameRead(){
+		loadCars();		// load cars
 		CarManager cManager = CarManager.instance();
 		Car c1 = cManager.getByRoadAndNumber("NH", "1");
+
 		CarEditFrame f = new CarEditFrame();
 		f.initComponents();
 		f.setTitle("Test Edit Car Frame");
@@ -470,6 +435,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testCarSetFrame(){
+		loadCars();		// load cars
 		CarSetFrame f = new CarSetFrame();
 		f.setTitle("Test Car Set Frame");
 		f.initComponents();
@@ -478,6 +444,65 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.loadCar(c3);
 		
 		f.dispose();
+	}
+	
+	private void loadCars() {
+		CarManager cManager = CarManager.instance();
+		// add 5 cars to table
+		Car c1 = cManager.newCar("NH", "1");
+		c1.setBuilt("2009");
+		c1.setColor("Red");
+		c1.setLength("40");
+		c1.setLoadName("L");
+		c1.setMoves(55);
+		c1.setOwner("Owner2");
+		c1.setRfid("RFID 3");
+		c1.setTypeName("Caboose");
+		c1.setWeight("1.4");
+		c1.setWeightTons("Tons of Weight");
+		c1.setCaboose(true);
+		c1.setComment("Test Car NH 1 Comment");
+		
+		Car c2 = cManager.newCar("UP", "2");
+		c2.setBuilt("2004");
+		c2.setColor("Blue");
+		c2.setLength("50");
+		c2.setLoadName("E");
+		c2.setMoves(50);
+		c2.setOwner("AT");
+		c2.setRfid("RFID 2");
+		c2.setTypeName("Boxcar");
+		
+		Car c3 = cManager.newCar("AA", "3");
+		c3.setBuilt("2006");
+		c3.setColor("White");
+		c3.setLength("30");
+		c3.setLoadName("LA");
+		c3.setMoves(40);
+		c3.setOwner("AB");
+		c3.setRfid("RFID 5");
+		c3.setTypeName("Gon");
+		
+		Car c4 = cManager.newCar("SP", "2");
+		c4.setBuilt("1990");
+		c4.setColor("Black");
+		c4.setLength("45");
+		c4.setLoadName("EA");
+		c4.setMoves(30);
+		c4.setOwner("AAA");
+		c4.setRfid("RFID 4");
+		c4.setTypeName("Tank Food");
+		
+		Car c5 = cManager.newCar("NH", "5");
+		c5.setBuilt("1956");
+		c5.setColor("Brown");
+		c5.setLength("25");
+		c5.setLoadName("LL");
+		c5.setMoves(25);
+		c5.setOwner("DAB");
+		c5.setRfid("RFID 1");
+		c5.setTypeName("Coil Car");
+
 	}
 	
 	@SuppressWarnings("unchecked")
