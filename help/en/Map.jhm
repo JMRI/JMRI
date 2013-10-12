@@ -2416,13 +2416,13 @@
 
 <mapID target="html.apps.DecoderPro.RosterFile" url="html/apps/DecoderPro/RosterFile.shtml"/>
 
-<mapID target="package.jmri.jmrit.beantable.SignalMastTable" url="package/jmri/jmrit/beantable/SignalMastTable.shtml"/>
-
 <mapID target="manual.3-2_DecoderPro3.Start_DCC_Systems" url="manual/3-2_DecoderPro3/Start_DCC_Systems.shtml"/>
 
 <mapID target="manual.3-2_DecoderPro3.Main_RPS_PollingControl" url="manual/3-2_DecoderPro3/Main_RPS.shtml#PollingControl"/>
 
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalMastTable" url="package/jmri/jmrit/beantable/SignalMastTable.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Basic_Programming_Do More" url="manual/JMRI_2-14_manual/Basic_Programming.shtml#Do More"/>
 
