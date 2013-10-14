@@ -1357,7 +1357,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					if (addToReport)
 						TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("trainCanPickUpCar"), new Object[] { getName(), car.toString(),
-								car.getLocationName(), car.getTrackName() }));
+								car.getLocationName(), car.getTrackName(), rLoc.getId() }));
 					if (car.getDestination() == null) {
 						if (debugFlag)
 							log.debug("Car (" + car.toString() + ") does not have a destination");

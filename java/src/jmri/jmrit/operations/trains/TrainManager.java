@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -390,9 +391,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return Train that can service car from its current location to the its destination.
 	 */
 	public Train getTrainForCar(Car car, PrintWriter buildReport) {
-		log.debug("Get train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
+		log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
 				+ car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
 				+ car.getDestinationTrackName() + ")"); // NOI18N
+		if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
+			TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
+					.getMessage("trainFindForCar"), new Object[] { car.toString(), car.getLocationName(),
+					car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName() }));
+		}
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));

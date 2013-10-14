@@ -94,7 +94,7 @@
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
       <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
-      <LI><A HREF="#EditCarAttributes">Edit Car Attributes</A></LI>
+      <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color, Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
       <LI><A HREF="#CarsSet">Set Car</A></LI>
      </UL></LI>
@@ -586,7 +586,7 @@
    <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
    algorithm will search for the most efficient route for the car to travel. The algorithm will
    attempt to use interchanges and then yards to move cars. If you don't want the router to use
-   yards, you can deselect the "Enable Car Routing via Yards" check box. Routing through staging is
+   yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing through staging is
    disabled by default. The algorithm will try and find a route using a maximum of five trains to
    complete the car move. Note that the program never gives up trying to route a car. If a car has
    been assigned a
@@ -853,9 +853,16 @@
 
    <H3>Message Format</H3>
 
-   If you would like your manifest and switch lists printed in a tabular format select the tabular
-   checkbox. Only equally spaced fonts like "Courier New" or "Monospaced" are shown in the Font
-   selection box.
+   If you would like your manifest and switch lists printed in a tabular (columns) format select the
+   "Tabular" checkbox. The "Two Column" format creates manifests with two major columns, the left
+   column shows the car pick ups for a location, and the right column shows the set outs. The "Two
+   Column" only uses half the page for the car information, so you might have to limit the number of
+   car attributes (see
+   <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The text color
+   options for set outs, pick ups, and local move are not available for the "Two Column" format.
+   <P>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
+    "Monospaced" and only equally spaced fonts are shown in the "Font" selection box when either
+    option is selected.</P>
 
    <H3>Set Out Text Color</H3>
 
@@ -870,7 +877,7 @@
    <H3>Local Move Text Color</H3>
 
    You can select the text color of your manifest when the operation is to move a car from one track
-   to another at the same location. The car in this case in not added to the train. Select the
+   to another at the same location. The car in this case is not added to the train. Select the
    desired color from the drop down box.
 
    <H3>Switch List Format</H3>
@@ -879,18 +886,20 @@
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
 
+  <A NAME="MessageFormats"></A>
    <H3>Message Formats</H3>
 
    You can customize the pick up, set out, and local move messages for your manifests and switch
-   lists by selecting the appropriate drop down menus. To remove an attribute select blank. You can
-   also edit and or replace the "[ ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular
-   prefixes are "Spot" and "Pull" for set outs and pick ups respectively. If you want to use the
-   text color options, the set out, pick up, and move prefixes must be unique. 
+   lists by selecting the appropriate drop down menus. To remove a loco or car attribute (Road,
+   Number, Type, Length, Color, Load, etc.) select blank. You can also edit and or replace the "[ ]
+   Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and "Pull" for
+   set outs and pick ups respectively. If you want to use the text color options, the set out, pick
+   up, and move prefixes must be unique. 
    
    <A NAME="ManifestComments"></A>
    <H3>Manifests Options</H3>
 
-   The program allows you to customize your train manifest to your liking. There are eight optional
+   The program allows you to customize your train manifest to your liking. There are nine optional
    checkboxes and their functions are described below.
    <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the manifest was printed. The print time is always shown at the top
@@ -1497,7 +1506,7 @@
    <H3>Staging and Car loads</H3>
 
    Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
-   empty. Select the "Swap default Loads and Empties" if you want your cars loads to change when
+   empty. Select the "Swap default loads and empties" if you want your cars loads to change when
    arriving at the staging track. You can if you want, ask the program to empty cars as they enter
    staging. Select the "Empty cars with default loads" to change a car's load status to empty. If
    you're using custom loads, you can remove the custom load when the cars arrive at the staging
@@ -2350,7 +2359,16 @@
     provides a "Report" button under the "Action" column for a train that fails to build.</P>
 
    <P>The "Preview" checkbox when selected, allows you to preview rather than printing your
-    train's manifest or build report.</P>
+    train's manifest or build report.</p>
+
+   <P>If you select the "Generate CSV Manifest" from the <A
+    HREF="#ManifestOptions">Options</A> window found under "Tools" in
+    the Settings or Trains window, two additional checkboxes will appear labled "Open" and "Run". If the "Open"
+    checkbox is selected the "Function" button for a built train will become "Open" rather than
+    "Print" or "Preview". Pressing a train's "Open" button will allow you to examine the train's
+    comma separated value file. If you select the "Run" checkbox, the function button for a built
+    train becomes "Run". Pressing a train's "Run" button will start the Excel program configured
+    by the "Setup Excel Program (Manifest Creator)" window found in the Trains "Tools" menu .</P>
 
    <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
@@ -2437,9 +2455,9 @@
 
    <H4>Send all car pick ups to terminal</H4>
 
-   You can also request that all car pick ups are sent to the last location in your route
-   (terminal). Useful if you don't want your cars picked up and set out at various locations in your
-   train's route.
+   You can also request that all car pick ups along the train's route are sent to the last location
+   in the train's route (terminal). Useful if you don't want your cars picked up and set out at
+   various locations in your train's route.
 
    <H4>Allow cars to return to staging if needed</H4>
 
@@ -2828,14 +2846,27 @@
     mode, the car's current track space is available for other trains to use.
    </P>
 
-   <P>If a car has a final destination that was set by a schedule, the program will try and move
-    the car to that destination, or if not possible, it will try and move the car closer to that
-    final destination.</P>
+   <P>
+    There is an exception when departing staging in aggressive mode, the program will skip searching
+    for destinations for cars out of staging on the first pass unless the "Use normal mode when
+    building this train" is selected. The thinking is that car pick ups along the train's route will
+    free up space which should provide more possibilities for cars out of staging. However, if you
+    have tight train length restrictions along the train's route, the program might not be able of
+    find destinations for cars out of staging while keeping the train length in check. If you find
+    in the build report that the train length is an issue for cars out of staging, try building the
+    train using the "Use normal mode when building this train" found under <A
+     HREF="#TrainBuildOptions">Train Build Options</A> in the Tools menu under Edit Train.
+   </P>
+
+   <P>When a car has a final destination that was set by a schedule, the program will try and
+    "route" the car to that destination. If the program can't find a train or series of trains that
+    can deliver the car to the destination, it will try and move the car in an attempt to find a way
+    to get the car to the destination.</P>
 
    <P>
     If a car has a custom load without a destination, the program will search for a spur with a
     schedule demanding that car type and load, the program will then "route" the car to that
-    destination. The program will use up to five trains to get the car to a destination. The program
+    destination. The program will use up to five trains to route a car to a destination. The program
     when determining how many cars an industry can serve considers the length of the spur serving
     the industry, and the length of the alternate track if one is specified. If the car is departing
     staging with a custom load, the "Percentage of custom loads generated by staging" is used to
