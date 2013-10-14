@@ -156,9 +156,36 @@ public class SlotManagerTest extends TestCase {
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
     
+    // Test names ending with "String" are for the new writeCV(String, ...) 
+    // etc methods.  If you remove the older writeCV(int, ...) tests, 
+    // you can rename these. Note that not all (int,...) tests may have a 
+    // String(String, ...) test defined, in which case you should create those.
+    
+    public void testReadCVPagedString() throws jmri.ProgrammerException {
+        SlotManager slotmanager = new SlotManager(lnis);
+        String CV1 = "12";
+        ProgListener p2=  null;
+        slotmanager.setMode(Programmer.PAGEMODE);
+        slotmanager.readCV(CV1, p2);
+        Assert.assertEquals("read message",
+			    "EF 0E 7C 23 00 00 00 00 02 0B 7F 7F 7F 00",
+			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+    }
+    
     public void testReadCVRegister() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  2;
+        ProgListener p2=  null;
+        slotmanager.setMode(Programmer.REGISTERMODE);
+        slotmanager.readCV(CV1, p2);
+        Assert.assertEquals("read message",
+			    "EF 0E 7C 13 00 00 00 00 02 01 7F 7F 7F 00",
+			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+    }
+    
+    public void testReadCVRegisterString() throws jmri.ProgrammerException {
+        SlotManager slotmanager = new SlotManager(lnis);
+        String CV1 = "2";
         ProgListener p2=  null;
         slotmanager.setMode(Programmer.REGISTERMODE);
         slotmanager.readCV(CV1, p2);
@@ -199,13 +226,25 @@ public class SlotManagerTest extends TestCase {
     }
     
     public void testWriteCVPaged() throws jmri.ProgrammerException {
-	SlotManager slotmanager = new SlotManager(lnis);
-	int CV1=  12;
-	int val2=  34;
+	    SlotManager slotmanager = new SlotManager(lnis);
+	    int CV1=  12;
+	    int val2=  34;
         ProgListener p3=  null;
-	slotmanager.setMode(Programmer.PAGEMODE);
+	    slotmanager.setMode(Programmer.PAGEMODE);
         slotmanager.writeCV(CV1, val2, p3);
-	Assert.assertEquals("write message",
+	    Assert.assertEquals("write message",
+			    "EF 0E 7C 63 00 00 00 00 00 0B 22 7F 7F 00",
+			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+    }
+    
+    public void testWriteCVPagedString() throws jmri.ProgrammerException {
+	    SlotManager slotmanager = new SlotManager(lnis);
+	    String CV1 = "12";
+	    int val2=  34;
+        ProgListener p3=  null;
+	    slotmanager.setMode(Programmer.PAGEMODE);
+        slotmanager.writeCV(CV1, val2, p3);
+	    Assert.assertEquals("write message",
 			    "EF 0E 7C 63 00 00 00 00 00 0B 22 7F 7F 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
@@ -225,6 +264,18 @@ public class SlotManagerTest extends TestCase {
     public void testWriteCVDirect() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
+        int val2=  34;
+        ProgListener p3=  null;
+        slotmanager.setMode(Programmer.DIRECTBYTEMODE);
+        slotmanager.writeCV(CV1, val2, p3);
+        Assert.assertEquals("write message",
+			    "EF 0E 7C 6B 00 00 00 00 00 0B 22 7F 7F 00",
+			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+    }
+
+    public void testWriteCVDirectString() throws jmri.ProgrammerException {
+        SlotManager slotmanager = new SlotManager(lnis);
+        String CV1 = "12";
         int val2=  34;
         ProgListener p3=  null;
         slotmanager.setMode(Programmer.DIRECTBYTEMODE);

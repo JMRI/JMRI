@@ -59,10 +59,23 @@ public abstract class AbstractProgrammer implements Programmer {
         }
     }
 
-    /**
-     * By default, the highest CV that can be programmed is 2048.
-     */
-    public int getMaxCvAddr() { return 2048; }
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        writeCV(Integer.parseInt(CV), val, p);
+    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        readCV(Integer.parseInt(CV), p);
+    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(Integer.parseInt(CV), val, p);
+    }
+
+    public boolean getCanRead() { return true; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    
+    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     /**
      * Internal routine to start timer to protect the mode-change.

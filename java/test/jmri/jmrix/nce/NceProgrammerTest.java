@@ -20,6 +20,10 @@ import jmri.jmrix.nce.NceProgrammer;
 
 /**
  * JUnit tests for the NceProgrammer class
+ *<P>
+ * Note most have names starting with x, which disables them;
+ * a note why that was done would have been good!
+ *
  * @author			Bob Jacobsen
  * @version          $Revision$
  */
@@ -70,6 +74,38 @@ public class NceProgrammerTest extends TestCase {
         Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
     }
 
+    // Test names ending with "String" are for the new writeCV(String, ...) 
+    // etc methods.  If you remove the older writeCV(int, ...) tests, 
+    // you can rename these. Note that not all (int,...) tests may have a 
+    // String(String, ...) test defined, in which case you should create those.
+    
+    public void xtestWriteCvSequenceAsciiString() throws JmriException, Exception {
+
+        // infrastructure objects
+        NceInterfaceScaffold t = new NceInterfaceScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
+        NceTrafficController tc = new NceTrafficController();
+        tc.setCommandOptions(NceTrafficController.OPTION_2004);
+        
+        NcePortControllerScaffold pC = new NcePortControllerScaffold();
+        
+		tc.connectPort(pC);
+
+        NceProgrammer p = new NceProgrammer(tc);
+
+        // and do the write
+        p.writeCV("10", 20, l);
+        // correct message sent
+        Assert.assertEquals("mode message sent", 1, t.outbound.size());
+        Assert.assertEquals("write message contents", "P010 020",
+                            ((t.outbound.elementAt(0))).toString());
+        // reply from programmer arrives
+        NceReply r = new NceReply(tc);
+        t.sendTestReply(r, p);
+        Assert.assertEquals(" got data value back", 20, rcvdValue);
+        Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+    }
+
     public void xtestWriteCvSequenceBin() throws JmriException {
     	tc.setCommandOptions(NceTrafficController.OPTION_2006);
         // infrastructure objects
@@ -80,6 +116,27 @@ public class NceProgrammerTest extends TestCase {
 
         // and do the write
         p.writeCV(10, 20, l);
+        // correct message sent
+        Assert.assertEquals("mode message sent", 1, t.outbound.size());
+        Assert.assertEquals("write message contents", "A0 00 0A 14",
+                            ((t.outbound.elementAt(0))).toString());
+        // reply from programmer arrives
+        NceReply r = new NceReply(tc);
+        t.sendTestReply(r, p);
+        Assert.assertEquals(" got data value back", 20, rcvdValue);
+        Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+    }
+
+    public void xtestWriteCvSequenceBinString() throws JmriException {
+    	tc.setCommandOptions(NceTrafficController.OPTION_2006);
+        // infrastructure objects
+        NceInterfaceScaffold t = new NceInterfaceScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
+
+        NceProgrammer p = new NceProgrammer(tc);
+
+        // and do the write
+        p.writeCV("10", 20, l);
         // correct message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "A0 00 0A 14",
@@ -115,6 +172,30 @@ public class NceProgrammerTest extends TestCase {
         Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
     }
 
+    public void xtestWriteRegisterSequenceAsciiString() throws JmriException {
+    	tc.setCommandOptions(NceTrafficController.OPTION_2004);
+        // infrastructure objects
+        NceInterfaceScaffold t = new NceInterfaceScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
+
+        NceProgrammer p = new NceProgrammer(tc);
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+        // and do the write
+        p.writeCV("3", 12, l);
+        // check "prog mode" message sent
+        Assert.assertEquals("write message sent", 1, t.outbound.size());
+        Assert.assertEquals("write message contents", "S3 012",
+                            ((t.outbound.elementAt(0))).toString());
+        // reply from programmer arrives
+        NceReply r = new NceReply(tc);
+        t.sendTestReply(r, p);
+        Assert.assertEquals(" got data value back", 12, rcvdValue);
+        Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+    }
+
     public void xtestWriteRegisterSequenceBin() throws JmriException {
     	tc.setCommandOptions(NceTrafficController.OPTION_2006);
         // infrastructure objects
@@ -139,6 +220,30 @@ public class NceProgrammerTest extends TestCase {
         Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
     }
 
+    public void xtestWriteRegisterSequenceBinString() throws JmriException {
+    	tc.setCommandOptions(NceTrafficController.OPTION_2006);
+        // infrastructure objects
+        NceInterfaceScaffold t = new NceInterfaceScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
+
+        NceProgrammer p = new NceProgrammer(tc);
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+        // and do the write
+        p.writeCV("3", 12, l);
+        // check "prog mode" message sent
+        Assert.assertEquals("write message sent", 1, t.outbound.size());
+        Assert.assertEquals("write message contents", "A6 03 0C",
+                            ((t.outbound.elementAt(0))).toString());
+        // reply from programmer arrives
+        NceReply r = new NceReply(tc);
+        t.sendTestReply(r, p);
+        Assert.assertEquals(" got data value back", 12, rcvdValue);
+        Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+    }
+
     public void xtestReadCvSequenceAscii() throws JmriException {
     	tc.setCommandOptions(NceTrafficController.OPTION_2004);
         // infrastructure objects
@@ -149,6 +254,32 @@ public class NceProgrammerTest extends TestCase {
 
         // and do the read
         p.readCV(10, l);
+
+        // check "read command" message sent
+        Assert.assertEquals("read message sent", 1, t.outbound.size());
+        Assert.assertEquals("read message contents", "R010",
+                            ((t.outbound.elementAt(0))).toString());
+        // reply from programmer arrives
+        NceReply r = new NceReply(tc);
+        r.setElement(0, '0');
+        r.setElement(1, '2');
+        r.setElement(2, '0');
+        t.sendTestReply(r, p);
+
+        Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
+        Assert.assertEquals(" value read", 20, rcvdValue);
+    }
+
+    public void xtestReadCvSequenceAsciiString() throws JmriException {
+    	tc.setCommandOptions(NceTrafficController.OPTION_2004);
+        // infrastructure objects
+        NceInterfaceScaffold t = new NceInterfaceScaffold();
+        NceListenerScaffold l = new NceListenerScaffold();
+
+        NceProgrammer p = new NceProgrammer(tc);
+
+        // and do the read
+        p.readCV("10", l);
 
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());

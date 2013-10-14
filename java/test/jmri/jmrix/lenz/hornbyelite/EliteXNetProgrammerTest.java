@@ -45,6 +45,35 @@ public class EliteXNetProgrammerTest extends TestCase {
 
 	}
 
+    // Test names ending with "String" are for the new writeCV(String, ...) 
+    // etc methods.  If you remove the older writeCV(int, ...) tests, 
+    // you can rename these. Note that not all (int,...) tests may have a 
+    // String(String, ...) test defined, in which case you should create those.
+    
+	public void testWriteCvSequenceString() throws JmriException {
+		// infrastructure objects
+		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+		EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
+
+		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
+
+		// and do the write
+		p.writeCV("10", 20, l);
+		// check "prog mode" message sent
+		Assert.assertEquals("mode message sent", 2, t.outbound.size());
+        Assert.assertEquals("write message contents", "23 16 0A 14 2B", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
+
+        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+
+	}
+
 	public void testWriteRegisterSequence() throws JmriException {
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
@@ -57,6 +86,34 @@ public class EliteXNetProgrammerTest extends TestCase {
 
 		// and do the write
 		p.writeCV(29, 12, l);
+		// check "prog mode" message sent
+		Assert.assertEquals("read message sent", 2, t.outbound.size());
+        Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
+
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
+
+	    Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+
+	}
+
+	public void testWriteRegisterSequenceString() throws JmriException {
+		// infrastructure objects
+		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+		EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
+
+		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+		// and do the write
+		p.writeCV("29", 12, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("read message sent", 2, t.outbound.size());
         Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
@@ -98,6 +155,31 @@ public class EliteXNetProgrammerTest extends TestCase {
 
 	}
 
+	public void testReadCvSequenceString() throws JmriException {
+		// infrastructure objects
+		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+		EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
+
+		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
+
+		// and do the read
+		p.readCV("10", l);
+		// check "prog mode" message sent
+		Assert.assertEquals("mode message sent", 2, t.outbound.size());
+        Assert.assertEquals("read message contents", "22 15 0A 3D", t.outbound.elementAt(0).toString());
+
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
+
+        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+
+	}
+
 	public void testReadRegisterSequence() throws JmriException {
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
@@ -110,6 +192,32 @@ public class EliteXNetProgrammerTest extends TestCase {
 
         // and do the read
         p.readCV(29, l);
+        // check "prog mode" message sent
+        Assert.assertEquals("mode message sent", 2, t.outbound.size());
+        Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
+
+	    Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+    }
+
+	public void testReadRegisterSequenceString() throws JmriException {
+		// infrastructure objects
+		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+		EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
+
+		EliteXNetProgrammer p = new EliteXNetProgrammer(t);
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+        // and do the read
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 2, t.outbound.size());
         Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());

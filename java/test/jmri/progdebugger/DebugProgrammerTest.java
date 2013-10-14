@@ -40,10 +40,40 @@ public class DebugProgrammerTest extends TestCase {
         log.debug("readValue is "+readValue);
         Assert.assertEquals("read back", 12, readValue);
     }
+
+    // Test names ending with "String" are for the new writeCV(String, ...) 
+    // etc methods.  If you remove the older writeCV(int, ...) tests, 
+    // you can rename these. Note that not all (int,...) tests may have a 
+    // String(String, ...) test defined, in which case you should create those.
+    
+    public void testWriteReadString() throws jmri.ProgrammerException, InterruptedException {
+        Programmer p = new ProgDebugger();
+        ProgListener l = new ProgListener(){
+                public void programmingOpReply(int value, int status) {
+                    log.debug("callback value="+value+" status="+status);
+                    replied = true;
+                    readValue = value;
+                }
+            };
+        p.writeCV("4", 12, l);
+        waitReply();
+        log.debug("readValue is "+readValue);
+        p.readCV("4", l);
+        waitReply();
+        log.debug("readValue is "+readValue);
+        Assert.assertEquals("read back", 12, readValue);
+    }
     
     public void testCvLimit() {
-        Programmer p = new ProgDebugger();
-        Assert.assertEquals("CV limit", 256, p.getMaxCvAddr());
+        Programmer p = new jmri.progdebugger.ProgDebugger();
+        Assert.assertTrue("CV limit read", p.getCanRead("256"));  
+        Assert.assertTrue("CV limit write", p.getCanWrite("256"));  
+        Assert.assertTrue("CV limit read mode", p.getCanRead(0, "256"));  
+        Assert.assertTrue("CV limit write mode", p.getCanWrite(0, "256"));  
+        Assert.assertTrue("CV limit read", !p.getCanRead("257"));  
+        Assert.assertTrue("CV limit write", !p.getCanWrite("257"));  
+        Assert.assertTrue("CV limit read mode", !p.getCanRead(0, "257"));  
+        Assert.assertTrue("CV limit write mode", !p.getCanWrite(0, "257"));  
     }
     
     public void testKnowsWrite() throws jmri.ProgrammerException {
@@ -62,6 +92,26 @@ public class DebugProgrammerTest extends TestCase {
         p.clearHasBeenWritten(4);
         Assert.assertTrue("now longer written", !p.hasBeenWritten(4));
         p.writeCV(4, 12, l);
+        Assert.assertTrue("after 2nd write", p.hasBeenWritten(4));
+
+    }
+    
+    public void testKnowsWriteString() throws jmri.ProgrammerException {
+        ProgDebugger p = new ProgDebugger();
+        ProgListener l = new ProgListener(){
+                public void programmingOpReply(int value, int status) {
+                    log.debug("callback value="+value+" status="+status);
+                    replied = true;
+                    readValue = value;
+                }
+            };
+        
+        Assert.assertTrue("initially not written", !p.hasBeenWritten(4));
+        p.writeCV("4", 12, l);
+        Assert.assertTrue("after 1st write", p.hasBeenWritten(4));
+        p.clearHasBeenWritten(4);
+        Assert.assertTrue("now longer written", !p.hasBeenWritten(4));
+        p.writeCV("4", 12, l);
         Assert.assertTrue("after 2nd write", p.hasBeenWritten(4));
 
     }

@@ -42,6 +42,16 @@ public class LnOpsModeProgrammer implements Programmer  {
         mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        writeCV(Integer.parseInt(CV), val, p);
+    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        readCV(Integer.parseInt(CV), p);
+    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(Integer.parseInt(CV), val, p);
+    }
+
     public void setMode(int mode) {
         if (mode!=Programmer.OPSBYTEMODE) {
             reportBadMode(mode);
@@ -62,17 +72,19 @@ public class LnOpsModeProgrammer implements Programmer  {
 
     /**
      * Can this ops-mode programmer read back values?  Yes,
-     * if transponding hardware is present.  
+     * if transponding hardware is present, but we don't check that here.
      * @return always true
      */
     public boolean getCanRead() {
         return true;
     }
-
-    /**
-     * Digitrax command stations can go to 2048
-     */
-    public int getMaxCvAddr() { return 2048; }
+    public boolean getCanRead(String addr) { 
+        return getCanRead() && Integer.parseInt(addr)<=2048; }
+    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    
+    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {
         mSlotMgr.addPropertyChangeListener(p);

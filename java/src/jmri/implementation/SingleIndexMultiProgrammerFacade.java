@@ -1,4 +1,4 @@
-// SingleIndexProgrammerFacade.java
+// SingleIndexMultiProgrammerFacade.java
 
 package jmri.implementation;
 
@@ -14,75 +14,77 @@ import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
 /**
- * Programmer facade, at this point just an example.
+ * Programmer facade for single index multi-CV access.
  * <p>
- * This one isn't particularly useful. It imagines
- * that CVs from 0 to "top" can be addressed
- * directly. (Top being a power of two)
- * Above the top CV, the upper bits are written to 
- * a specific CV, followed by an operation
- * with just the lower bits. This works
- * for CV addresses up to some known "max" value. 
+ * Used through the String write/read/confirm interface.  Accepts address formats:
+ *<ul>
+ *<li> 123 Do write/read/confirm to 123
+ *<li> 13.123 Writes 13 to the index CV, then does write/read/confirm to 123
+ *</ul>
  *
  * @author      Bob Jacobsen  Copyright (C) 2013
  * @version	$Revision$
  */
-public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
+public class SingleIndexMultiProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
      * @param top CVs above this use the indirect method
      * @param addrCV  CV to which the high value is to be written
      * @param max Maximum CV that can be accessed this way
      */
-    public SingleIndexProgrammerFacade(Programmer prog, int top, int addrCV, int max) {
+    public SingleIndexMultiProgrammerFacade(Programmer prog, int indexCV) {
         super(prog);
-        this.prog = prog;
-        this.top = top;
-        this.addrCV = addrCV;
-        this.max = max;
+        this.indexCV = indexCV;
     }
-
-    Programmer prog;
     
-    int top;
-    int addrCV;
-    int max;
-
+    int indexCV;
 
     // members for handling the programmer interface
 
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
+    int _indexVal;  //  value to write to index or -1
 
+    void parseCV(String cv) {
+        if (cv.contains(".")) {
+            String[] splits = cv.split("\\.");
+            _indexVal = Integer.parseInt(splits[0]);
+            _cv = Integer.parseInt(splits[1]);
+        } else {
+            _indexVal = -1;
+            _cv = Integer.parseInt(cv);
+        }
+    }
+    
     // programming interface
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        _cv = CV;
+    synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         _val = val;
         useProgrammer(p);
-        if (CV <= top) {
+        parseCV(CV);
+        if (_indexVal == -1 ) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(CV, val, this);
+            prog.writeCV(_cv, val, this);
         } else {
             // write index first
             state = ProgState.FINISHWRITE;
-            prog.writeCV(addrCV, CV/top, this);
+            prog.writeCV(indexCV, _indexVal, this);
         }
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        _cv = CV;
+    synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
-        if (CV <= top) {
+        parseCV(CV);
+        if (_indexVal == -1 ) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(CV, this);
+            prog.readCV(_cv, this);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
-            prog.writeCV(addrCV, CV/top, this);
+            prog.writeCV(indexCV, _indexVal, this);
         }
     }
 
@@ -123,7 +125,7 @@ public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implem
             case FINISHREAD:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(_cv%top, this);
+                    prog.readCV(_cv, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -131,7 +133,7 @@ public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implem
             case FINISHWRITE:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.writeCV(_cv%top, _val, this);
+                    prog.writeCV(_cv, _val, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
@@ -145,8 +147,7 @@ public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleIndexProgrammerFacade.class.getName());
+    static Logger log = LoggerFactory.getLogger(SingleIndexMultiProgrammerFacade.class.getName());
 
 }
 
-/* @(#)SprogProgrammer.java */
