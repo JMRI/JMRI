@@ -1917,6 +1917,11 @@
     <img src="images/EditCarAttribute.png">
    </P>
 
+   Under "Tools" you will find two items, "Show the number of cars with this attribute" and "Delete
+   unused attributes". The first will show a count in front of the menu box. The count is the number
+   of'cars that have this particular attribute. The delete option will prompt you to delete any
+   attribute that hasn't been assigned to a car.
+
    <H3>Add Button</H3>
 
    To add a new car attribute, enter the desired text in the text box and press the "Add" button.
@@ -2240,8 +2245,19 @@
 
    <P>
     You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> using <A
-     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. The grade is optional
-    and is used to determine how many locomotives the train will require for that segment.
+     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. For example, if you
+    limited the train's departure length to 500 feet, then approximately 10 cars would depart in the
+    train from that location. When first starting out, it is recommended that you leave the
+    departure train lengths to the maximun and adjust the number of cars in the train by changing
+    the car move counts in the train's route. Later if you find that your train is too long, you should
+    first reduce the car move counts and then the maximun train lengths to get your trains to build to
+    your liking.
+   </P>
+
+   <P>
+    The grade is optional and is used to determine how many locomotives the train will require for
+    that segment when using the train <A HREF="#TrainRequires">Auto</A> locomotive assignment
+    feature. Enter the maximun grade that the train will encounter between the two locations.
    </P>
 
    <P>
