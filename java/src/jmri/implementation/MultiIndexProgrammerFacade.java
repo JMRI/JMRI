@@ -28,9 +28,7 @@ import java.util.Vector;
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param top CVs above this use the indirect method
-     * @param addrCV  CV to which the high value is to be written
-     * @param max Maximum CV that can be accessed this way
+     * @param indexCV  CV to which the first value is to be written for NN.NN forms
      */
     public MultiIndexProgrammerFacade(Programmer prog, int indexCV) {
         super(prog);
