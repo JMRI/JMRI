@@ -1,4 +1,4 @@
-// SingleIndexProgrammerFacade.java
+// AddressedHighCvProgrammerFacade.java
 
 package jmri.implementation;
 
@@ -25,16 +25,16 @@ import java.util.Vector;
  * for CV addresses up to some known "max" value. 
  *
  * @author      Bob Jacobsen  Copyright (C) 2013
- * @version	$Revision$
+ * @version	$Revision: 24246 $
  */
-public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
+public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
      * @param top CVs above this use the indirect method
      * @param addrCV  CV to which the high value is to be written
      * @param max Maximum CV that can be accessed this way
      */
-    public SingleIndexProgrammerFacade(Programmer prog, int top, int addrCV, int max) {
+    public AddressedHighCvProgrammerFacade(Programmer prog, int top, int addrCV, int max) {
         super(prog);
         this.prog = prog;
         this.top = top;
@@ -145,7 +145,7 @@ public class SingleIndexProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleIndexProgrammerFacade.class.getName());
+    static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
 
 }
 

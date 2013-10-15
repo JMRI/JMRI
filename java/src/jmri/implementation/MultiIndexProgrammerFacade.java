@@ -1,4 +1,4 @@
-// SingleIndexMultiProgrammerFacade.java
+// MultiIndexProgrammerFacade.java
 
 package jmri.implementation;
 
@@ -23,16 +23,16 @@ import java.util.Vector;
  *</ul>
  *
  * @author      Bob Jacobsen  Copyright (C) 2013
- * @version	$Revision$
+ * @version	$Revision: 24246 $
  */
-public class SingleIndexMultiProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
+public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
      * @param top CVs above this use the indirect method
      * @param addrCV  CV to which the high value is to be written
      * @param max Maximum CV that can be accessed this way
      */
-    public SingleIndexMultiProgrammerFacade(Programmer prog, int indexCV) {
+    public MultiIndexProgrammerFacade(Programmer prog, int indexCV) {
         super(prog);
         this.indexCV = indexCV;
     }
@@ -147,7 +147,7 @@ public class SingleIndexMultiProgrammerFacade extends AbstractProgrammerFacade i
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleIndexMultiProgrammerFacade.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiIndexProgrammerFacade.class.getName());
 
 }
 

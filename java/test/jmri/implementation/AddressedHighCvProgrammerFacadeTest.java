@@ -1,4 +1,4 @@
-// SingleIndexMultiProgrammerFacadeTest.java
+// DebugProgrammerTest.java
 
 package jmri.implementation;
 
@@ -14,35 +14,21 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Test the SingleIndexProgrammerFacade class.
+ * Test the AddressedHighCvProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version     $Revision$
+ * @version     $Revision: 24246 $
  */
-public class SingleIndexMultiProgrammerFacadeTest extends TestCase {
+public class AddressedHighCvProgrammerFacadeTest extends TestCase {
 
 
     int readValue = -2;
     boolean replied = false;
 
-    public void testParse() {
-        ProgDebugger dp = new ProgDebugger();
-        SingleIndexMultiProgrammerFacade p = new SingleIndexMultiProgrammerFacade(dp, 81);
-        
-        p.parseCV("12");
-        Assert.assertEquals("for 12, cv", 12, p._cv);
-        Assert.assertEquals("for 12, indexVal", -1, p._indexVal);
-        
-        p.parseCV("12.34");
-        Assert.assertEquals("for 12.34, cv", 34, p._cv);
-        Assert.assertEquals("for 12.34, indexVal", 12, p._indexVal);
-        
-    }
-    
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
-        Programmer p = new SingleIndexMultiProgrammerFacade(dp, 81);
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, 256, 255, 1024);
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
@@ -50,21 +36,20 @@ public class SingleIndexMultiProgrammerFacadeTest extends TestCase {
                     readValue = value;
                 }
             };
-        p.writeCV("4", 12, l);
+        p.writeCV(4, 12, l);
         waitReply();
         Assert.assertEquals("target written", 12, dp.getCvVal(4));
-        Assert.assertTrue("index not written", !dp.hasBeenWritten(81));
+        Assert.assertTrue("index not written", !dp.hasBeenWritten(255));
 
-        p.readCV("4", l);
+        p.readCV(4, l);
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
-        Assert.assertTrue("index not written", !dp.hasBeenWritten(81));
     }
     
     public void testWriteReadIndexed() throws jmri.ProgrammerException, InterruptedException {
         
         ProgDebugger dp = new ProgDebugger();
-        Programmer p = new SingleIndexMultiProgrammerFacade(dp, 81);
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, 256, 255, 1024);
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
@@ -72,22 +57,19 @@ public class SingleIndexMultiProgrammerFacadeTest extends TestCase {
                     readValue = value;
                 }
             };
-        p.writeCV("123.45", 12, l);
+        p.writeCV(258, 12, l);
         waitReply();
-        Assert.assertEquals("index written", 123, dp.getCvVal(81));
-        Assert.assertEquals("value written", 12, dp.getCvVal(45));
+        Assert.assertTrue("target not written", !dp.hasBeenWritten(258));
+        Assert.assertEquals("index written", 1, dp.getCvVal(255));
+        Assert.assertEquals("offset written", 12, dp.getCvVal(2));
 
-        dp.clearHasBeenWritten(81);
-        
-        p.readCV("123.45", l);
+        p.readCV(258, l);
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
-        Assert.assertTrue("index written", dp.hasBeenWritten(81));
-        Assert.assertEquals("index written", 123, dp.getCvVal(81));
     }
     
     public void testCvLimit() {
-        Programmer p = new SingleIndexMultiProgrammerFacade(new jmri.progdebugger.ProgDebugger(), 81);
+        Programmer p = new AddressedHighCvProgrammerFacade(new jmri.progdebugger.ProgDebugger(), 256, 255, 1024);
         Assert.assertTrue("CV limit read OK", p.getCanRead("2048"));  
         Assert.assertTrue("CV limit write OK", p.getCanWrite("2048"));  
         Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "2048"));  
@@ -108,23 +90,23 @@ public class SingleIndexMultiProgrammerFacadeTest extends TestCase {
 
     
     // from here down is testing infrastructure
-    public SingleIndexMultiProgrammerFacadeTest(String s) {
+    public AddressedHighCvProgrammerFacadeTest(String s) {
         super(s);
     }
     
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SingleIndexMultiProgrammerFacadeTest.class.getName()};
+        String[] testCaseName = {AddressedHighCvProgrammerFacadeTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
     
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(SingleIndexMultiProgrammerFacadeTest.class);
+        TestSuite suite = new TestSuite(AddressedHighCvProgrammerFacadeTest.class);
         return suite;
     }
     
-    static Logger log = Logger.getLogger(SingleIndexMultiProgrammerFacadeTest.class.getName());
+    static Logger log = Logger.getLogger(AddressedHighCvProgrammerFacadeTest.class.getName());
 
 }
