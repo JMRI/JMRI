@@ -156,7 +156,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		// show train build options in very detailed mode
-		addLine(buildReport, SEVEN, Bundle.getMessage("MenuItemBuildOptions"));
+		addLine(buildReport, SEVEN, Bundle.getMessage("MenuItemBuildOptions") + ":");
 		if (Setup.isBuildAggressive())
 			addLine(buildReport, SEVEN, Bundle.getMessage("BuildModeAggressive"));
 		else
@@ -172,6 +172,7 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowLocalMoves"));
 		if (train.isAllowThroughCarsEnabled())
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowThroughCars"));
+		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS()
@@ -200,30 +201,30 @@ public class TrainBuilder extends TrainCommon {
 			}
 			// if a location is skipped, no car drops or pick ups
 			else if (train.skipsLocation(rl.getId())) {
-				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocSkipped"),
-						new Object[] { rl.getName(), train.getName() }));
+				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocSkippedMaxTrain"),
+						new Object[] { rl.getName(), train.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit() }));
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
 			} else {
 				// we're going to use this location, so initialize the location
-				rl.setCarMoves(0); // clear the number of moves				
+				rl.setCarMoves(0); // clear the number of moves
 				// show the type of moves allowed at this location
 				if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
-					addLine(buildReport, THREE, MessageFormat.format(Bundle
-							.getMessage("buildLocNoDropsOrPickups"), new Object[] { rl.getName() }));
+					addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocNoDropsOrPickups"),
+							new Object[] { rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit() }));
 				} else {
 					requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 					if (rl.isDropAllowed() && rl.isPickUpAllowed())
-						addLine(buildReport, THREE, MessageFormat.format(Bundle
-								.getMessage("buildLocRequestMoves"), new Object[] { rl.getName(),
-								rl.getMaxCarMoves() }));
+						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
+								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+										Setup.getLengthUnit() }));
 					else if (!rl.isDropAllowed())
-						addLine(buildReport, THREE, MessageFormat.format(Bundle
-								.getMessage("buildLocRequestPickups"), new Object[] { rl.getName(),
-								rl.getMaxCarMoves() }));
+						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
+								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+										Setup.getLengthUnit() }));
 					else
-						addLine(buildReport, THREE, MessageFormat.format(Bundle
-								.getMessage("buildLocRequestDrops"), new Object[] { rl.getName(),
-								rl.getMaxCarMoves() }));
+						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
+								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+										Setup.getLengthUnit() }));
 				}
 			}
 			rl.setTrainWeight(0); // clear the total train weight
@@ -234,6 +235,7 @@ public class TrainBuilder extends TrainCommon {
 			requested = requested / 2; // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
+		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)) {
@@ -462,7 +464,8 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
 				new Object[] { train.getName() }));
-
+		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		
 		// show car types and loads that this train will service
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
 				new Object[] { train.getName() }));
