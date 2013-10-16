@@ -1411,7 +1411,7 @@
     
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
-
+   
    A classification yard is used to sort cars into various trains. Normally a yard track is assigned
    to a specific train and cars are delivered to that track until there are enough cars to complete
    a train. To create a classification yard, you need to assign a <A HREF="#Interchange">classification/interchange
@@ -1719,7 +1719,7 @@
    card "*" when entering a car number. For example if you want to find all cars with numbers that
    ended with 345, enter *345, and press find. Each time you press find, the next car with a road
    number ending with "345" will be highlighted. 
-   
+     
    <A NAME="ImportingCars"></A>
    <H3>Importing Cars from a File</H3>
 
@@ -2221,7 +2221,7 @@
    <H3>Edit Route</H3>
 
    You can modify any location in a train's route by selecting an item in one of the menu boxes or by
-   doubling clicking one of the cells and entering a new value. Press "Save Route" to compelete your
+   doubling clicking one of the cells and entering a new value. Press "Save Route" to complete your
    change.
 
    <P>
@@ -2248,16 +2248,16 @@
      HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. For example, if you
     limited the train's departure length to 500 feet, then approximately 10 cars would depart in the
     train from that location. When first starting out, it is recommended that you leave the
-    departure train lengths to the maximun and adjust the number of cars in the train by changing
+    departure train lengths to the maximum and adjust the number of cars in the train by changing
     the car move counts in the train's route. Later if you find that your train is too long, you should
-    first reduce the car move counts and then the maximun train lengths to get your trains to build to
+    first reduce the car move counts and then the maximum train lengths to get your trains to build to
     your liking.
    </P>
 
    <P>
     The grade is optional and is used to determine how many locomotives the train will require for
     that segment when using the train <A HREF="#TrainRequires">Auto</A> locomotive assignment
-    feature. Enter the maximun grade that the train will encounter between the two locations.
+    feature. Enter the maximum grade that the train will encounter between the two locations.
    </P>
 
    <P>
@@ -2367,7 +2367,7 @@
     that hasn't been moved.</P>
 
    <P>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-    selects shows all trains in your roster. When deselected, only trains that have the "Build"
+    selected shows all trains in your roster. When deselected, only trains that have the "Build"
     checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
     whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
     checkbox when selected provides a report detailing how the train was built by the program. Use
@@ -2377,14 +2377,16 @@
    <P>The "Preview" checkbox when selected, allows you to preview rather than printing your
     train's manifest or build report.</p>
 
-   <P>If you select the "Generate CSV Manifest" from the <A
-    HREF="#ManifestOptions">Options</A> window found under "Tools" in
-    the Settings or Trains window, two additional checkboxes will appear labled "Open" and "Run". If the "Open"
-    checkbox is selected the "Function" button for a built train will become "Open" rather than
-    "Print" or "Preview". Pressing a train's "Open" button will allow you to examine the train's
-    comma separated value file. If you select the "Run" checkbox, the function button for a built
-    train becomes "Run". Pressing a train's "Run" button will start the Excel program configured
-    by the "Setup Excel Program (Manifest Creator)" window found in the Trains "Tools" menu .</P>
+   <P>
+    If you select the "Generate CSV Manifest" from the <A HREF="#ManifestOptions">Options</A> window
+    found under "Tools" in the Settings or Trains window, two additional checkboxes will appear
+    labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
+    train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
+    allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
+    the function button for a built train becomes "Run". Pressing a train's "Run" button will start
+    the Excel program configured by the "Setup Excel Program (Manifest Creator)" window found in the
+    Trains "Tools" menu .
+   </P>
 
    <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
