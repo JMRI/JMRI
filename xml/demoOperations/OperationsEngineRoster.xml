@@ -1,36 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/operations-engines.xsl" type="text/xsl"?>
-<!DOCTYPE operations-config SYSTEM "operations-engines.dtd">
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/operations-engines.xsl"?>
+<!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-engines.dtd">
 
 <operations-config>
-  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id$-->
-  <options>
-    <engineEditOptions x="85" y="45" height="679" width="450" />
-  </options>
+  <!--Written by JMRI version 20131014-0221-Daniel Boudreau on Wed Oct 16 21:40:28 EDT 2013 $Id$-->
   <engineModels>Allegheny%%E8%%F7%%GP20%%GP30%%GP35%%RS1%%RS11%%RS18%%RS27%%RS3%%RSD4%%SD26%%SD45%%SW1200%%SW1500%%SW8%%TRAINMASTER%%U28B%%</engineModels>
+  <models>
+    <model name="Allegheny" />
+    <model name="E8" />
+    <model name="F7" />
+    <model name="GP20" />
+    <model name="GP30" />
+    <model name="GP35" />
+    <model name="RS1" />
+    <model name="RS11" />
+    <model name="RS18" />
+    <model name="RS27" />
+    <model name="RS3" />
+    <model name="RSD4" />
+    <model name="SD26" />
+    <model name="SD45" />
+    <model name="SW1200" />
+    <model name="SW1500" />
+    <model name="SW8" />
+    <model name="TRAINMASTER" />
+    <model name="U28B" />
+  </models>
   <engineTypes>Diesel%%Steam%%</engineTypes>
+  <types>
+    <type name="Diesel" />
+    <type name="Steam" />
+  </types>
   <engineLengths>32%%34%%36%%38%%40%%42%%44%%45%%46%%48%%50%%52%%54%%56%%58%%60%%66%%70%%75%%80%%85%%90%%101%%125%%</engineLengths>
+  <lengths>
+    <length value="32" />
+    <length value="34" />
+    <length value="36" />
+    <length value="38" />
+    <length value="40" />
+    <length value="42" />
+    <length value="44" />
+    <length value="45" />
+    <length value="46" />
+    <length value="48" />
+    <length value="50" />
+    <length value="52" />
+    <length value="54" />
+    <length value="56" />
+    <length value="58" />
+    <length value="60" />
+    <length value="66" />
+    <length value="70" />
+    <length value="75" />
+    <length value="80" />
+    <length value="85" />
+    <length value="90" />
+    <length value="101" />
+    <length value="125" />
+  </lengths>
+  <options />
   <consists>RS18s%%SSW 1%%SSW 2%%SW%%nce_106%%nce_108%%nce_112%%nce_114%%nce_115%%nce_116%%nce_117%%nce_118%%nce_119%%nce_120%%nce_121%%nce_122%%nce_123%%nce_124%%nce_125%%nce_126%%nce_127%%</consists>
+  <newConsists>
+    <consist name="RS18s" />
+    <consist name="SSW 1" />
+    <consist name="SSW 2" />
+    <consist name="SW" />
+    <consist name="nce_106" />
+    <consist name="nce_108" />
+    <consist name="nce_112" />
+    <consist name="nce_114" />
+    <consist name="nce_115" />
+    <consist name="nce_116" />
+    <consist name="nce_117" />
+    <consist name="nce_118" />
+    <consist name="nce_119" />
+    <consist name="nce_120" />
+    <consist name="nce_121" />
+    <consist name="nce_122" />
+    <consist name="nce_123" />
+    <consist name="nce_124" />
+    <consist name="nce_125" />
+    <consist name="nce_126" />
+    <consist name="nce_127" />
+  </newConsists>
   <engines>
-    <engine id="Chesapeake &amp; Ohio1633" roadName="C&amp;O" roadNumber="1633" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" owner="AT" model="Allegheny" hp="8000" />
-    <engine id="Chesapeake &amp; Ohio1641" roadName="C&amp;O" roadNumber="1641" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" owner="AT" model="Allegheny" hp="8000" />
-    <engine id="SP1017" roadName="SP" roadNumber="1017" type="Diesel" length="45" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" model="SW1200" hp="1200" />
-    <engine id="SP1019" roadName="SP" roadNumber="1019" type="Diesel" length="45" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" model="SW1200" hp="1200" />
-    <engine id="SP3023" roadName="SP" roadNumber="3023" type="Diesel" length="66" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" owner="AT" model="TRAINMASTER" hp="2400" consist="nce_106" />
-    <engine id="SP3029" roadName="SP" roadNumber="3029" type="Diesel" length="66" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" model="TRAINMASTER" hp="2400" consist="nce_106" leadConsist="true" consistNum="106" />
-    <engine id="SP4802" roadName="SP" roadNumber="4802" type="Diesel" length="66" locationId="92" secLocationId="92s4" lastRouteId="12" moves="49" model="TRAINMASTER" hp="2400" consist="nce_118" />
-    <engine id="SP4805" roadName="SP" roadNumber="4805" type="Diesel" length="66" locationId="92" secLocationId="92s4" lastRouteId="12" moves="49" model="TRAINMASTER" hp="2400" consist="nce_118" leadConsist="true" consistNum="118" />
-    <engine id="SP5010" roadName="SP" roadNumber="5010" type="Diesel" length="56" locationId="84" secLocationId="84s17" lastRouteId="17" moves="23" model="GP30" hp="2250" />
-    <engine id="SP5151" roadName="SP" roadNumber="5151" type="Diesel" length="52" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" model="RS18" hp="1800" consist="nce_127" />
-    <engine id="SP5160" roadName="SP" roadNumber="5160" type="Diesel" length="52" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" model="RS18" hp="1800" consist="nce_127" leadConsist="true" consistNum="127" />
-    <engine id="SP5162" roadName="SP" roadNumber="5162" type="Diesel" length="52" locationId="92" secLocationId="92s5" lastRouteId="15" moves="20" model="RS18" hp="1800" consist="RS18s" leadConsist="true" />
-    <engine id="SP5166" roadName="SP" roadNumber="5166" type="Diesel" length="52" locationId="92" secLocationId="92s5" lastRouteId="15" moves="20" model="RS18" hp="1800" consist="RS18s" />
-    <engine id="SP5294" roadName="SP" roadNumber="5294" type="Diesel" length="52" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" model="RSD4" hp="1600" consist="nce_115" leadConsist="true" consistNum="115" />
-    <engine id="SP5307" roadName="SP" roadNumber="5307" type="Diesel" length="52" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" model="RSD4" hp="1600" consist="nce_115" />
-    <engine id="SSW4501" roadName="SSW" roadNumber="4501" type="Diesel" length="56" locationId="91" secLocationId="91s3" lastRouteId="14" moves="7" model="GP35" hp="2500" consist="SSW 1" leadConsist="true" />
-    <engine id="SSW4503" roadName="SSW" roadNumber="4503" type="Diesel" length="56" locationId="91" secLocationId="91s3" lastRouteId="14" moves="7" model="GP35" hp="2500" consist="SSW 1" />
-    <engine id="SSW4545" roadName="SSW" roadNumber="4545" type="Diesel" length="56" locationId="92" secLocationId="92s6" lastRouteId="12" moves="11" model="GP35" hp="2500" consist="SSW 2" leadConsist="true" />
-    <engine id="SSW4546" roadName="SSW" roadNumber="4546" type="Diesel" length="56" locationId="92" secLocationId="92s6" lastRouteId="12" moves="11" model="GP35" hp="2500" consist="SSW 2" />
+    <engine id="Chesapeake &amp; Ohio1633" roadName="C&amp;O" roadNumber="1633" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" owner="AT" date="" model="Allegheny" hp="8000" />
+    <engine id="Chesapeake &amp; Ohio1641" roadName="C&amp;O" roadNumber="1641" type="Steam" length="125" locationId="78" secLocationId="78s8" moves="0" owner="AT" date="" model="Allegheny" hp="8000" />
+    <engine id="SP1017" roadName="SP" roadNumber="1017" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" model="SW1200" hp="1200" />
+    <engine id="SP1019" roadName="SP" roadNumber="1019" type="Diesel" length="45" weightTons="124" locationId="78" secLocationId="78s8" lastRouteId="4" moves="18" date="" model="SW1200" hp="1200" />
+    <engine id="SP3023" roadName="SP" roadNumber="3023" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" owner="AT" date="" model="TRAINMASTER" hp="2400" consist="nce_106" />
+    <engine id="SP3029" roadName="SP" roadNumber="3029" type="Diesel" length="66" weightTons="188" locationId="78" secLocationId="78s8" lastRouteId="18" moves="38" date="" model="TRAINMASTER" hp="2400" consist="nce_106" leadConsist="true" consistNum="106" />
+    <engine id="SP4802" roadName="SP" roadNumber="4802" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="49" date="" model="TRAINMASTER" hp="2400" consist="nce_118" />
+    <engine id="SP4805" roadName="SP" roadNumber="4805" type="Diesel" length="66" weightTons="188" locationId="92" secLocationId="92s4" lastRouteId="12" moves="49" date="" model="TRAINMASTER" hp="2400" consist="nce_118" leadConsist="true" consistNum="118" />
+    <engine id="SP5010" roadName="SP" roadNumber="5010" type="Diesel" length="56" weightTons="130" locationId="84" secLocationId="84s17" lastRouteId="17" moves="23" date="" model="GP30" hp="2250" />
+    <engine id="SP5151" roadName="SP" roadNumber="5151" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" model="RS18" hp="1800" consist="nce_127" />
+    <engine id="SP5160" roadName="SP" roadNumber="5160" type="Diesel" length="52" weightTons="118" locationId="91" secLocationId="91s2" lastRouteId="14" moves="17" date="" model="RS18" hp="1800" consist="nce_127" leadConsist="true" consistNum="127" />
+    <engine id="SP5162" roadName="SP" roadNumber="5162" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="20" date="" model="RS18" hp="1800" consist="RS18s" leadConsist="true" />
+    <engine id="SP5166" roadName="SP" roadNumber="5166" type="Diesel" length="52" weightTons="118" locationId="92" secLocationId="92s5" lastRouteId="15" moves="20" date="" model="RS18" hp="1800" consist="RS18s" />
+    <engine id="SP5294" roadName="SP" roadNumber="5294" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" date="" model="RSD4" hp="1600" consist="nce_115" leadConsist="true" consistNum="115" />
+    <engine id="SP5307" roadName="SP" roadNumber="5307" type="Diesel" length="52" weightTons="179" locationId="78" secLocationId="78s8" lastRouteId="11" moves="29" date="" model="RSD4" hp="1600" consist="nce_115" />
+    <engine id="SSW4501" roadName="SSW" roadNumber="4501" type="Diesel" length="56" weightTons="130" locationId="91" secLocationId="91s3" lastRouteId="14" moves="7" date="" model="GP35" hp="2500" consist="SSW 1" leadConsist="true" />
+    <engine id="SSW4503" roadName="SSW" roadNumber="4503" type="Diesel" length="56" weightTons="130" locationId="91" secLocationId="91s3" lastRouteId="14" moves="7" date="" model="GP35" hp="2500" consist="SSW 1" />
+    <engine id="SSW4545" roadName="SSW" roadNumber="4545" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s6" lastRouteId="12" moves="11" date="" model="GP35" hp="2500" consist="SSW 2" leadConsist="true" />
+    <engine id="SSW4546" roadName="SSW" roadNumber="4546" type="Diesel" length="56" weightTons="130" locationId="92" secLocationId="92s6" lastRouteId="12" moves="11" date="" model="GP35" hp="2500" consist="SSW 2" />
   </engines>
 </operations-config>
 
