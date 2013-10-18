@@ -92,9 +92,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public boolean getCanRead(String cv) {
         if (!getCanRead()) return false;
-        
-        if (Integer.parseInt(cv)>=256) return false;
-        
         return true;
     }
 
