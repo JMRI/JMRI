@@ -4,12 +4,15 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,7 +21,7 @@ import javax.swing.JPanel;
  * Frame for copying a train for operations.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2011
+ * @author Daniel Boudreau Copyright (C) 2011, 2013
  * @version $Revision: 17977 $
  */
 public class TrainCopyFrame extends OperationsFrame {
@@ -27,7 +30,6 @@ public class TrainCopyFrame extends OperationsFrame {
 
 	// labels
 	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(Bundle.getMessage("SelectTrain"));
-	javax.swing.JLabel textTrainName = new javax.swing.JLabel(Bundle.getMessage("Name"));
 
 	// text field
 	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
@@ -44,29 +46,34 @@ public class TrainCopyFrame extends OperationsFrame {
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// Set up the panels
-		JPanel p1 = new JPanel();
-		p1.setLayout(new GridBagLayout());
 
 		// Layout the panel by rows
 		// row 1
-		addItem(p1, textTrainName, 0, 1);
-		addItemWidth(p1, trainNameTextField, 3, 1, 1);
+		JPanel pName = new JPanel();
+		pName.setLayout(new GridBagLayout());
+		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
+		addItem(pName, trainNameTextField, 0, 0);
 
 		// row 2
-		addItem(p1, textCopyTrain, 0, 2);
-		addItemWidth(p1, trainBox, 3, 1, 2);
+		JPanel pCopy = new JPanel();
+		pCopy.setLayout(new GridBagLayout());
+		pCopy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectTrain")));
+		addItem(pCopy, trainBox, 0, 0);
 
 		// row 4
-		addItem(p1, copyButton, 1, 4);
+		JPanel pButton = new JPanel();
+		pButton.add(copyButton);
 
-		getContentPane().add(p1);
+		getContentPane().add(pName);
+		getContentPane().add(pCopy);
+		getContentPane().add(pButton);
 
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
 		pack();
 		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
-		
+
 		setTitle(Bundle.getMessage("TitleTrainCopy"));
 
 		// setup buttons
@@ -107,15 +114,13 @@ public class TrainCopyFrame extends OperationsFrame {
 	}
 
 	private void reportTrainExists() {
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
-				MessageFormat.format(Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
-				JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), MessageFormat.format(Bundle
+				.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }), JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void reportTrainDoesNotExist() {
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectTrain"),
-				MessageFormat.format(Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
-				JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectTrain"), MessageFormat.format(Bundle
+				.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }), JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
@@ -124,16 +129,14 @@ public class TrainCopyFrame extends OperationsFrame {
 	 */
 	private boolean checkName() {
 		if (trainNameTextField.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), MessageFormat.format(
-					Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), MessageFormat.format(Bundle
+					.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainNameTextField.getText().length() > Control.max_len_string_train_name) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainNameLess"),
-					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(
-					Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("copy") }),
-					JOptionPane.ERROR_MESSAGE);
+					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(Bundle
+					.getMessage("CanNot"), new Object[] { Bundle.getMessage("copy") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -143,6 +146,5 @@ public class TrainCopyFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class.getName());
 }
