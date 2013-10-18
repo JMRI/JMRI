@@ -84,14 +84,14 @@ public class PaneServiceProgFrame extends PaneProgFrame
                         if (a.getValue().equals("no")) register = false;
                         
                     // iterate over any facades and add them
-                    List<Element> facades = (List<Element>)(programming.getChildren("capability"));
+                    List<Element> facades = programming.getChildren("capability");
                     if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability elements");
                     for (Element facade : facades) {
                         String fname = facade.getChild("name").getText();
                         if (log.isDebugEnabled()) log.debug("Process capability facade: "+fname);
 
 
-                        List<Element> parameters = (List<Element>)(facade.getChildren("parameter"));
+                        List<Element> parameters = facade.getChildren("parameter");
                         if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability parameters");
                         for (Element parameter : parameters) {
                             String pval = parameter.getText();
