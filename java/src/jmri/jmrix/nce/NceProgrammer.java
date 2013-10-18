@@ -90,6 +90,31 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     		return true;
     	}
 
+    public boolean getCanRead(String cv) {
+        if (!getCanRead()) return false;
+        
+        if (Integer.parseInt(cv)>=256) return false;
+        
+        return true;
+    }
+
+    public boolean getCanWrite(String cv) {
+       if ((Integer.parseInt(cv) > 256) &&
+               ((getMode() == Programmer.PAGEMODE) ||
+                   (getMode() == Programmer.DIRECTBYTEMODE) ||
+                   (getMode() == Programmer.REGISTERMODE)
+               ) && ((tc != null) && (
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_1999) |
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_2004) |
+                       (tc.getCommandOptions() == NceTrafficController.OPTION_2006))
+                   )
+               ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     // notify property listeners - see AbstractProgrammer for more
 
     @SuppressWarnings("unchecked")
