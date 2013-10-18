@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+import java.util.List;
+
 /**
  * Extend the PaneProgFrame to handle service mode operations.
  *<p>
@@ -49,6 +51,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      * @param name
      * @param file
      */
+    @SuppressWarnings("unchecked")
     public PaneServiceProgFrame(DecoderFile decoderFile, RosterEntry r,
                                 String name, String file, Programmer pProg) {
         super(decoderFile, r, name, file, pProg, false);
@@ -67,6 +70,8 @@ public class PaneServiceProgFrame extends PaneProgFrame
                 boolean register= true;
                 if (decoderRoot != null
                     && (programming = decoderRoot.getChild("decoder").getChild("programming"))!= null) {
+                    
+                    // set the programming attributes for DCC
                     Attribute a;
                     if ( (a = programming.getAttribute("paged")) != null )
                         if (a.getValue().equals("no")) paged = false;
@@ -77,6 +82,20 @@ public class PaneServiceProgFrame extends PaneProgFrame
                     }
                     if ( (a = programming.getAttribute("register")) != null )
                         if (a.getValue().equals("no")) register = false;
+                        
+                    // iterate over any facades and add them
+                    List<Element> facades = (List<Element>)(programming.getChildren("capability"));
+                    if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability elements");
+                    for (Element facade : facades) {
+                        String fname = facade.getChild("name").getText();
+                        if (log.isDebugEnabled()) log.debug("Process capability facade: "+fname);
+                        List<Element> parameters = (List<Element>)(facade.getChildren("parameter"));
+                        if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability parameters");
+                        for (Element parameter : parameters) {
+                            String pval = parameter.getText();
+                            if (log.isDebugEnabled()) log.debug("Process parameter value: "+pval);
+                        }
+                    }
                 }
     
                 // is the current mode OK?

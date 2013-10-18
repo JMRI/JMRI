@@ -190,12 +190,17 @@ public class ProgDebugger implements Programmer  {
         return true;
     }
 
+    int writeLimit = 2048;
+    int readLimit = 2048;
+    public void setTestReadLimit(int lim) { readLimit = lim; }
+    public void setTestWriteLimit(int lim) { writeLimit = lim; }
+    
     public boolean getCanRead() { return true; }
-    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=readLimit; }
     public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
     
     public boolean getCanWrite()  { return true; }
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=writeLimit; }
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     /**

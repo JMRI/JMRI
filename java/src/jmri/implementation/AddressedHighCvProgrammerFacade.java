@@ -16,8 +16,13 @@ import java.util.Vector;
 /**
  * Programmer facade, at this point just an example.
  * <p>
- * This one isn't particularly useful. It imagines
- * that CVs from 0 to "top" can be addressed
+ * This is for decoders that have an
+ * alternate high-CV access method for
+ * command stations that can't address all 2048.
+ * It falls back to that mode if the CS can't
+ * directly address an requested CV address.
+ * In the fall back, 
+ * CVs from 0 to "top" are addressed
  * directly. (Top being a power of two)
  * Above the top CV, the upper bits are written to 
  * a specific CV, followed by an operation
@@ -31,22 +36,25 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
 
     /**
      * @param top CVs above this use the indirect method
-     * @param addrCV  CV to which the high value is to be written
-     * @param max Maximum CV that can be accessed this way
+     * @param addrCVhigh  CV to which the high part of address is to be written
+     * @param addrCVlow  CV to which the low part of address is to be written
+     * @param valueCV Value read/written here once address has been written
      */
-    public AddressedHighCvProgrammerFacade(Programmer prog, int top, int addrCV, int max) {
+    public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV) {
         super(prog);
         this.prog = prog;
-        this.top = top;
-        this.addrCV = addrCV;
-        this.max = max;
+        this.top = Integer.parseInt(top);
+        this.addrCVhigh = Integer.parseInt(addrCVhigh);
+        this.addrCVlow = Integer.parseInt(addrCVlow);
+        this.valueCV = Integer.parseInt(valueCV);
     }
 
     Programmer prog;
     
     int top;
-    int addrCV;
-    int max;
+    int addrCVhigh;
+    int addrCVlow;
+    int valueCV;
 
 
     // members for handling the programmer interface
@@ -55,34 +63,34 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        _cv = CV;
+    synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        _cv = Integer.parseInt(CV);
         _val = val;
         useProgrammer(p);
-        if (CV <= top) {
+        if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(CV, val, this);
+            prog.writeCV(_cv, val, this);
         } else {
             // write index first
-            state = ProgState.FINISHWRITE;
-            prog.writeCV(addrCV, CV/top, this);
+            state = ProgState.WRITELOWWRITE;
+            prog.writeCV(addrCVhigh, _cv/top, this);
         }
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        _cv = CV;
+    synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        _cv = Integer.parseInt(CV);
         useProgrammer(p);
-        if (CV <= top) {
+        if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(CV, this);
+            prog.readCV(_cv, this);
         } else {
             // write index first
-            state = ProgState.FINISHREAD;
-            prog.writeCV(addrCV, CV/top, this);
+            state = ProgState.WRITELOWREAD;
+            prog.writeCV(addrCVhigh, _cv/top, this);
         }
     }
 
@@ -101,7 +109,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         }
     }
 
-    enum ProgState { PROGRAMMING, FINISHREAD, FINISHWRITE, NOTPROGRAMMING }
+    enum ProgState { PROGRAMMING, WRITELOWREAD, WRITELOWWRITE, FINISHREAD, FINISHWRITE, NOTPROGRAMMING }
     ProgState state = ProgState.NOTPROGRAMMING;
     
     // get notified of the final result
@@ -120,10 +128,26 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
                 state = ProgState.NOTPROGRAMMING;
                 temp.programmingOpReply(value, status);
                 break;
+            case WRITELOWREAD:
+                try {
+                    state = ProgState.FINISHREAD;
+                    prog.writeCV(addrCVlow, _cv%top, this);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Exception doing final read", e);
+                }
+                break;
+            case WRITELOWWRITE:
+                try {
+                    state = ProgState.FINISHWRITE;
+                    prog.writeCV(addrCVlow, _cv%top, this);
+                } catch (jmri.ProgrammerException e) {
+                    log.error("Exception doing final write", e);
+                }
+                break;
             case FINISHREAD:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.readCV(_cv%top, this);
+                    prog.readCV(valueCV, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -131,7 +155,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             case FINISHWRITE:
                 try {
                     state = ProgState.PROGRAMMING;
-                    prog.writeCV(_cv%top, _val, this);
+                    prog.writeCV(valueCV, _val, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
@@ -143,7 +167,17 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
                 state = ProgState.NOTPROGRAMMING;
                 
         }
+
     }
+
+    // Access to full address space provided by this.
+    public boolean getCanRead() { return true; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+
+    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
 
