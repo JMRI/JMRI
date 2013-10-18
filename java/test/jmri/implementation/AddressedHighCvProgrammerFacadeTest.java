@@ -28,7 +28,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
-        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255");
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
@@ -51,7 +51,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
     public void testWriteReadDirectHighCV() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
-        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255");
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
@@ -76,7 +76,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(256);
         dp.setTestWriteLimit(256);
-        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255");
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
@@ -87,8 +87,8 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         p.writeCV("258", 12, l);
         waitReply();
         Assert.assertTrue("target not written", !dp.hasBeenWritten(258));
-        Assert.assertEquals("index H written", 1, dp.getCvVal(253));
-        Assert.assertEquals("index L written", 2, dp.getCvVal(254));
+        Assert.assertEquals("index H written", 2, dp.getCvVal(253));
+        Assert.assertEquals("index L written", 58, dp.getCvVal(254));
         Assert.assertEquals("value written", 12, dp.getCvVal(255));
 
         p.readCV("258", l);
@@ -100,7 +100,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(256);
         dp.setTestWriteLimit(256);
-        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255");
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
         Assert.assertTrue("CV limit read OK", p.getCanRead("2048"));  
         Assert.assertTrue("CV limit write OK", p.getCanWrite("2048"));  
         Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "2048"));  

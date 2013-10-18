@@ -39,14 +39,17 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
      * @param addrCVhigh  CV to which the high part of address is to be written
      * @param addrCVlow  CV to which the low part of address is to be written
      * @param valueCV Value read/written here once address has been written
+     * @param modulo Modulus for determining high/low address parts
      */
-    public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV) {
+    public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV, String modulo) {
         super(prog);
         this.prog = prog;
         this.top = Integer.parseInt(top);
         this.addrCVhigh = Integer.parseInt(addrCVhigh);
         this.addrCVlow = Integer.parseInt(addrCVlow);
         this.valueCV = Integer.parseInt(valueCV);
+        this.modulo = Integer.parseInt(modulo);
+        log.debug("Created with "+prog+", "+this.top+", "+this.addrCVhigh+", "+this.addrCVlow+", "+this.valueCV+", "+this.modulo);
     }
 
     Programmer prog;
@@ -55,6 +58,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     int addrCVhigh;
     int addrCVlow;
     int valueCV;
+    int modulo;
 
 
     // members for handling the programmer interface
@@ -63,7 +67,13 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        writeCV(""+CV, val, p);
+    }
+    @Override
+    public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("start writeCV");
         _cv = Integer.parseInt(CV);
         _val = val;
         useProgrammer(p);
@@ -73,15 +83,26 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         } else {
             // write index first
             state = ProgState.WRITELOWWRITE;
-            prog.writeCV(addrCVhigh, _cv/top, this);
+            prog.writeCV(addrCVhigh, _cv/modulo, this);
         }
     }
 
-    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        confirmCV(""+CV, val, p);
+    }
+    @Override
+    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
-    synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(""+CV, p);
+    }
+    @Override
+    public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        log.debug("start readCV");
         _cv = Integer.parseInt(CV);
         useProgrammer(p);
         if (prog.getCanWrite(CV) || _cv <= top) {
@@ -90,7 +111,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         } else {
             // write index first
             state = ProgState.WRITELOWREAD;
-            prog.writeCV(addrCVhigh, _cv/top, this);
+            prog.writeCV(addrCVhigh, _cv/modulo, this);
         }
     }
 
@@ -131,7 +152,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             case WRITELOWREAD:
                 try {
                     state = ProgState.FINISHREAD;
-                    prog.writeCV(addrCVlow, _cv%top, this);
+                    prog.writeCV(addrCVlow, _cv%modulo, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -139,7 +160,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             case WRITELOWWRITE:
                 try {
                     state = ProgState.FINISHWRITE;
-                    prog.writeCV(addrCVlow, _cv%top, this);
+                    prog.writeCV(addrCVlow, _cv%modulo, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
