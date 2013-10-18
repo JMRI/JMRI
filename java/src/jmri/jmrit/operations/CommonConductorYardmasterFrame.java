@@ -186,10 +186,13 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		textTrainRouteLocationComment.setBackground(null);
 
 		// row 12
-		pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
+		if ((getPreferredSize().width > Control.widePanelWidth && Setup.isTabEnabled())
+				|| (getPreferredSize().width > Control.widePanelWidth-200 && !Setup.isTabEnabled()))
+			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
+		else
+			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.Y_AXIS));
 		pWorkPanes.add(pickupPane);
 		pWorkPanes.add(setoutPane);
-//		pWorkPanes.setPreferredSize(new Dimension(600, 400));
 
 		// row 13
 		pStatus.setLayout(new GridBagLayout());
