@@ -98,7 +98,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
                             if (log.isDebugEnabled()) log.debug("Process parameter value: "+pval);
                         }
 
-                        if (fname.equals("High Access via Index")) {
+                        if (fname.equals("High Access via Double Index")) {
                             // going to create a specific one
                             String top          = parameters.get(0).getText();
                             String addrCVhigh   = parameters.get(1).getText();
@@ -108,6 +108,23 @@ public class PaneServiceProgFrame extends PaneProgFrame
 
                             jmri.implementation.AddressedHighCvProgrammerFacade pf =
                                 new jmri.implementation.AddressedHighCvProgrammerFacade(mProgrammer, top, addrCVhigh, addrCVlow, valueCV, modulo);
+                            
+                            log.debug("new programmer "+pf);
+                            mProgrammer = pf;
+                            cvModel.setProgrammer(pf);
+                            iCvModel.setProgrammer(pf);
+                            resetModel.setProgrammer(pf);
+                            log.debug("Found programmers: "+cvModel.getProgrammer()+" "+iCvModel.getProgrammer());
+                            
+                        } else if (fname.equals("High Access via Partial Index")) {
+                            // going to create a specific one
+                            String top          = parameters.get(0).getText();
+                            String addrCV       = parameters.get(1).getText();
+                            String factor       = parameters.get(2).getText();
+                            String modulo       = parameters.get(3).getText();
+
+                            jmri.implementation.OffsetHighCvProgrammerFacade pf =
+                                new jmri.implementation.OffsetHighCvProgrammerFacade(mProgrammer, top, addrCV, factor, modulo);
                             
                             log.debug("new programmer "+pf);
                             mProgrammer = pf;
