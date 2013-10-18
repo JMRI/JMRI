@@ -25,7 +25,7 @@ import jmri.*;
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 	
 	private int _numRows = 0;                // must be zero until Vectors are initialized
-    static final int MAXCVNUM = 1024;
+    static final int MAXCVNUM = 2048;
     private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
     private Vector<CvValue> _cvAllVector = new Vector<CvValue>(MAXCVNUM+1);  // vector of all possible CV objects
     public Vector<CvValue> allCvVector() { return _cvAllVector; }
@@ -71,6 +71,19 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
      */
     public Programmer getProgrammer() {
         return mProgrammer;
+    }
+
+    public void setProgrammer(Programmer p) { 
+        mProgrammer = p;
+        // tell all variables
+        for (CvValue cv : _cvAllVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        for (CvValue cv : _cvDisplayVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        log.debug("Set programmer in "+_cvAllVector.size()+"CVs");
+        
     }
 
     // basic methods for AbstractTableModel implementation

@@ -57,6 +57,8 @@ public class CvValue extends AbstractValue implements ProgListener {
                 +" _iCv="+_iCv;
     }
     
+    void setProgrammer(Programmer p) { mProgrammer = p; }
+    
     public int number() { return _num; }
     private int _num;
 
@@ -249,7 +251,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     private boolean _confirm = false;
 
     public void read(JLabel status) {
-        if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
+        if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num+" and programmer "+mProgrammer);
         setToRead(false);
         // get a programmer reference and write
         _status = status;
