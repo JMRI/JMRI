@@ -101,14 +101,14 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         dp.setTestReadLimit(256);
         dp.setTestWriteLimit(256);
         Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
-        Assert.assertTrue("CV limit read OK", p.getCanRead("2048"));  
-        Assert.assertTrue("CV limit write OK", p.getCanWrite("2048"));  
-        Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "2048"));  
-        Assert.assertTrue("CV limit write mode OK", p.getCanWrite(0, "2048"));  
-        Assert.assertTrue("CV limit read fail", !p.getCanRead("2049"));  
-        Assert.assertTrue("CV limit write fail", !p.getCanWrite("2049"));  
-        Assert.assertTrue("CV limit read mode fail", !p.getCanRead(0, "2049"));  
-        Assert.assertTrue("CV limit write mode fail", !p.getCanWrite(0, "2049"));  
+        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));  
+        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));  
+        Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "1024"));  
+        Assert.assertTrue("CV limit write mode OK", p.getCanWrite(0, "1024"));  
+        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));  
+        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));  
+        Assert.assertTrue("CV limit read mode fail", !p.getCanRead(0, "1025"));  
+        Assert.assertTrue("CV limit write mode fail", !p.getCanWrite(0, "1025"));  
     }
     
     // from here down is testing infrastructure

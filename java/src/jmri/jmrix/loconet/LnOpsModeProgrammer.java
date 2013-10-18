@@ -79,11 +79,11 @@ public class LnOpsModeProgrammer implements Programmer  {
         return true;
     }
     public boolean getCanRead(String addr) { 
-        return getCanRead() && Integer.parseInt(addr)<=2048; }
+        return getCanRead() && Integer.parseInt(addr)<=1024; }
     public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
     
     public boolean getCanWrite()  { return true; }
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {

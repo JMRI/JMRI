@@ -25,7 +25,7 @@ import jmri.*;
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 	
 	private int _numRows = 0;                // must be zero until Vectors are initialized
-    static final int MAXCVNUM = 2048;
+    static final int MAXCVNUM = 1024;
     private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
     private Vector<CvValue> _cvAllVector = new Vector<CvValue>(MAXCVNUM+1);  // vector of all possible CV objects
     public Vector<CvValue> allCvVector() { return _cvAllVector; }

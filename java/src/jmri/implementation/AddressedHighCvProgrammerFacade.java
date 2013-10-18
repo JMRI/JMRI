@@ -18,7 +18,7 @@ import java.util.Vector;
  * <p>
  * This is for decoders that have an
  * alternate high-CV access method for
- * command stations that can't address all 2048.
+ * command stations that can't address all 1024.
  * It falls back to that mode if the CS can't
  * directly address an requested CV address.
  * In the fall back, 
@@ -196,11 +196,11 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
 
     // Access to full address space provided by this.
     public boolean getCanRead() { return true; }
-    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=1024; }
     public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
 
     public boolean getCanWrite()  { return true; }
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=2048; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());

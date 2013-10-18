@@ -190,8 +190,8 @@ public class ProgDebugger implements Programmer  {
         return true;
     }
 
-    int writeLimit = 2048;
-    int readLimit = 2048;
+    int writeLimit = 1024;
+    int readLimit = 1024;
     public void setTestReadLimit(int lim) { readLimit = lim; }
     public void setTestWriteLimit(int lim) { writeLimit = lim; }
     
