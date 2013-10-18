@@ -23,11 +23,14 @@ import java.util.Vector;
  * directly address an requested CV address.
  * In the fall back, 
  * CVs from 0 to "top" are addressed
- * directly. (Top being a power of two)
- * Above the top CV, the upper bits are written to 
- * a specific CV, followed by an operation
- * with just the lower bits. This works
- * for CV addresses up to some known "max" value. 
+ * directly. (Top being a supplied parameter)
+ * Above the top CV, the upper part of the CV address written to 
+ * a specific CV, followed by an write
+ * with just the lower part to a second CV, then access
+ * to a 3rd CV for the value read/write.
+ * The upper and lower parts are calculated using a supplied modulus, e.g. 100.
+ * <p>
+ * This method is used by some ESU decoders.
  *
  * @author      Bob Jacobsen  Copyright (C) 2013
  * @version	$Revision: 24246 $
