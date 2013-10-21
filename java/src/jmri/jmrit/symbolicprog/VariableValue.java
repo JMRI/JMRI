@@ -52,6 +52,17 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     public String getTextValue() { return getValueString(); }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     * <p>
+     * Default is a single CV number
+     */
+     
+     public String getCvDescription() {
+        return "CV"+_cvNum;
+     }
+     
     /**
      * Set the value from a single number.
      *
