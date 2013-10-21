@@ -68,15 +68,45 @@ public abstract class AbstractProgrammer implements Programmer {
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(Integer.parseInt(CV), val, p);
     }
-
-    public boolean getCanRead() { return true; }
-    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
     
-    public boolean getCanWrite()  { return true; }
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
-    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
+    /**
+     * Basic implementation.  
+     * Override this to turn reading on and off globally.
+     */
+    public boolean getCanRead() { return true; }
+    
+    /**
+     * Unless overridden, checks using the current default programming mode
+     */
+    public boolean getCanRead(String addr) { return getCanRead(getMode(), addr); }
 
+    /**
+     * Most detailed implementation, requires
+     * that the CV be a valid number and that reading is possible
+     */
+    public boolean getCanRead(int mode, String addr) {
+        if (!getCanRead()) return false; // check basic implementation first
+        return Integer.parseInt(addr)<=1024; 
+    }
+    
+    /**
+     * Basic implementation.  
+     * Override this to turn writing on and off globally.
+     */
+    public boolean getCanWrite()  { return true; }
+    /**
+     * Unless overridden, checks using the current default programming mode
+     */
+    public boolean getCanWrite(String addr) { return getCanWrite(getMode(), addr);  }
+    /**
+     * Most detailed implementation, requires
+     * that the CV be a valid number and that writing is possible
+     */
+    public boolean getCanWrite(int mode, String addr)  { 
+        if (!getCanWrite()) return false; // check basic implementation first
+        return Integer.parseInt(addr)<=1024; 
+    }
+    
     /**
      * Internal routine to start timer to protect the mode-change.
      */
