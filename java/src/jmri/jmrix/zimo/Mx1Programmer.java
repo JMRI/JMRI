@@ -90,8 +90,6 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         return false;
     }
 
-    public boolean getCanRead() { return true; }
-
 	// notify property listeners - see AbstractProgrammer for more
 
 	@SuppressWarnings("unchecked")

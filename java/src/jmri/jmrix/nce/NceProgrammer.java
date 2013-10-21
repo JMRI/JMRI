@@ -82,6 +82,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public int getMode() { return _mode; }
 
+    @Override
     public boolean getCanRead() {
     	if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB &&
     			tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
@@ -89,11 +90,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     	else
     		return true;
     	}
-
-    public boolean getCanRead(String cv) {
-        if (!getCanRead()) return false;
-        return true;
-    }
 
     public boolean getCanWrite(String cv) {
        if ((Integer.parseInt(cv) > 256) &&

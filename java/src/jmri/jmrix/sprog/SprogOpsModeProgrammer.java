@@ -79,6 +79,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
      * but maybe later.
      * @return always false for now
      */
+    @Override
     public boolean getCanRead() {
         return false;
     }

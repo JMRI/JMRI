@@ -91,6 +91,7 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
      * but maybe later.
      * @return always false for now
      */
+    @Override
     public boolean getCanRead() {
         return false;
     }

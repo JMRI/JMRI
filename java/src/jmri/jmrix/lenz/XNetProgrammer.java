@@ -96,6 +96,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return false;
     }
 
+    @Override
     public boolean getCanRead() {
 		// Multimaus cannot read CVs, unless Rocomotion interface is used, assume other Command Stations do.
 		// To be revised if and when a Rocomotion adapter is introduced!!!

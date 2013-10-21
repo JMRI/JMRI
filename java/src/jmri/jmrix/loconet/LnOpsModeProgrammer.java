@@ -75,15 +75,21 @@ public class LnOpsModeProgrammer implements Programmer  {
      * if transponding hardware is present, but we don't check that here.
      * @return always true
      */
+    @Override
     public boolean getCanRead() {
         return true;
     }
+    @Override
     public boolean getCanRead(String addr) { 
         return getCanRead() && Integer.parseInt(addr)<=1024; }
+    @Override
     public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
     
+    @Override
     public boolean getCanWrite()  { return true; }
+    @Override
     public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
+    @Override
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {
