@@ -119,15 +119,7 @@ public class CircuitBuilder  {
             OBlock block = manager.getBySystemName(sysNames[i]);
             _circuitMap.put(block, new ArrayList<Positionable>());
         }
-        // delay error detection until ControlPanelEditor is fully loaded
-        JMenuItem mi = new JMenuItem (Bundle.getMessage("circuitErrorsItem"));
-        mi.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                checkCircuits();
-            }
-        });
        makeCircuitMenu();
-       _circuitMenu.add(mi);
        return _circuitMenu;
     }
         
@@ -305,7 +297,7 @@ public class CircuitBuilder  {
         JMenuItem editDirectionItem = new JMenuItem(Bundle.getMessage("editDirectionItem"));
         _circuitMenu.add(editDirectionItem);
 
-        if ( _circuitMap.keySet().size()>0) {
+        if ( _circuitMap.size()>0) {
             editCircuitItem.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         editCircuit("editCircuitItem");
@@ -326,6 +318,14 @@ public class CircuitBuilder  {
                 	editPortalDirection("editDirectionItem");
                 }
             });
+            // delay error detection until ControlPanelEditor is fully loaded
+            JMenuItem mi = new JMenuItem (Bundle.getMessage("circuitErrorsItem"));
+            mi.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    checkCircuits();
+                }
+            });
+            _circuitMenu.add(mi);
         } else {
             editCircuitItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
             editPortalsItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
@@ -664,6 +664,8 @@ public class CircuitBuilder  {
         if (!retOK) {
             JOptionPane.showMessageDialog(_editor, Bundle.getMessage("createOBlock"), 
                     Bundle.getMessage("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+        } else if ( _circuitMap.size()<=1) {
+            makeCircuitMenu();        	
         }
         return retOK;
     }

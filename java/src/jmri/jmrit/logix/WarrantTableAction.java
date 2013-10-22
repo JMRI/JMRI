@@ -471,20 +471,58 @@ public class WarrantTableAction extends AbstractAction {
             _startW = startW;
             _endW = endW;
         }
+        void doConcatenate(Warrant w) {
+            if (_startW!=null) {
+                List <BlockOrder> orders = _startW.getOrders();
+                int limit = orders.size()-1;
+                for (int i=0; i<limit; i++) {
+                    w.addBlockOrder(new BlockOrder(orders.get(i)));
+                }
+                BlockOrder bo = new BlockOrder(orders.get(limit));
+                if (_endW!=null) {
+                    orders = _endW.getOrders();
+                    bo.setExitName(orders.get(0).getExitName());
+                    w.addBlockOrder(bo);
+                    for (int i=1; i<orders.size(); i++) {
+                        w.addBlockOrder(new BlockOrder(orders.get(i)));
+                    }                	
+                } else {
+                    w.addBlockOrder(bo);		// copy only               	
+                }
+                List <ThrottleSetting> commands = _startW.getThrottleCommands();
+                for (int i=0; i<commands.size(); i++) {
+                    w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
+                }
+                if (_endW!=null) {
+                    commands = _endW.getThrottleCommands();
+                    for (int i=0; i<commands.size(); i++) {
+                        w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
+                    }                	
+                }
+                _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
+            }
+            dispose();
+       	
+        }
 
         void makeWarrant() {
             String sysName = _sysNameBox.getText().trim();
             String userName = _userNameBox.getText().trim();
-            if (sysName==null || sysName.length()==0 || sysName.toUpperCase().equals("IW")) {
-                dispose();
+            sysName = sysName.toUpperCase();
+            if (!sysName.startsWith("IW")) {
+            	sysName = "IW"+sysName;
+            }
+            _sysNameBox.setText(sysName);
+            if (sysName.length()<3) {
                 return;
             }
-            if (userName.trim().length()==0) {
+            if (userName.length()==0) {
                 userName = null;
             }
             boolean failed = false;
+            Warrant w = null;
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-            Warrant w = manager.getBySystemName(sysName);
+            w = manager.getBySystemName(sysName);
             if (w != null) {
                 failed = true;
             } else {
@@ -493,41 +531,14 @@ public class WarrantTableAction extends AbstractAction {
                     failed = true;
                 } else {
                     // register warrant if user saves this instance
-                    w = new Warrant(sysName, userName);
+                	w = new Warrant(sysName, userName);
+                	doConcatenate(w);
                 }
-            }
+            }            	
             if (failed) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("WarrantExists", 
                 			userName, sysName), Bundle.getMessage("WarningTitle"),
                 			JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (_startW!=null && _endW!=null) {
-                    List <BlockOrder> orders = _startW.getOrders();
-                    int limit = orders.size()-1;
-                    for (int i=0; i<limit; i++) {
-                        w.addBlockOrder(new BlockOrder(orders.get(i)));
-                    }
-                    BlockOrder bo = new BlockOrder(orders.get(limit)); 
-                    orders = _endW.getOrders();
-                    bo.setExitName(orders.get(0).getExitName());
-                    w.addBlockOrder(bo);
-                    for (int i=1; i<orders.size(); i++) {
-                        w.addBlockOrder(new BlockOrder(orders.get(i)));
-                    }
-
-                    List <ThrottleSetting> commands = _startW.getThrottleCommands();
-                    for (int i=0; i<commands.size(); i++) {
-                        w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
-                    }
-                    commands = _endW.getThrottleCommands();
-                    for (int i=0; i<commands.size(); i++) {
-                        w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
-                    }
-                    _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
-                } else {
-                    _frameMap.put(w.getDisplayName(), new WarrantFrame(w, true));
-                }
-                dispose();
             }
         }
 

@@ -147,6 +147,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
            try {
                JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
                label.setName(borderName);
+        	   label.setToolTipText(icon.getName());
                panel.add(label);
                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                    label.setText(Bundle.getMessage("invisibleIcon"));

@@ -148,6 +148,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         }
         (new makeCatalog()).execute();
+        if (_debug) log.debug("Init SwingWorker launched");
     }
     
     public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
@@ -802,6 +803,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     // all content loaded from file.
     public void loadComplete() {
+        if (_debug) log.debug("loadComplete");
     }
     
     /**
@@ -827,6 +829,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 scrollVertical.setSelected(true);
                 break;
         }
+        if (_debug) log.debug("InitView done");
     }
 
     /***************** Overriden methods of Editor *******************/

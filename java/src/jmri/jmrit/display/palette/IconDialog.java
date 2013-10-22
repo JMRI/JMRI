@@ -173,6 +173,7 @@ public class IconDialog extends ItemDialog {
     		   image.setText(Bundle.getMessage("invisibleIcon"));
     		   image.setForeground(Color.lightGray);
     	   }
+    	   image.setToolTipText(icon.getName());
     	   JPanel iPanel = new JPanel();
     	   iPanel.add(image);
 

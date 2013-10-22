@@ -225,6 +225,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     image.setText(Bundle.getMessage("invisibleIcon"));
                     image.setForeground(Color.lightGray);
                 }
+                image.setToolTipText(icon.getName());
                 panel.add(image);
                 int width = Math.max(85, panel.getPreferredSize().width);
                 panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));

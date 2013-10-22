@@ -174,6 +174,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         	_icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));    		
         	_icon.setArrowOrientatuon(true);
     	}
+    	_icon.setStatus(PortalIcon.TO_ARROW);
     }
 
     protected void setPortalIcon(PortalIcon icon) {
@@ -189,6 +190,8 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         	} else {
         		_icon.setStatus(PortalIcon.FROM_ARROW);        	        		
         	}
+        	_toButton.setIcon(_icon.getIcon(PortalIcon.TO_ARROW));
+        	_fromButton.setIcon(_icon.getIcon(PortalIcon.FROM_ARROW));
         }
     }
     

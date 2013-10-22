@@ -1256,7 +1256,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                		// train is lost
                 	_idxLastOrder = -1;
                     firePropertyChange("blockChange", block, null);
-                	setRunMode(Warrant.MODE_NONE, null, null, null, false);
+                    _engineer.setHalt(true);
+//                	setRunMode(Warrant.MODE_NONE, null, null, null, false);
                     return;
                	}
         	} else {

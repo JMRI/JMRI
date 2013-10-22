@@ -359,6 +359,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                image.setText(Bundle.getMessage("invisibleIcon"));
                image.setForeground(Color.lightGray);
            }
+    	   image.setToolTipText(icon.getName());
            panel.add(image);
            int width = Math.max(100, panel.getPreferredSize().width);
            panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));

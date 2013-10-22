@@ -1183,26 +1183,29 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
+    protected void setWarrant(Warrant w) {
+    	_warrant = w;
+        _sysNameBox.setText(w.getSystemName());
+        _userNameBox.setText(w.getUserName());
+    }
     private void copy() {
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("makeCopy", _warrant.getDisplayName()),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.OK_CANCEL_OPTION, 
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
-            String sysName = _warrant.getSystemName();
-            save();
-            _warrant = null;
-            _create = true;
-            int n = 0;
-            while (_warrant==null) {
-                n++;
-                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(sysName+n, sysName+n);
-            }
-            _userNameBox.setText("");
-            _sysNameBox.setText(sysName+n);
+        String sysName = _warrant.getSystemName();
+        String userName = _warrant.getUserName();
+        if (userName!=null && userName.length()>0) {
+        	sysName = sysName+"("+userName+")";
         }
+        WarrantTableAction.CreateWarrantFrame f = new WarrantTableAction.CreateWarrantFrame();
+        f.setVisible(true);
+        try {
+            f.initComponents();
+            f.concatenate(_warrant, null);
+        } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
     }
 
     public void dispose() {
-        WarrantTableAction.closeWarrantFrame(_warrant.getDisplayName());
+    	if (_warrant!=null) {
+            WarrantTableAction.closeWarrantFrame(_warrant.getDisplayName());    		
+    	}
         super.dispose();
     }
 

@@ -37,7 +37,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private Portal _portal;
     private String _status;
-    private boolean _regular;		// true when TO_ARROW show entry into ToBlock
+    private boolean _regular = true;	// true when TO_ARROW shows entry into ToBlock
 
     public PortalIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -53,6 +53,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void initMap() {
         ControlPanelEditor ed = (ControlPanelEditor)_editor;
+        int deg = getDegrees();
     	_iconMap = PositionableIcon.cloneMap(ed.getPortalIconMap(), this);
     	if (!_regular) {
     		NamedIcon a = _iconMap.get(TO_ARROW);
@@ -60,6 +61,8 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
             _iconMap.put(FROM_ARROW, a);
             _iconMap.put(TO_ARROW, b);
     	}
+    	setScale(getScale());
+    	rotate(deg);
         setFamily((ed.getPortalIconFamily()));
         setIcon(_iconMap.get(HIDDEN));
     }
@@ -76,28 +79,25 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     /**
-     * Called from EditPortalDirection fram in CircuitBuilder
+     * Called from EditPortalDirection frame in CircuitBuilder
      */
     protected void setIcon(String name, NamedIcon ic) {
-        if (log.isDebugEnabled()) log.debug("\""+getName()+"\" put icon key= \""+name+"\" icon= "+ic);
+        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ put icon key= \""+name+"\" icon= "+ic);
         NamedIcon icon = cloneIcon(ic, this);
         icon.scale(getScale(), this);
         icon.rotate(getDegrees(), this);
         _iconMap.put(name, icon);
     }
     /**
-     * Called from EditPortalDirection fram in CircuitBuilder
+     * Called from EditPortalDirection frame in CircuitBuilder
      */
-    protected void setArrowOrientatuon(boolean regular) {
-    	_regular = regular;
-    	setStatus(TO_ARROW);
+    public void setArrowOrientatuon(boolean set) {
+        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setArrowOrientatuon regular="+set+" from "+_regular);
+    	_regular = set;
     }
     
     public boolean getArrowSwitch() {
     	return _regular;
-    }
-    public void setArrowSwitch(boolean set) {
-    	_regular = set;
     }
 
     public Portal getPortal() {
@@ -123,7 +123,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
    }
 
     public void setStatus(String status) {
-        if (log.isDebugEnabled()) log.debug("\""+getName()+"\" setStatus("+status+") icon= "+_iconMap.get(status));
+        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setStatus("+status+") regular="+_regular+" icon= "+_iconMap.get(status));
         setIcon(_iconMap.get(status));
         _status = status;
         updateSize();

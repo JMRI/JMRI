@@ -123,7 +123,7 @@ public class PortalIconXml extends PositionableLabelXml {
         boolean value = true;
         if ((a = element.getAttribute("arrowSwitch"))!=null && a.getValue().equals("no"))
             value = false;
-        l.setArrowSwitch(value);
+        l.setArrowOrientatuon(value);
      }
 
     static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());

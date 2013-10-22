@@ -46,6 +46,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     static Point _loc = null;
     static Dimension _dim = null;
 
+    /* Ctor for fix a portal error  */
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, OBlock adjacent) {
     	this(title, parent, block, true);
     	_adjacentBlock = adjacent;
@@ -572,6 +573,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _parent.removePortal(icon.getName());
         _parent.getCircuitIcons(_homeBlock).remove(icon);
         icon.remove();
+        _parent._editor.getSelectionGroup().remove(icon);
         _parent._editor.repaint();
     }
 
