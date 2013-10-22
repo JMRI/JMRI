@@ -50,7 +50,6 @@ public class DccLocoAddressSelector extends JPanel
                 new String[]{LocoAddress.Protocol.DCC_SHORT.getPeopleName(),
                              LocoAddress.Protocol.DCC_LONG.getPeopleName()});
         }
-
     }
     
     public DccLocoAddressSelector(String[] protocols){
@@ -94,9 +93,10 @@ public class DccLocoAddressSelector extends JPanel
             protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String)box.getSelectedItem());
             return (DccLocoAddress)InstanceManager.throttleManagerInstance().getAddress(text.getText(), protocol);
         }
+        
         // nothing, construct a default
         int num = Integer.parseInt(text.getText());
-        protocol = LocoAddress.Protocol.DCC_SHORT;
+        protocol = LocoAddress.Protocol.getByPeopleName((String)box.getSelectedItem());
         return new DccLocoAddress(num,protocol);
     }
 
@@ -111,6 +111,8 @@ public class DccLocoAddressSelector extends JPanel
                 text.setText(""+a.getNumber());
                 if(InstanceManager.throttleManagerInstance()!=null){
                     box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+                } else {
+                    box.setSelectedItem(a.getProtocol().getPeopleName());
                 }
             }
         }
