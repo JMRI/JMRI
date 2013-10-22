@@ -342,7 +342,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             	error = true;
             	break;
             }
-            OPath p = makeOPath(path.getName(), _pathGroup.iterator(), false);
+            OPath p = makeOPath(path.getName(), pathGp, false);
             if (p==null) {
             	error = true;
             	break;
@@ -439,14 +439,15 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     /**
      * Make the OPath from the icons in the Iterator 
      */
-    private OPath makeOPath(String name, Iterator<Positionable> it, boolean showMsg) {
-        if (_pathGroup.size()==0) {
+    private OPath makeOPath(String name, ArrayList<Positionable> pathGp, boolean showMsg) {
+        if (pathGp.size()==0) {
         	if (showMsg) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons"),
                         Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);        		
         	}
             return null;
         }
+        Iterator<Positionable> it = pathGp.iterator();
         ArrayList<BeanSetting> settings = new ArrayList<BeanSetting>();      
         Portal fromPortal = null;
         Portal toPortal = null;
@@ -544,7 +545,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     		_pathList.setSelectedValue(otherPath, true);
     		return;       	
         }
-        OPath path = makeOPath(name, _pathGroup.iterator(), true);
+        OPath path = makeOPath(name, _pathGroup, true);
         if (path==null) {
         	return;		// proper OPath cannot be made
         }
@@ -604,17 +605,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
 		_pathList.setSelectedValue(path, true);
         _pathListModel.dataChange();
-    }
-
-    private OPath getBlockPath(String name) {
-        java.util.List<Path> list = _block.getPaths();
-        for (int i=0; i<list.size(); i++) {
-            OPath path = (OPath)list.get(i);
-            if (name.equals(path.getName())) {
-                return path;
-            }
-        }
-        return null;
     }
 
     private void changePathName() {

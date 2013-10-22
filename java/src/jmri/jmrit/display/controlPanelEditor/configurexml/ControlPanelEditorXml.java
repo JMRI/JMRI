@@ -281,7 +281,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
     
     public NamedIcon loadIcon(String key, Element element, Editor ed) {
     	Element elem = element.getChild(key);
-    	NamedIcon icon = null;;
+    	NamedIcon icon = null;
     	if (elem!=null) {
     		Element e = elem.getChild("url");
     		String iconName = e.getText();
