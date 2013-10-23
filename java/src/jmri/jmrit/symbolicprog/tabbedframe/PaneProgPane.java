@@ -1519,6 +1519,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public JComponent getRepresentation(String name, Element var) {
         int i = _varModel.findVarIndex(name);
+        VariableValue variable = _varModel.getVariable(i);
         JComponent rep = null;
         String format = "default";
         Attribute attr;
@@ -1531,11 +1532,42 @@ public class PaneProgPane extends javax.swing.JPanel
             String tip = "";
             if ( (tip = LocaleSelector.getAttribute(var, "tooltip"))!=null
                 && rep.getToolTipText()==null)
-                rep.setToolTipText(tip);
+                rep.setToolTipText(modifyToolTipText(tip, variable));
         }
         return rep;
     }
 
+    /** 
+     * Takes default tooltip text, e.g. from the 
+     * decoder element, and modifies it as needed.
+     *
+     * Intended to handle e.g. adding CV numbers to variables.
+     */
+    String modifyToolTipText(String start, VariableValue variable) {
+        if (log.isDebugEnabled()) log.debug("modifyToolTipText: "+variable.label()+" "+_cvModel.getProgrammer());
+        // this is the place to invoke VariableValue methods to (conditionally)
+        // add information about CVs, etc in the ToolTip text
+        
+        start = start+" ("+variable.getCvDescription()+")";
+        
+        // Indicate what the command station can do
+        // need to update this with e.g. the specific CV numbers
+        if (_cvModel.getProgrammer()!= null
+            && !_cvModel.getProgrammer().getCanRead()) {
+            start = start+" (Hardware cannot read)";
+        }
+        if (_cvModel.getProgrammer()!= null
+            && !_cvModel.getProgrammer().getCanWrite()) {
+            start = start+" (Hardware cannot write)";
+        }
+        
+        // indicate other reasons for read/write constraints
+        if (variable.getReadOnly()) start = start+" (Defined to be read only)";
+        if (variable.getWriteOnly()) start = start+" (Defined to be read only)";
+        
+        return start;
+    }
+    
     JComponent getRep(int i, String format) {
         return (JComponent)(_varModel.getRep(i, format));
     }
