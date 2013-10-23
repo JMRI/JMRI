@@ -2925,8 +2925,12 @@
 
    A switch list shows the work required to service all of the trains visiting that location.
    Normally a switch list is given to the person in charge of a yard or a location with many spurs
-   or industries. You can modify the look of your switch lists from the <A HREF="#PrintOptions">Manifest
-    Print Options</A> window.
+   or industries. You can modify the look of your switch lists from the
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.
+
+   <P>
+    <img src="images/SwitchList.png">
+   </P>
 
    <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
     switch list for a given location. A menu will appear that allows you to select which locations
@@ -2945,18 +2949,19 @@
    <H3>Switch List Options</H3>
 
    There are three options for adjusting the switch lists to your liking. The first checkbox option
-   when selected tells the program to print all trains that visit a location, even if the train
-   doesn't have any work. If you deselect this option, then the program only prints out trains that
-   have work at that location.
+   "All Trains" when selected tells the program to print all trains that visit a location, even if
+   the train doesn't have any work. If you deselect this option, then the program only prints out
+   trains that have work at that location.
 
-   <P>The next option when selected causes the program to print a train's switch list on a new
-    page for each train. This way your operators when completing the work for a train, can simply
-    discard the paperwork for that train. This mode is also useful if you have more than one
-    operator working a location, this way they can easily hand out the work by train.</P>
+   <P>The next option "Page per Train" when selected causes the program to print a train's
+    switch list on a new page for each train. This way your operators when completing the work for a
+    train, can simply discard the paperwork for that train. This mode is also useful if you have
+    more than one operator working a location, this way they can easily hand out the work by train.</P>
 
-   <P>The last option is whether you want your switch lists in real time or consolidation mode.
-    Normally you would generate your switch lists in real time. In this mode the switch list for a
-    location shows the work planned for trains that are built and not yet terminated.</P>
+   <P>The last option "Real Time" is whether you want your switch lists in real time or
+    consolidation mode. Normally you would generate your switch lists in real time. In this mode the
+    switch list for a location shows the work planned for trains that are built and not yet
+    terminated.</P>
 
    <P>If you only want to print out work for new trains, then deselect the real time option.
     Once you've printed out the switch list for a location, when new work is created by building
@@ -2991,9 +2996,10 @@
     is a copy of the last one printed. This allows you to print more than one copy of the switch
     list if needed.</P>
 
-   <P>
-    <img src="images/SwitchList.png">
-   </P>
+   <P>If you select or deselect any of the switch list options, you will need to press the
+    "Save" button to activate them.</P>
+
+
    <A NAME="TrainMove"></A>
    <H3>Moving Trains</H3>
 

@@ -16,9 +16,9 @@ import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * Represents rolling stock, both powered (engines) and not powered (cars) on the layout.
+ * Represents rolling stock, both powered (locomotives) and not powered (cars) on the layout.
  * 
- * @author Daniel Boudreau Copyright (C) 2009, 2010
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  * @version $Revision$
  */
 public class RollingStock implements java.beans.PropertyChangeListener {
@@ -478,9 +478,10 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 */
 	public String setDestination(Location destination, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new destination
-		String status = RsTestDestination(destination, track);
-		if (!force && !status.equals(Track.OKAY)) {
-			return status;
+		if (!force) {
+			String status = RsTestDestination(destination, track);
+			if (!status.equals(Track.OKAY))
+				return status;
 		}
 		// now set the rolling stock destination!
 		Location oldDestination = _destination;
@@ -531,7 +532,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			firePropertyChange(DESTINATION_CHANGED_PROPERTY, oldDestination, destination);
 			firePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
-		return status;
+		return Track.OKAY;
 	}
 
 	/**
@@ -924,28 +925,23 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			setWeightTons(a.getValue()); // so engine model will get proper weight
 		if ((a = e.getAttribute(Xml.BUILT)) != null)
 			_built = a.getValue();
+		
 		Location location = null;
 		Track track = null;
 		if ((a = e.getAttribute(Xml.LOCATION_ID)) != null)
 			location = locationManager.getLocationById(a.getValue());
 		if ((a = e.getAttribute(Xml.SEC_LOCATION_ID)) != null && location != null)
 			track = location.getTrackById(a.getValue());
-		String status = setLocation(location, track, true); // force location
-		if (!status.equals(Track.OKAY) && location != null && track != null)
-			log.warn("Could not place (" + getRoadName() + " " + getNumber() + ") at location ("
-					+ location.getName() + ") track (" + track.getName() + ") because of (" // NOI18N
-					+ status + ")"); // NOI18N
+		setLocation(location, track, true); // force location
+
 		Location destination = null;
-		Track trackDestination = null;
+		track = null;
 		if ((a = e.getAttribute(Xml.DESTINATION_ID)) != null)
 			destination = locationManager.getLocationById(a.getValue());
 		if ((a = e.getAttribute(Xml.SEC_DESTINATION_ID)) != null && destination != null)
-			trackDestination = destination.getTrackById(a.getValue());
-		status = setDestination(destination, trackDestination, true); // force destination
-		if (!status.equals(Track.OKAY) && destination != null && trackDestination != null)
-			log.warn("Forced destination for rolling stock (" + getRoadName() + " " + getNumber()
-					+ ") destination (" + destination.getName() + ") track (" // NOI18N
-					+ trackDestination.getName() + ") because of (" + status + ")"); // NOI18N
+			track = destination.getTrackById(a.getValue());
+		setDestination(destination, track, true); // force destination
+
 		if ((a = e.getAttribute(Xml.MOVES)) != null)
 			_moves = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null)
