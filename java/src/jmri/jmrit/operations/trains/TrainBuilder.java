@@ -3262,7 +3262,7 @@ public class TrainBuilder extends TrainCommon {
 			} else {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildRouteNoDropLocation"), new Object[] { train.getRoute().getName(),
-						rld.getName() }));
+					rld.getId(), rld.getName() }));
 				continue;
 			}
 			// get the destination
