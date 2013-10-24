@@ -1634,7 +1634,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			if (!rl.isPickUpAllowed()) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocNoPickups"),
-						new Object[] { train.getRoute().getName(), rl.getName() }));
+						new Object[] { train.getRoute().getName(), rl.getId(), rl.getName() }));
 				continue;
 			}
 			// the next check provides a build report message if there's an issue with the train direction
