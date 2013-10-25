@@ -164,16 +164,28 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		resetRB.setToolTipText(Bundle.getMessage("ResetTip"));
 
 		// row 2
+		JPanel addTrain = new JPanel();
+		addTrain.setBorder(BorderFactory.createTitledBorder(""));
+		addTrain.add(addButton);
+		
+		JPanel select = new JPanel();
+		select.setBorder(BorderFactory.createTitledBorder(""));
+		select.add(buildButton);
+		select.add(printButton);
+		select.add(openFileButton);
+		select.add(runFileButton);
+		select.add(printSwitchButton);
+		select.add(terminateButton);
+		
+		JPanel save = new JPanel();
+		save.setBorder(BorderFactory.createTitledBorder(""));
+		save.add(saveButton);
+		
 		JPanel cp2 = new JPanel();
-		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		cp2.add(addButton);
-		cp2.add(buildButton);
-		cp2.add(printButton);
-		cp2.add(openFileButton);
-		cp2.add(runFileButton);
-		cp2.add(printSwitchButton);
-		cp2.add(terminateButton);
-		cp2.add(saveButton);
+		cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
+		cp2.add(addTrain);
+		cp2.add(select);
+		cp2.add(save);
 
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
@@ -359,7 +371,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				log.warn("Manifest creator file not found!, directory name: "
 						+ TrainCustomManifest.getDirectoryName() + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
 				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-						.getMessage("DirectoryNameFileName"), new Object[] {
+						.getMessage("LoadDirectoryNameFileName"), new Object[] {
 						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 				return;

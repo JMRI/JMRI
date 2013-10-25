@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.PrintWriter;
@@ -11,6 +12,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import org.jdom.Element;
 
 import jmri.jmrit.operations.OperationsXml;
@@ -32,12 +36,10 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Editor;
 
@@ -2570,10 +2572,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		TrainCustomManifest.addCVSFile(file);
 		if (!TrainCustomManifest.process()) {
 			if (!TrainCustomManifest.manifestCreatorFileExists()) {
-				log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
-						+ ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+						.getMessage("LoadDirectoryNameFileName"), new Object[] {
+						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
+						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 			}
-			TrainUtilities.openDesktop(file);
 			return false;
 		}
 

@@ -2584,7 +2584,17 @@
     Included in the <a HREF="http://jmri.org/jython/operations">jython directory</a> are several
     examples of operation oriented scripts.
    </P>
+   
+   <A NAME="SetupExcelProgram"></A>
+   <H3>Setup Excel Program (Manifest Creator)</H3>
 
+   You can use an external program like Excel to create your own custom manifests. Dan Foltz who is
+   a JMRI user/programmer has developed the "Manifest Creator". You can find a copy of the program
+   at the
+   <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
+    files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
+   directory. You can of course create your own program and also place it in the csvManifest directory. 
+   
    <A NAME="TrainShowCarTypesServiced"></A>
    <H3>Show Car Types Serviced</H3>
    <P>This diagnostic tool can help you determine why a train will not service a particular car

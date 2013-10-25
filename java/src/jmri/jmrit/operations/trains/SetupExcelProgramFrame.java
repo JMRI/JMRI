@@ -93,7 +93,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 						.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-						.getMessage("DirectoryNameFileName"), new Object[] {
+						.getMessage("LoadDirectoryNameFileName"), new Object[] {
 						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 			}
