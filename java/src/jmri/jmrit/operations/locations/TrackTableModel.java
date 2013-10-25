@@ -147,7 +147,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         case DROPSCOLUMN: return Bundle.getMessage("Drop");
         case POOLCOLUMN: return Bundle.getMessage("Pool");
         case PLANPICKUPCOLUMN: return Bundle.getMessage("PlanPickUp");
-        case EDITCOLUMN: return "";		//edit column
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
         default: return "unknown"; // NOI18N
         }
     }

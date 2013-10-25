@@ -84,8 +84,7 @@ public class TrainManifest extends TrainCommon {
 				if (work) {
 					// add line break between locations without work and ones with work
 					// TODO sometimes an extra line break appears when the user has two or more locations with the
-					// "same" name
-					// and the second location doesn't have work
+					// "same" name and the second location doesn't have work
 					if (!oldWork)
 						newLine(fileOut);
 					newWork = true;
