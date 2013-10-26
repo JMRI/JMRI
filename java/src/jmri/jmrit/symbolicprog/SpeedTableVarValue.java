@@ -27,7 +27,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 /**
  * Represent an entire speed table as a single Variable.
  * <P>
@@ -385,8 +385,9 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             decVal.setState(currentState);
 
             Component v = decVal.getCommonRep();
-            ((JTextField)v).setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
-                                +" "+(i+1)+" CV "+(cvList[i]));
+            String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
+                            +" "+(i+1);
+            ((JTextField)v).setToolTipText(PaneProgPane.addCvDescription(start,"CV "+cvList[i]));
             ((JComponent)v).setBorder(null);  // pack tighter
             
             if (mfx && (i == 0 || i == (nValues-1))) {
@@ -490,7 +491,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText("Sets the starting voltage at throttle speed step 1."+" CV "+ThisCV);
+			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the starting voltage at throttle speed step 1","CV"+ThisCV));
 			l.add ( v );
 			
 			label = new JLabel("Vstart");
@@ -518,7 +519,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText("Sets the maximum voltage at full throttle."+" CV "+ThisCV);
+			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the maximum voltage at full throttle","CV"+ThisCV));
 			l.add ( v );
 		}
 			
@@ -847,8 +848,9 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // get the original color right
             setBackground(_var.getColor());
             // tooltip label
-            setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
-                            +" "+step+" CV "+var.number());
+            String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
+                            +" "+step;
+            setToolTipText(PaneProgPane.addCvDescription(start,"CV "+var.number()));
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                     public void propertyChange(java.beans.PropertyChangeEvent e) {

@@ -1529,10 +1529,10 @@ public class PaneProgPane extends javax.swing.JPanel
             rep = getRep(i, format);
             rep.setMaximumSize(rep.getPreferredSize());
             // set tooltip if specified here & not overridden by defn in Variable
-            String tip = "";
-            if ( (tip = LocaleSelector.getAttribute(var, "tooltip"))!=null
-                && rep.getToolTipText()==null)
-                rep.setToolTipText(modifyToolTipText(tip, variable));
+            String tip = LocaleSelector.getAttribute(var, "tooltip");
+            if ( rep.getToolTipText()!=null )
+                tip =  rep.getToolTipText();
+            rep.setToolTipText(modifyToolTipText(tip, variable));
         }
         return rep;
     }
@@ -1548,7 +1548,8 @@ public class PaneProgPane extends javax.swing.JPanel
         // this is the place to invoke VariableValue methods to (conditionally)
         // add information about CVs, etc in the ToolTip text
         
-        start = start+" ("+variable.getCvDescription()+")";
+        // Optionally add CV numbers based on Roster Preferences setting
+        start = addCvDescription(start, variable.getCvDescription());
         
         // Indicate what the command station can do
         // need to update this with e.g. the specific CV numbers
@@ -1568,6 +1569,29 @@ public class PaneProgPane extends javax.swing.JPanel
         return start;
     }
     
+    /** 
+     * Optionally add CV numbers to tooltip text based on Roster Preferences setting.
+     *
+     * Needs to be independent of VariableValue methods to allow use by  non-standard elements
+     * such as SpeedTableVarValue, DccAddressPanel, FnMapPanel.
+     */
+    public static String addCvDescription(String start, String description) {
+        // Optionally add CV numbers based on Roster Preferences setting
+        if (PaneProgFrame.getShowCvNumbers() && (description != null)) {
+            if (start == null) {
+                start = description;
+            } else {
+                start = start+" ("+description+")";
+            }
+        } else {
+            if (start == null)
+                start = "";
+        }
+        
+        return start;
+    }
+
+
     JComponent getRep(int i, String format) {
         return (JComponent)(_varModel.getRep(i, format));
     }

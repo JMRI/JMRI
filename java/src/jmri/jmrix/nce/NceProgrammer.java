@@ -140,7 +140,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         // prevent writing Op mode CV > 255 on PowerHouse 2007C and earlier
-        if ((CV > 255) && 
+        if ((CV > 256) && 
         		((getMode() == Programmer.PAGEMODE) ||
     				(getMode() == Programmer.DIRECTBYTEMODE) ||
     				(getMode() == Programmer.REGISTERMODE)

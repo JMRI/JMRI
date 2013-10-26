@@ -82,6 +82,15 @@ public class SplitVariableValue extends VariableValue
              _cvVector.elementAt(getSecondCvNum())};
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvNum()+" & CV"+getSecondCvNum();
+     }
+     
     int mSecondCV;
     int mFactor;
     int mOffset;

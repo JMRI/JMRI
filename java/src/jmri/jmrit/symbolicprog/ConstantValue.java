@@ -44,6 +44,15 @@ public class ConstantValue extends VariableValue {
         return new CvValue[]{};
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return null;
+     }
+     
     // stored value
     JComboBox _value = null;
 

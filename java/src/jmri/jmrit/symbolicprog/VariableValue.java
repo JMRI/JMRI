@@ -213,6 +213,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public int getCvNum() { return _cvNum; }
     private int _cvNum;
 
+    public String getCvName() { return _cvName; }
+
     public String getMask() { return _mask; }
     private String _mask;
 

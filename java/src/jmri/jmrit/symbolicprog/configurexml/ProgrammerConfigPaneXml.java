@@ -42,6 +42,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         programmer.setAttribute("defaultFile", p.getSelectedItem());
         programmer.setAttribute("verifyBeforeWrite", "no");
         if (!p.getShowEmptyTabs()) programmer.setAttribute("showEmptyPanes", "no");
+        if (p.getShowCvNums()) programmer.setAttribute("ShowCvNumbers", "yes");
         programmer.setAttribute("class", this.getClass().getName());
         return programmer;
     }
@@ -66,6 +67,12 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
                 PaneProgFrame.setShowEmptyPanes(false);
             else
                 PaneProgFrame.setShowEmptyPanes(true);
+        }
+        if (null != (a = element.getAttribute("ShowCvNumbers"))){
+            if ( a.getValue().equals("yes"))
+                PaneProgFrame.setShowCvNumbers(true);
+            else
+                PaneProgFrame.setShowCvNumbers(false);
         }
         jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true));
         return result;

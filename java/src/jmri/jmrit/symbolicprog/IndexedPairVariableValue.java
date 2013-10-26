@@ -123,6 +123,15 @@ public class IndexedPairVariableValue extends VariableValue
         return "Split value";
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvName()+" & CV"+mSecondCVname;
+     }
+     
     String oldContents = "";
 
     void enterField() {

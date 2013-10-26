@@ -1319,6 +1319,17 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
     static boolean showEmptyPanes = true;
 
+    /**
+     * Option to control appearance of CV numbers in tool tips
+     */
+    public static void setShowCvNumbers(boolean yes) {
+        ShowCvNumbers = yes;
+    }
+    public static boolean getShowCvNumbers() {
+        return ShowCvNumbers;
+    }
+    static boolean ShowCvNumbers = false;
+
     public RosterEntry getRosterEntry() { return _rosterEntry; }
 
     static Logger log = LoggerFactory.getLogger(PaneProgFrame.class.getName());

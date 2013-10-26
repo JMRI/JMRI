@@ -68,6 +68,15 @@ public class IndexedVariableValue extends VariableValue
         return "Decimal: "+_minVal+" - "+_maxVal;
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvName();
+     }
+     
     String oldContents = "";
 
     void enterField() {
