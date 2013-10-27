@@ -103,6 +103,17 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		return (controller().getCommandStation().getCommandStationType() != 0x10);
     }
 
+    /**
+     * Needs more nuanced implementation, but at the moment 
+     * access to CV numbers >= 256 is not guaranteed,
+     * regardless of mode or specific command station type.
+     */
+    public boolean getCanRead(int mode, String addr) {
+        if (log.isDebugEnabled()) log.debug("check mode "+mode+" CV "+addr);
+        if (!getCanRead()) return false; // check basic implementation first
+        return Integer.parseInt(addr)<=256; 
+    }
+
 	// notify property listeners - see AbstractProgrammer for more
 
 	@SuppressWarnings("unchecked")
