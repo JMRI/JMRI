@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: OpenLCB Connections</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: OpenLCB Connections
+</h1>
+
+This page discusses how JMRI can connect to OpenLCB.
+
+<p>
+For more on JMRI's OpenLCB support, see the
+<a href="index.shtml">main OpenLCB page</a>.
+
+<h2>Via a USB Adapter</h2>
+
+<h2>Via a Network Connection</h2>
+
+
+
+You can simulate a remote OpenLCB connection, e.g.
+to debug things, on many computers using the "nc" command:
+<pre>
+nc -l 12022
+</pre>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
