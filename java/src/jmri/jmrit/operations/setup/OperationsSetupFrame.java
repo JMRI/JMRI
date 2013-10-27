@@ -90,13 +90,12 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 	// text field
 	// JTextField ownerTextField = new JTextField(10);
-	JTextField panelTextField = new JTextField(35);
+	JTextField panelTextField = new JTextField(30);
 	JTextField railroadNameTextField = new JTextField(35);
 	JTextField maxLengthTextField = new JTextField(5);
 	JTextField maxEngineSizeTextField = new JTextField(3);
 	JTextField switchTimeTextField = new JTextField(3);
 	JTextField travelTimeTextField = new JTextField(3);
-	JTextField commentTextField = new JTextField(35);
 	JTextField yearTextField = new JTextField(4);
 
 	// combo boxes

@@ -401,7 +401,7 @@
    available in JMRI.
 
    <P>
-    The "Enable Train Icon SetX&amp;Y" when selected allows you to teach the operations program
+    The "Enable Icon SetX&amp;Y" when selected allows you to teach the operations program
     where to place the train icon on your panel when moving your train from location to location.
     Deselect this feature after your done teaching the program to prevent accidentally changing the
     train icon's position on your panel. If you also want the lead locomotive number as part of your
