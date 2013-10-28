@@ -28,6 +28,9 @@ public class OffsetHighCvProgrammerFacadeTest extends TestCase {
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(256);
+        dp.setTestWriteLimit(256);
+
         Programmer p = new OffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100");
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
@@ -49,6 +52,9 @@ public class OffsetHighCvProgrammerFacadeTest extends TestCase {
     public void testWriteReadDirectHighCV() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(1024);
+        dp.setTestWriteLimit(1024);
+
         Programmer p = new OffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100");
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {

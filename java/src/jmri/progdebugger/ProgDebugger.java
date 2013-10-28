@@ -190,8 +190,13 @@ public class ProgDebugger implements Programmer  {
         return true;
     }
 
-    int writeLimit = 1024;
-    int readLimit = 1024;
+    /**
+     * By default, the highest test CV is 256 so that
+     * we can test composite operations
+     */
+    int writeLimit = 256;
+    int readLimit = 256;
+    
     public void setTestReadLimit(int lim) { readLimit = lim; }
     public void setTestWriteLimit(int lim) { writeLimit = lim; }
     
@@ -202,12 +207,6 @@ public class ProgDebugger implements Programmer  {
     public boolean getCanWrite()  { return true; }
     public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=writeLimit; }
     public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
-
-    /**
-     * By default, the highest test CV is 256 so that
-     * we can test composite operations
-     */
-    public int getMaxCvAddr() { return 256; }
 
     // data members to hold contact with the property listeners
     private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();

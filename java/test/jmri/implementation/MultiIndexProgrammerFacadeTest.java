@@ -27,6 +27,9 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
 
     public void testParse() {
         ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(256);
+        dp.setTestWriteLimit(256);
+
         MultiIndexProgrammerFacade p = new MultiIndexProgrammerFacade(dp, 81);
         
         p.parseCV("12");
@@ -42,6 +45,9 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
     public void testWriteReadDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(256);
+        dp.setTestWriteLimit(256);
+
         Programmer p = new MultiIndexProgrammerFacade(dp, 81);
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
@@ -87,7 +93,12 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
     }
     
     public void testCvLimit() {
-        Programmer p = new MultiIndexProgrammerFacade(new jmri.progdebugger.ProgDebugger(), 81);
+        ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(1024);
+        dp.setTestWriteLimit(1024);
+
+        Programmer p = new MultiIndexProgrammerFacade(dp, 81);
+
         Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));  
         Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));  
         Assert.assertTrue("CV limit read mode OK", p.getCanRead(0, "1024"));  
