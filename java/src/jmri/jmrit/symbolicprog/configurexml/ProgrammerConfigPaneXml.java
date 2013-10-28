@@ -42,7 +42,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         programmer.setAttribute("defaultFile", p.getSelectedItem());
         programmer.setAttribute("verifyBeforeWrite", "no");
         if (!p.getShowEmptyTabs()) programmer.setAttribute("showEmptyPanes", "no");
-        if (p.getShowCvNums()) programmer.setAttribute("ShowCvNumbers", "yes");
+        if (p.getShowCvNums()) programmer.setAttribute("showCvNumbers", "yes");
         programmer.setAttribute("class", this.getClass().getName());
         return programmer;
     }
@@ -68,7 +68,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
             else
                 PaneProgFrame.setShowEmptyPanes(true);
         }
-        if (null != (a = element.getAttribute("ShowCvNumbers"))){
+        if (null != (a = element.getAttribute("showCvNumbers"))){
             if ( a.getValue().equals("yes"))
                 PaneProgFrame.setShowCvNumbers(true);
             else

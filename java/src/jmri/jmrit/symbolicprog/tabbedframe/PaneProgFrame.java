@@ -1323,12 +1323,12 @@ abstract public class PaneProgFrame extends JmriJFrame
      * Option to control appearance of CV numbers in tool tips
      */
     public static void setShowCvNumbers(boolean yes) {
-        ShowCvNumbers = yes;
+        showCvNumbers = yes;
     }
     public static boolean getShowCvNumbers() {
-        return ShowCvNumbers;
+        return showCvNumbers;
     }
-    static boolean ShowCvNumbers = false;
+    static boolean showCvNumbers = false;
 
     public RosterEntry getRosterEntry() { return _rosterEntry; }
 

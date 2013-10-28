@@ -57,7 +57,7 @@
   <!ATTLIST programmer class CDATA #REQUIRED>
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
   <!ATTLIST programmer showEmptyPanes ( yes | no ) "yes" >
-  <!ATTLIST programmer ShowCvNumbers ( yes | no ) "no" >
+  <!ATTLIST programmer showCvNumbers ( yes | no ) "no" >
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
 <!--  Application section identifies roster options -->
