@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,6 +39,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	// combo boxes
 	JComboBox locationBox = LocationManager.instance().getComboBox();
 	JComboBox trackBox = new JComboBox();
+	
+	// checkboxes
+	JCheckBox sameNameCheckBox = new JCheckBox(Bundle.getMessage("SameName"));
 
 	Location _location;	// Copy the track to this location
 
@@ -56,6 +60,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		pName.setLayout(new GridBagLayout());
 		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrackName")));
 		addItem(pName, trackNameTextField, 0, 0);
+		addItem(pName, sameNameCheckBox, 1, 0);
 
 		// row 2
 		JPanel pCopy = new JPanel();
@@ -73,6 +78,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(pButton);
 
 		addComboBoxAction(locationBox);
+		addComboBoxAction(trackBox);
 
 		// get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);
@@ -81,7 +87,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Tracks", true); // NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth, Control.smallPanelHeight));
 
 		if (_location != null)
 			setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[] { _location.getName() }));
@@ -95,6 +101,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == locationBox) {
 			updateTrackComboBox();
 		}
+		if (ae.getSource() == trackBox) {
+			updateTrackName();
+		}
 	}
 
 	protected void updateTrackComboBox() {
@@ -107,6 +116,12 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 			l.updateComboBox(trackBox);
 		}
 	}
+	
+	protected void updateTrackName() {
+		if (sameNameCheckBox.isSelected() && trackBox.getSelectedItem() != null) {
+			trackNameTextField.setText(trackBox.getSelectedItem().toString());
+		}
+	}
 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == copyButton) {
@@ -115,6 +130,13 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 				return;
 			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals("") && _location != null) {
 				Track track = (Track) trackBox.getSelectedItem();
+				// only copy tracks that are okay with the location
+				if (track.getTrackType().equals(Track.STAGING) ^ _location.getLocationOps() == Location.STAGING) {
+					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
+							new Object[] { track.getTrackType(), _location.getName() }), MessageFormat.format(Bundle.getMessage("CanNotCopy"),
+							new Object[] { track.getName() }), JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				track.copyTrack(trackNameTextField.getText(), _location);
 			} else {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle

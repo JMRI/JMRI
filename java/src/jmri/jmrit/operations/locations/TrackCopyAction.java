@@ -19,6 +19,8 @@ public class TrackCopyAction extends AbstractAction {
     public TrackCopyAction(Location location) {
     	super(Bundle.getMessage("MenuItemCopyTrack"));
     	_location = location;
+    	if (location == null)
+    		setEnabled(false);
     }
 
     Location _location;

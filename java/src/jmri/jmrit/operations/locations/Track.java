@@ -643,7 +643,8 @@ public class Track {
 			return;
 		jmri.util.StringUtil.sort(types);
 		for (int i = 0; i < types.length; i++)
-			_typeList.add(types[i]);
+			if (!_typeList.contains(types[i]))
+				_typeList.add(types[i]);
 	}
 
 	public void addTypeName(String type) {

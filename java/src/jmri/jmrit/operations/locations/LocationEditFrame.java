@@ -85,7 +85,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(800,42);
 	
-	// combo boxes
+	JMenu toolMenu;
 
 	public static final String NAME = Bundle.getMessage("Name");
 	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -266,7 +266,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new TrackCopyAction(_location));
 		toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));	
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
@@ -367,6 +367,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			selectCheckboxes(false);
 			enableCheckboxes(false);
 			enableButtons(false);
+			toolMenu.setEnabled(false);
 			// save location file
 			OperationsXml.save();
 		}
