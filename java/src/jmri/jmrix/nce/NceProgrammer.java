@@ -91,11 +91,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     		return true;
     	}
 
-    public boolean getCanWrite(String cv) {
+    public boolean getCanWrite(int mode, String cv) {
        if ((Integer.parseInt(cv) > 256) &&
-               ((getMode() == Programmer.PAGEMODE) ||
-                   (getMode() == Programmer.DIRECTBYTEMODE) ||
-                   (getMode() == Programmer.REGISTERMODE)
+               ((mode == Programmer.PAGEMODE) ||
+                   (mode == Programmer.DIRECTBYTEMODE) ||
+                   (mode == Programmer.REGISTERMODE)
                ) && ((tc != null) && (
                        (tc.getCommandOptions() == NceTrafficController.OPTION_1999) |
                        (tc.getCommandOptions() == NceTrafficController.OPTION_2004) |

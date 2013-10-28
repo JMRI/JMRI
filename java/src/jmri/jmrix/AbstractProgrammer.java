@@ -77,8 +77,11 @@ public abstract class AbstractProgrammer implements Programmer {
     
     /**
      * Unless overridden, checks using the current default programming mode
+     * <p>
+     * Final to avoid implementation issues when somebody 
+     * reimplements this, but not getCanRead(int mode, String addr).
      */
-    public boolean getCanRead(String addr) { return getCanRead(getMode(), addr); }
+    public final boolean getCanRead(String addr) { return getCanRead(getMode(), addr); }
 
     /**
      * Most detailed implementation, requires
@@ -95,9 +98,12 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     public boolean getCanWrite()  { return true; }
     /**
-     * Unless overridden, checks using the current default programming mode
+     * Checks using the current default programming mode.
+     * <p>
+     * Final to avoid implementation issues when somebody 
+     * reimplements this, but not getCanWrite(int mode, String addr).
      */
-    public boolean getCanWrite(String addr) { return getCanWrite(getMode(), addr);  }
+    public final boolean getCanWrite(String addr) { return getCanWrite(getMode(), addr);  }
     /**
      * Most detailed implementation, requires
      * that the CV be a valid number and that writing is possible

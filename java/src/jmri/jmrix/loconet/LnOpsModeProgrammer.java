@@ -81,16 +81,23 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
     @Override
     public boolean getCanRead(String addr) { 
-        return getCanRead() && Integer.parseInt(addr)<=1024; }
+        return getCanRead() && getCanRead(getMode(), addr);
+    }
     @Override
-    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    public boolean getCanRead(int mode, String addr) { 
+        return getCanRead() && Integer.parseInt(addr)<=1024;
+    }
     
     @Override
     public boolean getCanWrite()  { return true; }
     @Override
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
+    public boolean getCanWrite(String addr) { 
+        return getCanWrite(getMode(), addr);
+    }
     @Override
-    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
+    public boolean getCanWrite(int mode, String addr)  {
+        return getCanWrite() && Integer.parseInt(addr)<=1024;
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {
         mSlotMgr.addPropertyChangeListener(p);
