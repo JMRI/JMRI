@@ -146,7 +146,8 @@ public class FnMapPanel extends JPanel {
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
                     varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
-                    j.setToolTipText(PaneProgPane.addCvDescription(null,"CV"+_varModel.getCvName(iVar)));
+                    VariableValue var = _varModel.getVariable(iVar);
+                    j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
                     int row = firstFn+iFn;
                     int column = firstOut+iOut;
                     saveAt(row, column, j);

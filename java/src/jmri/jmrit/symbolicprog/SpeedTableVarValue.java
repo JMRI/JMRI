@@ -387,7 +387,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             Component v = decVal.getCommonRep();
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                             +" "+(i+1);
-            ((JTextField)v).setToolTipText(PaneProgPane.addCvDescription(start,"CV "+cvList[i]));
+            ((JTextField)v).setToolTipText(PaneProgPane.addCvDescription(start,"CV "+cvList[i],null));
             ((JComponent)v).setBorder(null);  // pack tighter
             
             if (mfx && (i == 0 || i == (nValues-1))) {
@@ -491,7 +491,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the starting voltage at throttle speed step 1","CV"+ThisCV));
+			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the starting voltage at throttle speed step 1","CV"+ThisCV,null));
 			l.add ( v );
 			
 			label = new JLabel("Vstart");
@@ -519,7 +519,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the maximum voltage at full throttle","CV"+ThisCV));
+			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the maximum voltage at full throttle","CV"+ThisCV,null));
 			l.add ( v );
 		}
 			
@@ -850,7 +850,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // tooltip label
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                             +" "+step;
-            setToolTipText(PaneProgPane.addCvDescription(start,"CV "+var.number()));
+            setToolTipText(PaneProgPane.addCvDescription(start,"CV "+var.number(),null));
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                     public void propertyChange(java.beans.PropertyChangeEvent e) {

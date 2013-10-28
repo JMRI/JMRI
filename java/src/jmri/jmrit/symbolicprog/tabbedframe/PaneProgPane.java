@@ -1549,7 +1549,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // add information about CVs, etc in the ToolTip text
         
         // Optionally add CV numbers based on Roster Preferences setting
-        start = addCvDescription(start, variable.getCvDescription());
+        start = addCvDescription(start, variable.getCvDescription(), variable.getMask());
         
         // Indicate what the command station can do
         // need to update this with e.g. the specific CV numbers
@@ -1575,13 +1575,14 @@ public class PaneProgPane extends javax.swing.JPanel
      * Needs to be independent of VariableValue methods to allow use by  non-standard elements
      * such as SpeedTableVarValue, DccAddressPanel, FnMapPanel.
      */
-    public static String addCvDescription(String start, String description) {
-        // Optionally add CV numbers based on Roster Preferences setting
-        if (PaneProgFrame.getShowCvNumbers() && (description != null)) {
+    public static String addCvDescription(String start, String description, String mask) {
+        String descString = description;
+        if ( (mask != null) && (mask.contains("X"))) descString = descString + " Mask:"+mask;
+        if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
             if (start == null) {
-                start = description;
+                start = descString;
             } else {
-                start = start+" ("+description+")";
+                start = start+" ("+descString+")";
             }
         } else {
             if (start == null)

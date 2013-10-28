@@ -40,6 +40,8 @@ public class SplitVariableValue extends VariableValue
                               Vector<CvValue> v, JLabel status, String stdname,
                               int pSecondCV, int pFactor, int pOffset, String uppermask) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        _mask = mask;
+        _uppermask = uppermask;
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -82,6 +84,8 @@ public class SplitVariableValue extends VariableValue
              _cvVector.elementAt(getSecondCvNum())};
     }
 
+    public String getMask() { return _uppermask+_mask; }
+
     /** 
      * Provide a user-readable description of
      * the CVs accessed by this variable.
@@ -94,6 +98,8 @@ public class SplitVariableValue extends VariableValue
     int mSecondCV;
     int mFactor;
     int mOffset;
+    String _mask;
+    String _uppermask;
 
     public int getSecondCvNum() { return mSecondCV;}
 
