@@ -211,8 +211,8 @@ public class Track {
 		newTrack.setPickupIds(getPickupIds());
 		
 		// track pools are only shared within a specific location
-		if (getLocation() == newLocation) {
-			newTrack.setPool(getPool());
+		if (getPool() != null) {
+			newTrack.setPool(newLocation.addPool(getPool().getName()));
 			newTrack.setMinimumLength(getMinimumLength());
 		}
 		newTrack.setRemoveCustomLoadsEnabled(isRemoveCustomLoadsEnabled());
@@ -2160,7 +2160,7 @@ public class Track {
 		if ((a = e.getAttribute(Xml.ORDER)) != null)
 			_order = a.getValue();
 		if ((a = e.getAttribute(Xml.POOL)) != null) {
-			setPool(_location.addPool(a.getValue()));
+			setPool(getLocation().addPool(a.getValue()));
 			if ((a = e.getAttribute(Xml.MIN_LENGTH)) != null)
 				_minimumLength = Integer.parseInt(a.getValue());
 		}
