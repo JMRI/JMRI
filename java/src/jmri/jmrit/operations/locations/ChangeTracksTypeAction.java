@@ -115,7 +115,7 @@ class ChangeTracksFrame extends OperationsFrame{
 		List<String> ids = _location.getTrackIdsByNameList(null);
 		for (int i=0; i<ids.size(); i++){
 			Track track = _location.getTrackById(ids.get(i));
-			track.setLocType(type);
+			track.setTrackType(type);
 		}
 		if (type.equals(Track.STAGING))
 			_location.setLocationOps(Location.STAGING);

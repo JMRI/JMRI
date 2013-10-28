@@ -226,7 +226,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		Enumeration<Track> en = _trackHashTable.elements();
 		while (en.hasMoreElements()) {
 			track = en.nextElement();
-			if (track.getLocType().equals(trackType))
+			if (track.getTrackType().equals(trackType))
 				return true;
 		}
 		return false;
@@ -606,7 +606,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			if (type == null) {
 				if (track.getName().equals(name))
 					return track;
-			} else if (track.getName().equals(name) && track.getLocType().equals(type))
+			} else if (track.getName().equals(name) && track.getTrackType().equals(type))
 				return track;
 		}
 		return null;
@@ -662,13 +662,13 @@ public class Location implements java.beans.PropertyChangeListener {
 				trackOut = getTrackById(out.get(j));
 				String outLocName = trackOut.getName();
 				if (locName.compareToIgnoreCase(outLocName) < 0
-						&& (type != null && track.getLocType().equals(type) || type == null)) {
+						&& (type != null && track.getTrackType().equals(type) || type == null)) {
 					out.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type != null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -699,13 +699,13 @@ public class Location implements java.beans.PropertyChangeListener {
 			for (int j = 0; j < moveList.size(); j++) {
 				trackOut = getTrackById(moveList.get(j));
 				int outLocMoves = trackOut.getMoves();
-				if (moves < outLocMoves && (type != null && track.getLocType().equals(type) || type == null)) {
+				if (moves < outLocMoves && (type != null && track.getTrackType().equals(type) || type == null)) {
 					moveList.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
-			if (!locAdded && (type != null && track.getLocType().equals(type) || type == null)) {
+			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
 				moveList.add(sortList.get(i));
 			}
 		}
@@ -782,7 +782,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			} else {
 				status = rs.testLocation(this, track);
 			}
-			if (status.equals(Track.OKAY) && (!destination || !track.getLocType().equals(Track.STAGING))) {
+			if (status.equals(Track.OKAY) && (!destination || !track.getTrackType().equals(Track.STAGING))) {
 				box.setSelectedItem(track);
 				log.debug("Available track: " + track.getName() + " for location: " + getName());
 			} else {

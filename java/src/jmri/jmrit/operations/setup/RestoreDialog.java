@@ -281,7 +281,7 @@ public class RestoreDialog extends JDialog {
 		comboBox.removeAllItems();
 
 		BackupSet[] sets = backup.getBackupSets();
-		ComboBoxModel model = new DefaultComboBoxModel(sets);
+		ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<BackupSet>(sets);
 
 		// Clear any current selection so that the state change will fire when
 		// we set a selection.

@@ -339,7 +339,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setName("New Test Name");
@@ -397,7 +397,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		Assert.assertEquals("Location Track Car Start Used Length", 0, t.getUsedLength());
@@ -492,7 +492,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		Assert.assertEquals("Location Track Pick Ups Start", 0, t.getPickupRS());
@@ -518,7 +518,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		Assert.assertEquals("Location Track Drops Start", 0, t.getDropRS());
@@ -551,7 +551,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		/* Test Type Name */
@@ -639,7 +639,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", Track.SPUR, l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", Track.SPUR, t.getLocType());
+		Assert.assertEquals("Location Track Car Type", Track.SPUR, t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setScheduleId("Test Schedule Id");
@@ -662,14 +662,14 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Car Type", "Test Type", t.getTrackType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		/* Test Load Swapable */
 		Assert.assertEquals("Location Track Load Swapable default", false, t.isLoadSwapEnabled());
-		t.setLoadSwapsEnabled(true);
+		t.setLoadSwapEnabled(true);
 		Assert.assertEquals("Location Track Load Swapable true", true, t.isLoadSwapEnabled());
-		t.setLoadSwapsEnabled(false);
+		t.setLoadSwapEnabled(false);
 		Assert.assertEquals("Location Track Load Swapable false", false, t.isLoadSwapEnabled());
 
 		/* Test Remove Loads */

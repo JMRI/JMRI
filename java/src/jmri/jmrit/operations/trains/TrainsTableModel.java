@@ -480,7 +480,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		return (Setup.isStagingTrackImmediatelyAvail() 
 				&& !train.isTrainInRoute()
 				&& train.getDepartureTrack() != null
-				&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
+				&& train.getDepartureTrack().getTrackType().equals(Track.STAGING)
 				&& train.getDepartureTrack() != train.getTerminationTrack()
 				&& train.getDepartureTrack().getDropRS() > 0 );
 	}

@@ -76,7 +76,7 @@ class ChangeTrackFrame extends OperationsFrame{
     	addItem(p1, saveButton, 1, 1);
     	
     	// group and set current track type
-    	_trackType = tef._track.getLocType();
+    	_trackType = tef._track.getTrackType();
     	group.add(spurRadioButton);
     	group.add(yardRadioButton);
     	group.add(interchangeRadioButton);
@@ -113,7 +113,7 @@ class ChangeTrackFrame extends OperationsFrame{
 	
 	private void changeTrack(String type){
 		log.debug("change track to "+type);
-		_tef._track.setLocType(type);
+		_tef._track.setTrackType(type);
 		OperationsXml.save();
 		_tef.dispose();
 		dispose();

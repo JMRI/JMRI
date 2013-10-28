@@ -536,7 +536,7 @@ public class Car extends RollingStock {
 		// update wait count
 		setWait(getNextWait());
 		setNextWait(0);
-		if (destTrack != null && destTrack.getLocType().equals(Track.SPUR)) {
+		if (destTrack != null && destTrack.getTrackType().equals(Track.SPUR)) {
 			if (!getNextLoadName().equals("")) {
 				setLoadName(getNextLoadName());
 				setNextLoadName("");
@@ -552,7 +552,7 @@ public class Car extends RollingStock {
 				setLoadEmpty();
 		}
 		// update load optionally when car reaches staging
-		if (destTrack != null && destTrack.getLocType().equals(Track.STAGING)) {
+		if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
 			if (destTrack.isLoadSwapEnabled()) {
 				if (getLoadName().equals(carLoads.getDefaultEmptyName())) {
 					setLoadName(carLoads.getDefaultLoadName());
@@ -560,7 +560,7 @@ public class Car extends RollingStock {
 					setLoadEmpty();
 				}
 			}
-			if (destTrack.isSetLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+			if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
 				setLoadEmpty();
 			}
 			// empty car if it has a custom load

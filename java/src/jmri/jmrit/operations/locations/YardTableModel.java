@@ -52,7 +52,7 @@ public class YardTableModel extends TrackTableModel {
 					+ " new: " + e.getNewValue()); // NOI18N
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getLocType();
+			String type = ((Track) e.getSource()).getTrackType();
 			if (type.equals(Track.YARD)) {
 				String yardId = ((Track) e.getSource()).getId();
 				int row = tracksList.indexOf(yardId);

@@ -88,7 +88,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		// setup the check boxes
 		if (_track != null) {
 			swapLoadsCheckBox.setSelected(_track.isLoadSwapEnabled());
-			emptyCheckBox.setSelected(_track.isSetLoadEmptyEnabled());
+			emptyCheckBox.setSelected(_track.isLoadEmptyEnabled());
 			emptyCustomCheckBox.setSelected(_track.isRemoveCustomLoadsEnabled());
 			loadCheckBox.setSelected(_track.isAddCustomLoadsEnabled());
 			loadAnyCheckBox.setSelected(_track.isAddCustomLoadsAnySpurEnabled());
@@ -116,7 +116,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	}
 
 	protected void saveTrack(Track track) {
-		track.setLoadSwapsEnabled(swapLoadsCheckBox.isSelected());
+		track.setLoadSwapEnabled(swapLoadsCheckBox.isSelected());
 		track.setLoadEmptyEnabled(emptyCheckBox.isSelected());
 		track.setRemoveCustomLoadsEnabled(emptyCustomCheckBox.isSelected());
 		track.setAddCustomLoadsEnabled(loadCheckBox.isSelected());

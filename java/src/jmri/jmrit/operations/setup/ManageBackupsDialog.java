@@ -29,12 +29,12 @@ public class ManageBackupsDialog extends JDialog {
 	private JButton selectAllButton;
 	private JButton clearAllButton;
 	private JScrollPane scrollPane;
-	private JList setList;
+	private JList<BackupSet> setList;
 
 	private JButton deleteButton;
 	//private JButton helpButton;
 
-	private DefaultListModel model;
+	private DefaultListModel<BackupSet> model;
 
 	private AutoBackup backup;
 	private Component horizontalGlue;
@@ -88,10 +88,10 @@ public class ManageBackupsDialog extends JDialog {
 			gbc_scrollPane.gridy = 1;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				setList = new JList();
+				setList = new JList<BackupSet>();
 				setList.setVisibleRowCount(20);
 
-				model = new DefaultListModel();
+				model = new DefaultListModel<BackupSet>();
 
 				// Load up the list control with the available BackupSets
 				for (BackupSet bs : backup.getBackupSets()) {

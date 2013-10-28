@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.text.MessageFormat;
@@ -316,7 +317,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			return false;
 		// check to see if rolling stock is in staging and out of service (also location unknown)
 		if (outOfServiceCheckBox.isSelected() && rs.getTrack() != null
-				&& rs.getTrack().getLocType().equals(Track.STAGING)) {
+				&& rs.getTrack().getTrackType().equals(Track.STAGING)) {
 			JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
 					.getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
 			// clear the rolling stock's location
@@ -482,7 +483,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					destTrack = (Track) trackDestinationBox.getSelectedItem();
 				}
 				if (destTrack != null && rs.getDestinationTrack() != destTrack
-						&& destTrack.getLocType().equals(Track.STAGING)
+						&& destTrack.getTrackType().equals(Track.STAGING)
 						&& (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
 					log.debug("Destination track (" + destTrack.getName() + ") is staging");
 					JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()

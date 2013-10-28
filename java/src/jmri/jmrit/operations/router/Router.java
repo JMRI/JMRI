@@ -128,7 +128,7 @@ public class Router extends TrainCommon {
 		if (trainServicesCar)
 			testTrain = _train;	// use the specific train
 		// can specific train can service car out of staging
-		if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
+		if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
 			log.debug("Car (" + car.toString() + ") destination (" + clone.getDestinationName() + ", "
 					+ clone.getDestinationTrackName() + ") is not serviced by train (" // NOI18N
 					+ _train.getName() + ") out of staging"); // NOI18N
@@ -389,7 +389,7 @@ public class Router extends TrainCommon {
 			testCar.setDestinationTrack(track);
 			// determine if car can be transported from current location to this yard or interchange
 			// Is there a "first" train for this car out of staging?
-			if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null
+			if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null
 					&& !_train.services(testCar)) {
 				if (debugFlag)
 					log.debug("Train (" + _train.getName() + ") can not deliver car to ("
@@ -434,7 +434,7 @@ public class Router extends TrainCommon {
 						continue;// found a route but it doesn't start with the specific train
 					}
 					// check to see if intermediate track is staging
-					if (track.getLocType().equals(Track.STAGING))
+					if (track.getTrackType().equals(Track.STAGING))
 						_status = car.setDestination(track.getLocation(), null); // don't specify which track in staging is to be used, decide later
 					else
 						_status = car.setDestination(track.getLocation(), track); // forward car to this intermediate destination and track.
@@ -523,7 +523,7 @@ public class Router extends TrainCommon {
 				Train middleTrain = TrainManager.instance().getTrainForCar(testCar, null);	// don't add to report
 				if (middleTrain != null) {
 					// check to see if track is staging
-					if (testCar.getTrack().getLocType().equals(Track.STAGING))
+					if (testCar.getTrack().getTrackType().equals(Track.STAGING))
 						testCar.setTrack(null); // don't specify which track in staging is to be used, decide later
 					log.debug("Found 3 train route, setting car destination ("
 							+ testCar.getLocationName() + ", " + testCar.getTrackName() + ")");
@@ -605,7 +605,7 @@ public class Router extends TrainCommon {
 								return true;
 							}
 							// check to see if track is staging
-							if (fltp.getLocType().equals(Track.STAGING))
+							if (fltp.getTrackType().equals(Track.STAGING))
 								_status = car.setDestination(fltp.getLocation(), null);
 							else
 								_status = car.setDestination(fltp.getLocation(), fltp);
@@ -693,7 +693,7 @@ public class Router extends TrainCommon {
 									}
 									// check to see if track is staging
 
-									if (fltp.getLocType().equals(Track.STAGING))					
+									if (fltp.getTrackType().equals(Track.STAGING))					
 										_status = car.setDestination(fltp.getLocation(), null);
 									else
 										_status = car.setDestination(fltp.getLocation(), fltp);
@@ -741,20 +741,20 @@ public class Router extends TrainCommon {
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue;	// track doesn't accept this car
 			if (debugFlag)
-				log.debug("Found " + track.getLocType() + " track (" + track.getLocation().getName() + ", "
+				log.debug("Found " + track.getTrackType() + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
 			// test to see if there's a train that can deliver the car to this location
 			testCar.setDestination(track.getLocation());
 			testCar.setDestinationTrack(track);
 			Train firstTrain = TrainManager.instance().getTrainForCar(testCar, null); // don't add to report
 			// Is there a train assigned to carry this car out of staging?
-			if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null
+			if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null
 					&& !_train.services(testCar))
 				firstTrain = null;
 			if (firstTrain != null) {
 				if (debugFlag)
 					log.debug("Train (" + firstTrain.getName() + ") can service car (" + car.toString()
-							+ ") from " + track.getLocType() // NOI18N
+							+ ") from " + track.getTrackType() // NOI18N
 							+ " (" // NOI18N
 							+ testCar.getLocationName() + ", " + testCar.getTrackName() // NOI18N
 							+ ") to final destination (" + testCar.getDestinationName() // NOI18N

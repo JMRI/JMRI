@@ -772,7 +772,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		l1s1.setLength(300);
 		Assert.assertEquals("Location 1s1 Id", "1s1", l1s1.getId());
 		Assert.assertEquals("Location 1s1 Name", "North End 1", l1s1.getName());
-		Assert.assertEquals("Location 1s1 LocType", "Staging", l1s1.getLocType());
+		Assert.assertEquals("Location 1s1 LocType", "Staging", l1s1.getTrackType());
 		Assert.assertEquals("Location 1s1 Length", 300, l1s1.getLength());
 		l1s1.setTrainDirections(DIRECTION_ALL);
 		l1s1.setRoadOption(Track.ALLROADS);
@@ -783,7 +783,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		l1s2.setLength(400);
 		Assert.assertEquals("Location 1s2 Id", "1s2", l1s2.getId());
 		Assert.assertEquals("Location 1s2 Name", "North End 2", l1s2.getName());
-		Assert.assertEquals("Location 1s2 LocType", "Staging", l1s2.getLocType());
+		Assert.assertEquals("Location 1s2 LocType", "Staging", l1s2.getTrackType());
 		Assert.assertEquals("Location 1s2 Length", 400, l1s2.getLength());
 		l1s2.setTrainDirections(DIRECTION_ALL);
 		l1s2.setRoadOption(Track.ALLROADS);
@@ -819,7 +819,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		l2s1.setLength(432);
 		Assert.assertEquals("Location 2s1 Id", "2s1", l2s1.getId());
 		Assert.assertEquals("Location 2s1 Name", "NI Yard", l2s1.getName());
-		Assert.assertEquals("Location 2s1 LocType", Track.YARD, l2s1.getLocType());
+		Assert.assertEquals("Location 2s1 LocType", Track.YARD, l2s1.getTrackType());
 		Assert.assertEquals("Location 2s1 Length", 432, l2s1.getLength());
 		l2s1.setTrainDirections(DIRECTION_ALL);
 
@@ -839,7 +839,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		l3s1.setLength(300);
 		Assert.assertEquals("Location 3s1 Id", "3s1", l3s1.getId());
 		Assert.assertEquals("Location 3s1 Name", "South End 1", l3s1.getName());
-		Assert.assertEquals("Location 3s1 LocType", "Staging", l3s1.getLocType());
+		Assert.assertEquals("Location 3s1 LocType", "Staging", l3s1.getTrackType());
 		Assert.assertEquals("Location 3s1 Length", 300, l3s1.getLength());
 		l3s1.setTrainDirections(DIRECTION_ALL);
 		l3s1.setRoadOption(Track.ALLROADS);
@@ -850,7 +850,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		l3s2.setLength(401);
 		Assert.assertEquals("Location 3s2 Id", "3s2", l3s2.getId());
 		Assert.assertEquals("Location 3s2 Name", "South End 2", l3s2.getName());
-		Assert.assertEquals("Location 3s2 LocType", "Staging", l3s2.getLocType());
+		Assert.assertEquals("Location 3s2 LocType", "Staging", l3s2.getTrackType());
 		Assert.assertEquals("Location 3s2 Length", 401, l3s2.getLength());
 		l3s2.setTrainDirections(DIRECTION_ALL);
 		l3s2.setRoadOption(Track.ALLROADS);

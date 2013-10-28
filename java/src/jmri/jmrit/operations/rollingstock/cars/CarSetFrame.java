@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -281,7 +282,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						&& !finalDestTrackBox.getSelectedItem().equals(""))
 					finalDestTrack = (Track) finalDestTrackBox.getSelectedItem();
 				if (finalDestTrack != null && car.getFinalDestinationTrack() != finalDestTrack
-						&& finalDestTrack.getLocType().equals(Track.STAGING)) {
+						&& finalDestTrack.getTrackType().equals(Track.STAGING)) {
 					log.debug("Destination track (" + finalDestTrack.getName() + ") is staging");
 					JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
 							.getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
@@ -325,7 +326,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")) {
 					Track trackRWE = (Track) trackReturnWhenEmptyBox.getSelectedItem();
 					// warn user if they selected a staging track
-					if (trackRWE != null && trackRWE.getLocType().equals(Track.STAGING)) {
+					if (trackRWE != null && trackRWE.getTrackType().equals(Track.STAGING)) {
 						log.debug("Return when empty track (" + trackRWE.getName() + ") is staging");
 						JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
 								.getMessage("rsCanNotRWE"), JOptionPane.ERROR_MESSAGE);
