@@ -139,9 +139,9 @@ public class IconDialog extends ItemDialog {
        iconPanel.setLayout(gridbag);
 
        int cnt = _iconMap.size();
-       int numCol = 2;
+       int numCol = cnt;
        if (cnt>6) {
-           numCol = 3;
+           numCol = 6;
        }
        GridBagConstraints c = new GridBagConstraints();
        c.fill = GridBagConstraints.NONE;

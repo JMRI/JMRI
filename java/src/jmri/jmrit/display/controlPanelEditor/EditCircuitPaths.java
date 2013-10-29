@@ -116,8 +116,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _pathList.setModel(_pathListModel);
         _pathList.addListSelectionListener(this);
         _pathList.setCellRenderer(new PathCellRenderer());
-        JScrollPane pane = new JScrollPane(_pathList);
-        pane.setPreferredSize(new Dimension(300,400));
+         JScrollPane pane = new JScrollPane(_pathList);
         pathPanel.add(pane);
         pathPanel.add(Box.createVerticalStrut(2*STRUT_SIZE));
 

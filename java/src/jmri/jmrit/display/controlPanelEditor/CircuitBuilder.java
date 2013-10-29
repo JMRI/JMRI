@@ -75,6 +75,7 @@ public class CircuitBuilder  {
     // OBlock list to open edit frames 
     private PickListModel _oblockModel;
     private boolean hasOBlocks = false;
+    private boolean _lock = false;		// attempts to preserve lock state of icons
 
     // "Editing Frames" - Called from menu in Main Frame
     private EditCircuitFrame _editCircuitFrame;
@@ -136,6 +137,9 @@ public class CircuitBuilder  {
                 icons.add(pos);
             }
             _iconMap.put(pos, block);
+            if (_lock) {
+            	pos.setPositionable(true);
+            }
         }
         _circuitMap.put(block, icons);
         _darkTrack.remove(pos);
@@ -730,6 +734,9 @@ public class CircuitBuilder  {
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack)pos).setOccBlockHandle(handle);
                 }
+                if (_lock) {
+                	pos.setPositionable(false);
+                }
                 icons.add(pos);
                 _iconMap.put(pos, block);
             }
@@ -1165,11 +1172,16 @@ public class CircuitBuilder  {
     * select block's track icons for editing -***could be _circuitMap.get(block) is sufficient
     */
     private ArrayList<Positionable> makeSelectionGroup(OBlock block, boolean showPortal) {
+    	_lock = false;
     	ArrayList<Positionable> group = new ArrayList<Positionable>();
     	List<Positionable> circuitIcons = _circuitMap.get(block);
     	Iterator<Positionable> iter = circuitIcons.iterator();
         while(iter.hasNext()) {
         	Positionable p = iter.next();
+        	if (!p.isPositionable()) {
+        		_lock = true;
+        	}
+        	p.setPositionable(true);
         	if (p instanceof PortalIcon) {
         		if (showPortal) {
                 	((PortalIcon)p).setStatus(PortalIcon.VISIBLE);
