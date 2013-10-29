@@ -84,13 +84,15 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		LocationManager.instance().addPropertyChangeListener(this);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Tracks", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 
 		pack();
 		setMinimumSize(new Dimension(Control.panelWidth, Control.smallPanelHeight));
 
-		if (_location != null)
+		if (_location != null) {
 			setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[] { _location.getName() }));
+			_location.addPropertyChangeListener(this);
+		}
 
 		// setup buttons
 		addButtonAction(copyButton);
@@ -107,7 +109,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	protected void updateTrackComboBox() {
-		log.debug("update location track combobox");
+		log.debug("update track combobox");
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
 			trackBox.removeAllItems();
 		} else {
@@ -133,12 +135,13 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 				// only copy tracks that are okay with the location
 				if (track.getTrackType().equals(Track.STAGING) ^ _location.getLocationOps() == Location.STAGING) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
-							new Object[] { track.getTrackType(), _location.getName() }), MessageFormat.format(Bundle.getMessage("CanNotCopy"),
-							new Object[] { track.getName() }), JOptionPane.ERROR_MESSAGE);
-					return;
+							new Object[] { track.getTrackType(), _location.getName() }), MessageFormat.format(Bundle
+							.getMessage("CanNotCopy"), new Object[] { track.getName() }), JOptionPane.ERROR_MESSAGE);
+				} else {
+					track.copyTrack(trackNameTextField.getText(), _location);
 				}
-				track.copyTrack(trackNameTextField.getText(), _location);
 			} else {
+				// tell user that they need to select a track to copy
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle
 						.getMessage("SelectTrackToCopy"), JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -146,10 +149,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	protected void updateComboBoxes() {
+		log.debug("update location combobox");
 		LocationManager.instance().updateComboBox(locationBox);
 	}
-
-	private static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
 
 	/**
 	 * 
@@ -161,9 +163,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("add") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trackNameTextField.getText().length() > MAX_NAME_LENGTH) {
+		if (trackNameTextField.getText().length() > Control.max_len_string_track_name) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
-					new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }), MessageFormat.format(Bundle
+					new Object[] { Integer.toString(Control.max_len_string_track_name + 1) }), MessageFormat.format(Bundle
 					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("add") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -180,6 +182,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	public void dispose() {
+		LocationManager.instance().removePropertyChangeListener(this);
+		if (_location != null)
+			_location.removePropertyChangeListener(this);
 		super.dispose();
 	}
 
@@ -187,6 +192,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() + ")");
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateComboBoxes();
+		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY))
+			dispose();
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
