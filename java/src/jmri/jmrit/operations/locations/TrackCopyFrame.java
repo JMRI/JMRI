@@ -45,8 +45,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
 	Location _location;	// Copy the track to this location
 
-	public TrackCopyFrame(Location location) {
-		_location = location;
+	public TrackCopyFrame(LocationEditFrame lef) {
+		_location = lef._location;
 
 		// general GUI config
 
@@ -92,6 +92,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		if (_location != null) {
 			setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[] { _location.getName() }));
 			_location.addPropertyChangeListener(this);
+		} else {
+			copyButton.setEnabled(false);
 		}
 
 		// setup buttons
@@ -160,13 +162,13 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 	private boolean checkName() {
 		if (trackNameTextField.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("add") }), JOptionPane.ERROR_MESSAGE);
+					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("Copy") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trackNameTextField.getText().length() > Control.max_len_string_track_name) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
 					new Object[] { Integer.toString(Control.max_len_string_track_name + 1) }), MessageFormat.format(Bundle
-					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("add") }), JOptionPane.ERROR_MESSAGE);
+					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("Copy") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// check to see if track already exists
@@ -175,7 +177,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		Track check = _location.getTrackByName(trackNameTextField.getText(), null);
 		if (check != null) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
-					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("add") }), JOptionPane.ERROR_MESSAGE);
+					.getMessage("CanNotTrack"), new Object[] { Bundle.getMessage("Copy") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;

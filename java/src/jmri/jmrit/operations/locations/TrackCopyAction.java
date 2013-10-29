@@ -16,19 +16,18 @@ import javax.swing.AbstractAction;
  */
 public class TrackCopyAction extends AbstractAction {
     
-    public TrackCopyAction(Location location) {
+    public TrackCopyAction(LocationEditFrame lef) {
     	super(Bundle.getMessage("MenuItemCopyTrack"));
-    	_location = location;
-    	if (location == null)
-    		setEnabled(false);
+    	_lef = lef;
     }
 
-    Location _location;
+    private LocationEditFrame _lef;
     TrackCopyFrame f = null;
+    
     public void actionPerformed(ActionEvent e) {
         // create a copy track frame
     	if (f == null || !f.isVisible()){
-    		f = new TrackCopyFrame(_location);
+    		f = new TrackCopyFrame(_lef);
     	}
     	f.setExtendedState(Frame.NORMAL);
 	   	f.setVisible(true);	// this also brings the frame into focus
