@@ -37,9 +37,10 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
      */
     public Element store(Object o) {
         ProgrammerConfigPane p = (ProgrammerConfigPane) o;
-        if (p.getSelectedItem()==null) return null;  // nothing to write!
         Element programmer = new Element("programmer");
-        programmer.setAttribute("defaultFile", p.getSelectedItem());
+        if (p.getSelectedItem() != null) { 
+            programmer.setAttribute("defaultFile", p.getSelectedItem());
+        }
         programmer.setAttribute("verifyBeforeWrite", "no");
         if (!p.getShowEmptyTabs()) programmer.setAttribute("showEmptyPanes", "no");
         if (p.getShowCvNums()) programmer.setAttribute("showCvNumbers", "yes");
@@ -54,9 +55,12 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
       */
     public boolean load(Element element) {
     	boolean result = true;
-        if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
-        jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
-
+    	
+    	if (element.getAttribute("defaultFile") != null) {
+            if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
+            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+        }
+        
 		// ugly hack to avoid static re-initialization, see comment at
 		// top of file.
 		new  jmri.jmrit.symbolicprog.CombinedLocoSelPane();
