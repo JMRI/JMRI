@@ -410,6 +410,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if (!updateGroup(list))
 						return false;
+				} else if (outOfServiceCheckBox.isSelected()) {
+					car.setKernel(null);	// don't leave car in kernel if out of service
 				}
 			}
 		}
