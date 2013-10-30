@@ -1392,9 +1392,8 @@ public class TrainBuilder extends TrainCommon {
 			if (c.getKernel() != null) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
 						new Object[] { c.toString(), c.getKernelName(), c.getKernel().getSize() }));
-				if (c.getKernel().isLead(c)) {
-					checkKernel(c);
-				} else {
+				checkKernel(c);
+				if (!c.getKernel().isLead(c)) {
 					carList.remove(c.getId()); // remove this car from the list
 					carIndex--;
 					continue;
@@ -1430,20 +1429,28 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	/**
-	 * Verifies that all cars in the kernel have the same departure track.
+	 * Verifies that all cars in the kernel have the same departure track. Also checks to see if the kernel has a lead
+	 * car and the lead car is in service.
 	 * 
 	 * @param car
 	 * @throws BuildFailedException
 	 */
 	private void checkKernel(Car car) throws BuildFailedException {
 		List<Car> cars = car.getKernel().getCars();
+		boolean foundLeadCar = false;
 		for (int i = 0; i < cars.size(); i++) {
+			// check that lead car exists
 			Car c = cars.get(i);
+			if (c.getKernel().isLead(c) && !c.isOutOfService())
+				foundLeadCar = true;
+			// check to see that all cars have the same location and track
 			if (car.getLocation() != c.getLocation() || car.getTrack() != c.getTrack())
-				throw new BuildFailedException(MessageFormat.format(Bundle
-						.getMessage("buildErrorCarKernelLocation"), new Object[] { c.toString(),
-						car.getKernelName(), car.toString() }));
+				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCarKernelLocation"),
+						new Object[] { c.toString(), car.getKernelName(), car.toString() }));
 		}
+		if (foundLeadCar == false)
+			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCarKernelNoLead"),
+					new Object[] { car.getKernelName() }));
 	}
 
 	/**
