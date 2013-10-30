@@ -44,6 +44,8 @@
   <version author="Dave Heap" version="11" lastUpdated="20130910"/>
   <!-- ver12 new Sound pane, many changes and corrections -->
   <version author="Dave Heap" version="12" lastUpdated="20130926"/>
+  <!-- ver13 add new capability section to define high CV alternate write method -->
+  <version author="Dave Heap" version="13" lastUpdated="20131028"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -291,7 +293,16 @@
         <functionlabel num="26" lockable="true"/>
       </functionlabels>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+        <capability>
+            <name>High Access via Double Index</name>
+            <parameter name="Max Regular CV address">256</parameter>
+            <parameter name="High Address CV">96</parameter>
+            <parameter name="Low Address CV">97</parameter>
+            <parameter name="Access Register CV">99</parameter>
+            <parameter name="Modulo">100</parameter>
+        </capability>
+    </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
       <variable label="Language selection" CV="48" mask="XXXXVVVV" item="ESU V4 Extra Miscellaneous Option 5" default="0">
