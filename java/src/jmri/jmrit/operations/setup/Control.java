@@ -26,6 +26,7 @@ public class Control {
 	
 	// Default panel height
 	public static final int panelHeight = 500;
+	public static final int mediumPanelHeight = 400;
 	public static final int minPanelHeight = 250;
 	public static final int smallPanelHeight = 200;
 	public static final int tinyPanelHeight = 100;

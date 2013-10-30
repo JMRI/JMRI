@@ -548,7 +548,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		if (track == null) {
 			_IdNumber++;
 			String id = _id + "s" + Integer.toString(_IdNumber);
-			log.debug("adding new " + type + " to " + getName() + " id: " + id);
+			log.debug("adding new " + type + " to " + getName() + " track name: "+ name +" id: " + id);
 			track = new Track(id, name, type, this);
 			register(track);
 		}
