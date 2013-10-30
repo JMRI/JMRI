@@ -540,23 +540,36 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             return;
         }
         OPath otherPath = _block.getPathByName(name);
-        if (!_pathChange && otherPath!=null) {
+        boolean sameName = false;
+        if (otherPath!=null) {
     		_pathList.setSelectedValue(otherPath, true);
-    		return;       	
+    		sameName = true;
+    		if (!_pathChange) {
+    			// check portals OK
+    			Portal p = otherPath.getFromPortal();
+    			if (!p.isValidPath(otherPath)) {
+    				p.addPath(otherPath);
+    			}
+    			p = otherPath.getToPortal();
+    			if (!p.isValidPath(otherPath)) {
+    				p.addPath(otherPath);
+    			}
+    			return;
+    		}
         }
         OPath path = makeOPath(name, _pathGroup, true);
         if (path==null) {
         	return;		// proper OPath cannot be made
         }
-        boolean sameName = (_block.getPathByName(name)!=null);
-        otherPath = null;
-		// is this path already defined?
-        Iterator <Path> iter = _block.getPaths().iterator();
-        while (iter.hasNext()) {
-            OPath p = (OPath)iter.next();
-            if (pathsEqual(path, p)) {
-            	otherPath = p;
-            	break;
+        if (otherPath==null) {
+    		// is this path already defined?
+            Iterator <Path> iter = _block.getPaths().iterator();
+            while (iter.hasNext()) {
+                OPath p = (OPath)iter.next();
+                if (pathsEqual(path, p)) {
+                	otherPath = p;
+                	break;
+                }
             }
         }
         // match icons to current selections
@@ -572,7 +585,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 }       		
             }
     		_pathList.setSelectedValue(otherPath, true);
-    		return;
+//    		return;
         }
         // from here on, path is different
     	
