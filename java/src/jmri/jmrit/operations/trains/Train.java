@@ -1462,7 +1462,8 @@ public class Train implements java.beans.PropertyChangeListener {
 									log.debug("No available moves for destination " + rLoc.getName());
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-											.getMessage("trainNoMoves"), new Object[] { getName(), rLoc.getName() }));
+											.getMessage("trainNoMoves"), new Object[] { getName(),
+											getRoute().getName(), rLoc.getId(), rLoc.getName() }));
 								continue;
 							}
 							if (debugFlag)

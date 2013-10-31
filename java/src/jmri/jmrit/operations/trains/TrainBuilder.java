@@ -3037,8 +3037,8 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			}
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-				addLine(buildReport, THREE, MessageFormat.format(Bundle
-						.getMessage("buildNoAvailableMovesStop"), new Object[] { rld.getName(), locCount }));
+				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildNoAvailableMovesStop"),
+						new Object[] { train.getRoute().getName(), rld.getId(), rld.getName(), locCount }));
 				continue;
 			}
 			// is the train length okay?
@@ -3282,7 +3282,7 @@ public class TrainBuilder extends TrainCommon {
 			// any moves left at this location?
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
-						.getMessage("buildNoAvailableMovesDest"), new Object[] { rld.getName() }));
+						.getMessage("buildNoAvailableMovesDest"), new Object[] { train.getRoute().getName(), rld.getId(), rld.getName() }));
 				continue;
 			}
 			Location destinationTemp = null;
