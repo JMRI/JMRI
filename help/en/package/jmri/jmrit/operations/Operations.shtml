@@ -67,6 +67,13 @@
     <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
     <LI><A HREF="#Locations">Locations</A>
      <UL>
+      <LI><A HREF="#LocationTools">Location Tools</A>
+      <UL>
+      <LI><A HREF="#CopyTrack">Copy Track</A></LI>
+      <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
+      <LI><A HREF="#ShowCars">Show Cars</A></LI>
+      <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
+      </UL></LI>
       <LI><A HREF="#Yards">Yards</A></LI>
       <LI><A HREF="#Sidings">Spurs</A>
        <UL>
@@ -94,7 +101,8 @@
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
       <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
-      <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color, Kernel, Owner)</A></LI>
+      <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
+        Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
       <LI><A HREF="#CarsSet">Set Car</A></LI>
      </UL></LI>
@@ -178,7 +186,7 @@
    The operations program provides a set of demo files to help introduce you to the some of the
    features and capabilities of this program. To load the demo files, first open the Operations
    Settings window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
-   window is the Tools menu, select "Load Demo Files". The program will create a <A
+   window is the "Tools" menu, select "Load Demo Files". The program will create a <A
     HREF="#BackupRestore">backup</A> of your current configuration if you have one, and then loads
    the demo files. Restart JMRI to complete the demo load process.
 
@@ -268,11 +276,12 @@
    </P>
 
    <P>
-    If you want a caboose or car with FRED for your train, first configure some of your cars to be a
-    caboose by selecting the caboose or FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the
-    Edit Car window. Now change the Optional train requirements radio button to Caboose or FRED. Be
-    sure that the last location on your trains route has a track that will accept the caboose car or
-    the train will not build properly.
+    If you want a caboose or car with FRED for your train, first configure some of the cars to be
+    the last car in the train by selecting the "Caboose" or "FRED"
+    <A HREF="#CabooseFredHazardous">checkbox</A> in the "Edit Car" window. Now change the optional
+    train requirements radio button to "Caboose" or "FRED" in the Edit Train window. Be sure that
+    the last location in your trains route has a track that will accept the caboose car or the train
+    will not build properly.
    </P>
 
    <P>
@@ -335,7 +344,7 @@
    <A NAME="MaximumTrainLength"></A>
    <H3>Maximum Train Length</H3>
 
-   Now enter the default "Maximum Train Length" you desire for your trains. This field provides the
+   Now enter the "Maximum Train Length" you desire for your trains. This field provides the
    maximum scale train length between stations. Later you can override this length if you wish a
    shorter train between any two locations. A 1000 foot train can carry approximately 20 cars, and
    is of course dependent on the car lengths assigned to the train.
@@ -436,8 +445,8 @@
     is done.</p>
 
    <p>Regular backups are done only when the user requests it by either clicking the "Backup"
-    button on the Settings page, or by selecting the "Backup" option on the Tools menu of the
-    Operations Settings page. The Backup button will copy the files to the Regular Backup Store
+    button on the Settings page, or by selecting the "Backup" option from the "Tools" menu of the
+    Operations Settings window. The Backup button will copy the files to the Regular Backup Store
     under the user's JMRI home directory as described above, while the Backup menu option will allow
     the user to specify any directory. This can be useful when making an archive copy that you want
     to move somewhere else for safekeeping.</p>
@@ -456,7 +465,7 @@
     Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
    <p>Backup Sets can be restored from either the Automatic Store or the Regular Store using the
-    "Restore" button on the Settings page. Alternatively, the "Restore" menu option on the Tools
+    "Restore" button on the Settings page. Alternatively, the "Restore" menu option in the "Tools"
     menu of the Operations Settings page allows you to navigate to any directory, and would be used
     to restore an archived Backup Set.</p>
 
@@ -472,7 +481,7 @@
    <H3>Reset Database</H3>
 
    <p>To reset the operation database and remove all operation files, use the "Reset Database" option on the
-    Tools menu of the Operations Settings page. An automatic backup copy of the current operation
+    "Tools" menu of the Operations Settings page. An automatic backup copy of the current operation
     files will be made before deleting the main files. The results will be that the settings, cars,
     locomotives, locations, and trains files will be purged. Note that after this is done and
     JMRI restarts, the "Operations" menu item on the main menu will no longer be visible, as there
@@ -861,7 +870,7 @@
    <A HREF="#MessageFormats">Message Formats</A> below) in order get the data to fit. The text color
    options for set outs, pick ups, and local move are not available for the "Two Column" format.
    <P>The "Tabular" and "Two Column" formats use equally spaced fonts like "Courier New" or
-    "Monospaced" and only equally spaced fonts are shown in the "Font" selection box when either
+    "Monospaced" so only equally spaced fonts are shown in the "Font" selection box when either
     option is selected.</P>
 
    <H3>Set Out Text Color</H3>
@@ -1081,6 +1090,47 @@
    You can enter an optional comment for your location. If you want the comment to print on your
    manifests you must select the print location comments <A HREF="#ManifestComments">option</A>. 
    
+   <A NAME="LocationTools"></A>
+   <H3>Location Tools</H3>
+
+   <A NAME="CopyTrack"></A>
+   <H4>Copy Track</H4>
+
+   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
+   The first is "Copy Track". From the copy track window, you can select any existing track and
+   create a new track with the same attributes as the existing one. You can also transfer all of the
+   rolling stock from the existing track to the new track and if you wish, delete the original
+   track. Select the operations you want and then press the "Copy" button to create a new track,
+   move cars and locos, and delete the original track. If you're pleased with the results, press the
+   "Save" button to make your copy permanent.
+
+   <P>When using the copy track feature, it is recommended that you reset or terminate any built
+    trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
+    up or set out from a built train. This restriction also applies to deleting the original track.</P>
+
+   <A NAME="ModifyLocationByCarType"></A>
+   <H4>Modify Location by Car Type</H4>
+
+   The next tool feature is "Modify Location by Car Type" which allows you to select a car type and
+   decide which tracks will service that car type for this location. See
+   <A HREF="#ModifyLocationsByCarType">Modify Locations by Car Type</A> for more info.
+   
+   <A NAME="ShowCars"></A>
+   <H4>Show Cars</H4>
+
+   <P>If you only want to see cars for this location, select "Show Cars" from the "Tools" menu.
+    This tool is also useful when you want to print out cars for a specific location.</P>
+
+   <A NAME="ChangeTrackTypeLocation"></A>
+   <H4>Change Track Type</H4>
+
+   <P>
+    The last tool is "Change Track Type". This tool allows you to change all of the tracks at this
+    location to the same type. Available track types are spur, yard, classification/interchange or
+    staging. You can also change the track type for a specific track, see <A HREF="#ChangeTrackType">Change
+     Track Type</A> for a track.
+   </P>
+
    <A NAME="Yards"></A>
    <H3>Yards</H3>
 
@@ -1288,14 +1338,14 @@
     the next car type when adding a car type. This makes it easy to quickly add car types to the
     table.</P>
 
-   <P>You can also access your schedules from the Locations Tools menu. The Schedules table
+   <P>You can also access your schedules from the Locations "Tools" menu. The Schedules table
     provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
     also provides additional status for each of the spurs that use that particular schedule. The
     table also allows you the edit a schedule once its been assigned to a spur.</P>
 
    <P>
     A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
-     type and load</A> which can be found under Tools in the Schedules window. This tool allows you to
+     type and load</A> which can be found under "Tools" in the Schedules window. This tool allows you to
     select a car type and the car's load to quickly see which spurs with schedules will ship and
     receive cars with those loads.
    </P>
@@ -1378,7 +1428,7 @@
     location are receiving or shipping that specific car load.</P>
 
    <P>If you want a list of custom car loads for each of your car types, you can use the "Print
-    Car Loads" or "Preview Car Loads" found under Tools in the "Show schedules by car type and load"
+    Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car type and load"
     window.</P>
 
    <A NAME="Interchange"></A>
@@ -1540,7 +1590,7 @@
 
    <P>
     To restrict which loads the program will place into your cars, you can use the staging track's
-    load control features. See in the menu under Tools "Load Options". You can also control which
+    load control features. Under the "Tools" menu find "Load Options". You can also control which
     types of loads the program will place by restricting the types of loads the train departing from
     staging is allowed to service. See "Select loads serviced by this train" under Edit-&gt;Train,
     then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.
@@ -1679,9 +1729,9 @@
    <A NAME="ModifyLocationsByCarType"></A>
    <H3>Modify Locations by Car Type</H3>
 
-   This tool can be found under Locations-&gt;Tools. Use this tool to quickly modify the type of
-   cars your locations and tracks will service. Very useful when adding a new car type to your
-   roster.
+   This feature can be found under the "Tools" menu in the Locations window. Use this tool to quickly
+   modify the type of cars your locations and tracks will service. Very useful when adding a new car
+   type to your roster.
 
    <P>
     <img src="images/ModifyLocationsByCarType.png">
@@ -2047,7 +2097,7 @@
    other selected cars will have the same settings as the default car. Be sure to press "Save" in
    the Cars window if you want to keep your changes.
 
-   <H3>Tools</H3>
+   <H3>Cars Tools</H3>
 
    The cars "Tools" menu allows you to perform some useful functions to your car roster. In addition
    to "Import from file" feature described earlier, you can also export your cars to a comma
@@ -2768,7 +2818,7 @@
    route) will by default never move a car from a spur to a spur or yard to a yard, only yard to
    spur or spur to yard. This rule also applies to interchanges. This restriction helps prevent
    unrealistic car movements between spurs (industries). However, if you want a spur to spur move,
-   use a <A HREF="#Schedules">Schedule</A> to force the car move. You can also disable this
+   use a <A HREF="#Schedules">Schedule</A> to create the car move. You can also disable this
    restriction see <A HREF="#AllowLocalCarMovements">Options. </A> 
    
    <A NAME="BuildingTrains"></A>
@@ -2783,7 +2833,7 @@
    train, select the trains that you want built and press the "Build" button found at the bottom of
    the trains window. The program will then build manifests for all of the selected trains.
 
-   <P>If a train fails to build, the "Move" button will change its text to "Report". Pressing
+   <P>If a train fails to build, the "Action" button will change its text to "Report". Pressing
     "Report" will print or preview the build report for this train. Whenever a train fails to build,
     a build failure message will appear. If you want to disable this feature deselect the checkbox
     "Build Messages".</P>
@@ -2823,7 +2873,7 @@
 
    The program when building a train creates a build report and saves it to disk. Normally you would
    access the build report from the <A HREF="#BuildingTrains">Trains</A> window or from the edit
-   train Tools menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
+   train "Tools" menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
    directory. The build report shows the steps the operations program goes through while building a
    train. The first page provides the route the train will travel and the number of car moves
    requested for each location. The report then shows the car type and locomotive types that the
@@ -2870,7 +2920,7 @@
     In <A HREF="#SettingsOptions">aggressive mode</A> , the program when figuring out destinations
     for cars, will do two passes when determining where to place cars. The first pass does 50% of
     the available moves for each location, and the second pass does the remainder. By doing two
-    passes, the program can "free" up some spurs that already have cars there, thus increasing the
+    passes, the program can "free" up some tracks that already have cars there, thus increasing the
     number of cars that the train can service. Once a car has been given a destination in aggressive
     mode, the car's current track space is available for other trains to use.
    </P>
@@ -2880,11 +2930,11 @@
     for destinations for cars out of staging on the first pass unless the "Use normal mode when
     building this train" is selected. The thinking is that car pick ups along the train's route will
     free up space which should provide more possibilities for cars out of staging. However, if you
-    have tight train length restrictions along the train's route, the program might not be able of
+    have tight train length restrictions along the train's route, the program might not
     find destinations for cars out of staging while keeping the train length in check. If you find
     in the build report that the train length is an issue for cars out of staging, try building the
     train using the "Use normal mode when building this train" found under <A
-     HREF="#TrainBuildOptions">Train Build Options</A> in the Tools menu under Edit Train.
+     HREF="#TrainBuildOptions">Train Build Options</A> in the "Tools" menu under Edit Train.
    </P>
 
    <P>When a car has a final destination that was set by a schedule, the program will try and
@@ -2906,7 +2956,7 @@
    <P>
     Sometimes reading the build report can get tedious. A text editor allows you to search the
     report, you can select this option from the <A HREF="#BuildReportDetails">Build Report
-     Options</A> under Tools in the Setup or Trains window.
+     Options</A> under "Tools" in the Setup or Trains window.
    </P>
 
    <A NAME="PrintingManifests"></A>
@@ -2921,8 +2971,8 @@
    for all of the selected trains. You can modify the look of your manifests from the <A
     HREF="#PrintOptions">Manifest Print Options</A> window.
 
-   <p>You can also access a train's manifest and build report from the Tools menu in the edit
-    train window. The Tools menu option allows you to recover the manifest and build report for a
+   <p>You can also access a train's manifest and build report from the "Tools" menu in the edit
+    train window. The "Tools" menu option allows you to recover the manifest and build report for a
     train that has been terminated. Useful if you've accidentally terminated a train before printing
     out the train's manifest.</p>
 
