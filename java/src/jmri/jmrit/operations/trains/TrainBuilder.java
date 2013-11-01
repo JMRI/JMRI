@@ -1717,11 +1717,11 @@ public class TrainBuilder extends TrainCommon {
 	 *            The route location to search for cars.
 	 * @param routeIndex
 	 *            Where in the route to add cars to this train.
-	 * @param secondPass
+	 * @param isSecondPass
 	 *            When true this is the second time we've looked at these cars.
 	 * @throws BuildFailedException
 	 */
-	private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean secondPass)
+	private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
 			throws BuildFailedException {
 		if (reqNumOfMoves <= 0)
 			return;
@@ -1730,13 +1730,13 @@ public class TrainBuilder extends TrainCommon {
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car car = carManager.getById(carList.get(carIndex));
 			// second pass only cares about cars that have a final destination equal to this location
-			if (secondPass && !car.getFinalDestinationName().equals(rl.getName()))
+			if (isSecondPass && !car.getFinalDestinationName().equals(rl.getName()))
 				continue;
 			// find a car at this location
 			if (!car.getLocationName().equals(rl.getName()))
 				continue;
 			// add message that we're on the second pass for this location
-			if (secondPass && messageFlag) {
+			if (isSecondPass && messageFlag) {
 				messageFlag = false;
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildExtraPassForLocation"), new Object[] { rl.getName() }));

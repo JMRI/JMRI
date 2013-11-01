@@ -102,6 +102,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected Engine _leadEngine = null; // lead engine for icon
 	protected String _switchListStatus = UNKNOWN; // print switch list status
 	protected String _comment = "";
+	protected String _serviceStatus = "";	// status only if train is being built
 
 	// Engine change and helper engines
 	protected int _leg2Options = 0; // options
@@ -1302,6 +1303,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	public boolean services(PrintWriter buildReport, Car car) {
 		boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
+		setServiceStatus("");
 		// check to see if train can carry car
 		if (!acceptsTypeName(car.getTypeName())) {
 			if (addToReport)
@@ -1458,12 +1460,12 @@ public class Train implements java.beans.PropertyChangeListener {
 							}
 							// check to see if moves are available
 							if (getStatus().equals(BUILDING) && rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
+								setServiceStatus(MessageFormat.format(Bundle.getMessage("trainNoMoves"), new Object[] {
+									getName(), getRoute().getName(), rLoc.getId(), rLoc.getName() }));
 								if (debugFlag)
 									log.debug("No available moves for destination " + rLoc.getName());
 								if (addToReport)
-									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-											.getMessage("trainNoMoves"), new Object[] { getName(),
-											getRoute().getName(), rLoc.getId(), rLoc.getName() }));
+									TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
 								continue;
 							}
 							if (debugFlag)
@@ -1474,14 +1476,15 @@ public class Train implements java.beans.PropertyChangeListener {
 						}
 						// check to see if train length is okay
 						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
-							if (debugFlag)
+							setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
+									new Object[] { getName(), getRoute().getName(), rLoc.getId(),
+											rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
+						if (debugFlag)
 								log.debug("Car (" + car.toString() + ") exceeds maximum train length "
 										+ rLoc.getMaxTrainLength() + " when departing (" // NOI18N
 										+ rLoc.getName() + ")");
 							if (addToReport)
-								TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-										.getMessage("trainExceedsMaximumLength"), new Object[] { getName(),
-										rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
+								TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
 							return false;
 						}
 					}
@@ -1493,6 +1496,18 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns the status of the "services(Car)" routine. There are two statuses that need special consideration when
+	 * the train is being built, the moves in a train's route and the maximum train length.
+	 */
+	protected void setServiceStatus(String status) {
+		_serviceStatus = status;
+	}
+	
+	public String getServiceStatus() {
+		return _serviceStatus;
 	}
 
 	/**
