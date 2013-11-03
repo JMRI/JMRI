@@ -121,16 +121,19 @@ public class Router extends TrainCommon {
 		}
 		// check to see if car will move to destination using a single train
 		boolean trainServicesCar = false; // specific train
-		Train testTrain = null; // any train
+		Train testTrain = null;
 		if (_train != null)
 			trainServicesCar = _train.services(buildReport, clone);
 		if (trainServicesCar)
 			testTrain = _train; // use the specific train
-		// can specific train can service car out of staging
+		// can specific train can service car out of staging. Note that the router code will try to use route the car using
+		// two or more trains just to get the car out of staging.
 		if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
 			log.debug("Car (" + car.toString() + ") destination (" + clone.getDestinationName() + ", "
 					+ clone.getDestinationTrackName() + ") is not serviced by train (" // NOI18N
 					+ _train.getName() + ") out of staging"); // NOI18N
+			if (!_train.getServiceStatus().equals(""))
+				addLine(buildReport, SEVEN, _train.getServiceStatus());
 		} else if (!trainServicesCar) {
 			testTrain = TrainManager.instance().getTrainForCar(clone, _buildReport);
 		}
