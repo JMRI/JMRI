@@ -71,6 +71,7 @@
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
 	<Li>Leo Bicknell, who updated the LocoNet monitor
 	<li>Pierre Billon, who translated decoder files to German and French
+	    and provided decoder definitions for Doehler and Haass.
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files, plus the ZTC 4007, and the
 	Lenz Standard decoder.
@@ -289,6 +290,7 @@
 	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
 	<LI>Tighe Kuykendall improved documentation.
+	<li>Bjorn Kvisli, who provided Doehler and Haass decoder definitions.
 <a name="L"></A>
     <li>John Lang, who provided several signal definitions
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
