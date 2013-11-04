@@ -989,7 +989,14 @@ public class TrainCommon {
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " " + TrainManifestText.getStringFinalDestination() + " " + splitString(car.getFinalDestinationName());
+				return " " + TrainManifestText.getStringFinalDestination() + " "
+						+ splitString(car.getFinalDestinationName());
+			return "";
+		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
+			if (!car.getFinalDestinationName().equals(""))
+				return " " + TrainManifestText.getStringFinalDestination() + " "
+						+ splitString(car.getFinalDestinationName()) + ", "
+						+ splitString(car.getFinalDestinationTrackName());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
