@@ -8,6 +8,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 import java.io.File;
@@ -310,7 +311,7 @@ public class OperationsPoolTest extends TestCase {
 		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
 		
 		// not able to place c3, not enough available track length
-		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t1));
+		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+") " + Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t1));
 		Assert.assertEquals("track length", 40+Car.COUPLER + 100-(40+Car.COUPLER)-(25+Car.COUPLER), t1.getLength());
 		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
 		Assert.assertEquals("track length", 0, t3.getLength());
@@ -330,7 +331,7 @@ public class OperationsPoolTest extends TestCase {
 		Assert.assertEquals("track length", 0, t6.getLength());
 
 		// not able to place c3, not enough available track length because of minimum for t5
-		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t2));
+		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+") " + Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t2));
 		Assert.assertEquals("track length", 100, t2.getLength());
 		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
 		Assert.assertEquals("track length", 0, t4.getLength());

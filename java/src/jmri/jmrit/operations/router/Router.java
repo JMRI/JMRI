@@ -126,7 +126,7 @@ public class Router extends TrainCommon {
 			trainServicesCar = _train.services(buildReport, clone);
 		if (trainServicesCar)
 			testTrain = _train; // use the specific train
-		// can specific train can service car out of staging. Note that the router code will try to use route the car using
+		// can specific train can service car out of staging. Note that the router code will try to route the car using
 		// two or more trains just to get the car out of staging.
 		if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
 			log.debug("Car (" + car.toString() + ") destination (" + clone.getDestinationName() + ", "

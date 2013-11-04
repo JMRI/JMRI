@@ -49,7 +49,7 @@ public class Track {
 	protected int _dropRS = 0; // number of set outs by trains
 	protected int _length = 0; // length of track
 	protected int _reserved = 0; // length of track reserved by trains
-	protected int _reservedDrops = 0; // length of track reserved for drops
+	protected int _reservedLengthDrops = 0; // length of track reserved for drops
 	protected int _numberCarsInRoute = 0; // number of cars in route to this track
 	protected int _usedLength = 0; // length of track filled by cars and engines
 	protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
@@ -572,7 +572,7 @@ public class Track {
 		_dropRS++;
 		setMoves(getMoves() + 1);
 		setReserved(getReserved() + rs.getTotalLength());
-		_reservedDrops = _reservedDrops + rs.getTotalLength();
+		_reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
 		setDirtyAndFirePropertyChange("addDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
 	}
 
@@ -580,7 +580,7 @@ public class Track {
 		int old = _dropRS;
 		_dropRS--;
 		setReserved(getReserved() - rs.getTotalLength());
-		_reservedDrops = _reservedDrops - rs.getTotalLength();
+		_reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
 		setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old), // NOI18N
 				Integer.toString(_dropRS));
 	}
@@ -1249,29 +1249,25 @@ public class Track {
 			if (getPool() != null && getPool().requestTrackLength(this, length))
 				return OKAY;
 			// ignore used length option?
-			if (getIgnoreUsedLengthPercentage() > 0) {
-				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
-				if (consumed > 0)
-					consumed = consumed / 100; // as a percentage
-				// log.debug("Ignore used length, reservedDrops = "+_reservedDrops +
-				// " rs length= "+length+" track length= "+getLength());
-				// two checks, can not drop more than one track length, and second, can not exceed 100% of track length
-				if (consumed + _reservedDrops + length <= getLength()
-						&& getUsedLength() + _reservedDrops + length < (getLength() + getLength()
-								* getIgnoreUsedLengthPercentage() / 100))
-					return OKAY;
-			}
+			if (getIgnoreUsedLengthPercentage() > 0
+					&& getUsedLength() + _reservedLengthDrops + length < getLength() + getLength()
+							* getIgnoreUsedLengthPercentage() / 100)
+				return OKAY;
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last check.
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
 					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
-			return LENGTH + " (" + length + ")";
+			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
 		// a spur with a schedule can overload in aggressive mode, check track capacity
-		if (Setup.isBuildAggressive() && !getScheduleId().equals("")
-				&& getUsedLength() + getReserved() > getLength()) {
-			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track ("
-					+ getName() + ")"); // NOI18N
-			return CAPACITY;
+		if (Setup.isBuildAggressive() && !getScheduleId().equals("")) {
+			int trackLength = getLength();
+			if (getIgnoreUsedLengthPercentage() > 0)
+				trackLength = trackLength + trackLength * getIgnoreUsedLengthPercentage() / 100;
+			if (getUsedLength() + getReserved() > trackLength) {
+				log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
+						+ ")"); // NOI18N
+				return CAPACITY;
+			}
 		}
 		return OKAY;
 	}
