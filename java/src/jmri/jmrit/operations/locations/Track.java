@@ -1249,25 +1249,32 @@ public class Track {
 			if (getPool() != null && getPool().requestTrackLength(this, length))
 				return OKAY;
 			// ignore used length option?
-			if (getIgnoreUsedLengthPercentage() > 0
-					&& getUsedLength() + _reservedLengthDrops + length < getLength() + getLength()
-							* getIgnoreUsedLengthPercentage() / 100)
-				return OKAY;
-			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last check.
-			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
-					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
+			if (getIgnoreUsedLengthPercentage() > 0) {
+				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
+				if (consumed > 0)
+					consumed = consumed / 100;
+				if (consumed + _reservedLengthDrops + length <= getLength())
+					return OKAY;
+			}
+			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
+			// check.
+			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location (" + getLocation().getName()
+					+ ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
 		// a spur with a schedule can overload in aggressive mode, check track capacity
-		if (Setup.isBuildAggressive() && !getScheduleId().equals("")) {
-			int trackLength = getLength();
-			if (getIgnoreUsedLengthPercentage() > 0)
-				trackLength = trackLength + trackLength * getIgnoreUsedLengthPercentage() / 100;
-			if (getUsedLength() + getReserved() > trackLength) {
-				log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
-						+ ")"); // NOI18N
-				return CAPACITY;
+		if (Setup.isBuildAggressive() && !getScheduleId().equals("") && getUsedLength() + getReserved() > getLength()) {
+			// ignore used length option?
+			if (getIgnoreUsedLengthPercentage() > 0) {
+				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
+				if (consumed > 0)
+					consumed = consumed / 100;
+				if (consumed + _reservedLengthDrops <= getLength())
+					return OKAY;
 			}
+			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
+					+ ")"); // NOI18N
+			return CAPACITY;
 		}
 		return OKAY;
 	}
