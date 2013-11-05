@@ -69,10 +69,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      */
     public DefaultSignalMastLogic(SignalMast source){
         this.source = source;
-        this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
-        this.source.addPropertyChangeListener(propertySourceMastListener);
-        if(source.getAspect()==null)
-            source.setAspect(stopAspect);
+        try {
+            this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
+            this.source.addPropertyChangeListener(propertySourceMastListener);
+            if(source.getAspect()==null)
+                source.setAspect(stopAspect);
+        } catch (Exception ex){
+            log.error("Error while creating Signal Logic " + ex.toString());
+        }
     }
     
     public void setFacingBlock(LayoutBlock facing){
@@ -1000,7 +1004,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             if ((aspect!=null) && (!aspect.equals(""))){
                 log.debug("set mast aspect called from set appearance");
-                getSourceMast().setAspect(aspect);
+                try {
+                    getSourceMast().setAspect(aspect);
+                } catch (Exception ex){
+                    log.error("Error while setting Signal Logic " + ex.toString());
+                }
                 return;
             }
         }
@@ -1086,14 +1094,24 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         DestinationMast(SignalMast destination){
             this.destination=destination;
-            if(destination.getAspect()==null)
-                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            if(destination.getAspect()==null){
+                try {
+                    destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                } catch (Exception ex){
+                    log.error("Error while creating Signal Logic " + ex.toString());
+                }
+            }
         }
         
         void updateDestinationMast(SignalMast newMast){
             destination=newMast;
-            if(destination.getAspect()==null)
-                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            if(destination.getAspect()==null){
+                try {
+                    destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                } catch (Exception ex){
+                    log.error("Error while creating Signal Logic " + ex.toString());
+                }
+            }
         }
         
         LayoutBlock getProtectingBlock(){
