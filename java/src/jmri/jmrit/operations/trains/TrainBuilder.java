@@ -995,12 +995,12 @@ public class TrainBuilder extends TrainCommon {
 	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld,
 			boolean requiresCaboose) throws BuildFailedException {
 		if (rl == null) {
-			log.error("Departure track for caboose is null");
-			return;
+			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCabooseNoLocation"),
+					new Object[] { train.getName() }));
 		}
 		if (rld == null) {
-			log.error("Destination track for caboose is null");
-			return;
+			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCabooseNoDestination"),
+					new Object[] { train.getName(), rl.getName() }));
 		}
 		// load departure track if staging
 		Track departTrack = null;
