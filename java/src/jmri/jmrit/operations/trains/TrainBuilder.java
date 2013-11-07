@@ -1122,14 +1122,17 @@ public class TrainBuilder extends TrainCommon {
 	/**
 	 * Removes the remaining cabooses and cars with FRED from consideration. Also saves a car's final destination
 	 * in case of train reset.
+	 * @throws BuildFailedException 
 	 */
-	private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() {
+	private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() throws BuildFailedException {
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose() || car.hasFred()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildExcludeCarTypeAtLoc"), new Object[] { car.toString(),
 						car.getTypeName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+				if (car.getTrack() == departStageTrack)
+					throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging");
 				carList.remove(car.getId()); // remove this car from the list
 				carIndex--;
 			}

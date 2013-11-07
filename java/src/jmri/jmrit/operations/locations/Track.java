@@ -1253,7 +1253,11 @@ public class Track {
 				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
 				if (consumed > 0)
 					consumed = consumed / 100;
-				if (consumed + _reservedLengthDrops + length <= getLength())
+				// two checks, number of inbound cars can't exceed the track length, and the total number of cars can't
+				// exceed track length plus the number of cars to ignore.
+				if (consumed + _reservedLengthDrops + length <= getLength()
+						&& getUsedLength() + getReserved() + length <= getLength()
+								+ (getLength() * getIgnoreUsedLengthPercentage() / 100))
 					return OKAY;
 			}
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
