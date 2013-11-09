@@ -1277,26 +1277,24 @@ public class OperationsLocationsTest extends TestCase {
 
 		// test track "capacity" warning when track is spur with schedule
 		// add schedule to track
-		ScheduleManager sm = ScheduleManager.instance();
-		Schedule s1 = sm.newSchedule("Schedule 1 Name");
-		s1.setComment("Schedule 1 Comment");
-		s1.addItem("Boxcar");
-		t1.setScheduleId(s1.getId());
-
-		// use aggressive mode for spur testing
-		Setup.setBuildAggressive(true);
-		
-		// c1 already sitting on track t1
-		Assert.assertEquals("Place C1", Track.OKAY, c1.setLocation(l, t1));
-		// now disable planned pick ups for this track
-		t1.setIgnoreUsedLengthPercentage(0);
-		// only spurs with schedules can have a capacity issue
-		if (t1.getTrackType().equals(Track.SPUR))
-			Assert.assertEquals("Place C1", Track.CAPACITY, c1.setLocation(l, t1));
-		else
-			Assert.assertEquals("Place C1", Track.OKAY, c1.setLocation(l, t1));
-		
-		sm.dispose(); // remove schedules
+//		ScheduleManager sm = ScheduleManager.instance();
+//		Schedule s1 = sm.newSchedule("Schedule 1 Name");
+//		s1.setComment("Schedule 1 Comment");
+//		s1.addItem("Boxcar");
+//		t1.setScheduleId(s1.getId());
+//
+//		// use aggressive mode for spur testing
+//		Setup.setBuildAggressive(true);
+//		
+//		// c1 already sitting on track t1
+//		Assert.assertEquals("Place C1", Track.OKAY, c1.setLocation(l, t1));
+//		// now disable planned pick ups for this track
+//		t1.setIgnoreUsedLengthPercentage(0);
+//		// only spurs with schedules can have a capacity issue
+//		if (t1.getTrackType().equals(Track.SPUR))
+//			Assert.assertEquals("Place C1", Track.CAPACITY, c1.setLocation(l, t1));
+//		else
+//			Assert.assertEquals("Place C1", Track.OKAY, c1.setLocation(l, t1));
 	}
 	
 	/**
@@ -1680,6 +1678,7 @@ public class OperationsLocationsTest extends TestCase {
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
 		LocationManager.instance().dispose();
+		ScheduleManager.instance().dispose();
 		CarTypes.instance().dispose();
 	}
 

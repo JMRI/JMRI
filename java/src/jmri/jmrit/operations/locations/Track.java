@@ -143,7 +143,7 @@ public class Track {
 	public static final String TYPE = Bundle.getMessage("type");
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
-	public static final String CAPACITY = Bundle.getMessage("capacity");
+//	public static final String CAPACITY = Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
 	public static final String DESTINATION = Bundle.getMessage("carDestination");
@@ -1249,17 +1249,8 @@ public class Track {
 			if (getPool() != null && getPool().requestTrackLength(this, length))
 				return OKAY;
 			// ignore used length option?
-			if (getIgnoreUsedLengthPercentage() > 0) {
-				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
-				if (consumed > 0)
-					consumed = consumed / 100;
-				// two checks, number of inbound cars can't exceed the track length, and the total number of cars can't
-				// exceed track length plus the number of cars to ignore.
-				if (consumed + _reservedLengthDrops + length <= getLength()
-						&& getUsedLength() + getReserved() + length <= getLength()
-								+ (getLength() * getIgnoreUsedLengthPercentage() / 100))
+			if (checkPlannedPickUps(length))
 					return OKAY;
-			}
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
 			// check.
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location (" + getLocation().getName()
@@ -1267,20 +1258,30 @@ public class Track {
 			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
 		// a spur with a schedule can overload in aggressive mode, check track capacity
-		if (Setup.isBuildAggressive() && !getScheduleId().equals("") && getUsedLength() + getReserved() > getLength()) {
-			// ignore used length option?
-			if (getIgnoreUsedLengthPercentage() > 0) {
-				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
-				if (consumed > 0)
-					consumed = consumed / 100;
-				if (consumed + _reservedLengthDrops <= getLength())
-					return OKAY;
-			}
-			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
-					+ ")"); // NOI18N
-			return CAPACITY;
-		}
+//		if (Setup.isBuildAggressive() && !getScheduleId().equals("") && getUsedLength() + getReserved() > getLength()) {
+//			// ignore used length option?
+//			if (checkPlannedPickUps(length))
+//				return OKAY;
+//			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
+//					+ ")"); // NOI18N
+//			return CAPACITY;
+//		}
 		return OKAY;
+	}
+	
+	private boolean checkPlannedPickUps(int length) {
+		if (getIgnoreUsedLengthPercentage() > 0) {
+			int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
+			if (consumed > 0)
+				consumed = consumed / 100;
+			// two checks, number of inbound cars can't exceed the track length, and the total number of cars can't
+			// exceed track length plus the number of cars to ignore.
+			if (consumed + _reservedLengthDrops + length <= getLength()
+					&& getUsedLength() + getReserved() + length <= getLength()
+							+ (getLength() * getIgnoreUsedLengthPercentage() / 100))
+				return true;
+		}
+		return false;
 	}
 
 	public int getMoves() {
