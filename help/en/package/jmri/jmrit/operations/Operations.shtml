@@ -127,6 +127,8 @@
      <UL>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
       <LI><A HREF="#TrainBuildOptions">Train Build Options</A></LI>
+      <LI><A HREF="#TrainLoadOptions">Train Load Options</A></LI>
+      <LI><A HREF="#TrainRoadOptions">Train Road Options</A></LI>
       <LI><A HREF="#TrainManifestOptions">Train Manifest Options</A></LI>
       <LI><A HREF="#TrainScripts">Scripts</A></LI>
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
@@ -1099,7 +1101,7 @@
    From the "Tools" menu found in "Edit Location" window you can access several useful functions.
    The first is "Copy Track". From the copy track window, you can select any existing track and
    create a new track with the same attributes as the existing one. You can also transfer all of the
-   rolling stock from the existing track to the new track and if you wish, delete the original
+   rolling stock from the existing track to the new track, and if you wish, delete the original
    track. Select the operations you want and then press the "Copy" button to create a new track,
    move cars and locos, and delete the original track. If you're pleased with the results, press the
    "Save" button to make your copy permanent.
@@ -1468,8 +1470,8 @@
    a train. To create a classification yard, you need to assign a <A HREF="#Interchange">classification/interchange
     track</A> to each of the trains that will depart your yard. For each track, allow any train to set
    out cars, but assign only one train to pick them up. You should configure the classification
-   track to service the same car types and roads that the train services, otherwise you could end up
-   with orphan cars.
+   track to service the same car types, loads and roads that the train services, otherwise you could end up
+   with stranded cars.
 
    <P>
     Note that it is okay to create more classification tracks then there are physical tracks in your
@@ -1590,10 +1592,11 @@
 
    <P>
     To restrict which loads the program will place into your cars, you can use the staging track's
-    load control features. Under the "Tools" menu find "Load Options". You can also control which
-    types of loads the program will place by restricting the types of loads the train departing from
-    staging is allowed to service. See "Select loads serviced by this train" under Edit-&gt;Train,
-    then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.
+    load control features. Under the "Tools" menu in the "Edit Track" window find "Load Options".
+    You can also control which types of loads the program will place by restricting the types of
+    loads the train departing from staging is allowed to service. To control which loads a train
+    will service, select under the "Edit Train" window menu "Tools" <A HREF="#TrainLoadOptions">Train
+     Load Options</A>.
    </P>
 
    <P>The program provides another feature with regards to car loads. If the train departs from
@@ -2504,10 +2507,9 @@
    <H3>Train Build Options</H3>
 
    In the edit train window menu under "Tools-&gt;Train Build Options" are additional options for
-   building a train. You can control which car roads, load, owners, and built dates the train will
-   service.
-
-   <P>You can also specify a locomotive change in route or add helper locomotives.</P>
+   building a train. You can control which car owners, and built dates the train will
+   service, and have up two locomotive and caboose changes in the train's route.
+   You can also add a request for helper locomotives.
 
    <P>
     <img src="images/TrainBuildOptions.png">
@@ -2557,37 +2559,11 @@
    last location (terminal). Deselect this option if you don't want the train to carry cars from the
    train's origin to the terminal. 
    
-   <A NAME="TrainRoadNames"></A>
-   <H3>Train Road Names</H3>
-
-   You can control the road names that the train will service. Select under the "Edit
-   Train-&gt;Tools" menu the "Train Build Options". This will bring up a new window with several
-   options.
-
-   <P>If the train will service any road name, select the "Accept all" radio button. If you want
-    to accept only some road names, select "Accept only" radio button. Then use the menu of road
-    names and "Add Road" button to make a list of road names that the train will service. To remove
-    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
-
-   <P>To build a list of road names that the train will not service, select the "Exclude" radio
-    button. Use the menu of road names and the "Add Road" button to build a list of roads that this
-    train will not service.</P>
-
-   <P>Press the "Save Train" button to update the train build options and close the window when
-    your done.</P>
-
-   <H3>Train Car Loads</H3>
-
-   You can decide which car loads the train will service. There are two pull down menus, the first
-   one is the type of car, and the second the type of load serviced by the car type selected. Use
-   the "Add Load" button to build a list of loads that the train will either service or exclude. The
-   "Delete All" button will remove all loads from the list. You can also associate a load with a
-   particular car type, select the "Use car type and load" checkbox if you want this feature.
-
    <H3>Train Owners</H3>
 
-   You can decide which rolling stock the train will service by owner name. The control is similar
-   to <A HREF="#TrainRoadNames">Train Road Names</A>, see above.
+   You can decide which rolling stock the train will service by owner name. Select which owners
+   names you want the train to carry. The control is similar to
+   <A HREF="#TrainRoadOptions">Train Road Options</A>, see below.
 
    <H3>Train Built Dates</H3>
 
@@ -2617,12 +2593,51 @@
     starting at the location you select, and removes the helper service at the second location
     specified by you.</P>
 
+   <A NAME="TrainLoadOptions"></A>
+   <H3>Train Load Options</H3>
+
+   You can decide which car loads the train will service. Select under the "Edit
+   Train-&gt;Tools-&gt;Train Load Options".
+
+   <P>If the train will service any load name, select the "Accept all" radio button. If you want
+    the train to service only some load names, select "Accept only" radio button. To build a list of
+    load names that the train will not service, select the "Exclude" radio button.</P>
+
+   There are two pull down menus, the first one is the type
+   of car, and the second the type of load serviced by the car type selected. Use the "Add Load"
+   button to build a list of loads that the train will either service or exclude. The "Delete All"
+   button will remove all loads from the list. You can also associate a load with a particular car
+   type, select the "Use car type and load" checkbox if you want this feature. 
+   
+   <A NAME="TrainRoadOptions"></A>
+   <H3>Train Road Options</H3>
+
+   You can control the road names that the train will service. Select under the "Edit
+   Train-&gt;Tools-&gt;Train Road Options". This will bring up a new window with several
+   options.
+
+   <P>If the train will service any road name, select the "Accept all" radio button. If you want
+    to accept only some road names, select "Accept only" radio button. Then use the menu of road
+    names and "Add Road" button to make a list of road names that the train will service. To remove
+    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
+
+   <P>To build a list of road names that the train will not service, select the "Exclude" radio
+    button. Use the menu of road names and the "Add Road" button to build a list of roads that this
+    train will not service.</P>
+
+   <P>Press the "Save Train" button to update the train build options and close the window when
+    your done.</P>
+
    <A NAME="TrainManifestOptions"></A>
    <H3>Train Manifest Options</H3>
 
    You can optionally have a unique railroad name and logo for each train in your roster. You can
    also decide if your manifests show the train's arrival and departure times. Use the "Edit
    Train-&gt;Tools-&gt;Manifest Options" to set these options. 
+   
+   <H3>Copy Train</H3>
+   
+   Use this tool to make a copy of an existing train.  You will need to enter a name for the new train.
    
    <A NAME="TrainScripts"></A>
    <H3>Scripts</H3>
