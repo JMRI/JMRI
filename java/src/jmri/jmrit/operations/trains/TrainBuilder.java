@@ -1753,8 +1753,16 @@ public class TrainBuilder extends TrainCommon {
 			// check for car order?
 			car = getCarOrder(car);
 			// is car departing staging and generate custom load?
-			if (!generateCarLoadFromStaging(car))
-				generateCarLoadStagingToStaging(car);
+			if (!generateCarLoadFromStaging(car)) {
+				if (!generateCarLoadStagingToStaging(car) && car.getTrack() == departStageTrack
+						&& !departStageTrack.shipsLoad(car.getLoadName(), car.getTypeName())) {
+					// build failure car departing staging with a restricted load
+					addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
+							new Object[] { car.toString(), car.getLoadName(), departStageTrack.getName() }));
+					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+					continue;
+				}
+			}
 			// does car have a custom load without a destination?
 			// If departing staging, a destination for this car is needed.
 			if (findFinalDestinationForCarLoad(car) && car.getDestination() == null
