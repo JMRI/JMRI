@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSchedule;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
-
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -1200,9 +1200,10 @@ public class Track {
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
-			if (!acceptsDestination(car.getFinalDestination())) {
+			if (!acceptsDestination(car.getFinalDestination())
+					&& getLocation() != car.getFinalDestination()) {
 				return DESTINATION + " (" + car.getFinalDestinationName() + ") "
-						+ Bundle.getMessage("carIsNotAllowed"); // no
+						+ MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
 			}
 		// check for car in kernel
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {

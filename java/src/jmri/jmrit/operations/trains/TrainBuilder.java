@@ -3319,7 +3319,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			
 			// check to see if departure track has any restrictions
-			if (car.getFinalDestination() != null && !car.getTrack().acceptsDestination(testDestination)) {
+			if (!car.getTrack().acceptsDestination(testDestination)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildDestinationNotServiced"), new Object[] { testDestination.getName(),
 						car.getTrackName() }));
