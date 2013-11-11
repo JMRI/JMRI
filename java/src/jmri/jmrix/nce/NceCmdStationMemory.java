@@ -55,12 +55,16 @@ public class NceCmdStationMemory {
     public static class CabMemoryUsb {
 
     	public static final int CAB_NUM_CONSIST = 13;		// usb cab number for consist memory
-    	public static final int NUM_CONSIST = 16;
+    	public static final int NUM_CONSIST = 16;		// number of consists supported
+    	public static final int CS_CON_SIZE = 8;		// memory size per consist entry
     	public static final int CS_CON_MAX = 127;
     	public static final int CS_CON_MIN = 112;
     	public static final int CAB_NUM_MACRO = 14;		// usb cab number for macros
     	public static final int CS_MAX_MACRO = 16;		// there are 16 possible macros
     	public final static int CS_MACRO_SIZE = 16;		// 16 bytes per macro
+    	
+    	public static final int CS_PG_CONSIST = 13;		// Context Page for Consist Data
+    	public static final int CS_PG_MACRO = 14;		// Context Page for Macro Data
     	
     	public final static int CAB_LINE_1 = 0;		// start of first line for cab display
     	public final static int CAB_LINE_2 = 16;		// start of second line for cab display
