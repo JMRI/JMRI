@@ -1108,7 +1108,7 @@ public class TrainCommon {
 		return s;
 	}
 	
-	protected static String padString(String s, int fieldSize) {
+	public static String padString(String s, int fieldSize) {
 		StringBuffer buf = new StringBuffer(s);
 		while (buf.length() < fieldSize) {
 			buf.append(" ");
