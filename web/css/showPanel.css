@@ -33,6 +33,7 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 	cursor: default;
+	white-space: nowrap;
 }
 
 .positionablelabel.text.hidden,
