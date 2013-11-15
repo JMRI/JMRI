@@ -604,6 +604,10 @@
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
    will try and route the car after every move. 
    
+   <P>The last routing option "Use all Train when Routing" when selected instructs the program to use all
+   of your trains to route a car.  If you only want to use the trains that you've selected in the
+   "Build" column of the "Trains" window, then deselect this option.</P>
+   
    <A NAME="LoggingOptions"></A>
    <H3>Logging Options</H3>
 
