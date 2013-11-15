@@ -533,7 +533,7 @@
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>
    <H4>Enable Type, Road and Load Restrictions into Staging</H4>
 
-   The next option is restricting trains to staging tracks that only accept the train's rolling
+   The next option restricts trains to staging tracks that only accept the train's rolling
    stock type, road and load names. When "Enable Type, Road and Load Restrictions into Staging" is
    selected, the program will only deliver a train to a staging track has the same rolling stock,
    road and load name restrictions. This is useful when you want trains delivered to staging tracks
@@ -596,18 +596,18 @@
    can use a
    <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
    algorithm will search for the most efficient route for the car to travel. The algorithm will
-   attempt to use interchanges and then yards to move cars. If you don't want the router to use
-   yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing through staging is
-   disabled by default. The algorithm will try and find a route using a maximum of five trains to
-   complete the car move. Note that the program never gives up trying to route a car. If a car has
-   been assigned a
+   attempt to use classification/interchange tracks and then yards to move cars. If you don't want
+   the router to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing
+   through staging is disabled by default. The algorithm will try and find a route using a maximum
+   of five trains to complete the car move. Note that the program never gives up trying to route a
+   car. If a car has been assigned a
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
-   will try and route the car after every move. 
-   
-   <P>The last routing option "Use all Train when Routing" when selected instructs the program to use all
-   of your trains to route a car.  If you only want to use the trains that you've selected in the
-   "Build" column of the "Trains" window, then deselect this option.</P>
-   
+   will try and route the car after every move.
+
+   <P>The last routing option "Use all Trains when Routing" when selected instructs the program
+    to use all of your trains to route a car. If you only want the router to use the trains that
+    you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+
    <A NAME="LoggingOptions"></A>
    <H3>Logging Options</H3>
 
@@ -1064,7 +1064,7 @@
     Staging tracks represent distant locations where trains can travel between to service the
     layout.
    <P>For a train to service a location, there must be at least one track for that location. See
-    below how to add tracks to your location.</P>
+    below for more information on how to add <A HREF="#Yards">tracks</A> to your location.</P>
 
    <P>The tables show the length of the tracks, the amount of track that is occupied (Used) by
     cars and locomotives, the amount of track that is reserved, the total number of cars and
