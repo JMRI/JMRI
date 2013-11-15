@@ -18,7 +18,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a car to its final destination through
- * the use of two or more trains. Code first tries to move car using a single train. If that fails, attempts are made to
+ * the use of two or more trains. Code t tries to move car using a single train. If that fails, attempts are made to
  * use two trains via an interchange track , then a yard. Next attempts are made using three or more trains using any
  * combination of interchanges and yards. Currently the router is limited to five trains.
  * 
@@ -126,7 +126,7 @@ public class Router extends TrainCommon {
 			trainServicesCar = _train.services(buildReport, clone);
 		if (trainServicesCar)
 			testTrain = _train; // use the specific train
-		// can specific train can service car out of staging. Note that the router code will try to use route the car using
+		// can specific train can service car out of staging. Note that the router code will try to route the car using
 		// two or more trains just to get the car out of staging.
 		if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
 			log.debug("Car (" + car.toString() + ") destination (" + clone.getDestinationName() + ", "
@@ -456,11 +456,11 @@ public class Router extends TrainCommon {
 
 	/*
 	 * Note that "last" set of location/tracks was loaded by setCarDestinationTwoTrains. The following code builds two
-	 * additional sets of location/tracks called "first" and "other". "first" is the first set of location/tracks that
+	 * additional sets of location/tracks called "next" and "other". "next" is the next set of location/tracks that
 	 * the car can reach by a single train. "last" is the last set of location/tracks that services the cars final
-	 * destination. And "other" is the remaining sets of location/tracks that are not "first" or "last". The code then
-	 * tries to connect the "first" and "last" location/track sets with a train that can service the car. If successful,
-	 * that would be a three train route for the car. If not successful, the code than tries combinations of "first",
+	 * destination. And "other" is the remaining sets of location/tracks that are not "next" or "last". The code then
+	 * tries to connect the "next" and "last" location/track sets with a train that can service the car. If successful,
+	 * that would be a three train route for the car. If not successful, the code than tries combinations of "next",
 	 * "other" and "last" location/tracks to create a route for the car.
 	 */
 	private boolean setCarDestinationMultipleTrains(Car car) {
@@ -470,10 +470,8 @@ public class Router extends TrainCommon {
 			return false;
 		}
 
-		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterMultipleTrains"), new Object[] { car
-				.getFinalDestinationName() }));
 		Car testCar = clone(car); // reload
-		// build the "first" and "other" location/tracks
+		// build the "next" and "other" location/tracks
 		// start with interchanges
 		List<Track> tracks = LocationManager.instance().getTracks(Track.INTERCHANGE);
 		loadTracks(car, testCar, tracks);
@@ -487,27 +485,33 @@ public class Router extends TrainCommon {
 			tracks = LocationManager.instance().getTracks(Track.STAGING);
 			loadTracks(car, testCar, tracks);
 		}
+		
 		if (_nextLocationTracks.size() == 0) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindLoc"),
 					new Object[] { car.getLocationName() }));
 			return false;
 		}
+		
+		// state that routing begins using three or more trains
+		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterMultipleTrains"), new Object[] { car
+			.getFinalDestinationName() }));
+		
 		// tracks that could be the very next destination for the car
 		for (int i = 0; i < _nextLocationTracks.size(); i++) {
-			Track lt = _nextLocationTracks.get(i);
-			log.debug("Next location (" + lt.getLocation().getName() + ", " + lt.getName() + ") can service car ("
+			Track t = _nextLocationTracks.get(i);
+			log.debug("Next location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
 					+ car.toString() + ")"); // NOI18N
 		}
 		// tracks that could be the next to last destination for the car
 		for (int i = 0; i < _lastLocationTracks.size(); i++) {
-			Track lt = _lastLocationTracks.get(i);
-			log.debug("Last location (" + lt.getLocation().getName() + ", " + lt.getName() + ") can service car ("
+			Track t = _lastLocationTracks.get(i);
+			log.debug("Last location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
 					+ car.toString() + ")"); // NOI18N
 		}
-		// tracks that are not the first or the last
+		// tracks that are not the next or the last list
 		for (int i = 0; i < _otherLocationTracks.size(); i++) {
-			Track lt = _otherLocationTracks.get(i);
-			log.debug("Other location (" + lt.getLocation().getName() + ", " + lt.getName()
+			Track t = _otherLocationTracks.get(i);
+			log.debug("Other location (" + t.getLocation().getName() + ", " + t.getName()
 					+ ") may be needed to service car (" + car.toString() + ")"); // NOI18N
 		}
 		log.debug("Try to find route using 3 trains");

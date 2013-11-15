@@ -995,12 +995,12 @@ public class TrainBuilder extends TrainCommon {
 	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld,
 			boolean requiresCaboose) throws BuildFailedException {
 		if (rl == null) {
-			log.error("Departure track for caboose is null");
-			return;
+			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCabooseNoLocation"),
+					new Object[] { train.getName() }));
 		}
 		if (rld == null) {
-			log.error("Destination track for caboose is null");
-			return;
+			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCabooseNoDestination"),
+					new Object[] { train.getName(), rl.getName() }));
 		}
 		// load departure track if staging
 		Track departTrack = null;
@@ -1122,14 +1122,17 @@ public class TrainBuilder extends TrainCommon {
 	/**
 	 * Removes the remaining cabooses and cars with FRED from consideration. Also saves a car's final destination
 	 * in case of train reset.
+	 * @throws BuildFailedException 
 	 */
-	private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() {
+	private void removeCaboosesAndCarsWithFredAndSaveFinalDestination() throws BuildFailedException {
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose() || car.hasFred()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildExcludeCarTypeAtLoc"), new Object[] { car.toString(),
 						car.getTypeName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+				if (car.getTrack() == departStageTrack)
+					throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging");
 				carList.remove(car.getId()); // remove this car from the list
 				carIndex--;
 			}
@@ -1750,8 +1753,16 @@ public class TrainBuilder extends TrainCommon {
 			// check for car order?
 			car = getCarOrder(car);
 			// is car departing staging and generate custom load?
-			if (!generateCarLoadFromStaging(car))
-				generateCarLoadStagingToStaging(car);
+			if (!generateCarLoadFromStaging(car)) {
+				if (!generateCarLoadStagingToStaging(car) && car.getTrack() == departStageTrack
+						&& !departStageTrack.shipsLoad(car.getLoadName(), car.getTypeName())) {
+					// build failure car departing staging with a restricted load
+					addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
+							new Object[] { car.toString(), car.getLoadName(), departStageTrack.getName() }));
+					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+					continue;
+				}
+			}
 			// does car have a custom load without a destination?
 			// If departing staging, a destination for this car is needed.
 			if (findFinalDestinationForCarLoad(car) && car.getDestination() == null
@@ -1810,8 +1821,9 @@ public class TrainBuilder extends TrainCommon {
 							.getMessage("buildNotAbleToSetDestination"), new Object[] { car.toString(),
 						Router.instance().getStatus() }));
 					// don't move car if routing issue was track space but not departing staging
-					if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !Router.instance()
-							.getStatus().startsWith(Track.CAPACITY))
+//					if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !Router.instance()
+//							.getStatus().startsWith(Track.CAPACITY))
+					if ((!Router.instance().getStatus().startsWith(Track.LENGTH))
 							|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
 						// move this car, routing failed!
 						findDestinationAndTrack(car, rl, routeIndex, routeList.size());
@@ -3307,7 +3319,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			
 			// check to see if departure track has any restrictions
-			if (car.getFinalDestination() != null && !car.getTrack().acceptsDestination(testDestination)) {
+			if (!car.getTrack().acceptsDestination(testDestination)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildDestinationNotServiced"), new Object[] { testDestination.getName(),
 						car.getTrackName() }));

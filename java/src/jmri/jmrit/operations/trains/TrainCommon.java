@@ -989,7 +989,14 @@ public class TrainCommon {
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " " + TrainManifestText.getStringFinalDestination() + " " + splitString(car.getFinalDestinationName());
+				return " " + TrainManifestText.getStringFinalDestination() + " "
+						+ splitString(car.getFinalDestinationName());
+			return "";
+		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
+			if (!car.getFinalDestinationName().equals(""))
+				return " " + TrainManifestText.getStringFinalDestination() + " "
+						+ splitString(car.getFinalDestinationName()) + ", "
+						+ splitString(car.getFinalDestinationTrackName());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
@@ -1101,7 +1108,7 @@ public class TrainCommon {
 		return s;
 	}
 	
-	protected static String padString(String s, int fieldSize) {
+	public static String padString(String s, int fieldSize) {
 		StringBuffer buf = new StringBuffer(s);
 		while (buf.length() < fieldSize) {
 			buf.append(" ");

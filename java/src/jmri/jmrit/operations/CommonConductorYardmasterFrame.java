@@ -482,7 +482,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				setCarButtonActionPerfomed(e);
 			}
 		});
-		JLabel label = new JLabel(car.toString());
+		JLabel label = new JLabel(TrainCommon.padString(car.toString(), Control.max_len_string_attibute
+				+ Control.max_len_string_road_number));
+		setLabelFont(label);
 		addItem(pSet, label, 0, 0);
 		addItemLeft(pSet, carSetButton, 1, 0);
 		return pSet;
@@ -492,6 +494,13 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		if (Setup.isTabEnabled()) {
 			Font font = new Font(Setup.getFontName(), Font.PLAIN, checkBox.getFont().getSize());
 			checkBox.setFont(font);
+		}
+	}
+	
+	protected void setLabelFont(JLabel label) {
+		if (Setup.isTabEnabled()) {
+			Font font = new Font(Setup.getFontName(), Font.PLAIN, label.getFont().getSize());
+			label.setFont(font);
 		}
 	}
 

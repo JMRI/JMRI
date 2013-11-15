@@ -118,6 +118,7 @@ public class Setup {
 	public static final String DESTINATION = Bundle.getMessage("Destination");
 	public static final String DEST_TRACK = Bundle.getMessage("DestAndTrack");
 	public static final String FINAL_DEST = Bundle.getMessage("FinalDestination");
+	public static final String FINAL_DEST_TRACK = Bundle.getMessage("FinalDestAndTrack");
 	public static final String LOCATION = Bundle.getMessage("Location");
 	public static final String CONSIST = Bundle.getMessage("Consist");
 	public static final String KERNEL = Bundle.getMessage("Kernel");
@@ -1347,6 +1348,7 @@ public class Setup {
 		box.addItem(DESTINATION);
 		box.addItem(DEST_TRACK);
 		box.addItem(FINAL_DEST);
+		box.addItem(FINAL_DEST_TRACK);
 		box.addItem(COMMENT);
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);

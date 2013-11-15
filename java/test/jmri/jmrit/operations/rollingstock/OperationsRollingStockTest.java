@@ -137,12 +137,12 @@ public class OperationsRollingStockTest extends TestCase {
 		/* track needs to have a defined length */
 		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length null", "length (45)", testresult);
+		Assert.assertEquals("RollingStock null Set Length null", "length (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(40);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length short", "length (45)", testresult);
+		Assert.assertEquals("RollingStock null Set Length short", "length (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(44);  // rs length + Coupler == 4

@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSchedule;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
-
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -49,7 +49,7 @@ public class Track {
 	protected int _dropRS = 0; // number of set outs by trains
 	protected int _length = 0; // length of track
 	protected int _reserved = 0; // length of track reserved by trains
-	protected int _reservedDrops = 0; // length of track reserved for drops
+	protected int _reservedLengthDrops = 0; // length of track reserved for drops
 	protected int _numberCarsInRoute = 0; // number of cars in route to this track
 	protected int _usedLength = 0; // length of track filled by cars and engines
 	protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
@@ -143,7 +143,7 @@ public class Track {
 	public static final String TYPE = Bundle.getMessage("type");
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
-	public static final String CAPACITY = Bundle.getMessage("capacity");
+//	public static final String CAPACITY = Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
 	public static final String DESTINATION = Bundle.getMessage("carDestination");
@@ -572,7 +572,7 @@ public class Track {
 		_dropRS++;
 		setMoves(getMoves() + 1);
 		setReserved(getReserved() + rs.getTotalLength());
-		_reservedDrops = _reservedDrops + rs.getTotalLength();
+		_reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
 		setDirtyAndFirePropertyChange("addDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
 	}
 
@@ -580,7 +580,7 @@ public class Track {
 		int old = _dropRS;
 		_dropRS--;
 		setReserved(getReserved() - rs.getTotalLength());
-		_reservedDrops = _reservedDrops - rs.getTotalLength();
+		_reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
 		setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old), // NOI18N
 				Integer.toString(_dropRS));
 	}
@@ -1200,9 +1200,10 @@ public class Track {
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
-			if (!acceptsDestination(car.getFinalDestination())) {
+			if (!acceptsDestination(car.getFinalDestination())
+					&& getLocation() != car.getFinalDestination()) {
 				return DESTINATION + " (" + car.getFinalDestinationName() + ") "
-						+ Bundle.getMessage("carIsNotAllowed"); // no
+						+ MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
 			}
 		// check for car in kernel
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {
@@ -1249,31 +1250,39 @@ public class Track {
 			if (getPool() != null && getPool().requestTrackLength(this, length))
 				return OKAY;
 			// ignore used length option?
-			if (getIgnoreUsedLengthPercentage() > 0) {
-				int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
-				if (consumed > 0)
-					consumed = consumed / 100; // as a percentage
-				// log.debug("Ignore used length, reservedDrops = "+_reservedDrops +
-				// " rs length= "+length+" track length= "+getLength());
-				// two checks, can not drop more than one track length, and second, can not exceed 100% of track length
-				if (consumed + _reservedDrops + length <= getLength()
-						&& getUsedLength() + _reservedDrops + length < (getLength() + getLength()
-								* getIgnoreUsedLengthPercentage() / 100))
+			if (checkPlannedPickUps(length))
 					return OKAY;
-			}
-			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last check.
-			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
-					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
-			return LENGTH + " (" + length + ")";
+			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
+			// check.
+			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location (" + getLocation().getName()
+					+ ", " + getName() + ") no room!"); // NOI18N
+			return LENGTH + " (" + length + ") " + Setup.getLengthUnit().toLowerCase();// NOI18N
 		}
 		// a spur with a schedule can overload in aggressive mode, check track capacity
-		if (Setup.isBuildAggressive() && !getScheduleId().equals("")
-				&& getUsedLength() + getReserved() > getLength()) {
-			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track ("
-					+ getName() + ")"); // NOI18N
-			return CAPACITY;
-		}
+//		if (Setup.isBuildAggressive() && !getScheduleId().equals("") && getUsedLength() + getReserved() > getLength()) {
+//			// ignore used length option?
+//			if (checkPlannedPickUps(length))
+//				return OKAY;
+//			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track (" + getName()
+//					+ ")"); // NOI18N
+//			return CAPACITY;
+//		}
 		return OKAY;
+	}
+	
+	private boolean checkPlannedPickUps(int length) {
+		if (getIgnoreUsedLengthPercentage() > 0) {
+			int consumed = getUsedLength() * (100 - getIgnoreUsedLengthPercentage());
+			if (consumed > 0)
+				consumed = consumed / 100;
+			// two checks, number of inbound cars can't exceed the track length, and the total number of cars can't
+			// exceed track length plus the number of cars to ignore.
+			if (consumed + _reservedLengthDrops + length <= getLength()
+					&& getUsedLength() + getReserved() + length <= getLength()
+							+ (getLength() * getIgnoreUsedLengthPercentage() / 100))
+				return true;
+		}
+		return false;
 	}
 
 	public int getMoves() {
