@@ -14,8 +14,10 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="John Sebastian, JohnSeb@pacbell.net" version="1" lastUpdated="20120217"/>
   <!--   version 1  Created from MRC 1810 ver. 1.6 by Peter Ulvestad-->
+  <!--   version 2  Corrected $ digit address not showing and Switch to includes for common vars-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
       <model model="Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series" numOuts="2" numFns="28" maxTotalCurrent="1.00A" extFnsMRC="yes">
@@ -24,10 +26,12 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" item="Short Address" tooltip="CV1 sets the Short, Primary or 2-digit address [range 1-127]" default="3">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable label="Start Voltage" CV="2" item="Vstart" tooltip="CV2 sets the motor voltage at Speed Step 1 [range 0-32]" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
@@ -44,22 +48,6 @@
         <decVal max="32"/>
         <label>Top Voltage</label>
       </variable>
-      <variable label="Manufacturer Version Number" CV="7" readOnly="yes" item="Decoder Version" tooltip="CV7 is the Mfg version number,  Read Only" default="32">
-        <decVal/>
-        <label>Manufacturer Version Number</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" tooltip="CV8 is the Manufacturer ID, MRC-143, Read Only" default="143">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Long Address, upper byte" CV="17" item="Extended Address" tooltip="CVs17 and 18 set the Extended (4 digit) address, range 192-231" default="192">
-        <longAddressVal/>
-        <label>Long Address, upper byte</label>
-      </variable>
-      <variable label="Long Address, lower byte" CV="18" item="Extended Address" tooltip="CVs17 and 18 set the Extended (4 digit) address, range 0-255" default="3">
-        <longAddressVal/>
-        <label>Long Address, lower byte</label>
-      </variable>
       <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="CV19 set the Advanced Consist address, range 0-127" default="0">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
@@ -74,61 +62,6 @@
           </enumChoice>
         </enumVal>
         <label>Consist Function</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="CV29 [ '1' bit (LSB)] sets the direction of motion">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="CV29 ['2' bit] sets the Speed Step resolution" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" tooltip="CV29 ['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" tooltip="CV29 ['8' bit] determines if loco will use Speed Table or not" default="0">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table">
-            <choice>Don't use Speed Table</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" tooltip="CV29 ['32' bit] sets the Addressing Mode">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Master volume control" CV="49" item="Sound Setting 1" tooltip="CV49 sets sound volume [range 1-16]" default="16">
         <decVal max="16"/>
