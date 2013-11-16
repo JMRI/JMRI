@@ -1212,9 +1212,9 @@ public class TrainBuilder extends TrainCommon {
 				// don't service a car at interchange and has been dropped of by this train
 				if (car.getTrack().getPickupOption().equals(Track.ANY)
 						&& car.getSavedRouteId().equals(train.getRoute().getId())) {
-					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("buildExcludeCarDropByTrain"), new Object[] { car.toString(),
-							(car.getLocationName() + ", " + car.getTrackName()) }));
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
+							new Object[] { car.toString(), train.getRoute().getName(), car.getLocationName(),
+									car.getTrackName() }));
 					carList.remove(car.getId());
 					carIndex--;
 					continue;
@@ -1229,7 +1229,7 @@ public class TrainBuilder extends TrainCommon {
 					} else {
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("buildExcludeCarByTrain"), new Object[] { car.toString(),
-								(car.getLocationName() + ", " + car.getTrackName()) }));
+								car.getLocationName(), car.getTrackName() }));
 						carList.remove(car.getId());
 						carIndex--;
 						continue;
@@ -1241,7 +1241,7 @@ public class TrainBuilder extends TrainCommon {
 					} else {
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("buildExcludeCarByRoute"), new Object[] { car.toString(),
-								(car.getLocationName() + ", " + car.getTrackName()) }));
+								car.getLocationName(), car.getTrackName() }));
 						carList.remove(car.getId());
 						carIndex--;
 						continue;

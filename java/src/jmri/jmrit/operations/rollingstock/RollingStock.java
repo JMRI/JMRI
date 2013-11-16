@@ -744,10 +744,20 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			firePropertyChange("rolling stock rfid", old, id); // NOI18N
 	}
 	
+	/**
+	 * Provides the last date when this rolling stock was moved, or was reset from a built train.
+	 * 
+	 * @return date
+	 */
 	public String getLastDate() {
 		return _last;
 	}
 	
+	/**
+	 * Sets the last date when this rolling stock was moved, or was reset from a built train.
+	 * 
+	 * @param date
+	 */
 	public void setLastDate(String date) {
 		String old = _last;
 		_last = date;

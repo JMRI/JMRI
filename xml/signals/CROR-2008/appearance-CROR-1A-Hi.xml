@@ -43,30 +43,30 @@
       <aspectname>Clear Signal</aspectname>
       <show>green</show>
       <reference>Rule 405</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-hi/CROR-1-405A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-Hi/CROR-1-405A.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Stop</aspectname>
       <show>yellow</show>
       <reference>Rule 411</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-hi/CROR-1-411A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-Hi/CROR-1-411A.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Clear to Stop</aspectname>
       <show>flashyellow</show>
       <reference>Rule 415</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-hi/CROR-1-415A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-Hi/CROR-1-415A.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Stop Signal</aspectname>
       <show>red</show>
       <reference>Rule 439</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-hi/CROR-1-439.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-Hi/CROR-1-439.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-hi/CROR-1-DarkA.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/1-Hi/CROR-1-DarkA.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
