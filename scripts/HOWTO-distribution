@@ -179,7 +179,7 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.5.3/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.5.5/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
