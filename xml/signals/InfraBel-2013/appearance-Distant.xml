@@ -39,7 +39,7 @@
       <show>dark</show>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Block-G.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-G.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
@@ -47,7 +47,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Block-YY.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Approach</aspectname>
@@ -55,7 +55,7 @@
       <show>yellow</show>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Block-GY.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-GY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-GY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow Approach</aspectname>
@@ -63,7 +63,7 @@
       <show>dark</show>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Block-YG.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YG.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>

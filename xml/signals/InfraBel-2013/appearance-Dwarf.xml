@@ -37,19 +37,19 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
-      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
