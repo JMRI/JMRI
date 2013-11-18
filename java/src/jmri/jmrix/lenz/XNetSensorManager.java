@@ -91,8 +91,9 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
     
     public boolean allowMultipleAdditions(String systemName) { return true;  }
-    
-    public String createSystemName(String curAddress, String prefix) throws JmriException{
+   
+    @Override 
+    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException{
         int encoderAddress = 0;
         int input = 0;
         
@@ -120,12 +121,13 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return prefix+typeLetter()+iName;
     }
     
-    int iName;
+    int iName; // must synchronize to avoid race conditions.
     
     /**
      * Does not enforce any rules on the encoder or input values.
      */
-    public String getNextValidAddress(String curAddress, String prefix){
+    @Override
+    synchronized public String getNextValidAddress(String curAddress, String prefix){
 
         String tmpSName = "";
 
