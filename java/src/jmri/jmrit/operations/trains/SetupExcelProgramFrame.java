@@ -72,7 +72,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		addButtonAction(testButton);
 		addButtonAction(saveButton);
 
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SetupExcelProgram", true); // NOI18N
 		setTitle(Bundle.getMessage("MenuItemSetupExcelProgram"));
 		
 		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));

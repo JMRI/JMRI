@@ -177,7 +177,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 		} else {
 			updateButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainBuildOptions", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainLoadOptions", true); // NOI18N
 		updateTypeComboBoxes();
 		updateLoadComboBoxes();
 		updateLoadNames();

@@ -96,8 +96,9 @@ public class LocationsTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
     	
     	initMinimumSize();
-//		if ((getWidth() < Control.tablePanelWidth))
-//			setSize(Control.tablePanelWidth, getHeight());
+		// make panel a bit wider than minimum if the very first time opened
+		if (getWidth() == Control.panelWidth)
+			setSize(850, getHeight());
     	
      	// now load the cars and engines
     	CarManagerXml.instance();

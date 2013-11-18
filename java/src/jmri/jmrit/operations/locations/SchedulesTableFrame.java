@@ -90,9 +90,9 @@ public class SchedulesTableFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
 		initMinimumSize();
-//		if (getWidth() < Control.widePanelWidth)
-//			setSize(Control.widePanelWidth, getHeight());
-
+		// make panel a bit wider than minimum if the very first time opened
+		if (getWidth() == Control.panelWidth)
+			setSize(Control.widePanelWidth, getHeight());
 	}
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

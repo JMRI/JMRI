@@ -2639,6 +2639,7 @@
    also decide if your manifests show the train's arrival and departure times. Use the "Edit
    Train-&gt;Tools-&gt;Manifest Options" to set these options. 
    
+   <A NAME="CopyTrain"></A>
    <H3>Copy Train</H3>
    
    Use this tool to make a copy of an existing train.  You will need to enter a name for the new train.

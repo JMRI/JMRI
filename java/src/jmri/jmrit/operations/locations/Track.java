@@ -167,6 +167,7 @@ public class Track {
 	public static final String DESTINATIONS_CHANGED_PROPERTY = "trackDestinations"; // NOI18N
 	public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
 	public static final String SCHEDULE_MODE_CHANGED_PROPERTY = "trackScheduleMode"; // NOI18N
+	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "trackScheduleId"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -1368,7 +1369,7 @@ public class Track {
 					setScheduleItemId(schedule.getItemsBySequenceList().get(0));
 				setScheduleCount(0);
 			}
-			setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, old, id);
+			setDirtyAndFirePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
 		}
 	}
 

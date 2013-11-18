@@ -97,7 +97,9 @@ public class RoutesTableFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
 
 		initMinimumSize();
-		setSize(730, getHeight());
+		// make panel a bit wider than minimum if the very first time opened
+		if (getWidth() == Control.panelWidth)
+			setSize(730, getHeight());
 
 		// now load the cars and engines
 		CarManagerXml.instance();

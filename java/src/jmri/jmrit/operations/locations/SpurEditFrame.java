@@ -148,7 +148,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
 					+ " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)) {
+				|| e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
 			updateScheduleComboBox();
 		}
 		super.propertyChange(e);
