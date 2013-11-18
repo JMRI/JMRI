@@ -68,10 +68,9 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                 connectionWarn();
             }
         } catch (Exception e) {
-                // TODO Currently there's no port recovery if an exception occurs
-                // must restart JMRI to clear xmtException.
-                xmtException = true;
-            portWarn(e);
+                // start the recovery process if an exception occurs.
+                portWarn(e);
+                controller.recover();
         }
      }
 
