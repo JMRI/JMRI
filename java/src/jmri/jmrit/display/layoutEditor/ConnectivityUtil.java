@@ -627,7 +627,7 @@ public class ConnectivityUtil
 								// block continues at A, either Double or RH
 								list.add((LayoutTurnout)cObject);
 								companion.add( Integer.valueOf(Turnout.THROWN));
-								tr = (TrackSegment)lt.getConnectA();
+ 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
 							}
@@ -2234,9 +2234,10 @@ public class ConnectivityUtil
                         }
                     }
                     else {
-                        // entering at diverging track, must exit at throat
-                        prevConnectType = LayoutEditor.TURNOUT_A;				
-                        tr = (TrackSegment)lt.getConnectA();
+                        // entering at continuing track, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_D;				
+                        tr = (TrackSegment)lt.getConnectD();
+                        setting = Turnout.CLOSED;
                     }
                     break;
                 case LayoutEditor.TURNOUT_D:
@@ -2289,9 +2290,10 @@ public class ConnectivityUtil
                         }
                     }
                     else {
-                    // entering at diverging track of a right-handed crossover, must exit at throat
-                        prevConnectType = LayoutEditor.TURNOUT_A;				
-                        tr = (TrackSegment)lt.getConnectA();
+                    // entering at through track of a right-handed crossover, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_C;				
+                        tr = (TrackSegment)lt.getConnectC();
+                        setting = Turnout.CLOSED;
                     }
                     break;
             }
