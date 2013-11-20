@@ -104,15 +104,63 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     }
 
     /**
-     * Needs more nuanced implementation, but at the moment 
-     * access to CV numbers >= 256 is not guaranteed,
-     * regardless of mode or specific command station type.
+     * Can we read from a specific CV in the specified mode?
+     * Answer may not be correct if the command station type and version
+     * sent by the command station mimics one of the known command 
+     * stations.
      */
+    @Override
     public boolean getCanRead(int mode, String addr) {
         if (log.isDebugEnabled()) log.debug("check mode "+mode+" CV "+addr);
         if (!getCanRead()) return false; // check basic implementation first
-        return Integer.parseInt(addr)<=256; 
+        switch(mode) {
+           case Programmer.DIRECTBITMODE:
+           case Programmer.DIRECTBYTEMODE: {
+                switch(controller().getCommandStation().getCommandStationType()) {
+                  case XNetConstants.CS_TYPE_LZ100:
+                       if(controller().getCommandStation()
+                                      .getCommandStationSoftwareVersion()<=3.5)
+                          return Integer.parseInt(addr)<=256;
+                       else 
+                          return Integer.parseInt(addr)<=1024; 
+                  default:
+                    return Integer.parseInt(addr)<=256; 
+                }
+            }
+           default:
+             return Integer.parseInt(addr)<=256; 
+        }
     }
+ 
+   /**
+     * Can we write to a specific CV in the specified mode?
+     * Answer may not be correct if the command station type and version
+     * sent by the command station mimics one of the known command 
+     * stations.
+     */
+    @Override
+    public boolean getCanWrite(int mode, String addr) {
+        if (log.isDebugEnabled()) log.debug("check mode "+mode+" CV "+addr);
+                                  log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
+        if (!getCanWrite()) return false; // check basic implementation first
+        switch(mode) {
+           case Programmer.DIRECTBITMODE:
+           case Programmer.DIRECTBYTEMODE:
+             switch(controller().getCommandStation().getCommandStationType()){
+                case XNetConstants.CS_TYPE_LZ100:
+                   if(controller().getCommandStation()
+                                  .getCommandStationSoftwareVersion()<=3.5)
+                     return Integer.parseInt(addr)<=256;
+                   else 
+                     return Integer.parseInt(addr)<=1024;
+                default: 
+                   return Integer.parseInt(addr)<=256; 
+             }
+           default:
+             return Integer.parseInt(addr)<=256; 
+        }
+    }
+
 
 	// notify property listeners - see AbstractProgrammer for more
 

@@ -334,6 +334,184 @@ public class XNetProgrammerTest extends TestCase {
         Assert.assertEquals("Direct mode received value",34,l.getRcvdValue());
 	}
 
+    // Test to make sure the getCanWrite(int,string) function works correctly 
+    public void testGetCanWriteV35LZ100() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
+       cs.setCommandStationSoftwareVersion(3.5f);
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"300"));
+    }
+
+    // Test to make sure the getCanWrite(int,string) function works correctly 
+    public void testGetCanWriteV36LZ100() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
+       cs.setCommandStationSoftwareVersion(3.6f);
+       XNetProgrammer p = new XNetProgrammer(t);
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.6 LZ100 Can not Write CV300 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.6 LZ100 Can not Write CV300 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"300"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV300 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Write CV300 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"300"));
+    }
+
+    // Test to make sure the getCanWrite(int,string) function works correctly 
+    public void testGetCanWriteV30LH200() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
+       cs.setCommandStationSoftwareVersion(3.0f);
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"300"));
+    }
+
+    // Test to make sure the getCanWrite(int,string) function works correctly 
+    public void testGetCanWriteV40MultiMaus() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
+       cs.setCommandStationSoftwareVersion(4.0f);
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in register mode",p.getCanWrite(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in paged mode",p.getCanWrite(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in direct bit mode",p.getCanWrite(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in direct byte mode",p.getCanWrite(Programmer.DIRECTBYTEMODE,"300"));
+    }
+
+    // Test to make sure the getCanRead(int,string) function works correctly 
+    public void testGetCanReadV35LZ100() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
+       cs.setCommandStationSoftwareVersion(3.5f);
+
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in register mode",p.getCanRead(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in paged mode",p.getCanRead(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in register mode",p.getCanRead(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in paged mode",p.getCanRead(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"300"));
+       Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"300"));
+    }
+
+    // Test to make sure the getCanRead(int,string) function works correctly 
+    public void testGetCanReadV36LZ100() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
+       cs.setCommandStationSoftwareVersion(3.6f);
+
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV3 in register mode",p.getCanRead(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV3 in paged mode",p.getCanRead(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV3 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV3 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.6 LZ100 Can not Read CV300 in register mode",p.getCanRead(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.6 LZ100 Can not Read CV300 in paged mode",p.getCanRead(Programmer.PAGEMODE,"300"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV300 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertTrue("Version 3.6 LZ100 Can Read CV300 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"300"));
+    }
+
+    // Test to make sure the getCanRead(int,string) function works correctly 
+    public void testGetCanReadV30LH200() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
+       cs.setCommandStationSoftwareVersion(3.0f);
+
+       XNetProgrammer p = new XNetProgrammer(t);
+       Assert.assertTrue("Version 3.0 LH200 Can Read CV3 in register mode",p.getCanRead(Programmer.REGISTERMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Read CV3 in paged mode",p.getCanRead(Programmer.PAGEMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Read CV3 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertTrue("Version 3.0 LH200 Can Read CV3 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 3.0 LH200 Can not Read CV300 in register mode",p.getCanRead(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Read CV300 in paged mode",p.getCanRead(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Read CV300 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertFalse("Version 3.0 LH200 Can not Read CV300 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"300"));
+    }
+
+    // Test to make sure the getCanRead(int,string) function works correctly 
+    public void testGetCanReadV40MultiMaus() {
+       // infrastructure objects
+       LenzCommandStation cs=new LenzCommandStation();
+       XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
+       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
+
+       cs.setCommandStationType(XNetConstants.CS_TYPE_MULTIMAUS);
+       cs.setCommandStationSoftwareVersion(4.0f);
+
+       XNetProgrammer p = new XNetProgrammer(t);
+
+       Assert.assertFalse("Version 4.0 MultiMaus Can Read CV3 in register mode",p.getCanRead(Programmer.REGISTERMODE,"3"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can Read CV3 in paged mode",p.getCanRead(Programmer.PAGEMODE,"3"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can Read CV3 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"3"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can Read CV3 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"3"));
+
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Read CV300 in register mode",p.getCanRead(Programmer.REGISTERMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Read CV300 in paged mode",p.getCanRead(Programmer.PAGEMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Read CV300 in direct bit mode",p.getCanRead(Programmer.DIRECTBITMODE,"300"));
+       Assert.assertFalse("Version 4.0 MultiMaus Can not Read CV300 in direct byte mode",p.getCanRead(Programmer.DIRECTBYTEMODE,"300"));
+        
+    }
 
 
 
