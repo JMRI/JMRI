@@ -279,6 +279,11 @@ public class Car extends RollingStock {
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
 			firePropertyChange(FINAL_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
+	
+	@Deprecated // available for old scripts
+	public void setNextDestination(Location destination) {
+		setFinalDestination(destination);
+	}
 
 	public Location getFinalDestination() {
 		return _finalDestination;
@@ -306,6 +311,11 @@ public class Car extends RollingStock {
 			}
 			firePropertyChange(FINAL_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 		}
+	}
+	
+	@Deprecated // available for old scripts
+	public void setNextDestinationTrack(Track track) {
+		setFinalDestinationTrack(track);
 	}
 
 	public Track getFinalDestinationTrack() {
