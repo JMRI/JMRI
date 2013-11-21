@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.JMRiClientTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.jmriclient.JMRiClientTest");  // no tests in this class itself
         suite.addTest(new TestSuite(JMRIClientMessageTest.class));
         suite.addTest(new TestSuite(JMRIClientReplyTest.class));
         suite.addTest(new TestSuite(JMRIClientTurnoutTest.class));
