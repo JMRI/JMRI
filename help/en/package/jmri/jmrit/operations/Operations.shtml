@@ -358,6 +358,10 @@
     for more details.
    </P>
 
+   <P>If you decrease the "Maximum Train Length" the program will prompt you to modify your
+    existing routes, and you can optionally have the program reduce all of your train's routes to
+    the new shorter train length.</P>
+
    <H3>Maximum Number of Locomotives</H3>
 
    Now set the maximum number of locomotives that you want the program to assign to a train. If you
