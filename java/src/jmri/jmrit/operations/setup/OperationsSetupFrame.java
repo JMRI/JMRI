@@ -553,6 +553,11 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	// if max train length has changed, check routes
 	private void checkRoutes() {
 		int maxLength = Integer.parseInt(maxLengthTextField.getText());
+		if (maxLength > Setup.getTrainLength()) {
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
+					Bundle.getMessage("MaxTrainLengthIncreased"), new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
+					JOptionPane.INFORMATION_MESSAGE);
+		}
 		if (maxLength < Setup.getTrainLength()) {
 			StringBuffer sb = new StringBuffer();
 			RouteManager rm = RouteManager.instance();
