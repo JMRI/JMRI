@@ -554,7 +554,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	private void checkRoutes() {
 		int maxLength = Integer.parseInt(maxLengthTextField.getText());
 		if (maxLength > Setup.getTrainLength()) {
-			JOptionPane.showMessageDialog(null, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
 					Bundle.getMessage("MaxTrainLengthIncreased"), new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
 					JOptionPane.INFORMATION_MESSAGE);
 		}

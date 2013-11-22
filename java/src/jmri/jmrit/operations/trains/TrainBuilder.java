@@ -3727,11 +3727,13 @@ public class TrainBuilder extends TrainCommon {
 					+ car.getFinalDestinationTrackName() + ") location (" + car.getDestinationName() + ")"); // NOI18N
 			if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
 				Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
-				if (alternate != null && alternate.getTrackType().equals(Track.YARD)
-						&& car.getDestinationTrack() == alternate 
+				if (alternate != null
+						&& car.getDestinationTrack() == alternate
+						&& (alternate.getTrackType().equals(Track.YARD) || alternate.getTrackType().equals(
+								Track.INTERCHANGE))
 						&& checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack())
 						&& checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
-					log.debug("Car (" + car.toString() + ") alternate track ("
+				log.debug("Car (" + car.toString() + ") alternate track ("
 							+ car.getDestinationTrackName()
 							+ ") can be redirected to final destination track (" // NOI18N
 							+ car.getFinalDestinationTrackName() + ")");
