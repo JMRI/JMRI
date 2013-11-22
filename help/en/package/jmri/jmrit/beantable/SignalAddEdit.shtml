@@ -64,6 +64,33 @@ choices for how the signal head is connected:
   green lamp.
   </dd>
 
+<dt>Triple Output RGB</dt>
+  <dd>
+  This type controls a signal head via three electrical connections.
+  One goes to a green lamp/LED, one to a red one, 
+  and the third to a blue one.
+  <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+  Setting e.g.
+  the turnout on the "green" connection Thrown should light the
+  green lamp.
+  </dd>
+
 <dt>Double Output</dt>
   <dd>
   This type controls a signal head via two electrical connections.
@@ -121,7 +148,7 @@ choices for how the signal head is connected:
  <dt>Single Output</dt>
   <dd>
   This type controls a signal head with a single electrical connections.
-  The connection can be to a single lamp/LED to display a single apperance.
+  The connection can be to a single lamp/LED to display a single appearance.
   An alternative method is to connect a pair of LEDs to the single output
   wired up suitable so that when the output of the decoder is on you get one
   color and while the output is off you get the other.
