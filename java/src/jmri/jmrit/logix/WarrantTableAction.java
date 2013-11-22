@@ -500,6 +500,8 @@ public class WarrantTableAction extends AbstractAction {
                     }                	
                 }
                 _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
+            } else {
+            	new WarrantFrame(w, true);
             }
             dispose();
        	

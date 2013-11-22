@@ -277,6 +277,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if (_iconMap.remove(_selectedIcon.getName())!= null) {
             removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);
+            deleteIconButton.setEnabled(false);
             validate();
         }
     }
