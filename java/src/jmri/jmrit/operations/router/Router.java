@@ -2,13 +2,16 @@ package jmri.jmrit.operations.router;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -205,7 +208,7 @@ public class Router extends TrainCommon {
 			testTrain = TrainManager.instance().getTrainForCar(clone, _buildReport);
 		}
 		if (testTrain != null) {
-			return routeUsingOneTrain(testTrain, car, clone, trainServicesCar);
+			return routeUsingOneTrain(testTrain, car, clone);
 		}
 		return false;
 	}
@@ -217,14 +220,13 @@ public class Router extends TrainCommon {
 	 * @param testTrain
 	 * @param car
 	 * @param clone
-	 * @param trainServicesCar
 	 * @return always returns true.
 	 */
-	private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone, boolean trainServicesCar) {
+	private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone) {
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"), new Object[] {
 				testTrain.getName(), car.toString(), clone.getDestinationName(), clone.getDestinationTrackName() }));
 		// now check to see if specific train can service car directly
-		if (_train != null && !trainServicesCar) {
+		if (_train != null && _train != testTrain) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
 					new Object[] { _train.getName(), car.toString(), clone.getDestinationName(),
 							clone.getDestinationTrackName() }));
@@ -629,6 +631,8 @@ public class Router extends TrainCommon {
 								+ ", " + testCar.getDestinationTrackName());
 					for (int k = 0; k < _otherLocationTracks.size(); k++) {
 						Track mlt2 = _otherLocationTracks.get(k);
+						if (mlt1 == mlt2)
+							continue;
 						testCar.setLocation(mlt1.getLocation()); // set car to this location and track
 						testCar.setTrack(mlt1);
 						testCar.setDestination(mlt2.getLocation()); // set car to this destination and track
@@ -709,7 +713,7 @@ public class Router extends TrainCommon {
 		Car clone = car.copy();
 		// modify clone car length if car is part of kernel
 		if (car.getKernel() != null)
-			clone.setLength(Integer.toString(car.getKernel().getTotalLength()));
+			clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLER));
 		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
 		clone.setFinalDestination(car.getFinalDestination());
