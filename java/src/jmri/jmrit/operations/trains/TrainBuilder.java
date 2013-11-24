@@ -172,6 +172,8 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowLocalMoves"));
 		if (train.isAllowThroughCarsEnabled())
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowThroughCars"));
+		if (train.isServiceAllCarsWithFinalDestinationsEnabled())
+			addLine(buildReport, SEVEN, Bundle.getMessage("ServiceAllCars"));
 		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 
 		// TODO: DAB control minimal build by each train

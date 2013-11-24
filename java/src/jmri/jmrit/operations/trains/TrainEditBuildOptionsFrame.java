@@ -119,6 +119,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JCheckBox returnStagingCheckBox = new JCheckBox(Bundle.getMessage("AllowCarsToReturn"));
 	JCheckBox allowLocalMovesCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalMoves"));
 	JCheckBox allowThroughCarsCheckBox = new JCheckBox(Bundle.getMessage("AllowThroughCars"));
+	JCheckBox serviceAllCarsCheckBox = new JCheckBox(Bundle.getMessage("ServiceAllCars"));
 
 	// text field
 	JTextField builtAfterTextField = new JTextField(10);
@@ -202,6 +203,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addItemLeft(pOption, returnStagingCheckBox, 0, 1);
 		addItemLeft(pOption, allowLocalMovesCheckBox, 1, 1);
 		addItemLeft(pOption, allowThroughCarsCheckBox, 0, 2);
+		addItemLeft(pOption, serviceAllCarsCheckBox, 1, 2);
 		pOption.setMaximumSize(new Dimension(2000, 250));
 
 		returnStagingCheckBox.setEnabled(false); // only enable if train departs and returns to same staging loc
@@ -383,6 +385,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
 			allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
 			allowThroughCarsCheckBox.setSelected(_train.isAllowThroughCarsEnabled());
+			serviceAllCarsCheckBox.setSelected(_train.isServiceAllCarsWithFinalDestinationsEnabled());
 			sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { _train.getTrainTerminatesName() }));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
@@ -721,6 +724,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				&& returnStagingCheckBox.isEnabled());
 		_train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
 		_train.setAllowThroughCarsEnabled(allowThroughCarsCheckBox.isSelected());
+		_train.setServiceAllCarsWithFinalDestinationsEnabled(serviceAllCarsCheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 

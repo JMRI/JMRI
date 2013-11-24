@@ -73,6 +73,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _allowThroughCars = true; // when true, cars from the origin can be sent to the terminal
 	protected boolean _buildNormal = false; // when true build this train in normal mode
 	protected boolean _allowCarsReturnStaging = false; // when true allow cars to return to staging if necessary
+	protected boolean _serviceAllCarsWithFinalDestinations = false; // when true, service cars with final destinations 
 	protected Route _route = null;
 	protected Track _departureTrack; // the departure track from staging
 	protected Track _terminationTrack; // the termination track into staging
@@ -2307,6 +2308,19 @@ public class Train implements java.beans.PropertyChangeListener {
 					enable ? "true" : "false"); // NOI18N
 		}
 	}
+	
+	public boolean isServiceAllCarsWithFinalDestinationsEnabled() {
+		return _serviceAllCarsWithFinalDestinations;
+	}
+	
+	public void setServiceAllCarsWithFinalDestinationsEnabled(boolean enable) {
+		boolean old = _serviceAllCarsWithFinalDestinations;
+		_serviceAllCarsWithFinalDestinations = enable;
+		if (old != enable) {
+			setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old ? "true" : "false", // NOI18N
+					enable ? "true" : "false"); // NOI18N
+		}
+	}
 
 	protected void setBuilt(boolean built) {
 		boolean old = _built;
@@ -3179,6 +3193,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_allowThroughCars = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.ALLOW_RETURN)) != null)
 			_allowCarsReturnStaging = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.SERVICE_ALL)) != null)
+			_serviceAllCarsWithFinalDestinations = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.BUILT)) != null)
 			_built = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.BUILD)) != null)
@@ -3357,6 +3373,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.ALLOW_LOCAL_MOVES, isAllowLocalMovesEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.ALLOW_RETURN, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.ALLOW_THROUGH_CARS, isAllowThroughCarsEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.SERVICE_ALL, isServiceAllCarsWithFinalDestinationsEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILT, isBuilt() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILD, isBuildEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILD_FAILED, getBuildFailed() ? Xml.TRUE : Xml.FALSE);

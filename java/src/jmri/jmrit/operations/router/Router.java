@@ -203,7 +203,7 @@ public class Router extends TrainCommon {
 					+ clone.getDestinationTrackName() + ") is not serviced by train (" // NOI18N
 					+ _train.getName() + ") out of staging"); // NOI18N
 			if (!_train.getServiceStatus().equals(""))
-				addLine(_buildReport, SEVEN, _train.getServiceStatus());
+				addLine(_buildReport, SEVEN, _train.getServiceStatus());			
 		} else if (!trainServicesCar) {
 			testTrain = TrainManager.instance().getTrainForCar(clone, _buildReport);
 		}
@@ -434,6 +434,15 @@ public class Router extends TrainCommon {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNot"),
 							new Object[] { _train.getName(), car.toString(), car.getLocationName(), car.getTrackName(),
 									track.getLocation().getName(), track.getName() }));
+				continue; // can't use this train
+			}
+			// Is the option for the specific train carry this car?
+			if (firstTrain != null && _train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
+					&& !specific.equals(YES)) {
+				if (_addtoReport)
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"),
+							new Object[] { firstTrain.getName(), car.toString(), track.getLocation().getName(),
+									track.getName() }));
 				continue; // can't use this train
 			}
 			if (firstTrain != null) {
@@ -748,6 +757,13 @@ public class Router extends TrainCommon {
 			// Can specific train carry this car out of staging?
 			if (car.getTrack().getTrackType().equals(Track.STAGING) && !specific.equals(YES))
 				train = null;
+			// is the option to car by specific enabled?
+			if (train != null && _train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
+					&& !specific.equals(YES)) {
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"),
+						new Object[] { train.getName(), car.toString(), track.getLocation().getName(), track.getName() }));
+				train = null;
+			}
 			if (train != null) {
 				if (debugFlag)
 					log.debug("Train (" + train.getName() + ") can service car (" + car.toString() + ") from "
