@@ -1479,20 +1479,35 @@
     
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
-   
-   A classification yard is used to sort cars into various trains. Normally a yard track is assigned
-   to a specific train and cars are delivered to that track until there are enough cars to complete
-   a train. To create a classification yard, you need to assign a <A HREF="#Interchange">classification/interchange
-    track</A> to each of the trains that will depart your yard. For each track, allow any train to set
-   out cars, but assign only one train to pick them up. You should configure the classification
-   track to service the same car types, loads and roads that the train services, otherwise you could end up
-   with stranded cars.
+
+   A classification yard is used to sort cars into various destinations or trains. Normally a yard
+   track is assigned to a specific destination or train and cars are delivered to that track until a
+   train comes along to pull the cars. To create a working classification yard, you don't need
+   schedules or custom loads for your cars.
 
    <P>
-    Note that it is okay to create more classification tracks then there are physical tracks in your
-    classification yard. The cars can share the same "slough" track until its time to finally sort
-    them into their various trains. You can also use the <A HREF="#Pools">Track Pools</A> feature to
-    share the track space in your yard.
+    To create a classification yard sorted by trains, you need to assign a <A HREF="#Interchange">classification/interchange
+     track</A> to each of the trains that will depart your yard. For each track, allow any train to set
+    out cars, but assign only one train to pick them up. You should configure the classification
+    track to service the same car types, loads and roads that the train services, otherwise you
+    could end up with stranded cars. When sorting cars in a yard by train, some use the label "Cars
+    for train xyz" as the track name.
+   </P>
+
+   <P>You can also create a classification yard that sorts cars by destinations. Again using the
+    C/I track type, there's an option under tools in the edit track window to set "Track
+    Destinations". So for example if your classification yard serviced four destinations, you could
+    create four "virtual" tracks, one for each destination, and the program would sort cars in your
+    yard to each of those destinations for you. With regards to the track name, some folks would use
+    a track name similar to "Cars to Boston" for cars going to Boston. You can if you wish break
+    down any destination to trains that serve that destination, really up to you how you want to
+    sort your cars.</P>
+
+   <P>
+    Note that it is okay to create more classification tracks or "virtual tracks" then there are
+    physical tracks in your classification yard. The cars can share the same "slough" track until
+    its time to finally sort them into their various destinations or trains. You can also use the <A
+     HREF="#Pools">Track Pools</A> feature to share the track space in your yard.
    </P>
 
    <A NAME="Staging"></A>
