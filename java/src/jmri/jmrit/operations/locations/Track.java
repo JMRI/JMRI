@@ -1934,7 +1934,7 @@ public class Track {
 	}
 	
 	public boolean acceptsDestination(Location destination) {
-		if (_destinationOption.equals(ALL_DESTINATIONS) || destination == null)
+		if (getDestinationOption().equals(ALL_DESTINATIONS) || destination == null)
 			return true;
 		if (_destinationOption.equals(INCLUDE_DESTINATIONS))
 			return _destinationIdList.contains(destination.getId());
@@ -1971,7 +1971,9 @@ public class Track {
 	}
 	
 	public String getDestinationOption() {
-		return _destinationOption;
+		if (getTrackType().equals(INTERCHANGE))
+			return _destinationOption;
+		return ALL_DESTINATIONS;
 	}
 
 	public void dispose() {

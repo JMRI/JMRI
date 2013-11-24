@@ -203,9 +203,16 @@ public class Router extends TrainCommon {
 					+ clone.getDestinationTrackName() + ") is not serviced by train (" // NOI18N
 					+ _train.getName() + ") out of staging"); // NOI18N
 			if (!_train.getServiceStatus().equals(""))
-				addLine(_buildReport, SEVEN, _train.getServiceStatus());			
+				addLine(_buildReport, SEVEN, _train.getServiceStatus());
 		} else if (!trainServicesCar) {
 			testTrain = TrainManager.instance().getTrainForCar(clone, _buildReport);
+		}
+		if (testTrain != null && _train != null && !trainServicesCar
+				&& _train.isServiceAllCarsWithFinalDestinationsEnabled()) {
+//			log.debug("Option to service all cars with a final destination is enabled");
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"), new Object[] {
+					testTrain.getName(), car.toString(), clone.getDestinationName(), clone.getDestinationTrackName() }));
+			testTrain = null;
 		}
 		if (testTrain != null) {
 			return routeUsingOneTrain(testTrain, car, clone);
