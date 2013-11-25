@@ -62,6 +62,7 @@ public class Xml {
 	static final String CAR_ROUTING_VIA_STAGING = "carRoutingViaStaging"; // NOI18N
 	static final String FORWARD_TO_YARD = "forwardToYard"; // NOI18N
 	static final String ONLY_ACTIVE_TRAINS = "onlyActiveTrains"; // NOI18N
+	static final String CHECK_CAR_DESTINATION = "checkCarDestination"; // NOI18N
 	
 	static final String LOGGER = "logger"; // NOI18N
 	static final String CAR_LOGGER = "carLogger"; // NOI18N

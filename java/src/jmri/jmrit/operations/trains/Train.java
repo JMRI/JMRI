@@ -1372,7 +1372,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								&& (!isSendCarsToTerminalEnabled() || TrainCommon.splitString(car.getDestinationName())
 										.equals(TrainCommon.splitString(getTrainTerminatesName())))
 								&& ((car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())
-								&& car.getTrack() != null && car.getTrack().acceptsDestination(car.getDestination())) {
+								&& ( !Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack().acceptsDestination(car.getDestination()))) {
 							// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
 								if (((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())

@@ -235,6 +235,7 @@ public class Setup {
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
 	private static boolean onlyActiveTrains	= false;	//when true only active trains are used for routing
+	private static boolean checkCarDestination = false;	//when true check car's track for valid destination
 	
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
@@ -379,6 +380,14 @@ public class Setup {
 	
 	public static void setOnlyActiveTrainsEnabled(boolean enabled){
 		onlyActiveTrains = enabled;
+	}
+	
+	public static boolean isCheckCarDestinationEnabled(){
+		return checkCarDestination;
+	}
+	
+	public static void setCheckCarDestinationEnabled(boolean enabled){
+		checkCarDestination = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -1619,6 +1628,7 @@ public class Setup {
     	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.ONLY_ACTIVE_TRAINS, isOnlyActiveTrainsEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CHECK_CAR_DESTINATION, isCheckCarDestinationEnabled()?Xml.TRUE:Xml.FALSE);
     	
     	// new format for logger options
     	e.addContent(values = new Element(Xml.LOGGER));
@@ -2152,6 +2162,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("onlyActiveTrains: "+enable);
         		setOnlyActiveTrainsEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CHECK_CAR_DESTINATION))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("checkCarDestination: "+enable);
+        		setCheckCarDestinationEnabled(enable.equals(Xml.TRUE));
         	}
         } else if (operations.getChild(Xml.SETTINGS) != null) {
          	// the next four items are for backwards compatibility
