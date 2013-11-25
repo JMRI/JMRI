@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -16,6 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -432,7 +434,7 @@ public class PrintLocationsAction extends AbstractAction {
 			Track track = location.getTrackById(tracks.get(k));
 			String name = track.getName();
 			try {
-				String s = TAB + name + getDirection(track.getTrainDirections());
+				String s = TAB + name + getDirection(location.getTrainDirections() & track.getTrainDirections());
 				writer.write(s);
 				writer.write(getTrackTypes(location, track));
 				writer.write(getTrackRoads(track));
@@ -441,6 +443,7 @@ public class PrintLocationsAction extends AbstractAction {
 				writer.write(getCarOrder(track));
 				writer.write(getSetOutTrains(track));
 				writer.write(getPickUpTrains(track));
+				writer.write(getDestinations(track));
 				writer.write(getSchedule(track));
 			} catch (IOException we) {
 				log.error("Error printing PrintLocationAction: " + we);
@@ -710,6 +713,34 @@ public class PrintLocationsAction extends AbstractAction {
 				}
 				buf.append(route.getName() + ", ");
 			}
+		}
+		if (buf.length() > 2)
+			buf.setLength(buf.length() - 2); // remove trailing separators
+		buf.append(NEW_LINE);
+		return buf.toString();
+	}
+	
+	private String getDestinations(Track track) {
+		if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
+			return "";
+		String op = Bundle.getMessage("AcceptOnly") + " " + track.getDestinationListSize() + " "
+				+ Bundle.getMessage("Destinations") + ":";
+		if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
+			op = Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getLocationsByIdList().size() - track.getDestinationListSize()) + " "
+					+ Bundle.getMessage("Destinations") + ":";
+		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
+		String[] destIds = track.getDestinationIds();
+		int charCount = 0;
+		for (int i=0; i<destIds.length; i++) {
+			Location location = manager.getLocationById(destIds[i]);
+			if (location == null)
+				continue;
+			charCount += location.getName().length() + 2;
+			if (charCount > characters) {
+				buf.append(NEW_LINE + TAB + TAB);
+				charCount = location.getName().length() + 2;
+			}
+			buf.append(location.getName() + ", ");
 		}
 		if (buf.length() > 2)
 			buf.setLength(buf.length() - 2); // remove trailing separators
