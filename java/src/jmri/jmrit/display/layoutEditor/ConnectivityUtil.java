@@ -2232,12 +2232,15 @@ public class ConnectivityUtil
                                 tr = null;
                             }					
                         }
-                    }
-                    else {
+                    } else if (tType==LayoutTurnout.LH_XOVER){
                         // entering at continuing track, must exit at throat
                         prevConnectType = LayoutEditor.TURNOUT_D;				
                         tr = (TrackSegment)lt.getConnectD();
                         setting = Turnout.CLOSED;
+                    } else {
+                        // entering at diverging track, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_A;				
+                        tr = (TrackSegment)lt.getConnectA();
                     }
                     break;
                 case LayoutEditor.TURNOUT_D:
@@ -2288,12 +2291,15 @@ public class ConnectivityUtil
                                 tr = null;
                             }					
                         }
-                    }
-                    else {
-                    // entering at through track of a right-handed crossover, must exit at throat
+                    } else if (tType==LayoutTurnout.RH_XOVER){
+                        // entering at through track of a right-handed crossover, must exit at throat
                         prevConnectType = LayoutEditor.TURNOUT_C;				
                         tr = (TrackSegment)lt.getConnectC();
                         setting = Turnout.CLOSED;
+                    } else {
+                    // entering at diverging track of a right-handed crossover, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_A;				
+                        tr = (TrackSegment)lt.getConnectA();
                     }
                     break;
             }
