@@ -2591,11 +2591,11 @@
 
    <H4>Service all cars with a final destination</H4>
 
-   This option when selected tells the program to pull cars with a final destination where the train
-   being built doesn't provide the most efficient route for the car. Useful if you want to the train
+   This option when selected tells the program to pull cars with a final destination even if the train
+   being built doesn't provide the most efficient route for the car. Useful if you want the train
    being built to move cars "closer" to their final destination, even if other trains could do it
    more efficiently. The term "closer" has to be taken with a grain of salt, as the program doesn't
-   really understand distances, only the number of trains need to move a car. So there will be cases
+   really understand distances, only the number of trains needed to move a car. So there will be cases
    where the train pulls the car, and it will in fact be physically farther from the car's final
    destination. This option does two things, it will add cars to the train being built that wouldn't
    normally travel on the train, thus freeing up track space. And second creates more work for your
