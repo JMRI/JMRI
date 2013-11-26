@@ -350,22 +350,22 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
 		if (ae.getSource() == loadNameAll) {
-			_track.setLoadOption(Track.ALLLOADS);
+			_track.setLoadOption(Track.ALL_LOADS);
 		}
 		if (ae.getSource() == loadNameInclude) {
-			_track.setLoadOption(Track.INCLUDELOADS);
+			_track.setLoadOption(Track.INCLUDE_LOADS);
 		}
 		if (ae.getSource() == loadNameExclude) {
-			_track.setLoadOption(Track.EXCLUDELOADS);
+			_track.setLoadOption(Track.EXCLUDE_LOADS);
 		}
 		if (ae.getSource() == shipLoadNameAll) {
-			_track.setShipLoadOption(Track.ALLLOADS);
+			_track.setShipLoadOption(Track.ALL_LOADS);
 		}
 		if (ae.getSource() == shipLoadNameInclude) {
-			_track.setShipLoadOption(Track.INCLUDELOADS);
+			_track.setShipLoadOption(Track.INCLUDE_LOADS);
 		}
 		if (ae.getSource() == shipLoadNameExclude) {
-			_track.setShipLoadOption(Track.EXCLUDELOADS);
+			_track.setShipLoadOption(Track.EXCLUDE_LOADS);
 		}
 	}
 
@@ -386,9 +386,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		panelLoads.removeAll();
 		if (_track != null) {
 			// set radio button
-			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALLLOADS));
-			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDELOADS));
-			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDELOADS));
+			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALL_LOADS));
+			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDE_LOADS));
+			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDE_LOADS));
 			
 			pLoadControls.setVisible(!loadNameAll.isSelected());
 
@@ -422,9 +422,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		panelShipLoads.removeAll();
 		if (_track != null) {
 			// set radio button
-			shipLoadNameAll.setSelected(_track.getShipLoadOption().equals(Track.ALLLOADS));
-			shipLoadNameInclude.setSelected(_track.getShipLoadOption().equals(Track.INCLUDELOADS));
-			shipLoadNameExclude.setSelected(_track.getShipLoadOption().equals(Track.EXCLUDELOADS));
+			shipLoadNameAll.setSelected(_track.getShipLoadOption().equals(Track.ALL_LOADS));
+			shipLoadNameInclude.setSelected(_track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
+			shipLoadNameExclude.setSelected(_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS));
 			
 			pShipLoadControls.setVisible(!shipLoadNameAll.isSelected());
 

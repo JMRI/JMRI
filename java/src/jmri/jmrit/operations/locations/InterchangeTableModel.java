@@ -26,7 +26,7 @@ public class InterchangeTableModel extends TrackTableModel {
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return Bundle.getMessage("InterchangeName");
 		}
 		return super.getColumnName(col);

@@ -323,9 +323,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location track Constant NORTH", 4, Track.NORTH);
 		Assert.assertEquals("Location Track Constant SOUTH", 8, Track.SOUTH);
 
-		Assert.assertEquals("Location Track Constant ALLROADS", "All", Track.ALLROADS);
-		Assert.assertEquals("Location Track Constant INCLUDEROADS", "Include", Track.INCLUDEROADS);
-		Assert.assertEquals("Location track Constant EXCLUDEROADS", "Exclude", Track.EXCLUDEROADS);
+		Assert.assertEquals("Location Track Constant ALLROADS", "All", Track.ALL_ROADS);
+		Assert.assertEquals("Location Track Constant INCLUDEROADS", "Include", Track.INCLUDE_ROADS);
+		Assert.assertEquals("Location track Constant EXCLUDEROADS", "Exclude", Track.EXCLUDE_ROADS);
 
 		Assert.assertEquals("Location Track Constant TYPES_CHANGED_PROPERTY", "trackRollingStockTypes", Track.TYPES_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Track Constant ROADS_CHANGED_PROPERTY", "trackRoads", Track.ROADS_CHANGED_PROPERTY);
@@ -583,7 +583,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.acceptsTypeName("Baggager"));
 
 		/* Test Road Name */
-		t.setRoadOption(Track.INCLUDEROADS);
+		t.setRoadOption(Track.INCLUDE_ROADS);
 		Assert.assertEquals("Location Track set Road Option INCLUDEROADS", "Include", t.getRoadOption());
 
 		Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.acceptsRoadName("TestRoadName"));
@@ -597,11 +597,11 @@ public class OperationsLocationsTest extends TestCase {
 		t.deleteRoadName("TestRoadName");
 		Assert.assertEquals("Location Track Accepts Road Name deleted", false, t.acceptsRoadName("TestRoadName"));
 
-		t.setRoadOption(Track.ALLROADS);
+		t.setRoadOption(Track.ALL_ROADS);
 		Assert.assertEquals("Location Track set Road Option AllROADS", "All", t.getRoadOption());
 		Assert.assertEquals("Location Track Accepts All Road Names", true, t.acceptsRoadName("TestRoadName"));
 
-		t.setRoadOption(Track.EXCLUDEROADS);
+		t.setRoadOption(Track.EXCLUDE_ROADS);
 		Assert.assertEquals("Location Track set Road Option EXCLUDEROADS", "Exclude", t.getRoadOption());
 		Assert.assertEquals("Location Track Excludes Road Names", true, t.acceptsRoadName("TestRoadName"));
 
@@ -912,7 +912,7 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = l.addTrack("new track", Track.SPUR);		
 		Assert.assertEquals("Location", l, t.getLocation());
 
-		t.setRoadOption(Track.INCLUDEROADS);
+		t.setRoadOption(Track.INCLUDE_ROADS);
 		t.addRoadName("Test Road Name");
 		t.addRoadName("Test Road Name 2");
 
@@ -1321,10 +1321,10 @@ public class OperationsLocationsTest extends TestCase {
 		Track t4 =l3.addTrack("A Stage", Track.STAGING);
 		
 		t1.addRoadName("Track 1 Road");
-		t1.setRoadOption(Track.INCLUDEROADS);
+		t1.setRoadOption(Track.INCLUDE_ROADS);
 		t2.addTypeName("Track 2 Type");
 		t3.addRoadName("Track 3 Road");
-		t3.setRoadOption(Track.EXCLUDEROADS);
+		t3.setRoadOption(Track.EXCLUDE_ROADS);
 		t4.addTypeName("Track 4 Type");
 		
 		// test pool features
@@ -1513,7 +1513,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 has n tracks", 1, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
-				Assert.assertEquals("Location 1 track road option", Track.EXCLUDEROADS, t.getRoadOption());
+				Assert.assertEquals("Location 1 track road option", Track.EXCLUDE_ROADS, t.getRoadOption());
 				Assert.assertEquals("Location 1 track road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 1 track road", false, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertNull("Location 1 track pool", t.getPool());
@@ -1532,7 +1532,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 has n tracks", 2, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
-				Assert.assertEquals("Location 2 track 1 road option", Track.ALLROADS, t.getRoadOption());
+				Assert.assertEquals("Location 2 track 1 road option", Track.ALL_ROADS, t.getRoadOption());
 				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 2 track 1 type", true, t.acceptsTypeName("Track 2 Type"));
@@ -1552,7 +1552,7 @@ public class OperationsLocationsTest extends TestCase {
 				
 				t = loc.getTrackById(list.get(1));
 				Assert.assertEquals("Location 2 2nd track name", "A Yard", t.getName());
-				Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDEROADS, t.getRoadOption());
+				Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDE_ROADS, t.getRoadOption());
 				Assert.assertEquals("Location 2 track 2 road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 2 track 2 road", false, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 2 Type"));
@@ -1575,7 +1575,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 has n tracks", 1, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());
-				Assert.assertEquals("Location 3 track 1 road option", Track.ALLROADS, t.getRoadOption());
+				Assert.assertEquals("Location 3 track 1 road option", Track.ALL_ROADS, t.getRoadOption());
 				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 3 track type", false, t.acceptsTypeName("Track 2 Type"));

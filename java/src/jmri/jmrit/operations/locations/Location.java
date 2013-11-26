@@ -888,6 +888,66 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		return false;
 	}
+	
+	/**
+	 * Used to determine if there are any load restrictions at this location.
+	 * 
+	 * @return True if there are load restrictions
+	 */
+	public boolean hasLoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getLoadOption().equals(Track.ALL_LOADS))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Used to determine if there are any load ship restrictions at this location.
+	 * 
+	 * @return True if there are load ship restrictions
+	 */
+	public boolean hasShipLoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getShipLoadOption().equals(Track.ALL_LOADS))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Used to determine if there are any road restrictions at this location.
+	 * 
+	 * @return True if there are road restrictions
+	 */
+	public boolean hasRoadRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getRoadOption().equals(Track.ALL_ROADS))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Used to determine if there are any road restrictions at this location.
+	 * 
+	 * @return True if there are road restrictions
+	 */
+	public boolean hasDestinationRestrications() {
+		List<String> tracks = getTrackIdsByIdList();
+		for (int i = 0; i < tracks.size(); i++) {
+			Track track = getTrackById(tracks.get(i));
+			if (!track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
+				return true;
+		}
+		return false;
+	}
 
 	public void dispose() {
 		List<String> tracks = getTrackIdsByIdList();

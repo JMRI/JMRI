@@ -26,7 +26,7 @@ public class StagingTableModel extends TrackTableModel {
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return Bundle.getMessage("StagingName");
 		}
 		return super.getColumnName(col);

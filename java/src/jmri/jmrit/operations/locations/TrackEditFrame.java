@@ -1025,10 +1025,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateRoadOption() {
 		if (_track != null) {
-			if (_track.getRoadOption().equals(Track.INCLUDEROADS))
+			if (_track.getRoadOption().equals(Track.INCLUDE_ROADS))
 				roadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getRoadNames().length + " "
 						+ Bundle.getMessage("Roads"));
-			else if (_track.getRoadOption().equals(Track.EXCLUDEROADS))
+			else if (_track.getRoadOption().equals(Track.EXCLUDE_ROADS))
 				roadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getRoadNames().length + " "
 						+ Bundle.getMessage("Roads"));
 			else
@@ -1038,19 +1038,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateLoadOption() {
 		if (_track != null) {
-			if (_track.getLoadOption().equals(Track.INCLUDELOADS))
+			if (_track.getLoadOption().equals(Track.INCLUDE_LOADS))
 				loadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
-			else if (_track.getLoadOption().equals(Track.EXCLUDELOADS))
+			else if (_track.getLoadOption().equals(Track.EXCLUDE_LOADS))
 				loadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
 			else
 				loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
 			
-			if (_track.getShipLoadOption().equals(Track.INCLUDELOADS))
+			if (_track.getShipLoadOption().equals(Track.INCLUDE_LOADS))
 				shipLoadOption.setText(Bundle.getMessage("ShipOnly") + " " + _track.getShipLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
-			else if (_track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+			else if (_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS))
 				shipLoadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getShipLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
 			else

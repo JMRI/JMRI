@@ -40,7 +40,7 @@ public class Track {
 	protected String _trackType = ""; // yard, spur, interchange or staging
 	protected Location _location; // the location for this track
 	protected String _alternateTrackId = ""; // the alternate track id
-	protected String _roadOption = ALLROADS; // controls which car roads are accepted
+	protected String _roadOption = ALL_ROADS; // controls which car roads are accepted
 	protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this track
 	protected int _numberRS = 0; // number of cars and engines
 	protected int _numberCars = 0; // number of cars
@@ -60,8 +60,8 @@ public class Track {
 	protected String _commentSetout = "";
 	protected String _commentBoth = "";
 
-	protected String _loadOption = ALLLOADS; // receive track load restrictions
-	protected String _shipLoadOption = ALLLOADS; // ship track load restrictions
+	protected String _loadOption = ALL_LOADS; // receive track load restrictions
+	protected String _shipLoadOption = ALL_LOADS; // ship track load restrictions
 	
 	protected String _destinationOption = ALL_DESTINATIONS; // track destination restriction
 
@@ -115,14 +115,14 @@ public class Track {
 	public static final int SOUTH = 8;
 
 	// how roads are serviced by this track
-	public static final String ALLROADS = Bundle.getMessage("All"); // track accepts all roads
-	public static final String INCLUDEROADS = Bundle.getMessage("Include"); // track accepts only certain roads
-	public static final String EXCLUDEROADS = Bundle.getMessage("Exclude"); // track does not accept certain roads
+	public static final String ALL_ROADS = Bundle.getMessage("All"); // track accepts all roads
+	public static final String INCLUDE_ROADS = Bundle.getMessage("Include"); // track accepts only certain roads
+	public static final String EXCLUDE_ROADS = Bundle.getMessage("Exclude"); // track does not accept certain roads
 
 	// load options
-	public static final String ALLLOADS = Bundle.getMessage("All"); // track services all loads
-	public static final String INCLUDELOADS = Bundle.getMessage("Include");
-	public static final String EXCLUDELOADS = Bundle.getMessage("Exclude");
+	public static final String ALL_LOADS = Bundle.getMessage("All"); // track services all loads
+	public static final String INCLUDE_LOADS = Bundle.getMessage("Include");
+	public static final String EXCLUDE_LOADS = Bundle.getMessage("Exclude");
 	
 	// destination options
 	public static final String ALL_DESTINATIONS = Bundle.getMessage("All"); // track services all loads
@@ -673,22 +673,6 @@ public class Track {
 		return _typeList.contains(type);
 	}
 
-	public String getRoadOption() {
-		return _roadOption;
-	}
-
-	/**
-	 * Set the road option for this track.
-	 * 
-	 * @param option
-	 *            ALLROADS, INCLUDEROADS, or EXCLUDEROADS
-	 */
-	public void setRoadOption(String option) {
-		String old = _roadOption;
-		_roadOption = option;
-		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
-	}
-
 	/**
 	 * Sets the train directions that can service this track
 	 * 
@@ -707,6 +691,21 @@ public class Track {
 		return _trainDir;
 	}
 
+	public String getRoadOption() {
+		return _roadOption;
+	}
+
+	/**
+	 * Set the road option for this track.
+	 * 
+	 * @param option
+	 *            ALLROADS, INCLUDEROADS, or EXCLUDEROADS
+	 */
+	public void setRoadOption(String option) {
+		String old = _roadOption;
+		_roadOption = option;
+		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
+	}
 	List<String> _roadList = new ArrayList<String>();
 
 	public String[] getRoadNames() {
@@ -746,10 +745,10 @@ public class Track {
 	}
 
 	public boolean acceptsRoadName(String road) {
-		if (_roadOption.equals(ALLROADS)) {
+		if (_roadOption.equals(ALL_ROADS)) {
 			return true;
 		}
-		if (_roadOption.equals(INCLUDEROADS)) {
+		if (_roadOption.equals(INCLUDE_ROADS)) {
 			return _roadList.contains(road);
 		}
 		// exclude!
@@ -763,7 +762,7 @@ public class Track {
 	/**
 	 * Gets the car receive load option for this track.
 	 * 
-	 * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 * @return ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public String getLoadOption() {
 		return _loadOption;
@@ -773,7 +772,7 @@ public class Track {
 	 * Set how this track deals with receiving car loads
 	 * 
 	 * @param option
-	 *            ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 *            ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public void setLoadOption(String option) {
 		String old = _loadOption;
@@ -846,10 +845,10 @@ public class Track {
 	 * @return true if track will service this load.
 	 */
 	public boolean acceptsLoadName(String load) {
-		if (_loadOption.equals(ALLLOADS)) {
+		if (_loadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_loadOption.equals(INCLUDELOADS)) {
+		if (_loadOption.equals(INCLUDE_LOADS)) {
 			return _loadList.contains(load);
 		}
 		// exclude!
@@ -866,10 +865,10 @@ public class Track {
 	 * @return true if track will service this load.
 	 */
 	public boolean acceptsLoad(String load, String type) {
-		if (_loadOption.equals(ALLLOADS)) {
+		if (_loadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_loadOption.equals(INCLUDELOADS)) {
+		if (_loadOption.equals(INCLUDE_LOADS)) {
 			return _loadList.contains(load) || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
 		}
 		// exclude!
@@ -879,7 +878,7 @@ public class Track {
 	/**
 	 * Gets the car ship load option for this track.
 	 * 
-	 * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 * @return ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public String getShipLoadOption() {
 		return _shipLoadOption;
@@ -889,7 +888,7 @@ public class Track {
 	 * Set how this track deals with shipping car loads
 	 * 
 	 * @param option
-	 *            ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 *            ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public void setShipLoadOption(String option) {
 		String old = _shipLoadOption;
@@ -962,10 +961,10 @@ public class Track {
 	 * @return true if track will service this load.
 	 */
 	public boolean shipsLoadName(String load) {
-		if (_shipLoadOption.equals(ALLLOADS)) {
+		if (_shipLoadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_shipLoadOption.equals(INCLUDELOADS)) {
+		if (_shipLoadOption.equals(INCLUDE_LOADS)) {
 			return _shipLoadList.contains(load);
 		}
 		// exclude!
@@ -982,10 +981,10 @@ public class Track {
 	 * @return true if track will service this load.
 	 */
 	public boolean shipsLoad(String load, String type) {
-		if (_shipLoadOption.equals(ALLLOADS)) {
+		if (_shipLoadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_shipLoadOption.equals(INCLUDELOADS)) {
+		if (_shipLoadOption.equals(INCLUDE_LOADS)) {
 			return _shipLoadList.contains(load) || _shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
 		}
 		// exclude!
@@ -2257,7 +2256,7 @@ public class Track {
 			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());
 		e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 		// build list of car roads for this track
-		if (!getRoadOption().equals(ALLROADS)) {
+		if (!getRoadOption().equals(ALL_ROADS)) {
 			String[] roads = getRoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
@@ -2278,7 +2277,7 @@ public class Track {
 		
 		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 		// save list of car loads for this track
-		if (!getLoadOption().equals(ALLLOADS)) {
+		if (!getLoadOption().equals(ALL_LOADS)) {
 			String[] loads = getLoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
@@ -2299,7 +2298,7 @@ public class Track {
 		
 		e.setAttribute(Xml.CAR_SHIP_LOAD_OPTION, getShipLoadOption());
 		// save list of car loads for this track
-		if (!getShipLoadOption().equals(ALLLOADS)) {
+		if (!getShipLoadOption().equals(ALL_LOADS)) {
 			String[] loads = getShipLoadNames();
 			// new way of saving car loads using elements
 			Element eLoads = new Element(Xml.CAR_SHIP_LOADS);

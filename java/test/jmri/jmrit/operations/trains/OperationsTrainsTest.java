@@ -1319,7 +1319,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s1 LocType", "Staging", l1s1.getTrackType());
 		Assert.assertEquals("Location 1s1 Length", 300, l1s1.getLength());
 		l1s1.setTrainDirections(DIRECTION_ALL);
-		l1s1.setRoadOption(Track.ALLROADS);
+		l1s1.setRoadOption(Track.ALL_ROADS);
 		l1s1.setDropOption(Track.ANY);
 		l1s1.setPickupOption(Track.ANY);
 
@@ -1330,7 +1330,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s2 LocType", "Staging", l1s2.getTrackType());
 		Assert.assertEquals("Location 1s2 Length", 400, l1s2.getLength());
 		l1s2.setTrainDirections(DIRECTION_ALL);
-		l1s2.setRoadOption(Track.ALLROADS);
+		l1s2.setRoadOption(Track.ALL_ROADS);
 		l1s2.setDropOption(Track.ANY);
 		l1s2.setPickupOption(Track.ANY);
 
@@ -1386,7 +1386,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s1 LocType", "Staging", l3s1.getTrackType());
 		Assert.assertEquals("Location 3s1 Length", 300, l3s1.getLength());
 		l3s1.setTrainDirections(DIRECTION_ALL);
-		l3s1.setRoadOption(Track.ALLROADS);
+		l3s1.setRoadOption(Track.ALL_ROADS);
 		l3s1.setDropOption(Track.ANY);
 		l3s1.setPickupOption(Track.ANY);
 
@@ -1397,7 +1397,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s2 LocType", "Staging", l3s2.getTrackType());
 		Assert.assertEquals("Location 3s2 Length", 401, l3s2.getLength());
 		l3s2.setTrainDirections(DIRECTION_ALL);
-		l3s2.setRoadOption(Track.ALLROADS);
+		l3s2.setRoadOption(Track.ALL_ROADS);
 		l3s2.setDropOption(Track.ANY);
 		l3s2.setPickupOption(Track.ANY);
 
@@ -2313,7 +2313,7 @@ public class OperationsTrainsTest extends TestCase {
 		train2.deleteTypeName("BOXCAR");
 		c3.setTypeName("Boxcar");
 		// control which road will go into staging
-		l3s3.setRoadOption(Track.INCLUDEROADS);
+		l3s3.setRoadOption(Track.INCLUDE_ROADS);
 
 		train2.build();
 		Assert.assertFalse("Train 2 will NOT build road restriction", train2.isBuilt());
@@ -2338,7 +2338,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertFalse("Train 2 will NOT build road restriction exclude road CP", train2.isBuilt());
 
 		// now allow road into staging
-		l3s3.setRoadOption(Track.EXCLUDEROADS);
+		l3s3.setRoadOption(Track.EXCLUDE_ROADS);
 		l3s3.deleteRoadName("CP");
 		Assert.assertEquals("Number of road names", 0, l3s3.getRoadNames().length);
 
@@ -4391,7 +4391,7 @@ public class OperationsTrainsTest extends TestCase {
 		CarRoads cr = CarRoads.instance();
 		cr.addName("CP");
 
-		loc1trk1.setRoadOption(Track.INCLUDEROADS);
+		loc1trk1.setRoadOption(Track.INCLUDE_ROADS);
 		loc1trk1.addRoadName("CP");
 		loc1trk1.addRoadName("PC");
 		train1.setRoadOption(Train.INCLUDEROADS);
@@ -4927,11 +4927,11 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk1.addRoadName("NH");
 		loc3trk1.addRoadName("SP");
 		loc3trk1.addRoadName("UP");
-		loc3trk1.setRoadOption(Track.INCLUDEROADS);
+		loc3trk1.setRoadOption(Track.INCLUDE_ROADS);
 		loc3trk2.addRoadName("NH");
 		loc3trk2.addRoadName("SP");
 		loc3trk2.addRoadName("UP");
-		loc3trk2.setRoadOption(Track.INCLUDEROADS);
+		loc3trk2.setRoadOption(Track.INCLUDE_ROADS);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 18", true, train1.isBuilt());
 

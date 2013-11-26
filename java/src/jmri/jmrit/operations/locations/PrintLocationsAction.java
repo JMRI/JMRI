@@ -530,12 +530,12 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private String getTrackRoads(Track track) {
-		if (track.getRoadOption().equals(Track.ALLROADS)) {
+		if (track.getRoadOption().equals(Track.ALL_ROADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllRoads") + NEW_LINE;
 		}
 		
 		String op = Bundle.getMessage("RoadsServicedTrack");
-		if (track.getRoadOption().equals(Track.EXCLUDEROADS))
+		if (track.getRoadOption().equals(Track.EXCLUDE_ROADS))
 			op = Bundle.getMessage("ExcludeRoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
@@ -556,12 +556,12 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private String getTrackLoads(Track track) {
-		if (track.getLoadOption().equals(Track.ALLLOADS)) {
+		if (track.getLoadOption().equals(Track.ALL_LOADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllLoads") + NEW_LINE;
 		}
 		
 		String op = Bundle.getMessage("LoadsServicedTrack");
-		if (track.getLoadOption().equals(Track.EXCLUDELOADS))
+		if (track.getLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsTrack");
 
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
@@ -585,11 +585,11 @@ public class PrintLocationsAction extends AbstractAction {
 		// only staging has the ship load control
 		if (!track.getTrackType().equals(Track.STAGING))
 			return "";
-		if (track.getShipLoadOption().equals(Track.ALLLOADS)) {
+		if (track.getShipLoadOption().equals(Track.ALL_LOADS)) {
 			return TAB + TAB + Bundle.getMessage("ShipsAllLoads") + NEW_LINE;
 		}
 		String op = Bundle.getMessage("LoadsShippedTrack");
-		if (track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+		if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS))
 			op = Bundle.getMessage("ExcludeLoadsShippedTrack");
 		
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);

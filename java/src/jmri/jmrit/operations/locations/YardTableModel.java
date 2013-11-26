@@ -26,7 +26,7 @@ public class YardTableModel extends TrackTableModel {
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case NAMECOLUMN:
+		case NAME_COLUMN:
 			return Bundle.getMessage("YardName");
 		}
 		return super.getColumnName(col);

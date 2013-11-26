@@ -2455,7 +2455,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		// check go see if track will accept the train's car and engine roads
 		if (train.getRoadOption().equals(Train.ALLROADS)
-				&& !terminateStageTrack.getRoadOption().equals(Track.ALLROADS)) {
+				&& !terminateStageTrack.getRoadOption().equals(Track.ALL_ROADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllRoads"),
 					new Object[] { terminateStageTrack.getName() }));
 			return false;
@@ -2491,7 +2491,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		// check go see if track will accept the train's car loads
 		if (train.getLoadOption().equals(Train.ALLLOADS)
-				&& !terminateStageTrack.getLoadOption().equals(Track.ALLLOADS)) {
+				&& !terminateStageTrack.getLoadOption().equals(Track.ALL_LOADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllLoads"),
 					new Object[] { terminateStageTrack.getName() }));
 			return false;
