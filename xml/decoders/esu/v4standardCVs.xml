@@ -87,10 +87,10 @@
       <variable label="Analog Mode Function Status - F15" CV="14" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Decoder Lock ID number" CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 9" tooltip="CV15" default="0">
+      <variable label="Decoder Lock ID number" CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 9" default="0">
         <decVal max="16"/>
       </variable>
-      <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" tooltip="CV16" default="0">
+      <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" default="0">
         <decVal max="16"/>
       </variable>
       <variable label="Extended Address" CV="17" item="Long Address">

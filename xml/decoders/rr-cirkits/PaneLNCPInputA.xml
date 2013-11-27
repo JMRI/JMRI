@@ -48,7 +48,7 @@
     </row>
     <row>
       <column>
-        <display item="In1 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="In1 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -124,7 +124,7 @@
     </row>
     <row>
       <column>
-        <display item="In2 Base Address" label="Primary event #" tooltip="CV137-8">
+        <display item="In2 Base Address" label="Primary event #" tooltip="8">
           </display>
       </column>
       <column>
@@ -200,7 +200,7 @@
     </row>
     <row>
       <column>
-        <display item="In3 Base Address" label="Primary event #" tooltip="CV145-6">
+        <display item="In3 Base Address" label="Primary event #" tooltip="6">
           </display>
       </column>
       <column>
@@ -276,7 +276,7 @@
     </row>
     <row>
       <column>
-        <display item="In4 Base Address" label="Primary event #" tooltip="CV153-4">
+        <display item="In4 Base Address" label="Primary event #" tooltip="4">
           </display>
       </column>
       <column>

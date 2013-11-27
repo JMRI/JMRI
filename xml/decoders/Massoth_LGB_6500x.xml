@@ -72,55 +72,55 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard CV1">
+      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard">
         <shortAddressVal/>
       </variable>
-      <variable label="Starting voltage" CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed CV2">
+      <variable label="Starting voltage" CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
         <decVal min="0" max="255"/>
       </variable>
-      <variable label="Acceleration" CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration CV3">
+      <variable label="Acceleration" CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Braking" CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking) CV4">
+      <variable label="Braking" CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Maximum Motor Voltage" CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed CV5">
+      <variable label="Maximum Motor Voltage" CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Software Version Number" CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+      <variable label="Software Version Number" CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
       </variable>
-      <variable label="Manufacturer Code" CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+      <variable label="Manufacturer Code" CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS) CV17-18">
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)">
         <longAddressVal/>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Forward"/>
           <enumChoice choice="Reverse"/>
         </enumVal>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode CV29">
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode">
         <enumVal>
           <enumChoice choice="14"/>
           <enumChoice choice="28/128 (not LGB MTS)"/>
         </enumVal>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
         <enumVal>
           <enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
           <enumChoice choice="address 128-10239 (not LGB MTS)"/>
         </enumVal>
       </variable>
-      <variable label="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value. CV58">
+      <variable label="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Analog Maximum Speed" CV="59" default="255" tooltip="Adjust the sound to the loco settings - if sound is too fast at high speed, decrease value. CV59">
+      <variable label="Analog Maximum Speed" CV="59" default="255" tooltip="Adjust the sound to the loco settings - if sound is too fast at high speed, decrease value">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Number of wheel magnets" CV="64" mask="XXXXXVVV" default="2" tooltip="Number of magnets on loco or sound car wheel/axle CV64">
+      <variable label="Number of wheel magnets" CV="64" mask="XXXXXVVV" default="2" tooltip="Number of magnets on loco or sound car wheel/axle">
         <enumVal>
           <enumChoice choice="1" value="1"/>
           <enumChoice choice="2" value="2"/>
@@ -131,7 +131,7 @@
           <enumChoice choice="7" value="7"/>
         </enumVal>
       </variable>
-      <variable label="Wheel diameter ratio" CV="64" mask="VVVVVXXX" default="10" tooltip="Ratio of loco wheel diameter to sound car wheel diameter CV64">
+      <variable label="Wheel diameter ratio" CV="64" mask="VVVVVXXX" default="10" tooltip="Ratio of loco wheel diameter to sound car wheel diameter">
         <enumVal>
           <enumChoice choice="0.1" value="1"/>
           <enumChoice choice="0.2" value="2"/>
@@ -167,7 +167,7 @@
         </enumVal>
       </variable>
       <!-- Do not attempt to read CV 105 on an LGB decoder -->
-      <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only) CV106">
+      <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only)">
         <decVal/>
       </variable>
     </variables>

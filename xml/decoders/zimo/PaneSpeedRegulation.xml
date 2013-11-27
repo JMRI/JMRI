@@ -12,12 +12,12 @@
     <label label="If several calibration runs are performed at different speeds and the Calibration Result read"/>
     <label label="after each one, the Calibration Result should be approximately the same"/>
     <label label=" "/>
-    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="CV136 Read Only"/>
+    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only"/>
     <label label=" "/>
     <label label=" "/>
     <row>
       <column>
-        <display item="km/h speed regulation control and range" label="Speed Regulation Control" tooltip="CV135"/>
+        <display item="km/h speed regulation control and range" label="Speed Regulation Control"/>
       </column>
       <column>
         <label label=" Miles or Kilometres per hour per (128) Speed Step"/>

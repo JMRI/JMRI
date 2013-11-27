@@ -954,32 +954,32 @@
   </decoder>
   <pane name="Output Handling">
     <column>
-      <display item="Output Reduction" layout="below" format="vslider" label="" tooltip="CV 54">
+      <display item="Output Reduction" layout="below" format="vslider" label="">
         <label/>
       </display>
-      <display item="Output Reduction" layout="below" tooltip="CV 54, 50=50% output reduction"/>
+      <display item="Output Reduction" layout="below" tooltip="50=50% output reduction"/>
     </column>
     <column>
       <label label="Dim Outputs (CV 57)">
         <label>Dim Outputs (CV 57)</label>
       </label>
       <separator/>
-      <display item="Dim Output 1" format="radiobuttons" label="Output 1" tooltip="CV 57, bit 0">
+      <display item="Dim Output 1" format="radiobuttons" label="Output 1">
         <label>Output 1</label>
       </display>
-      <display item="Dim Output 2" format="radiobuttons" label="Output 2" tooltip="CV 57, bit 1">
+      <display item="Dim Output 2" format="radiobuttons" label="Output 2">
         <label>Output 2</label>
       </display>
-      <display item="Dim Output 3" format="radiobuttons" label="Output 3" tooltip="CV 57, bit 2">
+      <display item="Dim Output 3" format="radiobuttons" label="Output 3">
         <label>Output 3</label>
       </display>
-      <display item="Dim Output 4" format="radiobuttons" label="Output 4" tooltip="CV 57, bit 3">
+      <display item="Dim Output 4" format="radiobuttons" label="Output 4">
         <label>Output 4</label>
       </display>
-      <display item="Dim Output 5" format="radiobuttons" label="Output 5" tooltip="CV 57, bit 4">
+      <display item="Dim Output 5" format="radiobuttons" label="Output 5">
         <label>Output 5</label>
       </display>
-      <display item="Dim Output 6" format="radiobuttons" label="Output 6" tooltip="CV 57, bit 5">
+      <display item="Dim Output 6" format="radiobuttons" label="Output 6">
         <label>Output 6</label>
       </display>
     </column>
@@ -988,25 +988,25 @@
         <label>F-6 Key Dims Outputs</label>
       </label>
       <separator/>
-      <display item="F6 key dims Output 1" format="checkbox" label="Output 1" tooltip="CV 119, bit 0">
+      <display item="F6 key dims Output 1" format="checkbox" label="Output 1">
         <label>Output 1</label>
       </display>
-      <display item="F6 key dims Output 2" format="checkbox" label="Output 2" tooltip="CV 119, bit 1">
+      <display item="F6 key dims Output 2" format="checkbox" label="Output 2">
         <label>Output 2</label>
       </display>
-      <display item="F6 key dims Output 3" format="checkbox" label="Output 3" tooltip="CV 119, bit 2">
+      <display item="F6 key dims Output 3" format="checkbox" label="Output 3">
         <label>Output 3</label>
       </display>
-      <display item="F6 key dims Output 4" format="checkbox" label="Output 4" tooltip="CV 119, bit 3">
+      <display item="F6 key dims Output 4" format="checkbox" label="Output 4">
         <label>Output 4</label>
       </display>
-      <display item="F6 key dims Output 5" format="checkbox" label="Output 5" tooltip="CV 119, bit 4">
+      <display item="F6 key dims Output 5" format="checkbox" label="Output 5">
         <label>Output 5</label>
       </display>
-      <display item="F6 key dims Output 6" format="checkbox" label="Output 6" tooltip="CV 119, bit 5">
+      <display item="F6 key dims Output 6" format="checkbox" label="Output 6">
         <label>Output 6</label>
       </display>
-      <display item="F6 key inverted" format="checkbox" label="F-6 Key inverted" tooltip="CV 119, bit 7">
+      <display item="F6 key inverted" format="checkbox" label="F-6 Key inverted">
         <label>F-6 Key inverted</label>
       </display>
       <label label=" ">
@@ -1016,25 +1016,25 @@
         <label>F-7 Key Dims Outputs</label>
       </label>
       <separator/>
-      <display item="F7 key dims Output 1" format="checkbox" label="Output 1" tooltip="CV 120, bit 0">
+      <display item="F7 key dims Output 1" format="checkbox" label="Output 1">
         <label>Output 1</label>
       </display>
-      <display item="F7 key dims Output 2" format="checkbox" label="Output 2" tooltip="CV 120, bit 1">
+      <display item="F7 key dims Output 2" format="checkbox" label="Output 2">
         <label>Output 2</label>
       </display>
-      <display item="F7 key dims Output 3" format="checkbox" label="Output 3" tooltip="CV 120, bit 2">
+      <display item="F7 key dims Output 3" format="checkbox" label="Output 3">
         <label>Output 3</label>
       </display>
-      <display item="F7 key dims Output 4" format="checkbox" label="Output 4" tooltip="CV 120, bit 3">
+      <display item="F7 key dims Output 4" format="checkbox" label="Output 4">
         <label>Output 4</label>
       </display>
-      <display item="F7 key dims Output 5" format="checkbox" label="Output 5" tooltip="CV 120, bit 4">
+      <display item="F7 key dims Output 5" format="checkbox" label="Output 5">
         <label>Output 5</label>
       </display>
-      <display item="F7 key dims Output 6" format="checkbox" label="Output 6" tooltip="CV 120, bit 5">
+      <display item="F7 key dims Output 6" format="checkbox" label="Output 6">
         <label>Output 6</label>
       </display>
-      <display item="F7 key inverted" format="checkbox" label="F-7 Key inverted" tooltip="CV 120, bit 7">
+      <display item="F7 key inverted" format="checkbox" label="F-7 Key inverted">
         <label>F-7 Key inverted</label>
       </display>
     </column>
@@ -1042,37 +1042,37 @@
   </pane>
   <pane name="Advanced">
     <column>
-      <display item="Shunting Usage" tooltip="CV 124, bit 0-1"/>
-      <display item="Shunt Function Key" tooltip="CV 124, bit 2"/>
-      <display item="Half Speed" tooltip="CV 124, bit 3"/>
+      <display item="Shunting Usage"/>
+      <display item="Shunt Function Key"/>
+      <display item="Half Speed"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Special Function Usage" tooltip="CV 61"/>
+      <display item="Special Function Usage"/>
     </column>
     <column>
-      <display item="Coupler Control reduced voltage" tooltip="CV 55"/>
-      <display item="Coupler Control time full voltage" tooltip="CV 56"/>
+      <display item="Coupler Control reduced voltage"/>
+      <display item="Coupler Control time full voltage"/>
       <label label="      Coupler Outputs">
         <label>      Coupler Outputs</label>
       </label>
       <separator/>
-      <display item="Coupler Output 1" format="checkbox" label="Output 1" tooltip="CV 58, bit 0">
+      <display item="Coupler Output 1" format="checkbox" label="Output 1">
         <label>Output 1</label>
       </display>
-      <display item="Coupler Output 2" format="checkbox" label="Output 2" tooltip="CV 58, bit 1">
+      <display item="Coupler Output 2" format="checkbox" label="Output 2">
         <label>Output 2</label>
       </display>
-      <display item="Coupler Output 3" format="checkbox" label="Output 3" tooltip="CV 58, bit 2">
+      <display item="Coupler Output 3" format="checkbox" label="Output 3">
         <label>Output 3</label>
       </display>
-      <display item="Coupler Output 4" format="checkbox" label="Output 4" tooltip="CV 58, bit 3">
+      <display item="Coupler Output 4" format="checkbox" label="Output 4">
         <label>Output 4</label>
       </display>
-      <display item="Coupler Output 5" format="checkbox" label="Output 5" tooltip="CV 58, bit 4">
+      <display item="Coupler Output 5" format="checkbox" label="Output 5">
         <label>Output 5</label>
       </display>
-      <display item="Coupler Output 6" format="checkbox" label="Output 6" tooltip="CV 58, bit 5">
+      <display item="Coupler Output 6" format="checkbox" label="Output 6">
         <label>Output 6</label>
       </display>
     </column>
@@ -1081,28 +1081,28 @@
         <label>Analog Mode Functions</label>
       </label>
       <separator/>
-      <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1" tooltip="CV 13, bit 0">
+      <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1">
         <label>F-1</label>
       </display>
-      <display item="Analog Mode Function Status - F2" format="checkbox" label="F-2" tooltip="CV 13, bit 1">
+      <display item="Analog Mode Function Status - F2" format="checkbox" label="F-2">
         <label>F-2</label>
       </display>
-      <display item="Analog Mode Function Status - F3" format="checkbox" label="F-3" tooltip="CV 13, bit 2">
+      <display item="Analog Mode Function Status - F3" format="checkbox" label="F-3">
         <label>F-3</label>
       </display>
-      <display item="Analog Mode Function Status - F4" format="checkbox" label="F-4" tooltip="CV 13, bit 3">
+      <display item="Analog Mode Function Status - F4" format="checkbox" label="F-4">
         <label>F-4</label>
       </display>
-      <display item="Analog Mode Function Status - F5" format="checkbox" label="F-5" tooltip="CV 13, bit 4">
+      <display item="Analog Mode Function Status - F5" format="checkbox" label="F-5">
         <label>F-5</label>
       </display>
-      <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6" tooltip="CV 13, bit 5">
+      <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6">
         <label>F-6</label>
       </display>
-      <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7" tooltip="CV 13, bit 6">
+      <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7">
         <label>F-7</label>
       </display>
-      <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8" tooltip="CV 13, bit 7">
+      <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8">
         <label>F-8</label>
       </display>
     </column>
@@ -1110,12 +1110,12 @@
   </pane>
   <pane name="Zimo">
     <column>
-      <display item="Signal Dependent Acceleration" tooltip="CV 61"/>
-      <display item="Signal Dependent Deceleration" tooltip="CV 53"/>
+      <display item="Signal Dependent Acceleration"/>
+      <display item="Signal Dependent Deceleration"/>
     </column>
     <column>
-      <display item="Address Pulse" tooltip="CV 29 bit 3"/>
-      <display item="NMRA" tooltip="CV 29 bit 6"/>
+      <display item="Address Pulse"/>
+      <display item="NMRA"/>
     </column>
     <column>
       <label label="Signal Dependent Speed Limits">

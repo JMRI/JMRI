@@ -120,7 +120,7 @@
         </enumVal>
         <label>Address Format</label>
       </variable>
-      <variable label="F5 controls X2" CV="39" mask="XXXXXXXV" tooltip="CV39 Bit 0" item="F5 controls output 1" minOut="2" default="0">
+      <variable label="F5 controls X2" CV="39" mask="XXXXXXXV" item="F5 controls output 1" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -131,7 +131,7 @@
         </enumVal>
         <label>F5 controls X2</label>
       </variable>
-      <variable label="F6 controls X2" CV="39" mask="XXXXXXVX" tooltip="CV39 Bit 1" item="F6 controls output 1" minOut="2" default="0">
+      <variable label="F6 controls X2" CV="39" mask="XXXXXXVX" item="F6 controls output 1" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -142,7 +142,7 @@
         </enumVal>
         <label>F6 controls X2</label>
       </variable>
-      <variable label="F7 controls X2" CV="39" mask="XXXXXVXX" tooltip="CV39 Bit 2" item="F7 controls output 1" minOut="2" default="0">
+      <variable label="F7 controls X2" CV="39" mask="XXXXXVXX" item="F7 controls output 1" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -153,7 +153,7 @@
         </enumVal>
         <label>F7 controls X2</label>
       </variable>
-      <variable label="F8 controls X2" CV="39" mask="XXXXVXXX" tooltip="CV39 Bit 3" item="F8 controls output 1" minOut="2" default="0">
+      <variable label="F8 controls X2" CV="39" mask="XXXXVXXX" item="F8 controls output 1" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -164,7 +164,7 @@
         </enumVal>
         <label>F8 controls X2</label>
       </variable>
-      <variable label="F5 controls X3" CV="40" mask="XXXXXXXV" tooltip="CV40 Bit 0" item="F5 controls output 2" minOut="2" default="0">
+      <variable label="F5 controls X3" CV="40" mask="XXXXXXXV" item="F5 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -175,7 +175,7 @@
         </enumVal>
         <label>F5 controls X3</label>
       </variable>
-      <variable label="F6 controls X3" CV="40" mask="XXXXXXVX" tooltip="CV40 Bit 1" item="F6 controls output 2" minOut="2" default="0">
+      <variable label="F6 controls X3" CV="40" mask="XXXXXXVX" item="F6 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -186,7 +186,7 @@
         </enumVal>
         <label>F6 controls X3</label>
       </variable>
-      <variable label="F7 controls X3" CV="40" mask="XXXXXVXX" tooltip="CV40 Bit 2" item="F7 controls output 2" minOut="2" default="0">
+      <variable label="F7 controls X3" CV="40" mask="XXXXXVXX" item="F7 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -197,7 +197,7 @@
         </enumVal>
         <label>F7 controls X3</label>
       </variable>
-      <variable label="F8 controls X3" CV="40" mask="XXXXVXXX" tooltip="CV40 Bit 3" item="F8 controls output 2" minOut="2" default="0">
+      <variable label="F8 controls X3" CV="40" mask="XXXXVXXX" item="F8 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -208,7 +208,7 @@
         </enumVal>
         <label>F8 controls X3</label>
       </variable>
-      <variable label="Motor Load Control BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="CV49 Bit 0">
+      <variable label="Motor Load Control BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -219,7 +219,7 @@
         </enumVal>
         <label>Motor Load Control BEMF</label>
       </variable>
-      <variable label="Emergancy Stop on direction change" CV="49" mask="XXXXXXVX" item="EMF Option 1" tooltip="CV49 Bit 1">
+      <variable label="Emergancy Stop on direction change" CV="49" mask="XXXXXXVX" item="EMF Option 1">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -230,7 +230,7 @@
         </enumVal>
         <label>Emergancy Stop on direction change</label>
       </variable>
-      <variable label="Emergancy Stop on F1" CV="49" mask="XXXXXVXX" item="F1 controls output 3" tooltip="CV49 Bit 2">
+      <variable label="Emergancy Stop on F1" CV="49" mask="XXXXXVXX" item="F1 controls output 3">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -241,7 +241,7 @@
         </enumVal>
         <label>Emergancy Stop on F1</label>
       </variable>
-      <variable label="Shunting gear mode F1" CV="49" mask="XXXXVXXX" item="F1 controls output 4" tooltip="CV49 Bit 3">
+      <variable label="Shunting gear mode F1" CV="49" mask="XXXXVXXX" item="F1 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -252,7 +252,7 @@
         </enumVal>
         <label>Shunting gear mode F1</label>
       </variable>
-      <variable label="Shunting gear mode F2" CV="49" mask="XXXVXXXX" item="F2 controls output 4" tooltip="CV49 Bit 4">
+      <variable label="Shunting gear mode F2" CV="49" mask="XXXVXXXX" item="F2 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -263,7 +263,7 @@
         </enumVal>
         <label>Shunting gear mode F2</label>
       </variable>
-      <variable label="Shunting gear mode F3" CV="49" mask="XXVXXXXX" item="F3 controls output 4" tooltip="CV49 Bit 5">
+      <variable label="Shunting gear mode F3" CV="49" mask="XXVXXXXX" item="F3 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -274,7 +274,7 @@
         </enumVal>
         <label>Shunting gear mode F3</label>
       </variable>
-      <variable label="Shunting gear mode F4" CV="49" mask="XVXXXXXX" item="F4 controls output 4" tooltip="CV49 Bit 6">
+      <variable label="Shunting gear mode F4" CV="49" mask="XVXXXXXX" item="F4 controls output 4">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -285,19 +285,19 @@
         </enumVal>
         <label>Shunting gear mode F4</label>
       </variable>
-      <variable label="Dimming Intensity, Output X2 (0-63)" CV="50" item="Global lighting option 1" default="63" tooltip="Sets intensity of dimmed headlight (larger number = brighter light) CV50">
+      <variable label="Dimming Intensity, Output X2 (0-63)" CV="50" item="Global lighting option 1" default="63" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
         <decVal min="0" max="63"/>
         <label>Dimming Intensity, Output X2 (0-63)</label>
       </variable>
-      <variable label="Dimming Intensity, Output X3 (0-63)" CV="51" item="Global lighting option 2" default="63" tooltip="Sets intensity of dimmed light (larger number = brighter light) CV51">
+      <variable label="Dimming Intensity, Output X3 (0-63)" CV="51" item="Global lighting option 2" default="63" tooltip="Sets intensity of dimmed light (larger number = brighter light)">
         <decVal min="0" max="63"/>
         <label>Dimming Intensity, Output X3 (0-63)</label>
       </variable>
-      <variable label="BEMF Kp" CV="54" default="96" item="EMF Static Config" tooltip="Proportional component of the load control CV54">
+      <variable label="BEMF Kp" CV="54" default="96" item="EMF Static Config" tooltip="Proportional component of the load control">
         <decVal max="255"/>
         <label>BEMF Kp</label>
       </variable>
-      <variable label="F1 controls X2" CV="55" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0" tooltip="CV55 Bit 0">
+      <variable label="F1 controls X2" CV="55" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -308,7 +308,7 @@
         </enumVal>
         <label>F1 controls X2</label>
       </variable>
-      <variable label="F2 controls X2" CV="55" mask="XXXXXXVX" item="F2 controls output 1" minOut="1" default="0" tooltip="CV55 Bit 1">
+      <variable label="F2 controls X2" CV="55" mask="XXXXXXVX" item="F2 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -319,7 +319,7 @@
         </enumVal>
         <label>F2 controls X2</label>
       </variable>
-      <variable label="F3 controls X2" CV="55" mask="XXXXXVXX" item="F3 controls output 1" minOut="1" default="0" tooltip="CV55 Bit 2">
+      <variable label="F3 controls X2" CV="55" mask="XXXXXVXX" item="F3 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -330,7 +330,7 @@
         </enumVal>
         <label>F3 controls X2</label>
       </variable>
-      <variable label="F4 controls X2" CV="55" mask="XXXXVXXX" item="F4 controls output 1" minOut="1" default="0" tooltip="CV55 Bit 3">
+      <variable label="F4 controls X2" CV="55" mask="XXXXVXXX" item="F4 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -341,7 +341,7 @@
         </enumVal>
         <label>F4 controls X2</label>
       </variable>
-      <variable label="FL(f) controls X2" CV="55" mask="XXXVXXXX" item="FL(f) controls output 1" minOut="1" default="1" tooltip="CV55 Bit 4">
+      <variable label="FL(f) controls X2" CV="55" mask="XXXVXXXX" item="FL(f) controls output 1" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -352,7 +352,7 @@
         </enumVal>
         <label>FL(f) controls X2</label>
       </variable>
-      <variable label="F1 controls X3" CV="56" mask="XXXXXXXV" item="F1 controls output 2" minOut="2" default="0" tooltip="CV56 Bit 0">
+      <variable label="F1 controls X3" CV="56" mask="XXXXXXXV" item="F1 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -363,7 +363,7 @@
         </enumVal>
         <label>F1 controls X3</label>
       </variable>
-      <variable label="F2 controls X3" CV="56" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0" tooltip="CV56 Bit 1">
+      <variable label="F2 controls X3" CV="56" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -374,7 +374,7 @@
         </enumVal>
         <label>F2 controls X3</label>
       </variable>
-      <variable label="F3 controls X3" CV="56" mask="XXXXXVXX" item="F3 controls output 2" minOut="2" default="0" tooltip="CV56 Bit 2">
+      <variable label="F3 controls X3" CV="56" mask="XXXXXVXX" item="F3 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -385,7 +385,7 @@
         </enumVal>
         <label>F3 controls X3</label>
       </variable>
-      <variable label="F4 controls X3" CV="56" mask="XXXXVXXX" item="F4 controls output 2" minOut="2" default="0" tooltip="CV56 Bit 3">
+      <variable label="F4 controls X3" CV="56" mask="XXXXVXXX" item="F4 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -396,7 +396,7 @@
         </enumVal>
         <label>F4 controls X3</label>
       </variable>
-      <variable label="FL(r) controls X3" CV="56" mask="XXXVXXXX" item="FL(r) controls output 2" minOut="2" default="1" tooltip="CV56 Bit 4">
+      <variable label="FL(r) controls X3" CV="56" mask="XXXVXXXX" item="FL(r) controls output 2" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -407,11 +407,11 @@
         </enumVal>
         <label>FL(r) controls X3</label>
       </variable>
-      <variable label="BEMF Ki" CV="59" default="22" item="EMF Dynamic Config" tooltip="Integral component of the load control CV59">
+      <variable label="BEMF Ki" CV="59" default="22" item="EMF Dynamic Config" tooltip="Integral component of the load control">
         <decVal max="255"/>
         <label>BEMF Ki</label>
       </variable>
-      <variable label="X2 output effect" item="Output 1 effect generated" CV="60" mask="XXXXXVVV" default="0" tooltip="CV60 Bits 0-2">
+      <variable label="X2 output effect" item="Output 1 effect generated" CV="60" mask="XXXXXVVV" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -428,7 +428,7 @@
         </enumVal>
         <label>X2 output effect</label>
       </variable>
-      <variable label="X2 output mode" item="Output 1 behavior" CV="60" mask="XXXVVXXX" default="1" tooltip="CV60 Bits 3-4">
+      <variable label="X2 output mode" item="Output 1 behavior" CV="60" mask="XXXVVXXX" default="1">
         <enumVal>
           <enumChoice choice="always on" value="0">
             <choice>always on</choice>
@@ -445,7 +445,7 @@
         </enumVal>
         <label>X2 output mode</label>
       </variable>
-      <variable label="X2 output options" item="Output 1 options" CV="60" mask="VVVXXXXX" default="0" tooltip="CV60 Bits 5-7">
+      <variable label="X2 output options" item="Output 1 options" CV="60" mask="VVVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -462,7 +462,7 @@
         </enumVal>
         <label>X2 output options</label>
       </variable>
-      <variable label="X3 output effect" item="Output 2 effect generated" CV="61" mask="XXXXXVVV" default="0" tooltip="CV61 Bits 0-2">
+      <variable label="X3 output effect" item="Output 2 effect generated" CV="61" mask="XXXXXVVV" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -479,7 +479,7 @@
         </enumVal>
         <label>X3 output effect</label>
       </variable>
-      <variable label="X3 output mode" item="Output 2 behavior" CV="61" mask="XXXVVXXX" default="2" tooltip="CV61 Bits 3-4">
+      <variable label="X3 output mode" item="Output 2 behavior" CV="61" mask="XXXVVXXX" default="2">
         <enumVal>
           <enumChoice choice="always on" value="0">
             <choice>always on</choice>
@@ -496,7 +496,7 @@
         </enumVal>
         <label>X3 output mode</label>
       </variable>
-      <variable label="X3 output options" item="Output 2 options" CV="61" mask="VVVXXXXX" default="0" tooltip="CV61 Bits 5-7">
+      <variable label="X3 output options" item="Output 2 options" CV="61" mask="VVVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="NONE" value="0">
             <choice>NONE</choice>
@@ -513,7 +513,7 @@
         </enumVal>
         <label>X3 output options</label>
       </variable>
-      <variable label="BEMF Kd" CV="64" default="30" item="EMF Droop Config" tooltip="Differential component of the load control CV64">
+      <variable label="BEMF Kd" CV="64" default="30" item="EMF Droop Config" tooltip="Differential component of the load control">
         <decVal max="255"/>
         <label>BEMF Kd</label>
       </variable>

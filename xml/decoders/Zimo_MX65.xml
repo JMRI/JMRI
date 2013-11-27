@@ -1313,7 +1313,7 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Sound Dependency" tooltip="CV 112, bit 0"/>
+      <display item="Sound Dependency"/>
     </column>
     <column>
       <label label="V model only">
@@ -1329,18 +1329,18 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Sound Loco Stopped" tooltip="CV 62"/>
-      <display item="Sound Lowest Speed" tooltip="CV 63"/>
-      <display item="Sound Maximum Speed" tooltip="CV 64"/>
+      <display item="Sound Loco Stopped"/>
+      <display item="Sound Lowest Speed"/>
+      <display item="Sound Maximum Speed"/>
     </column>
     <column>
-      <display item="Pulse Chain LGB-Sound" tooltip="CV 112, bit 7"/>
+      <display item="Pulse Chain LGB-Sound"/>
     </column>
     <name>Sound</name>
   </pane>
   <pane name="Motor II">
     <column>
-      <display item="Motor overload protection" tooltip="CV 112, bit 4"/>
+      <display item="Motor overload protection"/>
     </column>
     <name>Motor II</name>
   </pane>

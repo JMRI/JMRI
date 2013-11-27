@@ -16,7 +16,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <variable label="address place holder" CV="1" default="1"/>
-      <variable label="Motor direction" CV="2" comment=" " mask="VXXXXXXX" default="0" item="Locomotive Direction" tooltip="CV2 bit 7">
+      <variable label="Motor direction" CV="2" comment=" " mask="VXXXXXXX" default="0" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -26,7 +26,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="C input" CV="2" comment="C feature" mask="XXXXXXXV" default="1" item="User Id #1" tooltip="CV2 bit 0">
+      <variable label="C input" CV="2" comment="C feature" mask="XXXXXXXV" default="1" item="User Id #1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -36,7 +36,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Non-DCC operation" CV="2" comment=" " mask="XXXXXXVX" default="1" item="User Id #2" tooltip="CV2 bit 1">
+      <variable label="Non-DCC operation" CV="2" comment=" " mask="XXXXXXVX" default="1" item="User Id #2">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>

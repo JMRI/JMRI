@@ -39,32 +39,32 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
+      <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, range 1-127" item="Short Address" default="03">
         <shortAddressVal/>
         <label>Primary Address</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Start voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable label="Accel Base Rate (CV3)" CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255, CV3" comment="Range 0-255">
+      <variable label="Accel Base Rate (CV3)" CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel Base Rate (CV3)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decel Base Rate (CV4)" CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV4" comment="Range 0-255">
+      <variable label="Decel Base Rate (CV4)" CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel Base Rate (CV4)</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Maximum Voltage" CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable label="Maximum Voltage" CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Maximum Voltage</label>
         <comment>Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable label="Midpoint Voltage" CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable label="Midpoint Voltage" CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Midpoint Voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
@@ -77,7 +77,7 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="BEMF Cut Out" CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128), CV10">
+      <variable label="BEMF Cut Out" CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
         <decVal/>
         <label>BEMF Cut Out</label>
       </variable>
@@ -115,7 +115,7 @@
         <label>Analog Mode Purple</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18">
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999">
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
@@ -123,7 +123,7 @@
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="CV19, This loco runs Normal(default) or Reversed(address+128) when in the consist">
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -208,7 +208,7 @@
         </enumVal>
         <label>Speed steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" tooltip="CV29, '4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" tooltip="Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1013,7 +1013,7 @@
         <decVal/>
         <label>Dither Amplitude</label>
       </variable>
-      <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, CV61 least bit, enabling BEMF disables Dither">
+      <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1024,7 +1024,7 @@
         </enumVal>
         <label>BEMF Enable</label>
       </variable>
-      <variable label="Enable BEMF button control" CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF, CV61 '2' bit">
+      <variable label="Enable BEMF button control" CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1068,7 +1068,7 @@
         </enumVal>
         <label>Motor Button Control</label>
       </variable>
-      <variable label="Button Control Direction" CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active, CV61 ">
+      <variable label="Button Control Direction" CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active">
         <enumVal>
           <enumChoice choice="Manual F2 for, F3 rev">
             <choice>Manual F2 for, F3 rev</choice>
@@ -1372,47 +1372,47 @@
         </enumVal>
         <label>F6 controls output Ditch</label>
       </variable>
-      <variable label="Decel 2 Rate End Point" CV="125" default="0" tooltip="Sets the Decel 2 Rate End Point, range 0(default)-255, CV125" comment="Range 0-255">
+      <variable label="Decel 2 Rate End Point" CV="125" default="0" tooltip="Sets the Decel 2 Rate End Point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel 2 Rate End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 2 Rate, range 0(default)-255, CV126" comment="Range 0-255">
+      <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 2 Rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel 2 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decel 3 Rate End Point" CV="127" default="0" tooltip="Sets the Decel 3 Rate End Point, range 0(default)-255, CV127" comment="Range 0-255">
+      <variable label="Decel 3 Rate End Point" CV="127" default="0" tooltip="Sets the Decel 3 Rate End Point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel 3 Rate End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 3 Rate, range 0(default)-255, CV128" comment="Range 0-255">
+      <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 3 Rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel 3 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 2 Rate Start Point" CV="129" default="0" tooltip="Sets the Accel 2 Rate Start point, range 0(default)-255, CV129" comment="Range 0-255">
+      <variable label="Accel 2 Rate Start Point" CV="129" default="0" tooltip="Sets the Accel 2 Rate Start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 2 Rate Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
+      <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 2 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 3 Rate Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
+      <variable label="Accel 3 Rate Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 3 Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 Rate, range 0(default)-255, CV132" comment="Range 0-255">
+      <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 Rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 3 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255, CV133">
+      <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
         <decVal/>
         <label>Power to button controlled motor</label>
       </variable>

@@ -41,7 +41,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD1 Base Address" label="Primary event #" tooltip="CV193-4">
+        <display item="BOD1 Base Address" label="Primary event #" tooltip="4">
           </display>
       </column>
       <column>
@@ -112,7 +112,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD2 Base Address" label="Primary event #" tooltip="CV201-2">
+        <display item="BOD2 Base Address" label="Primary event #" tooltip="2">
           </display>
       </column>
       <column>
@@ -183,7 +183,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD3 Base Address" label="Primary event #" tooltip="CV209-10">
+        <display item="BOD3 Base Address" label="Primary event #" tooltip="10">
           </display>
       </column>
       <column>
@@ -254,7 +254,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD4 Base Address" label="Primary event #" tooltip="CV217-8">
+        <display item="BOD4 Base Address" label="Primary event #" tooltip="8">
           </display>
       </column>
       <column>
@@ -325,7 +325,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD5 Base Address" label="Primary event #" tooltip="CV225-6">
+        <display item="BOD5 Base Address" label="Primary event #" tooltip="6">
           </display>
       </column>
       <column>
@@ -396,7 +396,7 @@
     </row>
     <row>
       <column>
-        <display item="BOD6 Base Address" label="Primary event #" tooltip="CV233-4">
+        <display item="BOD6 Base Address" label="Primary event #" tooltip="4">
           </display>
       </column>
       <column>

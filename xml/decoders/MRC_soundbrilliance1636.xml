@@ -30,31 +30,31 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" tooltip="CV1 sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
+      <variable label="Short Address" CV="1" tooltip="sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-      <variable label="Start Voltage" CV="2" tooltip="CV2 sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
+      <variable label="Start Voltage" CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" tooltip="CV3 sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
+      <variable label="Acceleration" CV="3" tooltip="sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
         <decVal max="32"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" tooltip="CV4 sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
+      <variable label="Deceleration" CV="4" tooltip="sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
         <decVal max="32"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Top Voltage" CV="5" tooltip="CV5 sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
+      <variable label="Top Voltage" CV="5" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
         <decVal max="32"/>
         <label>Top Voltage</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" tooltip="CV7 is the Decoder ID, Read Only" item="Decoder Version">
+      <variable label="Version ID" CV="7" readOnly="yes" tooltip="is the Decoder ID, Read Only" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8 is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer" default="143">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -62,7 +62,7 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Advanced Consist address" CV="19" tooltip="CV19 set the Advanced Consist address, range 0-127" item="Consist Address" mask="XVVVVVVV" default="0">
+      <variable label="Advanced Consist address" CV="19" tooltip="set the Advanced Consist address, range 0-127" item="Consist Address" mask="XVVVVVVV" default="0">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
       </variable>
@@ -77,7 +77,7 @@
         </enumVal>
         <label>Locomotive Direction In Consist</label>
       </variable>
-      <variable label="Consist Function" CV="21" tooltip="CV21 selects the address accessory functions will respond to" item="Functions Respond To" mask="XXXXXXXV" default="0">
+      <variable label="Consist Function" CV="21" tooltip="selects the address accessory functions will respond to" item="Functions Respond To" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Functions respond to Locomotive Address Only">
             <choice>Functions respond to Locomotive Address Only</choice>
@@ -88,7 +88,7 @@
         </enumVal>
         <label>Consist Function</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" tooltip="CV29 '1' bit sets the direction of motion" item="Locomotive Direction" mask="XXXXXXXV">
+      <variable label="Normal direction of motion" CV="29" tooltip="'1' bit sets the direction of motion" item="Locomotive Direction" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -99,7 +99,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" tooltip="CV29 ['2' bit] sets the Speed Step resolution" item="Speed Step Mode" mask="XXXXXXVX" default="1">
+      <variable label="Speed Steps" CV="29" tooltip="['2' bit] sets the Speed Step resolution" item="Speed Step Mode" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -110,7 +110,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog Conversion Mode" CV="29" tooltip="CV29 ['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" item="Analog (DC) Operation" mask="XXXXXVXX" default="0">
+      <variable label="Analog Conversion Mode" CV="29" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" item="Analog (DC) Operation" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -121,7 +121,7 @@
         </enumVal>
         <label>Analog Conversion Mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" tooltip="CV29 ['8' bit] determines if loco will use Speed Table or not" item="Speed Table Definition" mask="XXXVXXXX" default="1">
+      <variable label="Use Speed Table" CV="29" tooltip="['8' bit] determines if loco will use Speed Table or not" item="Speed Table Definition" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
             <choice>Don't use Speed Table</choice>
@@ -138,7 +138,7 @@
           <enumChoice choice="4 digit addressing"/>
         </enumVal>
       </variable>
-      <variable label="Sound On/Off" CV="49" tooltip="CV49 turns sound on or off" item="Sound Option 1" mask="XXXXXXXV" default="1">
+      <variable label="Sound On/Off" CV="49" tooltip="turns sound on or off" item="Sound Option 1" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

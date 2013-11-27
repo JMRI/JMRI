@@ -286,7 +286,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <!-- Sound options -->
-      <variable label="Master Volume" CV="58" item="Sound Setting 1" tooltip="CV 58" default="9" comment="0-15, use about 4-8">
+      <variable label="Master Volume" CV="58" item="Sound Setting 1" default="9" comment="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
         <label xml:lang="it">Volume principale</label>
@@ -439,74 +439,74 @@
         <label xml:lang="it">Funzione 6 comportamento</label>
       </variable>
       <!-- Sound options -->
-      <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="127">
+      <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="127">
         <decVal/>
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable label="Steam Chuff/CAM Config" CV="133" tooltip="CV 133" item="Sound Setting 15" default="63" include="1441,1641">
+      <variable label="Steam Chuff/CAM Config" CV="133" item="Sound Setting 15" default="63" include="1441,1641">
         <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
-      <variable label="Steam Gear Ratio Trim" CV="134" tooltip="CV 134" item="Sound Setting 16" default="32" include="1441,1641">
+      <variable label="Steam Gear Ratio Trim" CV="134" item="Sound Setting 16" default="32" include="1441,1641">
         <decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
-      <variable label="Volume When Muted" CV="135" tooltip="CV 135" item="Sound Setting 3">
+      <variable label="Volume When Muted" CV="135" item="Sound Setting 3">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable label="Prime Mover/Chuff Volume" CV="140" tooltip="CV 140" item="Sound Setting 4" default="60">
+      <variable label="Prime Mover/Chuff Volume" CV="140" item="Sound Setting 4" default="60">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
-      <variable label="Bell Volume" CV="141" tooltip="CV 141" item="Sound Setting 5" default="25">
+      <variable label="Bell Volume" CV="141" item="Sound Setting 5" default="25">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable label="Horn/Whistle Volume" CV="142" tooltip="CV 142" item="Sound Setting 6" default="60">
+      <variable label="Horn/Whistle Volume" CV="142" item="Sound Setting 6" default="60">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba</label>
       </variable>
-      <variable label="Air Features Volume" CV="143" tooltip="CV 143" item="Sound Setting 7" default="30">
+      <variable label="Air Features Volume" CV="143" item="Sound Setting 7" default="30">
         <decVal max="64"/>
         <label>Air Features Volume</label>
         <label xml:lang="it">Volume Aria Compressa</label>
       </variable>
-      <variable label="Dynamic Brake Volume" CV="144" tooltip="CV 144" item="Sound Setting 8" default="55">
+      <variable label="Dynamic Brake Volume" CV="144" item="Sound Setting 8" default="55">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
         <label xml:lang="it">Volume frenata dinamica</label>
       </variable>
-      <variable label="Misc Volumes (reserved)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="15">
+      <variable label="Misc Volumes (reserved)" CV="145" item="Sound Setting 9" default="15">
         <decVal max="64"/>
         <label>Misc Volumes (reserved)</label>
         <label xml:lang="it">Volume vari (riservata)</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="24msec counts" default="9">
+      <variable label="Bell Ring Rate" CV="146" item="Sound Setting 10" comment="24msec counts" default="9">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in passi da 24msec</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147" tooltip="CV 147" item="Sound Setting 11" default="50">
+      <variable label="Air Drier Rate" CV="147" item="Sound Setting 11" default="50">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 12" default="30">
+      <variable label="Compressor Run/Popoff Rate" CV="148" item="Sound Setting 12" default="30">
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
       </variable>
-      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13" default="20">
+      <variable label="Compressor On Time" CV="149" item="Sound Setting 13" default="20">
         <decVal/>
         <label>Compressor On Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
@@ -643,7 +643,7 @@
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Steam Blowdown/Safety Volume" CV="154" tooltip="CV 154" item="Sound Setting 14" default="60" include="1441,1641">
+      <variable label="Steam Blowdown/Safety Volume" CV="154" item="Sound Setting 14" default="60" include="1441,1641">
         <decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>

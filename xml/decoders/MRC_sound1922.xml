@@ -90,11 +90,11 @@
         </enumVal>
         <label>Adaptive Back EMF control enable</label>
       </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="CV19 set the Advanced Consist address, range 0-127" default="0">
+      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="set the Advanced Consist address, range 0-127" default="0">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
       </variable>
-      <variable label="Consist Function" CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="CV21 selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
+      <variable label="Consist Function" CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
         <enumVal>
           <enumChoice choice="Functions respond to Locomotive Address Only">
             <choice>Functions respond to Locomotive Address Only</choice>
@@ -216,7 +216,7 @@
         <label>Rail wheel clack</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable label="Kick Start Voltage" CV="65" item="Kick Start" tooltip="CV65 sets the Kick Start Voltage [range 0-63]" default="63">
+      <variable label="Kick Start Voltage" CV="65" item="Kick Start" tooltip="sets the Kick Start Voltage [range 0-63]" default="63">
         <decVal max="63"/>
         <label>Kick Start Voltage</label>
       </variable>
@@ -444,7 +444,7 @@
         </enumVal>
         <label>Air Compressor Mode</label>
       </variable>
-      <variable label="Diesel Notch Mode" item="Sound Option 6" CV="122" tooltip="CV122 can only have values of 0 or 3" default="3">
+      <variable label="Diesel Notch Mode" item="Sound Option 6" CV="122" tooltip="can only have values of 0 or 3" default="3">
         <enumVal>
           <enumChoice choice="Auto" value="0">
             <choice>Auto</choice>
@@ -455,7 +455,7 @@
         </enumVal>
         <label>Prime Mover Type</label>
       </variable>
-      <variable label="Prime Mover Type" item="Sound Option 7" CV="123" tooltip="CV123 selects the Prime Mover Type" default="0">
+      <variable label="Prime Mover Type" item="Sound Option 7" CV="123" tooltip="selects the Prime Mover Type" default="0">
         <enumVal>
           <enumChoice choice="Dual EMD567B">
             <choice>Dual EMD567B</choice>

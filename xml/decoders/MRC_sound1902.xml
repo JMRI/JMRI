@@ -376,7 +376,7 @@
         </enumVal>
         <label>Auto Brake squeal</label>
       </variable>
-      <variable label="Diesel Notch Mode" item="Sound Option 6" CV="122" tooltip="CV122 can only have values of 0 or 3" default="3">
+      <variable label="Diesel Notch Mode" item="Sound Option 6" CV="122" tooltip="can only have values of 0 or 3" default="3">
         <enumVal>
           <enumChoice choice="Auto" value="0">
             <choice>Auto</choice>
@@ -387,7 +387,7 @@
         </enumVal>
         <label>Prime Mover Type</label>
       </variable>
-      <variable label="Prime Mover Type" item="Sound Option 7" CV="123" tooltip="CV123 selects the Prime Mover Type" default="0">
+      <variable label="Prime Mover Type" item="Sound Option 7" CV="123" tooltip="selects the Prime Mover Type" default="0">
         <enumVal>
           <enumChoice choice="Dual EMD567B">
             <choice>Dual EMD567B</choice>

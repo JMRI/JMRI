@@ -30,7 +30,7 @@
       <column>
         <row>
           <display item="CV51.0" layout="above" label=""/>
-          <display item="CV51.0" layout="above" format="hslider-percent" tooltip="Sets CV 51.0 (0 - 127)"/>
+          <display item="CV51.0" layout="above" format="hslider-percent" tooltip="(0 - 127)"/>
         </row>
       </column>
       <label label="      "/>

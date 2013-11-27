@@ -326,7 +326,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
@@ -985,15 +985,15 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
         <label>Slip Rate Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" include="MT4,FEF" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" include="MT4,FEF" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
         <label>Articulated Exhaust Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="1" include="BB,chal,N_Chal" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="1" include="BB,chal,N_Chal" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
         <label>Articulated Exhaust Control</label>
       </variable>
-      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0" tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam.">
+      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0" tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCam.xml"/>
         <label>Cam Enable</label>
       </variable>
@@ -1521,7 +1521,7 @@
         <decVal max="255"/>
         <label>DDE Filter Control Gain</label>
       </variable>
-      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255" tooltip="Sets the overall damping ratio of the DDE Filter Bank.">
+      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255" tooltip="Sets the overall damping ratio of the DDE Filter Bank">
         <decVal/>
         <label>DDE Filter Damping</label>
       </variable>
@@ -1607,35 +1607,35 @@
         <label>Automatic Steam Blow Down Enable</label>
       </variable>
       <!-- Event Probability Controls follow -->
-      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the fireman will shovel some coal.">
+      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the fireman will shovel some coal">
         <decVal max="255"/>
         <label>Probability Fireman Shovels Coal</label>
       </variable>
-      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will fill the tender with water.">
+      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will fill the tender with water">
         <decVal max="255"/>
         <label>Probability Fireman Fills the Tender</label>
       </variable>
-      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" tooltip="Sets the probability that the fireman will use his wrench.">
+      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" tooltip="Sets the probability that the fireman will use his wrench">
         <decVal max="255"/>
         <label>Probability Fireman Turns His Wrench</label>
       </variable>
-      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will use the grease gun.">
+      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will use the grease gun">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Grease Gun</label>
       </variable>
-      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the oil can.">
+      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the oil can">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Oil Can</label>
       </variable>
-      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the water injector.">
+      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the water injector">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Injector</label>
       </variable>
-      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the firebox blower.">
+      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the firebox blower">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Blower</label>
       </variable>
-      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the safety valve will relieve.">
+      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the safety valve will relieve">
         <decVal max="255"/>
         <label>Probability Pop Valve Blows Off</label>
       </variable>

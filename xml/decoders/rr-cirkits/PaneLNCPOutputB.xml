@@ -52,7 +52,7 @@
     </row>
     <row>
       <column>
-        <display item="OUT5 Base Address" label="Primary event #" tooltip="CV801-2">
+        <display item="OUT5 Base Address" label="Primary event #" tooltip="2">
           </display>
       </column>
       <column>
@@ -136,7 +136,7 @@
     </row>
     <row>
       <column>
-        <display item="OUT6 Base Address" label="Primary event #" tooltip="CV809-10">
+        <display item="OUT6 Base Address" label="Primary event #" tooltip="10">
           </display>
       </column>
       <column>
@@ -216,7 +216,7 @@
     </row>
     <row>
       <column>
-        <display item="OUT7 Base Address" label="Primary event #" tooltip="CV817-8">
+        <display item="OUT7 Base Address" label="Primary event #" tooltip="8">
           </display>
       </column>
       <column>
@@ -300,7 +300,7 @@
     </row>
     <row>
       <column>
-        <display item="OUT8 Base Address" label="Primary event #" tooltip="CV825-6">
+        <display item="OUT8 Base Address" label="Primary event #" tooltip="6">
           </display>
       </column>
       <column>

@@ -65,7 +65,7 @@
           <enumChoice choice="22 kHz" value="22"/>
         </enumVal>
       </variable>
-      <variable label="Alternative mode (analogue)" CV="12" mask="XXXXXXXV" item="Advanced Group 1 Option 1" default="1" tooltip="allow alternative mode (analogue), set action in CV29">
+      <variable label="Alternative mode (analogue)" CV="12" mask="XXXXXXXV" item="Advanced Group 1 Option 1" default="1" tooltip="allow alternative mode (analogue), set action in">
         <enumVal>
           <enumChoice choice="Off"/>
           <enumChoice choice="Analogue permitted"/>

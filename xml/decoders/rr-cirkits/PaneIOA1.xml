@@ -66,7 +66,7 @@
     </row>
     <row>
       <column>
-        <display item="PA1 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PA1 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -163,7 +163,7 @@
     </row>
     <row>
       <column>
-        <display item="PA2 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PA2 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -260,7 +260,7 @@
     </row>
     <row>
       <column>
-        <display item="PA3 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PA3 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -357,7 +357,7 @@
     </row>
     <row>
       <column>
-        <display item="PA4 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PA4 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>

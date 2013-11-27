@@ -18,31 +18,31 @@
 
 
 <variables>
-            <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
+            <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, range 1-127" item="Short Address" default="03">
                 <shortAddressVal/>
             </variable>
-            <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+            <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
                 <decVal/>
             </variable>
-            <variable label="Accel 1 Rate" CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255, CV3" comment="Range 0-255">
+            <variable label="Accel 1 Rate" CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Decel 1 Rate" CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV4" comment="Range 0-255">
+            <variable label="Decel 1 Rate" CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255" comment="Range 0-255">
                 <decVal max="255"/>
             </variable>
-            <variable label="Maximum Voltage" CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
+            <variable label="Maximum Voltage" CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
                 <decVal/>
             </variable>
-            <variable label="Midpoint Voltage" CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+            <variable label="Midpoint Voltage" CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
                 <decVal/>
             </variable>
-            <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="CV7=41-46 for all TCS with Back EMF models, Read Only">
+            <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
                 <decVal/>
             </variable>
-            <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="CV8=153 for TCS, Read Only">
+            <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="=153 for TCS, Read Only">
                 <decVal/>
             </variable>
-            <variable label="BEMF Cut Out" CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128), CV10">
+            <variable label="BEMF Cut Out" CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128)">
                 <decVal/>
             </variable>
             <variable label="Analog Mode White/Yellow" CV="13" mask="XXXXXXXV" default="1" minOut="2" item="Analog Mode Function Status - FL(f)">
@@ -90,16 +90,16 @@
             <variable label="Decoder Lock control number" CV="15" mask="XXXXXVVV" default="0" tooltip="To unlock a decoder make CV15=0 or CV15=CV16">
                 <decVal/>
             </variable>
-            <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's locking ID number, range 1-6, default 1, CV16">
+            <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's locking ID number, range 1-6, default 1">
                 <decVal/>
             </variable>
-            <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18">
+            <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999">
                 <longAddressVal/>
             </variable>
             <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
                 <decVal/>
             </variable>
-            <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="CV19, This loco runs Normal(default) or Reversed(address+128) when in the consist">
+            <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
                 <enumVal>
                     <enumChoice choice="Normal"/>
                     <enumChoice choice="Reversed"/>
@@ -171,7 +171,7 @@
                     <enumChoice choice="28/128"/>
                 </enumVal>
             </variable>
-            <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" tooltip="CV29, '4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
+            <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" tooltip="'4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
                 <enumVal>
                     <enumChoice choice="Off"/>
                     <enumChoice choice="On"/>
@@ -1211,19 +1211,19 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, CV61 least bit, enabling BEMF disables Dither">
+            <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
                 <enumVal>
                     <enumChoice choice="Disabled"/>
                     <enumChoice choice="Enabled"/>
                 </enumVal>
             </variable>
-            <variable label="Enable BEMF Button Control" CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF, CV61 '2' bit">
+            <variable label="Enable BEMF Button Control" CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
                 <enumVal>
                     <enumChoice choice="Disabled"/>
                     <enumChoice choice="Enabled"/>
                 </enumVal>
             </variable>
-            <variable label="Enable Brake Button Control" CV="61" mask="XXXXVXXX" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake, CV61 '3' bit">
+            <variable label="Enable Brake Button Control" CV="61" mask="XXXXVXXX" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
                 <enumVal>
                     <enumChoice choice="Disabled"/>
                     <enumChoice choice="Enabled"/>
@@ -1247,7 +1247,7 @@
                     <enumChoice choice="Button control of motor"/>
                 </enumVal>
             </variable>
-            <variable label="Button Control Direction" CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active, CV61 ">
+            <variable label="Button Control Direction" CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active">
                 <enumVal>
                     <enumChoice choice="Manual F2 for, F3 rev"/>
                     <enumChoice choice="Auto F2 for/rev"/>

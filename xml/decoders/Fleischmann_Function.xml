@@ -39,16 +39,16 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+      <variable label="Short Address" CV="1" default="3" item="Short Address">
         <shortAddressVal/>
       </variable>
-      <variable label="Software Version Number" CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+      <variable label="Software Version Number" CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="155" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="155" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
       </variable>
-      <variable label="Analog Mode" CV="12" default="1" item="Analog mode" tooltip="Analog Mode CV8">
+      <variable label="Analog Mode" CV="12" default="1" item="Analog mode" tooltip="Analog Mode">
         <enumVal>
           <enumChoice choice="Digital Operation Only">
             <choice>Digital Operation Only</choice>
@@ -62,7 +62,7 @@
         <longAddressVal/>
         <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
-      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Normal direction of travel">
             <choice>Normal direction of travel</choice>
@@ -72,7 +72,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29">
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -82,7 +82,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29">
+      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
         <enumVal>
           <enumChoice choice="Digital Operation Only">
             <choice>Digital Operation Only</choice>
@@ -102,7 +102,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Selection of speed curve" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table CV29">
+      <variable label="Selection of speed curve" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
         <enumVal>
           <enumChoice choice="speed curve through CV 2, 5, 6">
             <choice>speed curve through CV 2, 5, 6</choice>
@@ -112,7 +112,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
         <enumVal>
           <enumChoice choice="Short Address (CV1)">
             <choice>Short Address (CV1)</choice>
@@ -122,10 +122,10 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Error Information" CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only) CV30">
+      <variable label="Error Information" CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only)">
         <decVal/>
       </variable>
-      <variable label="Light Forward" CV="33" mask="XXXXXXXV" default="1" item="Function F0F behavior" tooltip="CV33">
+      <variable label="Light Forward" CV="33" mask="XXXXXXXV" default="1" item="Function F0F behavior">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -135,7 +135,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Light Reverse" CV="34" mask="XXXXXXVX" default="1" item="Function F0R behavior" tooltip="CV34">
+      <variable label="Light Reverse" CV="34" mask="XXXXXXVX" default="1" item="Function F0R behavior">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -145,7 +145,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Delay on/off" CV="35" mask="XVXXXXXX" default="1" item="Delay on/off" tooltip="CV35">
+      <variable label="Delay on/off" CV="35" mask="XVXXXXXX" default="1" item="Delay on/off">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -155,7 +155,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Shunting" CV="36" mask="VXXXXXXX" default="1" item="Shunt on/off" tooltip="CV36">
+      <variable label="Shunting" CV="36" mask="VXXXXXXX" default="1" item="Shunt on/off">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -165,7 +165,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function F3" CV="37" default="16" item="Function F3" tooltip="CV37">
+      <variable label="Function F3" CV="37" default="16" item="Function F3">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -175,7 +175,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function F4" CV="38" default="4" item="Function F4" tooltip="CV38">
+      <variable label="Function F4" CV="38" default="4" item="Function F4">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -185,7 +185,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function F5" CV="39" default="8" item="Shunt on/off" tooltip="CV39">
+      <variable label="Function F5" CV="39" default="8" item="Shunt on/off">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -195,7 +195,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function F6" CV="40" default="16" item="Function F6" tooltip="CV40">
+      <variable label="Function F6" CV="40" default="16" item="Function F6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -205,7 +205,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option" tooltip="CV49">
+      <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -215,7 +215,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="DC Motor PWM frequency" CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period" tooltip="CV49">
+      <variable label="DC Motor PWM frequency" CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
         <enumVal>
           <enumChoice choice="20 kHz Tact frequency on">
             <choice>20 kHz Tact frequency on</choice>
@@ -225,7 +225,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" tooltip="CV49">
+      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -235,7 +235,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0" tooltip="CV49">
+      <variable label="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -245,7 +245,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1" tooltip="CV49">
+      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -255,7 +255,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0" tooltip="CV49">
+      <variable label="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -265,7 +265,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0" tooltip="CV49">
+      <variable label="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -275,7 +275,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0" tooltip="CV49">
+      <variable label="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -285,7 +285,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="BEMF on/off" CV="51" mask="XXXXXXXV" default="1" tooltip="CV51">
+      <variable label="BEMF on/off" CV="51" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -295,7 +295,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Motor Cycle Integration on/off" CV="51" mask="XXXXXXVX" default="1" tooltip="CV51">
+      <variable label="Motor Cycle Integration on/off" CV="51" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -305,7 +305,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fleischmann Function #3" CV="51" mask="XXXXXVXX" default="0" tooltip="CV51">
+      <variable label="Fleischmann Function #3" CV="51" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -315,7 +315,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fleischmann Function #4" CV="51" mask="XXXXVXXX" default="0" tooltip="CV51">
+      <variable label="Fleischmann Function #4" CV="51" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -325,7 +325,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fleischmann Function #5" CV="51" mask="XXXVXXXX" default="0" tooltip="CV51">
+      <variable label="Fleischmann Function #5" CV="51" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -335,7 +335,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fleischmann Function #6" CV="51" mask="XXVXXXXX" default="0" tooltip="CV51">
+      <variable label="Fleischmann Function #6" CV="51" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -345,7 +345,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Overload Light Blink" CV="51" mask="XVXXXXXX" default="0" tooltip="CV51">
+      <variable label="Overload Light Blink" CV="51" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -355,7 +355,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fleischmann Function #8" CV="51" mask="VXXXXXXX" default="0" tooltip="CV51">
+      <variable label="Fleischmann Function #8" CV="51" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -365,7 +365,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="RESET" CV="64" default="24" item="RESET" tooltip="Writing 1 in this CV will reset the decoder. CV64">
+      <variable label="RESET" CV="64" default="24" item="RESET" tooltip="Writing 1 in this CV will reset the decoder">
       </variable>
     </variables>
     <resets>

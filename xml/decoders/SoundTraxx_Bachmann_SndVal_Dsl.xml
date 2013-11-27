@@ -103,7 +103,7 @@
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
       </variable>
-      <variable label="Packet Time Out Value (0-255)" CV="11" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;      addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable. Time Out Period = CV 11 X 0.25&lt;/html&gt;">
+      <variable label="Packet Time Out Value (0-255)" CV="11" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;      addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable. Units = 0.25 sec&lt;/html&gt;">
         <decVal/>
         <label>Packet Time Out Value (0-255)</label>
       </variable>
@@ -390,7 +390,7 @@
         </enumVal>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used">
             <choice>Disabled, Speed Curves not used</choice>

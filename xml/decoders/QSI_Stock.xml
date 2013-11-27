@@ -1928,7 +1928,7 @@
             <display item="CV51.0" layout="above" label="">
               <label/>
             </display>
-            <display item="CV51.0" layout="above" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+            <display item="CV51.0" layout="above" format="hslider" tooltip="(0 - 127)"/>
           </row>
         </column>
         <label label="      ">

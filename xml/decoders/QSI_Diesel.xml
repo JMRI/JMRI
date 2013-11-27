@@ -3048,7 +3048,7 @@
           <label label=" ">
             <label> </label>
           </label>
-          <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+          <display item="CV51.0" format="hslider" tooltip="(0 - 127)"/>
           <label label=" ">
             <label> </label>
           </label>

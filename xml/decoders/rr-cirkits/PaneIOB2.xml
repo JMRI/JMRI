@@ -64,7 +64,7 @@
     </row>
     <row>
       <column>
-        <display item="PB5 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PB5 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -161,7 +161,7 @@
     </row>
     <row>
       <column>
-        <display item="PB6 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PB6 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -258,7 +258,7 @@
     </row>
     <row>
       <column>
-        <display item="PB7 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PB7 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>
@@ -355,7 +355,7 @@
     </row>
     <row>
       <column>
-        <display item="PB8 Base Address" label="Primary event #" tooltip="CV129-30">
+        <display item="PB8 Base Address" label="Primary event #" tooltip="30">
           </display>
       </column>
       <column>

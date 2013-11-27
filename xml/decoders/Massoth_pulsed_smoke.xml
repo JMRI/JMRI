@@ -41,29 +41,29 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+      <variable label="Short Address" CV="1" default="3" item="Short Address">
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Programming lock - unlock" CV="15" default="160" tooltip="unlock programming lock CV15">
+      <variable label="Programming lock - unlock" CV="15" default="160" tooltip="unlock programming lock">
         <decVal/>
       </variable>
-      <variable label="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual) CV16">
+      <variable label="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual)">
         <decVal/>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) CV17-18">
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239)">
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
         <enumVal>
           <enumChoice choice="Short Address (CV1)">
             <choice>Short Address (CV1)</choice>
@@ -74,39 +74,39 @@
         </enumVal>
       </variable>
       <variable label="Bus Type" CV="49" mask="XXXVXXXX" default="0"
-         tooltip="Determines which protocol is used on the bus connection to other devices. CV49" >
+         tooltip="Determines which protocol is used on the bus connection to other devices" >
         <enumVal>
           <enumChoice choice="Massoth"/>
           <enumChoice choice="SUSI"/>
         </enumVal>
       </variable>
       <variable label="Digital diesel mode" CV="49" mask="VXXXXXXX" default="0"
-         tooltip="Determines mode for digital diesel operation. CV49" >
+         tooltip="Determines mode for digital diesel operation" >
         <enumVal>
           <enumChoice choice="Track"/>
           <enumChoice choice="Bus"/>
         </enumVal>
       </variable>
-      <variable label="Preheating heater element" CV="60" default="0" tooltip="Range 0-32. CV60">
+      <variable label="Preheating heater element" CV="60" default="0" tooltip="Range 0-32">
         <decVal min="0" max="32"/>
       </variable>
-      <variable label="Fan speed stop" CV="61" default="30" tooltip="Range 0-100. CV61">
+      <variable label="Fan speed stop" CV="61" default="30" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
       </variable>
-      <variable label="Fan speed start up" CV="62" default="100" tooltip="Range 0-100. CV62">
+      <variable label="Fan speed start up" CV="62" default="100" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
       </variable>
-      <variable label="Fan speed drive" CV="63" default="100" tooltip="Range 0-100. CV63">
+      <variable label="Fan speed drive" CV="63" default="100" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
       </variable>
-      <variable label="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100. CV64">
+      <variable label="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
       </variable>
-      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended 4 digit address for programming on the Main (Range 128-10239) CV107-108">
+      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended 4 digit address for programming on the Main (Range 128-10239)">
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Preheating function key" CV="110" default="0" tooltip="Function key which switches preheating CV110">
+      <variable label="Preheating function key" CV="110" default="0" tooltip="Function key which switches preheating">
         <enumVal>
           <enumChoice choice="F0" value="0">
             <choice>F0</choice>
@@ -162,13 +162,13 @@
         </enumVal>
       </variable>
       <variable label="Smoke Generator type" CV="113" default="20"
-         tooltip="Must be changed if voltage of heating element changed. CV113" >
+         tooltip="Must be changed if voltage of heating element changed" >
         <enumVal>
           <enumChoice choice="Analog" value="5"/>
           <enumChoice choice="Digital" value="20"/>
         </enumVal>
       </variable>
-      <variable label="Fan function key" CV="120" default="7" tooltip="Function key which switches preheating CV120">
+      <variable label="Fan function key" CV="120" default="7" tooltip="Function key which switches preheating">
         <enumVal>
           <enumChoice choice="F0" value="0">
             <choice>F0</choice>
@@ -223,12 +223,12 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Fan delay" CV="124"  tooltip="0,5 sec. per value CV124">
+      <variable label="Fan delay" CV="124"  tooltip="0,5 sec. per value">
         <decVal/>
       </variable>
       <variable label="New ID for Decoder Type" CV="255" readOnly="yes" default="160" 
         item="Product Number"
-        tooltip="New ID for Decoder Type (read only)(Only needed for Software Update) CV255">
+        tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
         <decVal/>
       </variable>
     </variables>

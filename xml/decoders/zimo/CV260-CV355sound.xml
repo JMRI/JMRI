@@ -20,7 +20,7 @@
     <decVal/>
     <label>Load Code 4</label>
   </variable>
-  <variable label="Set sound program" CV="265" default="1" tooltip="See manual! CV265">
+  <variable label="Set sound program" CV="265" default="1" tooltip="See manual!">
     <enumVal>
       <enumChoice choice="Steam Set 1" value="1">
         <choice>Steam Set 1</choice>
@@ -217,139 +217,139 @@
     </enumVal>
     <label>Set sound program</label>
   </variable>
-  <variable label="Total volume" CV="266" default="65" tooltip="65 is highest distortion-free play back, INC=5. CV266">
+  <variable label="Total volume" CV="266" default="65" tooltip="65 is highest distortion-free play back, INC=5">
     <decVal min="0" max="255"/>
     <label>Total volume</label>
   </variable>
-  <variable label="Virtual cam chuff frequency" CV="267" default="70" tooltip="The lower the value the higher the chuff frequency and vice versa, INC=1. CV267">
+  <variable label="Virtual cam chuff frequency" CV="267" default="70" tooltip="The lower the value the higher the chuff frequency and vice versa, INC=1">
     <decVal min="0" max="255"/>
     <label>Virtual cam chuff frequency</label>
   </variable>
-  <variable label="Real cam sensor chuff rate" CV="268" default="0" tooltip="0 = virtual sensor, triggers/chuff, INC=1. CV268">
+  <variable label="Real cam sensor chuff rate" CV="268" default="0" tooltip="0 = virtual sensor, triggers/chuff, INC=1">
     <decVal min="0" max="255"/>
     <label>Real cam sensor chuff rate</label>
   </variable>
-  <variable label="Lead chuff accentuated" CV="269" default="0" tooltip="See manual, INC=10. CV269">
+  <variable label="Lead chuff accentuated" CV="269" default="0" tooltip="See manual, INC=10">
     <decVal min="0" max="255"/>
     <label>Lead chuff accentuated</label>
   </variable>
-  <variable label="Overlapping effect at high speeds" CV="271" default="16" tooltip="Useful up to about 30, see manual, INC=1. CV271">
+  <variable label="Overlapping effect at high speeds" CV="271" default="16" tooltip="Useful up to about 30, see manual, INC=1">
     <decVal min="0" max="255"/>
     <label>Overlapping effect at high speeds</label>
   </variable>
-  <variable label="Blow-off time" CV="272" default="50" tooltip="How long after start-up blow-off occurs, INC=10. CV272">
+  <variable label="Blow-off time" CV="272" default="50" tooltip="How long after start-up blow-off occurs, INC=10">
     <decVal min="0" max="255"/>
     <label>Blow-off time</label>
   </variable>
-  <variable label="Delayed start after blow-off time" CV="273" default="0" tooltip="0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1. CV273">
+  <variable label="Delayed start after blow-off time" CV="273" default="0" tooltip="0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1">
     <decVal min="0" max="255"/>
     <label>Delayed start after blow-off time</label>
   </variable>
-  <variable label="Blow-off schedule" CV="274" default="30" tooltip="Blow-off suppressed by shunting, 10ths of seconds, INC=10. CV274">
+  <variable label="Blow-off schedule" CV="274" default="30" tooltip="Blow-off suppressed by shunting, 10ths of seconds, INC=10">
     <decVal min="0" max="255"/>
     <label>Blow-off schedule</label>
   </variable>
-  <variable label="Chuff volume at low speed and no load" CV="275" default="60" tooltip="See manual!, INC=10. CV275">
+  <variable label="Chuff volume at low speed and no load" CV="275" default="60" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at low speed and no load</label>
   </variable>
-  <variable label="Chuff volume at high speed and no load" CV="276" default="80" tooltip="See manual!, INC=10. CV276">
+  <variable label="Chuff volume at high speed and no load" CV="276" default="80" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Chuff volume at high speed and no load</label>
   </variable>
-  <variable label="Degree of volume change under load" CV="277" default="0" tooltip="See manual!, INC=10. CV277">
+  <variable label="Degree of volume change under load" CV="277" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Degree of volume change under load</label>
   </variable>
-  <variable label="Load change threshold" CV="278" default="0" tooltip="See manual!, INC=10. CV278">
+  <variable label="Load change threshold" CV="278" default="0" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Load change threshold</label>
   </variable>
-  <variable label="Reaction time to load change" CV="279" default="0" tooltip="See manual!, INC=1. CV279">
+  <variable label="Reaction time to load change" CV="279" default="0" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Reaction time to load change</label>
   </variable>
-  <variable label="Load influence for diesel engines" CV="280" default="0" tooltip="See manual! 0=no influence, reacts to motor speed only, 1-255, load influence increases with number. CV280">
+  <variable label="Load influence for diesel engines" CV="280" default="0" tooltip="See manual! 0=no influence, reacts to motor speed only, 1-255, load influence increases with number">
     <decVal min="0" max="255"/>
     <label>Load influence for diesel engines</label>
   </variable>
-  <variable label="Acceleration threshold for full load sound" CV="281" default="1" tooltip="See manual!, INC=1. CV281">
+  <variable label="Acceleration threshold for full load sound" CV="281" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Acceleration threshold for full load sound</label>
   </variable>
-  <variable label="Duration of acceleration sound" CV="282" default="30" tooltip="See manual!, INC=10. CV282">
+  <variable label="Duration of acceleration sound" CV="282" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of acceleration sound</label>
   </variable>
-  <variable label="Engine volume at full acceleration" CV="283" default="255" tooltip="See manual!, INC=10. CV283">
+  <variable label="Engine volume at full acceleration" CV="283" default="255" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Engine volume at full acceleration</label>
   </variable>
-  <variable label="Threshold for deceleration sound" CV="284" default="1" tooltip="See manual!, INC=1. CV284">
+  <variable label="Threshold for deceleration sound" CV="284" default="1" tooltip="See manual!, INC=1">
     <decVal min="0" max="255"/>
     <label>Threshold for deceleration sound</label>
   </variable>
-  <variable label="Duration of reduced volume on deceleration" CV="285" default="30" tooltip="See manual!, INC=10. CV285">
+  <variable label="Duration of reduced volume on deceleration" CV="285" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Duration of reduced volume on deceleration</label>
   </variable>
-  <variable label="Volume level during deceleration" CV="286" default="20" tooltip="See manual!, INC=10. CV286">
+  <variable label="Volume level during deceleration" CV="286" default="20" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Volume level during deceleration</label>
   </variable>
-  <variable label="Brake squeal threshold" CV="287" default="20" tooltip="Internal speed step below which brake squeal starts, INC=10. CV287">
+  <variable label="Brake squeal threshold" CV="287" default="20" tooltip="Internal speed step below which brake squeal starts, INC=10">
     <decVal min="0" max="255"/>
     <label>Brake squeal threshold</label>
   </variable>
-  <variable label="Minimum driving time before brake squeal" CV="288" default="50" tooltip="Unless loco is driven for this time Brake squeal will be surpressed (0-25sec), INC=10. CV288">
+  <variable label="Minimum driving time before brake squeal" CV="288" default="50" tooltip="Unless loco is driven for this time Brake squeal will be surpressed (0-25sec), INC=10">
     <decVal min="0" max="255"/>
     <label>Minimum driving time before brake squeal</label>
   </variable>
-  <variable label="Thyristor control: Sound pitch for stepping effect" CV="289" default="1" tooltip="See manual!, INC=10. CV289">
+  <variable label="Thyristor control: Sound pitch for stepping effect" CV="289" default="1" tooltip="See manual!, INC=10">
     <decVal min="1" max="255"/>
     <label>Thyristor control: Sound pitch for stepping effect</label>
   </variable>
-  <variable label="Thyristor control: Sound pitch at medium speed" CV="290" default="40" tooltip="See manual!, INC=10. CV290">
+  <variable label="Thyristor control: Sound pitch at medium speed" CV="290" default="40" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at medium speed</label>
   </variable>
-  <variable label="Thyristor control: Sound pitch at maximum speed" CV="291" default="100" tooltip="See manual!, INC=10. CV291">
+  <variable label="Thyristor control: Sound pitch at maximum speed" CV="291" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="100"/>
     <label>Thyristor control: Sound pitch at maximum speed</label>
   </variable>
-  <variable label="Thyristor control: Speed step for medium speed" CV="292" default="100" tooltip="See manual!, INC=10. CV292">
+  <variable label="Thyristor control: Speed step for medium speed" CV="292" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Speed step for medium speed</label>
   </variable>
-  <variable label="Thyristor control: Volume at steady speed" CV="293" default="30" tooltip="See manual!, INC=10. CV293">
+  <variable label="Thyristor control: Volume at steady speed" CV="293" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume at steady speed</label>
   </variable>
-  <variable label="Thyristor control: Volume during acceleration" CV="294" default="100" tooltip="See manual!, INC=10. CV294">
+  <variable label="Thyristor control: Volume during acceleration" CV="294" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during acceleration</label>
   </variable>
-  <variable label="Thyristor control: Volume during deceleration" CV="295" default="50" tooltip="See manual!, INC=10. CV295">
+  <variable label="Thyristor control: Volume during deceleration" CV="295" default="50" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Thyristor control: Volume during deceleration</label>
   </variable>
-  <variable label="Electric Engine Motor sound: highest volume" CV="296" default="100" tooltip="See manual!, INC=10. CV296">
+  <variable label="Electric Engine Motor sound: highest volume" CV="296" default="100" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: highest volume</label>
   </variable>
-  <variable label="Electric Engine Motor sound: where sound becomes audible" CV="297" default="30" tooltip="See manual!, INC=10. CV297">
+  <variable label="Electric Engine Motor sound: where sound becomes audible" CV="297" default="30" tooltip="See manual!, INC=10">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: where sound becomes audible</label>
   </variable>
-  <variable label="Electric Engine Motor sound: starting point of full volume" CV="298" default="128" tooltip="Should be &gt; value in CV 297. See manual!, INC=10. CV298">
+  <variable label="Electric Engine Motor sound: starting point of full volume" CV="298" default="128" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: starting point of full volume</label>
   </variable>
-  <variable label="Electric Engine Motor sound: dependence of the pitch on speed" CV="299" default="100" tooltip="Should be &gt; value in CV 297. See manual!, INC=10. CV299">
+  <variable label="Electric Engine Motor sound: dependence of the pitch on speed" CV="299" default="100" tooltip="Should be &gt; value in CV 297. See manual!, INC=10.">
     <decVal min="0" max="255"/>
     <label>Electric Engine Motor sound: dependence of the pitch on speed</label>
   </variable>
-  <variable label="On/off key for engine and random sound" CV="310" default="8" tooltip="Defines the key that turns the engine and random sounds on or off. CV310">
+  <variable label="On/off key for engine and random sound" CV="310" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>F0</choice>
@@ -417,7 +417,7 @@
     </enumVal>
     <label>On/off key for engine and random sound</label>
   </variable>
-  <variable label="On/off key for function sound" CV="311" default="0" tooltip="Defines the key that turns the function sounds (e.g. F2 bell) on or off. CV311">
+  <variable label="On/off key for function sound" CV="311" default="0" tooltip="Defines the key that turns the function sounds (e.g. F2 bell) on or off.">
     <enumVal>
       <enumChoice choice="Always On">
         <choice>F-key sounds always on</choice>
@@ -482,7 +482,7 @@
     </enumVal>
     <label>On/off key for function sound</label>
   </variable>
-  <variable label="Blow-off key" CV="312" default="4" tooltip="Defines the key to play-back the blow-off sound manually. CV312">
+  <variable label="Blow-off key" CV="312" default="4" tooltip="Defines the key to play-back the blow-off sound manually">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -547,7 +547,7 @@
     </enumVal>
     <label>Blow-off key</label>
   </variable>
-  <variable label="Mute key" CV="313" default="8" tooltip="Defines key to fade in and out driving sounds. CV313">
+  <variable label="Mute key" CV="313" default="8" tooltip="Defines key to fade in and out driving sounds">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -612,123 +612,123 @@
     </enumVal>
     <label>Mute key</label>
   </variable>
-  <variable label="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec). CV314">
+  <variable label="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
     <label>Fade in/out time</label>
   </variable>
-  <variable label="Minimum interval for random generator Z1" CV="315" default="1" tooltip="Seconds. By default, the compressor is assigned to Z1. See manual!. CV315">
+  <variable label="Minimum interval for random generator Z1" CV="315" default="1" tooltip="Seconds. By default, the compressor is assigned to Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z1</label>
   </variable>
-  <variable label="Maximum interval for random generator Z1" CV="316" default="60" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z1. See manual!. CV316">
+  <variable label="Maximum interval for random generator Z1" CV="316" default="60" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z1. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z1</label>
   </variable>
-  <variable label="Playback length for random generator Z1" CV="317" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!. CV317">
+  <variable label="Playback length for random generator Z1" CV="317" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z1</label>
   </variable>
-  <variable label="Minimum interval for random generator Z2" CV="318" default="20" tooltip="Seconds. By default, coal shoveling is assigned to Z2. See manual!. CV318">
+  <variable label="Minimum interval for random generator Z2" CV="318" default="20" tooltip="Seconds. By default, coal shoveling is assigned to Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z2</label>
   </variable>
-  <variable label="Maximum interval for random generator Z2" CV="319" default="80" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z2. See manual!. CV319">
+  <variable label="Maximum interval for random generator Z2" CV="319" default="80" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z2. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z2</label>
   </variable>
-  <variable label="Playback length for random generator Z2" CV="320" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!. CV320">
+  <variable label="Playback length for random generator Z2" CV="320" default="5" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z2</label>
   </variable>
-  <variable label="Minimum interval for random generator Z3" CV="321" default="30" tooltip="Seconds. By default, the injector is assigned to Z3. See manual!. CV321">
+  <variable label="Minimum interval for random generator Z3" CV="321" default="30" tooltip="Seconds. By default, the injector is assigned to Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z3</label>
   </variable>
-  <variable label="Maximum interval for random generator Z3" CV="322" default="90" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z3. See manual!. CV322">
+  <variable label="Maximum interval for random generator Z3" CV="322" default="90" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z3. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z3</label>
   </variable>
-  <variable label="Playback length for random generator Z3" CV="323" default="3" tooltip="Seconds.  Play back time for associated sound. See manual!. CV323">
+  <variable label="Playback length for random generator Z3" CV="323" default="3" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z3</label>
   </variable>
-  <variable label="Minimum interval for random generator Z4" CV="324" tooltip="Seconds. There is no default assignment for Z4. See manual!. CV324">
+  <variable label="Minimum interval for random generator Z4" CV="324" tooltip="Seconds. There is no default assignment for Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z4</label>
   </variable>
-  <variable label="Maximum interval for random generator Z4" CV="325" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z4. See manual!. CV325">
+  <variable label="Maximum interval for random generator Z4" CV="325" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z4. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z4</label>
   </variable>
-  <variable label="Playback length for random generator Z4" CV="326" tooltip="Seconds.  Play back time for associated sound. See manual!. CV326">
+  <variable label="Playback length for random generator Z4" CV="326" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z4</label>
   </variable>
-  <variable label="Minimum interval for random generator Z5" CV="327" tooltip="Seconds. There is no default assignment for Z5. See manual!. CV327">
+  <variable label="Minimum interval for random generator Z5" CV="327" tooltip="Seconds. There is no default assignment for Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z5</label>
   </variable>
-  <variable label="Maximum interval for random generator Z5" CV="328" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z5. See manual!. CV328">
+  <variable label="Maximum interval for random generator Z5" CV="328" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z5. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z5</label>
   </variable>
-  <variable label="Playback length for random generator Z5" CV="329" tooltip="Seconds.  Play back time for associated sound. See manual!. CV329">
+  <variable label="Playback length for random generator Z5" CV="329" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z5</label>
   </variable>
-  <variable label="Minimum interval for random generator Z6" CV="330" tooltip="Seconds. There is no default assignment for Z6. See manual!. CV330">
+  <variable label="Minimum interval for random generator Z6" CV="330" tooltip="Seconds. There is no default assignment for Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z6</label>
   </variable>
-  <variable label="Maximum interval for random generator Z6" CV="331" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z6. See manual!. CV331">
+  <variable label="Maximum interval for random generator Z6" CV="331" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z6. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z6</label>
   </variable>
-  <variable label="Playback length for random generator Z6" CV="332" tooltip="Seconds.  Play back time for associated sound. See manual!. CV332">
+  <variable label="Playback length for random generator Z6" CV="332" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z6</label>
   </variable>
-  <variable label="Minimum interval for random generator Z7" CV="333" tooltip="Seconds. There is no default assignment for Z7. See manual!. CV333">
+  <variable label="Minimum interval for random generator Z7" CV="333" tooltip="Seconds. There is no default assignment for Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z7</label>
   </variable>
-  <variable label="Maximum interval for random generator Z7" CV="334" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z7. See manual!. CV334">
+  <variable label="Maximum interval for random generator Z7" CV="334" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z7. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z7</label>
   </variable>
-  <variable label="Playback length for random generator Z7" CV="335" tooltip="Seconds.  Play back time for associated sound. See manual!. CV335">
+  <variable label="Playback length for random generator Z7" CV="335" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z7</label>
   </variable>
-  <variable label="Minimum interval for random generator Z8" CV="336" tooltip="Seconds. There is no default assignment for Z8. See manual!. CV336">
+  <variable label="Minimum interval for random generator Z8" CV="336" tooltip="Seconds. There is no default assignment for Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Minimum interval for random generator Z8</label>
   </variable>
-  <variable label="Maximum interval for random generator Z8" CV="337" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z8. See manual!. CV337">
+  <variable label="Maximum interval for random generator Z8" CV="337" tooltip="Seconds. Defines the maximum time interval between 2 consecutive pulses of the random generator Z8. See manual!.">
     <decVal min="0" max="255"/>
     <label>Maximum interval for random generator Z8</label>
   </variable>
-  <variable label="Playback length for random generator Z8" CV="338" tooltip="Seconds.  Play back time for associated sound. See manual!. CV338">
+  <variable label="Playback length for random generator Z8" CV="338" tooltip="Seconds.  Play back time for associated sound. See manual!.">
     <decVal min="0" max="255"/>
     <label>Playback length for random generator Z8</label>
   </variable>
-  <variable label="Switch input 1 playback time" CV="341" default="0" tooltip="Seconds. 0 = Play sample back once (as recorded). CV341">
+  <variable label="Switch input 1 playback time" CV="341" default="0" tooltip="Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
   </variable>
-  <variable label="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded). CV342">
+  <variable label="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
     <decVal min="0" max="255"/>
     <label>Switch input 2 playback time</label>
   </variable>
-  <variable label="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded). CV343" include="208,224">
+  <variable label="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,224">
     <decVal min="0" max="255"/>
     <label>Switch input 3 playback time</label>
   </variable>
-  <variable label="Run-on time for Diesel and Electric Auxiliaries" CV="344" default="0" tooltip="0 = no run-on, 255 = 25sec. CV344">
+  <variable label="Run-on time for Diesel and Electric Auxiliaries" CV="344" default="0" tooltip="0 = no run-on, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Run-on time</label>
   </variable>
-  <variable label="Multi-system engine Quick Select key" CV="345" default="0" tooltip="Function key to switch between two sound types. CV345">
+  <variable label="Multi-system engine Quick Select key" CV="345" default="0" tooltip="Function key to switch between two sound types">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -793,27 +793,27 @@
     </enumVal>
     <label>Multi-system engine Quick Select key</label>
   </variable>
-  <variable label="Delay of Switchgear sound at startup" CV="350" default="0" tooltip="0 = no delay, 255 = 25sec. CV350">
+  <variable label="Delay of Switchgear sound at startup" CV="350" default="0" tooltip="0 = no delay, 255 = 25sec">
     <decVal min="0" max="255"/>
     <label>Delay of Switchgear sound at startup</label>
   </variable>
-  <variable label="Smoke Fan Speed at Steady Speed" CV="351" default="128" tooltip="0 to 255. CV351">
+  <variable label="Smoke Fan Speed at Steady Speed" CV="351" default="128" tooltip="0 to 255">
     <decVal min="0" max="255"/>
     <label>Smoke Fan Speed at Steady Speed</label>
   </variable>
-  <variable label="Smoke Fan Speed at Startup and Acceleration" CV="352" default="255" tooltip="0 to 255. CV352">
+  <variable label="Smoke Fan Speed at Startup and Acceleration" CV="352" default="255" tooltip="0 to 255">
     <decVal min="0" max="255"/>
     <label>Smoke Fan Speed at Startup and Acceleration</label>
   </variable>
-  <variable label="Automatic Shut-down of Smoke Generator" CV="353" default="0" tooltip="0 to 252, 25sec per unit. CV353">
+  <variable label="Automatic Shut-down of Smoke Generator" CV="353" default="0" tooltip="0 to 252, 25sec per unit">
     <decVal min="0" max="252"/>
     <label>Automatic Shut-down of Smoke Generator</label>
   </variable>
-  <variable label="Delay of Switchgear sound at startup" CV="354" default="0" tooltip="0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV257. CV354">
+  <variable label="Delay of Switchgear sound at startup" CV="354" default="0" tooltip="0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV257">
     <decVal min="0" max="255"/>
     <label>Delay of Switchgear sound at startup</label>
   </variable>
-  <variable label="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133. CV355">
+  <variable label="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>
     <label>Fan Speed at Standstill</label>
   </variable>

@@ -33,7 +33,7 @@
         <decVal max="255"/>
         <label>Deceleration Rate</label>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address" tooltip="Sets the Extended (4 digit) address, range 0-9999, mapped to CV17 and 18">
+      <variable label="Extended Address" CV="17" item="Long Address" tooltip="Sets the Extended (4 digit) address, range 0-9999">
         <longAddressVal/>
         <label>Extended Address</label>
       </variable>
@@ -64,7 +64,7 @@
         <label>Short Address Alt Access</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Extended Address Alt Access" CV="50" tooltip="Sets the Extended (4 digit) address, range 0-9999, mapped to CV17 and 18">
+      <variable label="Extended Address Alt Access" CV="50" tooltip="Sets the Extended (4 digit) address, range 0-9999">
         <longAddressVal/>
         <label>Extended Address Alt Access</label>
       </variable>
