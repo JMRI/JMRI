@@ -2713,11 +2713,17 @@ public class TrainBuilder extends TrainCommon {
 	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
 		if (car.getTrack() == null || !car.getTrack().getTrackType().equals(Track.STAGING)
 				|| !car.getTrack().isAddCustomLoadsAnySpurEnabled()
-				|| !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
-				|| car.getDestination() != null || car.getFinalDestination() != null) {
-			log.debug("No load search for car (" + car.toString() + ") isAddLoadsAnySpurEnabled: " // NOI18N
+				|| !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) || car.getDestination() != null
+				|| car.getFinalDestination() != null) {
+			log.debug("No load generation for car (" + car.toString()
+					+ ") isAddLoadsAnySpurEnabled: " // NOI18N
 					+ (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
-					+ ", car load: (" + car.getLoadName() + ")"); // NOI18N
+					+ ", car load (" + car.getLoadName() + ") destination (" + car.getDestinationName() // NOI18N
+					+ ") final destination (" + car.getFinalDestinationName() + ")"); // NOI18N
+			if (car.getTrack() != null && car.getTrack().getTrackType().equals(Track.STAGING)
+				&& car.getTrack().isAddCustomLoadsAnySpurEnabled() && car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()))
+						addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarNoLoadGenerated"),
+				new Object[] { car.toString(), car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName() }));
 			return false; // no load generated for this car
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"),
@@ -2796,10 +2802,10 @@ public class TrainBuilder extends TrainCommon {
 				|| !car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled()
 				|| !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getFinalDestination() != null) {
-			log.debug("No load search for car (" + car.toString()
-					+ ") isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
+			log.debug("No load generation for car (" + car.toString() + ") isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
 					+ (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
-					+ ", car load: (" + car.getLoadName() + ")"); // NOI18N
+					+ ", car load (" + car.getLoadName() + ") destination (" + car.getDestinationName() // NOI18N
+					+ ") final destination (" + car.getFinalDestinationName() + ")"); // NOI18N
 			return false;
 		}
 		// TODO, not sure if we really need to try the terminate track, attempt to generate car load to staging was done earlier
