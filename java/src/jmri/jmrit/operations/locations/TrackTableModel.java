@@ -4,13 +4,15 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.*;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+
 import java.util.ArrayList;
 import java.util.List;
-import jmri.jmrit.operations.setup.Control;
+
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -45,7 +47,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	protected static final int SETOUT_COLUMN = 8;
 	protected static final int ROAD_COLUMN = 9;
 	protected static final int LOAD_COLUMN = 10;
-	protected static final int SHIP_COLUMN = 11;	
+	protected static final int SHIP_COLUMN = 11;
 	protected static final int DESTINATION_COLUMN = 12;
 	protected static final int POOL_COLUMN = 13;
 	protected static final int PLANPICKUP_COLUMN = 14;
@@ -272,12 +274,18 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		case LOAD_COLUMN:
 			return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.INCLUDE_LOADS));
 		case SHIP_COLUMN:
-			return getModifiedString(track.getShipLoadNames().length, track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
+			return getModifiedString(track.getShipLoadNames().length, track.getShipLoadOption().equals(
+					Track.INCLUDE_LOADS));
 		case ROAD_COLUMN:
 			return getModifiedString(track.getRoadNames().length, track.getLoadOption().equals(Track.INCLUDE_ROADS));
-		case DESTINATION_COLUMN:
-			return getModifiedString(track.getDestinationListSize(), track.getDestinationOption().equals(
-					Track.INCLUDE_DESTINATIONS));
+		case DESTINATION_COLUMN: {
+			if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
+				return "";
+			int length = track.getDestinationListSize();
+			if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
+				length = LocationManager.instance().getLocationsByIdList().size() - length;
+			return getModifiedString(length, track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
+		}
 		case POOL_COLUMN:
 			return track.getPoolName();
 		case PLANPICKUP_COLUMN:
@@ -295,8 +303,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		if (number == 0)
 			return "";
 		if (accept)
-			return "A " + Integer.toString(number);	// NOI18N
-		return "E " + Integer.toString(number);	// NOI18N
+			return "A " + Integer.toString(number); // NOI18N
+		return "E " + Integer.toString(number); // NOI18N
 	}
 
 	public void setValueAt(Object value, int row, int col) {
@@ -327,9 +335,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
 	// this table listens for changes to a location and it's tracks
 	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-					+ e.getNewValue());
+		// if (Control.showProperty && log.isDebugEnabled())
+		log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());
 		if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();
@@ -337,6 +344,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		if (e.getSource().getClass().equals(Track.class)
 				&& (e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
 						|| e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
+						|| e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)
 						|| e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) || e.getPropertyName().equals(
 						Track.PLANNEDPICKUPS_CHANGED_PROPERTY))) {
 			setColumnsVisible();
