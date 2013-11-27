@@ -1570,26 +1570,62 @@ public class PaneProgPane extends javax.swing.JPanel
     }
     
     /** 
-     * Optionally add CV numbers to tooltip text based on Roster Preferences setting.
+     * Optionally add CV numbers and bit numbers to tool tip text based on Roster Preferences setting.
      *
      * Needs to be independent of VariableValue methods to allow use by  non-standard elements
      * such as SpeedTableVarValue, DccAddressPanel, FnMapPanel.
      */
-    public static String addCvDescription(String start, String description, String mask) {
-        String descString = description;
-        if ( (mask != null) && (mask.contains("X"))) descString = descString + " Mask:"+mask;
-        if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
-            if (start == null) {
-                start = descString;
+    public static String addCvDescription(String toolTip, String cvDescription, String mask) {
+        // start with CV description
+        String descString = cvDescription;
+        
+        // generate bit numbers from bitmask if applicable
+        if ( (mask != null) && (mask.contains("X"))) {
+            int lastBit = mask.length()-1;
+            int lastV = -2;
+            if ( mask.contains("V")) {
+                if ( mask.indexOf('V') == mask.lastIndexOf('V') ) {
+                    descString = descString+" bit "+(lastBit-mask.indexOf('V'));
+                } else {
+                    descString = descString+" bits ";
+                    for (int i = 0; i <= lastBit; i++) {
+                        char descStringLastChar = descString.charAt(descString.length()-1);
+                        if ( mask.charAt(lastBit-i) == 'V' ) {
+                            if (descStringLastChar == ' ') {
+                                descString = descString+i;
+                            } else if (lastV == (i-1)) {
+                                if (descStringLastChar != '-') descString = descString+"-";
+                            } else {
+                                descString = descString+","+i;
+                            }
+                            lastV = i;
+                        }
+                        descStringLastChar = descString.charAt(descString.length()-1);
+                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit-i) != 'V') || (i == lastBit))) {
+                            descString = descString+lastV;
+                        }
+                    }
+                }
             } else {
-                start = start+" ("+descString+")";
+                descString = descString+" no bits";
             }
-        } else {
-            if (start == null)
-                start = "";
+            log.debug(descString+" Mask:"+mask);
         }
         
-        return start;
+        // add to tool tip if Show CV Numbers enabled
+        // parenthesise if adding to existing tool tip
+        if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
+            if (toolTip == null) {
+                toolTip = descString;
+            } else {
+                toolTip = toolTip+" ("+descString+")";
+            }
+        } else {
+            if (toolTip == null)
+                toolTip = "";
+        }
+        
+        return toolTip;
     }
 
 
