@@ -933,6 +933,19 @@ public class Setup {
 		localPrefix = prefix;
 	}
 	
+	public static int getManifestPrefixLength() {
+		int maxLength = getPickupEnginePrefix().length();
+		if (getDropEnginePrefix().length() > maxLength)
+			maxLength = getDropEnginePrefix().length();
+		if (getPickupCarPrefix().length() > maxLength)
+			maxLength = getPickupCarPrefix().length();
+		if (getDropCarPrefix().length() > maxLength)
+			maxLength = getDropCarPrefix().length();
+		if (getLocalPrefix().length() > maxLength)
+			maxLength = getLocalPrefix().length();
+		return maxLength;
+	}
+	
 	public static String getSwitchListPickupCarPrefix(){
 		if (isSwitchListFormatSameAsManifest())
 			return pickupCarPrefix;
@@ -964,6 +977,15 @@ public class Setup {
 	
 	public static void setSwitchListLocalPrefix(String prefix){
 		switchListLocalPrefix = prefix;
+	}
+	
+	public static int getSwitchListPrefixLength() {
+		int maxLength = getSwitchListPickupCarPrefix().length();
+		if (getSwitchListDropCarPrefix().length() > maxLength)
+			maxLength = getSwitchListDropCarPrefix().length();
+		if (getSwitchListLocalPrefix().length() > maxLength)
+			maxLength = getSwitchListLocalPrefix().length();
+		return maxLength;
 	}
 	
 	public static String[] getPickupEngineMessageFormat(){

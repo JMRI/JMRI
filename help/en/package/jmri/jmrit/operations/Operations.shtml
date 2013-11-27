@@ -2537,9 +2537,9 @@
    <H3>Train Build Options</H3>
 
    In the edit train window menu under "Tools-&gt;Train Build Options" are additional options for
-   building a train. You can control which car owners, and built dates the train will
-   service, and have up two locomotive and caboose changes in the train's route.
-   You can also add a request for helper locomotives.
+   building a train. You can control which car owners, and built dates the train will service, and
+   have up two locomotive and caboose changes in the train's route. You can also add a request for
+   helper locomotives. Press the "Save Train" button after you've completed your changes.
 
    <P>
     <img src="images/TrainBuildOptions.png">
@@ -2640,17 +2640,18 @@
    <H3>Train Load Options</H3>
 
    You can decide which car loads the train will service. Select under the "Edit
-   Train-&gt;Tools-&gt;Train Load Options".
+   Train-&gt;Tools-&gt;Train Load Options". This will bring up a new window with several
+   options.
 
    <P>If the train will service any load name, select the "Accept all" radio button. If you want
     the train to service only some load names, select "Accept only" radio button. To build a list of
     load names that the train will not service, select the "Exclude" radio button.</P>
 
-   There are two pull down menus, the first one is the type
+   <p>There are two pull down menus, the first one is the type
    of car, and the second the type of load serviced by the car type selected. Use the "Add Load"
    button to build a list of loads that the train will either service or exclude. The "Delete All"
    button will remove all loads from the list. You can also associate a load with a particular car
-   type, select the "Use car type and load" checkbox if you want this feature. 
+   type, select the "Use car type and load" checkbox if you want this feature.</p>
    
    <A NAME="TrainRoadOptions"></A>
    <H3>Train Road Options</H3>
@@ -2665,11 +2666,8 @@
     a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
 
    <P>To build a list of road names that the train will not service, select the "Exclude" radio
-    button. Use the menu of road names and the "Add Road" button to build a list of roads that this
+    button. The use the menu of road names and the "Add Road" button to build a list of roads that this
     train will not service.</P>
-
-   <P>Press the "Save Train" button to update the train build options and close the window when
-    your done.</P>
 
    <A NAME="TrainManifestOptions"></A>
    <H3>Train Manifest Options</H3>
@@ -2941,6 +2939,13 @@
    build can't resolve, the build will fail. To understand why a build failed, go to the last page
    of the build report and by working backwards from the last line, you should be able to understand
    why a train failed to build.
+
+   <P>
+    You can if you wish use a text editor instead of the print preview window. A text editor allows
+    you to search the report for a specific car or issue. You can select this option from the <A
+     HREF="#BuildReportDetails">Build Report Options</A> under "Tools" in the Setup or Trains
+    window.
+   </P>
 
    <H3>More Build Report Details</H3>
 
