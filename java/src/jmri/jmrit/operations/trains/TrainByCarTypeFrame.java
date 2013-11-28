@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -25,12 +26,11 @@ import java.util.List;
 /**
  * Frame to display by rolling stock, the locations serviced by this train
  * 
- * @author Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010, 2013
  * @version $Revision$
  */
 
-public class TrainByCarTypeFrame extends OperationsFrame implements
-		java.beans.PropertyChangeListener {
+public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	// train
 	Train train = null;
@@ -106,11 +106,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		addLocationAndTrackPropertyChange();
 
 		setPreferredSize(null);
-		pack();
-		if (getWidth() < 400)
-			setSize(400, getHeight());
-		setVisible(true);
-
+		initMinimumSize();
 	}
 
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -152,8 +148,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 				trk.setText(track.getName());
 				addItemLeft(pLocations, trk, 1, x);
 				// is the car at this location and track?
-				if (car != null && location.equals(car.getLocation())
-						&& track.equals(car.getTrack())) {
+				if (car != null && location.equals(car.getLocation()) && track.equals(car.getTrack())) {
 					JLabel here = new JLabel("  -->"); // NOI18N
 					addItemLeft(pLocations, here, 0, x);
 				}
@@ -163,8 +158,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 					op.setText(Bundle.getMessage("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoadName()))
 					op.setText(Bundle.getMessage("X(TrainRoad)"));
-				else if (car != null && !car.isCaboose()
-						&& !train.acceptsLoad(car.getLoadName(), car.getTypeName()))
+				else if (car != null && !car.isCaboose() && !train.acceptsLoad(car.getLoadName(), car.getTypeName()))
 					op.setText(Bundle.getMessage("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
 					op.setText(Bundle.getMessage("X(TrainBuilt)"));
@@ -189,6 +183,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 					op.setText(Bundle.getMessage("X(TrackRoad)"));
 				else if (car != null && !track.acceptsLoad(car.getLoadName(), car.getTypeName()))
 					op.setText(Bundle.getMessage("X(TrackLoad)"));
+				else if (car != null && !track.acceptsDestination(car.getFinalDestination()))
+					op.setText(Bundle.getMessage("X(TrackDestination)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
 					op.setText(Bundle.getMessage("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
@@ -251,30 +247,27 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 			// check to see if schedule services car type and load
 			if (attribute.equals(LOAD)
 					&& si.getTypeName().equals(carType)
-					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName()
-							.equals(car.getLoadName())))
+					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName().equals(
+							car.getLoadName())))
 				return true;
 			// check to see if schedule services car type and road
-			if (attribute.equals(ROAD)
-					&& si.getTypeName().equals(carType)
-					&& (si.getRoadName().equals("") || car == null || si.getRoadName()
-							.equals(car.getRoadName())))
+			if (attribute.equals(ROAD) && si.getTypeName().equals(carType)
+					&& (si.getRoadName().equals("") || car == null || si.getRoadName().equals(car.getRoadName())))
 				return true;
 			// check to see if schedule timetable allows delivery
 			if (attribute.equals(TIMETABLE)
 					&& si.getTypeName().equals(carType)
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
-							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+							.equals(si.getTrainScheduleId())))
 				return true;
 			// check to see if at least one schedule item can service car
 			if (attribute.equals(ALL)
 					&& si.getTypeName().equals(carType)
-					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName()
-							.equals(car.getLoadName()))
-					&& (si.getRoadName().equals("") || car == null || si.getRoadName()
-							.equals(car.getRoadName()))
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
-							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
+					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName().equals(
+							car.getLoadName()))
+					&& (si.getRoadName().equals("") || car == null || si.getRoadName().equals(car.getRoadName()))
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+							.equals(si.getTrainScheduleId())))
 				return true;
 		}
 		return false;
@@ -367,12 +360,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getSource().equals(car) || e.getSource().equals(train))
 			updateRoute();
-		if (e.getSource().getClass().equals(Track.class)
-				|| e.getSource().getClass().equals(Location.class)
+		if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
 				|| e.getSource().getClass().equals(Schedule.class))
 			updateRoute();
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
@@ -390,6 +382,5 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		}
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(TrainByCarTypeFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrame.class.getName());
 }
