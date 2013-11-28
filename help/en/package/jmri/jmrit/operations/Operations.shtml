@@ -2801,6 +2801,10 @@
      <td>The track doesn't service the train's route</td>
     </tr>
     <tr>
+     <td>X (Track Destination)</td>
+     <td>The track doesn't service the car's final destination</td>
+    </tr>
+    <tr>
      <td>X (Dir Loc)</td>
      <td>Based on the train's departure direction, the location doesn't allow set outs or pick
       ups</td>
