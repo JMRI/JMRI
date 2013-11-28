@@ -80,10 +80,10 @@
       <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="6" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
-      </variable><variable label="Top Speed" CV="5" default="1" item="Vhigh" tooltip="CV5 x (1/255 Track Voltage) CV5">
+      </variable><variable label="Top Speed" CV="5" default="1" item="Vhigh" tooltip="255 = Full Track Voltage">
         <decVal min="1" max="255"/>
       </variable>
-      <variable label="Med-Speed" CV="6" default="1" item="Vmid" tooltip="CV6 x (1/255 Track Voltage) CV6">
+      <variable label="Med-Speed" CV="6" default="1" item="Vmid" tooltip="255 = Full Track Voltage">
         <decVal min="1" max="255"/>
       </variable>
       <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
@@ -255,7 +255,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
@@ -765,11 +765,11 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>
       </variable>
-      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;      is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;      is enabled to simulate slipping drive wheels or a double-header&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
         <label>Slip Rate Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
         <label>Articulated Exhaust Control</label>
       </variable>
