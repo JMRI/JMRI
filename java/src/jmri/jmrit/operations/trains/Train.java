@@ -1347,7 +1347,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								|| !car.getTrack().acceptsPickupTrain(this)) {
 							if (addToReport)
 								TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-										.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString(),
+										.getMessage("trainCanNotServiceCarFrom"), new Object[] { getName(), car.toString(),
 										car.getLocationName(), car.getTrackName(), rLoc.getId() }));
 							continue;
 						}
@@ -1501,7 +1501,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
 				} else if (addToReport && rLoc.getName().equals(car.getLocationName())) {
 					TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("trainCanNotServiceCar"), new Object[] { getName(),
+							.getMessage("trainCanNotServiceCarFrom"), new Object[] { getName(),
 						car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()}));
 				}
 			}
