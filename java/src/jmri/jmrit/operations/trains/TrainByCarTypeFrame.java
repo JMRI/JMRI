@@ -21,6 +21,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -120,7 +121,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		if (train == null)
 			return;
 		log.debug("update locations served by train " + train.getName());
-		int x = 0;
+		int y = 0;
 		pLocations.removeAll();
 		String carType = (String) typeComboBox.getSelectedItem();
 		if (car != null)
@@ -139,21 +140,28 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			RouteLocation rl = route.getLocationById(routeIds.get(i));
 			String locationName = rl.getName();
 			loc.setText(locationName);
-			addItemLeft(pLocations, loc, 0, x++);
+			addItemLeft(pLocations, loc, 0, y++);
 			Location location = locationManager.getLocationByName(locationName);
+			if (car != null && car.getTrack() != null && !car.getTrack().acceptsDestination(location)) {
+				JLabel locText = new JLabel();
+				locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
+						new Object[] { car.toString(), car.getTrackName() }));
+				addItemWidth(pLocations, locText, 2, 1, y++);
+				continue;
+			}
 			List<String> tracks = location.getTrackIdsByNameList(null);
 			for (int j = 0; j < tracks.size(); j++) {
 				Track track = location.getTrackById(tracks.get(j));
 				JLabel trk = new JLabel();
 				trk.setText(track.getName());
-				addItemLeft(pLocations, trk, 1, x);
+				addItemLeft(pLocations, trk, 1, y);
 				// is the car at this location and track?
 				if (car != null && location.equals(car.getLocation()) && track.equals(car.getTrack())) {
 					JLabel here = new JLabel("  -->"); // NOI18N
-					addItemLeft(pLocations, here, 0, x);
+					addItemLeft(pLocations, here, 0, y);
 				}
 				JLabel op = new JLabel();
-				addItemLeft(pLocations, op, 2, x++);
+				addItemLeft(pLocations, op, 2, y++);
 				if (!train.acceptsTypeName(carType))
 					op.setText(Bundle.getMessage("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoadName()))

@@ -1344,10 +1344,15 @@ public class Train implements java.beans.PropertyChangeListener {
 						&& ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
 					if (car.getTrack() != null) {
 						if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
-								|| !car.getTrack().acceptsPickupTrain(this))
+								|| !car.getTrack().acceptsPickupTrain(this)) {
+							if (addToReport)
+								TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+										.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString(),
+										car.getLocationName(), car.getTrackName(), rLoc.getId() }));
 							continue;
+						}
 					}
-					if (debugFlag)
+				if (debugFlag)
 						log.debug("Car (" + car.toString() + ") can be picked up by train (" + getName()
 								+ ") location (" + car.getLocationName() + ", " + car.getTrackName()// NOI18N
 								+ ") destination ("// NOI18N
@@ -1494,6 +1499,10 @@ public class Train implements java.beans.PropertyChangeListener {
 						TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("trainCanNotDeliverToDestination"), new Object[] { getName(),
 								car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
+				} else if (addToReport && rLoc.getName().equals(car.getLocationName())) {
+					TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("trainCanNotServiceCar"), new Object[] { getName(),
+						car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()}));
 				}
 			}
 		}
