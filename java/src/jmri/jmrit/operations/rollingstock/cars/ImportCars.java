@@ -72,7 +72,7 @@ public class ImportCars extends Thread {
 		if (fc.getSelectedFile() == null)
 			return; // canceled
 		File file = fc.getSelectedFile();
-		BufferedReader in;
+		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8")); // NOI18N
 		} catch (FileNotFoundException e) {
