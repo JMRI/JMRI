@@ -365,6 +365,9 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
                 && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
                     Assert.assertEquals(inLine, outLine);
         }
+        
+        outFileStream.close();
+        inFileStream.close();
     }
         
     public void testValidateOne() {
