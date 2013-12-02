@@ -8,11 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 /*
@@ -24,7 +21,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import jmri.InstanceManager;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
-import jmri.Path;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.AtCommand;
 import com.rapplogic.xbee.api.AtCommandResponse;
 import com.rapplogic.xbee.api.XBeeResponse;
 //NOTE: this next line will need to change when the xbee api 

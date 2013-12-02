@@ -6,16 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.util.JmriJFrame;
 
 /**

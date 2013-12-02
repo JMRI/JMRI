@@ -5,27 +5,16 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Block;
 import jmri.jmrit.catalog.NamedIcon;
-//import javax.swing.TransferHandler;
-import java.awt.datatransfer.Transferable;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import javax.swing.JComponent;
-import java.awt.datatransfer.DataFlavor;
-
-import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-
-import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
-import jmri.util.datatransfer.RosterEntrySelection;
-
 import jmri.NamedBeanHandle;
 
 /**

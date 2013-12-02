@@ -6,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.can.*;
 /**
  *
  * @author      Bob Jacobsen  Copyright 2013

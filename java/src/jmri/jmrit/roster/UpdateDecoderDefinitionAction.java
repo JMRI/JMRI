@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import java.util.List;
 
-import org.jdom.Element;
-
 /**
  * Update the decoder definitions in the roster
  *

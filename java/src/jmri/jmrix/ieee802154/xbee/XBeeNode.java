@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractNode;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 

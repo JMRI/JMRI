@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

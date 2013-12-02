@@ -3,7 +3,6 @@
 package jmri.implementation;
 
 import org.apache.log4j.Logger;
-import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgListener;
 import jmri.progdebugger.ProgDebugger;

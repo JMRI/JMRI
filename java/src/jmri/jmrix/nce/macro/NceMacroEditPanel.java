@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
 import jmri.jmrix.nce.NceMessage;
