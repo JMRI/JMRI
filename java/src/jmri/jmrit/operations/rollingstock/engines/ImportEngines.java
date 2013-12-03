@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.FileUtil;
 
@@ -26,12 +29,10 @@ import jmri.util.FileUtil;
  * 
  * Each field is space or comma delimited. Field order: Number Road Type Length Owner Year Location
  * 
- * @author Dan Boudreau Copyright (C) 2008
+ * @author Dan Boudreau Copyright (C) 2008, 2013
  * @version $Revision$
  */
-public class ImportEngines extends Thread {
-
-	static final String NEW_LINE = "\n"; // NOI18N
+public class ImportEngines extends ImportRollingStock {
 
 	private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
 	private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
@@ -405,60 +406,6 @@ public class ImportEngines extends Thread {
 		} else {
 			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),
 					new Object[] { enginesAdded }), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	protected String[] parseCommaLine(String line, int arraySize) {
-		String[] outLine = new String[arraySize];
-		if (line.contains("\"")) { // NOI18N
-			// log.debug("line number "+lineNum+" has escape char \"");
-			String[] parseLine = line.split(",");
-			int j = 0;
-			for (int i = 0; i < parseLine.length; i++) {
-				if (parseLine[i].contains("\"")) { // NOI18N
-					StringBuilder sb = new StringBuilder(parseLine[i++]);
-					sb.deleteCharAt(0); // delete the "
-					outLine[j] = sb.toString();
-					while (i < parseLine.length) {
-						if (parseLine[i].contains("\"")) { // NOI18N
-							sb = new StringBuilder(parseLine[i]);
-							sb.deleteCharAt(sb.length() - 1); // delete the "
-							outLine[j] = outLine[j] + "," + sb.toString();
-							// log.debug("generated string: "+outLine[j]);
-							j++;
-							break; // done!
-						} else {
-							outLine[j] = outLine[j] + "," + parseLine[i++];
-						}
-					}
-
-				} else {
-					// log.debug("outLine: "+parseLine[i]);
-					outLine[j++] = parseLine[i];
-				}
-			}
-		} else {
-			outLine = line.split(",");
-		}
-		return outLine;
-	}
-
-	protected static class ImportFilter extends javax.swing.filechooser.FileFilter {
-
-		public boolean accept(File f) {
-			if (f.isDirectory())
-				return true;
-			String name = f.getName();
-			if (name.matches(".*\\.txt")) // NOI18N
-				return true;
-			if (name.matches(".*\\.csv")) // NOI18N
-				return true;
-			else
-				return false;
-		}
-
-		public String getDescription() {
-			return Bundle.getMessage("Text&CSV");
 		}
 	}
 
