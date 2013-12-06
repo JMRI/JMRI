@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20131116-2022-jake on Sat Nov 16 12:22:19 PST 2013 $Id$-->
-  <decoderIndex version="293">
+  <!--Written by JMRI version 20131206-1931-jake on Fri Dec 06 11:31:51 PST 2013 $Id$-->
+  <decoderIndex version="296">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -837,6 +837,15 @@
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
           <size length="2.877" width=".667" height=".173" units="inches" />
+        </model>
+        <model model="DH465" numOuts="6" numFns="10" maxMotorCurrent="4A (peak=6A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label="Pad (Green)" connection="solder" />
+          <output name="4" label="Pad (Violet)" connection="solder" />
+          <output name="5" label="Pad (Brown)" connection="solder" />
+          <output name="6" label="Pad (Yellow/white)" connection="solder" />
+          <size length="2.04" width="0.67" height="0.11" units="inches" />
         </model>
         <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin">
           <output name="1" label="LED" connection="solder" />
@@ -4516,7 +4525,7 @@
         <model model="MTH HO PS3" />
       </family>
       <family name="MTH HO Expanded PS3" mfg="Mikes Train House" file="MTH_Expanded.xml">
-        <model model="MTH HO Expanded PS3" lowVersionID="1" />
+        <model model="MTH HO Expanded PS3" lowVersionID="1" highVersionID="2" />
       </family>
       <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH" file="Massoth_CL_63000.xml">
         <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other" />
@@ -8539,16 +8548,6 @@
           <output name="Number" label="Boards" />
           <output name="Mute" />
           <output name="Class" label="Light" />
-          <output name="Brakes" />
-          <output name="Grade" label="Xing" />
-        </model>
-        <model model="F9B" numOuts="4" numFns="14" connector="9pin" productID="103" comment="CP_CN">
-          <versionCV lowVersionID="64" />
-          <output name="Air Horn" />
-          <output name="Bell" />
-          <output name="3" label="STR8-2-8" />
-          <output name="Dynamics" />
-          <output name="Mute" />
           <output name="Brakes" />
           <output name="Grade" label="Xing" />
         </model>

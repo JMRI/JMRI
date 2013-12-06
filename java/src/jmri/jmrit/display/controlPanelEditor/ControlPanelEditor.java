@@ -1405,7 +1405,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
  
     private HashMap <String, NamedIcon> _portalIconMap;
-    private String _portalIconFamily = "Standard";
 
     private void makePortalIconMap() {
 		_portalIconMap = new HashMap <String, NamedIcon>();
@@ -1432,10 +1431,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     		makePortalIconMap();
     	}
     	return _portalIconMap;
-    }
-    
-    public String getPortalIconFamily() {
-    	return _portalIconFamily;
     }
     
     public void setDefaultPortalIcons(HashMap <String, NamedIcon> map) {

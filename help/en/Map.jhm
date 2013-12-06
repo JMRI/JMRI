@@ -344,6 +344,8 @@
 
 <mapID target="manual.3-0_DecoderPro.Comp_Consist" url="manual/3-0_DecoderPro/Comp_Consist.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_CopyTrain" url="package/jmri/jmrit/operations/Operations.shtml#CopyTrain"/>
+
 <mapID target="manual.3-4_JMRI_OPS_UsersGuide.Ops_AddSiding_Top" url="manual/3-4_JMRI_OPS_UsersGuide/Ops_AddSiding.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_LocoNet_SendPacket" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#SendPacket"/>
@@ -3983,6 +3985,8 @@
 <mapID target="manual.3-4_DecoderPro.Main_Roster_Top" url="manual/3-4_DecoderPro/Main_Roster.shtml#Top"/>
 
 <mapID target="manual.DP3_2-14_manual.Basic_BasicPane_Read Data" url="manual/DP3_2-14_manual/Basic_BasicPane.shtml#Read Data"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_AlternateTrack" url="package/jmri/jmrit/operations/Operations.shtml#AlternateTrack"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_RPS_Speed" url="manual/JMRI_2-14_manual/Main_RPS.shtml#Speed"/>
 

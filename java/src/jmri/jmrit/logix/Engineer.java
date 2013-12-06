@@ -204,20 +204,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     * If waiting to sync entrance to a block boundary with recorded wait time,
     * or waiting for clearance ahead for rogue occupancy, stop aspect or sharing
     *  of turnouts, this call will free the wait.
-    * @param  block train has just entered.
-    */
-    protected void synchNotify(OBlock block) {
-    	synchronized(this) {
-        	if (_ramp!=null) {
-        		_ramp.stop();
-        		_ramp = null;
-        	}    		
-    	}
-    	checkHalt();
-        if (log.isDebugEnabled()) log.debug("synchNotify from block "+block.getDisplayName()+
-    				" _waitForClear= "+_waitForClear+" for warrant "+_warrant.getDisplayName());
-    }
-
+    */  
     synchronized private void checkHalt() {
         if (!_halt && !_waitForSensor) {
             if (_syncIdx <= _warrant.getCurrentOrderIndex()) { 
@@ -231,9 +218,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     * Ramp speed change.
     */
     synchronized protected void rampSpeedTo(String endSpeedType, long waitTime) {
+    	checkHalt();
         if (_speedType.equals(endSpeedType)) {
             return;
         }
+        if (log.isDebugEnabled()) log.debug("rampSpeedTo ="+endSpeedType+
+    				" for warrant "+_warrant.getDisplayName());
     	if (_ramp!=null) {
     		_ramp.stop();
     		_ramp = null;
@@ -355,9 +345,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("setHalt("+halt+"): throttle speed= "+_throttle.getSpeedSetting()+
                 					" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
     }
-/*    public boolean isHalted() {
-    	return _halt;
-    }*/
 
     /**
     * Flag from user to end run
@@ -606,6 +593,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY", justification="Shared variable 'stop' not being seen by FindBugs for some reason") 
         synchronized void stop() {
         	stop = true;
+        	if (log.isDebugEnabled()) log.debug("stop= "+stop);
     		notify();
         }
 
@@ -651,7 +639,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     
                     if (log.isDebugEnabled()) log.debug("rampSpeed from \""+old+"\" to \""+endSpeedType+
         					"\" step increment= "+incr+" time interval= "+delay+
-        					" on warrant "+_warrant.getDisplayName());
+        					" Ramp "+speed+" to "+endSpeed+" on warrant "+_warrant.getDisplayName());
 
                     if (endSpeed > speed) {
                         synchronized(this) {

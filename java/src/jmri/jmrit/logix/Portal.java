@@ -78,7 +78,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         } else if (_toBlock != null && _toBlock.equals(block)) {
             return addPath(_toPaths, path);
         }
-        // path already in one of the path lists
+        // portal is incomplete or path block not in this portal
+        // to do!!! fix this so it may return false.  Need true for bogus load
         return true;
     }
 

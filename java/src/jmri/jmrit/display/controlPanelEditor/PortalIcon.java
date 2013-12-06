@@ -63,7 +63,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     	}
     	setScale(getScale());
     	rotate(deg);
-        setFamily((ed.getPortalIconFamily()));
         setIcon(_iconMap.get(HIDDEN));
     }
     

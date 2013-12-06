@@ -26,43 +26,43 @@
 			<dccaddress/>
 			<label label=" "/>
 			<label label=" "/>
-			<display item="Short Address" tooltip="CV 1"/>
-			<display item="Long Address" tooltip="CV 17/18"/>
-			<display item="Address Format" tooltip="CV 29, bit 5"/>
+			<display item="Short Address"/>
+			<display item="Long Address"/>
+			<display item="Address Format"/>
 			<label label=" "/>
-			<display item="Locomotive Direction" tooltip="CV 29, bit 0"/>
-			<display item="Speed Step Mode" tooltip="CV 29, bit 1"/>
-			<display item="Analog (DC) Operation" tooltip="CV 29, bit 2"/>
+			<display item="Locomotive Direction"/>
+			<display item="Speed Step Mode"/>
+			<display item="Analog (DC) Operation"/>
 		</column>
 		<column>
 <!--			<display item="Decoder Version"/> -->
 <!-- 			<display item="Manufacturer"/>    -->
 			<label label=" "/>
-			<display item="User Id #1" tooltip="CV 105"/>
-			<display item="User Id #2" tooltip="CV 106"/>
+			<display item="User Id #1"/>
+			<display item="User Id #2"/>
 			<label label=" "/>
 		</column>
 	</pane>
 	
 	<pane name="Motor">
 		<column>
-			<display item="Acceleration" tooltip="CV 3"/>
-			<display item="Deceleration" tooltip="CV 4"/>
+			<display item="Acceleration"/>
+			<display item="Deceleration"/>
 			<label label=" "/>
-			<display item="Forward Trim" tooltip="CV 66"/>
-			<display item="Reverse Trim" tooltip="CV 95"/>
+			<display item="Forward Trim"/>
+			<display item="Reverse Trim"/>
 			<label label=" "/>
-			<display item="Total PWM Period" tooltip="CV 9, read manual"/>
+			<display item="Total PWM Period" tooltip="read manual"/>
 			<separator/>
 			<label label="0 = 22kHz, 204 = 87Hz"/> 
 		</column>
 		<column>
-			<display item="BEMF Active" tooltip="CV 49, bit 0"/>
+			<display item="BEMF Active"/>
 			<label label=" "/>
-			<display item="Adjust EMK Voltage" tooltip="CV 56"/>
+			<display item="Adjust EMK Voltage"/>
 			<label label=" "/>
-			<display item="K Adjustment" tooltip="CV 57"/>
-			<display item="I Adjustment" tooltip="CV 58"/>
+			<display item="K Adjustment"/>
+			<display item="I Adjustment"/>
 		</column>
 	</pane>
 	
@@ -73,15 +73,15 @@
 			<row>
 				<column>
 					<display item="Vstart" layout="below" format="vslider" label=""/>
-					<display item="Vstart" layout="below" tooltip="CV 2"/>
+					<display item="Vstart" layout="below"/>
 				</column>
 				<column>
 					<display item="Vmid" layout="below" format="vslider" label=""/>
-					<display item="Vmid" layout="below" tooltip="CV 6"/>
+					<display item="Vmid" layout="below"/>
 				</column>
 				<column>
 					<display item="Vhigh" layout="below" format="vslider" label=""/>
-					<display item="Vhigh" layout="below" tooltip="CV 5"/>
+					<display item="Vhigh" layout="below"/>
 				</column>
 			</row>
 		</column>
@@ -102,113 +102,113 @@
 		<column>
 			<label label="F-9(r) Key Output Control" />
 			<separator/>
-			<display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1" tooltip="CV 47, bit 0" />
-			<display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2" tooltip="CV 47, bit 1" />
-			<display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3" tooltip="CV 47, bit 2" />
-			<display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4" tooltip="CV 47, bit 3" />
-			<display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5" tooltip="CV 47, bit 4" />
-			<display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6" tooltip="CV 47, bit 5" />
-			<display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7" tooltip="CV 47, bit 6" />
-			<display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8" tooltip="CV 47, bit 7" />
+			<display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1" />
+			<display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2" />
+			<display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3" />
+			<display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4" />
+			<display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5" />
+			<display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6" />
+			<display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7" />
+			<display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8" />
 			<label label=" " />
 			<label label="F-10(r) Key Output Control" />
 			<separator/>
-			<display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1" tooltip="CV 48, bit 0" />
-			<display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2" tooltip="CV 48, bit 1" />
-			<display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3" tooltip="CV 48, bit 2" />
-			<display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4" tooltip="CV 48, bit 3" />
-			<display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5" tooltip="CV 48, bit 4" />
-			<display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6" tooltip="CV 48, bit 5" />
-			<display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7" tooltip="CV 48, bit 6" />
-			<display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8" tooltip="CV 48, bit 7" />
+			<display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1" />
+			<display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2" />
+			<display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3" />
+			<display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4" />
+			<display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5" />
+			<display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6" />
+			<display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7" />
+			<display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8" />
 		</column>
 	</pane>
 
 	<pane name="Lights">
 		<column>
-			<display item="Blink Rate" tooltip="CV 121" />
+			<display item="Blink Rate" />
 		</column>
 		<column>
-			<display item="Brightness Head Lights" tooltip="CV 113, bits 0-3"/>
-			<display item="Output Configuration Head Lights" tooltip="CV 113, bits 4 and 5"/>
+			<display item="Brightness Head Lights"/>
+			<display item="Output Configuration Head Lights"/>
 			<separator/>
-			<display item="Brightness Back Lights" tooltip="CV 114, bits 0-3"/>
-			<display item="Output Configuration Back Lights" tooltip="CV 114, bits 4 and 5"/>
+			<display item="Brightness Back Lights"/>
+			<display item="Output Configuration Back Lights"/>
 			<separator/>
-			<display item="Brightness AUX" tooltip="CV 115, bits 0-3"/>
-			<display item="Output Configuration AUX" tooltip="CV 115, bits 4 and 5"/>
+			<display item="Brightness AUX"/>
+			<display item="Output Configuration AUX"/>
 		</column>
 	</pane>
 
 	<pane name="Consist">
 		<column>
-			<display item="Consist Address" tooltip="CV 19" />
+			<display item="Consist Address" />
 			<separator/>
 			<label label="Will decoder respond to function requests at consist address?"/>
 			<separator/>
-			<display item="Consist Acceleration Adjustment" tooltip="CV 23, bits 0-6" />
-			<display item="Consist Acceleration Adjustment Sign" tooltip="CV 23, bit 7"/>
-			<display item="Consist Deceleration Adjustment" tooltip="CV 24, bits 0-6" />
-			<display item="Consist Deceleration Adjustment Sign" tooltip="CV 24, bit 7" />
+			<display item="Consist Acceleration Adjustment" />
+			<display item="Consist Acceleration Adjustment Sign"/>
+			<display item="Consist Deceleration Adjustment" />
+			<display item="Consist Deceleration Adjustment Sign" />
 		</column>
 	</pane>
 	
 	<pane name="Advanced">
 		<column>
-			<display item="Packet Time-out Value" tooltip="CV 11" />
+			<display item="Packet Time-out Value" />
 		</column>
 		<column>
-			<display item="Analog Vstart" tooltip="CV 60"/>
+			<display item="Analog Vstart"/>
 		</column>
 		<column>
 			<label label="Analog Mode Functions F1-F8" />
 			<separator/>
-			<display item="Analog Mode Function Status - F1" format="checkbox" label="F-1" tooltip="CV 13, bit 0"/>			
-			<display item="Analog Mode Function Status - F2" format="checkbox" label="F-2" tooltip="CV 13, bit 1"/>			
-			<display item="Analog Mode Function Status - F3" format="checkbox" label="F-3" tooltip="CV 13, bit 2"/>			
-			<display item="Analog Mode Function Status - F4" format="checkbox" label="F-4" tooltip="CV 13, bit 3"/>			
-			<display item="Analog Mode Function Status - F5" format="checkbox" label="F-5" tooltip="CV 13, bit 4"/>			
-			<display item="Analog Mode Function Status - F6" format="checkbox" label="F-6" tooltip="CV 13, bit 5"/>			
-			<display item="Analog Mode Function Status - F7" format="checkbox" label="F-7" tooltip="CV 13, bit 6"/>			
-			<display item="Analog Mode Function Status - F8" format="checkbox" label="F-8" tooltip="CV 13, bit 7"/>			
+			<display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>			
+			<display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>			
+			<display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>			
+			<display item="Analog Mode Function Status - F4" format="checkbox" label="F-4"/>			
+			<display item="Analog Mode Function Status - F5" format="checkbox" label="F-5"/>			
+			<display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>			
+			<display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>			
+			<display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>			
 			<label label=" "/>
 			<label label="Analog Mode Functions F0, F9-F12" />
 			<separator/>
-			<display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)" tooltip="CV 14, bit 0"/>			
-			<display item="Analog Mode Function Status - F0(r)" format="checkbox" label="F-0(r)" tooltip="CV 14, bit 1"/>			
-			<display item="Analog Mode Function Status - F9(f)" format="checkbox" label="F-9(f)" tooltip="CV 14, bit 2"/>			
-			<display item="Analog Mode Function Status - F10(f)" format="checkbox" label="F-10(f)" tooltip="CV 14, bit 3"/>			
-			<display item="Analog Mode Function Status - F11" format="checkbox" label="F-11" tooltip="CV 14, bit 4"/>			
-			<display item="Analog Mode Function Status - F12" format="checkbox" label="F-12" tooltip="CV 14, bit 5"/>			
-			<display item="Analog Mode Function Status - F9(r)" format="checkbox" label="F-9(r)" tooltip="CV 14, bit 6"/>			
-			<display item="Analog Mode Function Status - F10(r)" format="checkbox" label="F-10(r)" tooltip="CV 14, bit 7"/>		
+			<display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>			
+			<display item="Analog Mode Function Status - F0(r)" format="checkbox" label="F-0(r)"/>			
+			<display item="Analog Mode Function Status - F9(f)" format="checkbox" label="F-9(f)"/>			
+			<display item="Analog Mode Function Status - F10(f)" format="checkbox" label="F-10(f)"/>			
+			<display item="Analog Mode Function Status - F11" format="checkbox" label="F-11"/>			
+			<display item="Analog Mode Function Status - F12" format="checkbox" label="F-12"/>			
+			<display item="Analog Mode Function Status - F9(r)" format="checkbox" label="F-9(r)"/>			
+			<display item="Analog Mode Function Status - F10(r)" format="checkbox" label="F-10(r)"/>		
 		</column>
 		<column>
-			<display item="Signal Dependent Acceleration" tooltip="CV 61" />
-			<display item="Signal Dependent Deceleration" tooltip="CV 62" />
+			<display item="Signal Dependent Acceleration" />
+			<display item="Signal Dependent Deceleration" />
 			<label label=" " />
-			<display item="ZIMO Signal Dependence Active" tooltip="CV 49, bit 2" />
+			<display item="ZIMO Signal Dependence Active" />
 		</column>		
 	</pane>
 	
 	<pane name="Sound">
 		<column>
-			<display item="Minimum Incidental Sound RPM" tooltip="CV 50"/>
-			<display item="Maximum Incidental Sound RPM" tooltip="CV 51"/>
+			<display item="Minimum Incidental Sound RPM"/>
+			<display item="Maximum Incidental Sound RPM"/>
 			<label label=" "/>
-			<display item="Sound Mode 1" tooltip="CV 52"/>
-			<display item="Sound Mode 2" tooltip="CV 53"/>
+			<display item="Sound Mode 1"/>
+			<display item="Sound Mode 2"/>
 			<label label=" "/>
-			<display item="Minimum Incidental Sound Interval" tooltip="CV 54"/>
-			<display item="Maximum Incidental Sound Interval" tooltip="CV 54"/>
+			<display item="Minimum Incidental Sound Interval"/>
+			<display item="Maximum Incidental Sound Interval"/>
 			<label label=" "/>
-			<display item="Braking Noise Start" tooltip="CV 112"/>
+			<display item="Braking Noise Start"/>
 		</column>
 	</pane>
 
 	<pane name="Sound Levels">
 			<column>
-				<display item="Sound Level" tooltip="CV 63"/>
+				<display item="Sound Level"/>
 			</column>
 	</pane>
 
