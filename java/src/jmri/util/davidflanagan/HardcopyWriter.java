@@ -3,6 +3,7 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
+//import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+
 import jmri.util.JmriJFrame;
 
 /**
@@ -56,6 +58,8 @@ public class HardcopyWriter extends Writer {
     protected int charnum = 0, linenum = 0;
     protected int charoffset =0;
     protected int pagenum = 0;
+    protected int prFirst = 1;
+    protected int prLast = 16384;	// a large number for the last page
     protected Color color = Color.black;
     protected boolean printHeader = true;
     
@@ -141,6 +145,11 @@ public class HardcopyWriter extends Writer {
     			throw new PrintCanceledException("User cancelled print request");
     		pagesize = job.getPageDimension();
     		pagedpi = job.getPageResolution();
+    		// determine if user selected a range of pages to print out (not sure we need this, page == null if range selected dboudreau 12/6/2013)
+//			if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
+//				prFirst = jobAttributes.getPageRanges()[0][0];
+//				prLast = jobAttributes.getPageRanges()[0][1];
+//			}
     	}
 
         // Bug workaround
@@ -324,7 +333,8 @@ public class HardcopyWriter extends Writer {
                     charoffset += metrics.charWidth(buffer[i]);
                 }
             }
-            page.drawString(line, x0, y0 + (linenum*lineheight) + lineascent);
+			if (page != null)
+				page.drawString(line, x0, y0 + (linenum * lineheight) + lineascent);
         }
     }
     
@@ -444,7 +454,8 @@ public class HardcopyWriter extends Writer {
      *  method modified by Dennis Miller to add preview capability
      */
     protected void newline() {
-    	page.drawString(line, x0, y0 + (linenum*lineheight) + lineascent);
+		if (page != null)
+			page.drawString(line, x0, y0 + (linenum * lineheight) + lineascent);
     	line = "";
         charnum = 0;
         charoffset =0;
@@ -476,7 +487,7 @@ public class HardcopyWriter extends Writer {
         }
         pagenum++;
         linenum = 0; charnum = 0;
-        if (printHeader){
+        if (printHeader && page != null){
         	page.setFont(headerfont);
         	page.drawString(jobname, x0, headery);
 
@@ -490,9 +501,10 @@ public class HardcopyWriter extends Writer {
         	int y = headery + headermetrics.getDescent() + 1;
         	page.drawLine(x0, y, x0+width, y);
         }
-       	// set basic font
-    	page.setFont(font);
-    }
+		// set basic font
+		if (page != null)
+			page.setFont(font);
+	}
 
     /**
      * Write a graphic to the printout.
