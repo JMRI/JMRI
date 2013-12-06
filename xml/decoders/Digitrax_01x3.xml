@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version authot="Michael Greene mgreene@cedarlane.com" version="33" lastUpdated="20131201"/>
+  <version author="Michael Greene mgreene@cedarlane.com" version="33" lastUpdated="20131201"/>
   <version author="Bob Jacobsen" version="32" lastUpdated="20121226"/>
   <version author="Richard Sauerbrun" version="31" lastUpdated="20111230"/>
   <version author="Peter Ulvestad" version="30" lastUpdated="20091101"/>
