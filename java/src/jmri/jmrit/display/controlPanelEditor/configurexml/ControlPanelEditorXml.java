@@ -72,10 +72,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         elem.addContent(storeIcon("hidden",  map.get(PortalIcon.HIDDEN)));
         elem.addContent(storeIcon("to_arrow",  map.get(PortalIcon.TO_ARROW)));
         elem.addContent(storeIcon("from_arrow",  map.get(PortalIcon.FROM_ARROW)));
-        String family = p.getPortalIconFamily();
-        if (family!=null) {
-            elem.setAttribute("family", family);
-        }
         panel.addContent(elem);
         
        // include contents
