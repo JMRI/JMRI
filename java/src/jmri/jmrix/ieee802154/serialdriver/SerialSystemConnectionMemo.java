@@ -3,7 +3,6 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.*;
-import jmri.jmrix.SystemConnectionMemo;
 import java.util.ResourceBundle;
 
 /**

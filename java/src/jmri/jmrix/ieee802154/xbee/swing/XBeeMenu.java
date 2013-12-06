@@ -4,8 +4,6 @@ package jmri.jmrix.ieee802154.xbee.swing;
 
 import java.util.ResourceBundle;
 
-import javax.swing.JMenu;
-
 /**
  * Create a menu containing the XBee specific tools
  *

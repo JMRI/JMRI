@@ -4,14 +4,9 @@ package jmri.implementation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
 import jmri.Programmer;
 import jmri.ProgListener;
 import jmri.jmrix.AbstractProgrammerFacade;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Vector;
 
 /**
  * Programmer facade for single index multi-CV access.

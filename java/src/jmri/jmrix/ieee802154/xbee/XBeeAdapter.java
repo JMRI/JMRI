@@ -2,14 +2,8 @@
 
 package jmri.jmrix.ieee802154.xbee;
 
-import jmri.jmrix.ieee802154.IEEE802154PortController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -18,8 +12,6 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
 import com.rapplogic.xbee.XBeeConnection;
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeException;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port.

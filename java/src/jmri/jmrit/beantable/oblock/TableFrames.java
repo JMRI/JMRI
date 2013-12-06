@@ -41,8 +41,6 @@ import javax.swing.event.InternalFrameListener;
 
 import javax.swing.Action;
 import javax.swing.ActionMap;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;

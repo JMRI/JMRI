@@ -28,11 +28,11 @@ public class TrainManifest extends TrainCommon {
 	public TrainManifest(Train train) {
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
-		PrintWriter fileOut;
+		PrintWriter fileOut = null;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(file), "UTF-8")), true);	// NOI18N
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
+					true);
 		} catch (IOException e) {
 			log.error("can not open train manifest file");
 			return;
@@ -42,7 +42,7 @@ public class TrainManifest extends TrainCommon {
 			newLine(fileOut, train.getRailroadName());
 		else
 			newLine(fileOut, Setup.getRailroadName());
-		newLine(fileOut);	// empty line
+		newLine(fileOut); // empty line
 		newLine(fileOut, MessageFormat.format(TrainManifestText.getStringManifestForTrain(), new Object[] {
 				train.getName(), train.getDescription() }));
 
@@ -79,8 +79,7 @@ public class TrainManifest extends TrainCommon {
 
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
-			if (!routeLocationName.equals(previousRouteLocationName)
-					|| (work && !oldWork && !newWork)) {
+			if (!routeLocationName.equals(previousRouteLocationName) || (work && !oldWork && !newWork)) {
 				if (work) {
 					// add line break between locations without work and ones with work
 					// TODO sometimes an extra line break appears when the user has two or more locations with the
@@ -111,12 +110,12 @@ public class TrainManifest extends TrainCommon {
 					// add route comment
 					if (!rl.getComment().trim().equals(""))
 						newLine(fileOut, rl.getComment());
-					
+
 					printTrackComments(fileOut, rl, carList);
-					
+
 					// add location comment
 					if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
-						newLine(fileOut, rl.getLocation().getComment());					
+						newLine(fileOut, rl.getLocation().getComment());
 				}
 			}
 
@@ -124,16 +123,14 @@ public class TrainManifest extends TrainCommon {
 			if (train.getSecondLegOptions() != Train.NONE) {
 				if (rl == train.getSecondLegStartLocation())
 					printChange(fileOut, rl, train.getSecondLegOptions());
-				if (rl == train.getSecondLegEndLocation()
-						&& train.getSecondLegOptions() == Train.HELPER_ENGINES)
+				if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES)
 					newLine(fileOut, MessageFormat.format(TrainManifestText.getStringRemoveHelpers(),
 							new Object[] { splitString(rl.getName()) }));
 			}
 			if (train.getThirdLegOptions() != Train.NONE) {
 				if (rl == train.getThirdLegStartLocation())
 					printChange(fileOut, rl, train.getThirdLegOptions());
-				if (rl == train.getThirdLegEndLocation()
-						&& train.getThirdLegOptions() == Train.HELPER_ENGINES)
+				if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES)
 					newLine(fileOut, MessageFormat.format(TrainManifestText.getStringRemoveHelpers(),
 							new Object[] { splitString(rl.getName()) }));
 			}
@@ -164,9 +161,9 @@ public class TrainManifest extends TrainCommon {
 						// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
 						if (Setup.isPrintLoadsAndEmptiesEnabled())
 							trainDeparts = MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(),
-									new Object[] { routeLocationName, rl.getTrainDirectionString(),
-											cars - emptyCars, emptyCars, train.getTrainLength(rl),
-											Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl) });
+									new Object[] { routeLocationName, rl.getTrainDirectionString(), cars - emptyCars,
+											emptyCars, train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
+											train.getTrainWeight(rl) });
 						newLine(fileOut, trainDeparts);
 						newWork = false;
 						newLine(fileOut);
@@ -197,7 +194,7 @@ public class TrainManifest extends TrainCommon {
 												new Object[] { train.getExpectedDepartureTime(rl) });
 						}
 						newLine(fileOut, s);
-						
+
 						// add location comment
 						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
 							newLine(fileOut, rl.getLocation().getComment());
@@ -266,5 +263,5 @@ public class TrainManifest extends TrainCommon {
 	private void newLine(PrintWriter file, String string) {
 		newLine(file, string, Setup.getManifestOrientation());
 	}
-	
+
 }

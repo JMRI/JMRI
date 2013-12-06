@@ -9,7 +9,6 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.border.Border;
 
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;

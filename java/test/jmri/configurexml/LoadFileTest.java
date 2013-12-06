@@ -106,6 +106,8 @@ public class LoadFileTest extends LoadFileTestBase {
                 && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
                     Assert.assertEquals(inLine, outLine);
         }
+        inFileStream.close();
+        outFileStream.close();
     }
         
     public void testValidateOne() {

@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;

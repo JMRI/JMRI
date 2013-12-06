@@ -79,8 +79,8 @@
                     <th>ID</th>
                     <th>Icon</th>
                     <th>Image</th>
-                    <th>Road Number</th>
                     <th>Road Name</th>
+                    <th>Road Number</th>
                     <th>Manufacturer</th>
                     <th>Owner</th>
                     <th>Model</th>

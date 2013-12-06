@@ -36,11 +36,11 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		// create csv switch list file
 		File file = TrainManagerXml.instance().createCsvSwitchListFile(
 				location.getName());
-		PrintWriter fileOut;
+		PrintWriter fileOut = null;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
-					"UTF-8")), true);	// NOI18N
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
+					true); // NOI18N
 		} catch (IOException e) {
 			log.error("can not open cvs switchlist file");
 			return;

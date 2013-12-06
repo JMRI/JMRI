@@ -81,14 +81,16 @@ public class TrainPrintUtilities {
 			writer.setFontName(fontName);
 
 		// now get the build file to print
-		BufferedReader in;
+		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
 		} catch (FileNotFoundException e) {
 			log.error("Build file doesn't exist");
+			writer.close();
 			return;
 		} catch (UnsupportedEncodingException e) {
 			log.error("Doesn't support UTF-8 encoding");
+			writer.close();
 			return;
 		}
 		String line = " ";
@@ -177,13 +179,7 @@ public class TrainPrintUtilities {
 	 */
 	public static void editReport(File file, String name) {
 		// make a new file with the build report levels removed
-		BufferedReader in;
-//		try {
-//			in = new BufferedReader(new FileReader(file));
-//		} catch (FileNotFoundException e) {
-//			log.debug("Build report file doesn't exist");
-//			return;
-//		}
+		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
 		} catch (FileNotFoundException e) {
@@ -201,6 +197,10 @@ public class TrainPrintUtilities {
 					new FileOutputStream(buildReport), "UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("Can not create build report file");
+			try {
+				in.close();
+			} catch (IOException ee) {
+			}
 			return;
 		}
 		String line = " ";

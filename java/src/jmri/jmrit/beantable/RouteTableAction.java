@@ -16,7 +16,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
 
-import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

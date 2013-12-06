@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import jmri.jmrit.roster.CopyRosterItemAction;

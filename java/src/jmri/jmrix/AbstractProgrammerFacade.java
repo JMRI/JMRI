@@ -2,13 +2,10 @@
 
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
 
 /**
  * Common implementations of the Programmer interface

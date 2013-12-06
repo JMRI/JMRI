@@ -1,8 +1,5 @@
 package jmri.jmrit.signalling.entryexit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jmri.NamedBean;
 import jmri.Block;
 import jmri.jmrit.signalling.EntryExitPairs;

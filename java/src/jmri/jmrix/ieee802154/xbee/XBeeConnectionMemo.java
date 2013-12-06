@@ -5,7 +5,6 @@ package jmri.jmrix.ieee802154.xbee;
 import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.SystemConnectionMemo;
 import java.util.ResourceBundle;
 
 /**

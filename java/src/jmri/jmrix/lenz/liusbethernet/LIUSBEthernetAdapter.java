@@ -9,8 +9,6 @@ import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
-import java.io.*;
-
 import jmri.util.zeroconf.ZeroConfClient;
 
 /**

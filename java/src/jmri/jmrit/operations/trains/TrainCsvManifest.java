@@ -22,25 +22,26 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Builds a train's manifest using Comma Separated Values (csv). 
+ * Builds a train's manifest using Comma Separated Values (csv).
  * 
- * @author Daniel Boudreau  Copyright (C) 2011
- * @version             $Revision: 1 $
+ * @author Daniel Boudreau Copyright (C) 2011
+ * @version $Revision: 1 $
  */
 public class TrainCsvManifest extends TrainCsvCommon {
-	
+
 	EngineManager engineManager = EngineManager.instance();
 	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
-	
+
 	public TrainCsvManifest(Train train) {
 		// create comma separated value manifest file
 		File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());
-		PrintWriter fileOut;
+
+		PrintWriter fileOut = null;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(file), "UTF-8")), true);	// NOI18N
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
+					true); // NOI18N
 		} catch (IOException e) {
 			log.error("can not open train csv manifest file");
 			return;
@@ -50,7 +51,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		addLine(fileOut, RN + ESC + Setup.getRailroadName() + ESC);
 		addLine(fileOut, TN + train.getName());
 		addLine(fileOut, TM + ESC + train.getDescription() + ESC);
-		addLine(fileOut, PRNTR + ESC + locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
+		addLine(fileOut, PRNTR + ESC
+				+ locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName() + ESC);
 		// add logo
 		String logoURL = Setup.getManifestLogoURL();
 		if (!train.getManifestLogoURL().equals(""))
@@ -191,4 +193,3 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		fileOut.close();
 	}
 }
-

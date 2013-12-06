@@ -1613,10 +1613,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     static protected class PositionableListDnD implements Transferable {
 //        ControlPanelEditor _sourceEditor;
-        List _sourceEditor;
+        List<Positionable> _sourceEditor;
         DataFlavor _dataFlavor;
 
-        PositionableListDnD(List source) {
+        PositionableListDnD(List<Positionable> source) {
             _sourceEditor = source;
             _dataFlavor = new DataFlavor(List.class, "JComponentList");
         }

@@ -3,14 +3,12 @@ package jmri.jmrit.logix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ThrottleListener;
-import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
