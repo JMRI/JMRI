@@ -229,7 +229,8 @@
     <LI>Bill Gray suggested web page improvements
 	<LI>Michael Greene, who corrected a bug in the SoundTraxx decoder definition;
 	provided our jmri.info, decoderpro.info and packetpro.info domain names;
-	and provided definitions for the E-Z Command and Zimo MX61_N decoders
+	provided definitions for the E-Z Command and Zimo MX61_N decoders;
+	and updated the Digitrax definition for new types.
 	<LI>Walter Griffin, who provided graphics for signals and CTC panels
 	<LI>Mark Gurries, who provided loaner equipment and great ideas. He's currently
 	working on decoder definitions for DecoderPro
