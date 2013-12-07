@@ -209,6 +209,81 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
+    public void testMarkChanges2ndByte() {
+        SerialSensor s1 = new SerialSensor("CS9","a");
+        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
+        SerialSensor s2 = new SerialSensor("CS10","ab");
+        SerialSensor s3 = new SerialSensor("CS11","abc");
+        b.registerSensor(s1, 8);
+        b.registerSensor(s2, 9);
+        b.registerSensor(s3, 10);
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
+        // from UNKNOWN, 1st poll goes to new state
+        SerialReply r = new SerialReply();
+        r.setElement(2, '0');
+        r.setElement(3, '2');
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+    }
+
+    public void testMarkChangesShortReply() {
+        SerialSensor s1 = new SerialSensor("CS9","a");
+        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
+        SerialSensor s2 = new SerialSensor("CS10","ab");
+        SerialSensor s3 = new SerialSensor("CS11","abc");
+        b.registerSensor(s1, 8);
+        b.registerSensor(s2, 9);
+        b.registerSensor(s3, 10);
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
+        // from UNKNOWN, 1st poll goes to new state
+        SerialReply r = new SerialReply();
+        r.setElement(2, '0');
+        r.setElement(3, '2');
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        r = new SerialReply();
+        r.setElement(2, '0');
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+    }
+
+    public void testMarkChangesEmptyReply() {
+        SerialSensor s1 = new SerialSensor("CS9","a");
+        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
+        SerialSensor s2 = new SerialSensor("CS10","ab");
+        SerialSensor s3 = new SerialSensor("CS11","abc");
+        b.registerSensor(s1, 8);
+        b.registerSensor(s2, 9);
+        b.registerSensor(s3, 10);
+        Assert.assertTrue("check sensors active", b.getSensorsActive());
+        // from UNKNOWN, 1st poll goes to new state
+        SerialReply r = new SerialReply();
+        r.setElement(2, '0');
+        r.setElement(3, '2');
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        r = new SerialReply();
+        b.markChanges(r);
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
+        r = new SerialReply();
+        r.setElement(3, '5');
+        b.markChanges(r);
+        b.markChanges(r); // for debounce
+        Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.ACTIVE, s3.getKnownState());
+    }
+
     public void testMarkChangesDebounce() {
         SerialSensor s1 = new SerialSensor("CS1","a");
         SerialSensor s2 = new SerialSensor("CS2","ab");

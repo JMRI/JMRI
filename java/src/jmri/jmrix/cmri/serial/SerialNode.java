@@ -701,6 +701,7 @@ public class SerialNode extends AbstractNode {
             for (int i=0; i<=lastUsedSensor; i++) {
                 if (sensorArray[i] == null) continue; // skip ones that don't exist
                 int loc = i/8;
+                if (loc+2 >= l.getNumDataElements()) continue; // skip this one as not in data, so not changed
                 int bit = i%8;
                 boolean value = (((l.getElement(loc+2)>>bit)&0x01) == 1) ^ sensorArray[i].getInverted();  // byte 2 is first of data
 
