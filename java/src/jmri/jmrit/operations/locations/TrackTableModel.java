@@ -277,7 +277,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 			return getModifiedString(track.getShipLoadNames().length, track.getShipLoadOption().equals(
 					Track.INCLUDE_LOADS));
 		case ROAD_COLUMN:
-			return getModifiedString(track.getRoadNames().length, track.getLoadOption().equals(Track.INCLUDE_ROADS));
+			return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.INCLUDE_ROADS));
 		case DESTINATION_COLUMN: {
 			if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
 				return "";
