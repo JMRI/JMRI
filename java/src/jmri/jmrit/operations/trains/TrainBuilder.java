@@ -155,26 +155,26 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { train.getName() }));
 		}
 
-		// show train build options in very detailed mode
-		addLine(buildReport, SEVEN, Bundle.getMessage("MenuItemBuildOptions") + ":");
+		// show train build options in detailed mode
+		addLine(buildReport, FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
 		if (Setup.isBuildAggressive())
-			addLine(buildReport, SEVEN, Bundle.getMessage("BuildModeAggressive"));
+			addLine(buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
 		else
-			addLine(buildReport, SEVEN, Bundle.getMessage("BuildModeNormal"));
+			addLine(buildReport, FIVE, Bundle.getMessage("BuildModeNormal"));
 		if (train.isBuildTrainNormalEnabled())
-			addLine(buildReport, SEVEN, Bundle.getMessage("NormalModeWhenBuilding"));
+			addLine(buildReport, FIVE, Bundle.getMessage("NormalModeWhenBuilding"));
 		if (train.isSendCarsToTerminalEnabled())
-			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("SendToTerminal"),
+			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { terminateLocation.getName() }));
 		if (train.isAllowReturnToStagingEnabled()  || Setup.isAllowReturnToStagingEnabled())
-			addLine(buildReport, SEVEN, Bundle.getMessage("AllowCarsToReturn"));
+			addLine(buildReport, FIVE, Bundle.getMessage("AllowCarsToReturn"));
 		if (train.isAllowLocalMovesEnabled())
-			addLine(buildReport, SEVEN, Bundle.getMessage("AllowLocalMoves"));
+			addLine(buildReport, FIVE, Bundle.getMessage("AllowLocalMoves"));
 		if (train.isAllowThroughCarsEnabled())
-			addLine(buildReport, SEVEN, Bundle.getMessage("AllowThroughCars"));
+			addLine(buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
 		if (train.isServiceAllCarsWithFinalDestinationsEnabled())
-			addLine(buildReport, SEVEN, Bundle.getMessage("ServiceAllCars"));
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+			addLine(buildReport, FIVE, Bundle.getMessage("ServiceAllCars"));
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS()
@@ -237,7 +237,7 @@ public class TrainBuilder extends TrainCommon {
 			requested = requested / 2; // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)) {
@@ -466,7 +466,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
 				new Object[] { train.getName() }));
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 		
 		// show car types and loads that this train will service
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
@@ -520,7 +520,7 @@ public class TrainBuilder extends TrainCommon {
 		blockCarsFromStaging(); // block cars from staging
 
 		// now find destinations for cars
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 		addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrain"), new Object[] {
 				requested, train.getName(), carList.size() }));
 
@@ -1430,6 +1430,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 		}
+		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 		return;
 	}
 
@@ -1687,7 +1688,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"),
 					new Object[] { rl.getName(), reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
-			addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+			addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks
@@ -1984,7 +1985,7 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildWarnCarDepartStaging"),
 					new Object[] { car.toString(), car.getLoadName() }));
 		}
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 		numberCars++; // bump number of cars moved by this train
 		completedMoves++; // bump number of car pick up moves for the location
 		reqNumOfMoves--; // decrement number of moves left for the location
@@ -3045,7 +3046,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { car.toString(), departLocation.getName(), terminateLocation.getName() }));
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
 						new Object[] { departLocation.getName(), terminateLocation.getName() }));
-				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+				addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 				return true; // done
 			}
 			locCount++; // show when this car would be dropped at location
@@ -3217,7 +3218,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
 				new Object[] { car.toString() }));
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		return true; // car no longer has a destination, but it had one.
 	}
 
@@ -3596,7 +3597,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
 				new Object[] { car.toString() }));
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		return false; // no build errors, but car not given destination
 	}
 
