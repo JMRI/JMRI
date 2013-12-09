@@ -3,17 +3,17 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
-//import java.awt.JobAttributes.DefaultSelectionType;
+import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
-//import java.util.Properties;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import javax.swing.JFrame;
 import javax.swing.JWindow;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -58,7 +58,6 @@ public class HardcopyWriter extends Writer {
 	protected int charoffset = 0;
 	protected int pagenum = 0;
 	protected int prFirst = 1;
-	protected int prLast = 16384; // a large number for the last page
 	protected Color color = Color.black;
 	protected boolean printHeader = true;
 
@@ -136,12 +135,11 @@ public class HardcopyWriter extends Writer {
 				throw new PrintCanceledException("User cancelled print request");
 			pagesize = job.getPageDimension();
 			pagedpi = job.getPageResolution();
-			// determine if user selected a range of pages to print out (not sure we need this, page == null if range
-			// selected dboudreau 12/6/2013)
-			// if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
-			// prFirst = jobAttributes.getPageRanges()[0][0];
-			// prLast = jobAttributes.getPageRanges()[0][1];
-			// }
+			// determine if user selected a range of pages to print out, note that page becomes null if range
+			// selected is less than the total number of pages, that's the reason for the page null checks
+			if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
+				prFirst = jobAttributes.getPageRanges()[0][0];
+			}
 		}
 
 		// Bug workaround
@@ -323,7 +321,7 @@ public class HardcopyWriter extends Writer {
 					charoffset += metrics.charWidth(buffer[i]);
 				}
 			}
-			if (page != null)
+			if (page != null && pagenum >= prFirst)
 				page.drawString(line, x0, y0 + (linenum * lineheight) + lineascent);
 		}
 	}
@@ -338,11 +336,12 @@ public class HardcopyWriter extends Writer {
 	 * @throws IOException
 	 */
 	public void write(Color c, String s) throws IOException {
-		if (page != null) {
+		if (page != null)
 			page.setColor(c);
-			write(s);
+		write(s);
+		// note that the above write(s) can cause the page to become null!
+		if (page != null)
 			page.setColor(color); // reset color
-		}
 	}
 
 	public void flush() {
@@ -447,7 +446,8 @@ public class HardcopyWriter extends Writer {
 		synchronized (this.lock) {
 			if (isPreview)
 				pageImages.addElement(previewImage);
-			page.dispose();
+			if (page != null)
+				page.dispose();
 			page = null;
 			newpage();
 		}
@@ -467,7 +467,7 @@ public class HardcopyWriter extends Writer {
 	 * Internal method begins a new line method modified by Dennis Miller to add preview capability
 	 */
 	protected void newline() {
-		if (page != null)
+		if (page != null && pagenum >= prFirst)
 			page.drawString(line, x0, y0 + (linenum * lineheight) + lineascent);
 		line = "";
 		charnum = 0;
@@ -476,7 +476,8 @@ public class HardcopyWriter extends Writer {
 		if (linenum >= lines_per_page) {
 			if (isPreview)
 				pageImages.addElement(previewImage);
-			page.dispose();
+			if (page != null)
+				page.dispose();
 			page = null;
 			newpage();
 		}
@@ -486,11 +487,23 @@ public class HardcopyWriter extends Writer {
 	 * Internal method beings a new page and prints the header method modified by Dennis Miller to add preview
 	 * capability
 	 */
-	protected void newpage() {
+	protected void newpage() {		
+		pagenum++;
+		linenum = 0;
+		charnum = 0;
 		// get a page graphics or image graphics object depending on output destination
 		if (page == null) {
 			if (!isPreview) {
-				page = job.getGraphics();
+				if (pagenum >= prFirst) {
+					page = job.getGraphics();
+				} else {
+					// The job.getGraphics() method will return null if the number of pages requested is greater than
+					// the number the user selected. Since the code checks for a null page in many places, we need to
+					// create a "dummy" page for the pages the user has decided to skip.
+					JFrame f = new JFrame();
+					f.pack();
+					page = f.createImage(pagesize.width, pagesize.height).getGraphics();					
+				}
 			} else { // Preview
 				previewImage = previewPanel.createImage(pagesize.width, pagesize.height);
 				page = previewImage.getGraphics();
@@ -499,10 +512,7 @@ public class HardcopyWriter extends Writer {
 				page.setColor(color);
 			}
 		}
-		pagenum++;
-		linenum = 0;
-		charnum = 0;
-		if (printHeader && page != null) {
+		if (printHeader && page != null && pagenum >= prFirst) {
 			page.setFont(headerfont);
 			page.drawString(jobname, x0, headery);
 
@@ -538,7 +548,8 @@ public class HardcopyWriter extends Writer {
 		int x = x0 + width - (c.getWidth(null) * 2 / 3 + charwidth);
 		int y = y0 + (linenum * lineheight) + lineascent;
 
-		page.drawImage(c, x, y, c.getWidth(null) * 2 / 3, c.getHeight(null) * 2 / 3, null);
+		if (page != null && pagenum >= prFirst)
+			page.drawImage(c, x, y, c.getWidth(null) * 2 / 3, c.getHeight(null) * 2 / 3, null);
 	}
 
 	/**
@@ -557,7 +568,8 @@ public class HardcopyWriter extends Writer {
 		int x = x0 + width - (c.getWidth(null) + charwidth);
 		int y = y0 + (linenum * lineheight) + lineascent;
 
-		page.drawImage(c, x, y, c.getWidth(null), c.getHeight(null), null);
+		if (page != null && pagenum >= prFirst)
+			page.drawImage(c, x, y, c.getWidth(null), c.getHeight(null), null);
 	}
 
 	/**
@@ -575,19 +587,21 @@ public class HardcopyWriter extends Writer {
 		// if we haven't begun a new page, do that now
 		if (page == null)
 			newpage();
-		int x = x0;
-		int y = y0 + (linenum * lineheight);
-		// shift origin to current printing position
-		page.translate(x, y);
-		// Window must be visible to print
-		jW.setVisible(true);
-		// Have the window print itself
-		jW.printAll(page);
-		// Make it invisible again
-		jW.setVisible(false);
-		// Get rid of the window now that it's printed and put the origin back where it was
-		jW.dispose();
-		page.translate(-x, -y);
+		if (page != null && pagenum >= prFirst) {
+			int x = x0;
+			int y = y0 + (linenum * lineheight);
+			// shift origin to current printing position
+			page.translate(x, y);
+			// Window must be visible to print
+			jW.setVisible(true);
+			// Have the window print itself
+			jW.printAll(page);
+			// Make it invisible again
+			jW.setVisible(false);
+			// Get rid of the window now that it's printed and put the origin back where it was
+			jW.dispose();
+			page.translate(-x, -y);
+		}
 	}
 
 	/**
@@ -610,7 +624,8 @@ public class HardcopyWriter extends Writer {
 		int xEnd = x0 + (colEnd - 1) * charwidth + charwidth / 2;
 		int yStart = y0 + rowStart * lineheight + (lineheight - lineascent) / 2;
 		int yEnd = y0 + rowEnd * lineheight + (lineheight - lineascent) / 2;
-		page.drawLine(xStart, yStart, xEnd, yEnd);
+		if (page != null && pagenum >= prFirst)
+			page.drawLine(xStart, yStart, xEnd, yEnd);
 	}
 
 	/**
