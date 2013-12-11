@@ -156,6 +156,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		// show train build options in detailed mode
+		addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		addLine(buildReport, FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
 		if (Setup.isBuildAggressive())
 			addLine(buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
@@ -174,8 +175,7 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
 		if (train.isServiceAllCarsWithFinalDestinationsEnabled())
 			addLine(buildReport, FIVE, Bundle.getMessage("ServiceAllCars"));
-		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
-
+		addLine(buildReport, ONE, BLANK_LINE); // add line
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS()
 				&& Control.fullTrainOnly) {
@@ -237,7 +237,14 @@ public class TrainBuilder extends TrainCommon {
 			requested = requested / 2; // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
-		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
+		
+		// get engine requirements for this train
+		if (train.getNumberEngines().equals(Train.AUTO)) {
+			reqNumEngines = getAutoEngines();
+		} else {
+			reqNumEngines = Integer.parseInt(train.getNumberEngines());
+		}
+		showTrainRequirements();
 
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)) {
@@ -259,28 +266,13 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainBuiltBefore"),
 					new Object[] { train.getName(), train.getBuiltEndYear() }));
 
-		// show engine info
-		if (train.getNumberEngines().equals(Train.AUTO)) {
-			reqNumEngines = getAutoEngines();
-		} else {
-			reqNumEngines = Integer.parseInt(train.getNumberEngines());
-		}
 		// show engine types that this train will service
 		if (reqNumEngines > 0) {
+			addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle
 					.getMessage("buildTrainServicesEngineTypes"), new Object[] { train.getName() }));
 			addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getLocoTypeNames()));
 		}
-
-		// show engine requirements for this train
-		if (reqNumEngines == 0)
-			addLine(buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
-		else if (reqNumEngines == 1)
-			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReq1Engine"),
-					new Object[] { train.getEngineModel(), train.getEngineRoad() }));
-		else
-			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReqEngine"),
-					new Object[] { train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad() }));
 
 		// allow up to two engine and caboose swaps in the train's route
 		RouteLocation engineTerminatesFirstLeg = train.getTrainTerminatesRouteLocation();
@@ -338,6 +330,7 @@ public class TrainBuilder extends TrainCommon {
 		terminateStageTrack = null;
 		List<String> stagingTracksTerminate = terminateLocation.getTrackIdsByMovesList(Track.STAGING);
 		if (stagingTracksTerminate.size() > 0) {
+			addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"),
 					new Object[] { terminateLocation.getName(),
 							Integer.toString(stagingTracksTerminate.size()) }));
@@ -377,14 +370,17 @@ public class TrainBuilder extends TrainCommon {
 		departStageTrack = null;
 		List<String> stagingTracks = departLocation.getTrackIdsByMovesList(Track.STAGING);
 		if (stagingTracks.size() > 0) {
+			addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"),
 					new Object[] { departLocation.getName(), Integer.toString(stagingTracks.size()) }));
 			if (stagingTracks.size() > 1 && Setup.isPromptFromStagingEnabled()) {
 				departStageTrack = PromptFromStagingDialog();
 				startTime = new Date(); // restart build timer
-				if (departStageTrack == null)
+				if (departStageTrack == null) {
+					showTrainRequirements();
 					throw new BuildFailedException(MessageFormat.format(Bundle
 							.getMessage("buildErrorStagingEmpty"), new Object[] { departLocation.getName() }));
+				}
 				// load engines for this train
 				if (!getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train
 						.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
@@ -413,6 +409,7 @@ public class TrainBuilder extends TrainCommon {
 					departStageTrack = null;
 				}
 			if (departStageTrack == null) {
+				showTrainRequirements();
 				throw new BuildFailedException(MessageFormat.format(Bundle
 						.getMessage("buildErrorStagingEmpty"), new Object[] { departLocation.getName() }));
 				// departing staging and returning to same track?
@@ -420,12 +417,16 @@ public class TrainBuilder extends TrainCommon {
 					&& Setup.isBuildAggressive() && Setup.isStagingTrackImmediatelyAvail()) {
 				terminateStageTrack = departStageTrack; // use the same track
 			}
+		} else {
 			// no staging tracks at this location, load engines for this train
-		} else if (!getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train
-				.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
-			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
-					new Object[] { reqNumEngines, train.getTrainDepartsName(),
-							engineTerminatesFirstLeg.getName() }));
+			if (reqNumEngines > 0)
+				addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+			if (!getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train
+					.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
+				throw new BuildFailedException(MessageFormat
+						.format(Bundle.getMessage("buildErrorEngines"), new Object[] { reqNumEngines,
+								train.getTrainDepartsName(), engineTerminatesFirstLeg.getName() }));
+			}
 		}
 
 		// Save termination and departure tracks
@@ -464,11 +465,12 @@ public class TrainBuilder extends TrainCommon {
 								train.getThirdLegStartLocation(), engineTerminatesThirdLeg }));
 			}
 		}
-		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
+		if (reqNumEngines > 0)
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
 				new Object[] { train.getName() }));
-		addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 		
 		// show car types and loads that this train will service
+		addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
 				new Object[] { train.getName() }));
 		addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getCarTypeNames()));
@@ -554,6 +556,29 @@ public class TrainBuilder extends TrainCommon {
 		// now create and place train icon
 		train.moveTrainIcon(train.getTrainDepartsRouteLocation());
 		log.debug("Done building train " + train.getName());
+	}
+	
+	private void showTrainRequirements() {
+		addLine(buildReport, ONE, BLANK_LINE); // add line
+		addLine(buildReport, ONE, Bundle.getMessage("TrainRequrements"));
+		if (reqNumEngines == 0)
+			addLine(buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
+		else if (reqNumEngines == 1)
+			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReq1Engine"),
+					new Object[] { train.getEngineModel(), train.getEngineRoad() }));
+		else
+			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReqEngine"),
+					new Object[] { train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad() }));
+		// show caboose or FRED requirements
+		if ((train.getRequirements() & Train.CABOOSE) > 0) {
+			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresCaboose"),
+					new Object[] { train.getCabooseRoad() }));			
+		}
+		if ((train.getRequirements() & Train.FRED) > 0) {
+			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresFRED"),
+					new Object[] { train.getCabooseRoad() }));			
+		}
+		addLine(buildReport, ONE, BLANK_LINE); // add line
 	}
 
 	/**
@@ -844,9 +869,13 @@ public class TrainBuilder extends TrainCommon {
 								rld.getName() }));
 			}
 		}
-		if (!foundLoco)
+		if (!foundLoco) {
+			String locationName = rl.getName();
+			if (departTrack != null)
+				locationName = locationName + ", " + departTrack.getName();
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoLocosFoundAtLocation"),
-					new Object[] { rl.getName() }));
+					new Object[] { locationName }));
+		}
 		// not able to assign engines to train
 		return false;
 	}
@@ -1430,7 +1459,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 		}
-		addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 		return;
 	}
 
