@@ -272,21 +272,23 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		case SETOUT_COLUMN:
 			return Integer.toString(track.getDropRS());
 		case LOAD_COLUMN:
-			return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.INCLUDE_LOADS));
+			return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS), track
+					.getLoadOption().equals(Track.INCLUDE_LOADS));
 		case SHIP_COLUMN:
-			return getModifiedString(track.getShipLoadNames().length, track.getShipLoadOption().equals(
-					Track.INCLUDE_LOADS));
+			return getModifiedString(track.getShipLoadNames().length,
+					track.getShipLoadOption().equals(Track.ALL_LOADS), track.getShipLoadOption().equals(
+							Track.INCLUDE_LOADS));
 		case ROAD_COLUMN:
-			return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.INCLUDE_ROADS));
+			return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS), track
+					.getRoadOption().equals(Track.INCLUDE_ROADS));
 		case DESTINATION_COLUMN: {
-			if (track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
-				return "";
 			int length = track.getDestinationListSize();
 			if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
 				length = LocationManager.instance().getLocationsByIdList().size() - length;
-			return getModifiedString(length, track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
+			return getModifiedString(length, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
+					.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
 		}
-		case POOL_COLUMN:
+	case POOL_COLUMN:
 			return track.getPoolName();
 		case PLANPICKUP_COLUMN:
 			if (track.getIgnoreUsedLengthPercentage() > 0)
@@ -299,8 +301,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		}
 	}
 
-	private String getModifiedString(int number, boolean accept) {
-		if (number == 0)
+	private String getModifiedString(int number, boolean all, boolean accept) {
+		if (number == 0 || all)
 			return "";
 		if (accept)
 			return "A " + Integer.toString(number); // NOI18N
