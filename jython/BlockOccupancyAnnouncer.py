@@ -33,7 +33,8 @@ def cvtBlockStateToText(state) :
 
 # use external "nircmd" command to "speak" some text  (I prefer this voice to eSpeak)
 def speak(msg) :
-    java.lang.Runtime.getRuntime().exec('C:\\Progra~2\\nircmd\\nircmd speak text "' + msg +'"')
+    #uncomment next line for speech (Jenkins doesn't like this command)
+    #java.lang.Runtime.getRuntime().exec('C:\\Progra~2\\nircmd\\nircmd speak text "' + msg +'"')
     return
     
 # Define the sensor listener: 
