@@ -230,8 +230,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             aboutItem = new JMenuItem("About OBlocks&Portals");
             HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
             _warrantMenu.add(aboutItem);
-        } else {
-            _warrantMenu.add(TrackerTableAction.getInstance());         	
         }
     	_menuBar.add(_warrantMenu, 0);
     }

@@ -140,6 +140,8 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
+        _warrantMenu.add(TrackerTableAction.getInstance());
+        
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
     }
 
@@ -545,9 +547,6 @@ public class WarrantTableAction extends AbstractAction {
         }
 
     }
-
-    
-    
 
     static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
 }

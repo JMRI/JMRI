@@ -841,17 +841,15 @@ public class WarrantFrame extends WarrantRoute {
                 _dccNumBox.setText(_train.getDccLocoAddress().toString());
                 _rosterBox.setSelectedItem(_train.getId());
             } else {
-                _trainNameBox.setText("");
-                if (!isAddress) {
-                    _dccNumBox.setText("");
-                    _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-                } else {
-                    _rosterBox.setSelectedItem(" ");
-                }
+                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
                 return false;
             }
         }
-        if (_tabbedPane!=null) {
+        String n = _trainNameBox.getText();
+        if (n==null ||n.length()==0 || _train==null) {
+        	_trainNameBox.setText(_dccNumBox.getText());
+        }
+       if (_tabbedPane!=null) {
             _tabbedPane.invalidate();
         }
         return true;
@@ -1158,7 +1156,7 @@ public class WarrantFrame extends WarrantRoute {
             _warrant.addThrottleCommand(new ThrottleSetting(_throttleCommands.get(i)));
         }
         String name = _trainNameBox.getText();
-        if (name==null ||name.length()==0) {
+        if (name==null ||name.length()==0 || _train==null) {
         	name = _dccNumBox.getText();
         }
         _warrant.setTrainName(name);
