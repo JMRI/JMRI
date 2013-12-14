@@ -18,6 +18,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -1500,26 +1501,19 @@ public class Track {
 						new Object[] { si.getTypeName() });
 				break;
 			}
-			if (!si.getRoadName().equals("") && !acceptsRoadName(si.getRoadName())) {
-				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getRoadName() });
-				break;
-			}
-			if (!si.getRoadName().equals("") && !CarRoads.instance().containsName(si.getRoadName())) {
-				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getRoadName() });
+			// check roads, accepted by track, valid road, and there's at least one car with that road
+			if (!si.getRoadName().equals("")
+					&& (!acceptsRoadName(si.getRoadName()) || !CarRoads.instance().containsName(si.getRoadName()) || CarManager
+							.instance().getByTypeAndRoad(si.getTypeName(), si.getRoadName()) == null)) {
+				status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
 				break;
 			}
 			// check loads
-			if (!si.getReceiveLoadName().equals("") && !acceptsLoad(si.getReceiveLoadName(), si.getTypeName())) {
-				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getReceiveLoadName() });
-				break;
-			}
 			List<String> loads = CarLoads.instance().getNames(si.getTypeName());
-			if (!si.getReceiveLoadName().equals("") && !loads.contains(si.getReceiveLoadName())) {
-				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getReceiveLoadName() });
+			if (!si.getReceiveLoadName().equals("")
+					&& (!acceptsLoad(si.getReceiveLoadName(), si.getTypeName()) || !loads.contains(si
+							.getReceiveLoadName()))) {
+				status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getReceiveLoadName() });
 				break;
 			}
 			if (!si.getShipLoadName().equals("") && !loads.contains(si.getShipLoadName())) {
