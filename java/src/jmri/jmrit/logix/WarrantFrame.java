@@ -493,8 +493,7 @@ public class WarrantFrame extends WarrantRoute {
                 try {
                     Float.parseFloat(_throttleFactorBox.getText());
                 } catch (NumberFormatException nfe) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("MustBeFloat"),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                	showWarning("MustBeFloat");
                     _throttleFactorBox.setText("1.0");
                 }
             }
@@ -660,8 +659,7 @@ public class WarrantFrame extends WarrantRoute {
     private void insertRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        	showWarning("selectRow");
             return;
         }
         _throttleCommands.add(row, new ThrottleSetting(0, null, null, null));
@@ -671,16 +669,14 @@ public class WarrantFrame extends WarrantRoute {
     private void deleteRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        	showWarning("selectRow");
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
         if (cmd!=null) {
         	String c = cmd.getCommand();
             if (c!=null && c.trim().toUpperCase().equals("NOOP")) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("cannotDeleteNoop"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            	showWarning("cannotDeleteNoop");
                 return;
             }
             long time = cmd.getTime();
@@ -1478,8 +1474,7 @@ public class WarrantFrame extends WarrantRoute {
                     break;
             }
             if (msg != null) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            	showWarning(msg);
             } else {
                 fireTableRowsUpdated(row, row);
             }

@@ -630,8 +630,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         selectedRoute(_orders);
                         dialog.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectRoute"),
-                                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    	showWarning("SelectRoute");
                     }
                 }
                 ActionListener init(ButtonGroup bg, JDialog d, List <DefaultMutableTreeNode> dn,
@@ -654,8 +653,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                         showRoute(destNodes.get(i), tree);
                     } else {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectRoute"),
-                                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    	showWarning("SelectRoute");
                     }
                 }
                 ActionListener init(ButtonGroup bg, List <DefaultMutableTreeNode> dn,
@@ -687,6 +685,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _pickRouteDialog.setLocation(getLocation().x+50, getLocation().y+150);
         _pickRouteDialog.pack();
         _pickRouteDialog.setVisible(true);
+    }
+    
+    public void showWarning(String msg) {
+        JOptionPane.showMessageDialog(this, Bundle.getMessage(msg),
+                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);    	
     }
 
     /**

@@ -253,21 +253,17 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
         Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
         Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
         if (startW==null || endW==null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BadWarrantNames"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        	showWarning("BadWarrantNames");
             return;
         }
         BlockOrder last = startW.getLastOrder();
         BlockOrder next = endW.getfirstOrder();
         if (last==null || next==null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("EmptyRoutes"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        	showWarning("EmptyRoutes");
             return;
         }
         if (!last.getPathName().equals(next.getPathName())) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("RoutesDontMatch", 
-            		startW.getDisplayName(), endW.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        	showWarning("RoutesDontMatch");
             return;
         }
         WarrantTableAction.CreateWarrantFrame f = new WarrantTableAction.CreateWarrantFrame();
@@ -277,6 +273,12 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
         } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
         f.setVisible(true);
     }
+    
+    public void showWarning(String msg) {
+        JOptionPane.showMessageDialog(this, Bundle.getMessage(msg),
+                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);    	
+    }
+
     /************************* Table ****************************************/
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
