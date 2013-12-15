@@ -167,7 +167,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		JPanel addTrain = new JPanel();
 		addTrain.setBorder(BorderFactory.createTitledBorder(""));
 		addTrain.add(addButton);
-		
+
 		JPanel select = new JPanel();
 		select.setBorder(BorderFactory.createTitledBorder(""));
 		select.add(buildButton);
@@ -176,11 +176,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		select.add(runFileButton);
 		select.add(printSwitchButton);
 		select.add(terminateButton);
-		
+
 		JPanel save = new JPanel();
 		save.setBorder(BorderFactory.createTitledBorder(""));
 		save.add(saveButton);
-		
+
 		JPanel cp2 = new JPanel();
 		cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
 		cp2.add(addTrain);
@@ -314,7 +314,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// log.debug("train button activated");
 		if (ae.getSource() == addButton) {
 			TrainEditFrame f = new TrainEditFrame();
-//			f.setTitle(Bundle.getMessage("TitleTrainAdd"));
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton) {
@@ -331,16 +330,15 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			List<String> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = trainManager.getTrainById(trains.get(i));
-				if (train.isBuildEnabled() && !train.printManifestIfBuilt()
-						&& trainManager.isBuildMessagesEnabled()) {
-					JOptionPane.showMessageDialog(null, MessageFormat.format(
-							Bundle.getMessage("NeedToBuildBeforePrinting"), new Object[] {
-									train.getName(),
-									(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-											: Bundle.getMessage("print")) }), MessageFormat.format(
-							Bundle.getMessage("CanNotPrintManifest"), new Object[] { trainManager
-									.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-									: Bundle.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
+				if (train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()) {
+					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+							.getMessage("NeedToBuildBeforePrinting"), new Object[] {
+							train.getName(),
+							(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+									.getMessage("print")) }), MessageFormat.format(Bundle
+							.getMessage("CanNotPrintManifest"),
+							new Object[] { trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+									.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -351,14 +349,14 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				Train train = trainManager.getTrainById(trains.get(i));
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 								.getMessage("NeedToBuildBeforeOpenFile"), new Object[] {
 								train.getName(),
 								(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
 										.getMessage("print")) }), MessageFormat.format(Bundle
-								.getMessage("CanNotPrintManifest"), new Object[] { trainManager
-								.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-								.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
+								.getMessage("CanNotPrintManifest"),
+								new Object[] { trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+										: Bundle.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
 					} else if (train.isBuilt()) {
 						train.openFile();
 					}
@@ -368,11 +366,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == runFileButton) {
 			// Processes the CSV Manifest files using an external custom program.
 			if (!TrainCustomManifest.manifestCreatorFileExists()) {
-				log.warn("Manifest creator file not found!, directory name: "
-						+ TrainCustomManifest.getDirectoryName() + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
-				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-						.getMessage("LoadDirectoryNameFileName"), new Object[] {
-						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
+				log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
+						+ ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+				JOptionPane.showMessageDialog(this, MessageFormat.format(
+						Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
+								TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -381,14 +379,14 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				Train train = trainManager.getTrainById(trains.get(i));
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 								.getMessage("NeedToBuildBeforeRunFile"), new Object[] {
 								train.getName(),
 								(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
 										.getMessage("print")) }), MessageFormat.format(Bundle
-								.getMessage("CanNotPrintManifest"), new Object[] { trainManager
-								.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-								.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
+								.getMessage("CanNotPrintManifest"),
+								new Object[] { trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+										: Bundle.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
 					} else if (train.isBuilt()) {
 						// Make sure our csv manifest file exists for this Train.
 						File csvFile = train.createCSVManifestFile();
@@ -397,7 +395,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 					}
 				}
 			}
-			
+
 			// Now run the user specified custom Manifest processor program
 			TrainCustomManifest.process();
 		}
@@ -414,11 +412,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				if (train.isBuildEnabled() && train.isBuilt() && train.isPrinted()) {
 					train.terminate();
 				} else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()) {
-					int status = JOptionPane.showConfirmDialog(
-							null,
-							Bundle.getMessage("WarningTrainManifestNotPrinted"),
-							MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-									new Object[] { train.getName(), train.getDescription() }),
+					int status = JOptionPane.showConfirmDialog(null, Bundle
+							.getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
+							.getMessage("TerminateTrain"), new Object[] { train.getName(), train.getDescription() }),
 							JOptionPane.YES_NO_OPTION);
 					if (status == JOptionPane.YES_OPTION)
 						train.terminate();
@@ -454,7 +450,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		for (int i = 0; i < sorter.getColumnCount(); i++) {
 			String name = sorter.getColumnName(i);
 			int status = sorter.getSortingStatus(i);
-			//log.debug("Column " + name + " status " + status);
+			// log.debug("Column " + name + " status " + status);
 			if (status != TableSorter.NOT_SORTED && !name.equals("")) {
 				sortBy = name;
 				_status = status;
@@ -499,11 +495,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	private void setTrainActionButton() {
 		moveRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE));
-		terminateRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(
-				TrainsTableFrame.TERMINATE));
+		terminateRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE));
 		resetRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET));
-		conductorRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(
-				TrainsTableFrame.CONDUCTOR));
+		conductorRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR));
 	}
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -534,8 +528,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	private void updateTitle() {
 		String title = Bundle.getMessage("TitleTrainsTable");
-		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
-				trainManager.getTrainScheduleActiveId());
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(trainManager.getTrainScheduleActiveId());
 		if (sch != null)
 			title = title + " (" + sch.getName() + ")";
 		setTitle(title);
@@ -546,15 +539,14 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		List<String> locations = locationManager.getLocationsByIdList();
 		for (int i = 0; i < locations.size(); i++) {
 			Location location = locationManager.getLocationById(locations.get(i));
-			if (location != null && location.isSwitchListEnabled()
-					&& location.getStatus().equals(Location.MODIFIED)) {
+			if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
 				printSwitchButton.setBackground(Color.RED);
 				return;
 			}
 		}
 		printSwitchButton.setBackground(Color.GREEN);
 	}
-	
+
 	// show open files only if create csv is enabled
 	private void updateRunAndOpenButtons() {
 		openFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
@@ -596,18 +588,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	protected void handleModified() {
 		if (OperationsXml.areFilesDirty()) {
-			int result = javax.swing.JOptionPane.showOptionDialog(
-					this,
-					Bundle.getMessage("PromptQuitWindowNotWritten"),
-					Bundle.getMessage("PromptSaveQuit"),
-					javax.swing.JOptionPane.YES_NO_OPTION,
-					javax.swing.JOptionPane.WARNING_MESSAGE,
-					null, // icon
-					new String[] {
-							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
-									"WarnYesSave"), // NOI18N
-							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
-									"WarnNoClose") }, // NOI18N
+			int result = javax.swing.JOptionPane.showOptionDialog(this,
+					Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"),
+					javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
+					new String[] { ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"), // NOI18N
+							ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnNoClose") }, // NOI18N
 					ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
 			if (result == javax.swing.JOptionPane.NO_OPTION) {
 				return;
@@ -624,17 +609,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
 			updateTitle();
 		if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY))
 			updateSwitchListButton();
 		if (e.getPropertyName().equals(TrainManager.GENERATE_CSV_CHANGED_PROPERTY))
-				updateRunAndOpenButtons();
+			updateRunAndOpenButtons();
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());
 }

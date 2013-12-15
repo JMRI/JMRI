@@ -81,66 +81,69 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
 		// load managers
 		manager = LocationManager.instance();
-		
-		// general GUI config
-		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-		
-	    //      Set up the panels
-    	JPanel pCarType = new JPanel();
-    	pCarType.setLayout(new GridBagLayout());
-    	pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
-    	
-    	addItem(pCarType, typeComboBox, 0,0);
-    	addItem(pCarType, copyCheckBox, 1,0);
-    	addItem(pCarType, textCarType, 2,0);
-    	typeComboBox.setSelectedItem(carType);
-    	copyCheckBox.setToolTipText(Bundle.getMessage("TipCopyCarType"));
 
-    	pLocations = new JPanel();
-    	pLocations.setLayout(new GridBagLayout());
-    	JScrollPane locationPane = new JScrollPane(pLocations);
-    	locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Locations")));
-    	updateLocations();
-    	
-    	JPanel pButtons = new JPanel();
-    	pButtons.setLayout(new GridBagLayout());
-    	pButtons.setBorder(BorderFactory.createTitledBorder(""));
-    	
-    	addItem(pButtons, clearButton, 0, 0);
-    	addItem(pButtons, setButton, 1, 0);
-    	addItem(pButtons, saveButton, 2, 0);
-    	
-    	getContentPane().add(pCarType);
-    	getContentPane().add(locationPane);
-    	getContentPane().add(pButtons);
-    	
+		// general GUI config
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+		// Set up the panels
+		JPanel pCarType = new JPanel();
+		pCarType.setLayout(new GridBagLayout());
+		pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
+
+		addItem(pCarType, typeComboBox, 0, 0);
+		addItem(pCarType, copyCheckBox, 1, 0);
+		addItem(pCarType, textCarType, 2, 0);
+		typeComboBox.setSelectedItem(carType);
+		copyCheckBox.setToolTipText(Bundle.getMessage("TipCopyCarType"));
+
+		pLocations = new JPanel();
+		pLocations.setLayout(new GridBagLayout());
+		JScrollPane locationPane = new JScrollPane(pLocations);
+		locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Locations")));
+		updateLocations();
+
+		JPanel pButtons = new JPanel();
+		pButtons.setLayout(new GridBagLayout());
+		pButtons.setBorder(BorderFactory.createTitledBorder(""));
+
+		addItem(pButtons, clearButton, 0, 0);
+		addItem(pButtons, setButton, 1, 0);
+		addItem(pButtons, saveButton, 2, 0);
+
+		getContentPane().add(pCarType);
+		getContentPane().add(locationPane);
+		getContentPane().add(pButtons);
+
 		// setup combo box
 		addComboBoxAction(typeComboBox);
-		
-    	// setup buttons
+
+		// setup buttons
 		addButtonAction(setButton);
 		addButtonAction(clearButton);
 		addButtonAction(saveButton);
-		
+
 		// setup checkbox
 		addCheckBoxAction(copyCheckBox);
-		
+
 		manager.addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
-		
+
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true, this));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false,
+				this));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true,
+				this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);	// NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true); // NOI18N
 
-		setPreferredSize(null);	// we need to resize this frame
+		setPreferredSize(null); // we need to resize this frame
 		pack();
 		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
+		setSize(getWidth() + 25, getHeight());	// make a bit wider to eliminate scroll bar
 		if (location != null)
 			setTitle(Bundle.getMessage("TitleModifyLocation"));
 		else

@@ -585,7 +585,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				}
 			}
 			if (sb.length() > 0) {
-				JOptionPane.showMessageDialog(null, sb.toString(),
+				JOptionPane.showMessageDialog(this, sb.toString(),
 						Bundle.getMessage("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
 				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
 						new Object[] { maxLength }), Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

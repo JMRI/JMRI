@@ -185,7 +185,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	// check to see if a location has been selected 
     	if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")){
-    		JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectLocationToEdit"), Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"), Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
     		return;
     	}
     	Location l = (Location)locationBox.getSelectedItem();
@@ -308,7 +308,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			return;
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
 					Bundle.getMessage("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}

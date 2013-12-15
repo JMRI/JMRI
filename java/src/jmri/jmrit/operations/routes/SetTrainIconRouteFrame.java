@@ -190,7 +190,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	private void placeTestIcons() {
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("LoadPanel"),
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
 					new Object[] { Setup.getPanelName() }), Bundle.getMessage("PanelNotFound"),
 					JOptionPane.ERROR_MESSAGE);
 		} else {

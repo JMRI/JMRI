@@ -145,7 +145,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 		// menuBar.add(_toolMenu);
 		// setJMenuBar(menuBar);
 
-		initMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
+		initMinimumSize(new Dimension(Control.mediumPanelWidth, Control.panelHeight));
 	}
 
 	// Save, Delete, Add
