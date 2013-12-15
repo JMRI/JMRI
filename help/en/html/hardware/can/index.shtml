@@ -98,7 +98,7 @@ JMRI can connect to CAN networks several ways.
 There are various CAN-USB adapters available:
 
 <dl>
-<dt>TCH Technologies
+<dt>TCH Technology
 <dd><a href="http://www.tchtechnology.com/products/can_usb/">TCH Technology CAN/USB</a>
 which provides a high-speed connection for model railroad use
 <dt>gridconnect
