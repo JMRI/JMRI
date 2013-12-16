@@ -1926,13 +1926,15 @@ public class Track {
 		return;
 	}
 	
+	/**
+	 * Returns true if destination is valid from this track.
+	 * @param destination
+	 * @return true if track services the destination
+	 */
 	public boolean acceptsDestination(Location destination) {
 		if (getDestinationOption().equals(ALL_DESTINATIONS) || destination == null)
 			return true;
-		if (_destinationOption.equals(INCLUDE_DESTINATIONS))
-			return _destinationIdList.contains(destination.getId());
-		else
-			return !_destinationIdList.contains(destination.getId());
+		return _destinationIdList.contains(destination.getId());
 	}
 	
 	public void setDestinationIds(String[] ids) {

@@ -302,7 +302,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	}
 
 	private String getModifiedString(int number, boolean all, boolean accept) {
-		if (number == 0 || all)
+		if (all)
 			return "";
 		if (accept)
 			return "A " + Integer.toString(number); // NOI18N
