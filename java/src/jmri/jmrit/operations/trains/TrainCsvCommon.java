@@ -53,6 +53,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String VT = "VT"+DEL+Bundle.getMessage("csvValid")+DEL; // NOI18N
 	
 	// switch list specific operators
+	protected final static String SWL = "SWL"+DEL+Bundle.getMessage("csvSwitchList")+DEL; // NOI18N
 	protected final static String DL = "DL"+DEL+Bundle.getMessage("csvDepartureLocationName")+DEL; // NOI18N
 	protected final static String ETA = "ETA"+DEL+Bundle.getMessage("csvExpectedTimeArrival")+DEL; // NOI18N
 	protected final static String ETE = "ETE"+DEL+Bundle.getMessage("csvEstimatedTimeEnroute")+DEL; // NOI18N
@@ -63,6 +64,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String TIR = "TIR"+DEL+Bundle.getMessage("csvTrainInRoute"); // NOI18N
 	protected final static String TDONE = "TDONE"+DEL+Bundle.getMessage("csvTrainHasAlreadyServiced"); // NOI18N	
 	protected final static String VN = "VN"+DEL+Bundle.getMessage("csvVisitNumber")+DEL; // NOI18N
+	protected final static String END = "END"+DEL+Bundle.getMessage("csvEnd")+DEL; // NOI18N
 	
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names

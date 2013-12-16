@@ -47,6 +47,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		}
 		// build header
 		addLine(fileOut, HEADER);
+		addLine(fileOut, SWL);	// this is a switch list
 		addLine(fileOut, RN+ESC+Setup.getRailroadName()+ESC);
 
 		addLine(fileOut, LN+ESC+splitString(location.getName())+ESC);
@@ -91,7 +92,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 					// the train's direction when it arrives
 					// if it terminate at this location
 					if (stops == 1){
-						newLine(fileOut);
+//						newLine(fileOut);
 						addLine(fileOut, TN+train.getName());
 						addLine(fileOut, TM+train.getDescription());
 
@@ -188,6 +189,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		}
 		// TODO Are there any cars that need to be found?
 		//getCarsLocationUnknown(fileOut);
+		addLine(fileOut, END);	// done with switch list
 		fileOut.flush();
 		fileOut.close();
 	}
