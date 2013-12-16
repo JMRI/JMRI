@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -11,6 +12,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -261,7 +263,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		loadAndTypeCheckBox.setSelected(loadAndType);
 		shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
 		
-		initMinimumSize();
+		initMinimumSize(new Dimension(Control.greaterPanelWidth, Control.mediumPanelHeight));
 	}
 
 	// Save, Delete, Add

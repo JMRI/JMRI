@@ -172,7 +172,19 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(Bundle.getMessage("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoadName()))
 					op.setText(Bundle.getMessage("X(TrainRoad)"));
-				else if (car != null && !car.isCaboose() && !train.acceptsLoad(car.getLoadName(), car.getTypeName()))
+				// TODO need to do the same tests for caboose changes in the train's route
+				else if (car != null && car.isCaboose() && (train.getRequirements() & Train.CABOOSE) > 0
+						&& location.equals(car.getLocation()) && track.equals(car.getTrack())
+						&& !train.getCabooseRoad().equals("") && !car.getRoadName().equals(train.getCabooseRoad())
+						&& location.getName().equals(train.getTrainDepartsName()))
+					op.setText(Bundle.getMessage("X(TrainRoad)"));
+				else if (car != null && car.hasFred() && (train.getRequirements() & Train.FRED) > 0
+						&& location.equals(car.getLocation()) && track.equals(car.getTrack())
+						&& !train.getCabooseRoad().equals("") && !car.getRoadName().equals(train.getCabooseRoad())
+						&& location.getName().equals(train.getTrainDepartsName()))
+					op.setText(Bundle.getMessage("X(TrainRoad)"));
+				else if (car != null && !car.isCaboose() && !car.isPassenger()
+						&& !train.acceptsLoad(car.getLoadName(), car.getTypeName()))
 					op.setText(Bundle.getMessage("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
 					op.setText(Bundle.getMessage("X(TrainBuilt)"));

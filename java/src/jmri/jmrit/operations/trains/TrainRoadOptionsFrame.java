@@ -175,7 +175,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
 		
-		initMinimumSize();
+		initMinimumSize(new Dimension(Control.panelWidth, Control.mediumPanelHeight));
 	}
 	
 	// Save
