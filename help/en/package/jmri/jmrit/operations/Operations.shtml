@@ -817,6 +817,10 @@
      <td>Parameters</td>
     </tr>
     <tr>
+     <td>SWL</td>
+     <td>Switch List</td>
+    </tr>
+    <tr>
      <td>DL</td>
      <td>Departure Location Name</td>
      <td>Name</td>
@@ -861,6 +865,10 @@
      <td>VN</td>
      <td>Visit Number</td>
      <td>Number</td>
+    </tr>
+    <tr>
+     <td>END</td>
+     <td>End Switch List</td>
     </tr>
    </table>
 
