@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -724,6 +725,7 @@ public class TrainBuilder extends TrainCommon {
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildBegineSearchEngines"),
 				new Object[] { numberOfEngines, model, road, rl.getName(), rld.getName() }));
 		boolean foundLoco = false;
+		List<Engine> singleLocos = new ArrayList<Engine>();
 		for (int indexEng = 0; indexEng < engineList.size(); indexEng++) {
 			Engine engine = engineManager.getById(engineList.get(indexEng));
 			log.debug("Engine (" + engine.toString() + ") at location (" + engine.getLocationName() + ")");
@@ -792,7 +794,7 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			}
 			// skip engines that have been assigned destinations that don't match the terminal
-			if (engine.getDestination() != null && !engine.getDestinationName().equals(rl.getName())) {
+			if (engine.getDestination() != null && !engine.getDestinationName().equals(rld.getName())) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildExcludeEngineDestination"), new Object[] { engine.toString(),
 						engine.getDestinationName() }));
@@ -814,6 +816,7 @@ public class TrainBuilder extends TrainCommon {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("buildExcludeEngineSingle"), new Object[] { engine.toString(),
 							numberOfEngines }));
+					singleLocos.add(engine);
 					continue;
 				}
 				// engine is part of a consist
@@ -860,46 +863,24 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, MessageFormat
 					.format(Bundle.getMessage("buildAtLocation"), new Object[] {
 							(engine.getLocationName() + ", " + engine.getTrackName()), rld.getName() }));
-			// is there a staging track?
-			if (terminateTrack != null) {
-				String status = engine.testDestination(terminateTrack.getLocation(), terminateTrack);
-				if (status.equals(Track.OKAY)) {
-					addEngineToTrain(engine, rl, rld, terminateTrack);
-					engineList.remove(indexEng);
-					indexEng--;
-					return true; // done
-				} else {
-					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("buildCanNotDropEngineToTrack"), new Object[] { engine.toString(),
-							terminateTrack.getName(), status }));
-				}
-				// find a destination track for this engine
-			} else {
-				Location destination = rld.getLocation();
-				List<String> destTracks = destination.getTrackIdsByMovesList(null);
-				if (destTracks.size() == 0) {
-					addLine(buildReport, THREE, MessageFormat.format(
-							Bundle.getMessage("buildNoTracksAtDestination"), new Object[] { rld.getName() }));
-				}
-				for (int s = 0; s < destTracks.size(); s++) {
-					Track track = destination.getTrackById(destTracks.get(s));
-					if (!checkDropTrainDirection(engine, rld, track))
-						continue;
-					String status = engine.testDestination(destination, track);
-					if (status.equals(Track.OKAY)) {
-						addEngineToTrain(engine, rl, rld, track);
-						engineList.remove(indexEng);
-						indexEng--;
+			if (setLocoDestination(engine, rl, rld, terminateTrack))
+				return true; // done
+		}
+		// build a consist if not departing staging
+		if (!foundLoco && departTrack == null && train.isBuildConsistEnabled() && numberOfEngines > 1) {
+			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOptionBuildConsist"), new Object[] {
+					numberOfEngines, rl.getName() }));
+			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOptionSingleLocos"), new Object[] {
+					singleLocos.size(), rl.getName() }));
+			if (singleLocos.size() >= numberOfEngines) {
+				int locos = 0;
+				for (int i = 0; i < singleLocos.size(); i++) {
+					Engine engine = singleLocos.get(i);
+					if (setLocoDestination(engine, rl, rld, terminateTrack))
+						locos++;
+					if (locos == numberOfEngines)
 						return true; // done
-					} else {
-						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-								.getMessage("buildCanNotDropEngineToTrack"), new Object[] {
-								engine.toString(), track.getName(), status }));
-					}
 				}
-				addLine(buildReport, FIVE, MessageFormat.format(
-						Bundle.getMessage("buildCanNotDropEngToDest"), new Object[] { engine.toString(),
-								rld.getName() }));
 			}
 		}
 		if (!foundLoco) {
@@ -911,6 +892,49 @@ public class TrainBuilder extends TrainCommon {
 		}
 		// not able to assign engines to train
 		return false;
+	}
+	
+	private boolean setLocoDestination(Engine engine, RouteLocation rl, RouteLocation rld, Track terminateTrack) {
+		// is there a staging track?
+		if (terminateTrack != null) {
+			String status = engine.testDestination(terminateTrack.getLocation(), terminateTrack);
+			if (status.equals(Track.OKAY)) {
+				addEngineToTrain(engine, rl, rld, terminateTrack);
+				engineList.remove(engine.getId());
+				return true; // done
+			} else {
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("buildCanNotDropEngineToTrack"), new Object[] { engine.toString(),
+						terminateTrack.getName(), status }));
+			}
+			// find a destination track for this engine
+		} else {
+			Location destination = rld.getLocation();
+			List<String> destTracks = destination.getTrackIdsByMovesList(null);
+			if (destTracks.size() == 0) {
+				addLine(buildReport, THREE, MessageFormat.format(
+						Bundle.getMessage("buildNoTracksAtDestination"), new Object[] { rld.getName() }));
+			}
+			for (int s = 0; s < destTracks.size(); s++) {
+				Track track = destination.getTrackById(destTracks.get(s));
+				if (!checkDropTrainDirection(engine, rld, track))
+					continue;
+				String status = engine.testDestination(destination, track);
+				if (status.equals(Track.OKAY)) {
+					addEngineToTrain(engine, rl, rld, track);
+					engineList.remove(engine.getId());
+					return true; // done
+				} else {
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildCanNotDropEngineToTrack"), new Object[] {
+							engine.toString(), track.getName(), status }));
+				}
+			}
+			addLine(buildReport, FIVE, MessageFormat.format(
+					Bundle.getMessage("buildCanNotDropEngToDest"), new Object[] { engine.toString(),
+							rld.getName() }));
+		}
+		return false; // not able to set loco's destination
 	}
 
 	/**

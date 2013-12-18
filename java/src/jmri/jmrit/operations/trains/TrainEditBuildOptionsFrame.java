@@ -120,6 +120,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JCheckBox allowLocalMovesCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalMoves"));
 	JCheckBox allowThroughCarsCheckBox = new JCheckBox(Bundle.getMessage("AllowThroughCars"));
 	JCheckBox serviceAllCarsCheckBox = new JCheckBox(Bundle.getMessage("ServiceAllCars"));
+	JCheckBox buildConsistCheckBox = new JCheckBox(Bundle.getMessage("BuildConsist"));
 
 	// text field
 	JTextField builtAfterTextField = new JTextField(10);
@@ -204,6 +205,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addItemLeft(pOption, allowLocalMovesCheckBox, 1, 1);
 		addItemLeft(pOption, allowThroughCarsCheckBox, 0, 2);
 		addItemLeft(pOption, serviceAllCarsCheckBox, 1, 2);
+		addItemLeft(pOption, buildConsistCheckBox, 0, 3);
 		pOption.setMaximumSize(new Dimension(2000, 250));
 
 		returnStagingCheckBox.setEnabled(false); // only enable if train departs and returns to same staging loc
@@ -386,12 +388,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
 			allowThroughCarsCheckBox.setSelected(_train.isAllowThroughCarsEnabled());
 			serviceAllCarsCheckBox.setSelected(_train.isServiceAllCarsWithFinalDestinationsEnabled());
+			buildConsistCheckBox.setSelected(_train.isBuildConsistEnabled());
 			sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { _train.getTrainTerminatesName() }));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
 			enableButtons(true);
+			// does this train depart staging?
+			if (_train.getTrainDepartsRouteLocation() != null
+					&& _train.getTrainDepartsRouteLocation().getLocation().getLocationOps() == (Location.STAGING)) {
+				buildConsistCheckBox.setEnabled(false);	// can't build a consist out of staging
+			}
 			// does train depart and return to same staging location?
 			if (_train.getTrainDepartsRouteLocation() != null
 					&& _train.getTrainTerminatesRouteLocation() != null
@@ -725,6 +733,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
 		_train.setAllowThroughCarsEnabled(allowThroughCarsCheckBox.isSelected());
 		_train.setServiceAllCarsWithFinalDestinationsEnabled(serviceAllCarsCheckBox.isSelected());
+		_train.setBuildConsistEnabled(buildConsistCheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 
