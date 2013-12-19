@@ -248,13 +248,13 @@ public class TrainBuilder extends TrainCommon {
 		showTrainRequirements();
 
 		// show road names that this train will service
-		if (!train.getRoadOption().equals(Train.ALLROADS)) {
+		if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"),
 					new Object[] { train.getName(), train.getRoadOption(),
 							formatStringToCommaSeparated(train.getRoadNames()) }));
 		}
 		// show owner names that this train will service
-		if (!train.getOwnerOption().equals(Train.ALLOWNERS)) {
+		if (!train.getOwnerOption().equals(Train.ALL_OWNERS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainOwners"),
 					new Object[] { train.getName(), train.getOwnerOption(),
 							formatStringToCommaSeparated(train.getOwnerNames()) }));
@@ -476,7 +476,7 @@ public class TrainBuilder extends TrainCommon {
 				new Object[] { train.getName() }));
 		addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getCarTypeNames()));
 		// show load names that this train will service
-		if (!train.getLoadOption().equals(Train.ALLLOADS)) {
+		if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainLoads"),
 					new Object[] { train.getName(), train.getLoadOption(),
 							formatStringToCommaSeparated(train.getLoadNames()) }));
@@ -535,9 +535,9 @@ public class TrainBuilder extends TrainCommon {
 
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested) {
-			train.setStatus(Train.PARTIALBUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
+			train.setStatus(Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
 					+ Bundle.getMessage("cars"));
-			addLine(buildReport, ONE, Train.PARTIALBUILT + " " + train.getNumberCarsWorked() + "/"
+			addLine(buildReport, ONE, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/"
 					+ requested + " " + Bundle.getMessage("cars"));
 		} else {
 			train.setStatus(Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
@@ -2338,7 +2338,7 @@ public class TrainBuilder extends TrainCommon {
 						return false;
 					}
 					// does the engine road match the train requirements?
-					if (!train.getRoadOption().equals(Train.ALLLOADS) && !train.getEngineRoad().equals("")
+					if (!train.getRoadOption().equals(Train.ALL_LOADS) && !train.getEngineRoad().equals("")
 							&& !train.getEngineRoad().equals(eng.getRoadName())) {
 						addLine(buildReport, THREE, MessageFormat.format(Bundle
 								.getMessage("buildStagingDepartEngineRoad"), new Object[] {
@@ -2541,13 +2541,13 @@ public class TrainBuilder extends TrainCommon {
 			}
 		}
 		// check go see if track will accept the train's car and engine roads
-		if (train.getRoadOption().equals(Train.ALLROADS)
+		if (train.getRoadOption().equals(Train.ALL_ROADS)
 				&& !terminateStageTrack.getRoadOption().equals(Track.ALL_ROADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllRoads"),
 					new Object[] { terminateStageTrack.getName() }));
 			return false;
 
-		} else if (train.getRoadOption().equals(Train.INCLUDEROADS)) {
+		} else if (train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
 			String[] roads = train.getRoadNames();
 			for (int i = 0; i < roads.length; i++) {
 				if (!terminateStageTrack.acceptsRoadName(roads[i])) {
@@ -2557,7 +2557,7 @@ public class TrainBuilder extends TrainCommon {
 					return false;
 				}
 			}
-		} else if (train.getRoadOption().equals(Train.EXCLUDEROADS)) {
+		} else if (train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
 			String[] excludeRoads = train.getRoadNames();
 			String[] allroads = CarRoads.instance().getNames();
 			List<String> roads = new ArrayList<String>();
@@ -2577,13 +2577,13 @@ public class TrainBuilder extends TrainCommon {
 			}
 		}
 		// check go see if track will accept the train's car loads
-		if (train.getLoadOption().equals(Train.ALLLOADS)
+		if (train.getLoadOption().equals(Train.ALL_LOADS)
 				&& !terminateStageTrack.getLoadOption().equals(Track.ALL_LOADS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllLoads"),
 					new Object[] { terminateStageTrack.getName() }));
 			return false;
 
-		} else if (train.getLoadOption().equals(Train.INCLUDELOADS)) {
+		} else if (train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
 			String[] loads = train.getLoadNames();
 			for (int i = 0; i < loads.length; i++) {
 				String loadParts[] = loads[i].split(CarLoad.SPLIT_CHAR); // split load name
@@ -2603,7 +2603,7 @@ public class TrainBuilder extends TrainCommon {
 					}
 				}
 			}
-		} else if (train.getLoadOption().equals(Train.EXCLUDELOADS)) {
+		} else if (train.getLoadOption().equals(Train.EXCLUDE_LOADS)) {
 			// build a list of loads that the staging track must accept
 			List<String> loads = new ArrayList<String>();
 			for (int i = 0; i < types.length; i++) {
@@ -3872,7 +3872,7 @@ public class TrainBuilder extends TrainCommon {
 	private void buildFailed(BuildFailedException e) {
 		String msg = e.getMessage();
 		train.setBuildFailedMessage(msg);
-		train.setStatus(Train.BUILDFAILED);
+		train.setStatus(Train.BUILD_FAILED);
 		train.setBuildFailed(true);
 		if (log.isDebugEnabled())
 			log.debug(msg);

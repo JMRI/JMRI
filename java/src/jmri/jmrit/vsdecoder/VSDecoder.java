@@ -545,7 +545,7 @@ public class VSDecoder implements PropertyChangeListener {
 	    String status = (String)evt.getNewValue();
 	    log.debug("Train status changed: " + status);
 	    log.debug("New Location: " + getTrainPosition((Train)evt.getSource()));
-	    if ((status.startsWith(Train.BUILT)) || (status.startsWith(Train.PARTIALBUILT))){ 
+	    if ((status.startsWith(Train.BUILT)) || (status.startsWith(Train.PARTIAL_BUILT))){ 
 		log.debug("Train built. status = " + status);
 		PhysicalLocation p = getTrainPosition((Train)evt.getSource());
 		if (p != null)

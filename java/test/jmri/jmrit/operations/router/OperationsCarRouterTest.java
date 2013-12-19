@@ -259,7 +259,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't allow train to service boxcars with road name BA
 		ActonTrain.addRoadName("BA");
-		ActonTrain.setRoadOption(Train.EXCLUDEROADS);
+		ActonTrain.setRoadOption(Train.EXCLUDE_ROADS);
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Acton);
@@ -275,7 +275,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 
 		// now try again but allow road name
-		ActonTrain.setRoadOption(Train.ALLROADS);
+		ActonTrain.setRoadOption(Train.ALL_ROADS);
 		Assert.assertTrue("Try routing with train that does service road name BA", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
@@ -304,7 +304,7 @@ public class OperationsCarRouterTest extends TestCase {
 		// try car loads
 		c3.setLoadName("Tools");
 		ActonTrain.addLoadName("Tools");
-		ActonTrain.setLoadOption(Train.EXCLUDELOADS);
+		ActonTrain.setLoadOption(Train.EXCLUDE_LOADS);
 		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
@@ -320,7 +320,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertTrue("Try routing with train that services load E", router.setDestination(c4, null, null));
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 		
-		ActonTrain.setLoadOption(Train.ALLLOADS);
+		ActonTrain.setLoadOption(Train.ALL_LOADS);
 		Assert.assertTrue("Try routing with train that that does service load Tools", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 
@@ -492,7 +492,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't allow train to service boxcars with road name BA
 		ActonToBedfordTrain.addRoadName("BA");
-		ActonToBedfordTrain.setRoadOption(Train.EXCLUDEROADS);
+		ActonToBedfordTrain.setRoadOption(Train.EXCLUDE_ROADS);
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);
@@ -506,7 +506,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 
 		// now try again but allow road name
-		ActonToBedfordTrain.setRoadOption(Train.ALLROADS);
+		ActonToBedfordTrain.setRoadOption(Train.ALL_ROADS);
 		Assert.assertTrue("Try routing with train that does service road name BA", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 		
@@ -533,7 +533,7 @@ public class OperationsCarRouterTest extends TestCase {
 		// try car loads
 		c3.setLoadName("Tools");
 		ActonToBedfordTrain.addLoadName("Tools");
-		ActonToBedfordTrain.setLoadOption(Train.EXCLUDELOADS);
+		ActonToBedfordTrain.setLoadOption(Train.EXCLUDE_LOADS);
 		
 		// and the next destination for the car
 		c3.setDestination(null, null);	// clear previous destination
@@ -547,7 +547,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertTrue("Try routing with train that services load E", router.setDestination(c4, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 		
-		ActonToBedfordTrain.setLoadOption(Train.ALLLOADS);
+		ActonToBedfordTrain.setLoadOption(Train.ALL_LOADS);
 		Assert.assertTrue("Try routing with train that that does service load Tools", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 
@@ -700,7 +700,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't allow train 2 to service boxcars with road name BA
 		ActonTrain2.addRoadName("BA");
-		ActonTrain2.setRoadOption(Train.EXCLUDEROADS);
+		ActonTrain2.setRoadOption(Train.EXCLUDE_ROADS);
 		
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setFinalDestination(Bedford);	// the final destination for the car
@@ -736,7 +736,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination track", "Acton Interchange", c3.getDestinationTrackName());
 				
 		// allow train 2 to service boxcars with road name BA
-		ActonTrain2.setRoadOption(Train.ALLROADS);
+		ActonTrain2.setRoadOption(Train.ALL_ROADS);
 		
 		// try with train 2
 		c3.setDestination(null, null);	// clear previous destination
@@ -794,13 +794,13 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't allow train 2 to service cars with load Tools
 		ActonTrain2.addLoadName("Tools");
-		ActonTrain2.setLoadOption(Train.EXCLUDELOADS);
+		ActonTrain2.setLoadOption(Train.EXCLUDE_LOADS);
 		// routing should work using train 1, but destinations and track should not be set
 		Assert.assertTrue("Try routing four trains", router.setDestination(c3, ActonTrain2, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
 		// restore train 2
-		ActonTrain2.setLoadOption(Train.ALLLOADS);
+		ActonTrain2.setLoadOption(Train.ALL_LOADS);
 		
 		// set final destination Essex
 		c3.setDestination(null, null);	// clear previous destination

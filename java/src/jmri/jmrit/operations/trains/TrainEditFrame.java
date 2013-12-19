@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -67,6 +68,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
 	JPanel typeCarPanelCheckBoxes = new JPanel();
 	JPanel typeEnginePanelCheckBoxes = new JPanel();
+	JPanel roadAndLoadStatusPanel = new JPanel();
 	JPanel locationPanelCheckBoxes = new JPanel();
 	JScrollPane typeCarPane;
 	JScrollPane typeEnginePane;
@@ -76,6 +78,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textName = new JLabel(Bundle.getMessage("Name"));
 	JLabel textDescription = new JLabel(Bundle.getMessage("Description"));
 	JLabel textRouteStatus = new JLabel();
+	JLabel loadOption = new JLabel();
+	JLabel roadOption = new JLabel();
 	JLabel textModel = new JLabel(Bundle.getMessage("Model"));
 	JLabel textRoad2 = new JLabel(Bundle.getMessage("Road"));
 	JLabel textRoad3 = new JLabel(Bundle.getMessage("Road"));
@@ -226,8 +230,21 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// row 8
 		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
+		
+		// status panel for roads and loads
+		roadAndLoadStatusPanel.setLayout(new BoxLayout(roadAndLoadStatusPanel, BoxLayout.X_AXIS));
+		JPanel pRoadOption = new JPanel();
+		pRoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadOption")));
+		pRoadOption.add(roadOption);
+		JPanel pLoadOption = new JPanel();
+		pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
+		pLoadOption.add(loadOption);
+		
+		roadAndLoadStatusPanel.add(pRoadOption);
+		roadAndLoadStatusPanel.add(pLoadOption);
+		roadAndLoadStatusPanel.setVisible(false); // don't show unless there's a restriction
 
-		// row 9
+		// row 10
 		JPanel trainReq = new JPanel();
 		trainReq.setLayout(new GridBagLayout());
 		trainReq.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainRequires")));
@@ -288,6 +305,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(locationsPane);
 		getContentPane().add(typeCarPane);
 		getContentPane().add(typeEnginePane);
+		getContentPane().add(roadAndLoadStatusPanel);
 		getContentPane().add(trainReq);
 		getContentPane().add(pC);
 		getContentPane().add(pB);
@@ -364,6 +382,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLocationCheckboxes();
 		updateCarTypeCheckboxes();
 		updateEngineTypeCheckboxes();
+		updateRoadAndLoadStatus();
 		updateCabooseRoadComboBox();
 		updateEngineRoadComboBox();
 
@@ -893,6 +912,31 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			minuteBox.setEnabled(true);
 		}
 	}
+	
+	private void updateRoadAndLoadStatus() {
+		if (_train != null) {
+			// road options
+			if (_train.getRoadOption().equals(Train.ALL_ROADS))
+				roadOption.setText(Bundle.getMessage("AcceptAll"));
+			else if (_train.getRoadOption().equals(Train.INCLUDE_LOADS))
+				roadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _train.getRoadNames().length + " "
+						+ Bundle.getMessage("Roads"));
+			else
+				roadOption.setText(Bundle.getMessage("Exclude") + " " + _train.getRoadNames().length + " "
+						+ Bundle.getMessage("Roads"));
+			// load options
+			if (_train.getLoadOption().equals(Train.ALL_ROADS))
+				loadOption.setText(Bundle.getMessage("AcceptAll"));
+			else if (_train.getLoadOption().equals(Train.INCLUDE_LOADS))
+				loadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _train.getLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
+			else
+				loadOption.setText(Bundle.getMessage("Exclude") + " " + _train.getLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
+			if (!_train.getRoadOption().equals(Train.ALL_ROADS) || !_train.getLoadOption().equals(Train.ALL_LOADS))
+				roadAndLoadStatusPanel.setVisible(true);
+		}
+	}
 
 	private void packFrame() {
 		setVisible(false);
@@ -976,6 +1020,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
 			enableButtons(_train != null);
+		}
+		if (e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY)) {
+			updateRoadAndLoadStatus();
 		}
 	}
 

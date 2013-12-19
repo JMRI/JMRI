@@ -1101,7 +1101,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			moveRollingStock((RouteLocation) e.getOldValue(), (RouteLocation) e.getNewValue());
 		}
 		if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-				&& e.getNewValue().equals(Train.TRAINRESET) && e.getSource() == _train) {
+				&& e.getNewValue().equals(Train.TRAIN_RESET) && e.getSource() == _train) {
 			if (log.isDebugEnabled())
 				log.debug("Rolling stock (" + toString() + ") is removed from train ("
 						+ _train.getName() + ") by reset"); // NOI18N

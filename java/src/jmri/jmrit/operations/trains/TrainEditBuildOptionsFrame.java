@@ -457,15 +457,15 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		log.debug("radio button activated");
 		if (_train != null) {
 			if (ae.getSource() == ownerNameAll) {
-				_train.setOwnerOption(Train.ALLOWNERS);
+				_train.setOwnerOption(Train.ALL_OWNERS);
 				updateOwnerNames();
 			}
 			if (ae.getSource() == ownerNameInclude) {
-				_train.setOwnerOption(Train.INCLUDEOWNERS);
+				_train.setOwnerOption(Train.INCLUDE_OWNERS);
 				updateOwnerNames();
 			}
 			if (ae.getSource() == ownerNameExclude) {
-				_train.setOwnerOption(Train.EXCLUDEOWNERS);
+				_train.setOwnerOption(Train.EXCLUDE_OWNERS);
 				updateOwnerNames();
 			}
 			if (ae.getSource() == builtDateAll || ae.getSource() == builtDateAfter
@@ -557,9 +557,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
 		if (_train != null) {
 			// set radio button
-			ownerNameAll.setSelected(_train.getOwnerOption().equals(Train.ALLOWNERS));
-			ownerNameInclude.setSelected(_train.getOwnerOption().equals(Train.INCLUDEOWNERS));
-			ownerNameExclude.setSelected(_train.getOwnerOption().equals(Train.EXCLUDEOWNERS));
+			ownerNameAll.setSelected(_train.getOwnerOption().equals(Train.ALL_OWNERS));
+			ownerNameInclude.setSelected(_train.getOwnerOption().equals(Train.INCLUDE_OWNERS));
+			ownerNameExclude.setSelected(_train.getOwnerOption().equals(Train.EXCLUDE_OWNERS));
 
 			if (!ownerNameAll.isSelected()) {
 				p = new JPanel();

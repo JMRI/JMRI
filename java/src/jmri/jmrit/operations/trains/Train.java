@@ -78,7 +78,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected Route _route = null;
 	protected Track _departureTrack; // the departure track from staging
 	protected Track _terminationTrack; // the termination track into staging
-	protected String _roadOption = ALLROADS;// train road name restrictions
+	protected String _roadOption = ALL_ROADS;// train road name restrictions
 	protected int _requires = 0; // train requirements, caboose, FRED
 	protected String _numberEngines = "0"; // number of engines this train requires
 	protected String _engineRoad = ""; // required road name for engines assigned to this train
@@ -88,8 +88,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leadEngineId = ""; // lead engine for train icon info
 	protected String _builtStartYear = ""; // built start year
 	protected String _builtEndYear = ""; // built end year
-	protected String _loadOption = ALLLOADS;// train load restrictions
-	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
+	protected String _loadOption = ALL_LOADS;// train load restrictions
+	protected String _ownerOption = ALL_OWNERS;// train owner name restrictions
 	protected List<String> _buildScripts = new ArrayList<String>(); // list of script pathnames to run before train is
 																	// built
 	protected List<String> _afterBuildScripts = new ArrayList<String>(); // list of script pathnames to run after train
@@ -149,13 +149,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
 
 	// Train status
-	public static final String BUILDFAILED = Bundle.getMessage("BuildFailed");
+	public static final String BUILD_FAILED = Bundle.getMessage("BuildFailed");
 	public static final String BUILDING = Bundle.getMessage("Building");
 	public static final String BUILT = Bundle.getMessage("Built");
-	public static final String PARTIALBUILT = Bundle.getMessage("Partial");
+	public static final String PARTIAL_BUILT = Bundle.getMessage("Partial");
 	public static final String TERMINATED = Bundle.getMessage("Terminated");
-	public static final String TRAINRESET = Bundle.getMessage("TrainReset");
-	public static final String TRAININROUTE = Bundle.getMessage("TrainInRoute");
+	public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
+	public static final String TRAIN_IN_ROUTE = Bundle.getMessage("TrainInRoute");
 
 	// train requirements
 	public static final int NONE = 0; // default
@@ -163,19 +163,19 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final int FRED = 2;
 
 	// road options
-	public static final String ALLROADS = Bundle.getMessage("All"); // train services all road names
-	public static final String INCLUDEROADS = Bundle.getMessage("Include");
-	public static final String EXCLUDEROADS = Bundle.getMessage("Exclude");
+	public static final String ALL_ROADS = Bundle.getMessage("All"); // train services all road names
+	public static final String INCLUDE_ROADS = Bundle.getMessage("Include");
+	public static final String EXCLUDE_ROADS = Bundle.getMessage("Exclude");
 
 	// owner options
-	public static final String ALLOWNERS = Bundle.getMessage("All"); // train services all owner names
-	public static final String INCLUDEOWNERS = Bundle.getMessage("Include");
-	public static final String EXCLUDEOWNERS = Bundle.getMessage("Exclude");
+	public static final String ALL_OWNERS = Bundle.getMessage("All"); // train services all owner names
+	public static final String INCLUDE_OWNERS = Bundle.getMessage("Include");
+	public static final String EXCLUDE_OWNERS = Bundle.getMessage("Exclude");
 
 	// load options
-	public static final String ALLLOADS = Bundle.getMessage("All"); // train services all loads
-	public static final String INCLUDELOADS = Bundle.getMessage("Include");
-	public static final String EXCLUDELOADS = Bundle.getMessage("Exclude");
+	public static final String ALL_LOADS = Bundle.getMessage("All"); // train services all loads
+	public static final String INCLUDE_LOADS = Bundle.getMessage("Include");
+	public static final String EXCLUDE_LOADS = Bundle.getMessage("Exclude");
 
 	// Switch list status
 	public static final String UNKNOWN = "";
@@ -971,10 +971,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if train will service this road name.
 	 */
 	public boolean acceptsRoadName(String road) {
-		if (_roadOption.equals(ALLROADS)) {
+		if (_roadOption.equals(ALL_ROADS)) {
 			return true;
 		}
-		if (_roadOption.equals(INCLUDEROADS)) {
+		if (_roadOption.equals(INCLUDE_ROADS)) {
 			return _roadList.contains(road);
 		}
 		// exclude!
@@ -1084,10 +1084,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if train will service this load.
 	 */
 	public boolean acceptsLoadName(String load) {
-		if (_loadOption.equals(ALLLOADS)) {
+		if (_loadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_loadOption.equals(INCLUDELOADS)) {
+		if (_loadOption.equals(INCLUDE_LOADS)) {
 			return _loadList.contains(load);
 		}
 		// exclude!
@@ -1104,10 +1104,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if train will service this load.
 	 */
 	public boolean acceptsLoad(String load, String type) {
-		if (_loadOption.equals(ALLLOADS)) {
+		if (_loadOption.equals(ALL_LOADS)) {
 			return true;
 		}
-		if (_loadOption.equals(INCLUDELOADS)) {
+		if (_loadOption.equals(INCLUDE_LOADS)) {
 			return _loadList.contains(load) || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
 		}
 		// exclude!
@@ -1193,10 +1193,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if train will service this owner name.
 	 */
 	public boolean acceptsOwnerName(String owner) {
-		if (_ownerOption.equals(ALLOWNERS)) {
+		if (_ownerOption.equals(ALL_OWNERS)) {
 			return true;
 		}
-		if (_ownerOption.equals(INCLUDEOWNERS)) {
+		if (_ownerOption.equals(INCLUDE_OWNERS)) {
 			return _ownerList.contains(owner);
 		}
 		// exclude!
@@ -2938,7 +2938,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next) {
 		if (next != null) {
-			setStatus(TRAININROUTE + " " + getNumberCarsInTrain() + " " + Bundle.getMessage("cars") + " "
+			setStatus(TRAIN_IN_ROUTE + " " + getNumberCarsInTrain() + " " + Bundle.getMessage("cars") + " "
 					+ getTrainLength() + " " + Bundle.getMessage("feet") + ", " + getTrainWeight() + " "
 					+ Bundle.getMessage("tons"));
 			// run move scripts
@@ -2988,7 +2988,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setBuildFailedMessage("");
 		setPrinted(false);
 		// remove cars and engines from this train via property change
-		setStatus(TRAINRESET);
+		setStatus(TRAIN_RESET);
 		// remove train icon
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
@@ -3441,7 +3441,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		e.addContent(eTypes);
 		// save list of car roads for this train
-		if (!getRoadOption().equals(ALLROADS)) {
+		if (!getRoadOption().equals(ALL_ROADS)) {
 			String[] roads = getRoadNames();
 			// old way of saving road names
 			if (Control.backwardCompatible) {
@@ -3461,7 +3461,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.addContent(eRoads);
 		}
 		// save list of car loads for this train
-		if (!getLoadOption().equals(ALLLOADS)) {
+		if (!getLoadOption().equals(ALL_LOADS)) {
 			String[] loads = getLoadNames();
 			// old way of saving car loads
 			if (Control.backwardCompatible) {
@@ -3481,7 +3481,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.addContent(eLoads);
 		}
 		// save list of car owners for this train
-		if (!getOwnerOption().equals(ALLOWNERS)) {
+		if (!getOwnerOption().equals(ALL_OWNERS)) {
 			String[] owners = getOwnerNames();
 			// old way of saving car owners
 			if (Control.backwardCompatible) {

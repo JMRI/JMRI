@@ -120,7 +120,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train depart time", "00:00", t.getDepartureTime());
 		Assert.assertEquals("train route", null, t.getRoute());
 		Assert.assertTrue("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
-		Assert.assertEquals("train roads", Train.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("train roads", Train.ALL_ROADS, t.getRoadOption());
 		Assert.assertEquals("train requirements", Train.NONE, t.getRequirements());
 
 		// test departure time fields
@@ -327,13 +327,13 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// test car owner options
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameExclude));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car owner exclude", Train.EXCLUDEOWNERS, t.getOwnerOption());
+		Assert.assertEquals("train car owner exclude", Train.EXCLUDE_OWNERS, t.getOwnerOption());
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameInclude));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car owner include", Train.INCLUDEOWNERS, t.getOwnerOption());
+		Assert.assertEquals("train car owner include", Train.INCLUDE_OWNERS, t.getOwnerOption());
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameAll));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car owner all", Train.ALLOWNERS, t.getOwnerOption());
+		Assert.assertEquals("train car owner all", Train.ALL_OWNERS, t.getOwnerOption());
 
 		// test car date options
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.builtDateAfter));
