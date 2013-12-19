@@ -12,6 +12,20 @@ import javax.swing.*;
 /**
  * Provide a graphical representation of the DCC address, either long or short
  *
+ * <p>Expects one or more of the variables called:
+ *<ul>
+ *<li>Short Address
+ *<li>Long Address
+ *<li>Address Format (an Enum variable to select)
+ *</ul>
+ *and handles the cases where:
+ *<ul>
+ *<li>All three are present - the normal advanced decoder case
+ *<li>Short Address is present and Long Address is not
+ *<li>Long Address is present and Short Address is not
+ *</ul>
+ * At least one of Short Address and Long Address must be present!
+ *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2012
  * @version			$Revision$
  */
@@ -67,7 +81,7 @@ public class DccAddressPanel extends JPanel {
         add(val);
 
         // update initial contents & color
-        if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
+        if (extendAddr == null || ( addMode != null && !addMode.getValueString().equals("1") ) ) {
             if (primaryAddr!=null) {
                 // short address commonRep will be JTextField if variable, JLabel if constant
                 JTextField f;
@@ -80,15 +94,17 @@ public class DccAddressPanel extends JPanel {
                 val.setDocument( f.getDocument());
             }
         } else {
-            // long address commonRep will be JTextField if variable, JLabel if constant
-            JTextField f;
-            if (extendAddr.getCommonRep() instanceof JTextField) f = (JTextField)extendAddr.getCommonRep();
-            else {
-                f = new JTextField();
-                f.setText(((JLabel)extendAddr.getCommonRep()) .getText());
+            if (extendAddr!=null) {
+                // long address commonRep will be JTextField if variable, JLabel if constant
+                JTextField f;
+                if (extendAddr.getCommonRep() instanceof JTextField) f = (JTextField)extendAddr.getCommonRep();
+                else {
+                    f = new JTextField();
+                    f.setText(((JLabel)extendAddr.getCommonRep()) .getText());
+                }
+                val.setBackground(extendAddr.getCommonRep().getBackground());
+                val.setDocument( f.getDocument());
             }
-            val.setBackground(extendAddr.getCommonRep().getBackground());
-            val.setDocument( f.getDocument());
         }
 
         // start listening for changes to this value
