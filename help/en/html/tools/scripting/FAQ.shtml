@@ -109,6 +109,24 @@
             Instead, just modify little bits and play with it.
 		    </div>
 
+		    <h2>Where can I find more information on the JMRI classes?</h2>
+
+		    <div class=para>
+		    
+		    The 
+		    <a href="http://jmri.org/JavaDoc/doc/">class documentation pages</a> 
+		    include automatically-built summary information
+		    on every class.
+		    <p>
+		    There are a lot of classes!  To help you find things,
+		    it might be useful to look at the 
+		    <a href="../../doc/Technical/Patterns.shtml">page on JMRI structure</a>,
+		    which is part of the 
+		    <a href="../../doc/Technical/index.shtml">JMRI technical documentation</a>.
+		    Note the references on the left-hand side.
+		    </div>
+
+
 		    <h2>Are there required naming conventions?</h2>
 
 		    <div class=para>
