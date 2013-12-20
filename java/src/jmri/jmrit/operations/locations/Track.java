@@ -2001,6 +2001,7 @@ public class Track {
 			_moves = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.DIR)) != null)
 			_trainDir = Integer.parseInt(a.getValue());
+		// old way of reading track comment, see comments below for new format
 		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = OperationsXml.convertFromXmlComment(a.getValue());
 		// new way of reading car types using elements added in 3.3.1
@@ -2190,6 +2191,10 @@ public class Track {
 		}
 		
 		if (e.getChild(Xml.COMMENTS) != null) {
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.TRACK) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.TRACK).getAttribute(Xml.COMMENT)) != null) {
+				_comment = a.getValue();
+			}
 			if (e.getChild(Xml.COMMENTS).getChild(Xml.BOTH) != null &&
 					( a = e.getChild(Xml.COMMENTS).getChild(Xml.BOTH).getAttribute(Xml.COMMENT)) != null) {
 				_commentBoth = a.getValue();
@@ -2249,10 +2254,11 @@ public class Track {
 		e.addContent(eTypes);
  
 		if (Control.backwardCompatible)
-			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());
-		e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
+			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());	// early versions had a misspelling
+
 		// build list of car roads for this track
 		if (!getRoadOption().equals(ALL_ROADS)) {
+			e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 			String[] roads = getRoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
@@ -2271,9 +2277,9 @@ public class Track {
 			e.addContent(eRoads);
 		}
 		
-		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 		// save list of car loads for this track
 		if (!getLoadOption().equals(ALL_LOADS)) {
+			e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 			String[] loads = getLoadNames();
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
@@ -2292,9 +2298,9 @@ public class Track {
 			e.addContent(eLoads);
 		}
 		
-		e.setAttribute(Xml.CAR_SHIP_LOAD_OPTION, getShipLoadOption());
 		// save list of car loads for this track
 		if (!getShipLoadOption().equals(ALL_LOADS)) {
+			e.setAttribute(Xml.CAR_SHIP_LOAD_OPTION, getShipLoadOption());
 			String[] loads = getShipLoadNames();
 			// new way of saving car loads using elements
 			Element eLoads = new Element(Xml.CAR_SHIP_LOADS);
@@ -2306,8 +2312,8 @@ public class Track {
 			e.addContent(eLoads);
 		}
 		
-		e.setAttribute(Xml.DROP_OPTION, getDropOption());
 		if (!getDropOption().equals(ANY)) {
+			e.setAttribute(Xml.DROP_OPTION, getDropOption());
 			// build list of drop ids for this track
 			String[] dropIds = getDropIds();		
 			if (Control.backwardCompatible) {
@@ -2327,8 +2333,8 @@ public class Track {
 			e.addContent(eDropIds);
 		}
 		
-		e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
 		if (!getPickupOption().equals(ANY)) {
+			e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
 			// build list of pickup ids for this track
 			String[] pickupIds = getPickupIds();
 			if (Control.backwardCompatible) {
@@ -2364,7 +2370,6 @@ public class Track {
 			e.setAttribute(Xml.BLOCK_OPTIONS, Integer.toString(_blockOptions));
 		if (!getServiceOrder().equals(NORMAL))
 			e.setAttribute(Xml.ORDER, getServiceOrder());
-		e.setAttribute(Xml.COMMENT, getComment());
 		if (getPool() != null) {
 			e.setAttribute(Xml.POOL, getPool().getName());
 			e.setAttribute(Xml.MIN_LENGTH, Integer.toString(getMinimumLength()));
@@ -2372,8 +2377,9 @@ public class Track {
 		if (getIgnoreUsedLengthPercentage() > 0)
 			e.setAttribute(Xml.IGNORE_USED_PERCENTAGE,
 					Integer.toString(getIgnoreUsedLengthPercentage()));
-		e.setAttribute(Xml.TRACK_DESTINATION_OPTION, getDestinationOption());
+
 		if (!getDestinationOption().equals(ALL_DESTINATIONS)) {
+			e.setAttribute(Xml.TRACK_DESTINATION_OPTION, getDestinationOption());
 			// save destinations if they exist
 			String[] destIds = getDestinationIds();
 			if (destIds.length > 0) {
@@ -2391,15 +2397,20 @@ public class Track {
 				e.addContent(destinations);
 			}
 		}
+		if (Control.backwardCompatible)
+			e.setAttribute(Xml.COMMENT, getComment());
 		// save manifest track comments if they exist
-		if (!getCommentBoth().equals("") || !getCommentPickup().equals("") || !getCommentSetout().equals("")) {
+		if (!getComment().equals("") || !getCommentBoth().equals("") || !getCommentPickup().equals("") || !getCommentSetout().equals("")) {
 			Element comments = new Element(Xml.COMMENTS);
+			Element track = new Element(Xml.TRACK);
 			Element both = new Element(Xml.BOTH);
 			Element pickup = new Element(Xml.PICKUP);
 			Element setout = new Element(Xml.SETOUT);
+			comments.addContent(track);
 			comments.addContent(both);
 			comments.addContent(pickup);
 			comments.addContent(setout);
+			track.setAttribute(Xml.COMMENT, getComment());
 			both.setAttribute(Xml.COMMENT, getCommentBoth());
 			pickup.setAttribute(Xml.COMMENT, getCommentPickup());
 			setout.setAttribute(Xml.COMMENT, getCommentSetout());

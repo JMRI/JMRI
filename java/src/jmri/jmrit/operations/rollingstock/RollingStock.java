@@ -1026,14 +1026,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.DES_TRACK, getDestinationTrackName());
 		}
 		e.setAttribute(Xml.MOVES, Integer.toString(getMoves()));
+		e.setAttribute(Xml.DATE, getLastDate());
 		if (!getLastLocationId().equals(LOCATION_UNKNOWN))
 			e.setAttribute(Xml.LAST_LOCATION_ID, getLastLocationId());
 		if (!getTrainName().equals(""))
 			e.setAttribute(Xml.TRAIN, getTrainName());
 		if (!getOwner().equals(""))
 			e.setAttribute(Xml.OWNER, getOwner());
-		if (!getComment().equals(""))
-			e.setAttribute(Xml.COMMENT, getComment());
 		if (!getValue().equals(""))
 			e.setAttribute(Xml.VALUE, getValue());
 		if (!getRfid().equals(""))
@@ -1042,7 +1041,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.LOC_UNKNOWN, isLocationUnknown() ? Xml.TRUE : Xml.FALSE);
 		if (isOutOfService())
 			e.setAttribute(Xml.OUT_OF_SERVICE, isOutOfService() ? Xml.TRUE : Xml.FALSE);
-		e.setAttribute(Xml.DATE, getLastDate());
+		if (!getComment().equals(""))
+			e.setAttribute(Xml.COMMENT, getComment());
 		return e;
 	}
 

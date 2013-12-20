@@ -3384,9 +3384,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.TERMINATION_TRACK, getTerminationTrack().getId());
 		if (Control.backwardCompatible)
 			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // misspelled should have been option not operation
-		e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
-		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
-		e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());
 		e.setAttribute(Xml.BUILT_START_YEAR, getBuiltStartYear());
 		e.setAttribute(Xml.BUILT_END_YEAR, getBuiltEndYear());
 		e.setAttribute(Xml.NUMBER_ENGINES, getNumberEngines());
@@ -3442,6 +3439,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		e.addContent(eTypes);
 		// save list of car roads for this train
 		if (!getRoadOption().equals(ALL_ROADS)) {
+			e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 			String[] roads = getRoadNames();
 			// old way of saving road names
 			if (Control.backwardCompatible) {
@@ -3462,6 +3460,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		// save list of car loads for this train
 		if (!getLoadOption().equals(ALL_LOADS)) {
+			e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 			String[] loads = getLoadNames();
 			// old way of saving car loads
 			if (Control.backwardCompatible) {
@@ -3482,6 +3481,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		// save list of car owners for this train
 		if (!getOwnerOption().equals(ALL_OWNERS)) {
+			e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());
 			String[] owners = getOwnerNames();
 			// old way of saving car owners
 			if (Control.backwardCompatible) {
