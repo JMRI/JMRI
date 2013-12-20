@@ -176,6 +176,8 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
 		if (train.isServiceAllCarsWithFinalDestinationsEnabled())
 			addLine(buildReport, FIVE, Bundle.getMessage("ServiceAllCars"));
+		if (train.isBuildConsistEnabled())
+			addLine(buildReport, FIVE, Bundle.getMessage("BuildConsist"));
 		addLine(buildReport, ONE, BLANK_LINE); // add line
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS()
