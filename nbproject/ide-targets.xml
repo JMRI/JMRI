@@ -7,7 +7,7 @@
         <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
             <classpath refid="project.class.path"/>
         </nbjpdastart>
-        <java classname="apps.DecoderPro.DecoderPro" dir="../jmri" fork="yes">
+        <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
