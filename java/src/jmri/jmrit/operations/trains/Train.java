@@ -1632,14 +1632,14 @@ public class Train implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < engines.size(); i++) {
 			Engine eng = EngineManager.instance().getById(engines.get(i));
 			if (eng.getRouteLocation() == rl && eng.getRouteDestination() != rl) {
-				length = length + Integer.parseInt(eng.getLength()) + Engine.COUPLER;
+				length += eng.getTotalLength();
 			}
 		}
 		List<String> cars = CarManager.instance().getByTrainList(this);
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = CarManager.instance().getById(cars.get(i));
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
-				length = length + car.getTotalLength();
+				length += car.getTotalLength();
 			}
 		}
 		return length;
@@ -1664,10 +1664,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				for (int j = 0; j < engines.size(); j++) {
 					Engine eng = EngineManager.instance().getById(engines.get(j));
 					if (eng.getRouteLocation() == rl) {
-						length += Integer.parseInt(eng.getLength()) + Engine.COUPLER;
+						length += eng.getTotalLength();
 					}
 					if (eng.getRouteDestination() == rl) {
-						length += -(Integer.parseInt(eng.getLength()) + Engine.COUPLER);
+						length += -eng.getTotalLength();
 					}
 				}
 				for (int j = 0; j < cars.size(); j++) {
@@ -1743,6 +1743,41 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		return weight;
+	}
+	
+	/**
+	 * Gets the train's locomotive horsepower at the route location specified
+	 * 
+	 * @param routeLocation
+	 *            The route location
+	 * @return The train's locomotive horsepower at the route location
+	 */
+	public int getTrainHorsePower(RouteLocation routeLocation) {
+		int hp = 0;
+		Route route = getRoute();
+		if (route != null) {
+			List<String> engines = EngineManager.instance().getByTrainList(this);
+			List<String> ids = route.getLocationsBySequenceList();
+			for (int i = 0; i < ids.size(); i++) {
+				RouteLocation rl = route.getLocationById(ids.get(i));
+				for (int j = 0; j < engines.size(); j++) {
+					Engine eng = EngineManager.instance().getById(engines.get(j));
+					if (eng.getRouteLocation() == rl) {
+						try {
+							hp += Integer.parseInt(eng.getHp());
+						} catch (Exception e) {
+							break; // done engine hp rating not available
+						}
+					}
+					if (eng.getRouteDestination() == rl) {
+						hp += -Integer.parseInt(eng.getHp());
+					}
+				}
+				if (rl == routeLocation)
+					break;
+			}
+		}
+		return hp;
 	}
 
 	/**

@@ -251,7 +251,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// engine options
 		engine1Option.setLayout(new GridBagLayout());
 
-		for (int i = 0; i < Setup.getEngineSize() + 1; i++) {
+		for (int i = 0; i < Setup.getMaxNumberEngines() + 1; i++) {
 			numEngines1Box.addItem(Integer.toString(i));
 		}
 		numEngines1Box.setMinimumSize(new Dimension(50, 20));
@@ -299,7 +299,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// engine options
 		engine2Option.setLayout(new GridBagLayout());
 
-		for (int i = 0; i < Setup.getEngineSize() + 1; i++) {
+		for (int i = 0; i < Setup.getMaxNumberEngines() + 1; i++) {
 			numEngines2Box.addItem(Integer.toString(i));
 		}
 		numEngines2Box.setMinimumSize(new Dimension(50, 20));

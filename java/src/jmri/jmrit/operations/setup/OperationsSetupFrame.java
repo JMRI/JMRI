@@ -94,6 +94,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JTextField railroadNameTextField = new JTextField(35);
 	JTextField maxLengthTextField = new JTextField(5);
 	JTextField maxEngineSizeTextField = new JTextField(3);
+	JTextField hptTextField = new JTextField(3);
 	JTextField switchTimeTextField = new JTextField(3);
 	JTextField travelTimeTextField = new JTextField(3);
 	JTextField yearTextField = new JTextField(4);
@@ -121,8 +122,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// load fields
 		railroadNameTextField.setText(Setup.getRailroadName());
-		maxLengthTextField.setText(Integer.toString(Setup.getTrainLength()));
-		maxEngineSizeTextField.setText(Integer.toString(Setup.getEngineSize()));
+		maxLengthTextField.setText(Integer.toString(Setup.getMaxTrainLength()));
+		maxEngineSizeTextField.setText(Integer.toString(Setup.getMaxNumberEngines()));
+		hptTextField.setText(Integer.toString(Setup.getHorsePowerPerTon()));
 		switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
 		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
 		panelTextField.setText(Setup.getPanelName());
@@ -146,6 +148,10 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		autoSaveCheckBox.setToolTipText(Bundle.getMessage("AutoSaveTip"));
 		autoBackupCheckBox.setToolTipText(Bundle.getMessage("AutoBackUpTip"));
 		maxLengthTextField.setToolTipText(Bundle.getMessage("MaxLengthTip"));
+		maxEngineSizeTextField.setToolTipText(Bundle.getMessage("MaxEngineTip"));
+		hptTextField.setToolTipText(Bundle.getMessage("HPperTonTip"));
+		switchTimeTextField.setToolTipText(Bundle.getMessage("SwitchTimeTip"));
+		travelTimeTextField.setToolTipText(Bundle.getMessage("TravelTimeTip"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -190,8 +196,10 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p3.add(pMaxEngine);
 
 		// row 3c
-		JPanel p5 = new JPanel();
-		p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
+		JPanel pHPT = new JPanel();
+		pHPT.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("HPT")));
+		addItem(pHPT, hptTextField, 0, 0);
+		p3.add(pHPT);
 
 		JPanel pSwitchTime = new JPanel();
 		pSwitchTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MoveTime")));
@@ -282,7 +290,6 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		panel.add(p1);
 		panel.add(pScale);
 		panel.add(p3);
-		panel.add(p5);
 		panel.add(p9);
 
 		// Icon panel
@@ -497,8 +504,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		if (northCheckBox.isSelected())
 			direction += Setup.NORTH + Setup.SOUTH;
 		Setup.setTrainDirection(direction);
-		// set max engine length
-		Setup.setEngineSize(Integer.parseInt(maxEngineSizeTextField.getText()));
+		Setup.setMaxNumberEngines(Integer.parseInt(maxEngineSizeTextField.getText()));
+		Setup.setHorsePowerPerTon(Integer.parseInt(hptTextField.getText()));
 		// set switch time
 		Setup.setSwitchTime(Integer.parseInt(switchTimeTextField.getText()));
 		// set travel time
@@ -534,7 +541,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			Setup.setLengthUnit(Setup.METER);
 		Setup.setYearModeled(yearTextField.getText());
 		// warn about train length being too short
-		if (maxTrainLength != Setup.getTrainLength()) {
+		if (maxTrainLength != Setup.getMaxTrainLength()) {
 			if (maxTrainLength < 500 && Setup.getLengthUnit().equals(Setup.FEET) || maxTrainLength < 160
 					&& Setup.getLengthUnit().equals(Setup.METER)) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
@@ -544,7 +551,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			}
 		}
 		// set max train length
-		Setup.setTrainLength(Integer.parseInt(maxLengthTextField.getText()));
+		Setup.setMaxTrainLength(Integer.parseInt(maxLengthTextField.getText()));
 		OperationsSetupXml.instance().writeOperationsFile();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();
@@ -553,12 +560,12 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	// if max train length has changed, check routes
 	private void checkRoutes() {
 		int maxLength = Integer.parseInt(maxLengthTextField.getText());
-		if (maxLength > Setup.getTrainLength()) {
+		if (maxLength > Setup.getMaxTrainLength()) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
 					Bundle.getMessage("MaxTrainLengthIncreased"), new Object[] { maxLength, Setup.getLengthUnit().toLowerCase() }),
 					JOptionPane.INFORMATION_MESSAGE);
 		}
-		if (maxLength < Setup.getTrainLength()) {
+		if (maxLength < Setup.getMaxTrainLength()) {
 			StringBuffer sb = new StringBuffer();
 			RouteManager rm = RouteManager.instance();
 			List<String> routes = rm.getRoutesByNameList();

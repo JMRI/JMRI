@@ -249,7 +249,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		trainReq.setLayout(new GridBagLayout());
 		trainReq.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainRequires")));
 
-		for (int i = 0; i < Setup.getEngineSize() + 1; i++) {
+		for (int i = 0; i < Setup.getMaxNumberEngines() + 1; i++) {
 			numEnginesBox.addItem(Integer.toString(i));
 		}
 		numEnginesBox.addItem(Train.AUTO);

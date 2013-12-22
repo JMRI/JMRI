@@ -425,7 +425,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		rl.setPickUpAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
-	private int _maxTrainLength = Setup.getTrainLength();
+	private int _maxTrainLength = Setup.getMaxTrainLength();
 
 	public int getLastMaxTrainLength() {
 		return _maxTrainLength;
@@ -471,10 +471,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 					.getMessage("WarningTooShort"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION)
 				return;
 		}
-		if (length > Setup.getTrainLength()) {
+		if (length > Setup.getMaxTrainLength()) {
 			log.error("Maximum departure length can not exceed maximum train length");
 			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("DepartureLengthNotExceed"),
-					new Object[] { length, Setup.getTrainLength() }), Bundle.getMessage("CanNotChangeMaxLength"),
+					new Object[] { length, Setup.getMaxTrainLength() }), Bundle.getMessage("CanNotChangeMaxLength"),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		} else {

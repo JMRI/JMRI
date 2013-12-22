@@ -47,6 +47,7 @@ public class Xml {
 	static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
 	static final String TRAIN_LENGTH = "trainLength"; // NOI18N
 	static final String MAX_ENGINES = "maxEngines"; // NOI18N
+	static final String HPT = "hpt"; // NOI18N
 	static final String SCALE = "scale"; // NOI18N
 	static final String CAR_TYPES = "carTypes"; // NOI18N
 	static final String SWITCH_TIME = "switchTime"; // NOI18N	

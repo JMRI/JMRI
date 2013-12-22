@@ -23,7 +23,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected Location _location = null;	// the location in the route
 	protected String _locationId = "";		// the location's id
 	protected int _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
-	protected int _maxTrainLength = Setup.getTrainLength();
+	protected int _maxTrainLength = Setup.getMaxTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
 	protected boolean _drops = true;		// when true set outs allowed at this location
 	protected boolean _pickups = true;		// when true pick ups allowed at this location

@@ -486,7 +486,7 @@ public class OperationsTrainsTest extends TestCase {
 		// disable build reports
 		tmanager.setBuildReportEnabled(false);
 		// This test uses the maximum length of a train in route
-		Setup.setTrainLength(1000);
+		Setup.setMaxTrainLength(1000);
 
 		Train train = tmanager.newTrain("AutoEngineTest");
 		train.setNumberEngines(Train.AUTO);
@@ -566,7 +566,7 @@ public class OperationsTrainsTest extends TestCase {
 		train.build();
 		Assert.assertTrue("Train should build, four engines available", train.isBuilt());
 
-		Setup.setEngineSize(3); // limit the maximum to three engines
+		Setup.setMaxNumberEngines(3); // limit the maximum to three engines
 		train.build();
 		Assert.assertFalse("Train should not build, needs four engines, three is the maximum allowed", train
 				.isBuilt());
@@ -3795,7 +3795,7 @@ public class OperationsTrainsTest extends TestCase {
 		CarManager cmanager = CarManager.instance();
 		CarTypes ct = CarTypes.instance();
 
-		Setup.setTrainLength(500);
+		Setup.setMaxTrainLength(500);
 		ct.addName("Gon");
 		ct.addName("Coil Car");
 		ct.addName("Flat Car");
@@ -6295,7 +6295,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Setup.setBuildAggressive(false);
 		Setup.setTrainIntoStagingCheckEnabled(true);
-		Setup.setTrainLength(1000);
+		Setup.setMaxTrainLength(1000);
 		Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 	}
 

@@ -202,11 +202,11 @@ public class OperationsSetupTest extends TestCase {
 		s.setTrainDirection(Setup.SOUTH);
 		Assert.assertEquals("Direction South", 8, s.getTrainDirection());
 
-		s.setTrainLength(520);
-		Assert.assertEquals("Train Length", 520, s.getTrainLength());
+		s.setMaxTrainLength(520);
+		Assert.assertEquals("Train Length", 520, s.getMaxTrainLength());
 
-		s.setEngineSize(120);
-		Assert.assertEquals("Engine Size", 120, s.getEngineSize());
+		s.setMaxNumberEngines(120);
+		Assert.assertEquals("Engine Size", 120, s.getMaxNumberEngines());
 
 		s.setCarMoves(12);
 		Assert.assertEquals("Car Moves", 12, s.getCarMoves());
@@ -322,8 +322,8 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Create Font Name", "File Test Font Name", s.getFontName());
 
 		Assert.assertEquals("Create Direction East", 1+2+4+8, s.getTrainDirection());
-		Assert.assertEquals("Create Train Length", 1111, s.getTrainLength());
-		Assert.assertEquals("Create Engine Size", 111, s.getEngineSize());
+		Assert.assertEquals("Create Train Length", 1111, s.getMaxTrainLength());
+		Assert.assertEquals("Create Engine Size", 111, s.getMaxNumberEngines());
 		Assert.assertEquals("Create Scale", 11, s.getScale());
 
 		Assert.assertEquals("Create Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
@@ -346,8 +346,8 @@ public class OperationsSetupTest extends TestCase {
 		s.setMainMenuEnabled(false);
 
 		s.setTrainDirection(Setup.EAST);
-		s.setTrainLength(2222);
-		s.setEngineSize(222);
+		s.setMaxTrainLength(2222);
+		s.setMaxNumberEngines(222);
 		s.setScale(Setup.N_SCALE);
 
 		s.setCarTypes("Before Read Test Car Types");
@@ -372,8 +372,8 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Before Read Main Menu Enabled", false, s.isMainMenuEnabled());
 
 		Assert.assertEquals("Before Read Direction East", 1, s.getTrainDirection());
-		Assert.assertEquals("Before Read Train Length", 2222, s.getTrainLength());
-		Assert.assertEquals("Before Read Engine Size", 222, s.getEngineSize());
+		Assert.assertEquals("Before Read Train Length", 2222, s.getMaxTrainLength());
+		Assert.assertEquals("Before Read Engine Size", 222, s.getMaxNumberEngines());
 		Assert.assertEquals("Before Read Scale", 2, s.getScale());
 
 		Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", s.getCarTypes());
@@ -400,8 +400,8 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("After Read Main Menu Enabled", true, s.isMainMenuEnabled());
 
 		Assert.assertEquals("After Read Direction East", 1+2+4+8, s.getTrainDirection());
-		Assert.assertEquals("After Read Train Length", 1111, s.getTrainLength());
-		Assert.assertEquals("After Read Engine Size", 111, s.getEngineSize());
+		Assert.assertEquals("After Read Train Length", 1111, s.getMaxTrainLength());
+		Assert.assertEquals("After Read Engine Size", 111, s.getMaxNumberEngines());
 		Assert.assertEquals("After Read Scale", 11, s.getScale());
 
 		Assert.assertEquals("After Read Test Car Types", "File Test Car Types", s.getCarTypes());
@@ -452,8 +452,8 @@ public class OperationsSetupTest extends TestCase {
 		s.setMainMenuEnabled(true);
 
 		s.setTrainDirection(Setup.EAST+Setup.WEST+Setup.NORTH+Setup.SOUTH);
-		s.setTrainLength(1111);
-		s.setEngineSize(111);
+		s.setMaxTrainLength(1111);
+		s.setMaxNumberEngines(111);
 		s.setScale(Setup.G_SCALE);
 		s.setCarTypes("File Test Car Types");
 		s.setSwitchTime(11);
