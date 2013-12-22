@@ -14,13 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="1" lastUpdated="20080821"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20131222"/>
+  <!-- Version 2 - Corrected CV 29 default, Renamed family to match branding. -->
   <!-- Decoder used in Hornby engines -->
   <decoder>
-    <family name="R8249" mfg="Hornby">
+    <family name="Digital" mfg="Hornby" highVersionID="13" lowVersionID="13">
       <model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes" nmraWarrantStart="200808" maxTotalCurrent="0.5A" maxMotorCurrent="0.5A">
         <size length="17" width="10" height="3.5" units="mm"/>
       </model>
-      <!-- don't know version id, maybe lowVersionID="13"?  -->
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -76,7 +77,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
