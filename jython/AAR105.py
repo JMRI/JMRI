@@ -5,7 +5,7 @@
 #
 # See <http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml>
 #
-# Author: Joan Carrancà, 2010
+# Author: Joan Carranc, 2010
 # - Based on the original RailDriver.py, Bob Jacobsen, copyright 2008
 # - Throttle window management and roster selection based on xboxThrottle.py, Andrew Berridge, copyright 2010
 # Part of the JMRI distribution

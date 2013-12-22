@@ -4,10 +4,10 @@
 # This is for the newer Roco crane (part number 46902 (DCC))and CV53 must be set to 2
 # Functions are as follows
     # Rotating the crane:
-    # CV53 = 02: ­F3
+    # CV53 = 02: not equal F3
     # LED (GREEN) flashes in single-cycle interval
     # Raising and lowering the Boom:
-    # CV53 = 02: ­F2
+    # CV53 = 02: not equal F2
     # LED (GREEN) flashes in two-cycle interval
     # Raising and lowering the crane hook
     # CV53 = 02: ,F1
