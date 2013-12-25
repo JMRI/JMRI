@@ -103,7 +103,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	ButtonGroup group = new ButtonGroup();
 
 	// text field
-	JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name);
+	JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name - 5);	// make slightly smaller
 	JTextField trainDescriptionTextField = new JTextField(30);
 
 	// text area
@@ -157,20 +157,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// Set up the panels
-		JPanel p1 = new JPanel();
-		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-		JScrollPane p1Pane = new JScrollPane(p1);
-		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		p1Pane.setMinimumSize(new Dimension(300, 3 * trainNameTextField.getPreferredSize().height));
-		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		JScrollPane pPane = new JScrollPane(p);
+//		pPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		pPane.setMinimumSize(new Dimension(300, 5 * trainNameTextField.getPreferredSize().height));
+		pPane.setBorder(BorderFactory.createTitledBorder(""));
 
 		// Layout the panel by rows
+		// row 1
+		JPanel p1 = new JPanel();
+		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 		// row 1a
 		JPanel pName = new JPanel();
 		pName.setLayout(new GridBagLayout());
 		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
 		addItem(pName, trainNameTextField, 0, 0);
-
 		// row 1b
 		JPanel pDesc = new JPanel();
 		pDesc.setLayout(new GridBagLayout());
@@ -180,10 +182,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		p1.add(pName);
 		p1.add(pDesc);
 
-		// row 2a
+		// row 2
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-		// row 3 right
+		// row 2a
 		JPanel pdt = new JPanel();
 		pdt.setLayout(new GridBagLayout());
 		pdt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
@@ -207,7 +209,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pdt, space2, 2, 5);
 		addItem(pdt, minuteBox, 3, 5);
 		addItem(pdt, space3, 4, 5);
-
 		// row 2b
 		// BUG! routeBox needs its own panel when resizing frame!
 		JPanel pr = new JPanel();
@@ -221,6 +222,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		p2.add(pdt);
 		p2.add(pr);
+		
+		p.add(p1);
+		p.add(p2);
 
 		// row 5
 		locationPanelCheckBoxes.setLayout(new GridBagLayout());
@@ -253,7 +257,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			numEnginesBox.addItem(Integer.toString(i));
 		}
 		numEnginesBox.addItem(Train.AUTO);
-		numEnginesBox.setMinimumSize(new Dimension(50, 20));
+		numEnginesBox.setMinimumSize(new Dimension(65, 20));
 		numEnginesBox.setToolTipText(Bundle.getMessage("TipNumberOfLocos"));
 		addItem(trainReq, textEngine, 1, 1);
 		addItem(trainReq, numEnginesBox, 2, 1);
@@ -300,8 +304,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pB, addTrainButton, 2, 0);
 		addItem(pB, saveTrainButton, 3, 0);
 
-		getContentPane().add(p1Pane);
-		getContentPane().add(p2);
+		getContentPane().add(pPane);
 		getContentPane().add(locationsPane);
 		getContentPane().add(typeCarPane);
 		getContentPane().add(typeEnginePane);
