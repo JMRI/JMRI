@@ -32,7 +32,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 	// text field
 
 	// major buttons
-	javax.swing.JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+	javax.swing.JButton changeButton = new javax.swing.JButton(Bundle.getMessage("Change"));
 
 	// combo boxes
 	javax.swing.JComboBox hourBox = new javax.swing.JComboBox();
@@ -58,7 +58,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 
 		// row 4
 		JPanel pButton = new JPanel();
-		pButton.add(saveButton);
+		pButton.add(changeButton);
 
 		getContentPane().add(pHour);
 		getContentPane().add(pButton);
@@ -72,11 +72,11 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 		setTitle(Bundle.getMessage("TitleChangeDepartureTime"));
 
 		// setup buttons
-		addButtonAction(saveButton);
+		addButtonAction(changeButton);
 	}
 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == saveButton) {
+		if (ae.getSource() == changeButton) {
 			log.debug("save button activated");
 			TrainManager trainManager = TrainManager.instance();
 			List<String> trainIds = trainManager.getTrainsByIdList();
