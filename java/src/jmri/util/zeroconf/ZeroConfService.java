@@ -73,6 +73,7 @@ public class ZeroConfService {
      *
      * @param type The service protocol
      * @param port The port the service runs over
+     * @return An unpublished ZeroConfService
      * @see #create(java.lang.String, java.lang.String, int, int, int,
      * java.util.HashMap)
      */
@@ -92,6 +93,7 @@ public class ZeroConfService {
      * @param port The port the service runs over
      * @param properties Additional information to be listed in service
      * advertisement
+     * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
         return create(type, WebServerManager.getWebServerPreferences().getRailRoadName(), port, 0, 0, properties);
@@ -113,6 +115,7 @@ public class ZeroConfService {
      * @param priority Default value is 0
      * @param properties Additional information to be listed in service
      * advertisement
+     * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
         ZeroConfService s;
@@ -144,6 +147,7 @@ public class ZeroConfService {
      * Get the key of the ZeroConfService object. The key is fully qualified
      * name of the service in all lowercase, jmri._http.local.
      *
+     * @return The fully qualified name of the service.
      */
     public String key() {
         return _serviceInfo.getKey();
@@ -155,6 +159,7 @@ public class ZeroConfService {
      *
      * @param type
      * @param name
+     * @return The combination of the name and type of the service.
      */
     protected static String key(String type, String name) {
         return (name + "." + type).toLowerCase();
@@ -164,6 +169,8 @@ public class ZeroConfService {
      * Get the name of the ZeroConfService object. The name can only be set when
      * creating the object.
      *
+     * @return The service name as reported by the
+     * {@link javax.jmdns.ServiceInfo} object.
      */
     public String name() {
         return _serviceInfo.getName();
@@ -173,6 +180,8 @@ public class ZeroConfService {
      * Get the type of the ZeroConfService object. The type can only be set when
      * creating the object.
      *
+     * @return The service type as reported by the
+     * {@link javax.jmdns.ServiceInfo} object.
      */
     public String type() {
         return _serviceInfo.getType();
@@ -182,15 +191,16 @@ public class ZeroConfService {
      * Get the ServiceInfo property of the object. This is the JmDNS
      * implementation of a zeroConf service.
      *
+     * @return The serviceInfo object.
      */
     public ServiceInfo serviceInfo() {
         return _serviceInfo;
     }
 
     /**
-     * Get the state of the service. True if the service is being advertised,
-     * and false otherwise.
+     * Get the state of the service.
      *
+     * @return True if the service is being advertised, and false otherwise.
      */
     public Boolean isPublished() {
         return ZeroConfService.services().containsKey(key());
@@ -206,9 +216,9 @@ public class ZeroConfService {
                 ZeroConfService.services().put(key(), this);
                 if (log.isDebugEnabled()) {
                     log.debug("Publishing zeroConf service for {} on", key());
-                    for (int i = 0; i < _serviceInfo.getInetAddresses().length; i++) {
-                        if (_serviceInfo.getInetAddresses()[i] != null) {
-                            log.debug("\t{}", _serviceInfo.getInetAddresses()[i]);
+                    for (InetAddress inetAddresse : _serviceInfo.getInetAddresses()) {
+                        if (inetAddresse != null) {
+                            log.debug("\t{}", inetAddresse);
                         }
                     }
                 }
@@ -247,6 +257,7 @@ public class ZeroConfService {
     /**
      * A list of published ZeroConfServices
      *
+     * @return Collection of ZeroConfServices
      */
     public static Collection<ZeroConfService> allServices() {
         return ZeroConfService.services().values();
@@ -299,6 +310,8 @@ public class ZeroConfService {
      * Return the system name or "computer" if the system name cannot be
      * determined. This method returns the first part of the fully qualified
      * domain name from {@link #FQDN()}.
+     *
+     * @return The hostName associated with the first interface encountered.
      */
     public static String hostName() {
         String hostName = ZeroConfService.FQDN() + ".";
@@ -311,6 +324,9 @@ public class ZeroConfService {
      * Return the fully qualified domain name or "computer" if the system name
      * cannot be determined. This method uses the
      * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
+     *
+     * @return The fully qualified domain name associated with the first
+     * interface encountered.
      */
     public static String FQDN() {
         return ZeroConfService.jmdns().getHostName();
@@ -318,6 +334,7 @@ public class ZeroConfService {
 
     /**
      * Return the non-loopback ipv4 address of the host, or null if none found.
+     * @return The last non-loopback IP address on the host.
      */
     public static InetAddress hostAddress() {
         // hostAddress returns the IPv4 address for the host
