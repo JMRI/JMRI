@@ -238,11 +238,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	public String getDepartureTime() {
 		// check to see if the route has a departure time
 		RouteLocation rl = getTrainDepartsRouteLocation();
-		if (rl != null && !rl.getDepartureTime().equals("")) {
-			// need to forward any changes to departure time
+		if (rl != null) {
 			rl.removePropertyChangeListener(this);
 			rl.addPropertyChangeListener(this);
-			return rl.getDepartureTime();
+			if (!rl.getDepartureTime().equals("")) {
+				return rl.getDepartureTime();
+			}
 		}
 		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
 		int minute = _departureTime.get(Calendar.MINUTE);

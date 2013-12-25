@@ -260,6 +260,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		toolMenu.add(new PrintOptionAction());
 		toolMenu.add(new BuildReportOptionAction());
 		toolMenu.add(new TrainsByCarTypeAction(Bundle.getMessage("TitleModifyTrains")));
+		toolMenu.add(new ChangeDepartureTimesAction(Bundle.getMessage("TitleChangeDepartureTime")));
 		toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleTimeTableTrains")));
 		toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
 		toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
