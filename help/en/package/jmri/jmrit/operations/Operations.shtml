@@ -134,9 +134,9 @@
       <LI><A HREF="#TrainScripts">Scripts</A></LI>
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
-      <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
-      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
       <LI><A HREF="#Timetable">Timetable</A></LI>
+      <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
+      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>    
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
@@ -2771,16 +2771,6 @@
     examples of operation oriented scripts.
    </P>
    
-   <A NAME="SetupExcelProgram"></A>
-   <H3>Setup Excel Program (Manifest Creator)</H3>
-
-   You can use an external program like Excel to create your own custom manifests. Dan Foltz who is
-   a JMRI user/programmer has developed the "Manifest Creator". You can find a copy of the program
-   at the
-   <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
-    files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
-   directory. You can of course create your own program and also place it in the csvManifest directory. 
-   
    <A NAME="TrainShowCarTypesServiced"></A>
    <H3>Show Car Types Serviced</H3>
    <P>This diagnostic tool can help you determine why a train will not service a particular car
@@ -2919,8 +2909,8 @@
    <A NAME="ModifyTrainsByCarType"></A>
    <H3>Modify Trains by Car Type</H3>
 
-   This tool can be found under Trains-&gt;Tools. Use this tool to quickly modify the type of cars
-   your trains will service. Very useful when adding a new car type to your roster.
+   The ability to modify the car types that your trains will service can be found under
+   Trains-&gt;Tools. Very useful when adding a new car type to your roster.
 
    <P>
     <img src="images/ModifyTrainsByCarType.png">
@@ -2933,7 +2923,34 @@
     car your would like to copy, then select the "copy" checkbox, the car type will now appear to
     the right of the checkbox, then select the type of car you want to modify, and press "Save" to
     have both car types serviced by the same trains.</P>
+    
+   <A NAME="ChangeTrainDepartureTimes"></A>
+   <H3>Change Train Departure Times</H3>
 
+   Use this window to change all of your train departure times by certain number of hours. It can be
+   found under Trains-&gt;Tools. Useful if you're trying to match the train departure times to a
+   real or fast clock. 
+   
+   <A NAME="Timetable"></A>
+   <H3>Timetable</H3>
+
+   The Timetable tool allows you to define which trains will run on any given day, and can be found
+   under the Trains-&gt;Tools. For each day of the week, select which trains you want to build. Then
+   select which day you want by selecting the appropriate radio button. Then press the "Apply"
+   button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
+   to the timetable. 
+   
+   <A NAME="SetupExcelProgram"></A>
+   <H3>Setup Excel Program (Manifest Creator)</H3>
+
+   The ability to configure an Excel program to create custom manifests can be found under
+   Trains-&gt;Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator".
+   You can find a copy of the program at the
+   <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
+    files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
+   directory. You can of course create your own program and also place it in the csvManifest
+   directory. 
+   
    <A NAME="SwitcherService"></A>
    <H3>Switcher Service</H3>
 
@@ -2980,14 +2997,7 @@
    <P>You can also control which trains are shown in the Trains window. When the "Show All"
     checkbox is unselected, only trains that have the "Build" checkbox selected are shown.</P>
 
-   <A NAME="Timetable"></A>
-   <H3>Timetable</H3>
 
-   The Timetable tool allows you to define which trains will run on any given day, and can be found
-   under the Trains-&gt;Tools. For each day of the week, select which trains you want to build. Then
-   select which day you want by selecting the appropriate radio button. Then press the "Apply"
-   button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
-   to the timetable. 
    
    <A NAME="TroubleShootingBuildingTrains"></A>
    <H2>Problems Building Trains How to Fix</H2>
