@@ -230,10 +230,8 @@ public class ReportContext {
         }
                     
         Collection<ZeroConfService> services = ZeroConfService.allServices();
-        try {
-            addString("ZeroConfService host: " + ZeroConfService.hostName() + " running " + services.size() + " service(s)");
-        } catch (NullPointerException ex) {
-            addString("ZeroConfService host not running");
+        for (InetAddress address : ZeroConfService.netServices().keySet()) {
+            addString("ZeroConfService host: " + ZeroConfService.hostName(address) + " running " + services.size() + " service(s)");
         }
         if (services.size()>0) {
             for (ZeroConfService service: services) {

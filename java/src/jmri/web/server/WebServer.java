@@ -113,22 +113,6 @@ public final class WebServer implements LifeCycle.Listener {
         server.stop();
     }
 
-    public static String getLocalAddress() {
-        InetAddress hostAddress = null;
-        try {
-            hostAddress = Inet4Address.getLocalHost();
-        } catch (java.net.UnknownHostException e) {
-        }
-        if (hostAddress == null || hostAddress.isLoopbackAddress()) {
-            hostAddress = ZeroConfService.hostAddress();  //lookup from interfaces
-        }
-        if (hostAddress == null) {
-            return WebServer.getString("MessageAddressNotFound");
-        } else {
-            return hostAddress.getHostAddress().toString();
-        }
-    }
-
     /**
      * Get the public URI for a portable path. This method returns public URIs
      * for only some portable paths, and does not check that the portable path

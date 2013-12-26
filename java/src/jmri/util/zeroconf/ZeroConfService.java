@@ -2,14 +2,19 @@
 package jmri.util.zeroconf;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.jmdns.JmDNS;
+import javax.jmdns.NetworkTopologyEvent;
+import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -63,8 +68,10 @@ public class ZeroConfService {
     private ServiceInfo _serviceInfo = null;
     // static data objects
     private static HashMap<String, ZeroConfService> _services = null;
-    private static JmDNS _jmdns = null;
-    static Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
+    private static HashMap<InetAddress, JmDNS> _netServices = null;
+    private static boolean hasNetServices = false;
+    private final List<ZeroConfServiceListener> _listeners = new ArrayList<ZeroConfServiceListener>();
+    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
@@ -187,6 +194,10 @@ public class ZeroConfService {
         return _serviceInfo.getType();
     }
 
+    private ServiceInfo newServiceInfo() {
+        return _serviceInfo.clone();
+    }
+
     /**
      * Get the ServiceInfo property of the object. This is the JmDNS
      * implementation of a zeroConf service.
@@ -211,25 +222,37 @@ public class ZeroConfService {
      */
     public void publish() {
         if (!isPublished()) {
-            try {
-                ZeroConfService.jmdns().registerService(_serviceInfo);
-                ZeroConfService.services().put(key(), this);
-                if (log.isDebugEnabled()) {
-                    log.debug("Publishing zeroConf service for {} on", key());
-                    for (InetAddress inetAddresse : _serviceInfo.getInetAddresses()) {
-                        if (inetAddresse != null) {
-                            log.debug("\t{}", inetAddresse);
-                        }
+            for (ZeroConfServiceListener listener : this._listeners) {
+                listener.serviceQueued(new ZeroConfServiceEvent(this, null));
+            }
+            if (!ZeroConfService.hasNetServices) {
+                ZeroConfService.netServices();
+                (new Timer()).schedule(new QueueTask(this), 500);
+                return;
+            }
+            for (JmDNS netService : ZeroConfService.netServices().values()) {
+                ZeroConfServiceEvent event;
+                ServiceInfo info;
+                try {
+                    // JmDNS requires a 1-to-1 mapping of serviceInfo to InetAddress
+                    try {
+                        info = _serviceInfo;
+                        netService.registerService(info);
+                    } catch (IllegalStateException ex) {
+                        info = _serviceInfo.clone();
+                        // TODO: need to catch cloned serviceInfo
+                        netService.registerService(info);
                     }
-                }
-            } catch (NullPointerException ex) {
-                if (_jmdns == null) {
-                    log.error("Unable to publish service for {}; no JmDNS service provider.", key());
-                } else {
+                    event = new ZeroConfServiceEvent(this, netService);
+                } catch (IOException ex) {
                     log.error("Unable to publish service for {}: {}", key(), ex.getMessage());
+                    break;
                 }
-            } catch (IOException ex) {
-                log.error("Unable to publish service for {}: {}", key(), ex.getMessage());
+                ZeroConfService.services().put(key(), this);
+                for (ZeroConfServiceListener listener : this._listeners) {
+                    listener.servicePublished(event);
+                }
+                log.debug("Publishing zeroConf service for {} on", key(), info.getInetAddresses()[0]);
             }
         }
     }
@@ -240,7 +263,12 @@ public class ZeroConfService {
     public void stop() {
         log.debug("Stopping ZeroConfService {}", key());
         if (ZeroConfService.services().containsKey(key())) {
-            ZeroConfService.jmdns().unregisterService(_serviceInfo);
+            for (JmDNS netService : ZeroConfService.netServices().values()) {
+                netService.unregisterService(_serviceInfo);
+                for (ZeroConfServiceListener listener : this._listeners) {
+                    listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                }
+            }
             ZeroConfService.services().remove(key());
         }
     }
@@ -250,7 +278,9 @@ public class ZeroConfService {
      */
     public static void stopAll() {
         log.debug("Stopping all ZeroConfServices");
-        ZeroConfService.jmdns().unregisterAllServices();
+        for (JmDNS netService : ZeroConfService.netServices().values()) {
+            netService.unregisterAllServices();
+        }
         ZeroConfService.services().clear();
     }
 
@@ -272,27 +302,27 @@ public class ZeroConfService {
     }
 
     /* return the JmDNS handler */
-    protected static JmDNS jmdns() {  // package protected, so we only have one.
-        if (_jmdns == null) {
+    public static HashMap<InetAddress, JmDNS> netServices() {  // package protected, so we only have one.
+        if (_netServices == null) {
+            _netServices = new HashMap<InetAddress, JmDNS>();
             log.debug("JmDNS version: {}", JmDNS.VERSION);
             try {
-                //get good host address to pass to jmdns.create(), null no longer works on ubuntu w/dhcp
-                InetAddress hostAddress = Inet4Address.getLocalHost();
-                if (hostAddress == null || hostAddress.isLoopbackAddress()) {
-                    hostAddress = hostAddress();  //lookup from interfaces
+                for (InetAddress address : hostAddresses()) {
+                    log.debug("Calling JmDNS.create({})", address.getHostAddress());
+                    _netServices.put(address, JmDNS.create(address));
                 }
-                log.debug("Calling JMDNS.create({})", hostAddress.getHostAddress());
-                _jmdns = JmDNS.create(hostAddress);
 
                 if (jmri.InstanceManager.shutDownManagerInstance() != null) {
                     ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
                         @Override
                         public boolean execute() {
-                            jmri.util.zeroconf.ZeroConfService.stopAll();
-                            try {
-                                jmri.util.zeroconf.ZeroConfService.jmdns().close();
-                            } catch (IOException e) {
-                                log.debug("jmdns.close() returned IOException: {}", e.getMessage());
+                            ZeroConfService.stopAll();
+                            for (JmDNS service : ZeroConfService.netServices().values()) {
+                                try {
+                                    service.close();
+                                } catch (IOException e) {
+                                    log.debug("jmdns.close() returned IOException: {}", e.getMessage());
+                                }
                             }
                             return true;
                         }
@@ -302,8 +332,9 @@ public class ZeroConfService {
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage());
             }
+            hasNetServices = true;
         }
-        return _jmdns;
+        return _netServices;
     }
 
     /**
@@ -311,10 +342,11 @@ public class ZeroConfService {
      * determined. This method returns the first part of the fully qualified
      * domain name from {@link #FQDN()}.
      *
+     * @param address The {@link java.net.InetAddress} for the host name.
      * @return The hostName associated with the first interface encountered.
      */
-    public static String hostName() {
-        String hostName = ZeroConfService.FQDN() + ".";
+    public static String hostName(InetAddress address) {
+        String hostName = ZeroConfService.FQDN(address) + ".";
         // we would have to check for the existance of . if we did not add .
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
@@ -325,46 +357,91 @@ public class ZeroConfService {
      * cannot be determined. This method uses the
      * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
      *
-     * @return The fully qualified domain name associated with the first
-     * interface encountered.
+     * @param address The {@link java.net.InetAddress} for the FQDN.
+     * @return The fully qualified domain name.
      */
-    public static String FQDN() {
-        return ZeroConfService.jmdns().getHostName();
+    public static String FQDN(InetAddress address) {
+        return ZeroConfService.netServices().get(address).getHostName();
     }
 
     /**
      * Return the non-loopback ipv4 address of the host, or null if none found.
+     *
      * @return The last non-loopback IP address on the host.
      */
-    public static InetAddress hostAddress() {
-        // hostAddress returns the IPv4 address for the host
-        InetAddress hostAddress = null;
-        Enumeration<NetworkInterface> ifs;
+    public static List<InetAddress> hostAddresses() {
+        List<InetAddress> addrList = new ArrayList<InetAddress>();
+        Enumeration<NetworkInterface> IFCs = null;
         try {
-            log.debug("Attempting to enumerate all network interfaces");
-            ifs = NetworkInterface.getNetworkInterfaces();
+            IFCs = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException ex) {
+            log.error("Unable to get network interfaces.", ex);
+        }
+        if (IFCs != null) {
+            while (IFCs.hasMoreElements()) {
+                NetworkInterface IFC = IFCs.nextElement();
+                try {
+                    if (IFC.isUp()) {
+                        Enumeration<InetAddress> addresses = IFC.getInetAddresses();
+                        while (addresses.hasMoreElements()) {
+                            InetAddress address = addresses.nextElement();
+                            if (!address.isLoopbackAddress()) {
+                                addrList.add(addresses.nextElement());
+                            }
+                        }
+                    }
+                } catch (SocketException ex) {
+                    log.error("Unable to read network interface {}.", IFC.toString(), ex);
+                }
+            }
+        }
+        return addrList;
+    }
 
-            // Iterate all interfaces
-            while (ifs.hasMoreElements() && hostAddress == null) {
-                NetworkInterface iface = ifs.nextElement();
+    public void addEventListener(ZeroConfServiceListener l) {
+        this._listeners.add(l);
+    }
 
-                // Fetch all IP addresses on this interface
-                Enumeration<InetAddress> ips = iface.getInetAddresses();
+    public void removeEventListener(ZeroConfServiceListener l) {
+        this._listeners.remove(l);
+    }
 
-                // Iterate the IP addresses
-                while (ips.hasMoreElements()) {
-                    InetAddress ip = ips.nextElement();
-                    // use the last ipv4 that's not a loopback
-                    if ((ip instanceof Inet4Address) && !ip.isLoopbackAddress()) {
-                        hostAddress = ip;
-                        log.debug("\tfound: {}", hostAddress.getHostAddress());
+    private static class NetworkListener implements NetworkTopologyListener {
+
+        @Override
+        public void inetAddressAdded(NetworkTopologyEvent nte) {
+            if (!ZeroConfService._netServices.containsKey(nte.getInetAddress())) {
+                for (ZeroConfService service : ZeroConfService.allServices()) {
+                    try {
+                        nte.getDNS().registerService(service.serviceInfo());
+                    } catch (IOException ex) {
+                        log.error(ex.getLocalizedMessage(), ex);
                     }
                 }
             }
-        } catch (SocketException se) {
-            log.warn("Could not enumerate network interfaces");
         }
-        return hostAddress;
+
+        @Override
+        public void inetAddressRemoved(NetworkTopologyEvent nte) {
+            ZeroConfService._netServices.remove(nte.getInetAddress());
+            nte.getDNS().unregisterAllServices();
+        }
+
+    }
+
+    private class QueueTask extends TimerTask {
+
+        private final ZeroConfService service;
+
+        protected QueueTask(ZeroConfService service) {
+            this.service = service;
+        }
+
+        @Override
+        public void run() {
+            this.service.publish();
+        }
+
     }
 }
 
