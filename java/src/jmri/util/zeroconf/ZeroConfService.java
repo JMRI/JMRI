@@ -414,6 +414,9 @@ public class ZeroConfService {
                 for (ZeroConfService service : ZeroConfService.allServices()) {
                     try {
                         nte.getDNS().registerService(service.serviceInfo());
+                        for (ZeroConfServiceListener listener : service._listeners) {
+                            listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                        }
                     } catch (IOException ex) {
                         log.error(ex.getLocalizedMessage(), ex);
                     }
@@ -425,6 +428,11 @@ public class ZeroConfService {
         public void inetAddressRemoved(NetworkTopologyEvent nte) {
             ZeroConfService._netServices.remove(nte.getInetAddress());
             nte.getDNS().unregisterAllServices();
+            for (ZeroConfService service : ZeroConfService.allServices()) {
+                for (ZeroConfServiceListener listener : service._listeners) {
+                    listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                }
+            }
         }
 
     }
