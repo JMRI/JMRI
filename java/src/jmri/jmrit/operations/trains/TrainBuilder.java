@@ -2565,7 +2565,7 @@ public class TrainBuilder extends TrainCommon {
 				|| car.getFinalDestination() != null)
 			return routeToSpurFound; // no schedule found for this car
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"), new Object[] {
-				car.toString(), car.getLoadName(), car.getLocationName() + ", " + car.getTrackName() }));
+				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName() + ", " + car.getTrackName() }));
 		List<Track> tracks = locationManager.getTracks(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {

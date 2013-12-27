@@ -668,12 +668,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			newTrain.addMoveScript(train.getMoveScripts().get(i));
 		for (int i = 0; i < train.getTerminationScripts().size(); i++)
 			newTrain.addTerminationScript(train.getTerminationScripts().get(i));
-		// options
+		// manifest options
 		newTrain.setRailroadName(train.getRailroadName());
 		newTrain.setManifestLogoURL(train.getManifestLogoURL());
+		newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
+		// build options
+		newTrain.setAllowLocalMovesEnabled(train.isAllowLocalMovesEnabled());
+		newTrain.setAllowReturnToStagingEnabled(train.isAllowReturnToStagingEnabled());
+		newTrain.setAllowThroughCarsEnabled(train.isAllowThroughCarsEnabled());
+		newTrain.setBuildConsistEnabled(train.isBuildConsistEnabled());
+		newTrain.setBuildTrainNormalEnabled(train.isBuildTrainNormalEnabled());
+		newTrain.setSendCarsToTerminalEnabled(train.isSendCarsToTerminalEnabled());
+		newTrain.setServiceAllCarsWithFinalDestinationsEnabled(train.isServiceAllCarsWithFinalDestinationsEnabled());		
 		// comment
 		newTrain.setComment(train.getComment());
-
+		// description
+		newTrain.setDescription(train.getDescription());
 		return newTrain;
 	}
 	
