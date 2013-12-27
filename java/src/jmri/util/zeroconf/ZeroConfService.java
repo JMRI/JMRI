@@ -386,7 +386,7 @@ public class ZeroConfService {
                         while (addresses.hasMoreElements()) {
                             InetAddress address = addresses.nextElement();
                             if (!address.isLoopbackAddress()) {
-                                addrList.add(addresses.nextElement());
+                                addrList.add(address);
                             }
                         }
                     }
