@@ -65,10 +65,11 @@ import org.slf4j.LoggerFactory;
 public class ZeroConfService {
 
     // internal data members
+    private final HashMap<InetAddress, ServiceInfo> _serviceInfos = new HashMap<InetAddress, ServiceInfo>();
     private ServiceInfo _serviceInfo = null;
     // static data objects
-    private static HashMap<String, ZeroConfService> _services = null;
-    private static HashMap<InetAddress, JmDNS> _netServices = null;
+    private static final HashMap<String, ZeroConfService> _services = new HashMap<String, ZeroConfService>();
+    private static final HashMap<InetAddress, JmDNS> _netServices = new HashMap<InetAddress, JmDNS>();
     private static boolean hasNetServices = false;
     private final List<ZeroConfServiceListener> _listeners = new ArrayList<ZeroConfServiceListener>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
@@ -147,7 +148,7 @@ public class ZeroConfService {
      * @param service
      */
     protected ZeroConfService(ServiceInfo service) {
-        _serviceInfo = service;
+        this._serviceInfo = service;
     }
 
     /**
@@ -157,7 +158,7 @@ public class ZeroConfService {
      * @return The fully qualified name of the service.
      */
     public String key() {
-        return _serviceInfo.getKey();
+        return this.serviceInfo().getKey();
     }
 
     /**
@@ -180,7 +181,7 @@ public class ZeroConfService {
      * {@link javax.jmdns.ServiceInfo} object.
      */
     public String name() {
-        return _serviceInfo.getName();
+        return this.serviceInfo().getName();
     }
 
     /**
@@ -191,21 +192,23 @@ public class ZeroConfService {
      * {@link javax.jmdns.ServiceInfo} object.
      */
     public String type() {
-        return _serviceInfo.getType();
+        return this.serviceInfo().getType();
     }
 
-    private ServiceInfo newServiceInfo() {
-        return _serviceInfo.clone();
+    private ServiceInfo addServiceInfo(JmDNS DNS) throws IOException {
+        this._serviceInfos.put(DNS.getInterface(), this.serviceInfo().clone());
+        return this._serviceInfos.get(DNS.getInterface());
     }
 
     /**
-     * Get the ServiceInfo property of the object. This is the JmDNS
-     * implementation of a zeroConf service.
+     * Get the reference ServiceInfo for the object. This is the JmDNS
+     * implementation of a zeroConf service. The reference ServiceInfo is never
+     * actually registered with a JmDNS service.
      *
      * @return The serviceInfo object.
      */
     public ServiceInfo serviceInfo() {
-        return _serviceInfo;
+        return this._serviceInfo;
     }
 
     /**
@@ -236,10 +239,10 @@ public class ZeroConfService {
                 try {
                     // JmDNS requires a 1-to-1 mapping of serviceInfo to InetAddress
                     try {
-                        info = _serviceInfo;
+                        info = this.serviceInfo();
                         netService.registerService(info);
                     } catch (IllegalStateException ex) {
-                        info = _serviceInfo.clone();
+                        info = this.addServiceInfo(netService);
                         // TODO: need to catch cloned serviceInfo
                         netService.registerService(info);
                     }
@@ -252,7 +255,11 @@ public class ZeroConfService {
                 for (ZeroConfServiceListener listener : this._listeners) {
                     listener.servicePublished(event);
                 }
-                log.debug("Publishing zeroConf service for {} on", key(), info.getInetAddresses()[0]);
+                try {
+                    log.debug("Publishing zeroConf service for {} on {}", key(), netService.getInterface().getHostAddress());
+                } catch (IOException ex) {
+                    log.debug("Publishing zeroConf service for {} with IOException {}", key(), ex.getLocalizedMessage(), ex);
+                }
             }
         }
     }
@@ -261,12 +268,17 @@ public class ZeroConfService {
      * Stop advertising the service.
      */
     public void stop() {
-        log.debug("Stopping ZeroConfService {}", key());
-        if (ZeroConfService.services().containsKey(key())) {
+        log.debug("Stopping ZeroConfService {}", this.key());
+        if (ZeroConfService.services().containsKey(this.key())) {
             for (JmDNS netService : ZeroConfService.netServices().values()) {
-                netService.unregisterService(_serviceInfo);
-                for (ZeroConfServiceListener listener : this._listeners) {
-                    listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                try {
+                    netService.unregisterService(this._serviceInfos.get(netService.getInterface()));
+                    this._serviceInfos.remove(netService.getInterface());
+                    for (ZeroConfServiceListener listener : this._listeners) {
+                        listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                    }
+                } catch (IOException ex) {
+                    log.error("Unable to stop ZeroConfService {}. {}", this.key(), ex.getLocalizedMessage());
                 }
             }
             ZeroConfService.services().remove(key());
@@ -295,16 +307,12 @@ public class ZeroConfService {
 
     /* return a list of published services */
     private static HashMap<String, ZeroConfService> services() {
-        if (_services == null) {
-            _services = new HashMap<String, ZeroConfService>();
-        }
         return _services;
     }
 
     /* return the JmDNS handler */
     public static HashMap<InetAddress, JmDNS> netServices() {  // package protected, so we only have one.
-        if (_netServices == null) {
-            _netServices = new HashMap<InetAddress, JmDNS>();
+        if (_netServices.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
             try {
                 for (InetAddress address : hostAddresses()) {
@@ -364,9 +372,9 @@ public class ZeroConfService {
     }
 
     /**
-     * Return the non-loopback ipv4 address of the host, or null if none found.
+     * A list of the non-loopback IP addresses of the host, or null if none found.
      *
-     * @return The last non-loopback IP address on the host.
+     * @return The non-loopback IP addresses on the host.
      */
     public static List<InetAddress> hostAddresses() {
         List<InetAddress> addrList = new ArrayList<InetAddress>();
@@ -412,7 +420,7 @@ public class ZeroConfService {
             if (!ZeroConfService._netServices.containsKey(nte.getInetAddress())) {
                 for (ZeroConfService service : ZeroConfService.allServices()) {
                     try {
-                        nte.getDNS().registerService(service.serviceInfo());
+                        nte.getDNS().registerService(service.addServiceInfo(nte.getDNS()));
                         for (ZeroConfServiceListener listener : service._listeners) {
                             listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
                         }
@@ -428,6 +436,7 @@ public class ZeroConfService {
             ZeroConfService._netServices.remove(nte.getInetAddress());
             nte.getDNS().unregisterAllServices();
             for (ZeroConfService service : ZeroConfService.allServices()) {
+                service._serviceInfos.remove(nte.getInetAddress());
                 for (ZeroConfServiceListener listener : service._listeners) {
                     listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
                 }
