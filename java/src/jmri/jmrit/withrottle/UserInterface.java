@@ -7,6 +7,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
+ * @author Randall Wood Copyright (C) 2013
  *	@version $Revision$
  */
 
@@ -22,7 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
@@ -49,10 +52,12 @@ import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
+import jmri.util.zeroconf.ZeroConfServiceEvent;
+import jmri.util.zeroconf.ZeroConfServiceListener;
 
 
 //	listen() has to run in a separate thread.
-public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager {
+public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -134,7 +139,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         JToolBar withrottleToolBar = new JToolBar();
         withrottleToolBar.setFloatable(false);
         withrottleToolBar.add(new StopAllButton());
-	withrottleToolBar.add(new LargePowerManagerButton());
+        withrottleToolBar.add(new LargePowerManagerButton());
         withrottleToolBar.add(rgsPanel);
         con.weightx = 0.5;
         con.ipadx = 0;
@@ -142,13 +147,13 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         con.gridy = 3;
         con.gridwidth = 2;
         panel.add(withrottleToolBar, con);
-/*
-        JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
-        con.weightx = 0;
-        con.gridx = 2;
-        con.gridy = 3;
-        panel.add(vLabel, con);
-*/
+        /*
+         JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
+         con.weightx = 0;
+         con.gridx = 2;
+         con.gridy = 3;
+         panel.add(vLabel, con);
+         */
         JLabel icon;
         java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
 
@@ -190,7 +195,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 //  Create the menu to use with WiThrottle window. Has to be before pack() for Windows.
 
         buildMenu();
-        
+
 //  Set window size & location
         this.setTitle("WiThrottle");
         this.pack();
@@ -239,8 +244,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         menu.add(new ControllerFilterAction());
 
         Action prefsAction = new apps.gui3.TabbedPreferencesAction(
-                            ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
-                            "WITHROTTLE");
+                ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
+                "WITHROTTLE");
 
         menu.add(prefsAction);
 
@@ -267,36 +272,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         if(log.isDebugEnabled()) log.debug("WiThrottle listening on TCP port: " + port);
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
+        service.addEventListener(this);
         service.publish();
-            
-        if (service.isPublished()) {
-        	Inet4Address hostAddr = null;
-            //Determine the first externally published IPv4 address for this system. This is presented in the GUI for
-            //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
-            try {
-            	for (Inet4Address addr : service.serviceInfo().getInet4Addresses()) {
-            		if (addr != null && !addr.isLoopbackAddress()) {
-            			hostAddr = addr;
-            			break;
-            		}
-            	}
-            	if (hostAddr != null) {
-            		portLabel.setText(hostAddr.getHostName());
-            		manualPortLabel.setText(hostAddr.getHostAddress() + ":" + port);
-            	} else {
-            		portLabel.setText(Inet4Address.getLocalHost().getHostName());
-            		manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port);
-            	}
-            } catch (Exception except) {
-            	log.error("Failed to determine this system's IP address: " + except.toString());
-        		portLabel.setText("null");
-        		manualPortLabel.setText("null:" + port);
-            }
-        } else {
-            log.error("JmDNS Failure");
-            portLabel.setText("failed to advertise service");
-        }
-        
+
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
@@ -339,10 +317,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public void notifyDeviceAddressChanged(DeviceServer device){
         withrottlesListModel.updateDeviceList(deviceList);
     }
-/**
- * Received an UDID, filter out any duplicate.
- * @param device
- */
+    /**
+     * Received an UDID, filter out any duplicate.
+     * @param device
+     */
     public void notifyDeviceInfoChanged(DeviceServer device){
 
         //  Filter duplicate connections
@@ -365,17 +343,17 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         DeviceServer device;
         int cnt = 0;
         if (deviceList.size()>0) do{
-            device = deviceList.get(0);
+                device = deviceList.get(0);
             if (device != null){
-            	device.closeThrottles(); //Tell device to stop its throttles, 
-                device.closeSocket();   //close its sockets
-                                        //close() will throw read error and it will be caught
-                                        //and drop the thread.
-                cnt++;
+                    device.closeThrottles(); //Tell device to stop its throttles, 
+                    device.closeSocket();   //close its sockets
+                    //close() will throw read error and it will be caught
+                    //and drop the thread.
+                    cnt++;
                 if (cnt>200){
-                    break;
+                        break;
+                    }
                 }
-            }
         }while (!deviceList.isEmpty());
         deviceList.clear();
         withrottlesListModel.updateDeviceList(deviceList);
@@ -393,7 +371,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                             disableServer();
                             return true;
                         }
-            };
+                    };
             jmri.InstanceManager.shutDownManagerInstance().register(task);
         }
     }
@@ -415,7 +393,44 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public String getSelectedRosterGroup() {
         return rosterGroupSelector.getSelectedRosterGroup();
     }
-    
+
+    @Override
+    public void serviceQueued(ZeroConfServiceEvent se) {
+        this.portLabel.setText(rb.getString("LabelPending"));
+        this.manualPortLabel.setText(null);
+    }
+
+    @Override
+    public void servicePublished(ZeroConfServiceEvent se) {
+        try {
+            try {
+                InetAddress addr = se.getAddress();
+                // most addresses are Inet6Address objects, 
+                if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                    this.portLabel.setText(addr.getHostName());
+                    this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
+                } else {
+                    this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
+                    this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
+                }
+            } catch (NullPointerException ex) {
+                log.error("Address is invalid: {}", ex.getLocalizedMessage());
+                this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
+                this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
+            }
+        } catch (UnknownHostException ex) {
+            log.error("Failed to determine this system's IP address: {}" + ex.getLocalizedMessage());
+            this.portLabel.setText(rb.getString("LabelUnknown")); // NOI18N
+            this.manualPortLabel.setText(null);
+        }
+    }
+
+    @Override
+    public void serviceUnpublished(ZeroConfServiceEvent se) {
+        this.portLabel.setText(rb.getString("LabelNone"));
+        this.manualPortLabel.setText(null);
+    }
+
 }
 
 //  listen() has to run in a separate thread.
@@ -434,7 +449,3 @@ class ServerThread extends Thread {
 
     static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
 }
-
- 	  	 
-
- 	  	 
