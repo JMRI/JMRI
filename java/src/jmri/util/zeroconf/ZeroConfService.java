@@ -311,26 +311,25 @@ public class ZeroConfService {
                     log.debug("Calling JmDNS.create({})", address.getHostAddress());
                     _netServices.put(address, JmDNS.create(address));
                 }
-
-                if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                    ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
-                        @Override
-                        public boolean execute() {
-                            ZeroConfService.stopAll();
-                            for (JmDNS service : ZeroConfService.netServices().values()) {
-                                try {
-                                    service.close();
-                                } catch (IOException e) {
-                                    log.debug("jmdns.close() returned IOException: {}", e.getMessage());
-                                }
-                            }
-                            return true;
-                        }
-                    };
-                    jmri.InstanceManager.shutDownManagerInstance().register(task);
-                }
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage());
+            }
+            if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+                ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
+                    @Override
+                    public boolean execute() {
+                        ZeroConfService.stopAll();
+                        for (JmDNS service : ZeroConfService.netServices().values()) {
+                            try {
+                                service.close();
+                            } catch (IOException e) {
+                                log.debug("jmdns.close() returned IOException: {}", e.getMessage());
+                            }
+                        }
+                        return true;
+                    }
+                };
+                jmri.InstanceManager.shutDownManagerInstance().register(task);
             }
             hasNetServices = true;
         }
