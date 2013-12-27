@@ -189,6 +189,8 @@ public class Track {
 	 */
 	public Track copyTrack(String newName, Location newLocation) {
 		Track newTrack = newLocation.addTrack(newName, getTrackType());
+		newTrack.clearTypeNames();		// all types are accepted by a new track
+		
 		newTrack.setAlternateTrack(getAlternateTrack());
 		newTrack.setBlockCarsEnabled(isBlockCarsEnabled());
 		newTrack.setComment(getComment());
@@ -647,6 +649,10 @@ public class Track {
 		for (int i = 0; i < types.length; i++)
 			if (!_typeList.contains(types[i]))
 				_typeList.add(types[i]);
+	}
+	
+	private void clearTypeNames() {
+		_typeList.clear();
 	}
 
 	public void addTypeName(String type) {
