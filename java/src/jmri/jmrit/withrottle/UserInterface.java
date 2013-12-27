@@ -1,17 +1,13 @@
-
 package jmri.jmrit.withrottle;
 
-
 /**
- *	UserInterface.java
- *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
+ * UserInterface.java Create a window for WiThrottle information, advertise
+ * service, and create a thread for it to run in.
  *
- *	@author Brett Hoffman   Copyright (C) 2009, 2010
+ * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
- *	@version $Revision$
+ * @version $Revision$
  */
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GridBagConstraints;
@@ -55,7 +51,6 @@ import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
 
-
 //	listen() has to run in a separate thread.
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
@@ -75,17 +70,18 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     String rosterGroupSelectorPreferencesName = this.getClass().getName() + ".rosterGroupSelector";
     RosterGroupComboBox rosterGroupSelector = new RosterGroupComboBox(userPreferences.getComboBoxLastSelection(rosterGroupSelectorPreferencesName));
 
-//	Server iVars
+    // Server iVars
     int port;
     ZeroConfService service;
     boolean isListen = true;
     ServerSocket socket = null;
     ArrayList<DeviceServer> deviceList;
 
-
-    UserInterface(){
+    UserInterface() {
         super(false, false);
-        if (deviceList == null) deviceList = new ArrayList<DeviceServer>(1);
+        if (deviceList == null) {
+            deviceList = new ArrayList<DeviceServer>(1);
+        }
 
         createWindow();
 
@@ -93,15 +89,12 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         createServerThread();
     }	//	End of constructor
 
-
-    public void createServerThread(){
+    public void createServerThread() {
         ServerThread s = new ServerThread(this);
         s.start();
     }
 
-
-
-    protected void createWindow(){
+    protected void createWindow() {
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints con = new GridBagConstraints();
@@ -165,22 +158,16 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             con.gridy = 0;
             con.ipady = 5;
             con.gridheight = 2;
-            panel.add(icon,con);
+            panel.add(icon, con);
         }
 
-
-
-
-
 //  Add a list of connected devices and the address they are set to.
-
         withrottlesListModel = new WiThrottlesListModel(deviceList);
         withrottlesList = new JTable(withrottlesListModel);
         withrottlesList.setPreferredScrollableViewportSize(new Dimension(300, 80));
 
         withrottlesList.setRowHeight(20);
         scrollTable = new JScrollPane(withrottlesList);
-
 
         con.gridx = 0;
         con.gridy = 4;
@@ -191,9 +178,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         con.gridwidth = 3;
         panel.add(scrollTable, con);
 
-		
 //  Create the menu to use with WiThrottle window. Has to be before pack() for Windows.
-
         buildMenu();
 
 //  Set window size & location
@@ -204,7 +189,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         Rectangle screenRect = new Rectangle(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 
 //  Centers on top edge of screen
-        this.setLocation((screenRect.width/2) - (this.getWidth()/2), 0);
+        this.setLocation((screenRect.width / 2) - (this.getWidth() / 2), 0);
 
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
@@ -212,25 +197,27 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
         rosterGroupSelector.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String)((JComboBox) e.getSource()).getSelectedItem());
+                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox) e.getSource()).getSelectedItem());
             }
         });
     }
 
-    protected void buildMenu(){
+    protected void buildMenu() {
         this.setJMenuBar(new JMenuBar());
 
         JMenu menu = new JMenu(rb.getString("MenuMenu"));
         serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
         serverOnOff.addActionListener(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent event) {
-                if (isListen){	//	Stop server
+                if (isListen) {	//	Stop server
                     disableServer();
                     serverOnOff.setText(rb.getString("MenuMenuStart"));
                     portLabel.setText(rb.getString("LabelNone"));
                     manualPortLabel.setText(null);
-                }else{	//	Restart server
+                } else {	//	Restart server
                     serverOnOff.setText(rb.getString("MenuMenuStop"));
                     isListen = true;
 
@@ -255,29 +242,31 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
     }
 
-    public void listen(){
+    public void listen() {
         int socketPort = 0;
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()){
+        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()) {
             socketPort = Integer.parseInt(WiThrottleManager.withrottlePreferencesInstance().getPort());
         }
 
-        try{	//Create socket on available port
+        try {	//Create socket on available port
             socket = new ServerSocket(socketPort);
-        } catch(IOException e1){
+        } catch (IOException e1) {
             log.error("New ServerSocket Failed during listen()");
             return;
         }
 
         port = socket.getLocalPort();
-        if(log.isDebugEnabled()) log.debug("WiThrottle listening on TCP port: " + port);
+        if (log.isDebugEnabled()) {
+            log.debug("WiThrottle listening on TCP port: " + port);
+        }
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
         service.addEventListener(this);
         service.publish();
 
-        while (isListen){ //Create DeviceServer threads
+        while (isListen) { //Create DeviceServer threads
             DeviceServer device;
-            try{
+            try {
                 log.info("Creating new WiThrottle DeviceServer(socket) on port " + port + ", waiting for incoming connection...");
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
@@ -285,18 +274,19 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                 device.addDeviceListener(this);
                 log.debug("Starting DeviceListener thread");
                 t.start();
-            } catch (IOException e3){
-                if (isListen)log.error("Listen Failed on port " + port);
+            } catch (IOException e3) {
+                if (isListen) {
+                    log.error("Listen Failed on port " + port);
+                }
                 return;
             }
 
         }
 
-
     }
 
-
-    public void notifyDeviceConnected(DeviceServer device){
+    @Override
+    public void notifyDeviceConnected(DeviceServer device) {
 
         deviceList.add(device);
         numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
@@ -304,9 +294,14 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         pack();
     }
 
-    public void notifyDeviceDisconnected(DeviceServer device){
-        if (deviceList.size()<1) return;
-        if (!deviceList.remove(device)) return;
+    @Override
+    public void notifyDeviceDisconnected(DeviceServer device) {
+        if (deviceList.size() < 1) {
+            return;
+        }
+        if (!deviceList.remove(device)) {
+            return;
+        }
 
         numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
         withrottlesListModel.updateDeviceList(deviceList);
@@ -314,20 +309,24 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         pack();
     }
 
-    public void notifyDeviceAddressChanged(DeviceServer device){
+    @Override
+    public void notifyDeviceAddressChanged(DeviceServer device) {
         withrottlesListModel.updateDeviceList(deviceList);
     }
+
     /**
      * Received an UDID, filter out any duplicate.
+     *
      * @param device
      */
-    public void notifyDeviceInfoChanged(DeviceServer device){
+    @Override
+    public void notifyDeviceInfoChanged(DeviceServer device) {
 
         //  Filter duplicate connections
-        if ((device.getUDID() != null) && (deviceList.size() > 0)){
-            for (int i = 0;i < deviceList.size();i++){
+        if ((device.getUDID() != null) && (deviceList.size() > 0)) {
+            for (int i = 0; i < deviceList.size(); i++) {
                 DeviceServer listDevice = deviceList.get(i);
-                if ((device != listDevice) && (listDevice.getUDID() != null) && (listDevice.getUDID().equals(device.getUDID()))){
+                if ((device != listDevice) && (listDevice.getUDID() != null) && (listDevice.getUDID().equals(device.getUDID()))) {
                     //  If in here, array contains duplicate of a device
                     log.debug("Has duplicate of device, clearing old one.");
                     listDevice.closeThrottles();
@@ -339,22 +338,24 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
 //	Clear out the deviceList array and close each device thread
-    private void stopDevices(){
+    private void stopDevices() {
         DeviceServer device;
         int cnt = 0;
-        if (deviceList.size()>0) do{
+        if (deviceList.size() > 0) {
+            do {
                 device = deviceList.get(0);
-            if (device != null){
+                if (device != null) {
                     device.closeThrottles(); //Tell device to stop its throttles, 
                     device.closeSocket();   //close its sockets
                     //close() will throw read error and it will be caught
                     //and drop the thread.
                     cnt++;
-                if (cnt>200){
+                    if (cnt > 200) {
                         break;
                     }
                 }
-        }while (!deviceList.isEmpty());
+            } while (!deviceList.isEmpty());
+        }
         deviceList.clear();
         withrottlesListModel.updateDeviceList(deviceList);
         numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
@@ -362,34 +363,34 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
     private jmri.implementation.AbstractShutDownTask task = null;
+
     @Override
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            task =
-                    new jmri.implementation.AbstractShutDownTask(getTitle()){
-                        public boolean execute() {
-                            disableServer();
-                            return true;
-                        }
-                    };
+        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+            task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
+                @Override
+                public boolean execute() {
+                    disableServer();
+                    return true;
+                }
+            };
             jmri.InstanceManager.shutDownManagerInstance().register(task);
         }
     }
 
-
-    private void disableServer(){
+    private void disableServer() {
         isListen = false;
         stopDevices();
-        try{
+        try {
             socket.close();
             log.debug("UI socket in ServerThread just closed");
             service.stop();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("socket in ServerThread won't close");
-            return;
         }
     }
 
+    @Override
     public String getSelectedRosterGroup() {
         return rosterGroupSelector.getSelectedRosterGroup();
     }
@@ -435,9 +436,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
 //  listen() has to run in a separate thread.
 class ServerThread extends Thread {
+
     UserInterface UI;
 
-    ServerThread(UserInterface _UI){
+    ServerThread(UserInterface _UI) {
         UI = _UI;
     }
 
