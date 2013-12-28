@@ -393,16 +393,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	private void runCustomSwitchLists() {
 		if (!Setup.isGenerateCsvSwitchListEnabled())
 			return;
-		// Processes the CSV Manifest files using an external custom program.
-		if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
-			log.warn("Manifest creator file not found!, directory name: " + TrainCustomSwitchList.getDirectoryName()
-					+ ", file name: " + TrainCustomSwitchList.getFileName()); // NOI18N
-			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
-						TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }), Bundle
-					.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
-			return;
-		}
 		log.debug("run custom switch lists");
 		TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
@@ -415,8 +405,19 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 					log.warn("CSV switch list file was not created for location " + locationName);
 					return;
 				}
-				TrainCustomSwitchList.addCVSFile(csvFile);
+				if (TrainCustomSwitchList.manifestCreatorFileExists())
+					TrainCustomSwitchList.addCVSFile(csvFile);
 			}
+		}
+		// Processes the CSV Manifest files using an external custom program.
+		if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
+			log.warn("Manifest creator file not found!, directory name: " + TrainCustomSwitchList.getDirectoryName()
+					+ ", file name: " + TrainCustomSwitchList.getFileName()); // NOI18N
+			JOptionPane.showMessageDialog(this, MessageFormat.format(
+					Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
+						TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }), Bundle
+					.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		// Now run the user specified custom Switch List processor program
 		TrainCustomSwitchList.process();
