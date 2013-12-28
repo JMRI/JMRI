@@ -806,6 +806,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);
 			TrainCustomManifest.load(options);
+			TrainCustomSwitchList.load(options);
 			Element e = options.getChild(Xml.TRAIN_OPTIONS);
 			Attribute a;
 			if (e != null) {
@@ -922,6 +923,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 		
 		TrainCustomManifest.store(options);	// save custom manifest elements
+		TrainCustomSwitchList.store(options);	// save custom manifest elements
 		
 		root.addContent(options);
 

@@ -131,6 +131,9 @@ public class Xml {
 	static final String DIRECTORY = "directory"; // NOI18N
 	static final String COMMON_FILE = "commonFile"; // NOI18N
 	
+	// SwitchListCreator
+	static final String SWITCHLIST_CREATOR = "switchlistCreator"; // NOI18N
+	
 	// TrainManifestText.java
 	static final String MANIFEST_TEXT_STRINGS = "manifestTextStrings"; // NOI18N
 	static final String MANIFEST_FOR_TRAIN = "manifestForTrain"; // NOI18N

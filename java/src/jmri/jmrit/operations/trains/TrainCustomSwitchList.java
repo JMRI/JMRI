@@ -10,12 +10,12 @@ import org.jdom.Element;
 import jmri.jmrit.operations.FileHelper;
 import jmri.util.SystemType;
 
-public class TrainCustomManifest {
+public class TrainCustomSwitchList {
 
 	// To start, all files will be created inside of
-	// ../JMRI/operations/csvManifests
+	// ../JMRI/operations/csvSwitchList
 
-	private static String directoryName = "csvManifests"; // NOI18N
+	private static String directoryName = "csvSwitchLists"; // NOI18N
 	private static String mcAppName = "MC4JMRI.xls"; // NOI18N
 	private static final String mcAppArg = ""; // NOI18N
 
@@ -126,7 +126,7 @@ public class TrainCustomManifest {
 	}
 
 	public static void load(Element options) {
-		Element mc = options.getChild(Xml.MANIFEST_CREATOR);
+		Element mc = options.getChild(Xml.SWITCHLIST_CREATOR);
 		if (mc != null) {
 			Attribute a;
 			Element directory = mc.getChild(Xml.DIRECTORY);
@@ -142,7 +142,7 @@ public class TrainCustomManifest {
 	}
 
 	public static void store(Element options) {
-		Element mc = new Element(Xml.MANIFEST_CREATOR);
+		Element mc = new Element(Xml.SWITCHLIST_CREATOR);
 		Element file = new Element(Xml.RUN_FILE);
 		file.setAttribute(Xml.NAME, getFileName());
 		Element directory = new Element(Xml.DIRECTORY);
@@ -155,5 +155,5 @@ public class TrainCustomManifest {
 		options.addContent(mc);
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainCustomSwitchList.class.getName());
 }
