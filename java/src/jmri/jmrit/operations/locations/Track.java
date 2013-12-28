@@ -169,6 +169,7 @@ public class Track {
 	public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
 	public static final String SCHEDULE_MODE_CHANGED_PROPERTY = "trackScheduleMode"; // NOI18N
 	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "trackScheduleId"; // NOI18N
+	public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder";
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -1316,7 +1317,7 @@ public class Track {
 	public void setServiceOrder(String order) {
 		String old = _order;
 		_order = order;
-		setDirtyAndFirePropertyChange("trackServiceOrder", old, order); // NOI18N
+		setDirtyAndFirePropertyChange(SERVICE_ORDER_CHANGED_PROPERTY, old, order); // NOI18N
 	}
 
 	/**

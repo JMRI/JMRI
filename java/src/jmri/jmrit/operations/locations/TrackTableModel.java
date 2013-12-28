@@ -363,8 +363,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	}
 
 	public void dispose() {
-		if (log.isDebugEnabled())
-			log.debug("dispose");
+//		if (log.isDebugEnabled())
+//			log.debug("dispose");
 		removePropertyChangeTracks();
 		if (_location != null)
 			_location.removePropertyChangeListener(this);

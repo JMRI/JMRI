@@ -1088,12 +1088,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	// set the service order
 	private void updateCarOrder() {
-		orderNormal.setSelected(true);
 		if (_track != null) {
-			if (_track.getServiceOrder().equals(Track.FIFO))
-				orderFIFO.setSelected(true);
-			if (_track.getServiceOrder().equals(Track.LIFO))
-				orderLIFO.setSelected(true);
+			orderNormal.setSelected(_track.getServiceOrder().equals(Track.NORMAL));
+			orderFIFO.setSelected(_track.getServiceOrder().equals(Track.FIFO));
+			orderLIFO.setSelected(_track.getServiceOrder().equals(Track.LIFO));
 		}
 	}
 
@@ -1148,6 +1146,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(Track.PICKUP_CHANGED_PROPERTY)) {
 			updatePickupOptions();
+		}
+		if (e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY)) {
+			updateCarOrder();
 		}
 	}
 
