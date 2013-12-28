@@ -2,8 +2,6 @@ package jmri.web.server;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
