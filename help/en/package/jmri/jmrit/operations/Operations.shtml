@@ -2526,10 +2526,10 @@
    <H3>Train Departure Time</H3>
 
    Select the time that this train will depart the first location in its route. You can use the
-   departure time to sort your trains in the order that you want them built when using the <A
-    HREF="#BuildingTrains">Build Selected Trains</A> button. Note that if the train's route has a
-   departure time for the first location, the route's departure time is used and the train departure
-   time selection is disabled.
+   departure time to sort your trains in the order that you want them built when using the
+   <A HREF="#BuildingTrains">Build</A> button at the bottom of the Trains window. Note that if the
+   train's route has a departure time for the first location, the route's departure time is used and
+   the train departure time selection is disabled.
 
    <H3>Train Rolling Stock</H3>
 

@@ -152,9 +152,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		// The button editor for the table does a repaint of the button cells after the setValueAt code
 		// is called which then returns the focus back onto the table. We need the edit frame
 		// in focus.
-		if (focusLef) {
-			focusLef = false;
+
+		if (lef != null) {
 			lef.requestFocus();
+			lef = null;
 		}
 		if (ymf != null) {
 			ymf.requestFocus();
@@ -231,18 +232,27 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	}
     }
     
-    boolean focusLef = false;
     LocationEditFrame lef = null;
-    private synchronized void editLocation (int row){
-    	log.debug("Edit location");
-    	if (lef != null)
-    		lef.dispose();
-    	lef = new LocationEditFrame();
-    	Location loc = manager.getLocationById(sysList.get(row));
-     	lef.setTitle(Bundle.getMessage("TitleLocationEdit"));
-    	lef.initComponents(loc);
-    	focusLef = true;
-   }
+    LocationEditFrame lef1 = null;
+    LocationEditFrame lef2 = null;
+
+	private synchronized void editLocation(int row) {
+		log.debug("Edit location");
+		Location loc = manager.getLocationById(sysList.get(row));
+		if (lef1 != null && (lef2 == null || !lef2.isVisible())) {
+			if (lef2 != null)
+				lef2.dispose();
+			lef2 = new LocationEditFrame();
+			lef2.initComponents(loc);
+			lef = lef2;
+		} else {
+			if (lef1 != null)
+				lef1.dispose();
+			lef1 = new LocationEditFrame();
+			lef1.initComponents(loc);
+			lef = lef1;
+		}
+	}
    
     YardmasterFrame ymf = null;
     private synchronized void launchYardmaster (int row){
@@ -280,8 +290,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-       	if (lef != null)
-    		lef.dispose();
+       	if (lef1 != null)
+    		lef1.dispose();
+       	if (lef2 != null)
+    		lef2.dispose();
         manager.removePropertyChangeListener(this);
         removePropertyChangeLocations();
     }
