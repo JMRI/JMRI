@@ -73,8 +73,11 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if ("json".equals(request.getParameter("format"))) {
             response.sendRedirect("/json/panels");
+        } else if ("xml".equals(request.getParameter("format"))) {
+            response.sendRedirect("/xmlio/list?type=panel");
+        } else {
+            response.sendRedirect("/xmlio/list?type=panel");
         }
-        response.sendRedirect("/xmlio/list?type=panel");
     }
 
     protected String getPanel(String name, boolean useXML) {
