@@ -289,9 +289,25 @@ public class ZeroConfService {
      * Stop advertising all services.
      */
     public static void stopAll() {
+        ZeroConfService.stopAll(false);
+    }
+
+    private static void stopAll(final boolean close) {
         log.debug("Stopping all ZeroConfServices");
-        for (JmDNS netService : ZeroConfService.netServices().values()) {
-            netService.unregisterAllServices();
+        for (final JmDNS netService : ZeroConfService.netServices().values()) {
+            new Thread() {
+                @Override
+                public void run() {
+                    netService.unregisterAllServices();
+                    if (close) {
+                        try {
+                            netService.close();
+                        } catch (IOException ex) {
+                            log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
+                        }
+                    }
+                }
+            }.start();
         }
         ZeroConfService.services().clear();
     }
@@ -326,14 +342,7 @@ public class ZeroConfService {
                 ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
                     @Override
                     public boolean execute() {
-                        ZeroConfService.stopAll();
-                        for (JmDNS service : ZeroConfService.netServices().values()) {
-                            try {
-                                service.close();
-                            } catch (IOException e) {
-                                log.debug("jmdns.close() returned IOException: {}", e.getMessage());
-                            }
-                        }
+                        ZeroConfService.stopAll(true);
                         return true;
                     }
                 };
@@ -372,7 +381,8 @@ public class ZeroConfService {
     }
 
     /**
-     * A list of the non-loopback IP addresses of the host, or null if none found.
+     * A list of the non-loopback IP addresses of the host, or null if none
+     * found.
      *
      * @return The non-loopback IP addresses on the host.
      */
