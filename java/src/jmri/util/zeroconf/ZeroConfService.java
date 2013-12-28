@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.jmdns.JmDNS;
+import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
@@ -73,6 +74,7 @@ public class ZeroConfService {
     private static boolean hasNetServices = false;
     private final List<ZeroConfServiceListener> _listeners = new ArrayList<ZeroConfServiceListener>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
+    private static final NetworkListener networkListener = new NetworkListener();
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
@@ -229,6 +231,7 @@ public class ZeroConfService {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
             }
             if (!ZeroConfService.hasNetServices) {
+                JmmDNS.Factory.getInstance().addNetworkTopologyListener(ZeroConfService.networkListener);
                 ZeroConfService.netServices();
                 (new Timer()).schedule(new QueueTask(this), 500);
                 return;
@@ -343,6 +346,7 @@ public class ZeroConfService {
                     @Override
                     public boolean execute() {
                         ZeroConfService.stopAll(true);
+                        JmmDNS.Factory.getInstance().removeNetworkTopologyListener(ZeroConfService.networkListener);
                         return true;
                     }
                 };
@@ -428,8 +432,10 @@ public class ZeroConfService {
         @Override
         public void inetAddressAdded(NetworkTopologyEvent nte) {
             if (!ZeroConfService._netServices.containsKey(nte.getInetAddress())) {
+                log.debug("Adding address {}", nte.getInetAddress().getHostAddress());
                 for (ZeroConfService service : ZeroConfService.allServices()) {
                     try {
+                        log.debug("Publishing zeroConf service for {} on {}", service.key(), nte.getInetAddress().getHostAddress());
                         nte.getDNS().registerService(service.addServiceInfo(nte.getDNS()));
                         for (ZeroConfServiceListener listener : service._listeners) {
                             listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
@@ -443,6 +449,7 @@ public class ZeroConfService {
 
         @Override
         public void inetAddressRemoved(NetworkTopologyEvent nte) {
+            log.debug("Removing address {}", nte.getInetAddress().toString());
             ZeroConfService._netServices.remove(nte.getInetAddress());
             nte.getDNS().unregisterAllServices();
             for (ZeroConfService service : ZeroConfService.allServices()) {
