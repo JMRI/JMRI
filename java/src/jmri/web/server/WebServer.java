@@ -93,6 +93,8 @@ public final class WebServer implements LifeCycle.Listener {
                     ServletHolder holder = context.addServlet(DefaultServlet.class, "/*"); // NOI18N
                     holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getProperty(path))); // NOI18N
                     holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
+                } else if (services.getProperty(path).equals("redirectHandler")) { // NOI18N
+                    context.addServlet("jmri.web.servlet.RedirectionServlet", ""); // NOI18N
                 } else {
                     context.addServlet(services.getProperty(path), "/*"); // NOI18N
                 }
