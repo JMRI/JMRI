@@ -51,7 +51,7 @@ public class JsonServlet extends WebSocketServlet {
     private static final long serialVersionUID = -671593634343578915L;
     private ObjectMapper mapper;
     private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
-    private static Logger log = LoggerFactory.getLogger(JsonServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
 
     public JsonServlet() {
         super();
@@ -68,7 +68,7 @@ public class JsonServlet extends WebSocketServlet {
                 for (JsonWebSocket socket : sockets) {
                     try {
                         socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put(TYPE, GOODBYE)));
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }
                     socket.wsConnection.close();
@@ -97,6 +97,9 @@ public class JsonServlet extends WebSocketServlet {
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
      * note that data will vary for each type
+     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws java.io.IOException if an input or output error is detected when the servlet handles the GET request
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -453,7 +456,7 @@ public class JsonServlet extends WebSocketServlet {
             try {
                 log.debug("Sending hello");
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
-            } catch (Exception e) {
+            } catch (IOException e) {
                 log.warn("Error openning WebSocket:\n{}", e.getMessage(), e);
                 this.wsConnection.close();
                 sockets.remove(this);
@@ -471,7 +474,7 @@ public class JsonServlet extends WebSocketServlet {
         public void onMessage(String string) {
             try {
                 this.handler.onMessage(string);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 log.error("Error on WebSocket message:\n{}", e.getMessage(), e);
                 this.wsConnection.close();
                 sockets.remove(this);
