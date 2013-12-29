@@ -64,7 +64,6 @@ public class TrainBuilder extends TrainCommon {
 	List<String> routeList; // list of locations from departure to termination served by this train
 	Hashtable<String, Integer> numOfBlocks; // Number of blocks of cars departing staging.
 	int completedMoves; // the number of pick up car moves for a location
-	double maxWeight = 0; // the maximum weight of cars in train
 	int reqNumOfMoves; // the requested number of car moves for a location
 	Location departLocation; // train departs this location
 	Track departStageTrack; // departure staging track (null if not staging)
@@ -2043,9 +2042,6 @@ public class TrainBuilder extends TrainCommon {
 				r.setTrainLength(r.getTrainLength() + length); // couplers are included
 				r.setTrainWeight(r.getTrainWeight() + weightTons);
 			}
-			if (r.getTrainWeight() > maxWeight) {
-				maxWeight = r.getTrainWeight(); // used for AUTO engines
-			}
 		}
 	}
 
@@ -2652,12 +2648,15 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { car.toString(), car.getLoadName() }));
 			tracks = locationManager.getTracks(Track.STAGING);
 			log.debug("Found " + tracks.size() + " staging tracks");
-			// Only try routing to a staging location once
+			// list of locations that can't be reached by the router
 			List<Location> locations = new ArrayList<Location>();
-			for (int i = 0; i < tracks.size(); i++) {
-				Track track = tracks.get(i);
+			while (tracks.size() > 0) {
+				// pick a track randomly
+				int rnd = (int) (Math.random() * tracks.size());
+				Track track = tracks.get(rnd);
+				tracks.remove(track);
 				log.debug("Staging track (" + track.getLocation().getName() + ", " + track.getName() + ")");
-				if (track.getLocation() == car.getLocation())
+				if (track.getLocation() == car.getLocation())	
 					continue;
 				if (locations.contains(track.getLocation()))
 					continue;
@@ -2798,11 +2797,18 @@ public class TrainBuilder extends TrainCommon {
 			return true;
 		List<Track> tracks = locationManager.getTracks(Track.STAGING);
 		log.debug("Found " + tracks.size() + " staging tracks for load generation");
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = tracks.get(i);
+		// list of locations that can't be reached by the router
+		List<Location> locations = new ArrayList<Location>();
+		while (tracks.size() > 0) {
+			// pick a track randomly
+			int rnd = (int) (Math.random() * tracks.size());
+			Track track = tracks.get(rnd);
+			tracks.remove(track);
 			log.debug("Staging track (" + track.getLocation().getName() + ", " + track.getName() + ")");
 			// find a staging track that isn't at the departure or terminal
 			if (track.getLocation() == departLocation || track.getLocation() == terminateLocation)
+				continue;
+			if (locations.contains(track.getLocation()))
 				continue;
 			// the following method sets the load generated from staging boolean
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
@@ -2820,6 +2826,7 @@ public class TrainBuilder extends TrainCommon {
 				car.setLoadGeneratedFromStaging(false);
 				car.setFinalDestination(null);
 				car.updateKernel();
+				locations.add(track.getLocation()); // couldn't route to this staging location
 			}
 		}
 		return false;
