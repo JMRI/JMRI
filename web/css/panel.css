@@ -1,0 +1,125 @@
+/* stylesheet for specific needs of showPanel.html */
+
+body {
+	font-family: sans-serif;
+}
+.rotatable{
+	-webkit-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
+	transform-origin: 0% 0%;
+}
+.clickable:hover {
+  margin: -1px;
+  border: solid 1px lightGray;
+  cursor: pointer;
+}
+.clickable a {
+  text-decoration: none;
+}
+.clickable :link{
+	color: inherit;
+	font-weight: normal;
+}
+.clickable :link:hover, .clickable :visited:hover {
+	color: inherit;
+}
+.positionablelabel.text {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+	white-space: nowrap;
+}
+
+.positionablelabel.text.hidden,
+.sensoricon.hidden,
+.signalheadicon.hidden {
+	display: none;
+}
+.locoicon, .trainicon {
+  padding-left: 6px;
+  min-width:  60px;
+  min-height: 20px;
+  width:  60px;
+  background-repeat:no-repeat;
+/* vertical-align: middle; */
+/* text-align: center; */
+  line-height: 20px;
+}
+div#panelArea {
+  border-right: solid 1px #888;
+  border-bottom: solid 1px #888;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #ccc;
+}
+div#panelFooter {
+	margin: 8px;
+}
+
+div#panelFooter a {
+	padding: 8px 8px 4px 8px;
+	text-decoration: none;
+	font-style: italic;
+}
+
+div#panelFooter a:hover {
+	text-decoration: underline;
+}
+
+div#panelFooter span.info {
+	font-style: italic;
+	font-size: 80%;
+}
+
+div.MemoryInputIconXml, div.MemorySpinnerIconXml {
+	padding: 1px 1em 1px 1em;
+	min-width: 4em;
+	border:  solid black 1px;
+	text-align: center;
+}
+
+div.fastclock>div.clocktext {
+	position: relative;
+	top:      55%;
+	margin-right: auto;
+	margin-left:  auto;
+	text-align: center;
+	font-weight:  bold;
+	font-family:  serif;
+}
+div.fastclock>img.clockface {
+    position: absolute;
+    top:	0;
+    left: 	0;
+    z-index: -1;
+    width: 100%; /*so it will grow with scale */
+}
+div.fastclock>img.clockhourhand, div.fastclock>img.clockminutehand {
+	position: absolute;
+	top: 	0;
+	left: 	0;
+    width: 100%; /*so they will grow with scale */ 
+}
+div.fastclock>img.clockminutehand {
+  z-index: 2;
+}
+div.fastclock>img.clockhourhand {
+  z-index: 1;
+}
+.modal {
+    display:    none;
+    position:   fixed;
+    font-size:	2em;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    padding: 	50px;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .90 ); 
