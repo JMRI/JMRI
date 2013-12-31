@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import javax.jmdns.JmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ZeroConfClient {
 
@@ -19,7 +19,7 @@ public class ZeroConfClient {
     public void startServiceListener(String service) {
         log.debug("StartServiceListener called for service: " + service);
         if (mdnsServiceListener == null) {
-            mdnsServiceListener = new NetworkServiceListener(service,this);
+            mdnsServiceListener = new NetworkServiceListener(service, this);
         }
         for (JmDNS server : ZeroConfService.netServices().values()) {
             server.addServiceListener(service, mdnsServiceListener);
@@ -51,7 +51,9 @@ public class ZeroConfClient {
     public ServiceInfo getService(String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
-               if(infos!=null) return infos[0];
+            if (infos != null) {
+                return infos[0];
+            }
         }
         return null;
     }
@@ -64,18 +66,18 @@ public class ZeroConfClient {
      * @return JmDNS service entry for the first service of a particular type on
      * the specified host..
      */
-    public ServiceInfo getServiceOnHost(String service,String hostname) {
+    public ServiceInfo getServiceOnHost(String service, String hostname) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
-                if(info.getServer().equals(hostname))
-                      return info;
+                if (info.getServer().equals(hostname)) {
+                    return info;
+                }
             }
         }
         return null;
     }
 
-    
     /*
      * request the first service of a particular type
      * with a particular service name.
@@ -84,36 +86,38 @@ public class ZeroConfClient {
      * @return JmDNS service entry for the first service of a particular type on
      * the specified host..
      */
-    public ServiceInfo getServicebyAdName(String service,String adName) {
+    public ServiceInfo getServicebyAdName(String service, String adName) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
                 log.debug("Found Name: " + info.getQualifiedName());
-                if(info.getQualifiedName().equals(adName))
-                      return info;
+                if (info.getQualifiedName().equals(adName)) {
+                    return info;
+                }
             }
         }
         return null;
     }
 
     public String[] getHostList(String service) {
-        ArrayList<String> hostlist= new ArrayList<String>();
+        ArrayList<String> hostlist = new ArrayList<String>();
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
                 hostlist.add(info.getServer());
             }
         }
-        return ((String[])hostlist.toArray());
+        return ((String[]) hostlist.toArray());
     }
 
     public class NetworkServiceListener implements ServiceListener, NetworkTopologyListener {
 
-        private String service;
-        private ZeroConfClient parent;
+        private final String service;
+        private final ZeroConfClient client;
 
-        protected NetworkServiceListener(String service, ZeroConfClient parent) {
+        protected NetworkServiceListener(String service, ZeroConfClient client) {
             this.service = service;
+            this.client = client;
         }
 
         @Override
@@ -129,14 +133,13 @@ public class ZeroConfClient {
         @Override
         public void serviceAdded(ServiceEvent se) {
             log.debug("Service added: {}", se.getInfo().toString());
-            // notify the parent when a service is added.
-            synchronized(parent){
-               try {
-                  parent.notifyAll();
-               } catch(java.lang.IllegalMonitorStateException imse ) {
-                   log.error("Error notifying waiting listeners: " + 
-                              imse.getCause());
-               }
+            // notify the client when a service is added.
+            synchronized (client) {
+                try {
+                    client.notifyAll();
+                } catch (java.lang.IllegalMonitorStateException imse) {
+                    log.error("Error notifying waiting listeners: {}", imse.getCause());
+                }
             }
         }
 
