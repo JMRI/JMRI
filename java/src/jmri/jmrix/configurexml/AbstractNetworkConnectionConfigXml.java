@@ -44,13 +44,21 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         // invocation of the program can then continue.
 
         storeCommon(e, adapter);
-        if (adapter.getHostName()!=null)
-            e.setAttribute("address", adapter.getHostName());
-        else e.setAttribute("address", rb.getString("noneSelected"));
 
-        if (adapter.getPort()!=0)
-            e.setAttribute("port", ""+adapter.getPort());
-        else e.setAttribute("port", rb.getString("noneSelected"));
+        if (adapter.getMdnsConfigure()==true)
+            e.setAttribute("mdnsConfigure","true");
+        else {
+            e.setAttribute("mdnsConfigure","false");
+            // write the hostname and port only if we are not using automatic
+            // configuration.
+            if (adapter.getHostName()!=null)
+               e.setAttribute("address", adapter.getHostName());
+            else e.setAttribute("address", rb.getString("noneSelected"));
+
+            if (adapter.getPort()!=0)
+               e.setAttribute("port", ""+adapter.getPort());
+            else e.setAttribute("port", rb.getString("noneSelected"));
+        }
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -75,19 +83,36 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         getInstance();
         // configure port name
 
-        String hostName=null;
+        boolean mdnsConfig = false;
         try {
-            hostName = e.getAttribute("address").getValue();
+           mdnsConfig= (e.getAttribute("mdnsConfigure").getValue().equals("true"));
         } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
         }
-        adapter.setHostName(hostName);
+        adapter.setMdnsConfigure(mdnsConfig);
+
+        if(mdnsConfig) {
+           // get the host name and port number
+           // via mdns
+           adapter.autoConfigure();
+
+        } else {
+           // get the host name and port number
+           // via parameters.
+
+           String hostName=null;
+           try {
+               hostName = e.getAttribute("address").getValue();
+           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           }
+           adapter.setHostName(hostName);
         
-        try {
-            int port = e.getAttribute("port").getIntValue();
-            adapter.setPort(port);
-        } catch (org.jdom.DataConversionException ex) {
-            log.warn("Could not parse port attribute");
-        } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           try {
+               int port = e.getAttribute("port").getIntValue();
+               adapter.setPort(port);
+           } catch (org.jdom.DataConversionException ex) {
+               log.warn("Could not parse port attribute");
+           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           }
         }
         
         loadCommon(e, adapter);

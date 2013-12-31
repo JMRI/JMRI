@@ -50,4 +50,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 	portField.setEnabled(false); // we can't change this now.
 	//opt1Box.setEnabled(false); // we can't change this now.
     }
+
+    @Override
+    public boolean isHostNameAdvanced() { return showAutoConfig.isSelected(); }
+    
+    @Override
+    public boolean isAutoConfigPossible() { return true; }
+
 }

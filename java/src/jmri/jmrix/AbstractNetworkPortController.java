@@ -116,6 +116,31 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         else return JmrixConfigPane.NONE;
     }
+
+    /*
+     * Set whether or not this adapter should be
+     * configured automatically via MDNS.
+     * Note: Default implementation ignores the parameter.
+     * @param autoconfig boolean value.
+     */
+    public void setMdnsConfigure(boolean autoconfig){
+    }
+
+    /*
+     * Get whether or not this adapter is configured
+     * to use autoconfiguration via MDNS
+     * Default implemntation always returns false.
+     * @return true if configured using MDNS.
+     */
+    public boolean getMdnsConfigure() { return false; }
+
+    /*
+     * set the server's host name and port
+     * using mdns autoconfiguration.
+     * Default implementation does nothing.
+     */
+    public void autoConfigure() { 
+    }
     
     public DataInputStream getInputStream() {
         if (!opened) {

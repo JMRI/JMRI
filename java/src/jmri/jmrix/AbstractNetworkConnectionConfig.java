@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JCheckBox;
 import java.util.Hashtable;
 
 /**
@@ -31,6 +32,8 @@ import java.util.Hashtable;
  * @version	$Revision$
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
+
+    protected JCheckBox showAutoConfig = new JCheckBox("Automatic Configuration");
 
     /**
      * Ctor for an object being created during load process
@@ -134,7 +137,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                     if(!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())){
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                    }
+                    } 
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -142,8 +145,14 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     public void updateAdapter(){
-        adapter.setHostName(hostNameField.getText());
-        adapter.setPort(Integer.parseInt(portField.getText()));
+        if(adapter.getMdnsConfigure()) {
+           // get the host name and port number
+           // via mdns
+           adapter.autoConfigure();
+        } else {
+           adapter.setHostName(hostNameField.getText());
+           adapter.setPort(Integer.parseInt(portField.getText()));
+        }
         for(String i:options.keySet()){
             adapter.setOptionState(i, options.get(i).getItem());
         }
@@ -186,6 +195,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
+ 
 
         if(hostNameField.getActionListeners().length >0)
         	hostNameField.removeActionListener(hostNameField.getActionListeners()[0]);
@@ -209,6 +219,18 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         portField.setText(""+adapter.getPort());
         
         portFieldLabel = new JLabel("TCP/UDP Port:");
+
+        showAutoConfig.setFont(showAdvanced.getFont().deriveFont(9f));
+        showAutoConfig.setForeground(Color.blue);
+        showAutoConfig.addItemListener(
+            new ItemListener() {
+                public void itemStateChanged(ItemEvent e){
+                    setAutoNetworkConfig();
+                }
+            });
+        showAutoConfig.setSelected(adapter.getMdnsConfigure());
+        setAutoNetworkConfig();
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener(
@@ -294,6 +316,16 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
     
     protected int addStandardDetails(boolean incAdvanced, int i){
+
+        if(isAutoConfigPossible()) {
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(showAutoConfig, cR);
+            _details.add(showAutoConfig);
+            _details.add(showAutoConfig);
+            i++;
+        }
+
         if(!isHostNameAdvanced()){
             cR.gridy = i;
             cL.gridy = i;
@@ -319,6 +351,23 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public boolean isHostNameAdvanced() { return false; }
     public boolean isPortAdvanced() { return true; }
 
+    public boolean isAutoConfigPossible() { return false; }
+
+    public void setAutoNetworkConfig(){
+       if(showAutoConfig.isSelected()) {
+          hostNameField.setEnabled(false);
+          hostNameFieldLabel.setEnabled(false);
+          portField.setEnabled(false);
+          portFieldLabel.setEnabled(false);
+          adapter.setMdnsConfigure(true);
+       } else { 
+          hostNameField.setEnabled(true);
+          hostNameFieldLabel.setEnabled(true);
+          portField.setEnabled(true);
+          portFieldLabel.setEnabled(true);
+          adapter.setMdnsConfigure(false);
+       }
+    }
     
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }

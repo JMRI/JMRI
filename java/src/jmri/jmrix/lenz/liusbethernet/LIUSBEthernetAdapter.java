@@ -9,6 +9,7 @@ import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import java.util.ResourceBundle;
 import jmri.util.zeroconf.ZeroConfClient;
 
 /**
@@ -18,7 +19,7 @@ import jmri.util.zeroconf.ZeroConfClient;
  * The LIUSBEtherenet disconnects both ports if there is 60 seconds of inactivity
  * on the port.
  *
- * @author			Paul Bender (C) 2011
+ * @author			Paul Bender (C) 2011-2013
  * @version			$Revision$
  */
 
@@ -40,9 +41,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             if(log.isDebugEnabled()) log.debug("Constructor Called");
             setHostName(DEFAULT_IP_ADDRESS);
             setPort(COMMUNICATION_TCP_PORT);
-            new ZeroConfClient().startServiceListener("*.local.");  
         }
-
 
         @Override
     public void connect() throws Exception {
@@ -120,6 +119,57 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+
+    private boolean mDNSConfigure = false;
+
+    /*
+     * Set whether or not this adapter should be
+     * configured automatically via MDNS.
+     * @param autoconfig boolean value.
+     */
+     @Override
+    public void setMdnsConfigure(boolean autoconfig){
+       log.debug("Setting LIUSB Ethernet adapter autoconfiguration to: " +
+                autoconfig);
+       mDNSConfigure = autoconfig;
+    }
+
+    /*
+     * Get whether or not this adapter is configured
+     * to use autoconfiguration via MDNS
+     * @return true if configured using MDNS.
+     */
+     @Override
+    public boolean getMdnsConfigure() { return mDNSConfigure; }
+
+    /*
+     * set the server's host name and port
+     * using mdns autoconfiguration.
+     */
+     @Override
+    public void autoConfigure() {
+       log.info("Configuring XPressNet interface via JmDNS");
+       ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetConfigurationBundle");
+       String serviceType = rb.getString("defaultMDNSServiceType");
+       log.debug("Listening for service: " +serviceType );
+
+       ZeroConfClient mdnsClient = new ZeroConfClient();
+       mdnsClient.startServiceListener(serviceType);  
+       try {
+         synchronized(mdnsClient){
+         // we may need to add a timeout here.
+         mdnsClient.wait(keepAliveTimeoutValue);
+         if(log.isDebugEnabled()) mdnsClient.listService(serviceType);
+         }
+       } catch(java.lang.InterruptedException ie){
+         log.error("MDNS auto Configuration failed.");
+         return;
+       }
+       String qualifiedServiceName = rb.getString("defaultMDNSServiceName") +
+              "." + serviceType;
+       setHostName(mdnsClient.getServicebyAdName(serviceType,
+                            qualifiedServiceName).getHostAddresses()[0]);
+    }
 
     static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 

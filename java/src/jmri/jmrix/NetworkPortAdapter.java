@@ -38,4 +38,22 @@ public interface NetworkPortAdapter extends PortAdapter {
     public void setHostName(String hostname);
     
     public String getHostName();
+
+    /*
+     * Set whether or not this adapter should be
+     * configured automatically via MDNS.
+     */
+    public void setMdnsConfigure(boolean autoconfig);
+
+    /*
+     * Get whether or not this adapter is configured
+     * to use autoconfiguration via MDNS
+     */
+    public boolean getMdnsConfigure();
+
+    /*
+     * perform the automatic configuration
+     */
+   public void autoConfigure();
+
 }
