@@ -216,14 +216,14 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			out.add(arr[i]);
 		return out;
 	}
-
+	
 	/**
 	 * Returns all tracks of type
 	 * 
 	 * @param type
 	 *            Spur (Track.SPUR), Yard (Track.YARD), Interchange (Track.INTERCHANGE), Staging (Track.STAGING), or
 	 *            null (returns all track types)
-	 * @return List of tracks ordered by use
+	 * @return List of tracks
 	 */
 	public List<Track> getTracks(String type) {
 		List<String> sortList = getList();
@@ -237,6 +237,19 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 				trackList.add(track);
 			}
 		}
+		return trackList;
+	}
+
+	/**
+	 * Returns all tracks of type sorted by use
+	 * 
+	 * @param type
+	 *            Spur (Track.SPUR), Yard (Track.YARD), Interchange (Track.INTERCHANGE), Staging (Track.STAGING), or
+	 *            null (returns all track types)
+	 * @return List of tracks ordered by use
+	 */
+	public List<Track> getTracksByMoves(String type) {
+		List<Track> trackList = getTracks(type);
 		// now re-sort
 		List<Track> moveList = new ArrayList<Track>();
 		boolean locAdded = false;

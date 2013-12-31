@@ -2562,7 +2562,7 @@ public class TrainBuilder extends TrainCommon {
 			return routeToSpurFound; // no schedule found for this car
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName() + ", " + car.getTrackName() }));
-		List<Track> tracks = locationManager.getTracks(Track.SPUR);
+		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
@@ -2711,7 +2711,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), car.getTrackName() }));
-		List<Track> tracks = locationManager.getTracks(Track.SPUR);
+		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);

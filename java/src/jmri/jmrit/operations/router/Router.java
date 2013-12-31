@@ -366,7 +366,7 @@ public class Router extends TrainCommon {
 		}
 		boolean foundRoute = false;
 		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
-		List<Track> tracks = LocationManager.instance().getTracks(trackType);// restrict to yards, interchanges, or
+		List<Track> tracks = LocationManager.instance().getTracksByMoves(trackType);// restrict to yards, interchanges, or
 																				// staging
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
@@ -521,16 +521,16 @@ public class Router extends TrainCommon {
 		Car testCar = clone(car); // reload
 		// build the "next" and "other" location/tracks
 		// start with interchanges
-		List<Track> tracks = LocationManager.instance().getTracks(Track.INTERCHANGE);
+		List<Track> tracks = LocationManager.instance().getTracksByMoves(Track.INTERCHANGE);
 		loadTracks(car, testCar, tracks);
 		// next load yards if enabled
 		if (Setup.isCarRoutingViaYardsEnabled()) {
-			tracks = LocationManager.instance().getTracks(Track.YARD);
+			tracks = LocationManager.instance().getTracksByMoves(Track.YARD);
 			loadTracks(car, testCar, tracks);
 		}
 		// now staging if enabled
 		if (Setup.isCarRoutingViaStagingEnabled()) {
-			tracks = LocationManager.instance().getTracks(Track.STAGING);
+			tracks = LocationManager.instance().getTracksByMoves(Track.STAGING);
 			loadTracks(car, testCar, tracks);
 		}
 		
