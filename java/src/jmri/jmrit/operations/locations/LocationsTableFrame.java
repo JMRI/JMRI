@@ -4,13 +4,17 @@ package jmri.jmrit.operations.locations;
  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+//import java.awt.print.PrinterException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -45,6 +49,7 @@ public class LocationsTableFrame extends OperationsFrame {
 
 	// major buttons
 	JButton addButton = new JButton(Bundle.getMessage("Add"));
+//	JButton printTableButton = new JButton("Print Table");
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -68,6 +73,7 @@ public class LocationsTableFrame extends OperationsFrame {
     	controlPanel.add(sortById);
     	controlPanel.add(textSep);
 		controlPanel.add (addButton);
+//		controlPanel.add (printTableButton);
 		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
 	   	
 		getContentPane().add(controlPanel);
@@ -76,6 +82,7 @@ public class LocationsTableFrame extends OperationsFrame {
 	   	
 		// setup buttons
 		addButtonAction(addButton);
+//		addButtonAction(printTableButton);
 		
 		addRadioButtonAction (sortByName);
 		addRadioButtonAction (sortById);
@@ -127,7 +134,19 @@ public class LocationsTableFrame extends OperationsFrame {
 			f.initComponents(null);
 			f.setTitle(Bundle.getMessage("TitleLocationAdd"));
 		}
+//		if (ae.getSource() == printTableButton){
+//			printTable();
+//		}
 	}
+	
+//	public void printTable() {
+//		try {
+//			locationsTable.print();
+//		} catch (PrinterException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
     public void dispose() {
     	locationsModel.dispose();

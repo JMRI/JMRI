@@ -123,9 +123,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 2, x);
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 3, x);
 		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
-		List<String> locations = locationManager.getLocationsByNameList();
+		List<Location> locations = locationManager.getLocationsByNameList();
 		for (int i = 0; i < locations.size(); i++) {
-			Location l = locationManager.getLocationById(locations.get(i));
+			Location l = locations.get(i);
 			// don't show staging
 			if (l.getLocationOps() == Location.NORMAL) {
 				addItemLeft(locationsPanel, new JLabel(l.getName()), 0, x++);

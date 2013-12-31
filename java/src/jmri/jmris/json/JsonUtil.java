@@ -462,8 +462,8 @@ public class JsonUtil {
 
     static public JsonNode getLocations() throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String locationID : LocationManager.instance().getLocationsByIdList()) {
-            root.add(getLocation(locationID));
+        for (Location location : LocationManager.instance().getLocationsByIdList()) {
+            root.add(getLocation(location.getId()));
         }
         return root;
     }

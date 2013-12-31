@@ -64,18 +64,17 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	removePropertyChangeLocations();
     	
 		if (_sort == SORTBYID)
-			sysList = manager.getLocationsByIdList();
+			locationsList = manager.getLocationsByIdList();
 		else
-			sysList = manager.getLocationsByNameList();
+			locationsList = manager.getLocationsByNameList();
 		// and add them back in
-		for (int i = 0; i < sysList.size(); i++){
+		for (int i = 0; i < locationsList.size(); i++){
 //			log.debug("location ids: " + (String) sysList.get(i));
-			manager.getLocationById(sysList.get(i))
-					.addPropertyChangeListener(this);
+			locationsList.get(i).addPropertyChangeListener(this);
 		}
 	}
 
-	List<String> sysList = null;
+	List<Location> locationsList = null;
     
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -101,7 +100,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
-    public synchronized int getRowCount() { return sysList.size(); }
+    public synchronized int getRowCount() { return locationsList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
 
@@ -163,8 +162,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		}
 		if (row >= getRowCount())
 			return "ERROR row " + row; // NOI18N
-		String locId = sysList.get(row);
-		Location l = manager.getLocationById(locId);
+		Location l = locationsList.get(row);
 		if (l == null)
 			return "ERROR location unknown " + row; // NOI18N
 		switch (col) {
@@ -238,7 +236,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
 	private synchronized void editLocation(int row) {
 		log.debug("Edit location");
-		Location loc = manager.getLocationById(sysList.get(row));
+		Location loc = locationsList.get(row);
 		if (lef1 != null && (lef2 == null || !lef2.isVisible())) {
 			if (lef2 != null)
 				lef2.dispose();
@@ -258,7 +256,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private synchronized void launchYardmaster (int row){
     	log.debug("Yardmaster");
     	ymf = new YardmasterFrame();
-    	Location loc = manager.getLocationById(sysList.get(row));
+    	Location loc = locationsList.get(row);
     	ymf.initComponents(loc);
    }
 
@@ -270,7 +268,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	 }
     	 else if (e.getSource().getClass().equals(Location.class)){
     		 String locId = ((Location) e.getSource()).getId();
-    		 int row = sysList.indexOf(locId);
+    		 int row = locationsList.indexOf(locId);
     		 if (Control.showProperty && log.isDebugEnabled()) log.debug("Update location table row: "+row + " id: " + locId);
     		 if (row >= 0)
     			 fireTableRowsUpdated(row, row);
@@ -278,10 +276,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
     
     private synchronized void removePropertyChangeLocations() {
-    	if (sysList != null) {
-    		for (int i = 0; i < sysList.size(); i++) {
+    	if (locationsList != null) {
+    		for (int i = 0; i < locationsList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Location l = manager.getLocationById(sysList.get(i));
+    			Location l = locationsList.get(i);
     			if (l != null)
     				l.removePropertyChangeListener(this);
     		}

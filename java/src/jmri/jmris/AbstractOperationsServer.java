@@ -63,16 +63,16 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 	 *  send a list of locations known by Operations to the client
 	 */
 	public void sendLocationList() {
-		List<String> locationList = lm.getLocationsByNameList();
+		List<Location> locationList = lm.getLocationsByNameList();
 		ArrayList<Attribute> location;
-		for (String LocationID : locationList) {
+		for (Location loc : locationList) {
 		    location = new ArrayList<Attribute>(1);
-		    location.add(new Attribute(SimpleOperationsServer.LOCATIONS, lm.getLocationById(LocationID).getName()));
+		    location.add(new Attribute(SimpleOperationsServer.LOCATIONS, loc));
             try {
                 sendMessage(location);
             }
             catch (IOException ioe) {
-                log.debug("could not send train " + lm.getLocationById(LocationID).getName());
+                log.debug("could not send train " + loc.getName());
             }
 		}
 	}

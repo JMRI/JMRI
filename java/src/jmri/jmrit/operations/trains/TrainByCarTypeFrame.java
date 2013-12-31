@@ -335,9 +335,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	 * Add property listeners for locations and tracks
 	 */
 	private void addLocationAndTrackPropertyChange() {
-		List<String> locations = locationManager.getLocationsByIdList();
+		List<Location> locations = locationManager.getLocationsByIdList();
 		for (int i = 0; i < locations.size(); i++) {
-			Location loc = locationManager.getLocationById(locations.get(i));
+			Location loc = locations.get(i);
 			loc.addPropertyChangeListener(this);
 			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j = 0; j < tracks.size(); j++) {
@@ -354,9 +354,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	 * Remove property listeners for locations and tracks
 	 */
 	private void removeLocationAndTrackPropertyChange() {
-		List<String> locations = locationManager.getLocationsByIdList();
+		List<Location> locations = locationManager.getLocationsByIdList();
 		for (int i = 0; i < locations.size(); i++) {
-			Location loc = locationManager.getLocationById(locations.get(i));
+			Location loc = locations.get(i);
 			if (loc != null) {
 				loc.removePropertyChangeListener(this);
 				List<String> tracks = loc.getTrackIdsByNameList(null);

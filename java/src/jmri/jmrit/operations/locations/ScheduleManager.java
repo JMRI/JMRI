@@ -340,9 +340,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		JComboBox box = new JComboBox();
 		// search all spurs for that use schedule
 		LocationManager manager = LocationManager.instance();
-		List<String> locations = manager.getLocationsByNameList();
+		List<Location> locations = manager.getLocationsByNameList();
 		for (int j = 0; j < locations.size(); j++) {
-			Location location = manager.getLocationById(locations.get(j));
+			Location location = locations.get(j);
 			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
 			for (int k = 0; k < spurs.size(); k++) {
 				Track spur = location.getTrackById(spurs.get(k));

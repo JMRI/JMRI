@@ -99,7 +99,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	// Loop through the Roster, printing as needed
 	private void printLocationsSelected() throws IOException {
-		List<String> locations = manager.getLocationsByNameList();
+		List<Location> locations = manager.getLocationsByNameList();
 		int totalLength = 0;
 		int usedLength = 0;
 		int numberRS = 0;
@@ -112,7 +112,7 @@ public class PrintLocationsAction extends AbstractAction {
 				+ Bundle.getMessage("Drop") + NEW_LINE;
 		writer.write(s);
 		for (int i = 0; i < locations.size(); i++) {
-			Location location = manager.getLocationById(locations.get(i));
+			Location location = locations.get(i);
 			// location name, track length, used, number of RS, scheduled pick ups and drops
 			s = padOutString(location.getName(), Control.max_len_string_location_name) + TAB + "  "
 					+ Integer.toString(location.getLength()) + TAB
@@ -198,7 +198,7 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private void printSchedulesSelected() throws IOException {
-		List<String> locations = manager.getLocationsByNameList();
+		List<Location> locations = manager.getLocationsByNameList();
 		String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) + " " + Bundle.getMessage("Location") + " - "
 				+ Bundle.getMessage("SpurName") + NEW_LINE;
 		writer.write(s);
@@ -207,7 +207,7 @@ public class PrintLocationsAction extends AbstractAction {
 		for (int i = 0; i < schedules.size(); i++) {
 			Schedule schedule = sm.getScheduleById(schedules.get(i));
 			for (int j = 0; j < locations.size(); j++) {
-				Location location = manager.getLocationById(locations.get(j));
+				Location location = locations.get(j);
 				List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
 				for (int k = 0; k < spurs.size(); k++) {
 					Track spur = location.getTrackById(spurs.get(k));
@@ -257,11 +257,11 @@ public class PrintLocationsAction extends AbstractAction {
 	}
 
 	private void printDetailsSelected() throws IOException {
-		List<String> locations = manager.getLocationsByNameList();
+		List<Location> locations = manager.getLocationsByNameList();
 		String s = Bundle.getMessage("DetailedReport") + NEW_LINE;
 		writer.write(s);
 		for (int i = 0; i < locations.size(); i++) {
-			Location location = manager.getLocationById(locations.get(i));
+			Location location = locations.get(i);
 			String name = location.getName();
 			// services train direction
 			int dir = location.getTrainDirections();
@@ -307,7 +307,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	private void printAnalysisSelected() throws IOException {
 		CarManager carManager = CarManager.instance();
-		List<String> locations = manager.getLocationsByNameList();
+		List<Location> locations = manager.getLocationsByNameList();
 		List<String> cars = carManager.getByLocationList();
 		String[] carTypes = CarTypes.instance().getNames();
 
@@ -382,11 +382,11 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 	}
 
-	private int getTrackLengthAcceptType(List<String> locations, String carType, String trackType)
+	private int getTrackLengthAcceptType(List<Location> locations, String carType, String trackType)
 			throws IOException {
 		int trackLength = 0;
 		for (int j = 0; j < locations.size(); j++) {
-			Location location = manager.getLocationById(locations.get(j));
+			Location location = locations.get(j);
 			// get a list of spur tracks at this location
 			List<String> tracks = location.getTrackIdsByNameList(trackType);
 			for (int k = 0; k < tracks.size(); k++) {

@@ -189,9 +189,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 			destinationsInclude.setSelected(_track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
 			destinationsExclude.setSelected(_track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS));
 		}
-		List<String> locIds = locationManager.getLocationsByNameList();
-		for (int i = 0; i < locIds.size(); i++) {
-			Location loc = locationManager.getLocationById(locIds.get(i));
+		List<Location> locations = locationManager.getLocationsByNameList();
+		for (int i = 0; i < locations.size(); i++) {
+			Location loc = locations.get(i);
 			JCheckBox cb = new JCheckBox(loc.getName());
 			addItemLeft(panelDestinations, cb, 0, i);
 			cb.setEnabled(!destinationsAll.isSelected());

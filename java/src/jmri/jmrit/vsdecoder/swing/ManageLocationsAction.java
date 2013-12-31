@@ -106,14 +106,13 @@ public class ManageLocationsAction extends AbstractAction {
 
 	    // Handle Ops Locations
 	    LocationManager lmgr = LocationManager.instance();
-	    List<String> lnames = lmgr.getLocationsByIdList();
+	    List<Location> locations = lmgr.getLocationsByIdList();
 	    opsMap = new HashMap<String, PhysicalLocation>();
-	    log.debug("TableSize : " + lnames.size());
-	    Object[][] opsTable = new Object[lnames.size()][6];
+	    log.debug("TableSize : " + locations.size());
+	    Object[][] opsTable = new Object[locations.size()][6];
 	    i = 0;
-	    for (String s : lnames) {
-		Location l = lmgr.getLocationById(s);
-		if (log.isDebugEnabled()) log.debug("i = " + i + "MLA " + s + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
+	    for (Location l : locations) {
+		if (log.isDebugEnabled()) log.debug("i = " + i + "MLA " + l.getId() + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
 		PhysicalLocation p = l.getPhysicalLocation();
 		Boolean use = false;
 		if (p == PhysicalLocation.Origin) {

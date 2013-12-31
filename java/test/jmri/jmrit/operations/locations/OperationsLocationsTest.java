@@ -1309,7 +1309,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager = LocationManager.instance();
 		
 		// now load locations
-		List<String> locationList = manager.getLocationsByIdList();
+		List<Location> locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 		Location l1 = manager.newLocation("Test Location 2");
 		Location l2 = manager.newLocation("Test Location 1");
@@ -1381,9 +1381,9 @@ public class OperationsLocationsTest extends TestCase {
 		t2.setScheduleCount(2);
 
 		locationList = manager.getLocationsByIdList();
-		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById(locationList.get(0)).getName());
-		Assert.assertEquals("New Location by Id 2", "Test Location 1", manager.getLocationById(locationList.get(1)).getName());
-		Assert.assertEquals("New Location by Id 3", "Test Location 3", manager.getLocationById(locationList.get(2)).getName());
+		Assert.assertEquals("New Location by Id 1", "Test Location 2", locationList.get(0).getName());
+		Assert.assertEquals("New Location by Id 2", "Test Location 1", locationList.get(1).getName());
+		Assert.assertEquals("New Location by Id 3", "Test Location 3", locationList.get(2).getName());
 
 		Assert.assertEquals("New Location by Name 1", "Test Location 1", manager.getLocationByName("Test Location 1").getName());
 		Assert.assertEquals("New Location by Name 2", "Test Location 2", manager.getLocationByName("Test Location 2").getName());
@@ -1426,8 +1426,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
 		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = locationList.get(i);
-			Location loc = manager.getLocationById(locationId);
+			Location loc = locationList.get(i);
 			String locname = loc.getName();
 			if (i == 0) {
 				Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
@@ -1440,12 +1439,11 @@ public class OperationsLocationsTest extends TestCase {
 			}
 		}
 
-		locationList = manager.getLocationsByNameList();
+		List<Location> locationListByName = manager.getLocationsByNameList();
 		Assert.assertEquals("New Number of Locations", 3, locationList.size());
 
-		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = locationList.get(i);
-			Location loc = manager.getLocationById(locationId);
+		for (int i = 0; i < locationListByName.size(); i++) {
+			Location loc = locationListByName.get(i);
 			String locname = loc.getName();
 			if (i == 0) {
 				Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
@@ -1486,19 +1484,18 @@ public class OperationsLocationsTest extends TestCase {
 
 		// The dispose has removed all locations from the Manager.
 		manager = LocationManager.instance();
-		locationList = manager.getLocationsByNameList();
-		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
+		locationListByName = manager.getLocationsByNameList();
+		Assert.assertEquals("Starting Number of Locations", 0, locationListByName.size());
 
 		// Need to force a re-read of the xml file.
 		LocationManagerXml.instance().readFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 		
 		// check locations
-		locationList = manager.getLocationsByNameList();
-		Assert.assertEquals("Starting Number of Locations", 3, locationList.size());
+		locationListByName = manager.getLocationsByNameList();
+		Assert.assertEquals("Starting Number of Locations", 3, locationListByName.size());
 
-		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = locationList.get(i);
-			Location loc = manager.getLocationById(locationId);
+		for (int i = 0; i < locationListByName.size(); i++) {
+			Location loc = locationListByName.get(i);
 
 			if (i == 0) {
 				Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());

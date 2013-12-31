@@ -307,11 +307,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 	// name change or number of locations has changed
 	private void updateLocationCheckboxes() {
-		List<String> locations = locationManager.getLocationsByNameList();
+		List<Location> locations = locationManager.getLocationsByNameList();
 		synchronized (this) {
 			for (int i = 0; i < locations.size(); i++) {
-				Location l = locationManager.getLocationById(locations.get(i));
-				l.removePropertyChangeListener(this);
+				locations.get(i).removePropertyChangeListener(this);
 			}
 		}
 
@@ -333,7 +332,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		Location previousLocation = null;
 
 		for (int i = 0; i < locations.size(); i++) {
-			Location l = locationManager.getLocationById(locations.get(i));
+			Location l = locations.get(i);
 			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()) {
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
@@ -380,8 +379,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		// restore listeners
 		synchronized (this) {
 			for (int i = 0; i < locations.size(); i++) {
-				Location l = locationManager.getLocationById(locations.get(i));
-				l.addPropertyChangeListener(this);
+				locations.get(i).addPropertyChangeListener(this);
 			}
 		}
 
@@ -435,9 +433,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	private void enableChangeButtons() {
 		changeButton.setEnabled(false);
 		csvChangeButton.setEnabled(false);
-		List<String> locations = locationManager.getLocationsByNameList();
+		List<Location> locations = locationManager.getLocationsByNameList();
 		for (int i = 0; i < locations.size(); i++) {
-			Location l = locationManager.getLocationById(locations.get(i));
+			Location l = locations.get(i);
 			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()) {
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
@@ -496,10 +494,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 
 	public void dispose() {
 		locationManager.removePropertyChangeListener(this);
-		List<String> locations = locationManager.getLocationsByNameList();
+		List<Location> locations = locationManager.getLocationsByNameList();
 		for (int i = 0; i < locations.size(); i++) {
-			Location l = locationManager.getLocationById(locations.get(i));
-			l.removePropertyChangeListener(this);
+			locations.get(i).removePropertyChangeListener(this);
 		}
 		super.dispose();
 	}
