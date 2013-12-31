@@ -48,6 +48,7 @@ public final class JSON {
     public static final String JMRI = "JMRI"; // NOI18N
     public static final String HEARTBEAT = "heartbeat"; // NOI18N
     public static final String RAILROAD = "railroad"; // NOI18N
+    public static final String NODE = "node"; // NOI18N
    /* JSON list types */
     public static final String CARS = "cars"; // NOI18N
     public static final String CONSISTS = "consists"; // NOI18N
