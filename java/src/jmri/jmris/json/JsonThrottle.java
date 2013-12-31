@@ -60,6 +60,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void close() {
+        this.throttle.setSpeedSetting(0);
         this.throttle.release(this);
         this.throttle.removePropertyChangeListener(this);
     }
