@@ -12,19 +12,29 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.ESTOP;
+import static jmri.jmris.json.JSON.F;
+import static jmri.jmris.json.JSON.FORWARD;
+import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.IDLE;
+import static jmri.jmris.json.JSON.RELEASE;
+import static jmri.jmris.json.JSON.ROSTER_ENTRY;
+import static jmri.jmris.json.JSON.SPEED;
+import static jmri.jmris.json.JSON.STATUS;
 import jmri.jmrit.roster.Roster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
-    private JsonThrottleServer server;
-    private String throttleId;
+    private final JsonThrottleServer server;
+    private final String throttleId;
     private Throttle throttle;
-    private ObjectMapper mapper;
-    static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
+    private final ObjectMapper mapper;
+    private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
+    @SuppressWarnings("LeakingThisInConstructor")
     public JsonThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException {
         this.throttleId = throttleId;
         this.server = server;
@@ -124,6 +134,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         } else if (!data.path(RELEASE).isMissingNode()) {
             this.throttle.release(this);
             this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE));
+        } else if (!data.path(STATUS).isMissingNode()) {
+            this.sendStatus();
         }
     }
 
@@ -161,43 +173,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         try {
             this.throttle = t;
             t.addPropertyChangeListener(this);
-            ObjectNode data = this.mapper.createObjectNode();
-            data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
-            data.put(SPEED, this.throttle.getSpeedSetting());
-            data.put(FORWARD, this.throttle.getIsForward());
-            data.put(Throttle.F0, this.throttle.getF0());
-            data.put(Throttle.F1, this.throttle.getF1());
-            data.put(Throttle.F2, this.throttle.getF2());
-            data.put(Throttle.F3, this.throttle.getF3());
-            data.put(Throttle.F4, this.throttle.getF4());
-            data.put(Throttle.F5, this.throttle.getF5());
-            data.put(Throttle.F6, this.throttle.getF6());
-            data.put(Throttle.F7, this.throttle.getF7());
-            data.put(Throttle.F8, this.throttle.getF8());
-            data.put(Throttle.F9, this.throttle.getF9());
-            data.put(Throttle.F10, this.throttle.getF10());
-            data.put(Throttle.F11, this.throttle.getF11());
-            data.put(Throttle.F12, this.throttle.getF12());
-            data.put(Throttle.F13, this.throttle.getF13());
-            data.put(Throttle.F14, this.throttle.getF14());
-            data.put(Throttle.F15, this.throttle.getF15());
-            data.put(Throttle.F16, this.throttle.getF16());
-            data.put(Throttle.F17, this.throttle.getF17());
-            data.put(Throttle.F18, this.throttle.getF18());
-            data.put(Throttle.F19, this.throttle.getF19());
-            data.put(Throttle.F20, this.throttle.getF20());
-            data.put(Throttle.F21, this.throttle.getF21());
-            data.put(Throttle.F22, this.throttle.getF22());
-            data.put(Throttle.F23, this.throttle.getF23());
-            data.put(Throttle.F24, this.throttle.getF24());
-            data.put(Throttle.F25, this.throttle.getF25());
-            data.put(Throttle.F26, this.throttle.getF26());
-            data.put(Throttle.F27, this.throttle.getF27());
-            data.put(Throttle.F28, this.throttle.getF28());
-            if (this.throttle.getRosterEntry() != null) {
-                data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
-            }
-            this.sendMessage(data);
+            this.sendStatus();
         } catch (Exception e) {
             log.debug(e.getLocalizedMessage(), e);
         }
@@ -219,5 +195,45 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
             log.warn("Unable to send message, closing connection.", e);
         }
+    }
+
+    private void sendStatus() {
+        ObjectNode data = this.mapper.createObjectNode();
+        data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
+        data.put(SPEED, this.throttle.getSpeedSetting());
+        data.put(FORWARD, this.throttle.getIsForward());
+        data.put(Throttle.F0, this.throttle.getF0());
+        data.put(Throttle.F1, this.throttle.getF1());
+        data.put(Throttle.F2, this.throttle.getF2());
+        data.put(Throttle.F3, this.throttle.getF3());
+        data.put(Throttle.F4, this.throttle.getF4());
+        data.put(Throttle.F5, this.throttle.getF5());
+        data.put(Throttle.F6, this.throttle.getF6());
+        data.put(Throttle.F7, this.throttle.getF7());
+        data.put(Throttle.F8, this.throttle.getF8());
+        data.put(Throttle.F9, this.throttle.getF9());
+        data.put(Throttle.F10, this.throttle.getF10());
+        data.put(Throttle.F11, this.throttle.getF11());
+        data.put(Throttle.F12, this.throttle.getF12());
+        data.put(Throttle.F13, this.throttle.getF13());
+        data.put(Throttle.F14, this.throttle.getF14());
+        data.put(Throttle.F15, this.throttle.getF15());
+        data.put(Throttle.F16, this.throttle.getF16());
+        data.put(Throttle.F17, this.throttle.getF17());
+        data.put(Throttle.F18, this.throttle.getF18());
+        data.put(Throttle.F19, this.throttle.getF19());
+        data.put(Throttle.F20, this.throttle.getF20());
+        data.put(Throttle.F21, this.throttle.getF21());
+        data.put(Throttle.F22, this.throttle.getF22());
+        data.put(Throttle.F23, this.throttle.getF23());
+        data.put(Throttle.F24, this.throttle.getF24());
+        data.put(Throttle.F25, this.throttle.getF25());
+        data.put(Throttle.F26, this.throttle.getF26());
+        data.put(Throttle.F27, this.throttle.getF27());
+        data.put(Throttle.F28, this.throttle.getF28());
+        if (this.throttle.getRosterEntry() != null) {
+            data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
+        }
+        this.sendMessage(data);
     }
 }

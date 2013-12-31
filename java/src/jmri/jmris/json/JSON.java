@@ -14,8 +14,10 @@ public final class JSON {
      * Changes to the major number represent a backwards incompatible change,
      * while changes to the minor number represent an
      * addition to the protocol.
+     * JMRI 3.4-3.6: JSON 1.0
+     * JMRI 3.7-3.8: JSON 1.1
      */
-    public static final String JSON_PROTOCOL_VERSION = "1.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "1.1"; // NOI18N
     /* JSON structure */
     public static final String TYPE = "type"; // NOI18N
     public static final String LIST = "list"; // NOI18N
