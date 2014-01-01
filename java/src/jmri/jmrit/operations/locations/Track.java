@@ -192,6 +192,10 @@ public class Track {
 		Track newTrack = newLocation.addTrack(newName, getTrackType());
 		newTrack.clearTypeNames();		// all types are accepted by a new track
 		
+		newTrack.setAddCustomLoadsAnySpurEnabled(isAddCustomLoadsAnySpurEnabled());
+		newTrack.setAddCustomLoadsAnyStagingTrackEnabled(isAddCustomLoadsAnyStagingTrackEnabled());
+		newTrack.setAddCustomLoadsEnabled(isAddCustomLoadsEnabled());
+
 		newTrack.setAlternateTrack(getAlternateTrack());
 		newTrack.setBlockCarsEnabled(isBlockCarsEnabled());
 		newTrack.setComment(getComment());
@@ -228,6 +232,7 @@ public class Track {
 		newTrack.setScheduleMode(getScheduleMode());
 		newTrack.setServiceOrder(getServiceOrder());
 		newTrack.setShipLoadNames(getShipLoadNames());
+		newTrack.setShipLoadOption(getShipLoadOption());
 		newTrack.setTrainDirections(getTrainDirections());
 		newTrack.setTypeNames(getTypeNames());
 		return newTrack;
