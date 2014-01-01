@@ -339,7 +339,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
        cs.setCommandStationSoftwareVersion(3.5f);
@@ -361,7 +360,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
        cs.setCommandStationSoftwareVersion(3.6f);
@@ -382,7 +380,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
        cs.setCommandStationSoftwareVersion(3.0f);
@@ -404,7 +401,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
        cs.setCommandStationSoftwareVersion(4.0f);
@@ -426,7 +422,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
        cs.setCommandStationSoftwareVersion(3.5f);
@@ -449,7 +444,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
        cs.setCommandStationSoftwareVersion(3.6f);
@@ -472,7 +466,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_LH200);
        cs.setCommandStationSoftwareVersion(3.0f);
@@ -494,7 +487,6 @@ public class XNetProgrammerTest extends TestCase {
        // infrastructure objects
        LenzCommandStation cs=new LenzCommandStation();
        XNetInterfaceScaffold t = new XNetInterfaceScaffold(cs);
-       jmri.ProgListenerScaffold l = new jmri.ProgListenerScaffold();
 
        cs.setCommandStationType(XNetConstants.CS_TYPE_MULTIMAUS);
        cs.setCommandStationSoftwareVersion(4.0f);
