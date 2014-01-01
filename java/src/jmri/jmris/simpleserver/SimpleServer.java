@@ -11,6 +11,8 @@ import java.util.Scanner;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.JmriServer;
+import jmri.util.node.NodeIdentity;
+import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +66,8 @@ public class SimpleServer extends JmriServer {
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
+        outStream.writeBytes("RAILROAD " + WebServerManager.getWebServerPreferences().getRailRoadName() + " \n");
+        outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
 
         while (true) {
             inputScanner.skip("[\r\n]*");// skip any stray end of line characters.
