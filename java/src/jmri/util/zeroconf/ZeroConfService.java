@@ -346,7 +346,7 @@ public class ZeroConfService {
     /**
      * Return the system name or "computer" if the system name cannot be
      * determined. This method returns the first part of the fully qualified
-     * domain name from {@link #FQDN()}.
+     * domain name from {@link #FQDN}.
      *
      * @param address The {@link java.net.InetAddress} for the host name.
      * @return The hostName associated with the first interface encountered.
