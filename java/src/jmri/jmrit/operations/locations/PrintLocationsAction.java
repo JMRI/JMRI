@@ -203,9 +203,9 @@ public class PrintLocationsAction extends AbstractAction {
 				+ Bundle.getMessage("SpurName") + NEW_LINE;
 		writer.write(s);
 		ScheduleManager sm = ScheduleManager.instance();
-		List<String> schedules = sm.getSchedulesByNameList();
+		List<Schedule> schedules = sm.getSchedulesByNameList();
 		for (int i = 0; i < schedules.size(); i++) {
-			Schedule schedule = sm.getScheduleById(schedules.get(i));
+			Schedule schedule = schedules.get(i);
 			for (int j = 0; j < locations.size(); j++) {
 				Location location = locations.get(j);
 				List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);

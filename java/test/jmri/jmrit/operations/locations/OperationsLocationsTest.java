@@ -201,10 +201,10 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("1 First schedule name", "new schedule", s1.getName());
 		Assert.assertEquals("1 First schedule name", "newer schedule", s2.getName());
 		
-		List<String> names = sm.getSchedulesByNameList();
+		List<Schedule> names = sm.getSchedulesByNameList();
 		Assert.assertEquals("There should be 2 schedules", 2, names.size());
-		Schedule sch1 = sm.getScheduleById(names.get(0));
-		Schedule sch2 = sm.getScheduleById(names.get(1));
+		Schedule sch1 = names.get(0);
+		Schedule sch2 = names.get(1);
 		Assert.assertEquals("2 First schedule name", "new schedule", sch1.getName());
 		Assert.assertEquals("2 First schedule name", "newer schedule", sch2.getName());
 		Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
@@ -1584,11 +1584,11 @@ public class OperationsLocationsTest extends TestCase {
 		// check Schedules
 		
 		sm = ScheduleManager.instance();
-		List <String>list = sm.getSchedulesByNameList();
+		List <Schedule>list = sm.getSchedulesByNameList();
 		
 		Assert.assertEquals("There should be 2 schedules", 2, list.size());
-		s1 = sm.getScheduleById(list.get(0));
-		s2 = sm.getScheduleById(list.get(1));
+		s1 = list.get(0);
+		s2 = list.get(1);
 		
 		Assert.assertEquals("Schedule 1 name", "Schedule 1 Name", s1.getName());
 		Assert.assertEquals("Schedule 2 name", "Schedule 2 Name", s2.getName());
