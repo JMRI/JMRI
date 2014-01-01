@@ -568,10 +568,10 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		if (maxLength < Setup.getMaxTrainLength()) {
 			StringBuffer sb = new StringBuffer();
 			RouteManager rm = RouteManager.instance();
-			List<String> routes = rm.getRoutesByNameList();
+			List<Route> routes = rm.getRoutesByNameList();
 			int count = 0;
 			for (int i = 0; i < routes.size(); i++) {
-				Route r = rm.getRouteById(routes.get(i));
+				Route r = routes.get(i);
 				List<String> locations = r.getLocationsBySequenceList();
 				for (int j = 0; j < locations.size(); j++) {
 					RouteLocation rl = r.getLocationById(locations.get(j));
@@ -597,7 +597,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
 						new Object[] { maxLength }), Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					for (int i = 0; i < routes.size(); i++) {
-						Route r = rm.getRouteById(routes.get(i));
+						Route r = routes.get(i);
 						List<String> locations = r.getLocationsBySequenceList();
 						for (int j = 0; j < locations.size(); j++) {
 							RouteLocation rl = r.getLocationById(locations.get(j));

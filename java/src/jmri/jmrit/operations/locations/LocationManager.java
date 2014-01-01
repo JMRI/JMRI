@@ -63,12 +63,12 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 */
 
 	public Location getLocationByName(String name) {
-		Location l;
+		Location location;
 		Enumeration<Location> en = _locationHashTable.elements();
 		while (en.hasMoreElements()) {
-			l = en.nextElement();
-			if (l.getName().equals(name))
-				return l;
+			location = en.nextElement();
+			if (location.getName().equals(name))
+				return location;
 		}
 		return null;
 	}
@@ -128,28 +128,22 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	/**
 	 * Sort by location name
 	 * 
-	 * @return list of location ids ordered by name
+	 * @return list of locations ordered by name
 	 */
 	public List<Location> getLocationsByNameList() {
 		// first get id list
 		List<Location> sortList = getList();
 		// now re-sort
 		List<Location> out = new ArrayList<Location>();
-		boolean locAdded = false;
-		Location location;
-
 		for (int i = 0; i < sortList.size(); i++) {
-			locAdded = false;
-			location = sortList.get(i);
 			for (int j = 0; j < out.size(); j++) {
-				if (location.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
-					out.add(j, location);
-					locAdded = true;
+				if (sortList.get(i).getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
+					out.add(j, sortList.get(i));
 					break;
 				}
 			}
-			if (!locAdded) {
-				out.add(location);
+			if (!out.contains(sortList.get(i))) {
+				out.add(sortList.get(i));
 			}
 		}
 		return out;
@@ -159,39 +153,25 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	/**
 	 * Sort by location number, number can alpha numeric
 	 * 
-	 * @return list of location ids ordered by number
+	 * @return list of locations ordered by id numbers
 	 */
 	public List<Location> getLocationsByIdList() {
-		// first get id list
 		List<Location> sortList = getList();
 		// now re-sort
 		List<Location> out = new ArrayList<Location>();
-		int locationNumber = 0;
-		boolean locationAdded = false;
-		Location location;
-
 		for (int i = 0; i < sortList.size(); i++) {
-			locationAdded = false;
-			location = sortList.get(i);
-			try {
-				locationNumber = Integer.parseInt(location.getId());
-			} catch (NumberFormatException e) {
-				log.debug("location id number isn't a number");
-			}
 			for (int j = 0; j < out.size(); j++) {
 				try {
-					int outLocationNumber = Integer.parseInt(out.get(j).getId());
-					if (locationNumber < outLocationNumber) {
-						out.add(j, location);
-						locationAdded = true;
+					if (Integer.parseInt(sortList.get(i).getId()) < Integer.parseInt(out.get(j).getId())) {
+						out.add(j, sortList.get(i));
 						break;
 					}
 				} catch (NumberFormatException e) {
-					log.debug("list out id number isn't a number");
+					log.debug("list id number isn't a number");
 				}
 			}
-			if (!locationAdded) {
-				out.add(location);
+			if (!out.contains(sortList.get(i))) {
+				out.add(sortList.get(i));
 			}
 		}
 		return out;

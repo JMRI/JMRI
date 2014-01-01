@@ -354,9 +354,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	}
 	
 	public void updateTrainIconCoordinates(Location l){
-		List<String> routes = RouteManager.instance().getRoutesByIdList();
+		List<Route> routes = RouteManager.instance().getRoutesByIdList();
 		for (int i=0; i<routes.size(); i++){
-			Route route = RouteManager.instance().getRouteById(routes.get(i));
+			Route route = routes.get(i);
 			List<String> routeLocs = route.getLocationsBySequenceList();
 			for (int j=0; j<routeLocs.size(); j++){
 				RouteLocation rl = route.getLocationById(routeLocs.get(j));

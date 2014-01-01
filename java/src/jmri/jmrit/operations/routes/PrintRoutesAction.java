@@ -35,9 +35,9 @@ public class PrintRoutesAction extends PrintRouteAction {
 			return;
 		}
 		RouteManager routeManager = RouteManager.instance();
-		List<String> routes = routeManager.getRoutesByNameList();
+		List<Route> routes = routeManager.getRoutesByNameList();
 		for (int i = 0; i < routes.size(); i++) {
-			Route route = routeManager.getRouteById(routes.get(i));
+			Route route = routes.get(i);
 			try {
 				writer.write(route.getName() + NEW_LINE);
 				printRoute(writer, route);

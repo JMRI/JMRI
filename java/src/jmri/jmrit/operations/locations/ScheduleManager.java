@@ -130,27 +130,20 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	/**
 	 * Sort by schedule name
 	 * 
-	 * @return list of schedule ids ordered by name
+	 * @return list of schedules ordered by name
 	 */
 	public List<Schedule> getSchedulesByNameList() {
-		// first get id list
 		List<Schedule> sortList = getList();
 		// now re-sort
 		List<Schedule> out = new ArrayList<Schedule>();
-		String schName;
-		boolean schAdded = false;
-
 		for (int i = 0; i < sortList.size(); i++) {
-			schAdded = false;
-			schName = sortList.get(i).getName();
 			for (int j = 0; j < out.size(); j++) {
-				if (schName.compareToIgnoreCase(out.get(j).getName()) < 0) {
+				if (sortList.get(i).getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
 					out.add(j, sortList.get(i));
-					schAdded = true;
 					break;
 				}
 			}
-			if (!schAdded) {
+			if (!out.contains(sortList.get(i))) {
 				out.add(sortList.get(i));
 			}
 		}
@@ -161,36 +154,24 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	/**
 	 * Sort by schedule number
 	 * 
-	 * @return list of schedule ids ordered by number
+	 * @return list of schedules ordered by number
 	 */
 	public List<Schedule> getSchedulesByIdList() {
-		// first get id list
 		List<Schedule> sortList = getList();
 		// now re-sort
 		List<Schedule> out = new ArrayList<Schedule>();
-		int scheduleNumber = 0;
-		boolean scheduleAdded = false;
-
 		for (int i = 0; i < sortList.size(); i++) {
-			scheduleAdded = false;
-			try {
-				scheduleNumber = Integer.parseInt(sortList.get(i).getId());
-			} catch (NumberFormatException e) {
-				log.debug("schedule id number isn't a number");
-			}
 			for (int j = 0; j < out.size(); j++) {
 				try {
-					int outScheduleNumber = Integer.parseInt(out.get(j).getId());
-					if (scheduleNumber < outScheduleNumber) {
+					if (Integer.parseInt(sortList.get(i).getId()) < Integer.parseInt(out.get(j).getId())) {
 						out.add(j, sortList.get(i));
-						scheduleAdded = true;
 						break;
 					}
 				} catch (NumberFormatException e) {
-					log.debug("list out id number isn't a number");
+					log.debug("list id number isn't a number");
 				}
 			}
-			if (!scheduleAdded) {
+			if (!out.contains(sortList.get(i))) {
 				out.add(sortList.get(i));
 			}
 		}

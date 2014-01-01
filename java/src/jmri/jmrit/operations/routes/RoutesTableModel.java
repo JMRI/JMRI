@@ -68,12 +68,11 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 			sysList = manager.getRoutesByNameList();
 		// and add them back in
 		for (int i = 0; i < sysList.size(); i++) {
-			// log.debug("route ids: " + (String) sysList.get(i));
-			manager.getRouteById(sysList.get(i)).addPropertyChangeListener(this);
+			sysList.get(i).addPropertyChangeListener(this);
 		}
 	}
 
-	List<String> sysList = null;
+	List<Route> sysList = null;
 
 	void initTable(JTable table) {
 		// Install the button handlers
@@ -154,8 +153,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		}
 		if (row >= sysList.size())
 			return "ERROR unknown " + row; // NOI18N
-		String locId = sysList.get(row);
-		Route r = manager.getRouteById(locId);
+		Route r = sysList.get(row);
 		if (r == null)
 			return "ERROR route unknown " + row; // NOI18N
 		switch (col) {
@@ -192,7 +190,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();
-		Route route = manager.getRouteById(sysList.get(row));
+		Route route = sysList.get(row);
 		ref.initComponents(route);
 		focusRef = true;
 	}
@@ -220,9 +218,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Route l = manager.getRouteById(sysList.get(i));
-				if (l != null)
-					l.removePropertyChangeListener(this);
+				Route route = sysList.get(i);
+				if (route != null)
+					route.removePropertyChangeListener(this);
 			}
 		}
 	}
