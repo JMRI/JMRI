@@ -149,27 +149,36 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      @Override
     public void autoConfigure() {
        log.info("Configuring XPressNet interface via JmDNS");
+       setHostName(""); // reset the hostname to none.
        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetConfigurationBundle");
        String serviceType = rb.getString("defaultMDNSServiceType");
        log.debug("Listening for service: " +serviceType );
 
-       ZeroConfClient mdnsClient = new ZeroConfClient();
-       mdnsClient.startServiceListener(serviceType);  
-       try {
-         synchronized(mdnsClient){
-         // we may need to add a timeout here.
-         mdnsClient.wait(keepAliveTimeoutValue);
-         if(log.isDebugEnabled()) mdnsClient.listService(serviceType);
-         }
-       } catch(java.lang.InterruptedException ie){
-         log.error("MDNS auto Configuration failed.");
-         return;
+       if( mdnsClient == null ) 
+       {
+             mdnsClient = new ZeroConfClient();
+             mdnsClient.startServiceListener(serviceType);  
        }
+       // leave the wait code below commented out for now.  It
+       // does not appear to be needed for proper ZeroConf discovery.
+       //try {
+       //  synchronized(mdnsClient){
+       //  // we may need to add a timeout here.
+       //  mdnsClient.wait(keepAliveTimeoutValue);
+       //  if(log.isDebugEnabled()) mdnsClient.listService(serviceType);
+       //  }
+       //} catch(java.lang.InterruptedException ie){
+       //  log.error("MDNS auto Configuration failed.");
+       //  return;
+       //}
        String qualifiedServiceName = rb.getString("defaultMDNSServiceName") +
               "." + serviceType;
        setHostName(mdnsClient.getServicebyAdName(serviceType,
                             qualifiedServiceName).getHostAddresses()[0]);
     }
+
+    
+    ZeroConfClient mdnsClient = null;
 
     static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 

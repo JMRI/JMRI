@@ -261,6 +261,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                 safeSleep(reconnectinterval, "Waiting");
                 count++;
                 try {
+                    // if the device allows autoConfiguration,
+                    // we need to run the autoConfigure() call
+                    // before we try to reconnect.
+                    if(getMdnsConfigure()) autoConfigure();
                     connect();
                 } catch (Exception e) {
                 }
