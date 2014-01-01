@@ -31,9 +31,7 @@ public class DccAddressVarHandler {
                 doPrimary();
             }
         } else {
-            if (extendAddr!=null) {
-                doExtended();
-            }
+            doExtended();
         }
     }
         
