@@ -35,11 +35,11 @@ public class ZeroConfClient {
     public void listService(String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
-            log.debug("List " + service);
+            log.info("List " + service);
             for (ServiceInfo info : infos) {
-                log.debug(info.toString());
+                log.info(info.toString());
             }
-            log.debug("");
+            log.info("");
         }
     }
 
