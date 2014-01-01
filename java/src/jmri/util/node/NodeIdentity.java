@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a unetworkInterfaceque network identity for JMRI. If a stored
+ * Provide a unique network identity for JMRI. If a stored
  * identity does not exist, the identity is created by taking the MAC address of
  * the first {@link java.net.InetAddress} and prepending it with "jmri-". and
  * removing all :s from the address.
