@@ -1,25 +1,31 @@
 package jmri.util.node;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Properties;
+import java.util.List;
 import jmri.util.FileUtil;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a unique network identity for JMRI. If a stored identity does not
- * exist, the identity is created by taking the MAC address of the first
- * {@link java.net.InetAddress} and prepending it with "jmri-". and removing all
- * :s from the address.
+ * Provide a unetworkInterfaceque network identity for JMRI. If a stored
+ * identity does not exist, the identity is created by taking the MAC address of
+ * the first {@link java.net.InetAddress} and prepending it with "jmri-". and
+ * removing all :s from the address.
  *
  * If a stored identity is found, it is discarded if none of the InetAddresses
  * for the host match the MAC address in the identity and regenerated.
@@ -32,36 +38,46 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeIdentity {
 
-    private static NodeIdentity instance = null;
+    private final ArrayList<String> formerIdentities = new ArrayList<String>();
     private String identity = null;
-    private final File identityFile = new File(FileUtil.getPreferencesPath() + "networkIdentity.properties"); // NOI18N
+    private final File identityFile = new File(FileUtil.getPreferencesPath() + "nodeIdentity.xml"); // NOI18N
+
+    private static NodeIdentity instance = null;
     private final static Logger log = LoggerFactory.getLogger(NodeIdentity.class);
+
+    private final static String ROOT_ELEMENT = "nodeIdentityConfig"; // NOI18N
+    private final static String NODE_IDENTITY = "nodeIdentity"; // NOI18N
+    private final static String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
 
     private NodeIdentity() {
         init();
     }
 
     synchronized private void init() {
-        Properties p = new Properties();
-        FileInputStream is = null;
         if (this.identityFile.exists()) {
             try {
-                is = new FileInputStream(this.identityFile);
-                p.loadFromXML(is);
-                is.close();
-            } catch (IOException ex) {
-                if (is != null) {
-                    try {
-                        log.error("Unable to read network identity file: {}", ex.getLocalizedMessage());
-                        is.close();
-                    } catch (IOException ex1) {
-                        log.error("Unable to close network identify file: {}", ex1.getLocalizedMessage());
-                    }
+                Document doc = (new SAXBuilder()).build(this.identityFile);
+                String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
+                this.formerIdentities.clear();
+                for (Element e : (List<Element>) doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren()) {
+                    this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
                 }
+                if (!this.validateIdentity(id)) {
+                    log.debug("Node identity {} is invalid. Generating new node identity.", id);
+                    this.formerIdentities.add(id);
+                    this.getIdentity(true);
+                } else {
+                    this.getIdentity(true);
+                }
+            } catch (JDOMException ex) {
+                log.error("Unable to read node identities: {}", ex.getLocalizedMessage());
+                this.getIdentity(true);
+            } catch (IOException ex) {
+                log.error("Unable to read node identities: {}", ex.getLocalizedMessage());
+                this.getIdentity(true);
             }
-            this.setIdentity(p.getProperty("networkIdentity")); // NOI18N
         } else {
-            this.setIdentity(null);
+            this.getIdentity(true);
         }
     }
 
@@ -73,18 +89,12 @@ public class NodeIdentity {
         return instance.identity;
     }
 
-    private void setIdentity(String identity) {
-        if (identity == null || !this.validateIdentity(identity)) {
-            this.saveIdentity();
-        }
-        this.identity = identity;
-    }
-
-    private boolean validateIdentity(String identity) {
+    synchronized private boolean validateIdentity(String identity) {
         try {
             Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
             while (enumeration.hasMoreElements()) {
-                if (this.createIdentity(enumeration.nextElement().getHardwareAddress()).equals(identity)) {
+                NetworkInterface networkInterface = enumeration.nextElement();
+                if (!networkInterface.isVirtual() && this.createIdentity(networkInterface.getHardwareAddress()).equals(identity)) {
                     return true;
                 }
             }
@@ -94,8 +104,7 @@ public class NodeIdentity {
         return false;
     }
 
-    synchronized private void saveIdentity() {
-        Properties p = new Properties();
+    synchronized private void getIdentity(boolean save) {
         FileOutputStream os = null;
         try {
             this.identity = this.createIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
@@ -122,25 +131,43 @@ public class NodeIdentity {
                 }
             }
         }
-        if (this.identity != null) {
-            p.setProperty("networkIdentity", this.identity); // NOI18N
+        if (save) {
+            this.saveIdentity();
         }
-        if (!this.identityFile.exists()) {
-            log.error("Unable to create file at {}", this.identityFile.getAbsolutePath()); // NOI18N
+    }
+
+    private void saveIdentity() {
+        FileWriter fw = null;
+        Document doc = new Document();
+        doc.setRootElement(new Element(ROOT_ELEMENT));
+        Element identityElement = new Element(NODE_IDENTITY);
+        Element formerIdentitiesElement = new Element(FORMER_IDENTITIES);
+        if (this.identity == null) {
+            this.getIdentity(false);
         }
+        identityElement.setAttribute(NODE_IDENTITY, this.identity);
+        for (String formerIdentity : this.formerIdentities) {
+            log.debug("Retaining former node identity {}", formerIdentity);
+            Element e = new Element(NODE_IDENTITY);
+            e.setAttribute(NODE_IDENTITY, formerIdentity);
+            formerIdentitiesElement.addContent(e);
+        }
+        doc.getRootElement().addContent(identityElement);
+        doc.getRootElement().addContent(formerIdentitiesElement);
         try {
-            os = new FileOutputStream(this.identityFile);
-            p.storeToXML(os, "Network identity configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
-            os.close();
+            fw = new FileWriter(this.identityFile);
+            (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
+            fw.close();
         } catch (IOException ex) {
-            if (os != null) {
+            // close fw if possible
+            if (fw != null) {
                 try {
-                    log.error("Unable to create network identity file: {}", ex.getLocalizedMessage());
-                    os.close();
+                    fw.close();
                 } catch (IOException ex1) {
-                    log.error("Unable to close network identify file: {}", ex1.getLocalizedMessage());
+                    log.error("Unable to store node identities: {}", ex1.getLocalizedMessage());
                 }
             }
+            log.error("Unable to store node identities: {}", ex.getLocalizedMessage());
         }
     }
 
@@ -154,5 +181,10 @@ public class NodeIdentity {
             // not all interfaces have MAC addresses, but we don't care
         }
         return sb.toString();
+    }
+
+    private void retainFormerIdentitytt(String identity) {
+        this.formerIdentities.add(identity);
+        this.saveIdentity();
     }
 }
