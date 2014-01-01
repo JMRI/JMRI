@@ -10,10 +10,12 @@ import jmri.jmrit.picker.PickListModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
-import java.util.Hashtable;
+import javax.swing.JCheckBoxMenuItem;
 import java.util.HashMap;
+import java.util.Hashtable;
 import jmri.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -58,6 +60,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         pos.setTurnout(getNamedTurnout().getName());
         pos._iconStateMap = cloneMap(_iconStateMap, pos);
         pos.setTristate(getTristate());
+        pos.setMomentary(getMomentary());
         pos._iconFamily = _iconFamily;
         return super.finishClone(pos);
     }
@@ -210,6 +213,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public boolean getTristate() { return tristate; }
     private boolean tristate = false;
 
+    boolean momentary = false;
+    public boolean getMomentary() { return momentary; }
+    public void setMomentary(boolean m) { momentary = m; }
+
+    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
+
     /**
      * Pop-up displays unique attributes of turnouts
      */
@@ -218,9 +227,15 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             // add tristate option if turnout has feedback
             if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
                 addTristateEntry(popup);
-                return true;
             }
-            return false;
+            popup.add(momentaryItem);
+            momentaryItem.setSelected (getMomentary());
+            momentaryItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setMomentary(momentaryItem.isSelected());
+                }
+            });
+
         }
         return true;
 	}
@@ -406,17 +421,36 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         invalidate();
     }
 
-    /**
-     * Throw the turnout when the icon is clicked
-     * @param e
-     */
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
-        if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
-        if (e.isMetaDown() || e.isAltDown() ) return;
+    public boolean buttonLive() {
         if (namedTurnout==null) {
             log.error("No turnout connection, can't process click");
-            return;
+            return false;
         }
+        return true;
+    }
+
+    @Override
+    public void doMousePressed(MouseEvent e) {
+        if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
+            // this is a momentary button press
+            getTurnout().setCommandedState(jmri.Turnout.THROWN);
+        }
+        super.doMousePressed(e);
+    }
+
+    @Override
+    public void doMouseReleased(MouseEvent e) {
+        if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
+            // this is a momentary button release
+            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+        }
+        super.doMouseReleased(e);
+    }
+
+    public void doMouseClicked(java.awt.event.MouseEvent e) {
+        if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
+        if (e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) return;
+
         if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)  // if clear known state, set to opposite
             getTurnout().setCommandedState(jmri.Turnout.THROWN);
         else if (getTurnout().getKnownState()==jmri.Turnout.THROWN)
@@ -425,7 +459,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         else if (getTurnout().getCommandedState()==jmri.Turnout.CLOSED)
             getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
         else
-            getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just forc closed.
+            getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force closed.
     }
 
     public void dispose() {

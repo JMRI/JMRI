@@ -44,6 +44,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
 
         element.setAttribute("tristate", p.getTristate()?"true":"false");
+        element.setAttribute("momentary", p.getMomentary()?"true":"false");
         
         Element elem = new Element("icons");
         elem.addContent(storeIcon("closed", p.getIcon("TurnoutStateClosed")));
@@ -96,6 +97,12 @@ public class TurnoutIconXml extends PositionableLabelXml {
             l.setTristate(true);
         else
             l.setTristate(false);
+
+        a = element.getAttribute("momentary");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setMomentary(true);
+        else
+            l.setMomentary(false);
 
         @SuppressWarnings("unchecked")
         List<Element>states = element.getChildren();

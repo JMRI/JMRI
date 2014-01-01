@@ -867,6 +867,7 @@
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
       <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="momentary" type="trueFalseType" />
       <xs:attribute name="turnout" type="beanNameType" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="tristate" type="trueFalseType" />
