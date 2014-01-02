@@ -27,10 +27,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Note Mfg. recognizes CV read back is not 100% correct -->
     <variables>
-      <variable label="Short Address" CV="1" tooltip="sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Voltage" CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
@@ -68,10 +65,6 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC=143, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Long Address" CV="17" tooltip="CVs17 and 18 set the Extended (4 digit) address, range 128-9999" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
       </variable>
       <variable label="Advanced Consist address" CV="19" tooltip="set the Advanced Consist address, range 0-127" item="Consist Address" mask="XVVVVVVV" default="0">
         <decVal max="127"/>
@@ -142,17 +135,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" tooltip="['32' bit] sets the Addressing Mode" item="Address Format" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Horn type" CV="50" item="Sound Option 1" default="4" comment="Range 0-16">
         <decVal max="16"/>

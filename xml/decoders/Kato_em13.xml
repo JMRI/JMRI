@@ -26,11 +26,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Start Volts</label>
@@ -64,10 +60,6 @@
         <decVal/>
         <label>Motor Drive Frequency</label>
         <comment>00 is fastest, 255 is slowest</comment>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
       </variable>
       <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -123,17 +115,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
         <decVal max="15"/>

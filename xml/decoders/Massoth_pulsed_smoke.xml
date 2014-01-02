@@ -41,10 +41,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
@@ -58,20 +55,6 @@
       </variable>
       <variable label="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual)">
         <decVal/>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239)">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)">
-            <choice>Short Address (CV1)</choice>
-          </enumChoice>
-          <enumChoice choice="Long Address (CV17+18)">
-            <choice>Long Address (CV17+18)</choice>
-          </enumChoice>
-        </enumVal>
       </variable>
       <variable label="Bus Type" CV="49" mask="XXXVXXXX" default="0"
          tooltip="Determines which protocol is used on the bus connection to other devices" >
@@ -102,7 +85,7 @@
       <variable label="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
       </variable>
-      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended 4 digit address for programming on the Main (Range 128-10239)">
+      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended (Long) address for programming on the Main (Range 128-10239)">
         <longAddressVal/>
         <label>Long Address</label>
       </variable>

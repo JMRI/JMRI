@@ -57,7 +57,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Configuration Variable (CV) information follows -->
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
+      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, one byte) address">
         <shortAddressVal/>
         <label>Primary Address (1-127)</label>
       </variable>
@@ -126,7 +126,7 @@
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
-      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, 4 digit) address">
+      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, two byte) address">
         <longAddressVal/>
         <label>Extended Address (0001-9999)</label>
       </variable>

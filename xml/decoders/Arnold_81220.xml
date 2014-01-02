@@ -11,9 +11,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     </family>
     <programming></programming>
     <variables>
-      <variable label="Primary Address (1-119)" CV="1" item="Short Address" default="03" >
-        <decVal min="0" max="119"/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <variable label="Minimum Speed (0-255)" CV="2" item="Vstart" default="0" >
        <decVal min="0" max="255"/>
       </variable>

@@ -610,15 +610,11 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- Moved to front because controls presence of others -->
       <ivariable label="Minor Version" CVname="56.254.6" CV="56" PI="254" SI="6" item="CV56.254.6" default="0" readOnly="yes">
         <indexedVal/>
       </ivariable>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
       <variable label="Vstart" CV="2" default="32" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
@@ -651,10 +647,6 @@
       <variable label="Packet Time-out Value" CV="11">
         <decVal/>
         <label>Packet Time-out Value</label>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
@@ -814,17 +806,6 @@
           </enumChoice>
         </enumVal>
         <label>Speed Table Definition</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
       </variable>
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

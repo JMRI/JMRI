@@ -20,11 +20,7 @@
     </family>
     <programming direct="no" paged="no" register="no" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Short Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Acceleration Rate" CV="3" item="Accel">
         <decVal max="255"/>
         <label>Acceleration Rate</label>
@@ -32,10 +28,6 @@
       <variable label="Deceleration Rate" CV="4" item="Decel">
         <decVal max="255"/>
         <label>Deceleration Rate</label>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address" tooltip="Sets the Extended (4 digit) address, range 0-9999">
-        <longAddressVal/>
-        <label>Extended Address</label>
       </variable>
       <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
@@ -48,23 +40,12 @@
         </enumVal>
         <label>Speed steps</label>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
       <variable label="Short Address Alt Access" CV="49" comment="Short address" default="03">
         <shortAddressVal/>
         <label>Short Address Alt Access</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Extended Address Alt Access" CV="50" tooltip="Sets the Extended (4 digit) address, range 0-9999">
+      <variable label="Extended Address Alt Access" CV="50" tooltip="Sets the Extended (Long) address, range 0-9999">
         <longAddressVal/>
         <label>Extended Address Alt Access</label>
       </variable>

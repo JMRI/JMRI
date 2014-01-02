@@ -112,11 +112,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" comment="Short address" item="Short Address" default="03" tooltip="Sets the Primary (short, 2 digit) address">
-        <shortAddressVal/>
-        <label>Short Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start voltage" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%" default="0" tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start voltage</label>
@@ -317,10 +313,6 @@
         <label>Analog Mode Function Status - F12</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable label="Long Address" CV="17" item="Extended Address" default="0003" tooltip="/18 Sets the Extended (long, 4 digit) address">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="CV19 Stores consist address. Range 0-127 (direction set in bit 7)" tooltip="Stores consist address. Range 0-127">
         <decVal/>
         <label>Consist Address</label>
@@ -623,17 +615,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="2 Digit Address">
-            <choice>2 Digit Address</choice>
-          </enumChoice>
-          <enumChoice choice="4 Digit Address">
-            <choice>4 Digit Address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
       </variable>
       <variable label="Clear CVs (CVCLR)" CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 1" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
         <enumVal>

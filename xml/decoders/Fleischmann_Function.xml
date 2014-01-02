@@ -39,9 +39,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Software Version Number" CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
       </variable>
@@ -57,10 +55,6 @@
             <choice>Digital + Analog Operation</choice>
           </enumChoice>
         </enumVal>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
       <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
@@ -109,16 +103,6 @@
           </enumChoice>
           <enumChoice choice="speed curve through CV 67 - 96">
             <choice>speed curve through CV 67 - 96</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)">
-            <choice>Short Address (CV1)</choice>
-          </enumChoice>
-          <enumChoice choice="Long Address (CV17+18)">
-            <choice>Long Address (CV17+18)</choice>
           </enumChoice>
         </enumVal>
       </variable>

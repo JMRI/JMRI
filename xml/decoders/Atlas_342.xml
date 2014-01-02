@@ -27,11 +27,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" default="8" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
@@ -55,11 +51,6 @@
         <decVal/>
         <label>Manufacturer ID</label>
         <comment>Atlas - 127</comment>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
@@ -119,17 +110,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Motor Drive Selection" CV="50" mask="XXXXVXXX" default="1">
         <enumVal>

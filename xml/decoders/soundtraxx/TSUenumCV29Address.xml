@@ -13,10 +13,10 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
 <enumVal>
-  <enumChoice choice="Use 2 digit address (primary address)">
-    <choice>Use 2 digit address (primary address)</choice>
+  <enumChoice choice="Use Short address (primary address)">
+    <choice>Use Short address (primary address)</choice>
   </enumChoice>
-  <enumChoice choice="Use 4 digit address (extended address)">
-    <choice>Use 4 digit address (extended address)</choice>
+  <enumChoice choice="Use Long address (extended address)">
+    <choice>Use Long address (extended address)</choice>
   </enumChoice>
 </enumVal>

@@ -327,11 +327,11 @@
       </variable>
       <variable label="Addressing Mode" CV="17" mask="XVXXXXXX" default="1" item="Address Format">
         <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
+          <enumChoice choice="Short addressing">
+            <choice>Short addressing</choice>
           </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
+          <enumChoice choice="Long addressing">
+            <choice>Long addressing</choice>
           </enumChoice>
         </enumVal>
         <label>Addressing Mode</label>
@@ -19799,7 +19799,7 @@
     <column>
       <row>
         <column>
-          <display item="Long Address" tooltip="Use 4 digit address from 0-16383" label="Long Address">
+          <display item="Long Address" tooltip="Use Long address from 0-16383" label="Long Address">
             <label>Long Address</label>
           </display>
         </column>

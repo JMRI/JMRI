@@ -20,9 +20,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="003">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%" default="000">
         <decVal max="255"/>
       </variable>
@@ -53,9 +51,6 @@
       </variable>
       <variable label="DCC or Marklin" CV="12" default="0">
         <decVal max="2"/>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
       </variable>
       <variable label="Lenz BM1 Management" CV="27" comment="0 not managed, 1 FW, 2 Reverse, 3 both" default="0">
         <decVal max="3"/>
@@ -89,12 +84,6 @@
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
           <enumChoice choice="Use table in CVs 66 through 95"/>
-        </enumVal>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address"/>
-          <enumChoice choice="Two byte (extended) address"/>
         </enumVal>
       </variable>
       <!--Undocumented CV-->

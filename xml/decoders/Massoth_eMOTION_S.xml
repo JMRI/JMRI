@@ -84,9 +84,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting Voltage" CV="2" default="2" item="Vstart" tooltip="x (1/255 Track Voltage)">
         <decVal min="1" max="255"/>
       </variable>
@@ -144,9 +142,6 @@
           <enumChoice choice="On"/>
         </enumVal>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239)">
-        <longAddressVal/>
-      </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0" tooltip="Sets the multiple unit (consist) address, 0 = not in consist">
         <decVal min="0" max="127"/>
       </variable>
@@ -178,12 +173,6 @@
         <enumVal>
           <enumChoice choice="Internal Driving Curve (CV 2, 5, and 6)"/>
           <enumChoice choice="Programmable Driving Curve (CV 67-94)"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)"/>
-          <enumChoice choice="Long Address (CV17+18)"/>
         </enumVal>
       </variable>
       <variable label="Data Processing" CV="49" mask="XXXXXXXV" default="1" tooltip="Automatic Detection of Serial/Parallel">

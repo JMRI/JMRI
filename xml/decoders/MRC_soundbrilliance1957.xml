@@ -18,7 +18,7 @@
   <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="John Sebastian, JohnSeb@pacbell.net" version="1" lastUpdated="20120217"/>
   <!--   version 1  Created from MRC 1810 ver. 1.6 by Peter Ulvestad-->
-  <!--   version 2  Corrected 4 digit address not showing and Switch to includes for common vars-->
+  <!--   version 2  Corrected Long address not showing and Switch to includes for common vars-->
   <!--   version 3  Corrected BEMF not showing and light pane-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">

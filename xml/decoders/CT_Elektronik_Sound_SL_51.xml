@@ -32,11 +32,7 @@
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Voltage" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Start Voltage</label>
@@ -75,14 +71,6 @@
         <decVal/>
         <label>Analogue mode</label>
         <comment>DC/DCC</comment>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Extended Address" CV="18" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
       </variable>
       <variable label="Consist Address" CV="19" item="Consist Address">
         <decVal min="0" max="128"/>
@@ -131,17 +119,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Error Diagnosis" CV="30" default="0">
         <decVal min="0" max="3"/>

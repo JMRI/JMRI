@@ -25,11 +25,7 @@
     </family>
     <programming direct="no" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
@@ -50,10 +46,6 @@
       <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID: </label>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
@@ -154,17 +146,6 @@
           </enumChoice>
         </enumVal>
         <label>Speed Table Definition</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
       </variable>
       <variable label="F2, F3 blink control" CV="49" item="Global lighting option 1">
         <decVal/>

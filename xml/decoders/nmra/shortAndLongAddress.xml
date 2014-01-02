@@ -62,15 +62,15 @@
   </variable>
   <variable label="Address Format" CV="29" mask="XXVXXXXX">
     <enumVal>
-      <enumChoice choice="One byte (short) address">
-        <choice xml:lang="it">1 byte (ind.Corto)</choice>
-		<choice xml:lang="fr">1 octet (adresse courte)</choice>
-		<choice xml:lang="de">1 byte (Basisadresse)</choice>
+      <enumChoice choice="Short (one byte) address">
+        <choice xml:lang="it">Ind.Corto (1 byte)</choice>
+		<choice xml:lang="fr">Adresse courte (1 octet)</choice>
+		<choice xml:lang="de">Basisadresse (1 byte)</choice>
       </enumChoice>
-      <enumChoice choice="Two byte (extended) address">
-        <choice xml:lang="it">2 byte (ind.Esteso)</choice>
-		<choice xml:lang="fr">2 octets (adresse étendue)</choice>
-		<choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
+      <enumChoice choice="Long (two byte) address">
+        <choice xml:lang="it">Ind.Esteso) (2 byte)</choice>
+		<choice xml:lang="fr">Adresse étendue (2 octets)</choice>
+		<choice xml:lang="de">Erweiterte Adresse (2 byte)</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Formato Indirizzo</label>

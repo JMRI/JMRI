@@ -1303,10 +1303,10 @@
         <label>Secondary Short Address</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Secondary Long Address" CV="67" comment="4 digit address (Range 0001-9999)">
+      <variable label="Secondary Long Address" CV="67" comment="Long address (Range 0001-9999)">
         <longAddressVal/>
         <label>Secondary Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
+        <comment>Long address (Range 0001-9999)</comment>
       </variable>
       <variable label="AltFL(f) controls output 1" CV="69" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
         <enumVal>
@@ -2576,11 +2576,11 @@
       </variable>
       <variable label="Secondary Address Format" CV="112" mask="XXVXXXXX">
         <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
+          <enumChoice choice="Short addressing">
+            <choice>Short addressing</choice>
           </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
+          <enumChoice choice="Long addressing">
+            <choice>Long addressing</choice>
           </enumChoice>
         </enumVal>
         <label>Secondary Address Format</label>
@@ -3806,8 +3806,8 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Secondary Short Address" tooltip="Sets the short (2 digit) address"/>
-      <display item="Secondary Long Address" tooltip="Sets the extended (4 digit) address"/>
+      <display item="Secondary Short Address" tooltip="Sets the short (Primary) address"/>
+      <display item="Secondary Long Address" tooltip="Sets the long (Extended) address"/>
       <display item="Secondary Address Format" tooltip="Determines whether loco will use short or long address"/>
       <label label=" ">
         <label> </label>

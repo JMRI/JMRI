@@ -71,11 +71,7 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
-        <shortAddressVal/>
-        <label>Primary Address (1-127)</label>
-       <label xml:lang="it">Indirizzo primario (1-127)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Voltage (0-31)" CV="2" item="Vstart" default="0" tooltip="Sets the starting voltage at throttle speed step 1.  Note: some decoders only accept a max value of 15">
         <decVal max="31"/>
         <label>Start Voltage (0-31)</label>
@@ -110,11 +106,6 @@
         <decVal max="15"/>
         <label>EMF Frequency (0-15)</label>
       <label xml:lang="it">Frequenza EMF (0-15)</label>
-      </variable>
-      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, 4 digit) address">
-        <longAddressVal/>
-        <label>Extended Address (0001-9999)</label>
-      <label xml:lang="it">Indirizzo Esteso (0001-9999)</label>
       </variable>
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
@@ -207,20 +198,6 @@
         </enumVal>
         <label>Use Speed Table</label>
         <label xml:lang="it">Utilizzo Tabella Velocità</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-            <choice xml:lang="it">Indirizzo a 2 cifre</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-            <choice xml:lang="it">Indirizzo a 4 cifre</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-        <label xml:lang="it">Tipo Indirizzo</label>
       </variable>
       <variable label="Back EMF Control" CV="50" mask="XXXXXXXV" item="Load Control" default="1" tooltip="Activates the Back EMF function">
         <enumVal>

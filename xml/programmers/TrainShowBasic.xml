@@ -30,9 +30,9 @@
 			<dccaddress />
 			<label label=" "/>
 			<display item="Short Address"
-				tooltip="Sets the Primary (2 digit) address" />
+				tooltip="Sets the Primary (short) address" />
 			<display item="Long Address"
-				tooltip="Sets the Extended (4 digit) address" />
+				tooltip="Sets the Extended (long) address" />
 			<display item="Address Format"
 				tooltip="Determines whether loco will use short or long
 				address" />

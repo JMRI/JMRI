@@ -145,7 +145,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="16">

@@ -164,12 +164,12 @@
       </variable>
       <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
         <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
+          <enumChoice choice="Short addressing">
+            <choice>Short addressing</choice>
            <choice xml:lang="it">Indirizzo a 2 cifre</choice>
           </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
+          <enumChoice choice="Long addressing">
+            <choice>Long addressing</choice>
            <choice xml:lang="it">Indirizzo a 4 cifre</choice>
           </enumChoice>
         </enumVal>

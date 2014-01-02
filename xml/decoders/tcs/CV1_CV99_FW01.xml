@@ -17,10 +17,8 @@
 <!-- version 1 - for Unified Software -->
 
 
-<variables>
-            <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, range 1-127" item="Short Address" default="03">
-                <shortAddressVal/>
-            </variable>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
             <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
                 <decVal/>
             </variable>
@@ -92,9 +90,6 @@
             </variable>
             <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's locking ID number, range 1-6, default 1">
                 <decVal/>
-            </variable>
-            <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999">
-                <longAddressVal/>
             </variable>
             <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
                 <decVal/>
@@ -181,12 +176,6 @@
                 <enumVal>
                     <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
                     <enumChoice choice="Use Table"/>
-                </enumVal>
-            </variable>
-            <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-                <enumVal>
-                    <enumChoice choice="2 digit addressing"/>
-                    <enumChoice choice="4 digit addressing"/>
                 </enumVal>
             </variable>
             <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">

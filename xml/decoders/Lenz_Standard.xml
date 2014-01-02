@@ -25,11 +25,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="03" comment="Range 1-127">
-        <shortAddressVal/>
-        <label>Primary Address (1-127)</label>
-        <comment>Range 1-127</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts (0-255)" CV="2" item="Vstart" default="0" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Start Volts (0-255)</label>
@@ -72,11 +68,6 @@
         <decVal min="0" max="63"/>
         <label>Back EMF Repetition Rate (0-63)</label>
         <comment>Range 0-63</comment>
-      </variable>
-      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" default="100" comment="4 digit address (Range 0-9999)">
-        <longAddressVal/>
-        <label>Extended Address (0-9999)</label>
-        <comment>4 digit address (Range 0-9999)</comment>
       </variable>
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal min="0" max="127"/>
@@ -131,17 +122,6 @@
           </enumChoice>
         </enumVal>
         <label>Speed Table Selection</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>

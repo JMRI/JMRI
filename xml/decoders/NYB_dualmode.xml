@@ -23,11 +23,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no" bidirRead="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" default="10" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Start Volts</label>
@@ -50,11 +46,6 @@
       <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="71" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Manufacturer ID: </label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
@@ -103,17 +94,6 @@
           </enumChoice>
         </enumVal>
         <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Brake Momentum on DC" CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <enumVal>

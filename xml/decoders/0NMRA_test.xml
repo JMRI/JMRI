@@ -22,22 +22,7 @@
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
       <!-- Register 1 -->
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label xml:lang="it">Indirizzo Primario</label>
-        <comment xml:lang="it">Indirizzo Corto</comment>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice xml:lang="it">Indirizzo a 1 byte (corto)</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice xml:lang="it">Indirizzo a 2 byte (esteso)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <variable label="Dummy" CV="2">
         <decVal/>
         <label xml:lang="it">Falso</label>

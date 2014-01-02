@@ -29,11 +29,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
         <decVal max="63"/>
         <label>Vstart</label>
@@ -66,11 +62,6 @@
       <variable label="Manufacturer ID: " CV="8" item="Manufacturer" default="85" readOnly="yes">
         <decVal/>
         <label>Manufacturer ID: </label>
-      </variable>
-      <variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-        <comment>4 digit address (Range 128-10240)</comment>
       </variable>
       <variable label="Consist Address" CV="19" comment="0-127 0= no consist" item="Consist Address" default="0" mask="XVVVVVVV">
         <decVal/>
@@ -131,17 +122,6 @@
           </enumChoice>
         </enumVal>
         <label>Speed Table Definition</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
       </variable>
       <variable label="Main Motor Control - load regulation" CV="49" default="0" mask="XXXXXXXV">
         <enumVal>

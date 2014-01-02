@@ -44,10 +44,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Configuration Variable (CV) information follows -->
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
-        <shortAddressVal/>
-        <label>Primary Address (1-127)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start Voltage (0-255)</label>
@@ -151,10 +148,6 @@
       <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 3" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
-      </variable>
-      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, 4 digit) address">
-        <longAddressVal/>
-        <label>Extended Address (0001-9999)</label>
       </variable>
       <!-- Consisting Information follows -->
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
@@ -459,17 +452,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Extended Address Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
-        <enumVal>
-          <enumChoice choice="Use 2 digit address (primary address)">
-            <choice>Use 2 digit address (primary address)</choice>
-          </enumChoice>
-          <enumChoice choice="Use 4 digit address (extended address)">
-            <choice>Use 4 digit address (extended address)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Extended Address Mode</label>
       </variable>
       <variable label="CV Lock Enable" CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 4" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <enumVal>

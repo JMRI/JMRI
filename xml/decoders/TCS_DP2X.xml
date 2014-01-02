@@ -52,9 +52,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither">
         <decVal/>
       </variable>
@@ -75,9 +73,6 @@
       </variable>
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="153">
         <decVal/>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
-        <longAddressVal/>
       </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
@@ -110,12 +105,6 @@
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
           <enumChoice choice="Use Table"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing"/>
-          <enumChoice choice="4 digit addressing"/>
         </enumVal>
       </variable>
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated" default="0">

@@ -106,7 +106,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
       <variable label="Version Number (CV7, read only)" CV="7" readOnly="yes" item="Decoder Version">
@@ -150,12 +150,6 @@ nmraWarrant="yes" nmraWarrantStart="200604"
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
           <enumChoice choice="Use the Speed Table"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing"/>
-          <enumChoice choice="4 digit addressing"/>
         </enumVal>
       </variable>
 

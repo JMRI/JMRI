@@ -131,10 +131,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>
-      <variable label="Short Address" CV="1" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting voltage" CV="2" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
         <decVal min="0" max="255"/>
         <label>Starting voltage</label>
@@ -175,10 +172,6 @@
           </enumChoice>
         </enumVal>
         <label>Motor Frequency</label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)">
-        <longAddressVal/>
-        <label>Long Address</label>
       </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
@@ -223,17 +216,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)">
-            <choice>address 1-127 (LGB MTS: 0-22/1-23)</choice>
-          </enumChoice>
-          <enumChoice choice="address 128-10239 (not LGB MTS)">
-            <choice>address 128-10239 (not LGB MTS)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Voltage for F1 terminal" CV="49" tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage">
         <decVal min="1" max="32"/>

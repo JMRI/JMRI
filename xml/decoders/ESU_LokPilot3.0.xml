@@ -120,10 +120,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
         <decVal min="1" max="75"/>
         <label>Starting Voltage</label>
@@ -328,11 +325,6 @@
         </enumVal>
         <label>Analog Mode Function Status - F10(r)</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0">
         <decVal/>
         <label>Consist Address</label>
@@ -502,17 +494,6 @@
           </enumChoice>
         </enumVal>
         <label>Selection of speed curve</label>
-      </variable>
-      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)">
-            <choice>Short Address (CV1)</choice>
-          </enumChoice>
-          <enumChoice choice="Long Address (CV17+18)">
-            <choice>Long Address (CV17+18)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Selection of address</label>
       </variable>
       <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option">
         <enumVal>

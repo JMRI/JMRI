@@ -77,12 +77,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <label xml:lang="fr">Adresse décodeur</label>
-        <comment xml:lang="fr">Adresse courte</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable item="Vstart" CV="2" default="3">
         <decVal max="75"/>
         <label>Vstart</label>
@@ -311,11 +306,6 @@
         <label>Analog Mode Function Status - F10(r)</label>
         <label xml:lang="fr">Etat des fonctions en anal. - F10(r)</label>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-        <label xml:lang="fr">Adresse longue</label>
-      </variable>
       <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
@@ -453,18 +443,6 @@
         </enumVal>
         <label>Use Speed Table</label>
         <label xml:lang="fr">Courbe d'accélération</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-        <label xml:lang="fr">Config étendue</label>
       </variable>
       <variable item="BEMF Active" CV="49" mask="XXXXXXXV" default="1">
         <enumVal>

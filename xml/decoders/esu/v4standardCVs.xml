@@ -13,10 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Vstart" CV="2" default="3">
         <decVal/>
       </variable>
@@ -93,9 +90,6 @@
       <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" default="0">
         <decVal max="16"/>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
       <variable label="Brake on Asymmetrical DCC - higher voltage on right rail" CV="27" mask="XXXXXXXV" item="Advanced Group 2 Option 1">
@@ -156,16 +150,6 @@
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
           </enumChoice>
         </enumVal>
       </variable>

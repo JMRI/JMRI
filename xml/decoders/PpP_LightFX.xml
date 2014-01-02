@@ -27,10 +27,10 @@
       <variable label="Decoder Address (1-509)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-509" item="Long Address">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
       </variable>
-      <variable label="Extended Address" CV="17" default="9999" comment="4 digit address (Range 0-9999)">
+      <variable label="Extended Address" CV="17" default="9999" comment="Long address (Range 0-9999)">
         <longAddressVal/>
       </variable>
-      <variable label="Extended Address PoM (0-9999)" CV="17" default="9999" comment="4 digit address (Range 100-9999)" item="PoM address">
+      <variable label="Extended Address PoM (0-9999)" CV="17" default="9999" comment="Long address (Range 100-9999)" item="PoM address">
         <longAddressVal/>
       </variable>
       <variable label="Configuration" CV="29" readOnly="yes" default="128">

@@ -93,17 +93,6 @@
         </enumVal>
         <label>Speed steps</label>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
       <!-- Found on my decoders that this bit must be on, if this bit off then get no lights even if others bits are on
 				 also if another bit in on along with this one, then F0f does not turn onthe lights, only the other setting -->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1" tooltip="Must remain checked">

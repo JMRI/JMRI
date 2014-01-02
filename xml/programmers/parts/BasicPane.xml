@@ -5,13 +5,13 @@
     <column>
         <dccaddress/>
         <label label=" "/>
-        <display item="Short Address" tooltip="Sets the Primary (2 digit) address">
+        <display item="Short Address" tooltip="Sets the Primary (short) address">
             <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
-            <tooltip xml:lang="ca">Establir adreÁa prim‡ria (2 dÌgits)</tooltip>
+            <tooltip xml:lang="ca">Establir adreÁa prim‡ria (short)</tooltip>
         </display>
-        <display item="Long Address" tooltip="Sets the extended (4 digit) address">
-            <tooltip xml:lang="it">Imposta l'indirizzo esteso (4 cifre)</tooltip>
-            <tooltip xml:lang="ca">Establir adreÁa llarga (4 dÌgits)</tooltip>
+        <display item="Long Address" tooltip="Sets the extended (long) address">
+            <tooltip xml:lang="it">Imposta l'indirizzo esteso</tooltip>
+            <tooltip xml:lang="ca">Establir adreÁa llarga</tooltip>
         </display>
         <display item="Address Format" tooltip="Determines whether loco will use short or long address">
             <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>

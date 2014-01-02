@@ -29,16 +29,7 @@
     </family>
     <programming direct="no" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03" writeOnly="yes">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <variable label="Acceleration momentum" CV="3" default="5" item="Accel">
         <decVal max="255"/>
         <label>Acceleration momentum</label>

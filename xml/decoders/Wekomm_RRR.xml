@@ -34,10 +34,7 @@
 		<programming direct="yes" paged="no" 
 	                     register="yes" ops="yes"></programming>
 <variables>
-	<variable label="Primary Address" CV="1" comment="Short address"
-						item="Short Address"  default="03">
-			<shortAddressVal/>
-	</variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   		<variable label="Decoder Version No: " CV="7" readOnly="yes"
 			item="Decoder Version">
 			<decVal/>
@@ -51,15 +48,6 @@
             tooltip="Readonly default=86">
             <decVal />
     </variable>
-
-    <!-- CV 17 -->
-    <variable
-            label="Extended Address"
-            CV="17"
-            item="Long Address"
-    >
-            <longAddressVal/>
-     </variable>
 
      <!-- CV 19 Consist address  (can also use CV27-28 for Long Secondary address-->
      <variable
@@ -133,18 +121,6 @@
                 </enumVal>
         </variable>
 
-        <variable
-            label="Address Format"
-            CV="29"
-            mask="XXVXXXXX"
-            default="0"
-            item="Address Format"
-            tooltip="XXVXXXXX  default=0">
-            <enumVal>
-                <enumChoice choice="One byte (short) address"></enumChoice>
-                <enumChoice choice="Two byte (extended) address"></enumChoice>
-                </enumVal>
-        </variable>
         <variable
             label="Decoder Type"
             CV="29"

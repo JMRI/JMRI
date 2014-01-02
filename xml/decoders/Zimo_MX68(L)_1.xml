@@ -29,11 +29,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="First short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>First short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Acceleration" CV="3" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
@@ -57,11 +53,6 @@
         <label>Manufacturer ID - Reset</label>
       </variable>
       <!-- Deleted all CV 9 thru 16 references-->
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
       <variable label="Consist Address" CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
         <decVal/>
         <label>Consist Address</label>
@@ -77,17 +68,6 @@
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
         <enumVal>
@@ -962,15 +942,15 @@
         <label>Second Primary Address</label>
         <comment>Second short address</comment>
       </variable>
-      <variable label="Second Long Address #1" CV="67" item="Second Extended Address #1" comment="4 digit address (Range 0001-9999)">
+      <variable label="Second Long Address #1" CV="67" item="Second Extended Address #1" comment="Long address (Range 0001-9999)">
         <decVal/>
         <label>Second Long Address #1</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
+        <comment>Long address (Range 0001-9999)</comment>
       </variable>
-      <variable label="Second Long Address #2" CV="68" item="Second Extended Address #2" comment="4 digit address (Range 0001-9999)">
+      <variable label="Second Long Address #2" CV="68" item="Second Extended Address #2" comment="Long address (Range 0001-9999)">
         <decVal/>
         <label>Second Long Address #2</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
+        <comment>Long address (Range 0001-9999)</comment>
       </variable>
       <!-- Function settings second address -->
       <variable label="FL(f) output 1" CV="69" default="1" mask="XXXXXXXV" minOut="1">

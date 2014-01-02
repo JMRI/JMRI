@@ -31,11 +31,7 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
@@ -68,11 +64,6 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" comment="4 digit address (Range 0-9999)">
-        <longAddressVal/>
-        <label>Extended Address (0-9999)</label>
-        <comment>4 digit address (Range 0-9999)</comment>
       </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
@@ -118,17 +109,6 @@
           </enumChoice>
         </enumVal>
         <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
       </variable>
       <variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>

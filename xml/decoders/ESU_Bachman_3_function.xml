@@ -45,10 +45,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="2 digit address (Range 01-0128)">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
         <decVal min="1" max="63"/>
         <label>Starting Voltage</label>
@@ -72,21 +69,6 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="4 digit address (Range 0128-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" tooltip="['32' bit] sets the Addressing Mode">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>

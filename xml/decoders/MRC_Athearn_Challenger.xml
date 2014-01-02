@@ -26,11 +26,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Note Mfg. recognizes CV read back is not 100% correct -->
     <variables>
-      <variable label="Short address" CV="1" comment="Range 1-127" item="Short Address" default="3">
-        <shortAddressVal/>
-        <label>Short address</label>
-        <comment>Range 1-127</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start voltage" CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start voltage</label>
@@ -59,11 +55,6 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Long address" CV="17" item="Long Address" comment="4 digit address (Range 1-9999)">
-        <longAddressVal/>
-        <label>Long address</label>
-        <comment>4 digit address (Range 1-9999)</comment>
-      </variable>
       <variable label="Advanced consist address" CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Advanced consist address</label>
@@ -89,17 +80,6 @@
           </enumChoice>
         </enumVal>
         <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Sound volume min/max" CV="52" item="Sound Option 1" default="0" comment="Range 0 or 1">
         <enumVal>

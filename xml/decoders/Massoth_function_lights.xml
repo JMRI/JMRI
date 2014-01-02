@@ -95,10 +95,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- eMOTION 8FL document had motor CVs 2-6, LED document did not
                      Left them out as they make no sense in a function/light decoder
                 -->
@@ -198,10 +195,6 @@
         </enumVal>
         <label>F8 Function Output in Analog Mode</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239)">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
       <variable label="Driving Direction" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Driving Direction Standard">
@@ -234,17 +227,6 @@
           </enumChoice>
         </enumVal>
         <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)">
-            <choice>Short Address (CV1)</choice>
-          </enumChoice>
-          <enumChoice choice="Long Address (CV17+18)">
-            <choice>Long Address (CV17+18)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Data Processing" CV="49" mask="XXXXXXXV" default="0" tooltip="Automatic Detection of Serial/Parallel">
         <enumVal>

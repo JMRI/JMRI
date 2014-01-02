@@ -84,9 +84,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>
-      <variable label="Short Address" CV="1" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting voltage" CV="2" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
         <decVal min="0" max="255"/>
       </variable>
@@ -149,9 +147,6 @@
           <enumChoice choice="On"/>
         </enumVal>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)">
-        <longAddressVal/>
-      </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Forward"/>
@@ -174,12 +169,6 @@
         <enumVal>
           <enumChoice choice="internal speed step table"/>
           <enumChoice choice="user-programmed speed step table (CV's 67-94)"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
-          <enumChoice choice="address 128-10239 (not LGB MTS)"/>
         </enumVal>
       </variable>
       <variable label="Voltage for F1 terminal" CV="49" tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage">

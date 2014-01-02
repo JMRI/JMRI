@@ -39,10 +39,7 @@
 		<programming direct="yes" paged="no" 
 	                     register="yes" ops="yes"></programming>
 <variables>
-	<variable label="Primary Address" CV="1" comment="Short address"
-						item="Short Address"  default="03">
-			<shortAddressVal/>
-	</variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
 	<variable label="Vstart" CV="2"
 		comment="A value of 255 corresponds to 100%"
 		default="15">
@@ -132,10 +129,6 @@
 			<enumChoice choice="off"/>
 			<enumChoice choice="on"/>
 		</enumVal>
-	</variable>
-	<variable label="FunctionsExtended Address" CV="17"
-		item="Long Address" >
-			<longAddressVal/>
 	</variable>
 	<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
 		<decVal/>
@@ -274,12 +267,6 @@
 		<enumVal>
 			<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
 		<enumChoice choice="Use table in CVs 66 through 95"/>			</enumVal>
-	</variable>
-	<variable label="Address Format" CV="29" mask="XXVXXXXX">
-		<enumVal>
-			<enumChoice choice="One byte (short) address"/>
-			<enumChoice choice="Two byte (extended) address"/>
-			</enumVal>
 	</variable>
 	<variable label="FL(f) controls output 1" CV="33" 	mask="XXXXXXXV" minOut="1">
 		<enumVal> 

@@ -31,9 +31,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address (Range 1-127)" item="Short Address" default="03">
-        <shortAddressVal/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" default="1" comment="Range 0-31">
         <decVal min="0" max="31"/>
       </variable>
@@ -60,9 +58,6 @@
       </variable>
       <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
         <decVal/>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
       </variable>
       <!-- Consisting Information follows -->
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
@@ -237,12 +232,6 @@
         <enumVal>
           <enumChoice choice="Don't use Speed Table"/>
           <enumChoice choice="Use Speed Table"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
-        <enumVal>
-          <enumChoice choice="2 digit addressing"/>
-          <enumChoice choice="4 digit addressing"/>
         </enumVal>
       </variable>
       <!-- Function Mapping follows -->

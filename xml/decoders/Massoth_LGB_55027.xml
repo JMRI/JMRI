@@ -106,10 +106,7 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="no"/>
     <variables>
-      <variable label="Loco address (standard short)" CV="1" default="3" item="Short Address" tooltip="Loco addresses 1- 23 for LGB MTS II, 1-127 for Dimax Navigator">
-        <shortAddressVal/>
-        <label>Loco address (standard short)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable label="Starting voltage" CV="2" default="2" item="Vstart" tooltip="x (1/255 track power)">
         <decVal min="1" max="255"/>
         <label>Starting voltage</label>
@@ -221,10 +218,6 @@
         </enumVal>
         <label>F6 Function Output in Analog Mode</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS)">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="normal direction">
@@ -268,17 +261,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="short loco address (CV 1)">
-            <choice>short loco address (CV 1)</choice>
-          </enumChoice>
-          <enumChoice choice="long loco address (CV17 + CV18)">
-            <choice>long loco address (CV17 + CV18)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Function commands" CV="49" mask="XXXXXXXV" default="1" tooltip="When serial is selected, F1 - F8 also can be triggered parallel">
         <enumVal>
