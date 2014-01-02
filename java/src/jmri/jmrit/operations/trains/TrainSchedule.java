@@ -26,7 +26,7 @@ public class TrainSchedule {
 	protected List<String> _trainIds = new ArrayList<String>();
 
 	public TrainSchedule(String id, String name) {
-		log.debug("New train schedule " + name + " " + id);
+		log.debug("New train schedule, name: " + name + " id: " + id);
 		_name = name;
 		_id = id;
 	}

@@ -5,7 +5,10 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -29,6 +32,8 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
     JButton addButton = new JButton(Bundle.getMessage("Add"));
     JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
+    
+    JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
     
     TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
 	
@@ -54,16 +59,16 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         // row 4 
         addItem(replaceButton, 3, 4);
         
+        // row 5
+        addItem(restoreButton, 2, 5);
+        
 		addButtonAction(addButton);
         addButtonAction(deleteButton);
 		addButtonAction(replaceButton);
+		addButtonAction(restoreButton);
 		
 		setTitle(Bundle.getMessage("MenuItemEditSchedule"));
-		
-		pack();
-	   	if ((getWidth()<225)) 
-    		setSize(getWidth()+50, getHeight()+10);
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 
 	}
 	
@@ -71,7 +76,9 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 		if (ae.getSource() == deleteButton && comboBox.getSelectedItem() != null){
 			trainScheduleManager.deregister((TrainSchedule)comboBox.getSelectedItem());
 		}
-		
+		if (ae.getSource() == restoreButton){
+			trainScheduleManager.createDefaultSchedules();
+		}		
 		// check for valid name
 		String s = addTextBox.getText();
 		s = s.trim();
@@ -84,7 +91,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 		if (ae.getSource() == replaceButton && comboBox.getSelectedItem() != null){
 			TrainSchedule ts = ((TrainSchedule)comboBox.getSelectedItem());
 			ts.setName(s);
-		}		
+		}
 	}
 	
 	public void dispose(){

@@ -4,9 +4,12 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -390,7 +393,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
-		initMinimumSize();
+		initMinimumSize(new Dimension(Control.tablePanelWidth, Control.panelHeight));
 	}
 
 	// Save, Delete, Add buttons

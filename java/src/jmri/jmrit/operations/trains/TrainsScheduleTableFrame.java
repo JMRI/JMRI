@@ -213,12 +213,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		enableButtons(false);
 		schedule.add(noneButton);
 		schGroup.add(noneButton);
-		List<String> l = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < l.size(); i++) {
-			TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+		for (int i = 0; i < trainSchedules.size(); i++) {
+			TrainSchedule ts = trainSchedules.get(i);
 			JRadioButton b = new JRadioButton();
 			b.setText(ts.getName());
-			b.setName(l.get(i));
+			b.setName(trainSchedules.get(i).getId());
 			schedule.add(b);
 			schGroup.add(b);
 			addRadioButtonAction(b);
@@ -297,18 +297,18 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 
 	private void addPropertyChangeTrainSchedules() {
-		List<String> l = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < l.size(); i++) {
-			TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+		for (int i = 0; i < trainSchedules.size(); i++) {
+			TrainSchedule ts = trainSchedules.get(i);
 			if (ts != null)
 				ts.addPropertyChangeListener(this);
 		}
 	}
 
 	private void removePropertyChangeTrainSchedules() {
-		List<String> l = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < l.size(); i++) {
-			TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+		for (int i = 0; i < trainSchedules.size(); i++) {
+			TrainSchedule ts = trainSchedules.get(i);
 			if (ts != null)
 				ts.removePropertyChangeListener(this);
 		}

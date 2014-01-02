@@ -19,8 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2010, 2012
  * @version $Revision$
  */
-public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	TrainManager trainManager = TrainManager.instance();
 	TrainScheduleManager scheduleManager = TrainScheduleManager.instance();
@@ -208,9 +207,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+//		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)) {
 			updateList();
@@ -238,27 +237,26 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
 	private TrainSchedule getSchedule(int col) {
 		if (col >= FIXEDCOLUMN && col < getColumnCount()) {
-			List<String> l = scheduleManager.getSchedulesByIdList();
-			TrainSchedule schedule = scheduleManager.getScheduleById(l.get(col - FIXEDCOLUMN));
-			return schedule;
-		} else {
-			return null;
+			List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+			TrainSchedule ts = trainSchedules.get(col - FIXEDCOLUMN);
+			return ts;
 		}
+		return null;
 	}
 
 	private void removePropertyChangeTrainSchedules() {
-		List<String> l = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < l.size(); i++) {
-			TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+		for (int i = 0; i < trainSchedules.size(); i++) {
+			TrainSchedule ts = trainSchedules.get(i);
 			if (ts != null)
 				ts.removePropertyChangeListener(this);
 		}
 	}
 
 	private void addPropertyChangeTrainSchedules() {
-		List<String> l = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < l.size(); i++) {
-			TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+		List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+		for (int i = 0; i < trainSchedules.size(); i++) {
+			TrainSchedule ts = trainSchedules.get(i);
 			if (ts != null)
 				ts.addPropertyChangeListener(this);
 		}
@@ -295,6 +293,5 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		removePropertyChangeTrainSchedules();
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(TrainsScheduleTableModel.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainsScheduleTableModel.class.getName());
 }
