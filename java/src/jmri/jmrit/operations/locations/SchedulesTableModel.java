@@ -380,10 +380,10 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			updateList();
 			fireTableDataChanged();
 		} else if (e.getSource().getClass().equals(Schedule.class)) {
-			String id = ((Schedule) e.getSource()).getId();
-			int row = sysList.indexOf(id);
+			Schedule schedule = (Schedule) e.getSource();
+			int row = sysList.indexOf(schedule);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule table row: " + row + " id: " + id);
+				log.debug("Update schedule table row: " + row + " id: " + schedule.getId());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

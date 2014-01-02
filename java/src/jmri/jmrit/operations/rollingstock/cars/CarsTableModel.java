@@ -670,8 +670,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 		// must be a car change
 		else if (e.getSource().getClass().equals(Car.class)) {
-			String carId = ((Car) e.getSource()).getId();
-			int row = sysList.indexOf(carId);
+			Car car = (Car) e.getSource();
+			int row = sysList.indexOf(car);
 			if (Control.showProperty && log.isDebugEnabled())
 				log.debug("Update car table row: " + row);
 			if (row >= 0)

@@ -521,10 +521,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			fireTableDataChanged();
 		} else if (e.getSource().getClass().equals(Train.class)) {
 			synchronized (this) {
-				String trainId = ((Train) e.getSource()).getId();
-				int row = sysList.indexOf(trainId);
+				Train train = ((Train) e.getSource());
+				int row = sysList.indexOf(train);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update train table row: " + row + " id: " + trainId);
+					log.debug("Update train table row: " + row + " id: " + train.getId());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

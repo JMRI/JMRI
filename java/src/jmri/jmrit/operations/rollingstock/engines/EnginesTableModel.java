@@ -505,8 +505,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		}
 		// must be a engine change
 		else if (e.getSource().getClass().equals(Engine.class)) {
-			String engineId = ((Engine) e.getSource()).getId();
-			int row = sysList.indexOf(engineId);
+			Engine engine = (Engine) e.getSource();
+			int row = sysList.indexOf(engine);
 			if (Control.showProperty && log.isDebugEnabled())
 				log.debug("Update engine table row: " + row);
 			if (row >= 0)

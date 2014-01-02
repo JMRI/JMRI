@@ -205,10 +205,10 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 			updateList();
 			fireTableDataChanged();
 		} else if (e.getSource().getClass().equals(Route.class)) {
-			String locId = ((Route) e.getSource()).getId();
-			int row = sysList.indexOf(locId);
+			Route route = (Route) e.getSource();
+			int row = sysList.indexOf(route);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update route table row: " + row + " id: " + locId);
+				log.debug("Update route table row: " + row + " id: " + route.getId());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}

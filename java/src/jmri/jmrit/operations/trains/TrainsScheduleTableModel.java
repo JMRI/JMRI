@@ -226,11 +226,11 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		} else if (e.getPropertyName().equals(TrainSchedule.SCHEDULE_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		} else if (e.getSource().getClass().equals(Train.class)) {
-			String trainId = ((Train) e.getSource()).getId();
+			Train train = (Train) e.getSource();
 			synchronized (this) {
-				int row = sysList.indexOf(trainId);
+				int row = sysList.indexOf(train);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update train table row: " + row + " id: " + trainId);
+					log.debug("Update train table row: " + row + " id: " + train.getId());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

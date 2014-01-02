@@ -267,9 +267,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
              fireTableDataChanged();
     	 }
     	 else if (e.getSource().getClass().equals(Location.class)){
-    		 String locId = ((Location) e.getSource()).getId();
-    		 int row = locationsList.indexOf(locId);
-    		 if (Control.showProperty && log.isDebugEnabled()) log.debug("Update location table row: "+row + " id: " + locId);
+    		 Location loc = (Location) e.getSource();
+    		 int row = locationsList.indexOf(loc);
+    		 if (Control.showProperty && log.isDebugEnabled()) log.debug("Update location table row: "+row + " id: " + loc.getId());
     		 if (row >= 0)
     			 fireTableRowsUpdated(row, row);
     	 }
