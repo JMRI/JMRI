@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimerTask;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
@@ -340,7 +339,7 @@ public class ZeroConfService {
                 InstanceManager.shutDownManagerInstance().register(ZeroConfService.shutDownTask);
             }
         }
-        return (HashMap<InetAddress, JmDNS>) ZeroConfService.netServices.clone();
+        return new HashMap<InetAddress, JmDNS>(ZeroConfService.netServices);
     }
 
     /**
@@ -447,21 +446,6 @@ public class ZeroConfService {
                     listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
                 }
             }
-        }
-
-    }
-
-    private static class QueueTask extends TimerTask {
-
-        private final ZeroConfService service;
-
-        protected QueueTask(ZeroConfService service) {
-            this.service = service;
-        }
-
-        @Override
-        public void run() {
-            this.service.publish();
         }
 
     }
