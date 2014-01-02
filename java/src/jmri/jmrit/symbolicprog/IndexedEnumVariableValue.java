@@ -520,7 +520,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * @author  Bob Jacobsen   Copyright (C) 2001
      * @version $Revision$
      */
-    public class IVarComboBox extends JComboBox {
+    public static class IVarComboBox extends JComboBox {
 
         IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;

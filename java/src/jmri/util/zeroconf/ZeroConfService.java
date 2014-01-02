@@ -451,7 +451,7 @@ public class ZeroConfService {
 
     }
 
-    private class QueueTask extends TimerTask {
+    private static class QueueTask extends TimerTask {
 
         private final ZeroConfService service;
 
