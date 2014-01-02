@@ -342,10 +342,9 @@ public class Route implements java.beans.PropertyChangeListener {
     			return ERROR;
     	}
     	// check to see if this route is used by a train
-		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		List<Train> trains = TrainManager.instance().getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
-			Train train = TrainManager.instance().getTrainById(trains.get(i));
-			if (train.getRoute() == this)
+			if (trains.get(i).getRoute() == this)
 				return OKAY;
 		}
 	   	return ORPHAN;

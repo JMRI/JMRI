@@ -79,9 +79,9 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 		if (ae.getSource() == changeButton) {
 			log.debug("save button activated");
 			TrainManager trainManager = TrainManager.instance();
-			List<String> trainIds = trainManager.getTrainsByIdList();
-			for (int i = 0; i < trainIds.size(); i++) {
-				Train train = trainManager.getTrainById(trainIds.get(i));
+			List<Train> trains = trainManager.getTrainsByIdList();
+			for (int i = 0; i < trains.size(); i++) {
+				Train train = trains.get(i);
 				int hour = Integer.parseInt((String) hourBox.getSelectedItem())
 						+ Integer.parseInt(train.getDepartureTimeHour());
 				if (hour > 23)

@@ -5910,7 +5910,7 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation endC = C.addLocation(Westford);
 
 		TrainManager manager = TrainManager.instance();
-		List<String> temptrainList = manager.getTrainsByIdList();
+		List<Train> temptrainList = manager.getTrainsByIdList();
 
 		Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
 		Train t1 = manager.newTrain("Test Number 1");

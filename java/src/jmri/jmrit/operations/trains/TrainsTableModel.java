@@ -108,8 +108,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (!_showAll) {
 			// filter out trains not checked
 			for (int i = sysList.size() - 1; i >= 0; i--) {
-				Train train = manager.getTrainById(sysList.get(i));
-				if (!train.isBuildEnabled()) {
+				if (!sysList.get(i).isBuildEnabled()) {
 					sysList.remove(i);
 				}
 			}
@@ -119,7 +118,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		addPropertyChangeTrains();
 	}
 
-	List<String> sysList = null;
+	List<Train> sysList = null;
 	JTable _table = null;
 	TrainsTableFrame _frame = null;
 
@@ -274,7 +273,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
-		Train train = manager.getTrainById(sysList.get(row));
+		Train train = sysList.get(row);
 		if (train == null)
 			return "ERROR train unknown " + row; // NOI18N
 		switch (col) {
@@ -353,7 +352,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			actionTrain(row);
 			break;
 		case BUILDBOXCOLUMN: {
-			Train train = manager.getTrainById(sysList.get(row));
+			Train train = sysList.get(row);
 			train.setBuildEnabled(((Boolean) value).booleanValue());
 			break;
 		}
@@ -369,7 +368,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (tef != null)
 			tef.dispose();
 		tef = new TrainEditFrame();
-		Train train = manager.getTrainById(sysList.get(row));
+		Train train = sysList.get(row);
 		log.debug("Edit train (" + train.getName() + ")");
 		tef.initComponents(train);
 		focusTef = true;
@@ -382,7 +381,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();
-		Train train = manager.getTrainById(sysList.get(row));
+		Train train = sysList.get(row);
 		log.debug("Edit route for train (" + train.getName() + ")");
 		ref.initComponents(train.getRoute(), train);
 		focusRef = true;
@@ -390,7 +389,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 	Thread build;
 	private synchronized void buildTrain(int row) {
-		final Train train = manager.getTrainById(sysList.get(row));
+		final Train train = sysList.get(row);
 		if (!train.isBuilt()) {
 			// only one train build at a time
 			if (build != null && build.isAlive())
@@ -421,7 +420,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// no actions while a train is being built
 		if (build != null && build.isAlive())
 			return;
-		Train train = manager.getTrainById(sysList.get(row));
+		Train train = sysList.get(row);
 		// move button becomes report if failure
 		if (train.getBuildFailed()) {
 			train.printBuildReport();
@@ -533,22 +532,22 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	private synchronized void removePropertyChangeTrains() {
-		List<String> trains = manager.getTrainsByIdList();
+		List<Train> trains = manager.getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			Train t = manager.getTrainById(trains.get(i));
-			if (t != null)
-				t.removePropertyChangeListener(this);
+			Train train = trains.get(i);
+			if (train != null)
+				train.removePropertyChangeListener(this);
 		}
 	}
 
 	private synchronized void addPropertyChangeTrains() {
-		List<String> trains = manager.getTrainsByIdList();
+		List<Train> trains = manager.getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			Train t = manager.getTrainById(trains.get(i));
-			if (t != null)
-				t.addPropertyChangeListener(this);
+			Train train = trains.get(i);
+			if (train != null)
+				train.addPropertyChangeListener(this);
 		}
 	}
 

@@ -328,9 +328,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			build.start();
 		}
 		if (ae.getSource() == printButton) {
-			List<String> trains = getSortByList();
+			List<Train> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = trainManager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				if (train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 							.getMessage("NeedToBuildBeforePrinting"), new Object[] {
@@ -345,9 +345,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == openFileButton) {
 			// open the csv files
-			List<String> trains = getSortByList();
+			List<Train> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = trainManager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
 						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
@@ -375,9 +375,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			List<String> trains = getSortByList();
+			List<Train> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = trainManager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
 						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
@@ -407,9 +407,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			tslef.initComponents();
 		}
 		if (ae.getSource() == terminateButton) {
-			List<String> trains = getSortByList();
+			List<Train> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = trainManager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				if (train.isBuildEnabled() && train.isBuilt() && train.isPrinted()) {
 					train.terminate();
 				} else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()) {
@@ -434,10 +434,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	 * A thread is used to allow train table updates during builds.
 	 */
 	private void buildTrains() {
-		List<String> trains = getSortByList();
+		List<Train> trains = getSortByList();
 		for (int i = 0; i < trains.size(); i++) {
-			Train train = trainManager.getTrainById(trains.get(i));
-			train.buildIfSelected();
+			trains.get(i).buildIfSelected();
 		}
 	}
 
@@ -461,8 +460,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		return sortBy;
 	}
 
-	public List<String> getSortByList() {
-		List<String> sysList;
+	public List<Train> getSortByList() {
+		List<Train> sysList;
 		String sortBy = getSortBy();
 		if (sortBy.equals(TrainsTableModel.IDCOLUMNNAME))
 			sysList = trainManager.getTrainsByIdList();

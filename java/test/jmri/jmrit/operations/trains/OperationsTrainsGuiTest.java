@@ -655,11 +655,11 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	public void testTrainsScheduleEditFrame() {
 		TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
 		Assert.assertNotNull("frame exists", f);
-
+		
 		f.addTextBox.setText("A New Day");
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-
+		
 		TrainScheduleManager tsm = TrainScheduleManager.instance();
 		Assert.assertNotNull("Train schedule manager exists", tsm);
 		Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));

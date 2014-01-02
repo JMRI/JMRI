@@ -233,13 +233,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	private void updateCheckboxes(boolean selected) {
 		TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(getSelectedScheduleId());
 		if (ts != null) {
-			List<String> trains = trainManager.getTrainsByIdList();
+			List<Train> trains = trainManager.getTrainsByIdList();
 			for (int j = 0; j < trains.size(); j++) {
-				log.debug("train id: " + trains.get(j));
+//				log.debug("train id: " + trains.get(j).getId());
 				if (selected)
-					ts.addTrainId(trains.get(j));
+					ts.addTrainId(trains.get(j).getId());
 				else
-					ts.removeTrainId(trains.get(j));
+					ts.removeTrainId(trains.get(j).getId());
 			}
 		}
 	}
@@ -248,11 +248,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		setActiveId();
 		TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(_activeId);
 		if (ts != null) {
-			List<String> trains = trainManager.getTrainsByIdList();
+			List<Train> trains = trainManager.getTrainsByIdList();
 			for (int j = 0; j < trains.size(); j++) {
-				log.debug("train id: " + trains.get(j));
-				Train train = trainManager.getTrainById(trains.get(j));
-				train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
+//				log.debug("train id: " + trains.get(j).getId());
+				trains.get(j).setBuildEnabled(ts.containsTrainId(trains.get(j).getId()));
 			}
 		}
 	}

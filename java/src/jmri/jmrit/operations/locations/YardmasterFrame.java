@@ -309,9 +309,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	
 	private void addTrainListeners() {
 		log.debug("Adding train listerners");
-		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		List<Train> trains = TrainManager.instance().getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
-			Train train = TrainManager.instance().getTrainById(trains.get(i));
+			Train train = trains.get(i);
 			if (train != null)
 				train.addPropertyChangeListener(this);
 		}
@@ -321,9 +321,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	private void removeTrainListeners() {
 		log.debug("Removing train listerners");
-		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		List<Train> trains = TrainManager.instance().getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
-			Train train = TrainManager.instance().getTrainById(trains.get(i));
+			Train train = trains.get(i);
 			if (train != null)
 				train.removePropertyChangeListener(this);
 		}

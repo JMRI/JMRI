@@ -1083,8 +1083,8 @@ public class JsonUtil {
 
     static public JsonNode getTrains() throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String trainID : TrainManager.instance().getTrainsByNameList()) {
-            root.add(getTrain(trainID));
+        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+            root.add(getTrain(train.getId()));
         }
         return root;
     }

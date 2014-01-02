@@ -174,6 +174,9 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	}
 
 	private List<TrainSchedule> getList() {
+		// no schedules? then load defaults
+		if (numEntries() == 0)
+			createDefaultSchedules();
 		List<TrainSchedule> out = new ArrayList<TrainSchedule>();
 		Enumeration<TrainSchedule> en = _scheduleHashTable.elements();
 		while (en.hasMoreElements()) {
@@ -244,11 +247,11 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 		Element e = root.getChild(Xml.SCHEDULES);
 		if (e != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
+			List<Element> schedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
 			if (log.isDebugEnabled())
-				log.debug("TrainScheduleManager sees " + l.size() + " train schedules");
-			for (int i = 0; i < l.size(); i++) {
-				register(new TrainSchedule(l.get(i)));
+				log.debug("TrainScheduleManager sees " + schedules.size() + " train schedules");
+			for (int i = 0; i < schedules.size(); i++) {
+				register(new TrainSchedule(schedules.get(i)));
 			}
 		}
 	}

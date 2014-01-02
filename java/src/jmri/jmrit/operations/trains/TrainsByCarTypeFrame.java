@@ -174,9 +174,9 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		String carType = (String)typeComboBox.getSelectedItem();
 		if (copyCheckBox.isSelected())
 			carType = textCarType.getText();
-		List<String> trains = manager.getTrainsByNameList();
+		List<Train> trains = manager.getTrainsByNameList();
 		for (int i=0; i<trains.size(); i++){
-			Train train = manager.getTrainById(trains.get(i));
+			Train train = trains.get(i);
 			train.addPropertyChangeListener(this);
 			JCheckBox cb = new JCheckBox(train.getName());
 			cb.setName(train.getId());

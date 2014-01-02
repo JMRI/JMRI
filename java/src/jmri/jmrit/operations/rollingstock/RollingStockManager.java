@@ -24,9 +24,8 @@ import java.util.List;
  */
 public class RollingStockManager {
 
-	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); // RollingStock
-																									// by
-																									// id
+	// RollingStock by id
+	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); 
 
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
 

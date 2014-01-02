@@ -45,16 +45,16 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 	 * send a list of trains known by Operations to the client
 	 */
 	public void sendTrainList() {
-		List<String> trainList = tm.getTrainsByNameList();
+		List<Train> trainList = tm.getTrainsByNameList();
 		ArrayList<Attribute> aTrain;
-		for (String trainID : trainList) {
+		for (Train train : trainList) {
 		    aTrain = new ArrayList<Attribute>(1);
-		    aTrain.add(new Attribute(SimpleOperationsServer.TRAINS, tm.getTrainById(trainID).getName()));
+		    aTrain.add(new Attribute(SimpleOperationsServer.TRAINS, train.getName()));
 		    try {
 		        sendMessage(aTrain);
 		    }
 		    catch (IOException ioe) {
-		        log.debug("could not send train " + tm.getTrainById(trainID).getName());
+		        log.debug("could not send train " + train.getName());
 		    }
 		}
 	}
@@ -278,16 +278,16 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 	}
 	
 	private void addPropertyChangeListeners(){
-		java.util.List<String> trainList = tm.getTrainsByNameList();		
-		for (String trainID : trainList) {
-			tm.getTrainById(trainID).addPropertyChangeListener(this);
+		java.util.List<Train> trainList = tm.getTrainsByNameList();		
+		for (Train train : trainList) {
+			train.addPropertyChangeListener(this);
 		}
 	}
 	
 	private void removePropertyChangeListeners(){
-		java.util.List<String> trainList = tm.getTrainsByNameList();		
-		for (String trainID : trainList) {
-			tm.getTrainById(trainID).removePropertyChangeListener(this);
+		java.util.List<Train> trainList = tm.getTrainsByNameList();		
+		for (Train train : trainList) {
+			train.removePropertyChangeListener(this);
 		}
 	}
 	

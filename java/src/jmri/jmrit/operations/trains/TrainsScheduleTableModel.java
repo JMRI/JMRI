@@ -78,11 +78,11 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		addPropertyChangeTrains();
 	}
 
-	public synchronized List<String> getSelectedTrainList() {
+	public synchronized List<Train> getSelectedTrainList() {
 		return sysList;
 	}
 
-	List<String> sysList = null;
+	List<Train> sysList = null;
 	JTable _table = null;
 	TrainsScheduleTableFrame _frame = null;
 
@@ -93,6 +93,8 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	}
 
 	void initTable() {
+		if (_table == null)
+			return;
 		// Install the button handlers
 		TableColumnModel tcm = _table.getColumnModel();
 		_table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
@@ -168,7 +170,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	public synchronized Object getValueAt(int row, int col) {
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
-		Train train = trainManager.getTrainById(sysList.get(row));
+		Train train = sysList.get(row);
 		if (train == null)
 			return "ERROR train unknown " + row; // NOI18N
 		switch (col) {
@@ -193,7 +195,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	public synchronized void setValueAt(Object value, int row, int col) {
 		TrainSchedule ts = getSchedule(col);
 		if (ts != null) {
-			Train train = trainManager.getTrainById(sysList.get(row));
+			Train train = sysList.get(row);
 			if (train == null) {
 				log.error("train not found");
 				return;
@@ -266,9 +268,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Train t = trainManager.getTrainById(sysList.get(i));
-				if (t != null)
-					t.removePropertyChangeListener(this);
+				Train train = sysList.get(i);
+				if (train != null)
+					train.removePropertyChangeListener(this);
 			}
 		}
 	}
@@ -277,9 +279,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Train t = trainManager.getTrainById(sysList.get(i));
-				if (t != null)
-					t.addPropertyChangeListener(this);
+				Train train = sysList.get(i);
+				if (train != null)
+					train.addPropertyChangeListener(this);
 			}
 		}
 	}

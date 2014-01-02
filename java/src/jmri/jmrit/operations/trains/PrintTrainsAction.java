@@ -48,7 +48,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 		}
 		
 		TrainsTableFrame panel = (TrainsTableFrame) frame;
-		List<String> trains = panel.getSortByList();
+		List<Train> trains = panel.getSortByList();
 		
 		printSummaryTrains(writer, trains);
 		
@@ -59,7 +59,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 			
 			// now do the details for each train
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = manager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				if (train.getRoute() != null) {
 					List<String> route = train.getRoute().getLocationsBySequenceList();
 					// determine if another detailed summary can fit on the same page
@@ -78,14 +78,14 @@ public class PrintTrainsAction extends PrintTrainAction {
 		writer.close();
 	}
 	
-	protected void printSummaryTrains(HardcopyWriter writer, List<String> trains) {
+	protected void printSummaryTrains(HardcopyWriter writer, List<Train> trains) {
 		try {
 			String s = Bundle.getMessage("Name") + TAB + TAB + Bundle.getMessage("Description") + TAB
 					+ Bundle.getMessage("Route") + TAB + TAB + Bundle.getMessage("Departs") + TAB + TAB
 					+ Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + TAB + NEW_LINE;
 			writer.write(s, 0, s.length());
 			for (int i = 0; i < trains.size(); i++) {
-				Train train = manager.getTrainById(trains.get(i));
+				Train train = trains.get(i);
 				String name = train.getName();
 				name = truncate(name);
 				String desc = train.getDescription();

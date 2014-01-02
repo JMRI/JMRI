@@ -776,10 +776,10 @@ public class ActivateTrainFrame {
 		}
 		else if (_TrainsFromTrains) {
 			// initialize free trains from operations
-			List<String> l = TrainManager.instance().getTrainsByNameList();
-			if (l.size()>0) {
-				for (int i = 0; i<l.size(); i++) {
-					Train t = TrainManager.instance().getTrainById(l.get(i));
+			List<Train> trains = TrainManager.instance().getTrainsByNameList();
+			if (trains.size()>0) {
+				for (int i = 0; i<trains.size(); i++) {
+					Train t = trains.get(i);
 					if (t!=null) {
 						String rName = t.getName();
 						if (isTrainFree(rName)) {

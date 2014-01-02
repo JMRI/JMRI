@@ -65,7 +65,7 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		// service that car type
 		String carTypes[] = CarTypes.instance().getNames();
 
-		List<String> trains = trainManager.getTrainsByNameList();
+		List<Train> trains = trainManager.getTrainsByNameList();
 		
 		try {
 			// title line
@@ -78,7 +78,7 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 				writer.write(s);
 				// trains
 				for (int i = 0; i < trains.size(); i++) {
-					Train train = trainManager.getTrainById(trains.get(i));
+					Train train = trains.get(i);
 					if (train.acceptsTypeName(carTypes[t])) {
 						StringBuilder sb = new StringBuilder();
 						String name = train.getName();

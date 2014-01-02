@@ -884,7 +884,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
@@ -1070,7 +1070,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
@@ -1405,7 +1405,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
@@ -1609,7 +1609,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Car c3 = cmanager.getByRoadAndNumber("BA", "3");
@@ -1742,7 +1742,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Car c3 = cmanager.getByRoadAndNumber("BA", "3");
@@ -2159,7 +2159,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		loadLocationsTrainsAndCars();
 
-		List<String> trains = tmanager.getTrainsByNameList();
+		List<Train> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 7, trains.size());
 		
 		Car c3 = cmanager.getByRoadAndNumber("BA", "3");

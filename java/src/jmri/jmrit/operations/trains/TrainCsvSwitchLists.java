@@ -59,7 +59,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		addLine(fileOut, VT + getDate(true));
 
 		// get a list of trains
-		List<String> trains = trainManager.getTrainsByTimeList();
+		List<Train> trains = trainManager.getTrainsByTimeList();
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
 		for (int i = 0; i < trains.size(); i++) {
@@ -67,7 +67,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			int dropCars = 0;
 			int stops = 1;
 			boolean trainDone = false;
-			Train train = trainManager.getTrainById(trains.get(i));
+			Train train = trains.get(i);
 			if (!train.isBuilt())
 				continue; // train wasn't built so skip
 			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
