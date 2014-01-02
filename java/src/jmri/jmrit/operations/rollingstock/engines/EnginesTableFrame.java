@@ -4,11 +4,13 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -27,6 +29,7 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -249,7 +252,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		clearTableSort(enginesTable);
 	}
 
-	public List<String> getSortByList() {
+	public List<RollingStock> getSortByList() {
 		return enginesModel.getSelectedEngineList();
 	}
 

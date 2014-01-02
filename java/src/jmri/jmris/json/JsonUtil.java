@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -131,6 +133,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -144,6 +147,7 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,8 +184,8 @@ public class JsonUtil {
 
     static public JsonNode getCars() {
         ArrayNode root = mapper.createArrayNode();
-        for (String id : CarManager.instance().getByIdList()) {
-            root.add(getCar(id));
+        for (RollingStock rs : CarManager.instance().getByIdList()) {
+            root.add(getCar(rs.getId()));
         }
         return root;
     }
@@ -364,8 +368,8 @@ public class JsonUtil {
 
     static public JsonNode getEngines() {
         ArrayNode root = mapper.createArrayNode();
-        for (String id : EngineManager.instance().getByIdList()) {
-            root.add(getEngine(id));
+        for (RollingStock rs : EngineManager.instance().getByIdList()) {
+            root.add(getEngine(rs.getId()));
         }
         return root;
     }
@@ -1182,9 +1186,9 @@ public class JsonUtil {
     static private ArrayNode getCarsForTrain(Train train) {
         ArrayNode clan = mapper.createArrayNode();
         CarManager carManager = CarManager.instance();
-        List<String> carList = carManager.getByTrainDestinationList(train);
+        List<Car> carList = carManager.getByTrainDestinationList(train);
         for (int k = 0; k < carList.size(); k++) {
-            clan.add(getCar(carList.get(k)).get(DATA)); //add each car's data to the carList array
+            clan.add(getCar(carList.get(k).getId()).get(DATA)); //add each car's data to the carList array
         }
         return clan;  //return array of car data
     }
@@ -1192,9 +1196,9 @@ public class JsonUtil {
     static private ArrayNode getEnginesForTrain(Train train) {
         ArrayNode elan = mapper.createArrayNode();
         EngineManager engineManager = EngineManager.instance();
-        List<String> engineList = engineManager.getByTrainList(train);
+        List<RollingStock> engineList = engineManager.getByTrainList(train);
         for (int k = 0; k < engineList.size(); k++) {
-            elan.add(getEngine(engineList.get(k)).get(DATA)); //add each engine's data to the engineList array
+            elan.add(getEngine(engineList.get(k).getId()).get(DATA)); //add each engine's data to the engineList array
         }
         return elan;  //return array of engine data
     }

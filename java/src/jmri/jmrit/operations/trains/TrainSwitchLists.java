@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,6 +15,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -113,8 +116,8 @@ public class TrainSwitchLists extends TrainCommon {
 			int stops = 1;
 			boolean trainDone = false;
 			// get engine and car lists
-			List<String> engineList = engineManager.getByTrainList(train);
-			List<String> carList = carManager.getByTrainDestinationList(train);
+			List<RollingStock> engineList = engineManager.getByTrainList(train);
+			List<Car> carList = carManager.getByTrainDestinationList(train);
 			List<String> routeList = route.getLocationsBySequenceList();
 			// does the train stop once or more at this location?
 			for (int r = 0; r < routeList.size(); r++) {

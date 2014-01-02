@@ -5,10 +5,6 @@ package jmri.jmrit.operations.rollingstock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 
 import java.util.Enumeration;
@@ -153,13 +149,13 @@ public class RollingStockManager {
 	}
 
 	/**
-	 * Returns a list (no order) of RollingStock ids.
+	 * Returns a list (no order) of RollingStock.
 	 * 
 	 * @return list of RollingStock
 	 */
-	public List<String> getList() {
-		Enumeration<String> en = _hashTable.keys();
-		List<String> out = new ArrayList<String>();
+	public List<RollingStock> getList() {
+		Enumeration<RollingStock> en = _hashTable.elements();
+		List<RollingStock> out = new ArrayList<RollingStock>();
 		while (en.hasMoreElements()) {
 			out.add(en.nextElement());
 		}
@@ -169,12 +165,12 @@ public class RollingStockManager {
 	/**
 	 * Sort by rolling stock id
 	 * 
-	 * @return list of RollingStock ids ordered by id
+	 * @return list of RollingStock ordered by id
 	 */
-	public List<String> getByIdList() {
+	public List<RollingStock> getByIdList() {
 		Enumeration<String> en = _hashTable.keys();
 		String[] arr = new String[_hashTable.size()];
-		List<String> out = new ArrayList<String>();
+		List<RollingStock> out = new ArrayList<RollingStock>();
 		int i = 0;
 		while (en.hasMoreElements()) {
 			arr[i] = en.nextElement();
@@ -182,72 +178,67 @@ public class RollingStockManager {
 		}
 		jmri.util.StringUtil.sort(arr);
 		for (i = 0; i < arr.length; i++)
-			out.add(arr[i]);
+			out.add(getById(arr[i]));
 		return out;
 	}
 
 	/**
 	 * Sort by rolling stock road name
 	 * 
-	 * @return list of RollingStock ids ordered by road name
+	 * @return list of RollingStock ordered by road name
 	 */
-	public List<String> getByRoadNameList() {
+	public List<RollingStock> getByRoadNameList() {
 		return getByList(getByIdList(), BY_ROAD);
 	}
 
 	/**
 	 * Sort by rolling stock number, number can alpha numeric
 	 * 
-	 * @return list of RollingStock ids ordered by number
+	 * @return list of RollingStock ordered by number
 	 */
-	public List<String> getByNumberList() {
-		// log.debug("start rolling stock sort by number list");
+	public List<RollingStock> getByNumberList() {
 		// first get by road list
-		List<String> sortIn = getByRoadNameList();
+		List<RollingStock> sortIn = getByRoadNameList();
 		// now re-sort
-		List<String> out = new ArrayList<String>();
+		List<RollingStock> out = new ArrayList<RollingStock>();
 		int rsNumber = 0;
 		int outRsNumber = 0;
 		int notInteger = -999999999; // flag when rolling stock number isn't an
 										// integer
 		String[] number;
-		boolean rsAdded = false;
 
 		for (int i = 0; i < sortIn.size(); i++) {
-			rsAdded = false;
 			try {
-				rsNumber = Integer.parseInt(getById(sortIn.get(i)).getNumber());
-				getById(sortIn.get(i)).number = rsNumber;
+				rsNumber = Integer.parseInt(sortIn.get(i).getNumber());
+				sortIn.get(i).number = rsNumber;
 			} catch (NumberFormatException e) {
 				// maybe rolling stock number in the format xxx-y
 				try {
-					number = getById(sortIn.get(i)).getNumber().split("-");
+					number = sortIn.get(i).getNumber().split("-");
 					rsNumber = Integer.parseInt(number[0]);
-					getById(sortIn.get(i)).number = rsNumber;
+					sortIn.get(i).number = rsNumber;
 				} catch (NumberFormatException e2) {
-					getById(sortIn.get(i)).number = notInteger;
+					sortIn.get(i).number = notInteger;
 					// sort alpha numeric numbers at the end of the out list
-					String numberIn = getById(sortIn.get(i)).getNumber();
+					String numberIn = sortIn.get(i).getNumber();
 					// log.debug("rolling stock in road number ("+numberIn+") isn't a number");
 					for (int k = (out.size() - 1); k >= 0; k--) {
-						String numberOut = getById(out.get(k)).getNumber();
+						String numberOut = out.get(k).getNumber();
 						try {
 							Integer.parseInt(numberOut);
 							// done, place rolling stock with alpha numeric
 							// number after
 							// rolling stocks with real numbers.
 							out.add(k + 1, sortIn.get(i));
-							rsAdded = true;
 							break;
 						} catch (NumberFormatException e3) {
 							if (numberIn.compareToIgnoreCase(numberOut) >= 0) {
 								out.add(k + 1, sortIn.get(i));
-								rsAdded = true;
 								break;
 							}
 						}
 					}
-					if (!rsAdded)
+					if (!out.contains(sortIn.get(i)))
 						out.add(0, sortIn.get(i));
 					continue;
 				}
@@ -257,7 +248,7 @@ public class RollingStockManager {
 			// page to improve sort performance.
 			int divisor = out.size() / pageSize;
 			for (int k = divisor; k > 0; k--) {
-				outRsNumber = getById(out.get((out.size() - 1) * k / divisor)).number;
+				outRsNumber = out.get((out.size() - 1) * k / divisor).number;
 				if (outRsNumber == notInteger)
 					continue;
 				if (rsNumber >= outRsNumber) {
@@ -266,17 +257,15 @@ public class RollingStockManager {
 				}
 			}
 			for (int j = start; j < out.size(); j++) {
-				outRsNumber = getById(out.get(j)).number;
+				outRsNumber = out.get(j).number;
 				if (outRsNumber == notInteger) {
 					try {
-						outRsNumber = Integer.parseInt(getById(out.get(j)).getNumber());
+						outRsNumber = Integer.parseInt(out.get(j).getNumber());
 					} catch (NumberFormatException e) {
 						try {
-							number = getById(out.get(j)).getNumber().split("-");
+							number = out.get(j).getNumber().split("-");
 							outRsNumber = Integer.parseInt(number[0]);
 						} catch (NumberFormatException e2) {
-							// RollingStock rs = getById(out.get(j));
-							// log.debug("RollingStock ("+rs.getId()+") road number ("+rs.getNumber()+") isn't a number");
 							// force add
 							outRsNumber = rsNumber + 1;
 						}
@@ -284,11 +273,10 @@ public class RollingStockManager {
 				}
 				if (rsNumber < outRsNumber) {
 					out.add(j, sortIn.get(i));
-					rsAdded = true;
 					break;
 				}
 			}
-			if (!rsAdded) {
+			if (!out.contains(sortIn.get(i))) {
 				out.add(sortIn.get(i));
 			}
 		}
@@ -301,24 +289,23 @@ public class RollingStockManager {
 	 * 
 	 * @return list of RollingStock ids ordered by RollingStock type
 	 */
-	public List<String> getByTypeList() {
+	public List<RollingStock> getByTypeList() {
 		return getByList(getByRoadNameList(), BY_TYPE);
 	}
 
 	/**
-	 * Return rolling stock ids of a specific type
+	 * Return rolling stock of a specific type
 	 * 
 	 * @param type
 	 *            type of rolling stock
-	 * @return list of RollingStock ids that are specific type
+	 * @return list of RollingStock that are specific type
 	 */
-	public List<String> getByTypeList(String type) {
-		List<String> l = getByTypeList();
-		List<String> out = new ArrayList<String>();
-		for (int i = 0; i < l.size(); i++) {
-			RollingStock rs = getById(l.get(i));
-			if (rs.getTypeName().equals(type))
-				out.add(l.get(i));
+	public List<RollingStock> getByTypeList(String type) {
+		List<RollingStock> typeList = getByTypeList();
+		List<RollingStock> out = new ArrayList<RollingStock>();
+		for (int i = 0; i < typeList.size(); i++) {
+			if (typeList.get(i).getTypeName().equals(type))
+				out.add(typeList.get(i));
 		}
 		return out;
 	}
@@ -326,153 +313,149 @@ public class RollingStockManager {
 	/**
 	 * Sort by rolling stock color names
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock color
+	 * @return list of RollingStock ordered by RollingStock color
 	 */
-	public List<String> getByColorList() {
+	public List<RollingStock> getByColorList() {
 		return getByList(getByTypeList(), BY_COLOR);
 	}
 
 	/**
 	 * Sort by rolling stock location
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock location
+	 * @return list of RollingStock ordered by RollingStock location
 	 */
-	public List<String> getByLocationList() {
+	public List<RollingStock> getByLocationList() {
 		return getByList(getByNumberList(), BY_LOCATION);
 	}
 
 	/**
 	 * Sort by rolling stock destination
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock destination
+	 * @return list of RollingStock ordered by RollingStock destination
 	 */
-	public List<String> getByDestinationList() {
+	public List<RollingStock> getByDestinationList() {
 		return getByList(getByLocationList(), BY_DESTINATION);
 	}
 
 	/**
 	 * Sort by rolling stocks in trains
 	 * 
-	 * @return list of RollingStock ids ordered by trains
+	 * @return list of RollingStock ordered by trains
 	 */
-	public List<String> getByTrainList() {
-		List<String> byDest = getByList(getByIdList(), BY_DESTINATION);
-		List<String> byLoc = getByList(byDest, BY_LOCATION);
+	public List<RollingStock> getByTrainList() {
+		List<RollingStock> byDest = getByList(getByIdList(), BY_DESTINATION);
+		List<RollingStock> byLoc = getByList(byDest, BY_LOCATION);
 		return getByList(byLoc, BY_TRAIN);
 	}
 
 	/**
 	 * Sort by rolling stock moves
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock moves
+	 * @return list of RollingStock ordered by RollingStock moves
 	 */
-	public List<String> getByMovesList() {
+	public List<RollingStock> getByMovesList() {
 		return getByIntList(getList(), BY_MOVES);
 	}
 
 	/**
 	 * Sort by when rolling stock was built
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock built date
+	 * @return list of RollingStock ordered by RollingStock built date
 	 */
-	public List<String> getByBuiltList() {
+	public List<RollingStock> getByBuiltList() {
 		return getByList(getByIdList(), BY_BUILT);
 	}
 
 	/**
 	 * Sort by rolling stock owner
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock owner
+	 * @return list of RollingStock ordered by RollingStock owner
 	 */
-	public List<String> getByOwnerList() {
+	public List<RollingStock> getByOwnerList() {
 		return getByList(getByIdList(), BY_OWNER);
 	}
 
 	/**
 	 * Sort by rolling stock value
 	 * 
-	 * @return list of RollingStock ids ordered by value
+	 * @return list of RollingStock ordered by value
 	 */
-	public List<String> getByValueList() {
+	public List<RollingStock> getByValueList() {
 		return getByList(getByIdList(), BY_VALUE);
 	}
 
 	/**
 	 * Sort by rolling stock RFID
 	 * 
-	 * @return list of RollingStock ids ordered by RFIDs
+	 * @return list of RollingStock ordered by RFIDs
 	 */
-	public List<String> getByRfidList() {
+	public List<RollingStock> getByRfidList() {
 		return getByList(getByIdList(), BY_RFID);
 	}
 
 	/**
 	 * Sort by rolling stock last date used
 	 * 
-	 * @return list of RollingStock ids ordered by last date
+	 * @return list of RollingStock ordered by last date
 	 */
-	public List<String> getByLastDateList() {
+	public List<RollingStock> getByLastDateList() {
 		return getByList(getByIdList(), BY_LAST);
 	}
 
 	private static final int pageSize = 64;
 
-	protected List<String> getByList(List<String> sortIn, int attribute) {
-		List<String> out = new ArrayList<String>();
+	protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
+		List<RollingStock> out = new ArrayList<RollingStock>();
 		String rsIn;
 		for (int i = 0; i < sortIn.size(); i++) {
-			boolean rsAdded = false;
-			rsIn = (String) getRsAttribute(getById(sortIn.get(i)), attribute);
+			rsIn = (String) getRsAttribute(sortIn.get(i), attribute);
 			int start = 0;
 			// page to improve performance. Most have id = road+number
 			int divisor = out.size() / pageSize;
 			for (int k = divisor; k > 0; k--) {
-				String rsOut = (String) getRsAttribute(getById(out.get((out.size() - 1) * k / divisor)), attribute);
+				String rsOut = (String) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
 				if (rsIn.compareToIgnoreCase(rsOut) >= 0) {
 					start = (out.size() - 1) * k / divisor;
 					break;
 				}
 			}
 			for (int j = start; j < out.size(); j++) {
-				String rsOut = (String) getRsAttribute(getById(out.get(j)), attribute);
+				String rsOut = (String) getRsAttribute(out.get(j), attribute);
 				if (rsIn.compareToIgnoreCase(rsOut) < 0) {
 					out.add(j, sortIn.get(i));
-					rsAdded = true;
 					break;
 				}
 			}
-			if (!rsAdded) {
+			if (!out.contains(sortIn.get(i))) {
 				out.add(sortIn.get(i));
 			}
 		}
 		return out;
 	}
 
-	protected List<String> getByIntList(List<String> sortIn, int attribute) {
-		List<String> out = new ArrayList<String>();
+	protected List<RollingStock> getByIntList(List<RollingStock> sortIn, int attribute) {
+		List<RollingStock> out = new ArrayList<RollingStock>();
 		int rsIn;
 		for (int i = 0; i < sortIn.size(); i++) {
-			boolean rsAdded = false;
-			rsIn = (Integer) getRsAttribute(getById(sortIn.get(i)), attribute);
+			rsIn = (Integer) getRsAttribute(sortIn.get(i), attribute);
 			int start = 0;
 			// page to improve performance. Most have id = road+number
 			int divisor = out.size() / pageSize;
 			for (int k = divisor; k > 0; k--) {
-				int rsOut = (Integer) getRsAttribute(getById(out.get((out.size() - 1) * k / divisor)), attribute);
+				int rsOut = (Integer) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
 				if (rsIn >= rsOut) {
 					start = (out.size() - 1) * k / divisor;
 					break;
 				}
 			}
 			for (int j = start; j < out.size(); j++) {
-				int rsOut = (Integer) getRsAttribute(getById(out.get(j)), attribute);
+				int rsOut = (Integer) getRsAttribute(out.get(j), attribute);
 				if (rsIn < rsOut) {
 					out.add(j, sortIn.get(i));
-					rsAdded = true;
 					break;
 				}
 			}
-			if (!rsAdded) {
+			if (!out.contains(sortIn.get(i))) {
 				out.add(sortIn.get(i));
 			}
 		}
@@ -572,94 +555,18 @@ public class RollingStockManager {
 	}
 
 	/**
-	 * Return a list available rolling stock (no assigned train or rolling stock
-	 * already assigned to this train) on a route, RollingStock is ordered least
-	 * recently moved to most recently moved.
-	 * 
-	 * @param train
-	 * @return List of RollingStock ids with no assigned train on a route
-	 */
-	public List<String> getAvailableTrainList(Train train) {
-		List<String> out = new ArrayList<String>();
-		Route route = train.getRoute();
-		if (route == null)
-			return out;
-		// get a list of locations served by this route
-		List<String> routeList = route.getLocationsBySequenceList();
-		// don't include RollingStock at route destination
-		RouteLocation destination = null;
-		if (routeList.size() > 1) {
-			destination = route.getLocationById(routeList.get(routeList.size() - 1));
-			// However, if the destination is visited more than once, must
-			// include all cars
-			RouteLocation test;
-			for (int i = 0; i < routeList.size() - 1; i++) {
-				test = route.getLocationById(routeList.get(i));
-				if (destination.getName().equals(test.getName())) {
-					destination = null; //include cars at destination
-					break;
-				}
-			}
-			// pickup allowed at destination? Don't include cars in staging
-			if (destination != null && destination.isPickUpAllowed()
-					&& destination.getLocation().getLocationOps() != Location.STAGING)
-				destination = null; // include cars at destination
-		}
-		// get rolling stock by moves list
-		List<String> sortByMoves = getByMovesList();
-		List<String> sortByPriority = sortByPriority(sortByMoves);
-		// now build list of available RollingStock for this route
-		RollingStock rs;
-		for (int i = 0; i < sortByPriority.size(); i++) {
-			rs = getById(sortByPriority.get(i));
-			// only use RollingStock with a location
-			if (rs.getLocationName().equals(""))
-				continue;
-			RouteLocation rl = route.getLastLocationByName(rs.getLocationName());
-			// get RollingStock that don't have an assigned train, or the
-			// assigned train is this one
-			if (rl != null && rl != destination && (rs.getTrain() == null || train.equals(rs.getTrain()))) {
-				out.add(sortByPriority.get(i));
-			}
-		}
-		return out;
-	}
-
-	// sorts the high priority cars to the start of the list
-	private List<String> sortByPriority(List<String> list) {
-		List<String> out = new ArrayList<String>();
-		RollingStock rs;
-		// move high priority ids to the start
-		for (int i = 0; i < list.size(); i++) {
-			rs = getById(list.get(i));
-			if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
-				out.add(list.get(i));
-				list.remove(i);
-				i--;
-			}
-		}
-		// now load all of the remaining low priority ids
-		for (int i = 0; i < list.size(); i++) {
-			out.add(list.get(i));
-		}
-		return out;
-	}
-
-	/**
 	 * Get a list of rolling stocks assigned to a train
 	 * 
 	 * @param train
 	 * @return List of RollingStock ids assigned to the train
 	 */
-	public List<String> getByTrainList(Train train) {
-		List<String> byLoc = getByLocationList();
-		List<String> inTrain = new ArrayList<String>();
-		RollingStock rs;
+	public List<RollingStock> getByTrainList(Train train) {
+		List<RollingStock> byLoc = getByLocationList();
+		List<RollingStock> inTrain = new ArrayList<RollingStock>();
 
 		for (int i = 0; i < byLoc.size(); i++) {
-			rs = getById(byLoc.get(i));
 			// get only rolling stock that is assigned to this train
-			if (rs.getTrain() == train)
+			if (byLoc.get(i).getTrain() == train)
 				inTrain.add(byLoc.get(i));
 		}
 		return inTrain;

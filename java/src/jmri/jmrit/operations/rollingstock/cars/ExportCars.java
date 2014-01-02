@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
@@ -81,7 +83,7 @@ public class ExportCars extends XmlFile {
 		}
 
 		CarManager manager = CarManager.instance();
-		List<String> carList = manager.getByNumberList();
+		List<RollingStock> carList = manager.getByNumberList();
 		String line = "";
 		// check for delimiter in the following car fields
 		String carType;
@@ -92,7 +94,7 @@ public class ExportCars extends XmlFile {
 
 		for (int i = 0; i < carList.size(); i++) {
 			// store car number, road, type, length, weight, color, owner, built date, location and track
-			Car car = manager.getById(carList.get(i));
+			Car car = (Car) carList.get(i);
 			carType = car.getTypeName();
 			if (carType.contains(del)) {
 				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in type field: "

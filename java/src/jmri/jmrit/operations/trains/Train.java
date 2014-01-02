@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -368,11 +369,11 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private int calculateWorkTimeAtLocation(RouteLocation routeLocation) {
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getByTrainList(this);
+		List<RollingStock> carList = carManager.getByTrainList(this);
 		int minutes = 0;
 		// add any work at this location
 		for (int j = 0; j < carList.size(); j++) {
-			Car car = carManager.getById(carList.get(j));
+			Car car = (Car) carList.get(j);
 			if (car.getRouteLocation() == routeLocation && !car.getTrackName().equals("")) {
 				minutes += Setup.getSwitchTime();
 			}
@@ -1528,10 +1529,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return The number of cars worked by this train
 	 */
 	public int getNumberCarsWorked() {
-		List<String> cars = CarManager.instance().getByTrainList(this);
+		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 		// remove cars that haven't been assigned by the train builder
 		for (int i = 0; i < cars.size(); i++) {
-			Car c = CarManager.instance().getById(cars.get(i));
+			Car c = (Car) cars.get(i);
 			if (c.getRouteLocation() == null) {
 				cars.remove(i--);
 			}
@@ -1547,10 +1548,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	public int getNumberCarsInTrain() {
 		RouteLocation rl = getCurrentLocation();
 		int number = 0;
-		List<String> cars = CarManager.instance().getByTrainList(this);
+		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 		// remove cars that aren't in the train
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
 				number++;
 			}
@@ -1567,12 +1568,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		int number = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<String> cars = CarManager.instance().getByTrainList(this);
+			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 			List<String> ids = route.getLocationsBySequenceList();
 			for (int i = 0; i < ids.size(); i++) {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < cars.size(); j++) {
-					Car car = CarManager.instance().getById(cars.get(j));
+					Car car = (Car) cars.get(j);
 					if (car.getRouteLocation() == rl) {
 						number++;
 					}
@@ -1597,12 +1598,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		int number = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<String> cars = CarManager.instance().getByTrainList(this);
+			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 			List<String> ids = route.getLocationsBySequenceList();
 			for (int i = 0; i < ids.size(); i++) {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < cars.size(); j++) {
-					Car car = CarManager.instance().getById(cars.get(j));
+					Car car = (Car) cars.get(j);
 					if (!CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						continue;
@@ -1629,16 +1630,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	public int getTrainLength() {
 		RouteLocation rl = getCurrentLocation();
 		int length = 0;
-		List<String> engines = EngineManager.instance().getByTrainList(this);
+		List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
 		for (int i = 0; i < engines.size(); i++) {
-			Engine eng = EngineManager.instance().getById(engines.get(i));
+			Engine eng = (Engine) engines.get(i);
 			if (eng.getRouteLocation() == rl && eng.getRouteDestination() != rl) {
 				length += eng.getTotalLength();
 			}
 		}
-		List<String> cars = CarManager.instance().getByTrainList(this);
+		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
 				length += car.getTotalLength();
 			}
@@ -1657,13 +1658,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		int length = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<String> engines = EngineManager.instance().getByTrainList(this);
-			List<String> cars = CarManager.instance().getByTrainList(this);
+			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
+			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 			List<String> ids = route.getLocationsBySequenceList();
 			for (int i = 0; i < ids.size(); i++) {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = EngineManager.instance().getById(engines.get(j));
+					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
 						length += eng.getTotalLength();
 					}
@@ -1672,7 +1673,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 				}
 				for (int j = 0; j < cars.size(); j++) {
-					Car car = CarManager.instance().getById(cars.get(j));
+					Car car = (Car) cars.get(j);
 					if (car.getRouteLocation() == rl) {
 						length += car.getTotalLength();
 					}
@@ -1695,16 +1696,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	public int getTrainWeight() {
 		RouteLocation rl = getCurrentLocation();
 		int weight = 0;
-		List<String> engines = EngineManager.instance().getByTrainList(this);
+		List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
 		for (int i = 0; i < engines.size(); i++) {
-			Engine eng = EngineManager.instance().getById(engines.get(i));
+			Engine eng = (Engine) engines.get(i);
 			if (eng.getRouteLocation() == rl && eng.getRouteDestination() != rl) {
 				weight = weight + eng.getAdjustedWeightTons();
 			}
 		}
-		List<String> cars = CarManager.instance().getByTrainList(this);
+		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
 				weight = weight + car.getAdjustedWeightTons();
 			}
@@ -1716,13 +1717,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		int weight = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<String> engines = EngineManager.instance().getByTrainList(this);
-			List<String> cars = CarManager.instance().getByTrainList(this);
+			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
+			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 			List<String> ids = route.getLocationsBySequenceList();
 			for (int i = 0; i < ids.size(); i++) {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = EngineManager.instance().getById(engines.get(j));
+					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
 						weight += eng.getAdjustedWeightTons();
 					}
@@ -1731,7 +1732,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 				}
 				for (int j = 0; j < cars.size(); j++) {
-					Car car = CarManager.instance().getById(cars.get(j));
+					Car car = (Car) cars.get(j);
 					if (car.getRouteLocation() == rl) {
 						weight += car.getAdjustedWeightTons();
 					}
@@ -1757,12 +1758,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		int hp = 0;
 		Route route = getRoute();
 		if (route != null) {
-			List<String> engines = EngineManager.instance().getByTrainList(this);
+			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
 			List<String> ids = route.getLocationsBySequenceList();
 			for (int i = 0; i < ids.size(); i++) {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < engines.size(); j++) {
-					Engine eng = EngineManager.instance().getById(engines.get(j));
+					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
 						try {
 							hp += Integer.parseInt(eng.getHp());
@@ -1789,9 +1790,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	public String getCabooseRoadAndNumber() {
 		String cabooseRoadNumber = "";
 		RouteLocation rl = getCurrentLocation();
-		List<String> cars = CarManager.instance().getByTrainList(this);
+		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose())
 				cabooseRoadNumber = car.toString();
 		}

@@ -13,6 +13,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -60,12 +61,12 @@ public class TrainManifest extends TrainCommon {
 		if (!train.getComment().equals(""))
 			newLine(fileOut, train.getComment());
 
-		List<String> engineList = engineManager.getByTrainList(train);
+		List<RollingStock> engineList = engineManager.getByTrainList(train);
 
 		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
 			newLine(fileOut, train.getRoute().getComment());
 
-		List<String> carList = carManager.getByTrainDestinationList(train);
+		List<Car> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
 
 		boolean work = false;
@@ -232,7 +233,7 @@ public class TrainManifest extends TrainCommon {
 					new Object[] { splitString(rl.getName()) }));
 	}
 
-	private void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<String> carList) {
+	private void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<Car> carList) {
 		Location location = rl.getLocation();
 		if (location != null) {
 			List<String> trackIds = location.getTrackIdsByNameList(null);
@@ -242,7 +243,7 @@ public class TrainManifest extends TrainCommon {
 				boolean pickup = false;
 				boolean setout = false;
 				for (int j = 0; j < carList.size(); j++) {
-					Car car = carManager.getById(carList.get(j));
+					Car car = carList.get(j);
 					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getTrack() == track)
 						pickup = true;
 					if (car.getRouteDestination() == rl && car.getDestinationTrack() != null

@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
@@ -81,7 +83,7 @@ public class ExportEngines extends XmlFile {
 		}
 
 		EngineManager manager = EngineManager.instance();
-		List<String> engineList = manager.getByNumberList();
+		List<RollingStock> engineList = manager.getByNumberList();
 		String line = "";
 		// check for delimiter in the following Engine fields
 		String engineModel;
@@ -92,7 +94,7 @@ public class ExportEngines extends XmlFile {
 
 		for (int i = 0; i < engineList.size(); i++) {
 			// store engine number, road, model, length, weight, owner, built date, location and track
-			Engine engine = manager.getById(engineList.get(i));
+			Engine engine = (Engine) engineList.get(i);
 			engineModel = engine.getModel();
 			if (engineModel.contains(del)) {
 				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()

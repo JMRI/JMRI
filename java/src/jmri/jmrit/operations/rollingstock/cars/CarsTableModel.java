@@ -4,10 +4,12 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.awt.Frame;
+
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -16,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -83,7 +86,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
 	private int _sort = SORTBYNUMBER;
 
-	List<String> sysList = null; // list of car ids
+	List<RollingStock> sysList = null; // list of cars
 	boolean showAllCars = true; // when true show all cars
 	String locationName = null; // only show cars with this location
 	String trackName = null; // only show cars with this track
@@ -220,7 +223,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
 	private int getIndex(int start, String roadNumber) {
 		for (int index = start; index < sysList.size(); index++) {
-			Car c = manager.getById(sysList.get(index));
+			Car c = (Car) sysList.get(index);
 			if (c != null) {
 				String[] number = c.getNumber().split("-");
 				// check for wild card '*'
@@ -250,7 +253,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	}
 
 	public Car getCarAtIndex(int index) {
-		return manager.getById(sysList.get(index));
+		return (Car) sysList.get(index);
 	}
 
 	synchronized void updateList() {
@@ -261,8 +264,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		addPropertyChangeCars();
 	}
 
-	public List<String> getSelectedCarList() {
-		List<String> list;
+	public List<RollingStock> getSelectedCarList() {
+		List<RollingStock> list;
 		if (_sort == SORTBYROAD)
 			list = manager.getByRoadNameList();
 		else if (_sort == SORTBYTYPE)
@@ -303,11 +306,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		return list;
 	}
 
-	private void filterList(List<String> list) {
+	private void filterList(List<RollingStock> list) {
 		if (showAllCars)
 			return;
 		for (int i = 0; i < list.size(); i++) {
-			Car car = manager.getById(list.get(i));
+			Car car = (Car) list.get(i);
 			if (car.getLocationName().equals("")) {
 				list.remove(i--);
 				continue;
@@ -478,7 +481,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 		if (row >= sysList.size())
 			return "ERROR row " + row;	// NOI18N
-		Car car = manager.getById(sysList.get(row));
+		Car car = (Car) sysList.get(row);
 		if (car == null)
 			return "ERROR car unknown " + row;	// NOI18N
 		switch (col) {
@@ -573,7 +576,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	CarSetFrame csf = null;
 
 	public void setValueAt(Object value, int row, int col) {
-		Car car = manager.getById(sysList.get(row));
+		Car car = (Car) sysList.get(row);
 		switch (col) {
 		case SETCOLUMN:
 			log.debug("Set car location");
@@ -638,20 +641,20 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	}
 
 	private void addPropertyChangeCars() {
-		List<String> list = manager.getList();
+		List<RollingStock> list = manager.getList();
 		for (int i = 0; i < list.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			Car car = manager.getById(list.get(i));
+			RollingStock car = list.get(i);
 			if (car != null)
 				car.addPropertyChangeListener(this);
 		}
 	}
 
 	private void removePropertyChangeCars() {
-		List<String> list = manager.getList();
+		List<RollingStock> list = manager.getList();
 		for (int i = 0; i < list.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			Car car = manager.getById(list.get(i));
+			RollingStock car = list.get(i);
 			if (car != null)
 				car.removePropertyChangeListener(this);
 		}

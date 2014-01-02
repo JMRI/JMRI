@@ -4,13 +4,16 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,6 +33,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.ModifyLocationsAction;
 import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -316,7 +320,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		clearTableSort(carsTable);
 	}
 
-	public List<String> getSortByList() {
+	public List<RollingStock> getSortByList() {
 		return carsModel.sysList;
 	}
 

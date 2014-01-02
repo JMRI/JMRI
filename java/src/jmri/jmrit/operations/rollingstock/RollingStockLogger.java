@@ -205,9 +205,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (Setup.isCarLoggerEnabled() && !carLog) {
 			log.debug("Rolling Stock Logger adding car listerners");
 			carLog = true;
-			List<String> cars = CarManager.instance().getList();
+			List<RollingStock> cars = CarManager.instance().getList();
 			for (int i = 0; i < cars.size(); i++) {
-				Car car = CarManager.instance().getById(cars.get(i));
+				Car car = (Car) cars.get(i);
 				if (car != null)
 					car.addPropertyChangeListener(this);
 			}
@@ -220,9 +220,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (Setup.isEngineLoggerEnabled() && !engLog) {
 			engLog = true;
 			log.debug("Rolling Stock Logger adding engine listerners");
-			List<String> engines = EngineManager.instance().getList();
+			List<RollingStock> engines = EngineManager.instance().getList();
 			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = EngineManager.instance().getById(engines.get(i));
+				Engine engine = (Engine) engines.get(i);
 				if (engine != null)
 					engine.addPropertyChangeListener(this);
 			}
@@ -234,9 +234,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	private void removeCarListeners() {
 		if (carLog) {
 			log.debug("Rolling Stock Logger removing car listerners");
-			List<String> cars = CarManager.instance().getList();
+			List<RollingStock> cars = CarManager.instance().getList();
 			for (int i = 0; i < cars.size(); i++) {
-				Car car = CarManager.instance().getById(cars.get(i));
+				Car car = (Car) cars.get(i);
 				if (car != null)
 					car.removePropertyChangeListener(this);
 			}
@@ -248,9 +248,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	private void removeEngineListeners() {
 		if (engLog) {
 			log.debug("Rolling Stock Logger removing engine listerners");
-			List<String> engines = EngineManager.instance().getList();
+			List<RollingStock> engines = EngineManager.instance().getList();
 			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = EngineManager.instance().getById(engines.get(i));
+				Engine engine = (Engine) engines.get(i);
 				if (engine != null)
 					engine.removePropertyChangeListener(this);
 			}

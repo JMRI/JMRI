@@ -4,14 +4,17 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.table.ButtonEditor;
@@ -128,7 +131,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
 	private int getIndex(int start, String roadNumber) {
 		for (int index = start; index < sysList.size(); index++) {
-			Engine e = manager.getById(sysList.get(index));
+			Engine e = (Engine) sysList.get(index);
 			if (e != null) {
 				String[] number = e.getNumber().split("-");
 				// check for wild card '*'
@@ -163,11 +166,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		sysList = getSelectedEngineList();
 		// and add listeners back in
 		for (int i = 0; i < sysList.size(); i++)
-			manager.getById(sysList.get(i)).addPropertyChangeListener(this);
+			sysList.get(i).addPropertyChangeListener(this);
 	}
 
-	public List<String> getSelectedEngineList() {
-		List<String> list;
+	public List<RollingStock> getSelectedEngineList() {
+		List<RollingStock> list;
 		if (_sort == SORTBYROAD)
 			list = manager.getByRoadNameList();
 		else if (_sort == SORTBYMODEL)
@@ -197,7 +200,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		return list;
 	}
 
-	List<String> sysList = null;
+	List<RollingStock> sysList = null;
 
 	JTable _table;
 	EnginesTableFrame _frame;
@@ -351,8 +354,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
-		String engineId = sysList.get(row);
-		Engine eng = manager.getById(engineId);
+		Engine eng = (Engine) sysList.get(row);
 		if (eng == null)
 			return "ERROR engine unknown " + row; // NOI18N
 		switch (col) {
@@ -418,8 +420,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	EngineSetFrame esf = null;
 
 	public void setValueAt(Object value, int row, int col) {
-		String engineId = sysList.get(row);
-		Engine engine = manager.getById(engineId);
+		Engine engine = (Engine) sysList.get(row);
 		switch (col) {
 		case SETCOLUMN:
 			log.debug("Set engine location");
@@ -481,7 +482,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Engine engine = manager.getById(sysList.get(i));
+				RollingStock engine = sysList.get(i);
 				if (engine != null)
 					engine.removePropertyChangeListener(this);
 			}

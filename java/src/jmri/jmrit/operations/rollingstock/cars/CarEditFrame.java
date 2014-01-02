@@ -662,9 +662,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
-				List<String> cars = carManager.getList();
+				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
-					Car c = carManager.getById(cars.get(i));
+					Car c = (Car) cars.get(i);
 					if (c.getTypeName().equals(_car.getTypeName())) {
 						c.setPassenger(passengerCheckBox.isSelected());
 					}
@@ -690,9 +690,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
-				List<String> cars = carManager.getList();
+				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
-					Car c = carManager.getById(cars.get(i));
+					Car c = (Car) cars.get(i);
 					if (c.isPassenger() && c.getTypeName().equals(_car.getTypeName())) {
 						c.setBlocking(blocking);
 					}
@@ -709,9 +709,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the caboose setting for all cars of this type
-				List<String> cars = carManager.getList();
+				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
-					Car c = carManager.getById(cars.get(i));
+					Car c = (Car) cars.get(i);
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setCaboose(cabooseCheckBox.isSelected());
 				}
@@ -727,9 +727,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the utility for all cars of this type
-				List<String> cars = carManager.getList();
+				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
-					Car c = carManager.getById(cars.get(i));
+					Car c = (Car) cars.get(i);
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setUtility(utilityCheckBox.isSelected());
 				}
@@ -745,9 +745,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the hazardous setting for all cars of this type
-				List<String> cars = carManager.getList();
+				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
-					Car c = carManager.getById(cars.get(i));
+					Car c = (Car) cars.get(i);
 					if (c.getTypeName().equals(_car.getTypeName()))
 						c.setHazardous(hazardousCheckBox.isSelected());
 				}

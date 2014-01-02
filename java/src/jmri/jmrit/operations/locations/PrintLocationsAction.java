@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -308,7 +309,7 @@ public class PrintLocationsAction extends AbstractAction {
 	private void printAnalysisSelected() throws IOException {
 		CarManager carManager = CarManager.instance();
 		List<Location> locations = manager.getLocationsByNameList();
-		List<String> cars = carManager.getByLocationList();
+		List<RollingStock> cars = carManager.getByLocationList();
 		String[] carTypes = CarTypes.instance().getNames();
 
 		String s = Bundle.getMessage("TrackAnalysis") + NEW_LINE;
@@ -321,7 +322,7 @@ public class PrintLocationsAction extends AbstractAction {
 			int numberOfCars = 0;
 			int totalTrackLength = 0;
 			for (int j = 0; j < cars.size(); j++) {
-				Car car = carManager.getById(cars.get(j));
+				Car car = (Car) cars.get(j);
 				if (car.getTypeName().equals(type) && car.getLocation() != null) {
 					numberOfCars++;
 					totalTrackLength = totalTrackLength + car.getTotalLength();

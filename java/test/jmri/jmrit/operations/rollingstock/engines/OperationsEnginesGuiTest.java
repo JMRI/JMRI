@@ -6,6 +6,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteManagerXml;
@@ -115,83 +116,83 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 //		Assert.assertEquals("number of Engines", "5", etf.numEngines.getText());
 	
 		// default is sort by number
-		List<String> Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by number list", e1.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by number list", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by number list", e2.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by number list", e3.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by number list", e5.getId(), Engines.get(4));
+		List<RollingStock> Engines = etf.enginesModel.getSelectedEngineList();
+		Assert.assertEquals("1st Engine in sort by number list", e1.getId(), Engines.get(0).getId());
+		Assert.assertEquals("2nd Engine in sort by number list", e4.getId(), Engines.get(1).getId());
+		Assert.assertEquals("3rd Engine in sort by number list", e2.getId(), Engines.get(2).getId());
+		Assert.assertEquals("4th Engine in sort by number list", e3.getId(), Engines.get(3).getId());
+		Assert.assertEquals("5th Engine in sort by number list", e5.getId(), Engines.get(4).getId());
 		
 		// now sort by built date
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByBuilt ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by built list", e5.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by built list", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by built list", e2.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by built list", e3.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by built list", e1.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by built list", e5, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by built list", e4, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by built list", e2, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by built list", e3, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by built list", e1, Engines.get(4));
 		
       getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByDestination ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by destination list", e2.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by destination list", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by destination list", e1.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by destination list", e3.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by destination list", e5.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by destination list", e2, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by destination list", e4, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by destination list", e1, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by destination list", e3, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by destination list", e5, Engines.get(4));
 				
 		// now sort by location
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByLocation ) );
         Engines = etf.enginesModel.getSelectedEngineList();
-        Assert.assertEquals("1st Engine in sort by location list", e2.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by location list", e3.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by location list", e5.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by location list", e4.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by location list", e1.getId(), Engines.get(4));
+        Assert.assertEquals("1st Engine in sort by location list", e2, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by location list", e3, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by location list", e5, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by location list", e4, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by location list", e1, Engines.get(4));
 	
 		// now sort by moves
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByMoves ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by move list", e5.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by move list", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by move list", e3.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by move list", e2.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by move list", e1.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by move list", e5, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by move list", e4, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by move list", e3, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by move list", e2, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by move list", e1, Engines.get(4));
 
 		// test sort by number again
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByNumber ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by number list 2", e1.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by number list 2", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by number list 2", e2.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by number list 2", e3.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by number list 2", e5.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by number list 2", e1, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by number list 2", e4, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by number list 2", e2, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by number list 2", e3, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by number list 2", e5, Engines.get(4));
 
 		// test sort by owner
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByOwner ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by owner list", e4.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by owner list", e3.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by owner list", e2.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by owner list", e5.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by owner list", e1.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by owner list", e4, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by owner list", e3, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by owner list", e2, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by owner list", e5, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by owner list", e1, Engines.get(4));
 
 		// test sort by rfid
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByRfid ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by rfid list", e5.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by rfid list", e2.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by rfid list", e1.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by rfid list", e4.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by rfid list", e3.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by rfid list", e5, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by rfid list", e2, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by rfid list", e1, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by rfid list", e4, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by rfid list", e3, Engines.get(4));
 
 		// test sort by road
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByRoad ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by road list", e3.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by road list", e1.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by road list", e5.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by road list", e4.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by road list", e2.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by road list", e3, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by road list", e1, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by road list", e5, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by road list", e4, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by road list", e2, Engines.get(4));
 
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByTrain ) );
 		//TODO add trains
@@ -202,11 +203,11 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		// test sort by model
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.sortByModel ) );
 		Engines = etf.enginesModel.getSelectedEngineList();
-		Assert.assertEquals("1st Engine in sort by model list", e2.getId(), Engines.get(0));
-		Assert.assertEquals("2nd Engine in sort by model list", e4.getId(), Engines.get(1));
-		Assert.assertEquals("3rd Engine in sort by model list", e1.getId(), Engines.get(2));
-		Assert.assertEquals("4th Engine in sort by model list", e5.getId(), Engines.get(3));
-		Assert.assertEquals("5th Engine in sort by model list", e3.getId(), Engines.get(4));
+		Assert.assertEquals("1st Engine in sort by model list", e2, Engines.get(0));
+		Assert.assertEquals("2nd Engine in sort by model list", e4, Engines.get(1));
+		Assert.assertEquals("3rd Engine in sort by model list", e1, Engines.get(2));
+		Assert.assertEquals("4th Engine in sort by model list", e5, Engines.get(3));
+		Assert.assertEquals("5th Engine in sort by model list", e3, Engines.get(4));
 
 		// test find text field
 		etf.findEngineTextBox.setText("2");

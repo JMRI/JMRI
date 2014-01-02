@@ -61,10 +61,10 @@ public class TrainCommon {
 	boolean pickupCars;
 	boolean dropCars;
 
-	protected void blockLocosTwoColumn(PrintWriter fileOut, List<String> engineList, RouteLocation rl,
+	protected void blockLocosTwoColumn(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl,
 			boolean isManifest) {
 		for (int k = 0; k < engineList.size(); k++) {
-			Engine engine = engineManager.getById(engineList.get(k));
+			Engine engine = (Engine) engineList.get(k);
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
 				newLine(fileOut, pickupEngine(engine).trim(), isManifest);
 			}
@@ -87,9 +87,9 @@ public class TrainCommon {
 	 * @param rl
 	 * @param orientation
 	 */
-	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl, String orientation) {
+	protected void pickupEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl, String orientation) {
 		for (int i = 0; i < engineList.size(); i++) {
-			Engine engine = engineManager.getById(engineList.get(i));
+			Engine engine = (Engine) engineList.get(i);
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
 				pickupEngine(fileOut, engine, orientation);
 		}
@@ -117,9 +117,9 @@ public class TrainCommon {
 	 * @param rl
 	 * @param orientation
 	 */
-	protected void dropEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl, String orientation) {
+	protected void dropEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl, String orientation) {
 		for (int i = 0; i < engineList.size(); i++) {
-			Engine engine = engineManager.getById(engineList.get(i));
+			Engine engine = (Engine) engineList.get(i);
 			if (engine.getRouteDestination() == rl)
 				dropEngine(fileOut, engine, orientation);
 		}
@@ -174,7 +174,7 @@ public class TrainCommon {
 	/**
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
-	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList,
+	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<Car> carList, List<String> routeList,
 			RouteLocation rl, int r, boolean isManifest) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
@@ -188,7 +188,7 @@ public class TrainCommon {
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
-					Car car = carManager.getById(carList.get(k));
+					Car car = carList.get(k);
 					if (Setup.isSortByTrackEnabled()
 							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 						continue;
@@ -212,7 +212,7 @@ public class TrainCommon {
 				}
 			}
 			for (int j = 0; j < carList.size(); j++) {
-				Car car = carManager.getById(carList.get(j));
+				Car car = carList.get(j);
 				if (Setup.isSortByTrackEnabled()
 						&& !splitString(track.getName()).equals(splitString(car.getDestinationTrackName())))
 					continue;
@@ -240,7 +240,7 @@ public class TrainCommon {
 	/**
 	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
 	 */
-	protected void blockCarsByTrackTwoColumn(PrintWriter fileOut, Train train, List<String> carList,
+	protected void blockCarsByTrackTwoColumn(PrintWriter fileOut, Train train, List<Car> carList,
 			List<String> routeList, RouteLocation rl, int r, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
@@ -256,7 +256,7 @@ public class TrainCommon {
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
-					Car car = carManager.getById(carList.get(k));
+					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 							&& car.getRouteDestination() == rld) {
 						if (Setup.isSortByTrackEnabled()
@@ -309,9 +309,9 @@ public class TrainCommon {
 
 	int index = 0;
 
-	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, boolean local, boolean isManfest) {
+	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManfest) {
 		while (index < carList.size()) {
-			Car car = carManager.getById(carList.get(index++));
+			Car car = carList.get(index++);
 			if (local && isLocalMove(car))
 				continue; // skip local moves
 			// car list is already sorted by destination track
@@ -325,7 +325,7 @@ public class TrainCommon {
 		return s;
 	}
 
-	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, Car car, boolean isManifest) {
+	private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest) {
 		dropCars = true;
 		cars--;
 		newWork = true;
@@ -534,7 +534,7 @@ public class TrainCommon {
 	 * @param rld
 	 * @param isManifest
 	 */
-	protected void pickupUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl,
+	protected void pickupUtilityCars(PrintWriter fileOut, List<Car> carList, Car car, RouteLocation rl,
 			RouteLocation rld, boolean isManifest) {
 		// list utility cars by type, track, length, and load
 		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
@@ -557,7 +557,7 @@ public class TrainCommon {
 	 * @param rl
 	 * @param isManifest
 	 */
-	protected void setoutUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl,
+	protected void setoutUtilityCars(PrintWriter fileOut, List<Car> carList, Car car, RouteLocation rl,
 			boolean isManifest) {
 		boolean isLocal = isLocalMove(car);
 		StringBuffer buf = new StringBuffer(tabString(Setup.getDropCarPrefix(), Setup.getManifestPrefixLength()));
@@ -579,7 +579,7 @@ public class TrainCommon {
 		dropCar(fileOut, car, buf, messageFormat, isLocal, Setup.getManifestOrientation());
 	}
 
-	public String pickupUtilityCars(List<String> carList, Car car, RouteLocation rl, RouteLocation rld,
+	public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
 			boolean isManifest) {
 		// list utility cars by type, track, length, and load
 		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
@@ -596,7 +596,7 @@ public class TrainCommon {
 		return buf.toString();
 	}
 
-	public String setoutUtilityCars(List<String> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
+	public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
 		// list utility cars by type, track, length, and load
 		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
@@ -631,7 +631,7 @@ public class TrainCommon {
 	 * @param isPickup
 	 * @return 0 if the car type has already been processed
 	 */
-	private int countUtiltiyCars(String[] messageFormat, List<String> carList, Car car, RouteLocation rl,
+	private int countUtiltiyCars(String[] messageFormat, List<Car> carList, Car car, RouteLocation rl,
 			RouteLocation rld, boolean isPickup) {
 		int count = 0;
 		// figure out if the user wants to show the car's length
@@ -664,7 +664,7 @@ public class TrainCommon {
 			utilityCarTypes.add(carAttributes); // don't do this type again
 			// determine how many cars of this type
 			for (int i = 0; i < carList.size(); i++) {
-				Car c = carManager.getById(carList.get(i));
+				Car c = carList.get(i);
 				if (!c.isUtility())
 					continue;
 				String[] cType = c.getTypeName().split("-");
@@ -890,14 +890,14 @@ public class TrainCommon {
 	}
 
 	// returns true if there's work at location
-	protected boolean isThereWorkAtLocation(List<String> carList, List<String> engList, RouteLocation rl) {
+	protected boolean isThereWorkAtLocation(List<Car> carList, List<RollingStock> engList, RouteLocation rl) {
 		for (int i = 0; i < carList.size(); i++) {
-			Car car = carManager.getById(carList.get(i));
+			Car car = carList.get(i);
 			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
 				return true;
 		}
 		for (int i = 0; i < engList.size(); i++) {
-			Engine eng = engineManager.getById(engList.get(i));
+			Engine eng = (Engine) engList.get(i);
 			if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl)
 				return true;
 		}
@@ -913,9 +913,9 @@ public class TrainCommon {
 	 */
 	public static boolean isThereWorkAtLocation(Train train, Location location) {
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getByTrainList(train);
+		List<RollingStock> carList = carManager.getByTrainList(train);
 		for (int i = 0; i < carList.size(); i++) {
-			Car car = carManager.getById(carList.get(i));
+			Car car = (Car) carList.get(i);
 			if ((car.getRouteLocation() != null && car.getTrack() != null && TrainCommon.splitString(
 					car.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
 					|| (car.getRouteDestination() != null && TrainCommon.splitString(
@@ -923,9 +923,9 @@ public class TrainCommon {
 				return true;
 		}
 		EngineManager engineManager = EngineManager.instance();
-		List<String> engList = engineManager.getByTrainList(train);
+		List<RollingStock> engList = engineManager.getByTrainList(train);
 		for (int i = 0; i < engList.size(); i++) {
-			Engine eng = engineManager.getById(engList.get(i));
+			Engine eng = (Engine) engList.get(i);
 			if ((eng.getRouteLocation() != null && eng.getTrack() != null && TrainCommon.splitString(
 					eng.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
 					|| (eng.getRouteDestination() != null && TrainCommon.splitString(
@@ -937,13 +937,13 @@ public class TrainCommon {
 
 	protected void addCarsLocationUnknown(PrintWriter file, boolean isManifest) {
 		CarManager carManager = CarManager.instance();
-		List<String> cars = carManager.getCarsLocationUnknown();
+		List<Car> cars = carManager.getCarsLocationUnknown();
 		if (cars.size() == 0)
 			return; // no cars to search for!
 		newLine(file);
 		newLine(file, Setup.getMiaComment(), isManifest);
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = carManager.getById(cars.get(i));
+			Car car = cars.get(i);
 			addSearchForCar(file, car);
 		}
 	}

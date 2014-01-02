@@ -152,17 +152,17 @@ public class EngineManager extends RollingStockManager{
     
     /**
      * Sort by engine model
-     * @return list of engine ids ordered by engine model
+     * @return list of engines ordered by engine model
      */
-    public List<String> getByModelList() {
+    public List<RollingStock> getByModelList() {
     	return getByList(getByRoadNameList(), BY_MODEL);
     }
     
     /**
      * Sort by engine consist
-     * @return list of engine ids ordered by engine consist
+     * @return list of engines ordered by engine consist
      */
-    public List<String> getByConsistList() {
+    public List<RollingStock> getByConsistList() {
     	return getByList(getByRoadNameList(), BY_CONSIST);
     }
   
@@ -185,19 +185,19 @@ public class EngineManager extends RollingStockManager{
 	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
-	 * @return Ordered list of engine ids not assigned to a train
+	 * @return Ordered list of engines not assigned to a train
 	 */
-    public List<String> getAvailableTrainList(Train train) {
+    public List<Engine> getAvailableTrainList(Train train) {
     	// get engines by moves list
-    	List<String> enginesSortByMoves = getByMovesList();
+    	List<RollingStock> enginesSortByMoves = getByMovesList();
     	// now build list of available engines for this route
-    	List<String> out = new ArrayList<String>();
+    	List<Engine> out = new ArrayList<Engine>();
     	Engine engine;
  
     	for (int i = 0; i < enginesSortByMoves.size(); i++) {
-    		engine = getById(enginesSortByMoves.get(i));
+    		engine = (Engine) enginesSortByMoves.get(i);
     		if(engine.getTrack() != null && (engine.getTrain()== null || engine.getTrain()==train))
-    			out.add(enginesSortByMoves.get(i));
+    			out.add(engine);
     	}
     	return out;
     }
@@ -311,9 +311,9 @@ public class EngineManager extends RollingStockManager{
         
 		root.addContent(values = new Element(Xml.ENGINES));
 		// add entries
-		List<String> engineList = getByRoadNameList();
+		List<RollingStock> engineList = getByRoadNameList();
 		for (int i=0; i<engineList.size(); i++) {
-			Engine eng = getById(engineList.get(i));
+			Engine eng = (Engine) engineList.get(i);
 			values.addContent(eng.store());
 		}		
     }

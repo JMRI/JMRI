@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Setup;
@@ -311,11 +312,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 	}
 
 	private void replaceItem(String oldItem, String newItem) {
-		List<String> cars = manager.getByNumberList();
+		List<RollingStock> cars = manager.getByNumberList();
 		// replace kernel
 		if (_comboboxName == CarEditFrame.KERNEL) {
 			for (int i = 0; i < cars.size(); i++) {
-				Car car = manager.getById(cars.get(i));
+				Car car = (Car) cars.get(i);
 				if (car.getKernelName().equals(oldItem)) {
 					Kernel kernel = manager.newKernel(newItem);
 					car.setKernel(kernel);
@@ -384,9 +385,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		int number = 0;
 		String item = (String) comboBox.getSelectedItem();
 		log.debug("Selected item " + item);
-		List<String> cars = manager.getList();
+		List<RollingStock> cars = manager.getList();
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = manager.getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 
 			if (_comboboxName == CarEditFrame.ROAD) {
 				if (car.getRoadName().equals(item))
@@ -418,9 +419,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		if (number == 0 && deleteUnused) {
 			// need to check if an engine is using the road name
 			if (_comboboxName == CarEditFrame.ROAD) {
-				List<String> engines = EngineManager.instance().getList();
+				List<RollingStock> engines = EngineManager.instance().getList();
 				for (int i = 0; i < engines.size(); i++) {
-					Engine engine = EngineManager.instance().getById(engines.get(i));
+					Engine engine = (Engine) engines.get(i);
 					if (engine.getRoadName().equals(item)) {
 						log.info("Engine (" + engine.getRoadName() + " " + engine.getNumber()
 								+ ") has assigned road name (" + item + ")");	// NOI18N

@@ -5,6 +5,7 @@ package jmri.jmrit.operations.trains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -310,17 +311,17 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		String carType = (String) typeComboBox.getSelectedItem();
 		// load car combobox
 		carsComboBox.addItem(blank);
-		List<String> cars = CarManager.instance().getByTypeList(carType);
+		List<RollingStock> cars = CarManager.instance().getByTypeList(carType);
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			carsComboBox.addItem(car);
 		}
 	}
 
 	private void adjustCarsComboBoxSize() {
-		List<String> cars = CarManager.instance().getList();
+		List<RollingStock> cars = CarManager.instance().getList();
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = CarManager.instance().getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			carsComboBox.addItem(car);
 		}
 		Dimension boxsize = carsComboBox.getMinimumSize();

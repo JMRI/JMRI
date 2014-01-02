@@ -4,9 +4,12 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -77,7 +80,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 		String rfid = "";
 		String location;
 
-		List<String> engines = panel.getSortByList();
+		List<RollingStock> engines = panel.getSortByList();
 		try {
 			// header
 			String s = Bundle.getMessage("Number")
@@ -104,7 +107,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 					+ NEW_LINE;
 			writer.write(s);
 			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = manager.getById(engines.get(i));
+				Engine engine = (Engine) engines.get(i);
 
 				// loco number
 				number = padAttribute(engine.getNumber().trim(), 7);

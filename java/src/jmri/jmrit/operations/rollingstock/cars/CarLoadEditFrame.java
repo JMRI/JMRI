@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -339,9 +341,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		int number = 0;
 		String item = (String) comboBox.getSelectedItem();
 		CarManager manager = CarManager.instance();
-		List<String> cars = manager.getList();
+		List<RollingStock> cars = manager.getList();
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = manager.getById(cars.get(i));
+			Car car = (Car) cars.get(i);
 			if (car.getLoadName().equals(item))
 				number++;
 		}

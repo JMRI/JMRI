@@ -4,12 +4,15 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -44,7 +47,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 
 	private boolean syncOK = true; // used to flag status messages
 	EngineManager engineManager = EngineManager.instance();
-	List<String> engineList;
+	List<RollingStock> engineList;
 	List<String> consists;
 
 	javax.swing.JLabel textConsist = new javax.swing.JLabel();
@@ -129,7 +132,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 					log.debug("NCE consist " + consistNum + " has lead engine " + engNum);
 					boolean engMatch = false;
 					for (int indexEng = 0; indexEng < engineList.size(); indexEng++) {
-						Engine engine = engineManager.getById(engineList.get(indexEng));
+						Engine engine = (Engine) engineList.get(indexEng);
 						if (engine.getNumber().equals(Integer.toString(engNum))) {
 							log.debug("found lead engine match " + engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE + consistNum);
@@ -171,7 +174,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 				log.debug("NCE consist " + consistNum + " has engine " + engNum);
 				boolean engMatch = false;
 				for (int indexEng = 0; indexEng < engineList.size(); indexEng++) {
-					Engine engine = engineManager.getById(engineList.get(indexEng));
+					Engine engine = (Engine) engineList.get(indexEng);
 					if (engine.getNumber().equals(Integer.toString(engNum))) {
 						log.debug("found engine match " + engine.getNumber());
 						engMatch = true;

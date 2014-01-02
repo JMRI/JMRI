@@ -12,6 +12,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -70,8 +71,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			addLine(fileOut, RC + ESC + train.getRoute().getComment() + ESC);
 
 		// get engine and car lists
-		List<String> engineList = engineManager.getByTrainList(train);
-		List<String> carList = carManager.getByTrainDestinationList(train);
+		List<RollingStock> engineList = engineManager.getByTrainList(train);
+		List<Car> carList = carManager.getByTrainDestinationList(train);
 
 		int cars = 0;
 		int emptyCars = 0;
@@ -130,12 +131,12 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 
 			for (int i = 0; i < engineList.size(); i++) {
-				Engine engine = engineManager.getById(engineList.get(i));
+				Engine engine = (Engine) engineList.get(i);
 				if (engine.getRouteLocation() == rl)
 					fileOutCsvEngine(fileOut, engine, PL);
 			}
 			for (int i = 0; i < engineList.size(); i++) {
-				Engine engine = engineManager.getById(engineList.get(i));
+				Engine engine = (Engine) engineList.get(i);
 				if (engine.getRouteDestination() == rl)
 					fileOutCsvEngine(fileOut, engine, SL);
 			}
@@ -144,7 +145,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
-					Car car = carManager.getById(carList.get(k));
+					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 						fileOutCsvCar(fileOut, car, PC);
 						cars++;
@@ -157,7 +158,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 			// car set outs
 			for (int j = 0; j < carList.size(); j++) {
-				Car car = carManager.getById(carList.get(j));
+				Car car = carList.get(j);
 				if (car.getRouteDestination() == rl) {
 					fileOutCsvCar(fileOut, car, SC);
 					cars--;

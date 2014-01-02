@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
@@ -117,7 +118,7 @@ public class TrainIcon extends LocoIcon {
 			return routeMenu;
 		List<String> routeList = route.getLocationsBySequenceList();
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getByTrainList(_train);
+		List<RollingStock> carList = carManager.getByTrainList(_train);
 		for (int r=0; r<routeList.size(); r++){
 			int pickupCars = 0;
 			int dropCars = 0;
@@ -126,7 +127,7 @@ public class TrainIcon extends LocoIcon {
 			if (_train.getCurrentLocation() == rl)
 				current = "-> "; // NOI18N
 			for (int j=0; j<carList.size(); j++){
-				Car car = carManager.getById(carList.get(j));
+				Car car = (Car) carList.get(j);
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 					pickupCars++;
 				}

@@ -4,7 +4,9 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -13,7 +15,9 @@ import javax.swing.*;
 
 import java.text.MessageFormat;
 import java.util.List;
+
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -59,7 +63,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
 	int numberCharPerLine = 90;
 	int ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
-	List<String> cars;
+	List<RollingStock> cars;
 
 	private void printCars() {
 
@@ -111,7 +115,7 @@ public class PrintCarRosterAction extends AbstractAction {
 			printTitleLine(writer);
 			String previousLocation = "";
 			for (int i = 0; i < cars.size(); i++) {
-				Car car = manager.getById(cars.get(i));
+				Car car = (Car) cars.get(i);
 				if (printCarsWithLocation.isSelected() && car.getLocation() == null)
 					continue; // car doesn't have a location skip
 				
