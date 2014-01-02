@@ -219,7 +219,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int maxNumMacros = 0;
     private int macroSize = 0;
     private int memBase = -1;
-    private int memPage = -1;
     private boolean isUsb = false;
     
     public NceMacroEditPanel() {
@@ -253,14 +252,12 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         isUsb = false;
         macroSize = CabMemorySerial.CS_MACRO_SIZE;
         memBase = CabMemorySerial.CS_MACRO_MEM;
-        memPage = -1;
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
         		(tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
         	maxNumMacros = CabMemoryUsb.CS_MAX_MACRO;
         	isUsb = true;
             macroSize = CabMemoryUsb.CS_MACRO_SIZE;
             memBase = -1;
-            memPage = CabMemoryUsb.CS_PG_MACRO;
         }
         
         // the following code sets the frame's initial state
