@@ -6,6 +6,9 @@ import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
 import jmri.jmrix.jmriclient.networkdriver.NetworkDriverAdapter;
+import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
+
+import org.jdom.Element;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -44,6 +47,30 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
+
+
+    /**
+     * Customizable method if you need to add anything more
+     * @param e Element being created, update as needed
+     */
+    @Override
+    protected void extendElement(Element e) {
+       if (adapter.getSystemConnectionMemo()!=null){
+            e.setAttribute("transmitPrefix", ((JMRIClientSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTransmitPrefix());
+        }
+    }
+
+    /**
+     * Customizable method if you need to add anything more
+     * @param e Element being created, update as needed
+     */
+    @Override
+    protected void unpackElement(Element e) {
+       if (e.getAttribute("transmitPrefix")!=null) {
+           ((JMRIClientSystemConnectionMemo)adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute("transmitPrefix").getValue());
+       }
+    }
+
 
 
     // initialize logging

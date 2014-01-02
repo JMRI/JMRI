@@ -20,12 +20,14 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 	// data members
 	private int _number;   // reporter number
         private JMRIClientTrafficController tc=null;
+        private String transmitName = null;
 
 	/**
 	 * JMRIClient reporters use the reporter  number on the remote host.
 	 */
 	public JMRIClientReporter(int number,JMRIClientSystemConnectionMemo memo)        {
             super(memo.getSystemPrefix()+"R"+number);
+            transmitName = memo.getTransmitPrefix() +"R"+number;
             _number = number;
             tc = memo.getJMRIClientTrafficController();
             // At construction, register for messages
@@ -38,7 +40,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 
 	public void requestUpdateFromLayout() {
 		// get the message text
-        String text = "REPORTER "+ getSystemName() + "\n";
+        String text = "REPORTER "+ transmitName + "\n";
             
         // create and send the message itself
 	tc.sendJMRIClientMessage(new JMRIClientMessage(text),this);
@@ -49,9 +51,9 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 		// get the message text
         String text;
         if (active) 
-            text = "REPORTER "+ getSystemName() + " ACTIVE\n";
+            text = "REPORTER "+ transmitName + " ACTIVE\n";
         else // thrown
-            text = "REPORTER "+ getSystemName() +" INACTIVE\n";
+            text = "REPORTER "+ transmitName +" INACTIVE\n";
             
         // create and send the message itself
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
@@ -62,9 +64,9 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
                String message=m.toString();
                log.debug("Message Received: " +m );
                log.debug("length "+ message.length() );
-               if(!message.contains(getSystemName()+" ")) return; // not for us
+               if(!message.contains(transmitName+" ")) return; // not for us
 	       else {
-		String text="REPORTER "+ getSystemName() +"\n";
+		String text="REPORTER "+ transmitName +"\n";
 		 if(!message.equals(text)) {
 		    setReport(message.substring(text.length()));  // this is an update of the report.
                  } else {

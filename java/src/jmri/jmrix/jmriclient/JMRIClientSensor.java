@@ -21,13 +21,15 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 	// data members
 	private int _number;   // sensor number
         private JMRIClientTrafficController tc=null;
+        private String transmitName = null;
 
 	/**
 	 * JMRIClient sensors use the sensor number on the remote host.
 	 */
 	public JMRIClientSensor(int number,JMRIClientSystemConnectionMemo memo)        {
-            super(memo.getSystemPrefix()+"s"+number);
+            super(memo.getSystemPrefix()+"S"+number);
             _number = number;
+            transmitName = memo.getTransmitPrefix()+"S"+number;
             tc = memo.getJMRIClientTrafficController();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
@@ -64,7 +66,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
 	public void requestUpdateFromLayout() {
 		// get the message text
-        String text = "SENSOR "+ getSystemName() + "\n";
+        String text = "SENSOR "+ transmitName + "\n";
             
         // create and send the message itself
 	tc.sendJMRIClientMessage(new JMRIClientMessage(text),this);
@@ -75,9 +77,9 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 		// get the message text
         String text;
         if (active) 
-            text = "SENSOR "+ getSystemName() + " ACTIVE\n";
+            text = "SENSOR "+ transmitName + " ACTIVE\n";
         else // thrown
-            text = "SENSOR "+ getSystemName() +" INACTIVE\n";
+            text = "SENSOR "+ transmitName +" INACTIVE\n";
             
         // create and send the message itself
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
@@ -87,7 +89,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         public void reply(JMRIClientReply m) {
                String message=m.toString();
                log.debug("Message Received: " +m);
-               if(!message.contains(getSystemName()+" ")) return; // not for us
+               if(!message.contains(transmitName+" ")) return; // not for us
 
                if(m.toString().contains("INACTIVE"))
                   setOwnState(!getInverted()?jmri.Sensor.INACTIVE:jmri.Sensor.ACTIVE);

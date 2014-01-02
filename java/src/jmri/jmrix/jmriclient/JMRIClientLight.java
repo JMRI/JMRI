@@ -21,6 +21,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 	// data members
 	private int _number;   // light number
         private JMRIClientTrafficController tc=null;
+        private String transmitName = null;
 
 	/**
 	 * JMRIClient lights use the light number on the remote host.
@@ -28,6 +29,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 	public JMRIClientLight(int number,JMRIClientSystemConnectionMemo memo)        {
             super(memo.getSystemPrefix()+"l"+number);
             _number = number;
+            transmitName = memo.getTransmitPrefix() + "L" + number;
             tc = memo.getJMRIClientTrafficController();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
@@ -40,7 +42,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
         //request a status update from the layout
         protected void requestUpdateFromLayout(){
             // create the message
-            String text="LIGHT " + getSystemName() + "\n";
+            String text="LIGHT " + transmitName + "\n";
             // create and send the message
             tc.sendJMRIClientMessage(new JMRIClientMessage(text),this);
         }
@@ -74,9 +76,9 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 		// get the message text
         String text;
         if (on) 
-            text = "LIGHT "+ getSystemName() + " ON\n";
+            text = "LIGHT "+ transmitName + " ON\n";
         else // thrown
-            text = "LIGHT "+ getSystemName() +" OFF\n";
+            text = "LIGHT "+ transmitName +" OFF\n";
             
         // create and send the message itself
 		tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
@@ -85,7 +87,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
        // to listen for status changes from JMRIClient system
         public synchronized void reply(JMRIClientReply m) {
                String message=m.toString();
-               if(!message.contains(getSystemName()+" ")) return; // not for us
+               if(!message.contains(transmitName+" ")) return; // not for us
 
                if(m.toString().contains("OFF"))
                   notifyStateChange(mState,jmri.Light.OFF);

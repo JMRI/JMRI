@@ -22,6 +22,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 	private int _number;   // turnout number
         private JMRIClientTrafficController tc=null;
         private String prefix = null;
+        private String transmitName = null;
 
         /* Static arrays to hold Lenz specific feedback mode information */
         static String[] modeNames = null;
@@ -35,6 +36,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
             _number = number;
             tc = memo.getJMRIClientTrafficController();
             prefix=memo.getSystemPrefix();
+            transmitName = memo.getTransmitPrefix()+"T"+number;
 	     /* allow monitoring mode feedback, which is the same
                 as direct for this connection (this aids the 
                 transition from directly connected hardware to remotly
@@ -59,7 +61,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     //Set the mode information for JMRIClient Turnouts.
     synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes){
         // if it hasn't been done already, create static arrays to hold
-        // the Lenz specific feedback information.
+        // the JMRIClient specific feedback information.
         if(modeNames == null) {
            if (feedbackNames.length != feedbackModes.length)
                log.error("int and string feedback arrays different length");
@@ -107,7 +109,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     // request a stuatus update from the layout.
     protected void requestUpdateFromLayout(){
         // create the message
-        String text = "TURNOUT "+ getSystemName() + "\n";
+        String text = "TURNOUT "+ transmitName + "\n";
         // create and send the message itself
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
     }
@@ -122,9 +124,9 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 		// get the message text
         String text;
         if (closed) 
-            text = "TURNOUT "+ getSystemName() + " CLOSED\n";
+            text = "TURNOUT "+ transmitName + " CLOSED\n";
         else // thrown
-            text = "TURNOUT "+ getSystemName() + " THROWN\n";
+            text = "TURNOUT "+ transmitName + " THROWN\n";
             
         // create and send the message itself
 	tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
@@ -133,7 +135,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
        // to listen for status changes from JMRIClient system
         public void reply(JMRIClientReply m) {
                String message=m.toString();
-               if(!message.contains(getSystemName()+ " ")) return; // not for us
+               if(!message.contains(transmitName+ " ")) return; // not for us
 
                if(m.toString().contains("THROWN"))
                   newKnownState(!getInverted()?jmri.Turnout.THROWN:jmri.Turnout.CLOSED);
@@ -145,10 +147,6 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
         public void message(JMRIClientMessage m) {
         }
-
-
-
-
 
 	static Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class.getName());
 

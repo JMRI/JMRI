@@ -73,6 +73,17 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         jmri.InstanceManager.setLightManager(new jmri.jmrix.jmriclient.JMRIClientLightManager(this));
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.jmriclient.JMRIClientReporterManager(this));
     }
+
+    public void setTransmitPrefix(String tPrefix){
+       transmitPrefix=tPrefix;
+    }
+
+    public String getTransmitPrefix(){
+      if(transmitPrefix == null ) return getSystemPrefix();
+      return transmitPrefix;
+    }
+
+    private String transmitPrefix = null;
     
     protected ResourceBundle getActionModelResourceBundle(){
         //No actions that can be loaded at startup

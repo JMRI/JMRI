@@ -114,9 +114,9 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
 	abstract public void loadDetails(final JPanel details) ;
     
-    GridBagLayout gbLayout = new GridBagLayout();
-    GridBagConstraints cL = new GridBagConstraints();
-    GridBagConstraints cR = new GridBagConstraints();
+    protected GridBagLayout gbLayout = new GridBagLayout();
+    protected GridBagConstraints cL = new GridBagConstraints();
+    protected GridBagConstraints cR = new GridBagConstraints();
     
     abstract void showAdvancedItems();
     
