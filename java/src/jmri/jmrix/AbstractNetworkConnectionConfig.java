@@ -190,7 +190,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
             for(String i:optionsAvailable){
-		JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
+		JComboBox opt = new JComboBox(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
