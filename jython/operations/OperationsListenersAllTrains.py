@@ -51,12 +51,11 @@ class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
   def handle(self):
     print "Number of trains", self.tm.numEntries()
     # get a list of trains from the manager
-    tList = self.tm.getTrainsByIdList()
+    trainList = self.tm.getTrainsByIdList()
     count = 1
 
     # show a list of trains and connect property change
-    for trainId in tList :
-      train = self.tm.getTrainById(trainId)
+    for train in trainList :
       print "Train", count, train.getName(), train.getDescription()
       train.addPropertyChangeListener(MyListener())
       count = count + 1
