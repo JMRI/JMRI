@@ -37,17 +37,17 @@ public class NceThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 1 and above can be long
+     * Addresses 0-10239 can be long
      **/
     public boolean canBeLongAddress(int address) {
-        return (address>=1);
+        return ( (address>=0) && (address<=10239) );
     }
     
     /**
-     * The full range of short addresses are available
+     * The short addresses 1-127 are available
      **/
     public boolean canBeShortAddress(int address) {
-        return (address<=127);
+        return ( (address>=1) && (address<=127) );
     }
 
     /**

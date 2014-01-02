@@ -174,6 +174,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public boolean requestThrottle(DccLocoAddress la, BasicRosterEntry re, ThrottleListener l) {
         boolean throttleFree = true;
+        
+        // check for a valid throttle address
+        if (!canBeLongAddress(la.getNumber()) && !canBeShortAddress(la.getNumber())) return false;
 
 		// put the list in if not present
         if (!throttleListeners.containsKey(la))
