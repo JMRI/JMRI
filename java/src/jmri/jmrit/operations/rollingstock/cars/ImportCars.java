@@ -512,18 +512,16 @@ public class ImportCars extends ImportRollingStock {
 						String status = car.setLocation(l, sl);
 						if (!status.equals(Track.OKAY)) {
 							log.debug("Can't set car's location because of " + status);
-							if (!autoAdjustLocationType) {
-								JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-										.getMessage("CanNotSetCarAtLocation"), new Object[] {
-										(carRoad + " " + carNumber), carType, carLocation, carTrack, status }), Bundle
-										.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-							}
 							if (status.startsWith(Track.TYPE)) {
 								if (autoAdjustLocationType) {
 									l.addTypeName(carType);
 									sl.addTypeName(carType);
 									status = car.setLocation(l, sl);
 								} else {
+									JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+											.getMessage("CanNotSetCarAtLocation"), new Object[] {
+											(carRoad + " " + carNumber), carType, carLocation, carTrack, status }), Bundle
+											.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 									int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
 											.getMessage("DoYouWantToAllowService"), new Object[] { carLocation,
 											carTrack, (carRoad + " " + carNumber), carType }), Bundle
@@ -552,6 +550,10 @@ public class ImportCars extends ImportRollingStock {
 									status = car.setLocation(l, sl);
 									log.debug("Set track length status: " + status);
 								} else {
+									JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+											.getMessage("CanNotSetCarAtLocation"), new Object[] {
+											(carRoad + " " + carNumber), carType, carLocation, carTrack, status }), Bundle
+											.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 									int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
 											.getMessage("DoYouWantIncreaseLength"), new Object[] { carTrack }), Bundle
 											.getMessage("TrackLength"), JOptionPane.YES_NO_OPTION);
@@ -573,6 +575,10 @@ public class ImportCars extends ImportRollingStock {
 								}
 							}
 							if (!status.equals(Track.OKAY)) {
+								JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+										.getMessage("CanNotSetCarAtLocation"), new Object[] {
+										(carRoad + " " + carNumber), carType, carLocation, carTrack, status }), Bundle
+										.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
 										.getMessage("DoYouWantToForceCar"), new Object[] { (carRoad + " " + carNumber),
 										carLocation, carTrack }), Bundle.getMessage("OverRide"),
