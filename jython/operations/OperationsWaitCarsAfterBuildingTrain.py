@@ -46,8 +46,7 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
     carList = cm.getByTrainDestinationList(train)
     print "Train (", self.trainName,") has ", carList.size(), " cars assigned to it"
     
-    for carId in carList:
-        car = cm.getById(carId)
+    for car in carList:
         if (car.getNextWait() == 0):
             car.setNextWait(self.wait)
             print "Setting next wait to ", self.wait, " for car ", car.toString()
