@@ -220,7 +220,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         
         portFieldLabel = new JLabel("TCP/UDP Port:");
 
-        showAutoConfig.setFont(showAdvanced.getFont().deriveFont(9f));
+        showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));
         showAutoConfig.setForeground(Color.blue);
         showAutoConfig.addItemListener(
             new ItemListener() {
