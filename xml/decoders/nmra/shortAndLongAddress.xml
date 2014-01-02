@@ -68,7 +68,7 @@
 		<choice xml:lang="de">Basisadresse (1 byte)</choice>
       </enumChoice>
       <enumChoice choice="Long (two byte) address">
-        <choice xml:lang="it">Ind.Esteso) (2 byte)</choice>
+        <choice xml:lang="it">Ind.Esteso (2 byte)</choice>
 		<choice xml:lang="fr">Adresse étendue (2 octets)</choice>
 		<choice xml:lang="de">Erweiterte Adresse (2 byte)</choice>
       </enumChoice>
