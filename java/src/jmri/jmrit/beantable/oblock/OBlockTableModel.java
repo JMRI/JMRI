@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import jmri.Block;
@@ -85,8 +86,11 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     public OBlockTableModel(TableFrames parent) {
         super();
         _parent = parent;
-        manager = InstanceManager.oBlockManagerInstance();
         initTempRow();
+    }
+    
+    void addHeaderListener(JTable table) {
+    	addMouseListenerToHeader(table);
     }
 
     void initTempRow() {
@@ -103,6 +107,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     }
 
     public Manager getManager() {
+        manager = InstanceManager.oBlockManagerInstance();
         return manager;
     }
     public NamedBean getBySystemName(String name) {
@@ -269,17 +274,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     return;
                 }
                 if (tempRow[SENSORCOL] != null) {
-                    Sensor sensor = null;
-                    boolean err1 = false;
-                    try {
-                        sensor = InstanceManager.sensorManagerInstance().getSensor(tempRow[SENSORCOL]);
-                        if (sensor!=null) {
-                            err1 = block.setSensor(tempRow[SENSORCOL]);
-                        }
-                    } catch (Exception ex) {
-                        log.error("No Sensor named \""+tempRow[SENSORCOL]+"\" found. threw exception: "+ ex);
-                    }
-                    if (err1) {
+                    if (!sensorExists(tempRow[SENSORCOL])) {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                             rbo.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
@@ -314,15 +309,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     Sensor sensor = null;
                     boolean err = false;
                     if (tempRow[ERR_SENSORCOL].trim().length()>0) {
-                        try {
-                            sensor = InstanceManager.sensorManagerInstance().getSensor(tempRow[ERR_SENSORCOL]);
-                            if (sensor!=null) {
-                                err = block.setErrorSensor(tempRow[ERR_SENSORCOL]);
-                            }
-                        } catch (Exception ex) {
-                            log.error("No Sensor named \""+tempRow[ERR_SENSORCOL]+"\" found. threw exception: "+ ex);
-                        }
-                        if (err) {
+                        if (!sensorExists(tempRow[ERR_SENSORCOL])) {
                             JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                                 rbo.getString("NoSuchSensorErr"), tempRow[ERR_SENSORCOL]),
                                 AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
@@ -401,21 +388,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 fireTableRowsUpdated(row,row);
                 return;
             case SENSORCOL:
-            	boolean err1 = false;
-                try {
-                    if (((String)value).trim().length()==0) {
-                        block.setSensor(null);
-                        block.setState(OBlock.DARK);
-                        err1 = true;
-                    } else {
-                        err1 = block.setSensor((String)value);
-                        fireTableRowsUpdated(row,row);
-                    }
-                    return;
-                } catch (Exception ex) {
-                    log.error("getSensor("+(String)value+") threw exception: "+ ex);
-                }
-                if (err1) {
+                if (!block.setSensor((String)value)) {
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                             rbo.getString("NoSuchSensorErr"), (String)value),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                	
@@ -516,7 +489,15 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         }
         super.setValueAt(value, row, col);					
     }
-
+    
+    private boolean sensorExists(String name) {
+        Sensor sensor = InstanceManager.sensorManagerInstance().getByUserName(name);
+        if (sensor==null) {
+        	sensor = InstanceManager.sensorManagerInstance().getBySystemName(name);
+        }
+        return (sensor!=null);   	
+    }
+    
     public String getColumnName(int col) {
         switch (col) {
             case COMMENTCOL: return AbstractTableAction.rb.getString("Comment");

@@ -58,6 +58,7 @@ import javax.swing.TransferHandler;
 
 import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -365,7 +366,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JTable blockTable = new DnDJTable(_oBlockModel, new int[] {OBlockTableModel.EDIT_COL, 
                                                                 OBlockTableModel.DELETE_COL,
                                                                 OBlockTableModel.UNITSCOL});
+        
+		// Use XTableColumnModel so we can control which columns are visible
+		XTableColumnModel tcm = new XTableColumnModel();
+		blockTable.setColumnModel(tcm);
+		blockTable.getTableHeader().setReorderingAllowed(true);
+		blockTable.createDefaultColumnsFromModel();
         _oBlockModel.makeSorter(blockTable);
+        _oBlockModel.addHeaderListener(blockTable);
+       
+        
         blockTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
@@ -394,6 +404,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         int tableWidth = _desktop.getPreferredSize().width;
         blockTable.setPreferredScrollableViewportSize( new java.awt.Dimension(tableWidth, ROW_HEIGHT*10));
         _blockTablePane = new JScrollPane(blockTable);
+
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.SPEEDCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));

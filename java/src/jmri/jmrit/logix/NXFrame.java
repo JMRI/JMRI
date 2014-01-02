@@ -49,7 +49,8 @@ public class NXFrame extends WarrantRoute {
     JTextField  _dccNumBox = new JTextField();
     JTextField  _speedBox = new JTextField();
     JCheckBox	_forward = new JCheckBox();
-     JCheckBox	_stageEStop = new JCheckBox();    
+    JCheckBox	_stageEStop = new JCheckBox();    
+    JCheckBox	_haltStart = new JCheckBox();    
     JTextField _rampInterval = new JTextField();
     JTextField _searchDepth = new JTextField();
     int _clickCount;
@@ -82,7 +83,11 @@ public class NXFrame extends WarrantRoute {
         pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStart, "HaltStart"));
+        pp.add(ppp);
         pp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(pp);
@@ -94,6 +99,7 @@ public class NXFrame extends WarrantRoute {
         panel.add(pp);
         _forward.setSelected(true);
         _stageEStop.setSelected(false);
+        _haltStart.setSelected(false);
         _speedBox.setText("0.5");
         _rampInterval.setText("4.0");
         _searchDepth.setText("10");
@@ -170,7 +176,7 @@ public class NXFrame extends WarrantRoute {
             		} else {
                 		dccNum = Integer.parseInt(addr);
                 		ch = addr.charAt(0);
-                        isLong = (ch=='0' || dccNum>255);  // leading zero means long
+                        isLong = (ch=='0' || dccNum>127);  // leading zero means long
                         addr = addr + (isLong?"L":"S");
             		}
             		if (msg==null) {
@@ -197,26 +203,27 @@ public class NXFrame extends WarrantRoute {
         } else {
         	_parent.getModel().addNXWarrant(warrant);
         	_parent.getModel().fireTableDataChanged();
-        	class Halter implements Runnable {
-        		Warrant war;
-        		Halter (Warrant w) {
-        			war = w;
-        		}
-        		public void run() {
-                	int limit = 0;  
-                	try {
-                    	while (!war.controlRunTrain(Warrant.HALT) && limit<3000) {
-                    		Thread.sleep(200);
-                    		limit += 200;
-                    	}            		
-                	} catch (InterruptedException e) {
-                		war.controlRunTrain(Warrant.HALT);
-                	}
-        			
-        		}
-        	}
-        	Halter h = new Halter(warrant);
-        	new Thread(h).start();
+        	if (_haltStart.isSelected()) {
+            	class Halter implements Runnable {
+            		Warrant war;
+            		Halter (Warrant w) {
+            			war = w;
+            		}
+            		public void run() {
+                    	int limit = 0;  
+                    	try {
+                        	while (!war.controlRunTrain(Warrant.HALT) && limit<3000) {
+                        		Thread.sleep(200);
+                        		limit += 200;
+                        	}            		
+                    	} catch (InterruptedException e) {
+                    		war.controlRunTrain(Warrant.HALT);
+                    	}           			
+            		}
+            	}
+            	Halter h = new Halter(warrant);
+            	new Thread(h).start();
+         	}
         	_parent.scrollTable();
         	dispose();
         	_parent.closeNXFrame();           	

@@ -17,11 +17,11 @@ import java.util.List;
 import jmri.util.NamedBeanComparator;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -55,7 +55,7 @@ import javax.swing.ListSelectionModel;
 /**
 * Table model for pick lists in IconAdder
 */
-public abstract class PickListModel extends AbstractTableModel implements PropertyChangeListener {
+public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
 
     protected ArrayList <NamedBean> _pickList;
     protected String _name;
@@ -86,12 +86,12 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
 
     /**
-    * Subclasses MUST call this method at creation
+    * No longer needed.  Now done in BeanTableDataModel 
     */
     public void init() {
         //log.debug("manager "+getManager());
-        getManager().addPropertyChangeListener(this);   // for adds and deletes
-        makePickList();
+        //getManager().addPropertyChangeListener(this);   // for adds and deletes
+        //makePickList();
     }
 
     /**
@@ -119,6 +119,12 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         return _pickList;
     }
 
+    /**
+     * override BeanTableDataModel only lists SystemName
+     */
+    protected synchronized void updateNameList() {
+    	makePickList();
+    }
     private void makePickList() {
         // Don't know who is added or deleted so remove all name change listeners
         if (_pickList != null) {
@@ -147,9 +153,13 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         if (log.isDebugEnabled()) log.debug("_pickList has "+_pickList.size()+" beans");
     }
 
+    public NamedBean getBySystemName(String name) {
+    	return getManager().getBeanBySystemName(name);
+    }
+    protected NamedBean getByUserName(String name) {
+    	return getManager().getBeanByUserName(name);
+    }
     abstract public Manager getManager();
-    abstract public NamedBean getBySystemName(String name);
-
     /**
     * Return bean with name given in parameter.  Create if needed and possible
     */
@@ -160,6 +170,10 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     */
     abstract public boolean canAddBean();
 
+    // these BeanTableDataModel abstract methods not needed
+    protected String getMasterClassName() { return "PickListModel"; }  
+    public void clickOn(NamedBean t) {}
+    
     public Class<?> getColumnClass(int c) {
             return String.class;
     }
@@ -199,24 +213,31 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
     public void setValueAt(Object type,int r,int c) {
     }
-    
+    // these BeanTableDataModel abstract methods not needed
+    public String getValue(String systemName) {
+    	return systemName;
+    }
     public String getName() {
         return _name;
     }
+    protected String getBeanType(){
+        return _name;
+    }
 
+    /**
+     * override. only interested in additions and deletions
+     */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a NamedBean added or deleted
             makePickList();
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("DisplayListName")){
-            //This is a call from the manager, which can be ignored
-        } else {
-            // a value changed.  Find it, to avoid complete redraw
+        } if(e.getSource() instanceof NamedBean){
             NamedBean bean = (NamedBean)e.getSource();
             for (int i=0; i<_pickList.size(); i++) {
                 if (bean.equals(_pickList.get(i)))  {
                     fireTableRowsUpdated(i, i);
+                    break;
                 }
             }
         }
@@ -245,6 +266,10 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         _table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,_table.getRowHeight()*7));
         _table.setDragEnabled(true);
         _table.setTransferHandler(new jmri.util.DnDTableExportHandler());
+        
+        _table.getTableHeader().setReorderingAllowed(true);
+        _table.setColumnModel(new XTableColumnModel());
+        _table.createDefaultColumnsFromModel();
         TableColumnModel columnModel = _table.getColumnModel();
 
         TableColumn sNameColumnT = columnModel.getColumn(SNAME_COLUMN);
@@ -256,6 +281,8 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         uNameColumnT.setResizable(true);
         uNameColumnT.setMinWidth(100);
         //uNameColumnT.setMaxWidth(300);
+        
+        addMouseListenerToHeader(_table);
 
         return _table;
     }
@@ -405,14 +432,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class TurnoutPickModel extends PickListModel {
         TurnoutManager manager;
         TurnoutPickModel () {
-            manager = InstanceManager.turnoutManagerInstance();
-            _name = rb.getString("TitleTurnoutTable");
+             _name = rb.getString("TitleTurnoutTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.turnoutManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideTurnout(name);
@@ -428,14 +452,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class SensorPickModel extends PickListModel {
         SensorManager manager;
         SensorPickModel () {
-            manager = InstanceManager.sensorManagerInstance();
             _name = rb.getString("TitleSensorTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.sensorManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideSensor(name);
@@ -469,14 +490,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class SignalHeadPickModel extends PickListModel {
         SignalHeadManager manager;
         SignalHeadPickModel () {
-            manager = InstanceManager.signalHeadManagerInstance();
-            _name = rb.getString("TitleSignalTable");
+             _name = rb.getString("TitleSignalTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.signalHeadManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.getSignalHead(name);
@@ -496,14 +514,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class SignalMastPickModel extends PickListModel {
         SignalMastManager manager;
         SignalMastPickModel () {
-            manager = InstanceManager.signalMastManagerInstance();
             _name = rb.getString("TitleSignalMastTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.signalMastManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideSignalMast(name);
@@ -523,14 +538,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class MemoryPickModel extends PickListModel {
         MemoryManager manager;
         MemoryPickModel () {
-            manager = InstanceManager.memoryManagerInstance();
             _name = rb.getString("TitleMemoryTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.memoryManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideMemory(name);
@@ -546,14 +558,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class BlockPickModel extends PickListModel {
         BlockManager manager;
         BlockPickModel () {
-            manager = InstanceManager.blockManagerInstance();
             _name = rb.getString("TitleBlockTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.blockManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideBlock(name);
@@ -569,14 +578,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class ReporterPickModel extends PickListModel {
         ReporterManager manager;
         ReporterPickModel () {
-            manager = InstanceManager.reporterManagerInstance();
             _name = rb.getString("TitleReporterTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.reporterManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideReporter(name);
@@ -592,14 +598,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class LightPickModel extends PickListModel {
         LightManager manager;
         LightPickModel () {
-            manager = InstanceManager.lightManagerInstance();
             _name = rb.getString("TitleLightTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.lightManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideLight(name);
@@ -615,14 +618,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class OBlockPickModel extends PickListModel {
         OBlockManager manager;
         OBlockPickModel () {
-            manager = InstanceManager.oBlockManagerInstance();
             _name = rb.getString("TitleBlockTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.oBlockManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideOBlock(name);
@@ -638,14 +638,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class WarrantPickModel extends PickListModel {
         WarrantManager manager;
         WarrantPickModel () {
-            manager = InstanceManager.warrantManagerInstance();
             _name = rb.getString("TitleWarrantTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.warrantManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.provideWarrant(name);
@@ -660,14 +657,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     class ConditionalPickModel extends PickListModel {
         ConditionalManager manager;
         ConditionalPickModel () {
-            manager = InstanceManager.conditionalManagerInstance();
             _name = rb.getString("TitleConditionalTable");
         }
         public Manager getManager() {
+            manager = InstanceManager.conditionalManagerInstance();
             return manager;
-        }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
         }
         public NamedBean addBean(String name) {
             return manager.createNewConditional(name, null);
@@ -704,16 +698,12 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         
         EntryExitPairs manager;
         EntryExitPickModel () {
-            manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
             _name = rb.getString("TitleEntryExitTable");
         }
         public Manager getManager() {
+            manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
             return manager;
         }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        
         public NamedBean addBean(String name) {
             return null;
         }
