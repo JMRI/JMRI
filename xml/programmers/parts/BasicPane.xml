@@ -5,7 +5,7 @@
     <column>
         <dccaddress/>
         <label label=" "/>
-        <display item="Short Address" tooltip="Sets the Primary (short) address">
+        <display item="Short Address" tooltip="Sets the primary (short) address">
             <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
             <tooltip xml:lang="ca">Establir adreÁa prim‡ria (short)</tooltip>
         </display>
