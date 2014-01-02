@@ -7,7 +7,10 @@ import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.TURNOUT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +29,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonTurnoutServer extends AbstractTurnoutServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
 
     public JsonTurnoutServer(JmriConnection connection) {

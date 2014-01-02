@@ -10,7 +10,16 @@ import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.jmris.AbstractSignalMastServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.ASPECT_DARK;
+import static jmri.jmris.json.JSON.ASPECT_HELD;
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.SIGNAL_MAST;
+import static jmri.jmris.json.JSON.STATE;
+import static jmri.jmris.json.JSON.TYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonSignalMastServer extends AbstractSignalMastServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonSignalMastServer.class);
 
     public JsonSignalMastServer(JmriConnection connection) {
@@ -75,7 +84,7 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
                     state = ASPECT_DARK;
                 }
                 this.sendStatus(name, state);
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 this.sendErrorStatus(name);
             }
         } else { //else set the aspect to the state passed in

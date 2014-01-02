@@ -10,8 +10,15 @@ import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.DELETE;
+import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.STATUS;
 import jmri.jmrit.consisttool.ConsistFile;
+import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonConsistServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     private final static Logger log = LoggerFactory.getLogger(JsonConsistServer.class);
 
     public JsonConsistServer(JmriConnection connection) {
@@ -31,8 +38,10 @@ public class JsonConsistServer {
         InstanceManager.consistManagerInstance().requestUpdateFromLayout();
         try {
             (new ConsistFile()).readFile();
-        } catch (Exception e) {
-            log.warn("error reading consist file: " + e);
+        } catch (IOException e) {
+            log.warn("error reading consist file: {}", e.getLocalizedMessage());
+        } catch (JDOMException e) {
+            log.warn("error reading consist file: {}", e.getLocalizedMessage());
         }
         InstanceManager.consistManagerInstance().addConsistListListener(new JsonConsistListListener());
     }
@@ -75,7 +84,7 @@ public class JsonConsistServer {
 
     private class JsonConsistListener implements ConsistListener {
 
-        private DccLocoAddress consistAddress;
+        private final DccLocoAddress consistAddress;
 
         private JsonConsistListener(DccLocoAddress address) {
             this.consistAddress = address;

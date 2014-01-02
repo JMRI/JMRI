@@ -9,7 +9,15 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.SIGNAL_HEAD;
+import static jmri.jmris.json.JSON.STATE;
+import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.UNKNOWN;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +30,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
 
     public JsonSignalHeadServer(JmriConnection connection) {

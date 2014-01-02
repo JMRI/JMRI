@@ -10,7 +10,19 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmris.AbstractProgrammerServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.MODE;
+import static jmri.jmris.json.JSON.NODE_CV;
+import static jmri.jmris.json.JSON.OP;
+import static jmri.jmris.json.JSON.PROGRAMMER;
+import static jmri.jmris.json.JSON.READ;
+import static jmri.jmris.json.JSON.STATE;
+import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.VALUE;
+import static jmri.jmris.json.JSON.WRITE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +35,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonProgrammerServer extends AbstractProgrammerServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class.getName());
 
     public JsonProgrammerServer(JmriConnection connection) {

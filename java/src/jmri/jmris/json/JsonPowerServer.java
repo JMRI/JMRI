@@ -22,8 +22,8 @@ import jmri.jmris.JmriConnection;
  */
 public class JsonPowerServer extends AbstractPowerServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
 
     public JsonPowerServer(JmriConnection connection) {
         this.connection = connection;

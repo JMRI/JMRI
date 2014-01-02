@@ -7,15 +7,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.THROTTLE;
+import static jmri.jmris.json.JSON.TYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JsonThrottleServer {
 
-    private ObjectMapper mapper;
-    protected JmriConnection connection;
-    private HashMap<String, JsonThrottle> throttles;
+    private final ObjectMapper mapper;
+    protected final JmriConnection connection;
+    private final HashMap<String, JsonThrottle> throttles;
     static final Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
 
     public JsonThrottleServer(JmriConnection connection) {

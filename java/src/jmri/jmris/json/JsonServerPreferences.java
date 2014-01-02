@@ -1,13 +1,15 @@
 package jmri.jmris.json;
 
 import java.io.File;
+import java.io.IOException;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonServerPreferences extends Bean {
 
@@ -52,10 +54,7 @@ public class JsonServerPreferences extends Bean {
         if (this.getHeartbeatInterval() != prefs.getHeartbeatInterval()) {
             return true;
         }
-        if (this.getPort() != prefs.getPort()) {
-            return true;
-        }
-        return false;
+        return this.getPort() != prefs.getPort();
     }
 
     public void apply(JsonServerPreferences prefs) {
@@ -82,8 +81,11 @@ public class JsonServerPreferences extends Bean {
         } catch (java.io.FileNotFoundException ea) {
             log.info("Could not find JSON Server preferences file.  Normal if preferences have not been saved before.");
             root = null;
-        } catch (Exception eb) {
-            log.error("Exception while loading JSON server preferences: " + eb);
+        } catch (IOException eb) {
+            log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
+            root = null;
+        } catch (JDOMException eb) {
+            log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
             root = null;
         }
         if (root != null) {
@@ -104,21 +106,21 @@ public class JsonServerPreferences extends Bean {
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :" + fileName);
+                    log.warn("Could not create parent directory for prefs file :{}", fileName);
                     return;
                 }
             }
             if (file.createNewFile()) {
-                log.debug("Creating new JSON Server prefs file: " + fileName);
+                log.debug("Creating new JSON Server prefs file: {}", fileName);
             }
-        } catch (Exception ea) {
+        } catch (IOException ea) {
             log.error("Could not create JSON Server preferences file.");
         }
 
         try {
             xmlFile.writeXML(file, XmlFile.newDocument(store()));
-        } catch (Exception eb) {
-            log.warn("Exception in storing JSON Server xml: " + eb);
+        } catch (IOException eb) {
+            log.warn("Exception in storing JSON Server xml: {}", eb.getLocalizedMessage());
         }
     }
 

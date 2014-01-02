@@ -10,7 +10,21 @@ import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.CABOOSE;
+import static jmri.jmris.json.JSON.CARS;
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.LEAD_ENGINE;
+import static jmri.jmris.json.JSON.LENGTH;
+import static jmri.jmris.json.JSON.LOCATION;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.OPERATIONS;
+import static jmri.jmris.json.JSON.STATUS;
+import static jmri.jmris.json.JSON.TERMINATE;
+import static jmri.jmris.json.JSON.TRAIN;
+import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.WEIGHT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +38,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonOperationsServer extends AbstractOperationsServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class.getName());
 
     public JsonOperationsServer(JmriConnection connection) {
@@ -42,7 +56,9 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * attributes.
      *
      * @param contents is the ArrayList of Attributes to be sent.
+     * @throws java.io.IOException
      */
+    @Override
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, OPERATIONS);
@@ -64,6 +80,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * - this method will add it. It should be plain text.
      * @throws IOException if there is a problem sending the error message
      */
+    @Override
     public void sendErrorStatus(String errorStatus) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, ERROR);
@@ -76,6 +93,9 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Parse a string into a JSON structure and then parse the data node for
      * operations commands
+     * @param statusString
+     * @throws jmri.JmriException
+     * @throws java.io.IOException
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {

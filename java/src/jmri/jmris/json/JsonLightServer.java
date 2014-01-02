@@ -7,7 +7,10 @@ import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
+import static jmri.jmris.json.JSON.LIGHT;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonLightServer extends AbstractLightServer {
 
-    private JmriConnection connection = null;
-    private ObjectMapper mapper = null;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     static Logger log = LoggerFactory.getLogger(JsonLightServer.class.getName());
 
     public JsonLightServer(JmriConnection connection) {
