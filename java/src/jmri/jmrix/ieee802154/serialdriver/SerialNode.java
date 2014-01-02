@@ -36,6 +36,8 @@ public class SerialNode extends IEEE802154Node{
 
     public SerialNode(byte pan[],byte user[], byte global[]) {
         super(pan,user,global);
+        if(log.isDebugEnabled()) log.debug("Created new node with panId: " +
+                                pan + " userId: " + user + " and GUID: " + global);
     }
    
     /**

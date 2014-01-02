@@ -89,14 +89,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         List<Element> l = e.getChildren("node");
         for (int i = 0; i<l.size(); i++) {
             Element n = l.get(i);
-            int addr = Integer.parseInt(n.getAttributeValue("name"));
+            //int addr = Integer.parseInt(n.getAttributeValue("name"));
             byte PAN[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"PAN"));            
             byte address[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"address")); 
             byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"GUID"));            
 
             // create node (they register themselves)
             SerialNode node = new SerialNode(PAN,address,GUID);
-            
+ 
             // Trigger initialization of this Node to reflect these parameters
             SerialSystemConnectionMemo scm = (SerialSystemConnectionMemo)adapter.getSystemConnectionMemo();
             SerialTrafficController stc=(SerialTrafficController)scm.getTrafficController();

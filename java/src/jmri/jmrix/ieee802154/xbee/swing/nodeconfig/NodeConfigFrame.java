@@ -392,7 +392,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Method to set node parameters
      *    The node must exist, and be in 'curNode'
      */
-    void setNodeParameters() {
+    @Override
+    protected void setNodeParameters() {
+        super.setNodeParameters();
     }
     
     /**

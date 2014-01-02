@@ -40,6 +40,8 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode(byte pan[],byte user[], byte global[]) {
         super(pan,user,global);
         Identifier="";
+        if(log.isDebugEnabled()) log.debug("Created new node with panId: " +
+                                pan + " userId: " + user + " and GUID: " + global);
     }
 
 

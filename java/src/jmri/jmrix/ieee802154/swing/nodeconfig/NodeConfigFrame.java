@@ -402,7 +402,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Method to set node parameters
      *    The node must exist, and be in 'curNode'
      */
-    void setNodeParameters() {
+    protected void setNodeParameters() {
     }
     
     /**

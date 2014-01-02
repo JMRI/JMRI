@@ -88,7 +88,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         List<Element> l = e.getChildren("node");
         for (int i = 0; i<l.size(); i++) {
             Element n = l.get(i);
-            int addr = Integer.parseInt(n.getAttributeValue("name"));
+            //int addr = Integer.parseInt(n.getAttributeValue("name"));
             byte PAN[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"PAN"));
             byte address[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"address"));
             byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"GUID"));
