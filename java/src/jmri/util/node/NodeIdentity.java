@@ -93,9 +93,12 @@ public class NodeIdentity {
         try {
             Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
             while (enumeration.hasMoreElements()) {
-                NetworkInterface networkInterface = enumeration.nextElement();
-                if (!networkInterface.isVirtual() && this.createIdentity(networkInterface.getHardwareAddress()).equals(identity)) {
-                    return true;
+                NetworkInterface nic = enumeration.nextElement();
+                if (!nic.isVirtual() && !nic.isLoopback()) {
+                    String nicIdentity = this.createIdentity(nic.getHardwareAddress());
+                    if (nicIdentity != null && nicIdentity.equals(identity)) {
+                        return true;
+                    }
                 }
             }
         } catch (SocketException ex) {
