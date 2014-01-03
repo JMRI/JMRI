@@ -229,9 +229,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		List<Schedule> schs = getSchedulesByIdList();
 		for (int i = 0; i < schs.size(); i++) {
 			Schedule sch = schs.get(i);
-			List<String> items = sch.getItemsBySequenceList();
+			List<ScheduleItem> items = sch.getItemsBySequenceList();
 			for (int j = 0; j < items.size(); j++) {
-				ScheduleItem si = sch.getItemById(items.get(j));
+				ScheduleItem si = items.get(j);
 				if (si.getTypeName().equals(oldType)) {
 					si.setTypeName(newType);
 				}
@@ -253,9 +253,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		List<Schedule> schs = getSchedulesByIdList();
 		for (int i = 0; i < schs.size(); i++) {
 			Schedule sch = schs.get(i);
-			List<String> items = sch.getItemsBySequenceList();
+			List<ScheduleItem> items = sch.getItemsBySequenceList();
 			for (int j = 0; j < items.size(); j++) {
-				ScheduleItem si = sch.getItemById(items.get(j));
+				ScheduleItem si = items.get(j);
 				if (si.getRoadName().equals(oldRoad)) {
 					si.setRoadName(newRoad);
 				}
@@ -277,9 +277,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		List<Schedule> schs = getSchedulesByIdList();
 		for (int i = 0; i < schs.size(); i++) {
 			Schedule sch = schs.get(i);
-			List<String> items = sch.getItemsBySequenceList();
+			List<ScheduleItem> items = sch.getItemsBySequenceList();
 			for (int j = 0; j < items.size(); j++) {
-				ScheduleItem si = sch.getItemById(items.get(j));
+				ScheduleItem si = items.get(j);
 				if (si.getTypeName().equals(type) && si.getReceiveLoadName().equals(oldLoad)) {
 					if (newLoad != null)
 						si.setReceiveLoadName(newLoad);

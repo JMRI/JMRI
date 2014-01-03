@@ -3439,7 +3439,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1.setScheduleId(sch1.getId());
 		loc2trk1.setScheduleMode(Track.SEQUENTIAL);
 		// start the schedule with 2nd item Flat Car
-		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1));
+		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1).getId());
 
 		Track loc2trk2;
 		loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SPUR);
@@ -3449,7 +3449,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2.setScheduleId(sch1.getId());
 		loc2trk2.setScheduleMode(Track.SEQUENTIAL);
 		// start the schedule with 3rd item Gon
-		loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2));
+		loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2).getId());
 
 		Track loc2trk3;
 		loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);

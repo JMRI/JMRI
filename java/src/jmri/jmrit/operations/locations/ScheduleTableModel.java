@@ -72,12 +72,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		_list = _schedule.getItemsBySequenceList();
 		// and add them back in
 		for (int i = 0; i < _list.size(); i++) {
-			// log.debug("schedule ids: " + _list.get(i));
-			_schedule.getItemById(_list.get(i)).addPropertyChangeListener(this);
+			_list.get(i).addPropertyChangeListener(this);
 		}
 	}
 
-	List<String> _list = new ArrayList<String>();
+	List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
 
 	void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location,
 			Track track) {
@@ -243,7 +242,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	public Object getValueAt(int row, int col) {
 		if (row >= _list.size())
 			return "ERROR row " + row; // NOI18N
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		if (si == null)
 			return "ERROR schedule item unknown " + row; // NOI18N
 		switch (col) {
@@ -445,7 +444,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	// set the count or hits if in match mode
 	private void setCount(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		int count;
 		try {
 			count = Integer.parseInt(value.toString());
@@ -470,7 +469,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	}
 
 	private void setWait(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		int wait;
 		try {
 			wait = Integer.parseInt(value.toString());
@@ -490,7 +489,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	}
 
 	private void setDay(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		Object obj = ((JComboBox) value).getSelectedItem();
 		if (obj.equals("")) {
 			si.setTrainScheduleId("");
@@ -501,7 +500,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	// note this method looks for String "Not Valid <>"
 	private void setRoad(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		String road = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(road))
 			si.setRoadName(road);
@@ -509,7 +508,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	// note this method looks for String "Not Valid <>"
 	private void setLoad(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		String load = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(load))
 			si.setReceiveLoadName(load);
@@ -517,7 +516,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	// note this method looks for String "Not Valid <>"
 	private void setShip(Object value, int row) {
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
+		ScheduleItem si = _list.get(row);
 		String load = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(load))
 			si.setShipLoadName(load);
@@ -537,7 +536,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private void setDestination(Object value, int row) {
 		if (((JComboBox) value).getSelectedItem() != null) {
-			ScheduleItem si = _schedule.getItemById(_list.get(row));
+			ScheduleItem si = _list.get(row);
 			si.setDestinationTrack(null);
 			Location dest = null;
 			if (!((JComboBox) value).getSelectedItem().equals("")) {
@@ -550,7 +549,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private void setTrack(Object value, int row) {
 		if (((JComboBox) value).getSelectedItem() != null) {
-			ScheduleItem si = _schedule.getItemById(_list.get(row));
+			ScheduleItem si = _list.get(row);
 			Track track = null;
 			if (!((JComboBox) value).getSelectedItem().equals("")) {
 				track = (Track) ((JComboBox) value).getSelectedItem();
@@ -561,20 +560,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private void moveUpScheduleItem(int row) {
 		log.debug("move schedule item up");
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
-		_schedule.moveItemUp(si);
+		_schedule.moveItemUp(_list.get(row));
 	}
 
 	private void moveDownScheduleItem(int row) {
 		log.debug("move schedule item down");
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
-		_schedule.moveItemDown(si);
+		_schedule.moveItemDown(_list.get(row));
 	}
 
 	private void deleteScheduleItem(int row) {
 		log.debug("Delete schedule item");
-		ScheduleItem si = _schedule.getItemById(_list.get(row));
-		_schedule.deleteItem(si);
+		_schedule.deleteItem(_list.get(row));
 	}
 
 	// remove destinations that don't service the car's type
@@ -643,8 +639,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		// update hit count?
 		if (e.getPropertyName().equals(ScheduleItem.HITS_CHANGED_PROPERTY)
 				&& e.getSource().getClass().equals(ScheduleItem.class)) {
-			String id = ((ScheduleItem) e.getSource()).getId();
-			int row = _list.indexOf(id);
+			ScheduleItem item = (ScheduleItem) e.getSource();
+			int row = _list.indexOf(item);
 			if (Control.showProperty && log.isDebugEnabled())
 				log.debug("Update schedule item table row: " + row);
 			if (row >= 0)
@@ -655,7 +651,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private void removePropertyChangeScheduleItems() {
 		for (int i = 0; i < _list.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			ScheduleItem si = _schedule.getItemById(_list.get(i));
+			ScheduleItem si = _list.get(i);
 			if (si != null)
 				si.removePropertyChangeListener(this);
 		}

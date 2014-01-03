@@ -138,10 +138,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 						// listen for changes
 						sch.removePropertyChangeListener(this);
 						sch.addPropertyChangeListener(this);
-						List<String> items = sch.getItemsBySequenceList();
+						List<ScheduleItem> items = sch.getItemsBySequenceList();
 						// determine if schedule is requesting car type and load
 						for (int k = 0; k < items.size(); k++) {
-							ScheduleItem item = sch.getItemById(items.get(k));
+							ScheduleItem item = items.get(k);
 							if (item.getTypeName().equals(type) && item.getReceiveLoadName().equals(load)
 									|| item.getTypeName().equals(type) && item.getReceiveLoadName().equals("")
 									|| item.getTypeName().equals(type) && item.getShipLoadName().equals(load)

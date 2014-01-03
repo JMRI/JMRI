@@ -265,9 +265,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		// if car is already placed at track, don't check car type and load
 		if (car != null && car.getTrack() == track)
 			return true;
-		List<String> scheduleItems = schedule.getItemsBySequenceList();
+		List<ScheduleItem> scheduleItems = schedule.getItemsBySequenceList();
 		for (int i = 0; i < scheduleItems.size(); i++) {
-			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			ScheduleItem si = scheduleItems.get(i);
 			// check to see if schedule services car type
 			if (attribute.equals(TYPE) && si.getTypeName().equals(carType))
 				return true;

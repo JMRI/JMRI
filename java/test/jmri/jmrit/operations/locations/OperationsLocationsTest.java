@@ -1595,9 +1595,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Schedule 1 comment", "Schedule 1 Comment", s1.getComment());
 		Assert.assertEquals("Schedule 2 comment", "Schedule 2 Comment", s2.getComment());
 		
-		List <String> s1items = s1.getItemsBySequenceList(); 
+		List <ScheduleItem> s1items = s1.getItemsBySequenceList(); 
 		Assert.assertEquals("There should be 2 items", 2, s1items.size());
-		ScheduleItem si1 = s1.getItemById(s1items.get(0));
+		ScheduleItem si1 = s1items.get(0);
 		Assert.assertEquals("Item 1 type", "Boxcar", si1.getTypeName());
 		Assert.assertEquals("Item 1 load", "Schedule 1 Item 1 Load", si1.getReceiveLoadName());
 		Assert.assertEquals("Item 1 ship", "Schedule 1 Item 1 Ship", si1.getShipLoadName());
@@ -1608,7 +1608,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Item 1 track", "A Siding", si1.getDestinationTrackName());
 
 		
-		ScheduleItem si2 = s1.getItemById(s1items.get(1));
+		ScheduleItem si2 = s1items.get(1);
 		Assert.assertEquals("Item 2 type", "boxcar", si2.getTypeName());
 		Assert.assertEquals("Item 2 load", "Schedule 1 Item 2 Load", si2.getReceiveLoadName());
 		Assert.assertEquals("Item 2 ship", "Schedule 1 Item 2 Ship", si2.getShipLoadName());
@@ -1618,9 +1618,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Item 2 destination", "Test Location 1", si2.getDestinationName());
 		Assert.assertEquals("Item 2 track", "An Interchange", si2.getDestinationTrackName());
 	
-		List <String> s2items = s2.getItemsBySequenceList(); 
+		List <ScheduleItem> s2items = s2.getItemsBySequenceList(); 
 		Assert.assertEquals("There should be 1 items", 1, s2items.size());
-		ScheduleItem si3 = s2.getItemById(s2items.get(0));
+		ScheduleItem si3 = s2items.get(0);
 		Assert.assertEquals("Item 3 type", "BoxCar", si3.getTypeName());
 		Assert.assertEquals("Item 3 load", "Schedule 2 Item 1 Load", si3.getReceiveLoadName());
 		Assert.assertEquals("Item 3 ship", "Schedule 2 Item 1 Ship", si3.getShipLoadName());

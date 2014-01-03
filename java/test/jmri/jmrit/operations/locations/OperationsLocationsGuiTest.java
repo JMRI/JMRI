@@ -461,16 +461,16 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveScheduleButton ) );
 		
-		List<String> list = s.getItemsBySequenceList();
+		List<ScheduleItem> list = s.getItemsBySequenceList();
 		Assert.assertEquals("number of items", 4, list.size());
 		
-		ScheduleItem si = s.getItemById(list.get(0));		
+		ScheduleItem si = list.get(0);		
 		Assert.assertEquals("1st type", "Tank Food", si.getTypeName());
-		si = s.getItemById(list.get(1));		
+		si = list.get(1);		
 		Assert.assertEquals("2nd type", "Boxcar", si.getTypeName());
-		si = s.getItemById(list.get(2));		
+		si = list.get(2);		
 		Assert.assertEquals("3rd type", "Flatcar", si.getTypeName());
-		si = s.getItemById(list.get(3));		
+		si = list.get(3);		
 		Assert.assertEquals("3rd type", "Coilcar", si.getTypeName());
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );

@@ -1378,7 +1378,7 @@ public class Track {
 			} else {
 				// set the id to the first item in the list
 				if (schedule.getItemsBySequenceList().size() > 0)
-					setScheduleItemId(schedule.getItemsBySequenceList().get(0));
+					setScheduleItemId(schedule.getItemsBySequenceList().get(0).getId());
 				setScheduleCount(0);
 			}
 			setDirtyAndFirePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
@@ -1418,7 +1418,7 @@ public class Track {
 			log.debug("Can not find schedule item (" + getScheduleItemId() + ") for schedule ("
 					+ getScheduleName() + ")");
 			// reset schedule
-			setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
+			setScheduleItemId((sch.getItemsBySequenceList().get(0)).getId());
 			currentSi = sch.getItemById(getScheduleItemId());
 		}
 		return currentSi;
@@ -1446,15 +1446,15 @@ public class Track {
 					+ getName() + ")");
 			return null;
 		}
-		List<String> l = sch.getItemsBySequenceList();
+		List<ScheduleItem> items = sch.getItemsBySequenceList();
 		ScheduleItem nextSi = null;
-		for (int i = 0; i < l.size(); i++) {
-			nextSi = sch.getItemById(l.get(i));
+		for (int i = 0; i < items.size(); i++) {
+			nextSi = items.get(i);
 			if (getCurrentScheduleItem() == nextSi) {
-				if (++i < l.size()) {
-					nextSi = sch.getItemById(l.get(i));
+				if (++i < items.size()) {
+					nextSi = items.get(i);
 				} else {
-					nextSi = sch.getItemById(l.get(0));
+					nextSi = items.get(0);
 				}
 				setScheduleItemId(nextSi.getId());
 				break;
@@ -1490,12 +1490,12 @@ public class Track {
 		if (schedule == null)
 			return MessageFormat.format(Bundle.getMessage("CanNotFindSchedule"),
 					new Object[] { getScheduleId() });
-		List<String> scheduleItems = schedule.getItemsBySequenceList();
+		List<ScheduleItem> scheduleItems = schedule.getItemsBySequenceList();
 		if (scheduleItems.size() == 0) {
 			return Bundle.getMessage("empty");
 		}
 		for (int i = 0; i < scheduleItems.size(); i++) {
-			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			ScheduleItem si = scheduleItems.get(i);
 			// check train schedule
 			if (!si.getTrainScheduleId().equals("")
 					&& TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId()) == null) {
