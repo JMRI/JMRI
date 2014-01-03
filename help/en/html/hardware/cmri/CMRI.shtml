@@ -458,7 +458,7 @@ inputs and outputs on that node will be numbered starting with 2001.
     <LI>CT2001 is the first output pin
     <LI>CT2048 is the last output pin
     <LI>CS2001 is the first input pin
-    <LI>CS2024 is the last output pin.
+    <LI>CS2024 is the last input pin.
     </UL>
 <LI>If you have a USIC with it's address switches set to "1", it will
 have all it's inputs and outputs numbered starting with 1001.  If it has
