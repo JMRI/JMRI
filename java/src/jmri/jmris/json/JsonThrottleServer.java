@@ -36,6 +36,11 @@ public class JsonThrottleServer {
         }
     }
 
+    protected void release(String throttleId) {
+        this.throttles.get(throttleId).release();
+        this.throttles.remove(throttleId);
+    }
+
     public void sendMessage(String throttleId, ObjectNode data) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, THROTTLE);

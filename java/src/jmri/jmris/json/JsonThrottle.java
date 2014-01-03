@@ -60,11 +60,21 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void close() {
-        this.throttle.setSpeedSetting(0);
-        this.throttle.release(this);
-        this.throttle.removePropertyChangeListener(this);
+        if (this.throttle != null) {
+            this.throttle.setSpeedSetting(0);
+            this.release();
+        }
     }
 
+    public void release() {
+        if (this.throttle != null) {
+            this.throttle.release(this);
+            this.throttle.removePropertyChangeListener(this);
+            this.throttle = null;
+            this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE));
+        }
+    }
+    
     public void parseRequest(JsonNode data) {
         if (data.path(ESTOP).asBoolean(false)) {
             this.throttle.setSpeedSetting(-1);
@@ -133,8 +143,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         } else if (!data.path(Throttle.F28).isMissingNode()) {
             this.throttle.setF28(data.path(Throttle.F28).asBoolean());
         } else if (!data.path(RELEASE).isMissingNode()) {
-            this.throttle.release(this);
-            this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE));
+            this.server.release(throttleId);
         } else if (!data.path(STATUS).isMissingNode()) {
             this.sendStatus();
         }
@@ -144,8 +153,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         try {
             this.server.sendMessage(throttleId, data);
         } catch (IOException ex) {
-            this.throttle.setSpeedSetting(0);
-            this.throttle.release(this);
+            this.close();
             log.warn("Unable to send message, closing connection.", ex);
             try {
                 this.server.connection.close();
