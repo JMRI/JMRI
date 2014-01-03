@@ -54,7 +54,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
 	public static final String LOCATION_UNKNOWN = "0";
 
-	public int number = 0; // used by managers for sort by number
+	protected int number = 0; // used by rolling stock manager for sort by number
 
 	public static final String ERROR_TRACK = "ERROR wrong track for location";  // NOI18N checks for coding error
 
