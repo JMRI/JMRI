@@ -349,10 +349,10 @@ public class Train implements java.beans.PropertyChangeListener {
 
 		// figure out the work at this location, note that there can be consecutive locations with the same name
 		if (getRoute() != null) {
-			List<String> routeList = getRoute().getLocationsBySequenceList();
+			List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 			boolean foundRouteLocation = false;
 			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+				RouteLocation rl = routeList.get(i);
 				if (rl == routeLocation) {
 					foundRouteLocation = true;
 				}
@@ -395,9 +395,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		// boolean trainAt = false;
 		boolean trainLocFound = false;
 		if (getRoute() != null) {
-			List<String> routeList = getRoute().getLocationsBySequenceList();
+			List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+				RouteLocation rl = routeList.get(i);
 				if (rl == routeLocation)
 					break; // done
 				// start recording time after finding where the train is
@@ -420,7 +420,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				// add wait time
 				minutes += rl.getWait();
 				// add travel time if new location
-				RouteLocation next = getRoute().getLocationById(routeList.get(i+1));
+				RouteLocation next = routeList.get(i+1);
 				if (next != null && !TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(next.getName())))
 					minutes += Setup.getTravelTime();
 				// don't count work if there's a departure time
@@ -567,9 +567,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (_route == null) {
 			return null;
 		}
-		List<String> list = _route.getLocationsBySequenceList();
+		List<RouteLocation> list = _route.getLocationsBySequenceList();
 		if (list.size() > 0) {
-			RouteLocation rl = _route.getLocationById(list.get(list.size() - 1));
+			RouteLocation rl = list.get(list.size() - 1);
 			return rl;
 		}
 		return null;
@@ -641,14 +641,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	public RouteLocation getNextLocation(RouteLocation rlc) {
 		if (getRoute() == null)
 			return null;
-		List<String> routeList = getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			if (rl == rlc) {
 				i++;
 				if (i < routeList.size()) {
-					rl = getRoute().getLocationById(routeList.get(i));
-					return rl;
+					return routeList.get(i);
 				}
 				break;
 			}
@@ -722,9 +721,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		String departureName = TrainCommon.splitString(getTrainDepartsName());
 		Route route = getRoute();
 		if (route != null) {
-			List<String> routeList = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			for (int i = 0; i < routeList.size(); i++) {
-				String name = TrainCommon.splitString(route.getLocationById(routeList.get(i)).getName());
+				String name = TrainCommon.splitString(routeList.get(i).getName());
 				if (!departureName.equals(name))
 					return false; // not a local switcher
 			}
@@ -1337,9 +1336,9 @@ public class Train implements java.beans.PropertyChangeListener {
 			length = car.getKernel().getTotalLength();
 		Route route = getRoute();
 		if (route != null) {
-			List<String> rLocations = route.getLocationsBySequenceList();
+			List<RouteLocation> rLocations = route.getLocationsBySequenceList();
 			for (int j = 0; j < rLocations.size(); j++) {
-				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
+				RouteLocation rLoc = rLocations.get(j);
 				if (rLoc.getName().equals(car.getLocationName())
 						&& rLoc.isPickUpAllowed()
 						&& rLoc.getMaxCarMoves() > 0
@@ -1372,7 +1371,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 					// now check car's destination
 					for (int k = j; k < rLocations.size(); k++) {
-						rLoc = route.getLocationById(rLocations.get(k));
+						rLoc = rLocations.get(k);
 						if (rLoc.getName().equals(car.getDestinationName())
 								&& rLoc.isDropAllowed()
 								&& rLoc.getMaxCarMoves() > 0
@@ -1569,9 +1568,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		Route route = getRoute();
 		if (route != null) {
 			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-			List<String> ids = route.getLocationsBySequenceList();
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				for (int j = 0; j < cars.size(); j++) {
 					Car car = (Car) cars.get(j);
 					if (car.getRouteLocation() == rl) {
@@ -1599,9 +1598,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		Route route = getRoute();
 		if (route != null) {
 			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-			List<String> ids = route.getLocationsBySequenceList();
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				for (int j = 0; j < cars.size(); j++) {
 					Car car = (Car) cars.get(j);
 					if (!CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
@@ -1660,9 +1659,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (route != null) {
 			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
 			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-			List<String> ids = route.getLocationsBySequenceList();
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				for (int j = 0; j < engines.size(); j++) {
 					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
@@ -1719,9 +1718,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (route != null) {
 			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
 			List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-			List<String> ids = route.getLocationsBySequenceList();
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				for (int j = 0; j < engines.size(); j++) {
 					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
@@ -1759,9 +1758,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		Route route = getRoute();
 		if (route != null) {
 			List<RollingStock> engines = EngineManager.instance().getByTrainList(this);
-			List<String> ids = route.getLocationsBySequenceList();
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				for (int j = 0; j < engines.size(); j++) {
 					Engine eng = (Engine) engines.get(j);
 					if (eng.getRouteLocation() == rl) {
@@ -2752,14 +2751,14 @@ public class Train implements java.beans.PropertyChangeListener {
 			setBuilt(false); // break terminate loop
 			return;
 		}
-		List<String> routeList = getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			if (getCurrentLocation() == rl) {
 				i++;
 				RouteLocation rlNew = null; // use null if end of route
 				if (i < routeList.size()) {
-					rlNew = getRoute().getLocationById(routeList.get(i));
+					rlNew = routeList.get(i);
 				}
 				setCurrentLocation(rlNew);
 				moveTrainIcon(rlNew);
@@ -2786,16 +2785,16 @@ public class Train implements java.beans.PropertyChangeListener {
 		log.info("Move train (" + getName() + ") to location (" + locationName + ")");
 		if (getRoute() == null || getCurrentLocation() == null)
 			return false;
-		List<String> routeList = getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			if (getCurrentLocation() == rl) {
 				for (int j = i + 1; j < routeList.size(); j++) {
-					rl = getRoute().getLocationById(routeList.get(j));
+					rl = routeList.get(j);
 					if (rl.getName().equals(locationName)) {
 						log.debug("Found location (" + locationName + ") moving train to this location");
 						for (j = i + 1; j < routeList.size(); j++) {
-							rl = getRoute().getLocationById(routeList.get(j));
+							rl = routeList.get(j);
 							move();
 							if (rl.getName().equals(locationName))
 								return true;

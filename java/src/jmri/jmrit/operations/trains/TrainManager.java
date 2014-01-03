@@ -687,9 +687,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			Route route = train.getRoute();
 			if (route == null)
 				continue; // no route for this train
-			List<String> routeList = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = route.getLocationById(routeList.get(r));
+				RouteLocation rl = routeList.get(r);
 				if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(location.getName()))) {
 					int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
 					// is already serviced then "-1"

@@ -1205,10 +1205,10 @@ public class JsonUtil {
 
     static private ArrayNode getRouteLocationsForTrain(Train train) throws JsonException {
         ArrayNode rlan = mapper.createArrayNode();
-        List<String> routeList = train.getRoute().getLocationsBySequenceList();
+        List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
         for (int r = 0; r < routeList.size(); r++) {
             ObjectNode rln = mapper.createObjectNode();
-            RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
+            RouteLocation rl = routeList.get(r);
             rln.put(ID, rl.getId());
             rln.put(NAME, rl.getName());
             rln.put(DIRECTION, rl.getTrainDirectionString());

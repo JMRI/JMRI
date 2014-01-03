@@ -212,65 +212,60 @@ public class RouteManager {
 	 */
 	public Route copyRoute(Route route, String routeName, boolean invert) {
 		Route newRoute = newRoute(routeName);
-		List<String> oldRouteLocations = route.getLocationsBySequenceList();
+		List<RouteLocation> routeList = route.getLocationsBySequenceList();
 		if (!invert) {
-			for (int i = 0; i < oldRouteLocations.size(); i++) {
-				copyRouteLocation(route, newRoute, oldRouteLocations.get(i), null, invert);
+			for (int i = 0; i < routeList.size(); i++) {
+				copyRouteLocation(newRoute, routeList.get(i), null, invert);
 			}
 			// invert route order
 		} else {
-			for (int i = oldRouteLocations.size() - 1; i >= 0; i--) {
+			for (int i = routeList.size() - 1; i >= 0; i--) {
 				int y = i - 1;
 				if (y < 0)
 					y = 0;
-				copyRouteLocation(route, newRoute, oldRouteLocations.get(i), oldRouteLocations.get(y), invert);
+				copyRouteLocation(newRoute, routeList.get(i), routeList.get(y), invert);
 			}
 		}
 		return newRoute;
 	}
 
-	private void copyRouteLocation(Route oldRoute, Route newRoute, String id, String nextId, boolean invert) {
-		LocationManager locationManager = LocationManager.instance();
-		RouteLocation oldRl = oldRoute.getLocationById(id);
-		RouteLocation oldNextRl = null;
-		if (nextId != null)
-			oldNextRl = oldRoute.getLocationById(nextId);
-		Location l = locationManager.getLocationByName(oldRl.getName());
-		RouteLocation newRl = newRoute.addLocation(l);
+	private void copyRouteLocation(Route newRoute, RouteLocation rl, RouteLocation rlNext, boolean invert) {
+		Location loc = LocationManager.instance().getLocationByName(rl.getName());
+		RouteLocation rlNew = newRoute.addLocation(loc);
 		// now copy the route location objects we want
-		newRl.setMaxCarMoves(oldRl.getMaxCarMoves());
-		newRl.setWait(oldRl.getWait());
-		newRl.setDepartureTime(oldRl.getDepartureTime());
-		newRl.setComment(oldRl.getComment());
+		rlNew.setMaxCarMoves(rl.getMaxCarMoves());
+		rlNew.setWait(rl.getWait());
+		rlNew.setDepartureTime(rl.getDepartureTime());
+		rlNew.setComment(rl.getComment());
 		if (!invert) {
-			newRl.setDropAllowed(oldRl.isDropAllowed());
-			newRl.setPickUpAllowed(oldRl.isPickUpAllowed());
-			newRl.setGrade(oldRl.getGrade());
-			newRl.setTrainDirection(oldRl.getTrainDirection());
-			newRl.setMaxTrainLength(oldRl.getMaxTrainLength());
+			rlNew.setDropAllowed(rl.isDropAllowed());
+			rlNew.setPickUpAllowed(rl.isPickUpAllowed());
+			rlNew.setGrade(rl.getGrade());
+			rlNew.setTrainDirection(rl.getTrainDirection());
+			rlNew.setMaxTrainLength(rl.getMaxTrainLength());
 		} else {
 			// flip set outs and pick ups
-			newRl.setDropAllowed(oldRl.isPickUpAllowed());
-			newRl.setPickUpAllowed(oldRl.isDropAllowed());
+			rlNew.setDropAllowed(rl.isPickUpAllowed());
+			rlNew.setPickUpAllowed(rl.isDropAllowed());
 			// invert train directions
-			int oldDirection = oldRl.getTrainDirection();
+			int oldDirection = rl.getTrainDirection();
 			if (oldDirection == RouteLocation.NORTH)
-				newRl.setTrainDirection(RouteLocation.SOUTH);
+				rlNew.setTrainDirection(RouteLocation.SOUTH);
 			else if (oldDirection == RouteLocation.SOUTH)
-				newRl.setTrainDirection(RouteLocation.NORTH);
+				rlNew.setTrainDirection(RouteLocation.NORTH);
 			else if (oldDirection == RouteLocation.EAST)
-				newRl.setTrainDirection(RouteLocation.WEST);
+				rlNew.setTrainDirection(RouteLocation.WEST);
 			else if (oldDirection == RouteLocation.WEST)
-				newRl.setTrainDirection(RouteLocation.EAST);
+				rlNew.setTrainDirection(RouteLocation.EAST);
 			// get the max length between location
-			if (oldNextRl == null) {
+			if (rlNext == null) {
 				log.error("Can not copy route, oldNextRl is null!");
 				return;
 			}
-			newRl.setMaxTrainLength(oldNextRl.getMaxTrainLength());
+			rlNew.setMaxTrainLength(rlNext.getMaxTrainLength());
 		}
-		newRl.setTrainIconX(oldRl.getTrainIconX());
-		newRl.setTrainIconY(oldRl.getTrainIconY());
+		rlNew.setTrainIconX(rl.getTrainIconX());
+		rlNew.setTrainIconY(rl.getTrainIconY());
 	}
 
 	/**

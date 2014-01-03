@@ -351,11 +351,11 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
 		for (int i = 0; i < trackIds.size(); i++) {
 			Track track = rl.getLocation().getTrackById(trackIds.get(i));
-			List<String> routeList = _train.getRoute().getLocationsBySequenceList();
+			List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
 			List<Car> carList = carManager.getByTrainDestinationList(_train);
 			// block pick ups by destination
 			for (int j = 0; j < routeList.size(); j++) {
-				RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
+				RouteLocation rld = routeList.get(j);
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					// determine if car is a pick up from the right track

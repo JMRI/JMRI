@@ -222,9 +222,9 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Add Location 3", "TESTLOCATIONNAME3", rl1test.getName());
 
 		// Check that locations are in the expected order
-		List<String> list = r1.getLocationsBySequenceList();
+		List<RouteLocation> list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById(list.get(i));
+			rl1test = list.get(i);
 			if (i == 0) {
 				Assert.assertEquals("List Location 1 before", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -248,7 +248,7 @@ public class OperationsRoutesTest extends TestCase {
 
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById(list.get(i));
+			rl1test = list.get(i);
 			if (i == 0) {
 				Assert.assertEquals("List Location 1 after", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -272,7 +272,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.moveLocationUp(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById(list.get(i));
+			rl1test = list.get(i);
 			if (i == 0) {
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME1", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -297,7 +297,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.moveLocationDown(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById(list.get(i));
+			rl1test = list.get(i);
 			if (i == 0) {
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -321,7 +321,7 @@ public class OperationsRoutesTest extends TestCase {
 		r1.deleteLocation(rl1test);
 		list = r1.getLocationsBySequenceList();
 		for (int i = 0; i < list.size(); i++) {
-			rl1test = r1.getLocationById(list.get(i));
+			rl1test = list.get(i);
 			if (i == 0) {
 				Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
 				Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
@@ -638,10 +638,10 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertNotNull("route r6 exists", r6);
 
 		Assert.assertEquals("r1 comment", "r1 comment", r1.getComment());
-		List<String> locs = r1.getLocationsBySequenceList();
+		List<RouteLocation> locs = r1.getLocationsBySequenceList();
 		Assert.assertEquals("number of locations in route r1", 5, locs.size());
 
-		RouteLocation rl1 = r1.getLocationById(locs.get(0));
+		RouteLocation rl1 = locs.get(0);
 		Assert.assertEquals("rl1 can drop", false, rl1.isDropAllowed());
 		Assert.assertEquals("rl1 can pickup", false, rl1.isPickUpAllowed());
 		Assert.assertEquals("rl1 car moves", 0, rl1.getCarMoves()); // default
@@ -659,7 +659,7 @@ public class OperationsRoutesTest extends TestCase {
 		locs = r2.getLocationsBySequenceList();
 		Assert.assertEquals("number of locations in route r2", 4, locs.size());
 
-		RouteLocation rl2 = r2.getLocationById(locs.get(1));
+		RouteLocation rl2 = locs.get(1);
 		Assert.assertEquals("rl2 can drop", false, rl2.isDropAllowed());
 		Assert.assertEquals("rl2 can pickup", true, rl2.isPickUpAllowed());
 		Assert.assertEquals("rl2 car moves", 0, rl2.getCarMoves()); // default
@@ -673,7 +673,7 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("rl2 train length", 0, rl2.getTrainLength()); // default
 		Assert.assertEquals("rl2 train weight", 0, rl2.getTrainWeight()); // default
 
-		RouteLocation rl4 = r2.getLocationById(locs.get(3));
+		RouteLocation rl4 = locs.get(3);
 		Assert.assertEquals("rl4 can drop", true, rl4.isDropAllowed());
 		Assert.assertEquals("rl4 can pickup", false, rl4.isPickUpAllowed());
 		Assert.assertEquals("rl4 car moves", 0, rl4.getCarMoves()); // default

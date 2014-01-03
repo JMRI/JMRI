@@ -174,7 +174,7 @@ public class TrainCommon {
 	/**
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
-	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<Car> carList, List<String> routeList,
+	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<Car> carList, List<RouteLocation> routeList,
 			RouteLocation rl, int r, boolean isManifest) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
@@ -186,7 +186,7 @@ public class TrainCommon {
 			trackNames.add(splitString(track.getName())); // use a track name once
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				RouteLocation rld = routeList.get(j);
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					if (Setup.isSortByTrackEnabled()
@@ -241,7 +241,7 @@ public class TrainCommon {
 	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
 	 */
 	protected void blockCarsByTrackTwoColumn(PrintWriter fileOut, Train train, List<Car> carList,
-			List<String> routeList, RouteLocation rl, int r, boolean isManifest) {
+			List<RouteLocation> routeList, RouteLocation rl, int r, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
@@ -254,7 +254,7 @@ public class TrainCommon {
 			trackNames.add(splitString(track.getName())); // use a track name once
 			// block car pick ups by destination
 			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				RouteLocation rld = routeList.get(j);
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
@@ -779,10 +779,10 @@ public class TrainCommon {
 		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName()))
 				&& car.getTrain() != null && car.getTrain().getRoute() != null) {
 			Route route = car.getTrain().getRoute();
-			List<String> locations = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			boolean foundRl = false;
-			for (int i = 0; i < locations.size(); i++) {
-				RouteLocation rl = route.getLocationById(locations.get(i));
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				if (foundRl) {
 					if (splitString(car.getRouteDestination().getName()).equals(splitString(rl.getName()))) {
 						// user can specify the "same" location two more more times in a row

@@ -80,9 +80,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			Route route = train.getRoute();
 			if (route == null)
 				continue; // no route for this train
-			List<String> routeList = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = route.getLocationById(routeList.get(r));
+				RouteLocation rl = routeList.get(r);
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals("-1")) { // NOI18N
@@ -120,7 +120,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 					}
 					if (stops > 1) {
 						// Print visit number, etc. only if previous location wasn't the same
-						RouteLocation rlPrevious = route.getLocationById(routeList.get(r - 1));
+						RouteLocation rlPrevious = routeList.get(r - 1);
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
 							// After the first time a train stops at a location provide:
 							// if the train has started its route
@@ -154,7 +154,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 					// get a list of cars and determine if this location is serviced
 					// block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {
-						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+						RouteLocation rld = routeList.get(j);
 						for (int k = 0; k < carList.size(); k++) {
 							Car car = carList.get(k);
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")

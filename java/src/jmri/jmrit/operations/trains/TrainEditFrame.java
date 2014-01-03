@@ -846,9 +846,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (route != null) {
 			if (!route.getStatus().equals(Route.OKAY))
 				textRouteStatus.setText(route.getStatus());
-			List<String> locations = route.getLocationsBySequenceList();
-			for (int i = 0; i < locations.size(); i++) {
-				RouteLocation rl = route.getLocationById(locations.get(i));
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = routeList.get(i);
 				JCheckBox checkBox = new javax.swing.JCheckBox();
 				locationCheckBoxes.add(checkBox);
 				checkBox.setText(rl.toString());
@@ -865,7 +865,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					if ((rl.getTrainDirection() & loc.getTrainDirections()) > 0)
 						services = true;
 					// train must service last location or single location
-					else if (i == locations.size() - 1)
+					else if (i == routeList.size() - 1)
 						services = true;
 					// check can drop and pick up, and moves > 0
 					if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0)
@@ -972,10 +972,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			Route route = _train.getRoute();
 			if (route != null) {
 				route.removePropertyChangeListener(this);
-				List<String> locations = route.getLocationsBySequenceList();
-				for (int i = 0; i < locations.size(); i++) {
-					RouteLocation rl = route.getLocationById(locations.get(i));
-					Location loc = LocationManager.instance().getLocationByName(rl.getName());
+				List<RouteLocation> routeList = route.getLocationsBySequenceList();
+				for (int i = 0; i < routeList.size(); i++) {
+					Location loc = LocationManager.instance().getLocationByName(routeList.get(i).getName());
 					if (loc != null)
 						loc.removePropertyChangeListener(this);
 				}

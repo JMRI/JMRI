@@ -118,10 +118,10 @@ public class TrainSwitchLists extends TrainCommon {
 			// get engine and car lists
 			List<RollingStock> engineList = engineManager.getByTrainList(train);
 			List<Car> carList = carManager.getByTrainDestinationList(train);
-			List<String> routeList = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			// does the train stop once or more at this location?
 			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = route.getLocationById(routeList.get(r));
+				RouteLocation rl = routeList.get(r);
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals("-1")) { // NOI18N
@@ -129,7 +129,7 @@ public class TrainSwitchLists extends TrainCommon {
 					}
 					if (stops > 1) {
 						// Print visit number only if previous location wasn't the same
-						RouteLocation rlPrevious = route.getLocationById(routeList.get(r - 1));
+						RouteLocation rlPrevious = routeList.get(r - 1);
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
 							newLine(fileOut);
 							if (train.isTrainInRoute()) {

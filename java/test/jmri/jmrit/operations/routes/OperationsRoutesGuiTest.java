@@ -108,12 +108,12 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		
 		// confirm that the route sequence is correct
-		List<String> routeLocations = newRoute.getLocationsBySequenceList();
-		Assert.assertEquals("1st location", "Test Loc E", newRoute.getLocationById(routeLocations.get(0)).getName());
-		Assert.assertEquals("2nd location", "Test Loc C", newRoute.getLocationById(routeLocations.get(1)).getName());
-		Assert.assertEquals("3rd location", "Test Loc B", newRoute.getLocationById(routeLocations.get(2)).getName());
-		Assert.assertEquals("4th location", "Test Loc D", newRoute.getLocationById(routeLocations.get(3)).getName());
-		Assert.assertEquals("5th location", "Test Loc A", newRoute.getLocationById(routeLocations.get(4)).getName());
+		List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
+		Assert.assertEquals("1st location", "Test Loc E", routeLocations.get(0).getName());
+		Assert.assertEquals("2nd location", "Test Loc C", routeLocations.get(1).getName());
+		Assert.assertEquals("3rd location", "Test Loc B", routeLocations.get(2).getName());
+		Assert.assertEquals("4th location", "Test Loc D", routeLocations.get(3).getName());
+		Assert.assertEquals("5th location", "Test Loc A", routeLocations.get(4).getName());
 		
 		f.routeNameTextField.setText("Newer Test Route");
 		//f.saveRouteButton.doClick();

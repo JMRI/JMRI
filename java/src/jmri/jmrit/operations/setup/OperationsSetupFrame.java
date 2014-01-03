@@ -575,9 +575,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			int count = 0;
 			for (int i = 0; i < routes.size(); i++) {
 				Route r = routes.get(i);
-				List<String> locations = r.getLocationsBySequenceList();
-				for (int j = 0; j < locations.size(); j++) {
-					RouteLocation rl = r.getLocationById(locations.get(j));
+				List<RouteLocation> routeList = r.getLocationsBySequenceList();
+				for (int j = 0; j < routeList.size(); j++) {
+					RouteLocation rl = routeList.get(j);
 					if (rl.getMaxTrainLength() > maxLength) {
 						String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"),
 								new Object[] { r.getName(), rl.getName(), rl.getMaxTrainLength(),
@@ -601,9 +601,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 						new Object[] { maxLength }), Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					for (int i = 0; i < routes.size(); i++) {
 						Route r = routes.get(i);
-						List<String> locations = r.getLocationsBySequenceList();
-						for (int j = 0; j < locations.size(); j++) {
-							RouteLocation rl = r.getLocationById(locations.get(j));
+						List<RouteLocation> routeList = r.getLocationsBySequenceList();
+						for (int j = 0; j < routeList.size(); j++) {
+							RouteLocation rl = routeList.get(j);
 							if (rl.getMaxTrainLength() > maxLength) {
 								log.debug("Setting route (" + r.getName() + ") routeLocation ("
 										+ rl.getName() + ") max traim length to " + maxLength); // NOI18N

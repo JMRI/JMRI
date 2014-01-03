@@ -299,17 +299,15 @@ public class CarManager extends RollingStockManager {
 		if (route == null)
 			return out;
 		// get a list of locations served by this route
-		List<String> routeList = route.getLocationsBySequenceList();
+		List<RouteLocation> routeList = route.getLocationsBySequenceList();
 		// don't include RollingStock at route destination
 		RouteLocation destination = null;
 		if (routeList.size() > 1) {
-			destination = route.getLocationById(routeList.get(routeList.size() - 1));
+			destination = routeList.get(routeList.size() - 1);
 			// However, if the destination is visited more than once, must
 			// include all cars
-			RouteLocation test;
 			for (int i = 0; i < routeList.size() - 1; i++) {
-				test = route.getLocationById(routeList.get(i));
-				if (destination.getName().equals(test.getName())) {
+				if (destination.getName().equals(routeList.get(i).getName())) {
 					destination = null; //include cars at destination
 					break;
 				}

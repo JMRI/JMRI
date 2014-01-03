@@ -71,10 +71,10 @@ public class TrainManifest extends TrainCommon {
 
 		boolean work = false;
 		String previousRouteLocationName = null;
-		List<String> routeList = train.getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
 		for (int r = 0; r < routeList.size(); r++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
+			RouteLocation rl = routeList.get(r);
 			boolean oldWork = work;
 			work = isThereWorkAtLocation(carList, engineList, rl);
 
@@ -151,7 +151,7 @@ public class TrainManifest extends TrainCommon {
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
-				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r + 1));
+				RouteLocation rlNext = routeList.get(r + 1);
 				if (!routeLocationName.equals(splitString(rlNext.getName()))) {
 					if (newWork) {
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons

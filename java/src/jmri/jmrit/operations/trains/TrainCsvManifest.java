@@ -78,9 +78,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		int emptyCars = 0;
 		boolean newWork = false;
 		String previousRouteLocationName = null;
-		List<String> routeList = train.getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int r = 0; r < routeList.size(); r++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
+			RouteLocation rl = routeList.get(r);
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
 			String locationName = routeLocationName;
@@ -143,7 +143,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				RouteLocation rld = routeList.get(j);
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
@@ -170,7 +170,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
-				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r + 1));
+				RouteLocation rlNext = routeList.get(r + 1);
 				String nextRouteLocationName = splitString(rlNext.getName());
 				if (!routeLocationName.equals(nextRouteLocationName)) {
 					if (newWork) {

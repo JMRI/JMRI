@@ -61,7 +61,7 @@ public class TrainBuilder extends TrainCommon {
 	Engine leadEngine; // last lead engine found from getEngine
 	int carIndex; // index for carList
 	List<Car> carList; // list of cars available for this train
-	List<String> routeList; // list of locations from departure to termination served by this train
+	List<RouteLocation> routeList; // list of locations from departure to termination served by this train
 	Hashtable<String, Integer> numOfBlocks; // Number of blocks of cars departing staging.
 	int completedMoves; // the number of pick up car moves for a location
 	int reqNumOfMoves; // the requested number of car moves for a location
@@ -188,7 +188,7 @@ public class TrainBuilder extends TrainCommon {
 		// get the number of requested car moves for this train
 		int requested = 0;
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			// check to see if there's a location for each stop in the route
 			Location l = locationManager.getLocationByName(rl.getName());
 			if (l == null || rl.getLocation() == null) {
@@ -911,7 +911,7 @@ public class TrainBuilder extends TrainCommon {
 		int moves = 0;
 
 		for (int i = 0; i < routeList.size() - 1; i++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			moves += rl.getMaxCarMoves();
 			double carDivisor = 16; // number of 40' cars per engine 1% grade
 			// change engine requirements based on grade
@@ -1533,9 +1533,9 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private void blockByLocationMoves() throws BuildFailedException {
 		// start at the second location in the route to begin blocking
-		List<String> routeList = train.getRoute().getLocationsBySequenceList();
+		List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int i = 1; i < routeList.size(); i++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			int possibleMoves = rl.getMaxCarMoves() - rl.getCarMoves();
 			if (rl.isDropAllowed() && possibleMoves > 0) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockLocationHasMoves"),
@@ -1634,11 +1634,11 @@ public class TrainBuilder extends TrainCommon {
 	 *            Where these cars were originally picked up from.
 	 * @return The location in the route with the most available moves.
 	 */
-	private RouteLocation getLocationWithMaximumMoves(List<String> routeList, String blockId) {
+	private RouteLocation getLocationWithMaximumMoves(List<RouteLocation> routeList, String blockId) {
 		RouteLocation rlMax = null;
 		int maxMoves = 0;
 		for (int i = 1; i < routeList.size(); i++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation rl = routeList.get(i);
 			if (rl.getMaxCarMoves() - rl.getCarMoves() > maxMoves) {
 				maxMoves = rl.getMaxCarMoves() - rl.getCarMoves();
 				rlMax = rl;
@@ -1669,7 +1669,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		// now go through each location starting at departure and place cars as requested
 		for (int routeIndex = 0; routeIndex < routeList.size(); routeIndex++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(routeIndex));
+			RouteLocation rl = routeList.get(routeIndex);
 			if (train.skipsLocation(rl.getId())) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocSkipped"), new Object[] {
 						rl.getName(), train.getName() }));
@@ -2031,7 +2031,7 @@ public class TrainBuilder extends TrainCommon {
 		// now adjust train length and weight for each location that the rolling stock is in the train
 		boolean inTrain = false;
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation r = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation r = routeList.get(i);
 			if (rl == r) {
 				inTrain = true;
 			}
@@ -2090,7 +2090,7 @@ public class TrainBuilder extends TrainCommon {
 	private boolean checkTrainLength(Car car, RouteLocation rl, RouteLocation rld) {
 		boolean carInTrain = false;
 		for (int i = 0; i < routeList.size(); i++) {
-			RouteLocation rlt = train.getRoute().getLocationById(routeList.get(i));
+			RouteLocation rlt = routeList.get(i);
 			if (rl == rlt) {
 				carInTrain = true;
 			}
@@ -2966,7 +2966,7 @@ public class TrainBuilder extends TrainCommon {
 			throws BuildFailedException {
 		int index;
 		for (index = 0; index < routeList.size(); index++) {
-			if (rld == train.getRoute().getLocationById(routeList.get(index)))
+			if (rld == routeList.get(index))
 				break;
 		}
 		return checkCarForDestinationAndTrack(car, rl, index - 1);
@@ -3006,7 +3006,7 @@ public class TrainBuilder extends TrainCommon {
 		// the correct destination name
 		int locCount = 0;
 		for (int k = routeIndex; k < routeList.size(); k++) {
-			rld = train.getRoute().getLocationById(routeList.get(k));
+			rld = routeList.get(k);
 			// if car can be picked up later at same location, skip
 			if (checkForLaterPickUp(rl, rld, car)) {
 				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"), new Object[] {
@@ -3211,7 +3211,7 @@ public class TrainBuilder extends TrainCommon {
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
 		int index;
 		for (index = 0; index < routeList.size(); index++) {
-			if (rld == train.getRoute().getLocationById(routeList.get(index)))
+			if (rld == routeList.get(index))
 				break;
 		}
 		return findDestinationAndTrack(car, rl, index - 1, index + 1);
@@ -3251,7 +3251,7 @@ public class TrainBuilder extends TrainCommon {
 			start = routeEnd - 1;
 		}
 		for (int k = start; k < routeEnd; k++) {
-			rld = train.getRoute().getLocationById(routeList.get(k));
+			rld = routeList.get(k);
 			// if car can be picked up later at same location, set flag
 			if (checkForLaterPickUp(rl, rld, car)) {
 				multiplePickup = true;
@@ -3503,7 +3503,7 @@ public class TrainBuilder extends TrainCommon {
 					}
 					// check for an earlier drop in the route
 					for (int m = start; m < routeEnd; m++) {
-						RouteLocation rle = train.getRoute().getLocationById(routeList.get(m));
+						RouteLocation rle = routeList.get(m);
 						if (rle == rld)
 							break; // done
 						if (rle.getName().equals(rld.getName()) && (rle.getMaxCarMoves() - rle.getCarMoves() > 0)
@@ -3752,10 +3752,10 @@ public class TrainBuilder extends TrainCommon {
 		RouteLocation rlStart = train.getTrainDepartsRouteLocation();
 		RouteLocation rlEnd = train.getTrainTerminatesRouteLocation();
 		if (route != null) {
-			List<String> ids = route.getLocationsBySequenceList();
+			List<RouteLocation> rls = route.getLocationsBySequenceList();
 			boolean helper = false;
-			for (int i = 0; i < ids.size(); i++) {
-				RouteLocation rl = route.getLocationById(ids.get(i));
+			for (int i = 0; i < rls.size(); i++) {
+				RouteLocation rl = rls.get(i);
 				if ((train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == train.getSecondLegStartLocation())
 						|| (train.getThirdLegOptions() == Train.HELPER_ENGINES && rl == train
 								.getThirdLegStartLocation())) {

@@ -384,11 +384,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					}
 					if (rd != null && route != null) {
 						// now determine if destination is after location
-						List<String> routeSequence = route.getLocationsBySequenceList();
+						List<RouteLocation> routeSequence = route.getLocationsBySequenceList();
 						boolean foundLoc = false; // when true, found the rs's location in the route
 						boolean foundDes = false;
 						for (int i = 0; i < routeSequence.size(); i++) {
-							RouteLocation rlocation = route.getLocationById(routeSequence.get(i));
+							RouteLocation rlocation = routeSequence.get(i);
 							if (rs.getLocationName().equals(rlocation.getName())) {
 								rl = rlocation;
 								foundLoc = true;

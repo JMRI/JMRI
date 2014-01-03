@@ -71,15 +71,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return;
 		// first, remove listeners from the individual objects
 		removePropertyChangeRouteLocations();
-		list = _route.getLocationsBySequenceList();
+		routeList = _route.getLocationsBySequenceList();
 		// and add them back in
-		for (int i = 0; i < list.size(); i++) {
-			// log.debug("location ids: " + list.get(i));
-			_route.getLocationById(list.get(i)).addPropertyChangeListener(this);
+		for (int i = 0; i < routeList.size(); i++) {
+			routeList.get(i).addPropertyChangeListener(this);
 		}
 	}
 
-	List<String> list = new ArrayList<String>();
+	List<RouteLocation> routeList = new ArrayList<RouteLocation>();
 
 	void initTable(RouteEditFrame frame, JTable table, Route route) {
 		_frame = frame;
@@ -137,7 +136,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	public int getRowCount() {
-		return list.size();
+		return routeList.size();
 	}
 
 	public int getColumnCount() {
@@ -248,9 +247,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	public Object getValueAt(int row, int col) {
-		if (row >= list.size())
+		if (row >= routeList.size())
 			return "ERROR unknown " + row; // NOI18N
-		RouteLocation rl = _route.getLocationById(list.get(row));
+		RouteLocation rl = routeList.get(row);
 		if (rl == null)
 			return "ERROR unknown route location " + row; // NOI18N
 		switch (col) {
@@ -365,23 +364,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void moveUpRouteLocation(int row) {
 		log.debug("move location up");
-		String id = list.get(row);
-		RouteLocation rl = _route.getLocationById(id);
-		_route.moveLocationUp(rl);
+		_route.moveLocationUp(routeList.get(row));
 	}
 
 	private void moveDownRouteLocation(int row) {
 		log.debug("move location down");
-		String id = list.get(row);
-		RouteLocation rl = _route.getLocationById(id);
-		_route.moveLocationDown(rl);
+		_route.moveLocationDown(routeList.get(row));
 	}
 
 	private void deleteRouteLocation(int row) {
 		log.debug("Delete location");
-		String id = list.get(row);
-		RouteLocation rl = _route.getLocationById(id);
-		_route.deleteLocation(rl);
+		_route.deleteLocation(routeList.get(row));
 	}
 
 	private int _trainDirection = Setup.getDirectionInt((String) Setup.getComboBox().getItemAt(0));
@@ -391,7 +384,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setTrainDirection(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
+		RouteLocation rl = routeList.get(row);
 		_trainDirection = Setup.getDirectionInt((String) ((JComboBox) value).getSelectedItem());
 		rl.setTrainDirection(_trainDirection);
 		// update train icon
@@ -399,7 +392,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setMaxTrainMoves(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
+		RouteLocation rl = routeList.get(row);
 		int moves;
 		try {
 			moves = Integer.parseInt(value.toString());
@@ -416,13 +409,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setDrop(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setDropAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
+		routeList.get(row).setDropAllowed(
+				((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private void setPickup(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setPickUpAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
+		routeList.get(row).setPickUpAllowed(
+				((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private int _maxTrainLength = Setup.getMaxTrainLength();
@@ -432,7 +425,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setWait(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
 		int wait;
 		try {
 			wait = Integer.parseInt(value.toString());
@@ -442,16 +434,15 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 					.getMessage("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		rl.setWait(wait);
+		routeList.get(row).setWait(wait);
 	}
 
 	private void setDepartureTime(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setDepartureTime(((String) ((JComboBox) value).getSelectedItem()));
+		routeList.get(row).setDepartureTime(((String) ((JComboBox) value).getSelectedItem()));
 	}
 
 	private void setMaxTrainLength(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
+		RouteLocation rl = routeList.get(row);
 		int length;
 		try {
 			length = Integer.parseInt(value.toString());
@@ -484,7 +475,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setGrade(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
 		double grade;
 		try {
 			grade = Double.parseDouble(value.toString());
@@ -493,7 +483,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return;
 		}
 		if (grade <= 6 && grade >= -6) {
-			rl.setGrade(grade);
+			routeList.get(row).setGrade(grade);
 		} else {
 			log.error("Maximum grade is 6 percent");
 			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"), Bundle.getMessage("CanNotChangeGrade"),
@@ -502,7 +492,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private void setTrainIconX(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
 		int x;
 		try {
 			x = Integer.parseInt(value.toString());
@@ -510,11 +499,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			log.error("Train icon x coordinate must be a number");
 			return;
 		}
-		rl.setTrainIconX(x);
+		routeList.get(row).setTrainIconX(x);
 	}
 
 	private void setTrainIconY(Object value, int row) {
-		RouteLocation rl = _route.getLocationById(list.get(row));
 		int y;
 		try {
 			y = Integer.parseInt(value.toString());
@@ -522,12 +510,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			log.error("Train icon y coordinate must be a number");
 			return;
 		}
-		rl.setTrainIconY(y);
+		routeList.get(row).setTrainIconY(y);
 	}
 
 	private void setComment(int row) {
 		log.debug("Set comment for row " + row);
-		final RouteLocation rl = _route.getLocationById(list.get(row));
+		final RouteLocation rl = routeList.get(row);
 		// Create comment panel
 		final JDialog dialog = new JDialog();
 		dialog.setLayout(new BorderLayout());
@@ -605,20 +593,19 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		}
 
 		if (e.getSource().getClass().equals(RouteLocation.class)) {
-			String id = ((RouteLocation) e.getSource()).getId();
-			int row = list.indexOf(id);
+			RouteLocation rl = (RouteLocation) e.getSource();
+			int row = routeList.indexOf(rl);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update route table row: " + row + " id: " + id);
+				log.debug("Update route table row: " + row + " id: " + rl.getId());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
-
 		}
 	}
 
 	private void removePropertyChangeRouteLocations() {
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < routeList.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			RouteLocation rl = _route.getLocationById(list.get(i));
+			RouteLocation rl = routeList.get(i);
 			if (rl != null)
 				rl.removePropertyChangeListener(this);
 		}
@@ -630,7 +617,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		removePropertyChangeRouteLocations();
 		if (_route != null)
 			_route.removePropertyChangeListener(this);
-		list.clear();
+		routeList.clear();
 		fireTableDataChanged();
 	}
 

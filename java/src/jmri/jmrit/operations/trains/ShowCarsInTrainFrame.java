@@ -166,7 +166,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
 				// now update the car pick ups and set outs
 				List<Car> carList = carManager.getByTrainDestinationList(_train);
-				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
+				List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
 				// add header
 				int i = 0;
 				addItemLeft(pCars, textPickUp, 0, 0);
@@ -174,7 +174,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 				addItemLeft(pCars, textSetOut, 2, i++);
 				// block cars by destination
 				for (int j = 0; j < routeList.size(); j++) {
-					RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
+					RouteLocation rld = routeList.get(j);
 					for (int k = 0; k < carList.size(); k++) {
 						Car car = carList.get(k);
 						log.debug("car " + car.toString() + " track " + car.getTrackName()

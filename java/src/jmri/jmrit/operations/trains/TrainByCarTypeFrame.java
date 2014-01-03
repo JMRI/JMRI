@@ -136,10 +136,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		Route route = train.getRoute();
 		if (route == null)
 			return;
-		List<String> routeIds = route.getLocationsBySequenceList();
-		for (int i = 0; i < routeIds.size(); i++) {
+		List<RouteLocation> routeList = route.getLocationsBySequenceList();
+		for (int i = 0; i < routeList.size(); i++) {
 			JLabel loc = new JLabel();
-			RouteLocation rl = route.getLocationById(routeIds.get(i));
+			RouteLocation rl = routeList.get(i);
 			String locationName = rl.getName();
 			loc.setText(locationName);
 			addItemLeft(pLocations, loc, 0, y++);

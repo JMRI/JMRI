@@ -92,10 +92,9 @@ public class PrintTrainAction extends AbstractAction {
 			writer.write(s, 0, s.length());
 			Route route = train.getRoute();
 			if (route != null) {
-				List<String> locations = route.getLocationsBySequenceList();
-				for (int i = 0; i < locations.size(); i++) {
-					RouteLocation rl = route.getLocationById(locations.get(i));
-					s = TAB + rl.getName() + NEW_LINE;
+				List<RouteLocation> routeList = route.getLocationsBySequenceList();
+				for (int i = 0; i < routeList.size(); i++) {
+					s = TAB + routeList.get(i).getName() + NEW_LINE;
 					writer.write(s, 0, s.length());
 				}
 			}

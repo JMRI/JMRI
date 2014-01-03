@@ -4,12 +4,14 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-
 import java.util.List;
 
 /**
@@ -61,7 +63,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = trains.get(i);
 				if (train.getRoute() != null) {
-					List<String> route = train.getRoute().getLocationsBySequenceList();
+					List<RouteLocation> route = train.getRoute().getLocationsBySequenceList();
 					// determine if another detailed summary can fit on the same page
 					if (numberOfLines - writer.getCurrentLineNumber() < route.size() + NUMBER_OF_HEADER_LINES)
 						writer.write(FORM_FEED);

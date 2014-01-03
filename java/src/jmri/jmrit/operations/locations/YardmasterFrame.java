@@ -242,14 +242,13 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			// determine how many times this train visits this location and if it is the last stop
 			RouteLocation rl = null;
 			boolean lastLocation = false;
-			List<String> routeList = route.getLocationsBySequenceList();
+			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			int visitNumber = 0;
 			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation l = route.getLocationById(routeList.get(i));
-				if (TrainCommon.splitString(l.getName()).equals(TrainCommon.splitString(_location.getName()))) {
+				if (TrainCommon.splitString(routeList.get(i).getName()).equals(TrainCommon.splitString(_location.getName()))) {
 					visitNumber++;
 					if (visitNumber == _visitNumber) {
-						rl = l;
+						rl = routeList.get(i);
 						if (i == routeList.size() - 1)
 							lastLocation = true;
 					}
