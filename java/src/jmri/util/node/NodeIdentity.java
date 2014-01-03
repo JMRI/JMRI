@@ -27,8 +27,12 @@ import org.slf4j.LoggerFactory;
  * {@link java.net.InetAddress} and prepending it with "jmri-". and removing all
  * colons from the address.
  *
- * If a stored identity is found, it is discarded if none of the InetAddresses
- * for the host match the MAC address in the identity and regenerated.
+ * If a stored identity is found, the identity is replaced if none of the
+ * InetAddresses for the host match the MAC address in the identity and
+ * regenerated.
+ *
+ * A list of former identities is retained to aid in migrating from the former
+ * identity to the new identity.
  *
  * If the MAC address of the localhost cannot be read, fall back on using the
  * hostname or IP address. If no local IP address is available, fall back on
@@ -50,7 +54,7 @@ public class NodeIdentity {
     private final static String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
 
     private NodeIdentity() {
-        init();
+        init(); // init as a method so the init can be synchronized.
     }
 
     synchronized private void init() {
@@ -81,6 +85,13 @@ public class NodeIdentity {
         }
     }
 
+    /**
+     * Return the node's current identity.
+     *
+     * @return An identity. If this identity is not in the form
+     * <i>jmri-MACADDRESS</i>, this identity should be considered unreliable and
+     * subject to change across JMRI restarts.
+     */
     synchronized public static String identity() {
         if (instance == null) {
             instance = new NodeIdentity();
@@ -89,6 +100,25 @@ public class NodeIdentity {
         return instance.identity;
     }
 
+    /**
+     * If network hardware on a node was replaced, the identity will change.
+     *
+     * @return A list of other identities this node may have had in the past.
+     */
+    synchronized public static List<String> formerIdentities() {
+        if (instance == null) {
+            instance = new NodeIdentity();
+            log.info("Using {} as the JMRI Node identity", instance.identity);
+        }
+        return new ArrayList<String>(instance.formerIdentities);
+    }
+
+    /**
+     * Verify that the current identity is a valid identity for this hardware.
+     *
+     * @param identity
+     * @return true if the identity is based on this hardware.
+     */
     synchronized private boolean validateIdentity(String identity) {
         try {
             Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
@@ -107,6 +137,11 @@ public class NodeIdentity {
         return false;
     }
 
+    /**
+     * Get a node identity from the current hardware.
+     *
+     * @param save
+     */
     synchronized private void getIdentity(boolean save) {
         try {
             try {
@@ -147,6 +182,9 @@ public class NodeIdentity {
         }
     }
 
+    /**
+     * Save the current node identity and all former identities to file.
+     */
     private void saveIdentity() {
         FileWriter fw = null;
         Document doc = new Document();
@@ -182,6 +220,12 @@ public class NodeIdentity {
         }
     }
 
+    /**
+     * Create an identity string given a MAC address.
+     *
+     * @param mac a byte array representing a MAC address.
+     * @return An identity or null if input is null.
+     */
     private String createIdentity(byte[] mac) {
         StringBuilder sb = new StringBuilder("jmri-"); // NOI18N
         try {
