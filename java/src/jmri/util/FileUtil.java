@@ -17,10 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Common utility methods for working with Files. <P> We needed a place to
- * refactor common File-processing idioms in JMRI code, so this class was
- * created. It's more of a library of procedures than a real class, as (so far)
- * all of the operations have needed no state information.
+ * Common utility methods for working with Files.
+ * <P>
+ * We needed a place to refactor common File-processing idioms in JMRI code, so
+ * this class was created. It's more of a library of procedures than a real
+ * class, as (so far) all of the operations have needed no state information.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
  * @author Randall Wood Copyright 2012, 2013
@@ -62,7 +63,7 @@ public class FileUtil {
     /*
      * User's home directory
      */
-    static private String homePath = System.getProperty("user.home") + File.separator; // NOI18N
+    private static final String homePath = System.getProperty("user.home") + File.separator; // NOI18N
     /*
      * Settable directories
      */
@@ -75,7 +76,7 @@ public class FileUtil {
     /* path to the user's files directory */
     static private String userFilesPath = null;
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(FileUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(FileUtil.class.getName());
 
     /**
      * Get the resource file corresponding to a name. There are five cases: <UL>
@@ -221,6 +222,7 @@ public class FileUtil {
      * Deprecated forms are not created.
      *
      * @param file File to be represented
+     * @return Filename for storage in a portable manner
      * @since 2.7.2
      */
     static public String getPortableFilename(File file) {
@@ -253,6 +255,7 @@ public class FileUtil {
      * Deprecated forms are not created.
      *
      * @param filename Filename to be represented
+     * @return Filename for storage in a portable manner
      * @since 2.7.2
      */
     static public String getPortableFilename(String filename) {
@@ -391,6 +394,7 @@ public class FileUtil {
      * {@link #findURL(java.lang.String)}
      *
      * @param path
+     * @return URL of portable or absolute path
      */
     static public URL findExternalFilename(String path) {
         return FileUtil.findURL(FileUtil.getExternalFilename(path));
@@ -437,7 +441,7 @@ public class FileUtil {
 
     /**
      * Get the resources directory within the user's files directory.
-     * 
+     *
      * @return path to [user's file]/resources/
      */
     static public String getUserResourcePath() {
@@ -461,13 +465,16 @@ public class FileUtil {
 
     /**
      * Search for a file or JAR resource by name and return the
-     * {@link java.net.URL} for that file. <p> Search order is:<ol><li>For any
-     * provided searchPaths, iterate over the searchPaths by prepending each
-     * searchPath to the path and following the following search order:</li>
+     * {@link java.net.URL} for that file.
+     * <p>
+     * Search order is:
+     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * prepending each searchPath to the path and following the following search
+     * order:
      * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
      * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol>
+     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
      * in the four locations listed without prepending any path</li></ol>
      *
@@ -483,12 +490,10 @@ public class FileUtil {
             log.debug("Attempting to find " + path + " in " + Arrays.toString(searchPaths));
         }
         URL resource;
-        if (searchPaths != null) {
-            for (String searchPath : searchPaths) {
-                resource = FileUtil.findURL(searchPath + File.separator + path);
-                if (resource != null) {
-                    return resource;
-                }
+        for (String searchPath : searchPaths) {
+            resource = FileUtil.findURL(searchPath + File.separator + path);
+            if (resource != null) {
+                return resource;
             }
         }
         try {
