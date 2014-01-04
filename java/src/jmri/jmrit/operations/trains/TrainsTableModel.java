@@ -534,20 +534,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	private synchronized void removePropertyChangeTrains() {
 		List<Train> trains = manager.getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			Train train = trains.get(i);
-			if (train != null)
-				train.removePropertyChangeListener(this);
+			trains.get(i).removePropertyChangeListener(this);
 		}
 	}
 
 	private synchronized void addPropertyChangeTrains() {
 		List<Train> trains = manager.getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			Train train = trains.get(i);
-			if (train != null)
-				train.addPropertyChangeListener(this);
+			trains.get(i).addPropertyChangeListener(this);
 		}
 	}
 

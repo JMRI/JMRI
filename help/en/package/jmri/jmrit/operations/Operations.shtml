@@ -2167,10 +2167,12 @@
    have the same settings as the default car.
 
    <P>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
-    values once you press the "Change" button. However, if you only want to change only one or two
+    values once you press the "Change" button. However, if you want to change only one or two
     of the fields shown in the Set Cars window, select the ignore checkbox for the fields you don't
     want changed by the "Change" button. Only the fields that don't have the "ignore" selected will
-    change. After making your changes, be sure to press "Save" in the Cars window if you want to
+    change.</p>
+    
+    <P> After making your changes, be sure to press "Save" in the Cars window if you want to
     keep your changes.</P>
 
    <H3>Cars Tools</H3>

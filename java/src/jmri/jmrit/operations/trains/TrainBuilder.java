@@ -209,7 +209,7 @@ public class TrainBuilder extends TrainCommon {
 			// if a location is skipped, no car drops or pick ups
 			else if (train.skipsLocation(rl.getId())) {
 				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocSkippedMaxTrain"),
-						new Object[] { rl.getName(), train.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit() }));
+						new Object[] { rl.getName(), train.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
 			} else {
 				// we're going to use this location, so initialize the location
@@ -217,21 +217,21 @@ public class TrainBuilder extends TrainCommon {
 				// show the type of moves allowed at this location
 				if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
 					addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocNoDropsOrPickups"),
-							new Object[] { rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit() }));
+							new Object[] { rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
 				} else {
 					requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 					if (rl.isDropAllowed() && rl.isPickUpAllowed())
 						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
 								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-										Setup.getLengthUnit() }));
+										Setup.getLengthUnit().toLowerCase() }));
 					else if (!rl.isDropAllowed())
 						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
 								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-										Setup.getLengthUnit() }));
+										Setup.getLengthUnit().toLowerCase() }));
 					else
 						addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
 								new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-										Setup.getLengthUnit() }));
+										Setup.getLengthUnit().toLowerCase() }));
 				}
 			}
 			rl.setTrainWeight(0); // clear the total train weight
@@ -2108,7 +2108,7 @@ public class TrainBuilder extends TrainCommon {
 				length = car.getKernel().getTotalLength();
 			if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength"),
-						new Object[] { car.toString(), length, rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(), rlt.getName() }));
+						new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase() }));
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength2"),
 						new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(), rlt.getName() }));
 				return false;
@@ -2622,7 +2622,7 @@ public class TrainBuilder extends TrainCommon {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
 						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
 								track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
-								track.getReservationFactor() }));
+								Setup.getLengthUnit().toLowerCase(), track.getReservationFactor() }));
 				continue;
 			}
 			// try to send car to this spur

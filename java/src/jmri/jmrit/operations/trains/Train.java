@@ -1487,7 +1487,8 @@ public class Train implements java.beans.PropertyChangeListener {
 						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
 							setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
 									new Object[] { getName(), getRoute().getName(), rLoc.getId(),
-											rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
+											rLoc.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
+											rLoc.getName(), car.toString() }));
 						if (debugFlag)
 								log.debug("Car (" + car.toString() + ") exceeds maximum train length "
 										+ rLoc.getMaxTrainLength() + " when departing (" // NOI18N
