@@ -52,6 +52,8 @@ public class TrainBuilder extends TrainCommon {
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
 	protected static final String BLANK_LINE = " ";
+	private static final int DISPLAY_CAR_LIMIT = 500;
+	private static final int DISPLAY_NO_MOVE_CAR_LIMIT = 100;
 
 	// build variables shared between local routines
 	Train train; // the train being built
@@ -185,6 +187,8 @@ public class TrainBuilder extends TrainCommon {
 			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCars"), new Object[] {
 					Integer.toString(departLocation.getNumberRS()), train.getTrainDepartsName(), train.getName() }));
 		}
+		addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrainRoute"),
+				new Object[] { train.getName(), train.getRoute().getName() }));
 		// get the number of requested car moves for this train
 		int requested = 0;
 		for (int i = 0; i < routeList.size(); i++) {
@@ -1413,8 +1417,8 @@ public class TrainBuilder extends TrainCommon {
 		// now go through the car list and remove non-lead cars in kernels, destinations that aren't part of this route
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car c = carList.get(carIndex);
-			// only print out the first 500 cars
-			if (carIndex < 500) {
+			// only print out the first DISPLAY_CAR_LIMIT cars
+			if (carIndex < DISPLAY_CAR_LIMIT) {
 				if (c.getLoadPriority().equals(CarLoad.PRIORITY_LOW))
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
 							new Object[] { c.toString(), c.getTypeName(),
@@ -1425,8 +1429,9 @@ public class TrainBuilder extends TrainCommon {
 									c.getTypeName(), (c.getLocationName() + ", " + c.getTrackName()), c.getMoves(),
 									c.getLoadPriority() }));
 			}
-			if (carIndex == 500)
-				addLine(buildReport, FIVE, Bundle.getMessage("buildOnlyFirst500Cars"));
+			if (carIndex == DISPLAY_CAR_LIMIT)
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
+						new Object[] { carIndex }));
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
@@ -2103,9 +2108,9 @@ public class TrainBuilder extends TrainCommon {
 				length = car.getKernel().getTotalLength();
 			if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength"),
-						new Object[] { car.toString(), length }));
+						new Object[] { car.toString(), length, rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(), rlt.getName() }));
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength2"),
-						new Object[] { rlt.getMaxTrainLength(), rlt.getName() }));
+						new Object[] { rlt.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(), rlt.getName() }));
 				return false;
 			}
 		}
@@ -3715,19 +3720,25 @@ public class TrainBuilder extends TrainCommon {
 		if (carIndex < 0)
 			carIndex = 0;
 		// cars up this point have build report messages, only show the cars that aren't in the build report
-		boolean printHeader = true;
+		int numberCars = 0;
 		for (int i = carIndex; i < carList.size(); i++) {
+			if (numberCars == DISPLAY_NO_MOVE_CAR_LIMIT) {
+					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
+							new Object[] { numberCars }));
+				break;
+			}
+				
 			Car car = carList.get(i);
 			// find a car at this location that hasn't been given a destination
 			if (!car.getLocationName().equals(rl.getName()) || car.getRouteDestination() != null)
 				continue;
-			if (printHeader) {
+			if (numberCars == 0) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildMovesCompleted"),
 						new Object[] { rl.getName() }));
-				printHeader = false;
 			}
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIgnored"), new Object[] {
 					car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
+			numberCars++;
 		}
 		addLine(buildReport, SEVEN, BLANK_LINE);
 	}
