@@ -149,7 +149,8 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      @Override
     public void autoConfigure() {
        log.info("Configuring XPressNet interface via JmDNS");
-       setHostName(""); // reset the hostname to none.
+       if(getHostName().equals(DEFAULT_IP_ADDRESS))
+          setHostName(""); // reset the hostname to none.
        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetConfigurationBundle");
        String serviceType = rb.getString("defaultMDNSServiceType");
        log.debug("Listening for service: " +serviceType );
@@ -171,15 +172,25 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
        //  log.error("MDNS auto Configuration failed.");
        //  return;
        //}
-       String qualifiedServiceName = rb.getString("defaultMDNSServiceName") +
+       try {
+         // if there is a hostname set, use the host name (which can
+         // be changed) to find the service.
+         String qualifiedHostName = m_HostName +
+              "." + rb.getString("defaultMDNSDomainName");
+         setHostAddress(mdnsClient.getServiceOnHost(serviceType,
+                            qualifiedHostName).getHostAddresses()[0]);
+       } catch(java.lang.NullPointerException npe) {  
+         // if there is no hostname set, use the service name (which can't
+         // be changed) to find the service.
+         String qualifiedServiceName = rb.getString("defaultMDNSServiceName") +
               "." + serviceType;
-       setHostName(mdnsClient.getServicebyAdName(serviceType,
+         setHostAddress(mdnsClient.getServicebyAdName(serviceType,
                             qualifiedServiceName).getHostAddresses()[0]);
+       } 
     }
 
     
     ZeroConfClient mdnsClient = null;
-
     static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 
 }

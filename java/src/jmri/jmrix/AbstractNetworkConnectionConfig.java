@@ -25,6 +25,8 @@ import javax.swing.JComponent;
 import javax.swing.JCheckBox;
 import java.util.Hashtable;
 
+import java.util.ResourceBundle;
+
 /**
  * Abstract base class for common implementation of the ConnectionConfig
  *
@@ -33,7 +35,9 @@ import java.util.Hashtable;
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
-    protected JCheckBox showAutoConfig = new JCheckBox("Automatic Configuration");
+    private final static ResourceBundle rb =  ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+
+    protected JCheckBox showAutoConfig = new JCheckBox(rb.getString("AutoConfigLabel"));
 
     /**
      * Ctor for an object being created during load process
@@ -146,7 +150,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     public void updateAdapter(){
         if(adapter.getMdnsConfigure()) {
-           // get the host name and port number
+           // set the hostname if it is not blank.
+           if(!(hostNameField.getText().equals("")))
+              adapter.setHostName(hostNameField.getText());
+           // and get the host IP and port number
            // via mdns
            adapter.autoConfigure();
         } else {
@@ -211,14 +218,14 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         portField.setEnabled(true);
         
         hostNameField.setText(adapter.getHostName());
-        hostNameFieldLabel = new JLabel("IP Address: ");
+        hostNameFieldLabel = new JLabel(rb.getString("HostFieldLabel"));
         if(adapter.getHostName()==null || adapter.getHostName().equals("") ){
             hostNameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName()+".hostname"));
             adapter.setHostName(hostNameField.getText());
         }
         portField.setText(""+adapter.getPort());
         
-        portFieldLabel = new JLabel("TCP/UDP Port:");
+        portFieldLabel = new JLabel(rb.getString("PortFieldLabel"));
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));
         showAutoConfig.setForeground(Color.blue);
@@ -355,14 +362,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     public void setAutoNetworkConfig(){
        if(showAutoConfig.isSelected()) {
-          hostNameField.setEnabled(false);
-          hostNameFieldLabel.setEnabled(false);
           portField.setEnabled(false);
           portFieldLabel.setEnabled(false);
           adapter.setMdnsConfigure(true);
        } else { 
-          hostNameField.setEnabled(true);
-          hostNameFieldLabel.setEnabled(true);
           portField.setEnabled(true);
           portFieldLabel.setEnabled(true);
           adapter.setMdnsConfigure(false);

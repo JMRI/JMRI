@@ -45,20 +45,29 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
         storeCommon(e, adapter);
 
-        if (adapter.getMdnsConfigure()==true)
+        if (adapter.getMdnsConfigure()==true) {
+            // if we are using mDNS for configuration, only save
+            // the hostname if it was specified.
+            if (adapter.getHostName()!=null && !adapter.getHostName().equals(""))
+               e.setAttribute("address", adapter.getHostName());
+
             e.setAttribute("mdnsConfigure","true");
-        else {
+        } else {
             e.setAttribute("mdnsConfigure","false");
-            // write the hostname and port only if we are not using automatic
-            // configuration.
+          
+            // require a value for the address if we are not using mDNS.
+
             if (adapter.getHostName()!=null)
                e.setAttribute("address", adapter.getHostName());
             else e.setAttribute("address", rb.getString("noneSelected"));
+
+            // write the port only if we are not using automatic configuration.
 
             if (adapter.getPort()!=0)
                e.setAttribute("port", ""+adapter.getPort());
             else e.setAttribute("port", rb.getString("noneSelected"));
         }
+
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -81,7 +90,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     public boolean load(Element e) throws Exception {
     	boolean result = true;
         getInstance();
-        // configure port name
+        
 
         boolean mdnsConfig = false;
         try {
@@ -91,20 +100,30 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         adapter.setMdnsConfigure(mdnsConfig);
 
         if(mdnsConfig) {
-           // get the host name and port number
+        
+           // configure host name
+           String hostName=null;
+           try {
+               hostName = e.getAttribute("address").getValue();
+               // the hostname is optional when mDNS is being used.
+               adapter.setHostName(hostName);
+           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           }
+
+           // get the host IP and port number
            // via mdns
            adapter.autoConfigure();
 
         } else {
-           // get the host name and port number
-           // via parameters.
+           // get the host name and port number via parameters.
 
+           // configure host name
            String hostName=null;
            try {
                hostName = e.getAttribute("address").getValue();
-           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
-           }
-           adapter.setHostName(hostName);
+        } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+        }
+        adapter.setHostName(hostName);
         
            try {
                int port = e.getAttribute("port").getIntValue();
