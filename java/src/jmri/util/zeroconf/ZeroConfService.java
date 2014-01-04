@@ -42,8 +42,12 @@ import org.slf4j.LoggerFactory;
  * advertisements include the JMRI version, using the key "version", and the
  * JMRI version numbers in a string "major.minor.test" with the key "jmri"
  * <P>
+ * All ZeroConfServices are published with the computer's hostname as the mDNS
+ * hostname (unless it cannot be determined by JMRI), as well as the JMRI node
+ * name in the TXT record with the key "node".
+ * <p>
  * All ZeroConfServices are automatically stopped when the JMRI application
- * shuts down. Use {@link #allServices() } to get a collection of all
+ * shuts down. Use {@link #allServices() } to get a collection of all published
  * ZeroConfService objects.
  * <hr>
  * This file is part of JMRI.
@@ -323,14 +327,22 @@ public class ZeroConfService {
         return ZeroConfService.services;
     }
 
-    /* return the JmDNS handler */
+    /**
+     * The list of JmDNS handlers.
+     *
+     * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
+     * accessible by {@link java.net.InetAddress} keys.
+     */
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
         if (ZeroConfService.netServices.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
             try {
                 for (InetAddress address : hostAddresses()) {
-                    log.debug("Calling JmDNS.create({}, {})", address.getHostAddress(), NodeIdentity.identity());
-                    ZeroConfService.netServices.put(address, JmDNS.create(address, NodeIdentity.identity()));
+                    // explicitly passing null since newer versions of JmDNS use passed in host
+                    // as hostname instead of using passed in host as fallback if real hostname
+                    // cannot be determined
+                    log.debug("Calling JmDNS.create({}, null)", address.getHostAddress());
+                    ZeroConfService.netServices.put(address, JmDNS.create(address, null));
                 }
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
