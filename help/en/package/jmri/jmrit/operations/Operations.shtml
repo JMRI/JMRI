@@ -106,6 +106,7 @@
         Kernel, Owner)</A></LI>
       <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
       <LI><A HREF="#CarsSet">Set Car</A></LI>
+      <LI><A HREF="#SetCars">Set Cars</A></LI>
      </UL></LI>
     <LI><A HREF="#Locomotives">Locomotives</A>
      <UL>
@@ -2157,13 +2158,20 @@
    <A NAME="SetCars"></A>
    <H3>Set Cars</H3>
 
-   If you want to change the location, destinations, status, or train assignment for a group of cars
-   use the "Set Cars" tool found under "Tools" in the <A HREF="#Cars">Cars</A> window. The tool
-   works the same way as the <A HREF="#CarsSet">Set Car</A> as described above, except that multiple
-   cars are modified. Select the cars you want to change in the table and then select "Set Cars".
-   The first car selected becomes the default, and if you press the "Change" button, all of the
-   other selected cars will have the same settings as the default car. Be sure to press "Save" in
-   the Cars window if you want to keep your changes.
+   If you want to change the status, location, return when empty, load, kernel, destinations or
+   train assignment for a group of cars use the "Set Cars" tool found under "Tools" in the
+   <A HREF="#Cars">Cars</A> window. The tool works the same way as the
+   <A HREF="#CarsSet">Set Car</A> as described above, except that multiple cars are modified. Select
+   the cars you want to change in the table and then select "Set Cars". The first car selected
+   becomes the default, and if you press the "Change" button, all of the other selected cars will
+   have the same settings as the default car.
+
+   <P>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
+    values once you press the "Change" button. However, if you only want to change only one or two
+    of the fields shown in the Set Cars window, select the ignore checkbox for the fields you don't
+    want changed by the "Change" button. Only the fields that don't have the "ignore" selected will
+    change. After making your changes, be sure to press "Save" in the Cars window if you want to
+    keep your changes.</P>
 
    <H3>Cars Tools</H3>
 
