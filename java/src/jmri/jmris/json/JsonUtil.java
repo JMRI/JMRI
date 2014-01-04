@@ -5,13 +5,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -57,6 +55,7 @@ import static jmri.jmris.json.JSON.ERROR;
 import static jmri.jmris.json.JSON.EXPECTED_ARRIVAL;
 import static jmri.jmris.json.JSON.EXPECTED_DEPARTURE;
 import static jmri.jmris.json.JSON.F;
+import static jmri.jmris.json.JSON.FORMER_NODES;
 import static jmri.jmris.json.JSON.FORWARD;
 import static jmri.jmris.json.JSON.FUNCTION_KEYS;
 import static jmri.jmris.json.JSON.HEARTBEAT;
@@ -143,11 +142,10 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.util.node.NodeIdentity;
 import jmri.util.JmriJFrame;
+import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1251,6 +1249,19 @@ public class JsonUtil {
         return root;
     }
 
+    public static JsonNode getNode() {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, NODE);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NODE, NodeIdentity.identity());
+        ArrayNode nodes = mapper.createArrayNode();
+        for (String node : NodeIdentity.formerIdentities()) {
+            nodes.add(node);
+        }
+        data.put(FORMER_NODES, nodes);
+        return root;
+    }
+
     static protected ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);
@@ -1281,5 +1292,5 @@ public class JsonUtil {
             isLong = true;
         }
         return new DccLocoAddress(number, isLong);
-    }
+    }    
 }

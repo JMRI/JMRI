@@ -116,7 +116,7 @@ public final class JSON {
      */
     public static final String MESSAGE = "message"; // NOI18N
 
-    /* JSON hello */
+    /* JSON hello and metadata */
     /**
      * {@value #HELLO}
      */
@@ -137,6 +137,11 @@ public final class JSON {
      * {@value #NODE}
      */
     public static final String NODE = "node"; // NOI18N
+    /**
+     * {@value #FORMER_NODES}
+     * @since 1.1
+     */
+    public static final String FORMER_NODES = "formerNodes"; // NOI18N
 
     /* JSON list types */
     /**
