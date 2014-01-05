@@ -52,6 +52,11 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                e.setAttribute("address", adapter.getHostName());
 
             e.setAttribute("mdnsConfigure","true");
+            if (adapter.getAdvertisementName()!=null)
+              e.setAttribute("advertisementName",adapter.getAdvertisementName());
+            if (adapter.getServiceType()!=null)
+              e.setAttribute("serviceType",adapter.getServiceType());
+
         } else {
             e.setAttribute("mdnsConfigure","false");
           
@@ -107,6 +112,24 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                hostName = e.getAttribute("address").getValue();
                // the hostname is optional when mDNS is being used.
                adapter.setHostName(hostName);
+           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           }
+
+           // configure the Service Type
+           String serviceType=null;
+           try {
+               serviceType = e.getAttribute("serviceType").getValue();
+               // the Service Type is optional when mDNS is being used.
+               adapter.setServiceType(serviceType);
+           } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
+           }
+
+           // configure the advertisement name
+           String advertisementName=null;
+           try {
+               advertisementName = e.getAttribute("advertisementName").getValue();
+               // the Advertisement Name is optional when mDNS is being used.
+               adapter.setAdvertisementName(advertisementName);
            } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
            }
 

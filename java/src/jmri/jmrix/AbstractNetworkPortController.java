@@ -159,6 +159,21 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     public void autoConfigure() { 
     }
+
+   /*
+    * Get and set the ZeroConf/mDNS advertisement name.
+    * Default implementation does nothing.
+    */
+   public void setAdvertisementName(String AdName) {}
+   public String getAdvertisementName() { return null; }
+
+   /* 
+    * Get and set the ZeroConf/mDNS service type.
+    * Default implementation does nothing.
+    */
+   public void setServiceType(String ServiceType) {}
+   public String getServiceType(){ return null; }
+
     
     public DataInputStream getInputStream() {
         if (!opened) {

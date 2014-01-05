@@ -25,6 +25,7 @@ import jmri.util.zeroconf.ZeroConfClient;
 
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
+         static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetConfigurationBundle");
 	static final int COMMUNICATION_TCP_PORT= 5550;
 	static final String DEFAULT_IP_ADDRESS = "192.168.0.200";
 
@@ -151,7 +152,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
        log.info("Configuring XPressNet interface via JmDNS");
        if(getHostName().equals(DEFAULT_IP_ADDRESS))
           setHostName(""); // reset the hostname to none.
-       ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetConfigurationBundle");
        String serviceType = rb.getString("defaultMDNSServiceType");
        log.debug("Listening for service: " +serviceType );
 
@@ -189,8 +189,24 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
        } 
     }
 
-    
     ZeroConfClient mdnsClient = null;
+
+   /*
+    * Get the ZeroConf/mDNS advertisement name.
+    * this value is fixed on the LIUSB-Ethernet, so return the default
+    * value.
+    */
+   @Override
+   public String getAdvertisementName() { return rb.getString("defaultMDNSServiceName"); }
+
+   /*
+    * Get the ZeroConf/mDNS service type.
+    * this value is fixed on the LIUSB-Ethernet, so return the default
+    * value.
+    */
+   @Override
+   public String getServiceType(){ return rb.getString("defaultMDNSServiceType"); }
+
     static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 
 }
