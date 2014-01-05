@@ -20,9 +20,9 @@
     <div id="mainContent">
 
 <h1>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</h1>
-<p>Usage: http://&lt;your browser IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
+<p>Usage: &lt;your JMRI server IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
 <p>This application shows feedback and controls not only locomotives, but also turnouts, routes, lights and other devices through JMRI panels.</p>
-<p><b>webThrottle</b> is completely resizable and it adjusts automatically to the size and orientation of the device screen.</p>
+<p><b>webThrottle</b> is completely resizable and it ajusts automatically to the size and orientation of the device screen.</p>
 <p>
 It runs on the most recent browsers on computers, smartphones and tablets.
 <br />Your device and browser must support HTML5 and websockets.
@@ -30,12 +30,13 @@ It runs on the most recent browsers on computers, smartphones and tablets.
 <br /><b>There is nothing to install on your device !</b>
 </p>
 <p>
-To start using JMRI through a web browser, you just need to activate the included <b>JMRI Web Server</b>.
-You may find additional information <a href="/help/en/html/web/index.shtml">here</a>.
+To start using JMRI through a web browser, you just need to activate the included <b>Web Server</b>.
+You may found additional information <a href="/help/en/html/web/index.shtml">here</a>.
 </p>
 <p>
-Please click '?' to get help for each throttle context.
-<br />You need to previously load 'ThrottleMonitor.py' script (in 'jython' directory) to be able to control locos.
+To get help, please click '?' at each page top right.
+<br />You will find important and useful information there.
+<br />There is different help for each page type (roster, loco, panel, ...).
 </p>
 <h3>Screen samples ...</h3>
 <p>
