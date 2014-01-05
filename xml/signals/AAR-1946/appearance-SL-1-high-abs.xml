@@ -75,6 +75,13 @@
     </appearance>
 
     <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <reference>Page 50 C</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Page 50 C</reference>
@@ -160,6 +167,16 @@
 
      <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

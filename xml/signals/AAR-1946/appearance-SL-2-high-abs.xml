@@ -124,6 +124,14 @@
     </appearance>
 
     <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 47 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>yellow</show>
@@ -216,7 +224,6 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -228,6 +235,11 @@
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
