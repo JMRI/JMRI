@@ -330,7 +330,7 @@ public class RollingStockManager {
 	 * @return list of RollingStock ordered by RollingStock location
 	 */
 	public List<RollingStock> getByLocationList() {
-		return getByList(getByNumberList(), BY_LOCATION);
+		return getByList(getList(), BY_LOCATION);
 	}
 
 	/**
@@ -567,7 +567,7 @@ public class RollingStockManager {
 	 * Get a list of rolling stocks assigned to a train
 	 * 
 	 * @param train
-	 * @return List of RollingStock ids assigned to the train
+	 * @return List of RollingStock assigned to the train
 	 */
 	public List<RollingStock> getByTrainList(Train train) {
 		List<RollingStock> byLoc = getByLocationList();

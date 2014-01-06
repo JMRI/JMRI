@@ -13,6 +13,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -337,8 +338,9 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
 	// this table listens for changes to a location and it's tracks
 	public void propertyChange(PropertyChangeEvent e) {
-		// if (Control.showProperty && log.isDebugEnabled())
-		log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue());
 		if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

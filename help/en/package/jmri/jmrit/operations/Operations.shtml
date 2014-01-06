@@ -630,9 +630,25 @@
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
    will try and route the car after every move.
 
-   <P>The last routing option "Use all Trains when Routing" when selected instructs the program
+   <P>The option "Use all Trains when Routing" when selected instructs the program
     to use all of your trains to route a car. If you only want the router to use the trains that
     you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+
+   <P>
+    The last routing option "Enable Track Destination Restrictions when Routing" when selected tells the router
+    to use the <A HREF="#Interchange">classification/interchange</A> track destinations control when
+    routing a car. It is recommended that you leave this feature disabled, even if you've placed
+    destination restrictions on your C/I tracks. When this feature is enabled, you must enter the
+    destination and any interim destination needed to route a car to that destination. For example,
+    say the route for a car looks something like this: New York to Springfield to Worcester
+    to Boston. With the "Enable Track Destination Restrictions when Routing" disabled, you only
+    have to enter "Boston" as the destination for the departure C/I track in New York. The program when
+    routing a car to Boston from New York, will determine that sending the car first to Springfield
+    is okay because that's the route to get the car to Boston. However, if you enable this option,
+    you must add Springfield in addition to Boston as valid destinations. But now cars
+    going to Springfield and not just Boston could be added to the train since there are now two
+    destinations for the C/I track out of New York.
+   </P>
 
    <A NAME="LoggingOptions"></A>
    <H3>Logging Options</H3>

@@ -41,6 +41,7 @@ public class OptionFrame extends OperationsFrame {
 	JCheckBox routerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRouting"));
 	JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
 	JCheckBox routerAllTrainsBox = new JCheckBox(Bundle.getMessage("AllTrains"));
+	JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrications"));
 	
 	JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
 	JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
@@ -89,6 +90,7 @@ public class OptionFrame extends OperationsFrame {
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
 		routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
 		routerAllTrainsBox.setSelected(!Setup.isOnlyActiveTrainsEnabled());
+		routerRestrictBox.setSelected(Setup.isCheckCarDestinationEnabled());
 		// logging options
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
 		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
@@ -158,6 +160,7 @@ public class OptionFrame extends OperationsFrame {
 		addItemLeft(pRouter, routerCheckBox, 1, 0);
 		addItemLeft(pRouter, routerYardCheckBox, 1, 1);
 		addItemLeft(pRouter, routerAllTrainsBox, 1, 2);
+		addItemLeft(pRouter, routerRestrictBox, 1, 3);
 
 		// Logger panel
 		JPanel pLogger = new JPanel();
@@ -248,6 +251,7 @@ public class OptionFrame extends OperationsFrame {
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
 			Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
+			Setup.setCheckCarDestinationEnabled(routerRestrictBox.isSelected());
 			// Options
 			TrainManager.instance().setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());

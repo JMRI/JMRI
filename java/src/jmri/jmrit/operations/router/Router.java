@@ -356,25 +356,27 @@ public class Router extends TrainCommon {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFindTrack"), new Object[] {
 					trackType, car.toString(), testCar.getDestinationName(), testCar.getDestinationTrackName() }));
 		// save car's location, track, destination, and destination track
-		Location saveLocation = testCar.getLocation();
 		Track saveTrack = testCar.getTrack();
-		Location saveDestation = testCar.getDestination();
-		Track saveDestTrack = testCar.getDestinationTrack();
+		Location saveDestination = testCar.getDestination();
+		Track saveDestinationTrack = testCar.getDestinationTrack();
 		if (saveTrack == null) {
 			log.debug("Car's track is null! Can't route");
 			return false;
 		}
 		boolean foundRoute = false;
 		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
-		List<Track> tracks = LocationManager.instance().getTracksByMoves(trackType);// restrict to yards, interchanges, or
-																				// staging
+		List<Track> tracks = LocationManager.instance().getTracksByMoves(trackType);
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
+			if (saveTrack == track)
+				continue; // don't use car's current track
+			// don't allow interchange to interchange move
+//			if (saveTrack.getLocation() == track.getLocation() && saveTrack.getTrackType().equals(track.getTrackType())
+//					&& _train.isServiceAllCarsWithFinalDestinationsEnabled())
+//				continue; // don't use same track types at the car's current location
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue;
-			if (saveTrack == track)
-				continue; // don't use car's current track
 			if (debugFlag)
 				log.debug("Found " + trackType + " track (" + track.getLocation().getName() + ", " + track.getName()
 						+ ") for car (" + car.toString() + ")"); // NOI18N
@@ -384,8 +386,8 @@ public class Router extends TrainCommon {
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setLocation(track.getLocation());
 			testCar.setTrack(track);
-			testCar.setDestination(saveDestation);
-			testCar.setDestinationTrack(saveDestTrack);
+			testCar.setDestination(saveDestination);
+			testCar.setDestinationTrack(saveDestinationTrack);
 			Train nextTrain = TrainManager.instance().getTrainForCar(testCar, _buildReport);
 			if (nextTrain == null) {
 				if (debugFlag)
@@ -413,7 +415,7 @@ public class Router extends TrainCommon {
 			// Save the "last" tracks for later use
 			_lastLocationTracks.add(track);
 			// now try to forward car to this interim location
-			testCar.setLocation(saveLocation); // restore car's location and track
+			testCar.setLocation(saveTrack.getLocation()); // restore car's location and track
 			testCar.setTrack(saveTrack);
 			testCar.setDestination(track.getLocation()); // forward test car to this interim destination and track
 			testCar.setDestinationTrack(track);
@@ -745,6 +747,10 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (track == car.getTrack())
 				continue; // don't use car's current track
+			// don't allow interchange to interchange move if forcing a car move
+//			if (car.getTrack().getLocation() == track.getLocation() && car.getTrack().getTrackType().equals(track.getTrackType())
+//					&& _train.isServiceAllCarsWithFinalDestinationsEnabled())
+//				continue; // don't use same track types at the car's current location
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue; // track doesn't accept this car
