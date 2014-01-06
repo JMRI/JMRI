@@ -145,7 +145,16 @@ public class NodeIdentity {
     synchronized private void getIdentity(boolean save) {
         try {
             try {
-                this.identity = this.createIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
+                try {
+                    this.identity = this.createIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
+                } catch (NullPointerException ex) {
+                    // NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress() failed
+                    // this can be do to multiple reasons, most likely getLocalHost() failing on certain platforms.
+                    // Only set this.identity = null, since the following null checks address all potential problems
+                    // with getLocalHost() including some expected conditions (such as InetAddress.getLocalHost()
+                    // returning the loopback interface).
+                    this.identity = null;
+                }
                 if (this.identity == null) {
                     Enumeration nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
