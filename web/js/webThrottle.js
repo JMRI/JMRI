@@ -4,9 +4,9 @@
 * 
 * This script defines the web throttle behaviour.
 * 
-* >>> This file version: 2.0 - by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.1 - by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
-* This script relies on 'jquery.jmriConnect.js v2.0' (read its header for dependencies).
+* This script relies on 'jquery.jmriConnect.js v2.1' (read its header for dependencies).
 * 
 * URL parameters: (roster/panels list if no parameters)
 * - 'loconame' (to open a throttle for a loco)
@@ -80,7 +80,7 @@ var $movementTilt = null;
 var $movementActive = $hasMovement;
 var $movementOn = false;
 var $movementCtrl = 0;
-var $locoAddress = -1;
+var $locoAddress = "none";
 var $help = [];
 
 //----------------------------------------- Generic onError
@@ -641,8 +641,8 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 					};
 					img.attr('src', '/roster/' + encodeURIComponent(loco.id) + '/' + (icon ? 'icon' : 'image') + '?maxHeight=' + $cellHeightRef);
 				}
-				$locoAddress = loco.dccAddress;
-				$jmri.setJMRI('throttle', $locoAddress, {"address":$locoAddress});
+				$locoAddress = '' + loco.dccAddress;
+				$jmri.setJMRI('throttle', $locoAddress, {"address":loco.dccAddress});
 			} else smoothAlert('Loco \'' + $paramLocoName + '\' doesn\'t exist.\nReopen the web page with a valid loco name.');
 			break;
 		case 'turnouts':

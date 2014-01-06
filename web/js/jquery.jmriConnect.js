@@ -4,7 +4,7 @@
 * File version 1.0 (old): script 'ThrottleMonitor.py' must be loaded for throttle support
 * File version 2.0: native JSON throttle support - doesn't need script 'ThrottleMonitor.py' anymore
 * 
-* >>> This file version: 2.0 - from original 'jquery.jmri.js' modified by Oscar Moutinho (oscar.moutinho@gmail.com)
+* >>> This file version: 2.1 - from original 'jquery.jmri.js' modified by Oscar Moutinho (oscar.moutinho@gmail.com)
 * 
 * Using HTML5 and jQuery 2...
 * Note that this JMRI extension relies on the jquery-websocket v.0.0.4 extension.
@@ -216,7 +216,7 @@
 				},
 				message: function(e) {jmri.fullData(e.originalEvent.data);},
 				events: {
-					error: function(e) {jmri.error(e.data.code, e.data.message);},
+					error: function(e) {jmri.error(e.code, e.message);},
 					pong: function(e) {},
 					goodbye: function(e) {
 						jmri.socket.close();
