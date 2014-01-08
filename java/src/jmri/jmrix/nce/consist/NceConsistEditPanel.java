@@ -71,8 +71,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     
 	private static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
 	private static final int CONSIST_MAX = 127;
-	private static final int LOC_ADR_MIN = 1; 			// loco address range
-	private static final int LOC_ADR_MAX = 9999;
+	private static final int LOC_ADR_MIN = 0; 			// loco address range
+	private static final int LOC_ADR_MAX = 10239;
 	private static final int LOC_ADR_REPLACE = 0x3FFF; 	// dummy loco address 
 	
 	private int consistNum = 0; 				// consist being worked
@@ -591,8 +591,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			return;
 		} else {
 			if (adrButton.getText().equals(rb.getString("KeyLONG"))) {
-				if (Integer.parseInt(locoTextField.getText()) < 128) {
-					adrButton.setText(rb.getString("KeySHORT"));
+				if ( (Integer.parseInt(locoTextField.getText()) < 128) &&
+					(Integer.parseInt(locoTextField.getText()) > 0) ) {
+						adrButton.setText(rb.getString("KeySHORT"));
 				}
 			} else {
 				adrButton.setText(rb.getString("KeyLONG"));
@@ -1811,13 +1812,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	}
 
 	private String getLocoAddrText(NceReply r, int i) {
-		int rC = r.getElement(i++);
-		rC = (rC << 8) & 0x3F00;
+		int rC_u = r.getElement(i++);
+		int rC = (rC_u << 8) & 0x3F00;
 		int rC_l = r.getElement(i);
-		rC_l = rC_l & 0xFF;
-		rC = rC + rC_l;
+		rC = rC + (rC_l & 0xFF);
 		String locoAddrText = "";
-		if (rC != 0) 
+		if ( (rC_u != 0) || (rC_l != 0) ) 
 			locoAddrText = Integer.toString(rC);
 		if (rC == LOC_ADR_REPLACE) 
 			locoAddrText = rb.getString("REPLACE_LOCO");
