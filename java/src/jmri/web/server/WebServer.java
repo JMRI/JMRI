@@ -103,6 +103,7 @@ public final class WebServer implements LifeCycle.Listener {
             server.addLifeCycleListener(this);
 
             Thread serverThread = new ServerThread(server);
+            serverThread.setName("WebServer"); // NOI18N
             serverThread.start();
 
         }
@@ -184,7 +185,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     static private class ServerThread extends Thread {
 
-        private Server server;
+        private final Server server;
 
         public ServerThread(Server server) {
             this.server = server;
