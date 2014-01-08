@@ -26,10 +26,11 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start Volts</label>
@@ -49,10 +50,6 @@
         <decVal max="32"/>
         <label>Max Voltage</label>
         <comment>Range 0-63</comment>
-      </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="set the Advanced Consist address, range 0-127" default="0">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
       </variable>
     </variables>
     <resets>
