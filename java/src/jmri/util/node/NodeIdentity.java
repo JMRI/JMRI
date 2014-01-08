@@ -44,7 +44,6 @@ public class NodeIdentity {
 
     private final ArrayList<String> formerIdentities = new ArrayList<String>();
     private String identity = null;
-    private final File identityFile = new File(FileUtil.getPreferencesPath() + "nodeIdentity.xml"); // NOI18N
 
     private static NodeIdentity instance = null;
     private final static Logger log = LoggerFactory.getLogger(NodeIdentity.class);
@@ -58,9 +57,10 @@ public class NodeIdentity {
     }
 
     synchronized private void init() {
-        if (this.identityFile.exists()) {
+        File identityFile = this.identityFile();
+        if (identityFile.exists()) {
             try {
-                Document doc = (new SAXBuilder()).build(this.identityFile);
+                Document doc = (new SAXBuilder()).build(identityFile);
                 String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
                 this.formerIdentities.clear();
                 for (Element e : (List<Element>) doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren()) {
@@ -213,7 +213,7 @@ public class NodeIdentity {
         doc.getRootElement().addContent(identityElement);
         doc.getRootElement().addContent(formerIdentitiesElement);
         try {
-            fw = new FileWriter(this.identityFile);
+            fw = new FileWriter(this.identityFile());
             (new XMLOutputter(Format.getPrettyFormat())).output(doc, fw);
             fw.close();
         } catch (IOException ex) {
@@ -247,4 +247,7 @@ public class NodeIdentity {
         return sb.toString();
     }
 
+    private File identityFile() {
+        return new File(FileUtil.getPreferencesPath() + "nodeIdentity.xml"); // NOI18N
+    }
 }
