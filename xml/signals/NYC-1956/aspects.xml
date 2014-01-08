@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>NYC 1956</name>
+  <name>NYC-1956</name>
   <date>1956</date>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956"</reference>
 
@@ -32,6 +32,13 @@
         <date>2013-07-07</date>
         <authorinitials>JDL</authorinitials>
         <revremark>aspect mapping revisions</revremark>
+    </revision>
+    
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2013-12-30</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
     
   </revhistory>

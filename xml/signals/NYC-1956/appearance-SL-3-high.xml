@@ -31,9 +31,16 @@
         <revremark>aspect mapping revisions</revremark>
     </revision>
     
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2013-12-30</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
+    </revision>
+    
   </revhistory>
 
-  <aspecttable>NYC 1956</aspecttable>
+  <aspecttable>NYC-1956</aspecttable>
   <name>Triple searchlight high signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a three-searchlight signalmast</description>
@@ -242,7 +249,6 @@
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
-      <ourAspect>Limited Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -293,6 +299,7 @@
       <advancedAspect>Slow-Clear</advancedAspect>
       <ourAspect>Medium-Approach Slow</ourAspect>
       <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

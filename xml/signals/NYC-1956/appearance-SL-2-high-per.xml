@@ -31,9 +31,16 @@
         <revremark>aspect mapping revisions</revremark>
     </revision>
     
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2013-12-30</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
+    </revision>
+    
   </revhistory>
 
-  <aspecttable>NYC 1956</aspecttable>
+  <aspecttable>NYC-1956</aspecttable>
   <name>Double searchlight high permissive signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
@@ -181,6 +188,7 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
