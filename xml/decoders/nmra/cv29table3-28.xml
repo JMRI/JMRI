@@ -43,13 +43,13 @@
     <enumVal>
       <enumChoice choice="Use Vstart Vmid Vmax">
         <choice>Use Vstart Vmid Vmax</choice>
-		<label xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</label>
-		<label xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</label>
+		<choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
+		<choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
-		<label xml:lang="fr">Utiliser tableau de vitesse</label>
-		<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+		<choice xml:lang="fr">Utiliser tableau de vitesse</choice>
+		<choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
