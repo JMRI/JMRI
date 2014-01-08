@@ -23,11 +23,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Digitrax Firmware Downloader
+<H1>Loconet Firmware Downloader
 </H1>
     
-Some Digitrax products can have new firmware (internal programs) downloaded to them.
-The firmware updates are distributed as ".dmf" (Digitrax Mangled Firmware) files.
+Some Locnet products can have new firmware (internal programs) downloaded to them.
+The firmware updates are distributed as ".dmf" (Digitrax Mangled Firmware) or .hex files by other manufacures.
 They contain both the code itself, and various managment information
 to make sure that it can only be downloaded into the hardware it expects.
 
@@ -47,7 +47,7 @@ control fields (this is usuall not needed)
 <li>Click Download to load the firmware. This will take a little while, so
 there's progress bar below the buttons.
 <li>If desired, click Verify to double-check the contents. This also takes a 
-while.
+while and my not indicate if an error occured.
 </ul>
 <p>
 (This is the help/jmri/jmrix/loconet/downloader/LoaderFrame help page)
