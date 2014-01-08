@@ -530,16 +530,16 @@ pattern:<span style="font-weight:normal; color:blue">&#9;
 
 	<xsl:template name="howmany">
 		<xsl:choose>
-			<xsl:when test="@minOccurs='0' and @maxOccurs='unbounded'">*</xsl:when>
-			<xsl:when test="@minOccurs='0' and (not(@maxOccurs) or @maxOccurs='1')">?</xsl:when>
-			<xsl:when test="(not(@minOccurs) or @minOccurs='1') and @maxOccurs='unbounded'">+	</xsl:when>
+			<xsl:when test="@minOccurs='0' and @maxOccurs='unbounded'"> {0 or more}</xsl:when>
+			<xsl:when test="@minOccurs='0' and (not(@maxOccurs) or @maxOccurs='1')"> {at most 1}</xsl:when>
+			<xsl:when test="(not(@minOccurs) or @minOccurs='1') and @maxOccurs='unbounded'"> {at least 1}</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="@minOccurs and @maxOccurs!='1'">
+				<xsl:if test="@minOccurs and @maxOccurs!='1'"> {
 					<xsl:value-of select="@minOccurs"/>
-					<xsl:if test="@maxOccurs='unbounded'">+</xsl:if>
+					<xsl:if test="@maxOccurs='unbounded'"> or more</xsl:if>
 					<xsl:if test="@maxOccurs!='unbounded'">-<xsl:value-of select="@maxOccurs"/>
 					</xsl:if>
-				</xsl:if>
+				}</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
