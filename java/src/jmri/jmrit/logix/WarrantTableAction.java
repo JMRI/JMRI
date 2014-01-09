@@ -60,12 +60,15 @@ public class WarrantTableAction extends AbstractAction {
     private static WarrantTableAction _instance;
     private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
     private static WarrantTableFrame _tableFrame;
+    private static TrackerTableAction _trackerTable;
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
+    private static WarrantFrame _openFrame;
 
     public WarrantTableAction(String menuOption) {
 	    super(Bundle.getMessage(menuOption));
+	    _trackerTable = TrackerTableAction.getInstance();
     }
     
     static WarrantTableAction getInstance() {
@@ -140,45 +143,48 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
-        _warrantMenu.add(TrackerTableAction.getInstance());
+        _warrantMenu.add(_trackerTable);
         
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
     }
 
-    synchronized public static void closeWarrantFrame(String key) {
-        _frameMap.remove(key);
+    synchronized public static void closeWarrantFrame(WarrantFrame frame) {
+    	if (frame!=null) {
+    		if  (frame.equals(_openFrame)) {
+            	_openFrame = null;;    		    			
+    		}
+    		frame.dispose();
+    	}
+    }
+    synchronized public static void newWarrantFrame(WarrantFrame frame) {
+    	closeWarrantFrame(_openFrame);
+    	_openFrame = frame;
     }
 
     synchronized public static void openWarrantFrame(String key) {
-        WarrantFrame frame = _frameMap.get(key);
-        if (frame==null) {
-            frame = new WarrantFrame(key);
-            _frameMap.put(key, frame);
+    	_openFrame = _frameMap.get(key);
+        if (_openFrame==null) {
+        	_openFrame = new WarrantFrame(key);
+            _frameMap.put(key, _openFrame);
         }
         if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
-        frame.setVisible(true);
-        frame.toFront();
+        _openFrame.setVisible(true);
+        _openFrame.toFront();
     }
 
-    synchronized public static void openWarrantFrame(Warrant w) {
-    	String key = w.getDisplayName();
-        WarrantFrame frame = _frameMap.get(key);
-        if (frame==null) {
-            frame = new WarrantFrame(w);
-            _frameMap.put(key, frame);
-        }
-        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
-        frame.setVisible(true);
-        frame.toFront();
-    }
-
-    synchronized public static WarrantFrame getOpenWarrantFrame(String key) {
+    synchronized public static WarrantFrame getWarrantFrame(String key) {
         return _frameMap.get(key);
     }
     
     synchronized static public void mouseClickedOnBlock(OBlock block) {
-    	if (_tableFrame!=null) {
-    		_tableFrame.mouseClickedOnBlock(block);
+    	if (_tableFrame!=null && _tableFrame.mouseClickedOnBlock(block)) {
+    		return;
+    	}
+    	if (_trackerTable!=null && _trackerTable.mouseClickedOnBlock(block)) {
+    		return;
+    	}
+    	if (_openFrame!=null) {
+    		_openFrame.mouseClickedOnBlock(block);    		    		
     	}
     }
     

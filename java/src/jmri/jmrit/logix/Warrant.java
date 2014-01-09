@@ -1125,22 +1125,34 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 							+" for warrant= "+getDisplayName());
                 // we assume it is our train entering the block - cannot guarantee it, but what else?
                 _idxCurrentOrder = activeIdx;
-                getBlockOrderAt(activeIdx).setPath(this);// safety for late TO throws -especially when coming from a dark block
                 // set block state to show our train occupies the block
 //                block.setValue(_trainName);
 //                block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
-            log.warn("Rouge train ahead at block \""+block.getDisplayName()+"\"!");
-        	if (_runMode==MODE_LEARN) {
-	            log.error("Block "+block.getDisplayName()+" became occupied before block "+
-	            		getBlockAt(_idxCurrentOrder+1).getDisplayName()+ " ABORT recording.");        				
-                firePropertyChange("abortLearn", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
-    		}
-        	return;
+        	OBlock nextBlock = getBlockAt(_idxCurrentOrder+1);
+        	if ((nextBlock.getState() | OBlock.DARK) !=0 && block.equals(getBlockAt(_idxCurrentOrder+2))) {
+        		// passing through a dark block - only one allowed          		
+                _idxCurrentOrder = activeIdx;
+                if (_debug) log.debug("firePropertyChange(\"blockChange\", "+getBlockAt(oldIndex).getDisplayName()+
+                		", "+getBlockAt(oldIndex+1).getDisplayName()+") for warrant= "+getDisplayName());
+                firePropertyChange("blockChange", getBlockAt(oldIndex), getBlockAt(oldIndex+1));
+                oldIndex++;
+        	} else {
+             	if (_runMode==MODE_LEARN) {
+    	            log.error("Block "+block.getDisplayName()+" became occupied before block "+
+    	            		getBlockAt(_idxCurrentOrder+1).getDisplayName()+ " ABORT recording.");        				
+                    firePropertyChange("abortLearn", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));            		
+        		} else {
+        			log.warn("Rouge train ahead at block \""+block.getDisplayName()+"\"!");    			   			
+         		}
+            	return;
+        	}
         } else if (_idxCurrentOrder > 0) {
-        	log.error("activeIdx ("+activeIdx+") < _idxCurrentOrder ("+_idxCurrentOrder+")!"); 
+        	log.error("activeIdx ("+activeIdx+") < _idxCurrentOrder ("+_idxCurrentOrder+")!");
+        	return;
         }
+        getBlockOrderAt(activeIdx).setPath(this);// safety for late TO throws -especially when coming from a dark block
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);        	
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
@@ -1207,6 +1219,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         if (_idxCurrentOrder==activeIdx) {
             // fire notification last so engineer's state can be documented in whatever GUI is listening.
+            if (_debug) log.debug("firePropertyChange(\"blockChange\", "+getBlockAt(oldIndex).getDisplayName()+
+            		", "+block.getDisplayName()+") for warrant= "+getDisplayName());
             firePropertyChange("blockChange", getBlockAt(oldIndex), block);
         }
     }		//end goingActive
@@ -1245,17 +1259,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	if (_idxCurrentOrder+1<_orders.size()) {
                	OBlock nextBlock = getBlockAt(_idxCurrentOrder+1);
                	if ((nextBlock.getState() & OBlock.DARK) > 0) {
-                   	if (_runMode==MODE_LEARN) {
-                   		goingActive(nextBlock);
-                   	} else if (_engineer!=null) {
+               		if (_engineer!=null) {
                    		_engineer.setRunOnET(true);
                    	}               		
                	} else {
                		// train is lost
-                	//_idxLastOrder = -1;
+                    if (_debug) log.debug("firePropertyChange(\"blockChange\", "+block.getDisplayName()+
+                    		", null) for warrant= "+getDisplayName());
                     firePropertyChange("blockChange", block, null);
                     _engineer.setHalt(true);
-//                	setRunMode(Warrant.MODE_NONE, null, null, null, false);
                     return;
                	}
         	} else {

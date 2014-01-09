@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,22 +52,12 @@ import org.slf4j.LoggerFactory;
 
 public abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
-	private BlockOrder  _originBlockOrder;
-	private BlockOrder  _destBlockOrder;
-	private BlockOrder  _viaBlockOrder;
-	private BlockOrder  _avoidBlockOrder;
-
-    protected JTextField  _originBlockBox = new JTextField();
-    protected JTextField  _destBlockBox = new JTextField();
-    protected JTextField  _viaBlockBox =  new JTextField();
-    protected JTextField  _avoidBlockBox =  new JTextField();
-    private JComboBox _originPathBox = new JComboBox();
-    private JComboBox _destPathBox = new JComboBox();
-    private JComboBox _viaPathBox = new JComboBox();
-    private JComboBox _avoidPathBox = new JComboBox();
-    private JComboBox _originPortalBox = new JComboBox();     // exit
-    private JComboBox _destPortalBox = new JComboBox();       // entrance
-//    int _thisActionEventId;     // id for the listener of the above items
+	enum Location {ORIGIN, DEST, VIA, AVOID}
+    protected RouteLocation  _origin = new RouteLocation(Location.ORIGIN);
+    protected RouteLocation  _destination = new RouteLocation(Location.DEST);
+    protected RouteLocation  _via =  new RouteLocation(Location.VIA);
+    protected RouteLocation  _avoid =  new RouteLocation(Location.AVOID);
+    RouteLocation _focusedField;
 	
     static int STRUT_SIZE = 10;
     private JDialog			_pickRouteDialog;
@@ -91,19 +82,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 	 */
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
 	
-	protected void init() {
-        doSize(_originBlockBox, 500, 100);
-        doSize(_destBlockBox, 500, 100);
-        doSize(_viaBlockBox, 500, 100);
-        doSize(_avoidBlockBox, 500, 100);
-        doSize(_originPathBox, 500, 100);
-        doSize(_destPathBox, 500, 100);
-        doSize(_viaPathBox, 500, 100);
-        doSize(_avoidPathBox, 500, 100);
-        doSize(_originPortalBox, 500, 100);
-        doSize(_destPortalBox, 500, 100);		
-	}
-	
 	protected void doSize(JComponent comp, int max, int min) {
         Dimension dim = comp.getPreferredSize();
         dim.width = max;
@@ -114,42 +92,37 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-//        _thisActionEventId = e.getID();
         if (log.isDebugEnabled()) log.debug("actionPerformed: source "+((Component)obj).getName()+
                      " id= "+e.getID()+", ActionCommand= "+e.getActionCommand());
         doAction(obj);
     }
     
     void doAction(Object obj) {
-        if (obj instanceof JTextField)
-        {
+        if (obj instanceof JTextField) {
             JTextField box = (JTextField)obj;
-            //String text = box.getText();
-            if (box == _originBlockBox) {
-                setOriginBlock();
-            } else if (box == _destBlockBox) {
-                setDestinationBlock();
-            } else if (box == _viaBlockBox) {
-                setViaBlock();
-            } else if (box == _avoidBlockBox) {
-                setAvoidBlock();
+            if (!_origin.checkBlockBox(box)) {
+                if (!_destination.checkBlockBox(box)) {
+                    if (!_via.checkBlockBox(box)) {
+                        if (!_avoid.checkBlockBox(box)) {
+                        }
+                    }
+                }
             }
         } else {
             JComboBox box = (JComboBox)obj;
-            if (box == _originPathBox) {
-                setPortalBox(_originPathBox, _originPortalBox, _originBlockOrder);
-            } else if (box == _originPortalBox) {
-                _originBlockOrder.setExitName((String)_originPortalBox.getSelectedItem());
-            } else if (box == _destPathBox) {
-                setPortalBox(_destPathBox, _destPortalBox, _destBlockOrder);
-            } else if (box == _destPortalBox) {
-                _destBlockOrder.setEntryName((String)_destPortalBox.getSelectedItem());
-            } else if (box == _viaPathBox) {
-                String pathName = (String)_viaPathBox.getSelectedItem();
-                _viaBlockOrder.setPathName(pathName);
-            } else if (box == _avoidPathBox) {
-                String pathName = (String)_avoidPathBox.getSelectedItem();
-                _avoidBlockOrder.setPathName(pathName);
+            if (!_origin.checkPathBox(box)) {
+            	if (!_destination.checkPathBox(box)) {
+            		if (!_via.checkPathBox(box)) {
+                		if (!_avoid.checkPathBox(box)) {
+                            if (_origin.checkPortalBox(box)) {
+                            	_origin.setOrderExitPortal();
+                            }
+                            if (_destination.checkPortalBox(box)) {
+                            	_destination.setOrderEntryPortal();
+                            }
+                        }
+            		}
+            	}
             }
             clearRoute();
         }
@@ -160,80 +133,21 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel oPanel = makeEndPoint("OriginBlock", makeBlockBox(_originBlockBox, "OriginToolTip"), 
-                                     makeLabelCombo("PathName", _originPathBox, "OriginToolTip"), 
-                                     makeLabelCombo("ExitPortalName", _originPortalBox, "OriginToolTip"),
-                                     "OriginToolTip");
+        JPanel oPanel = _origin.makePanel("OriginBlock", "OriginToolTip", "PathName", "ExitPortalName", this);
         panel.add(oPanel);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = makeEndPoint("DestBlock", makeBlockBox(_destBlockBox, "DestToolTip"), 
-                              makeLabelCombo("EntryPortalName", _destPortalBox, "DestToolTip"),
-                              makeLabelCombo("PathName", _destPathBox, "DestToolTip"),
-                              "DestToolTip");
+        oPanel = _destination.makePanel("DestBlock", "DestToolTip", "EntryPortalName", "PathName", this);
         panel.add(oPanel);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = makeEndPoint("ViaBlock", makeBlockBox(_viaBlockBox, "ViaToolTip"), 
-                              makeLabelCombo("PathName", _viaPathBox, "ViaToolTip"),
-                              null, "ViaToolTip");
+        oPanel = _via.makePanel("ViaBlock", "ViaToolTip", "PathName", null, this);
         panel.add(oPanel);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = makeEndPoint("AvoidBlock", makeBlockBox(_avoidBlockBox, "AvoidToolTip"), 
-                              makeLabelCombo("PathName", _avoidPathBox, "AvoidToolTip"),
-                              null, "AvoidToolTip");
+        oPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
         panel.add(oPanel);
     	return panel;
-    }
-
-    private JPanel makeEndPoint(String title, JPanel p0, JPanel p1, JPanel p2, String tooltip) {
-        JPanel oPanel = new JPanel();
-        oPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage(title),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        JPanel hPanel = new JPanel();
-        hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.X_AXIS));
-        hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        hPanel.add(p0);
-        hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        JPanel pPanel = new JPanel();
-        pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
-        pPanel.add(p1);
-        pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        if (p2!=null) { 
-            pPanel.add(p2); 
-            pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        }
-        hPanel.add(pPanel);
-        oPanel.add(hPanel);
-        pPanel.setToolTipText(Bundle.getMessage(tooltip));
-        hPanel.setToolTipText(Bundle.getMessage(tooltip));
-        oPanel.setToolTipText(Bundle.getMessage(tooltip));
-        oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        return oPanel;
-    }
-    
-   private JPanel makeBlockBox(JTextField blockBox, String tooltip) {
-        blockBox.setDragEnabled(true);
-        blockBox.setTransferHandler(new jmri.util.DnDStringImportHandler());
-        blockBox.setColumns(15);
-        blockBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        //blockBox.setMaximumSize(new Dimension(100, blockBox.getPreferredSize().height));
-        //blockBox.setDropMode(DropMode.USE_SELECTION);
-        JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("BlockName")));
-        p.setToolTipText(Bundle.getMessage(tooltip));
-        blockBox.setToolTipText(Bundle.getMessage(tooltip));
-        p.add(pp, BorderLayout.NORTH);
-        p.add(blockBox, BorderLayout.CENTER);
-        blockBox.addActionListener(this);
-        blockBox.addPropertyChangeListener(this);
-        return p;
     }
 
     private JPanel makeLabelCombo(String title, JComboBox box, String tooltip) {
@@ -248,9 +162,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.add(pp, BorderLayout.NORTH);
         p.add(box, BorderLayout.CENTER);
         box.addActionListener(this);
-//        box.addPropertyChangeListener(this);
         box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        //box.setMaximumSize(new Dimension(100, box.getPreferredSize().height));
         return p;
     }
 
@@ -273,206 +185,267 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return block;
     }
 
-    private boolean setPathBox(JComboBox pathBox, JComboBox portalBox, OBlock block) {
-    	if(log.isDebugEnabled()) log.debug("setPathBox: block= "+block.getDisplayName()); 
-        pathBox.removeAllItems();
-        if (portalBox!=null) {
+    private boolean setOriginBlock() {
+        return _origin.setBlock();
+    }
+
+    private boolean setDestinationBlock() {
+        return _destination.setBlock();
+    }
+    
+    private boolean setViaBlock() {
+        return _via.setBlock();
+    }
+    
+    private boolean setAvoidBlock() {
+        return _avoid.setBlock();
+    }
+        
+    /*********** route blocks **************************/
+    
+    protected class RouteLocation extends java.awt.event.MouseAdapter  {
+
+    	Location location;
+    	private BlockOrder order;
+    	private JTextField blockBox = new JTextField();
+        private JComboBox pathBox = new JComboBox();
+        private JComboBox portalBox;
+ 
+    	RouteLocation(Location loc) {
+    		location = loc;
+            doSize(blockBox, 500, 200);
+            doSize(pathBox, 500, 200);
+    		if (location==Location.ORIGIN ||location==Location.DEST) {
+            	portalBox = new JComboBox();
+                doSize(portalBox, 500, 200);
+    		}
+    	}
+    	
+        protected JPanel makePanel(String title, String tooltip, String box1Name, String box2Name, WarrantRoute parent) {
+            JPanel oPanel = new JPanel();
+            oPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                    Bundle.getMessage(title),
+                    javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.TOP));
+            JPanel hPanel = new JPanel();
+            hPanel.setLayout(new BoxLayout(hPanel, BoxLayout.X_AXIS));
+            hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            hPanel.add(makeBlockBox(tooltip));
+            hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            JPanel pPanel = new JPanel();
+            pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
+            if (location==Location.DEST) {
+                pPanel.add(makeLabelCombo(box1Name, portalBox, tooltip));           	
+            } else {
+                pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));            	
+            }
+            pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            if (box2Name != null) {
+            	if (location==Location.DEST) {
+                    pPanel.add(makeLabelCombo(box2Name, pathBox, tooltip));             		
+            	} else {
+                    pPanel.add(makeLabelCombo(box2Name, portalBox, tooltip)); 
+            	}
+                pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            }
+            hPanel.add(pPanel);
+            oPanel.add(hPanel);
+            pPanel.setToolTipText(Bundle.getMessage(tooltip));
+            hPanel.setToolTipText(Bundle.getMessage(tooltip));
+            oPanel.setToolTipText(Bundle.getMessage(tooltip));
+            oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+            blockBox.addActionListener(parent);
+            blockBox.addPropertyChangeListener(parent);
+            blockBox.addMouseListener(this);
+
+            return oPanel;        	
+        }
+        private JPanel makeBlockBox(String tooltip) {
+            blockBox.setDragEnabled(true);
+            blockBox.setTransferHandler(new jmri.util.DnDStringImportHandler());
+            blockBox.setColumns(15);
+            blockBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            //blockBox.setMaximumSize(new Dimension(100, blockBox.getPreferredSize().height));
+            //blockBox.setDropMode(DropMode.USE_SELECTION);
+            JPanel p = new JPanel();
+            p.setLayout(new BorderLayout());
+            JPanel pp = new JPanel();
+            pp.setLayout(new FlowLayout(FlowLayout.CENTER));
+            pp.add(new JLabel(Bundle.getMessage("BlockName")));
+            p.setToolTipText(Bundle.getMessage(tooltip));
+            blockBox.setToolTipText(Bundle.getMessage(tooltip));
+            p.add(pp, BorderLayout.NORTH);
+            p.add(blockBox, BorderLayout.CENTER);
+            return p;
+        }
+
+        protected boolean checkBlockBox(JTextField box) {
+        	if (box == blockBox) {
+        		setBlock(getEndPointBlock(blockBox));
+        		return true;
+        	}
+        	return false;
+        }
+        protected boolean checkPathBox(JComboBox box) {
+        	if (box == pathBox) {
+        		if (portalBox!=null) {
+                    setPortalBox(order);        			
+        		}
+        		return true;
+        	}
+        	return false;
+        }
+        protected boolean checkPortalBox(JComboBox box) {
+        	return (box == portalBox);
+        }
+        protected void setOrderEntryPortal()  {
+        	order.setEntryName((String)portalBox.getSelectedItem());
+        }
+        protected void setOrderExitPortal()  {
+        	order.setExitName((String)portalBox.getSelectedItem());       	
+        }
+        protected void setOrder(BlockOrder o) {
+        	order = o;
+            if (order!=null) {
+            	OBlock block = order.getBlock();
+            	blockBox.setText(block.getDisplayName());
+            	setPathBox(block);
+                pathBox.setSelectedItem(order.getPathName());
+                setPortalBox(order);
+                if (location==Location.DEST) {
+                    portalBox.setSelectedItem(order.getEntryName());           	
+                } else if (location==Location.ORIGIN){
+                    portalBox.setSelectedItem(order.getExitName());           	
+                }
+            }
+        }
+        protected BlockOrder getOrder() {
+        	return order;
+        }
+        protected void setPortalName(String name) {
+            portalBox.setSelectedItem(name);
+        }
+        protected void setPathName(String name) {
+            pathBox.setSelectedItem(name);
+        }
+        protected String getBlockName() {
+        	return blockBox.getText();
+        }
+        
+        boolean setBlock() {
+            return setBlock(getEndPointBlock(blockBox));
+        }
+        private boolean setBlock(OBlock block) {
+            boolean result = true;
+            if (block == null) {
+                result = false;
+                order = null;
+            } else {
+                if (order!= null && block==order.getBlock() &&
+                        pathIsValid(block, order.getPathName())==null) {
+                	result = true; 
+                } else {
+                    if (pathsAreValid(block)) {
+                        order = new BlockOrder(block);
+                        if (!setPathBox(block)) {
+                            result = false;
+                        } else {
+                        	setPortalBox(order);                        	
+                        }
+                    } else {
+                        result = false;
+                    }
+                }
+            }
+            if (result) {
+            	blockBox.setText(block.getDisplayName());
+            	order.setPathName((String)pathBox.getSelectedItem());
+                if (location==Location.DEST) {
+                    order.setEntryName((String)portalBox.getSelectedItem());           	
+                } else if (location==Location.ORIGIN){
+                    order.setExitName((String)portalBox.getSelectedItem());           	
+                }
+            	setNextLocation();
+            } else {
+            	blockBox.setText("");
+            	pathBox.removeAllItems();
+            	if (portalBox!=null) {
+                	portalBox.removeAllItems();            		
+            	}
+            }
+            return result; 
+        }
+        private boolean setPathBox(OBlock block) {
+            pathBox.removeAllItems();
+            if (portalBox!=null) {
+                portalBox.removeAllItems();
+            }
+            List <Path> list = block.getPaths();
+            if (list.size()==0) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("NoPaths", block.getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            for (int i=0; i<list.size(); i++) {
+                 pathBox.addItem(((OPath)list.get(i)).getName());
+            }
+            return true;
+        }
+        private void setPortalBox(BlockOrder order) {
+        	if (portalBox==null) {
+        		return;
+        	}
             portalBox.removeAllItems();
-        }
-        List <Path> list = block.getPaths();
-        if (list.size()==0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoPaths", block.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            //pack();
-            return false;
-        }
-        for (int i=0; i<list.size(); i++) {
-             pathBox.addItem(((OPath)list.get(i)).getName());
-        }
-        if (log.isDebugEnabled()) log.debug("setPathBox: Block "+
-                     block.getDisplayName()+" has "+list.size()+" paths.");
-        return true;
-    }
-
-    private void setPortalBox(JComboBox pathBox, JComboBox portalBox, BlockOrder order) {
-    	if(log.isDebugEnabled()) log.debug("setPortalBox: block= "+order.getBlock().getDisplayName());
-        portalBox.removeAllItems();
-        String pathName = (String)pathBox.getSelectedItem();
-        order.setPathName(pathName);
-        OPath path = order.getPath();
-        if (path != null) {
-            Portal portal = path.getFromPortal();
-            if (portal!=null) {
-                String name = portal.getName();
-                if (name!=null) { portalBox.addItem(name); }
-            }
-            portal = path.getToPortal();
-            if (portal!=null) {
-                String name = portal.getName();
-                if (name!=null) { portalBox.addItem(name); }
-            }
-            if (log.isDebugEnabled()) log.debug("setPortalBox: Path "+path.getName()+
-                         " set in block "+order.getBlock().getDisplayName());
-        } else {
-            if (log.isDebugEnabled()) log.debug("setPortalBox: Path set to null in block"
-                         +order.getBlock().getDisplayName());
-        }
-    }
-    
-    protected void setOriginBoxes(BlockOrder order) {
-        _originBlockOrder = order;
-        if (order!=null) {
-            OBlock block = order.getBlock();
-            String pathName = order.getPathName();
-            String portalName = order.getExitName();
-            _originBlockBox.setText(block.getDisplayName());
-            setPathBox(_originPathBox, _originPortalBox, block);
-            _originPathBox.setSelectedItem(pathName);
-            setPortalBox(_originPathBox, _originPortalBox, _originBlockOrder);
-            _originPortalBox.setSelectedItem(portalName);
-        }
-    }
-
-    protected boolean setOriginBlock() {
-        OBlock block = getEndPointBlock(_originBlockBox);
-        boolean result = true;
-        if (block == null) {
-            result = false;
-        } else {
-            if (_originBlockOrder!= null && block==_originBlockOrder.getBlock() &&
-                    pathIsValid(block, _originBlockOrder.getPathName())==null) {
-                return true; 
-            } else {
-                if (pathsAreValid(block)) {
-                    _originBlockOrder = new BlockOrder(block);
-                    if (!setPathBox(_originPathBox, _originPortalBox, block)) {
-                        result = false;
-                        _originBlockBox.setText("");
-                    }
-                } else {
-                    _originBlockBox.setText("");
-                    result = false;
+            String pathName = (String)pathBox.getSelectedItem();
+            order.setPathName(pathName);
+            OPath path = order.getPath();
+            if (path != null) {
+                Portal portal = path.getFromPortal();
+                if (portal!=null) {
+                    String name = portal.getName();
+                    if (name!=null) { portalBox.addItem(name); }
                 }
-            }
-        }
-        if (!result) {
-            _originPathBox.removeAllItems();
-            _originPortalBox.removeAllItems();
-        }
-        return result; 
-    }
-
-    protected void setDestinationBoxes(BlockOrder order) {
-        _destBlockOrder = order;
-        if (order!=null) {
-            OBlock block = order.getBlock();          
-            String pathName = order.getPathName();
-            String portalName = order.getExitName();
-            _destBlockBox.setText(block.getDisplayName());
-            setPathBox(_destPathBox, _destPortalBox, block);
-            _destPathBox.setSelectedItem(pathName);
-            setPortalBox(_destPathBox, _destPortalBox, _destBlockOrder);
-            _destPortalBox.setSelectedItem(portalName);
-        }
-    }
-    
-    protected boolean setDestinationBlock() {
-        OBlock block = getEndPointBlock(_destBlockBox);
-        boolean result = true;
-        if (block == null) {
-            result = false;
-        } else {
-            if (_destBlockOrder!= null && block==_destBlockOrder.getBlock() &&
-                    pathIsValid(block, _destBlockOrder.getPathName())==null) {
-                return true; 
-            } else {
-                if (pathsAreValid(block)) {
-                    _destBlockOrder = new BlockOrder(block);
-                    if (!setPathBox(_destPathBox, _destPortalBox, block)) {
-                        result = false;
-                        _destBlockBox.setText("");
-                    }
-                } else {
-                    _destBlockBox.setText("");
-                    result = false;
+                portal = path.getToPortal();
+                if (portal!=null) {
+                    String name = portal.getName();
+                    if (name!=null) { portalBox.addItem(name); }
                 }
-            }
-        }
-        if (!result) {
-        	_destPathBox.removeAllItems();
-        	_destPortalBox.removeAllItems();
-        }
-        return result; 
-    }
-
-    protected boolean setViaBlock() {
-        OBlock block = getEndPointBlock(_viaBlockBox);
-        if (block == null) {
-            _viaPathBox.removeAllItems();
-            _viaBlockOrder = null;
-            return true;
-        } else {
-            if (_viaBlockOrder!=null && block==_viaBlockOrder.getBlock() &&
-                    pathIsValid(block, _viaBlockOrder.getPathName())==null) {
-                return true;
+                if (log.isDebugEnabled()) log.debug("setPortalBox: Path "+path.getName()+
+                             " set in block "+order.getBlock().getDisplayName());
             } else {
-                if (pathsAreValid(block)) {
-                    _viaBlockOrder = new BlockOrder(block);
-                    if (!setPathBox(_viaPathBox, null, block)) {
-                        _viaPathBox.removeAllItems();
-                        _viaBlockBox.setText("");
-                        return false;
-                    }
-                }
+                if (log.isDebugEnabled()) log.debug("setPortalBox: Path set to null in block"
+                             +order.getBlock().getDisplayName());
             }
         }
-        return false;
-    }
-    
-    protected void setViaBoxes(BlockOrder order) {
-        _viaBlockOrder = order;
-        if (order!=null) {
-            OBlock block = order.getBlock();
-            String pathName = order.getPathName();
-            _viaBlockBox.setText(block.getDisplayName());
-            setPathBox(_viaPathBox, null, block);
-            _viaPathBox.setSelectedItem(pathName);
-        }    	
-    }
+        
+        private void setNextLocation() {
+        	switch (location) {
+            	case ORIGIN:
+            		_focusedField = _destination;
+            		break;
+            	case DEST:
+            		_focusedField = _via;
+            		break;
+            	case VIA:
+            		_focusedField = _avoid;
+            		break;
+            	case AVOID:
+            		_focusedField = _origin;
+            		break;
+        	}       		
+         }
+       
+    	public void mouseClicked(MouseEvent e) {
+    		_focusedField = this;
+    	}
+    }		// end RouteLocation
 
-    protected boolean setAvoidBlock() {
-        OBlock block = getEndPointBlock(_avoidBlockBox);
-        if (block == null) {
-            _avoidPathBox.removeAllItems();
-            _avoidBlockOrder = null;
-            return true;
-        } else {
-            if (_avoidBlockOrder!=null && block==_avoidBlockOrder.getBlock() &&
-                    pathIsValid(block, _avoidBlockOrder.getPathName())==null) {
-                return true;
-            } else {
-                if (pathsAreValid(block)) {
-                    _avoidBlockOrder = new BlockOrder(block);
-                    if (!setPathBox(_avoidPathBox, null, block)) {
-                        _avoidPathBox.removeAllItems();
-                        _avoidBlockBox.setText("");
-                        return false;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    
-    protected void setAvoidBoxes(BlockOrder order) {
-    	_avoidBlockOrder = order;
-        if (order!=null) {
-            OBlock block = order.getBlock();
-            String pathName = order.getPathName();
-            _avoidBlockBox.setText(block.getDisplayName());
-            setPathBox(_avoidPathBox, null, block);
-            _avoidPathBox.setSelectedItem(pathName);
-        }    	
+    protected void mouseClickedOnBlock(OBlock block) {
+    	if (_focusedField!=null) {
+    		_focusedField.setBlock(block);
+    	} else {
+    		_origin.setBlock(block);
+    	}
     }
     
     private boolean pathsAreValid(OBlock block) {
@@ -501,14 +474,16 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected String findRoute(int depth) {
         // read and verify origin and destination blocks/paths/portals
         String msg = null;
+        BlockOrder order = null;
         String pathName = null;
         if (setOriginBlock()) {
-            pathName = _originBlockOrder.getPathName();
+        	order = _origin.getOrder();
+            pathName = order.getPathName();
             if (pathName!=null) {
-                if (_originBlockOrder.getExitName() == null) {
+                if (order.getExitName() == null) {
                     msg = Bundle.getMessage("SetExitPortal", Bundle.getMessage("OriginBlock"));
                 } else {
-                    msg = pathIsValid(_originBlockOrder.getBlock(), pathName);
+                    msg = pathIsValid(order.getBlock(), pathName);
                 }
             } else {
                 msg = Bundle.getMessage("SetPath", Bundle.getMessage("OriginBlock"));
@@ -518,12 +493,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         if (msg==null) {
             if (setDestinationBlock()) {
-                pathName = _destBlockOrder.getPathName();
+            	order = _destination.getOrder();
+                pathName = order.getPathName();
                 if (pathName!=null) {
-                    if (_destBlockOrder.getEntryName() == null) {
+                    if (order.getEntryName() == null) {
                         msg = Bundle.getMessage("SetEntryPortal", Bundle.getMessage("DestBlock"));
                     } else {
-                        msg = pathIsValid(_destBlockOrder.getBlock(), pathName);
+                        msg = pathIsValid(order.getBlock(), pathName);
                     }
                 } else {
                     msg = Bundle.getMessage("SetPath", Bundle.getMessage("DestBlock"));
@@ -534,25 +510,23 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         if (msg==null) {
             if (setViaBlock()) {
-                if (_viaBlockOrder!=null && _viaBlockOrder.getPathName()==null) {
+            	order = _via.getOrder();
+                if (order!=null && order.getPathName()==null) {
                     msg = Bundle.getMessage("SetPath", Bundle.getMessage("ViaBlock"));
                 }
-            } else {
-                msg = Bundle.getMessage("SetEndPoint", Bundle.getMessage("ViaBlock"));
             }
         }
         if (msg==null) {
             if (setAvoidBlock()) {
-                if (_avoidBlockOrder!=null && _avoidBlockOrder.getPathName()==null) {
+            	order = _avoid.getOrder();
+                if (order!=null && order.getPathName()==null) {
                     msg = Bundle.getMessage("SetPath", Bundle.getMessage("AvoidBlock"));
                 }
-            } else {
-                msg = Bundle.getMessage("SetEndPoint", Bundle.getMessage("AvoidBlock"));
             }
         }
         if (msg==null) {
-            _routeFinder = new RouteFinder(this, _originBlockOrder, _destBlockOrder,
-                    _viaBlockOrder, _avoidBlockOrder, depth);
+            _routeFinder = new RouteFinder(this, _origin.getOrder(), _destination.getOrder(),
+            		_via.getOrder(), _avoid.getOrder(), depth);
             new Thread(_routeFinder).start();        	
         }       
         return msg;
@@ -579,11 +553,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 	}
 	
 	public BlockOrder getViaBlockOrder() {
-		return _viaBlockOrder;
+		return _via.getOrder();
 	}
 	
 	public BlockOrder getAvoidBlockOrder() {
-		return _avoidBlockOrder;
+		return _avoid.getOrder();
 	}
 	
    /**
@@ -729,12 +703,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *  Callback from RouteFinder - no routes found
     */
-    protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest) {
+    protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest, int depth) {
         if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this, Bundle.getMessage("NoRoute",  
                             new Object[] {origin.getBlock().getDisplayName(), 
-        								origin.getPathName(), origin.getExitName(),
-        								dest.getBlock().getDisplayName(), dest.getPathName() }),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+        								origin.getPathName(), origin.getExitName(), dest.getBlock().getDisplayName(),
+        								 dest.getEntryName(), dest.getPathName(), Integer.valueOf(depth) }),       								
+        						Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                                                     JOptionPane.WARNING_MESSAGE)) {
             return; 
         }

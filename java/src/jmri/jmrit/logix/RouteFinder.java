@@ -101,7 +101,7 @@ public class RouteFinder implements Runnable {
 //            _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
         }
         if (_destNodes.size()==0) {
-            _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
+            _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder, _maxBlocks);
         } else {
             _caller.pickRoute(_destNodes, _tree);
         }

@@ -29,7 +29,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 
@@ -307,7 +306,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         scrollBoth.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_BOTH);
-//                    repaint();
                 }
             });
         scrollGroup.add(scrollNone);
@@ -315,7 +313,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         scrollNone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_NONE);
-//                    repaint();
                 }
             });
         scrollGroup.add(scrollHorizontal);
@@ -323,7 +320,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         scrollHorizontal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_HORIZONTAL);
-//                    repaint();
                 }
             });
         scrollGroup.add(scrollVertical);
@@ -331,7 +327,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         scrollVertical.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_VERTICAL);
-//                    repaint();
                 }
             });
     }
@@ -700,9 +695,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     // override
     public void setUseGlobalFlag(boolean set) {
         positionableBox.setEnabled(set);
-        //positionableBox.invalidate();
         controllingBox.setEnabled(set);
-        //controllingBox.invalidate();
         super.setUseGlobalFlag(set);      
     }
 
@@ -984,10 +977,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" pastePending= "+_pastePending+" selectRect "+(_selectRect==null?"=":"!")+"= null");
-        //" _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
-/*        if (_dragging) {
-            mouseDragged(event);
-        }*/
         Positionable selection = getCurrentSelection(event);
 
         if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) /*&& !_dragging*/) {
@@ -1076,7 +1065,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 if (selection instanceof IndicatorTrack) {
                 	WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
-                	TrackerTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
                 }
             }
         }
@@ -1099,7 +1087,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         	return;
         }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
-//        if (!event.isPopupTrigger() && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;

@@ -57,10 +57,11 @@ public class TrackerTableAction extends AbstractAction {
         	_frame = new TableFrame();    		
     	}
     }
-    synchronized static public void mouseClickedOnBlock(OBlock block) {
+    synchronized static public boolean mouseClickedOnBlock(OBlock block) {
     	if (_frame!=null) {
-    		_frame.mouseClickedOnBlock(block);
+    		return _frame.mouseClickedOnBlock(block);
     	}
+    	return false;
     }
     static public Tracker markNewTracker(OBlock block, String name) {
     	if (_frame==null) {
@@ -183,10 +184,12 @@ public class TrackerTableAction extends AbstractAction {
             setVisible(true);
             pack();
         }
-        protected void mouseClickedOnBlock(OBlock block) {
+        protected boolean mouseClickedOnBlock(OBlock block) {
         	if (_dialog!=null) {
         		_trainLocationBox.setText(block.getDisplayName());
+            	return true;
         	}
+        	return false;
         }
    	/**
 	    * Create a new OBlock

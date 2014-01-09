@@ -261,7 +261,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
             case CONTROL_COLUMN:
                 String msg = w.getRunningMessage();
-                WarrantFrame frame = WarrantTableAction.getOpenWarrantFrame(w.getDisplayName());
+                WarrantFrame frame = WarrantTableAction.getWarrantFrame(w.getDisplayName());
                 if (frame !=null) {
                     frame._statusBox.setText(msg);
                 }
@@ -432,7 +432,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
                 break;
             case EDIT_COLUMN:
-                WarrantTableAction.openWarrantFrame(w);
+                WarrantTableAction.openWarrantFrame(w.getDisplayName());
                 break;
             case DELETE_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {

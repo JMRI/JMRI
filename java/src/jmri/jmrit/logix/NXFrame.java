@@ -53,20 +53,16 @@ public class NXFrame extends WarrantRoute {
     JCheckBox	_haltStart = new JCheckBox();    
     JTextField _rampInterval = new JTextField();
     JTextField _searchDepth = new JTextField();
-    int _clickCount;
+//    int _clickCount;
 
     NXFrame(WarrantTableFrame parent) {
 		super();
 		_parent = parent;
-		_clickCount = 0;
 		setTitle(Bundle.getMessage("AutoWarrant"));
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(10,10));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-//        doSize(_dccNumBox, 50, 20);
-//        doSize(_speedBox, 50, 20);
-//        doSize(_searchDepth, 50, 20);
         panel.add(Box.createVerticalGlue());
         panel.add(makeBlockPanels());
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -305,29 +301,6 @@ public class NXFrame extends WarrantRoute {
        	return null;    		
    }
  
-    void mouseClickedOnBlock(OBlock block) {
-    	_clickCount++;
-    	switch (_clickCount) {
-    		case 1:
-        		_originBlockBox.setText(block.getDisplayName());
-        		setOriginBlock();
-        		break;
-    		case 2:
-        		_destBlockBox.setText(block.getDisplayName());
-                setDestinationBlock();
-                break;
-    		case 3 :
-    			_viaBlockBox.setText(block.getDisplayName());
-                setViaBlock();
-                break;
-    		case 4:
-        		_avoidBlockBox.setText(block.getDisplayName());
-                setAvoidBlock();
-                break;
-			default:
-				_clickCount= 0;       				
-    	}
-    }
 	boolean makeAndRunWarrant() {
         int depth = 10;
         String msg = null;

@@ -234,10 +234,12 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
     }
 
     
-    protected void mouseClickedOnBlock(OBlock block) {
+    protected boolean mouseClickedOnBlock(OBlock block) {
     	if (_nxFrame!=null) {
     		_nxFrame.mouseClickedOnBlock(block);
+    		return true;
     	}
+    	return false;
     }
        
     private void nxAction() {
