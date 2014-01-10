@@ -261,7 +261,6 @@ fi
 if [ "$OS" = "macosx" ]; then
     # since bash mangles the application name and icon in $OPTIONS,
     # these are not stored in $OPTIONS
-    MEMORY_OPTIONS="-Xms96m -Xmx640m"
     OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dfile.encoding=UTF-8"
@@ -270,10 +269,42 @@ if [ "$OS" = "macosx" ]; then
     else
         APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
     fi
-else
-    MEMORY_OPTIONS="-Xms30m -Xmx640m"
 fi
 
+#
+# set memory options
+#
+heap_size () {
+    mem=640
+    case "`uname`" in
+        Linux*)
+        mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
+        mem=`expr $mem / 1024`
+        ;;
+    SunOS*)
+        mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
+        ;;
+    Darwin*)
+        mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
+        mem=`expr $mem / 1048576`
+        ;;
+        *) 
+        ;;
+    esac
+    if [ -z "$mem" ] ; then
+        mem=640
+    fi
+    mem=`expr $mem / 2`
+    if [ $mem -gt 768 ] ; then
+        mem=768
+    elif [ $mem -lt 192 ] ; then
+        mem=192
+    fi
+    echo $mem
+    return 0
+}
+
+MEMORY_OPTIONS="-Xms96m -Xmx`heap_size`m"
 
 OPTIONS="${JMRI_OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
