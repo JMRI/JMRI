@@ -271,7 +271,7 @@ if [ "$OS" = "macosx" ]; then
         APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
     fi
 else
-    MEMORY_OPTIONS="-Xms30m -Xmx200m"
+    MEMORY_OPTIONS="-Xms30m -Xmx640m"
 fi
 
 

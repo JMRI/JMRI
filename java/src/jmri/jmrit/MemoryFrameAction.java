@@ -65,7 +65,7 @@ public class MemoryFrameAction extends AbstractAction {
 
 		p.add(new JLabel(Bundle.getMessage("used_(MB)")));
 		p.add(new JLabel(Bundle.getMessage("free_(MB)")));
-		p.add(new JLabel(Bundle.getMessage("total_(MB,_of_")+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
+		p.add(new JLabel(Bundle.getMessage("total_(MB,_of_")+" "+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"MB)"));
 
 		p.add(used3);
 		p.add(free3);

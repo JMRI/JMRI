@@ -1201,5 +1201,725 @@
         <display item="ESU V4 Function Output 10 Check 7" layout="above" format="checkbox"/>
         </row>
       <separator/>
+        <display item="ESU V4 Function Output 11 effect generated"/>
+        <display item="ESU V4 Function Output 11 behavior"/>
+        <display item="ESU V4 Function Output 11 options"/>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 11 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 11 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 11 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 11 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 11 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
+        <display item="ESU V4 Function Output 12 effect generated"/>
+        <display item="ESU V4 Function Output 12 behavior"/>
+        <display item="ESU V4 Function Output 12 options"/>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 12 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 12 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 12 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 12 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 12 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
+        <display item="ESU V4 Function Output 13 effect generated"/>
+        <display item="ESU V4 Function Output 13 behavior"/>
+        <display item="ESU V4 Function Output 13 options"/>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 13 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 13 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 13 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 13 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 13 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
+        <display item="ESU V4 Function Output 14 effect generated"/>
+        <display item="ESU V4 Function Output 14 behavior"/>
+        <display item="ESU V4 Function Output 14 options"/>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 14 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 14 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 14 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 14 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 14 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
+        <display item="ESU V4 Function Output 15 effect generated"/>
+        <display item="ESU V4 Function Output 15 behavior"/>
+        <display item="ESU V4 Function Output 15 options"/>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 15 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 15 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 15 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 15 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 15 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
+        <display item="ESU V4 Function Output 16 effect generated"/>
+        <display item="ESU V4 Function Output 16 behavior"/>
+        <display item="ESU V4 Function Output 16 options"/>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 1"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 1" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 2"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 2" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 3"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 3" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 4"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 4" format="hslider" label=""/>
+        </row>
+        <display item="ESU V4 Function Output 16 Option 1"/>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 5"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 5" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 6"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 6" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 7"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 7" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 8"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 8" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 9"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 9" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 10"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 10" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 11"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 11" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 12"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 12" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 13"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 13" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 14"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 14" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 15"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 15" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 16"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 16" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 17"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 17" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 18"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 18" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 19"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 19" format="hslider" label=""/>
+        </row>
+        <row>
+            <display item="ESU V4 Function Output 16 Slider 20"/>
+            <label label=""/>
+            <display item="ESU V4 Function Output 16 Slider 20" format="hslider" label=""/>
+        </row>
+        <row>
+        <display item="ESU V4 Function Output 16 Check 1" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 2" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 3" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 4" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 5" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 6" layout="above" format="checkbox"/>
+        <label label="  "/>
+        <display item="ESU V4 Function Output 16 Check 7" layout="above" format="checkbox"/>
+        </row>
+      <separator/>
     </column>
   </pane>
