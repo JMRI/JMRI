@@ -200,13 +200,33 @@ public class ProgDebugger implements Programmer  {
     public void setTestReadLimit(int lim) { readLimit = lim; }
     public void setTestWriteLimit(int lim) { writeLimit = lim; }
     
-    public boolean getCanRead() { return true; }
-    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=readLimit; }
-    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    public boolean getCanRead() { 
+        log.debug("getCanRead() returns true");
+        return true;
+    }
+    public boolean getCanRead(String addr) { 
+        log.debug("getCanRead("+addr+") returns "+(Integer.parseInt(addr)<=readLimit));
+        return Integer.parseInt(addr)<=readLimit; 
+    }
+    public boolean getCanRead(int mode, String addr) { 
+        boolean retval = getCanRead(addr);
+        log.debug("getCanRead("+mode+","+addr+") returns "+retval);
+        return retval;
+    }
     
-    public boolean getCanWrite()  { return true; }
-    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=writeLimit; }
-    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
+    public boolean getCanWrite()  { 
+        log.debug("getCanWrite() returns true");
+        return true;
+    }
+    public boolean getCanWrite(String addr) {
+        log.debug("getCanWrite("+addr+") returns "+(Integer.parseInt(addr)<=writeLimit));
+        return Integer.parseInt(addr)<=writeLimit;
+    }
+    public boolean getCanWrite(int mode, String addr)  { 
+        boolean retval = getCanWrite(addr);
+        log.debug("getCanWrite("+mode+","+addr+") returns "+retval);
+        return retval;
+    }
 
     // data members to hold contact with the property listeners
     private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();
@@ -240,8 +260,8 @@ public class ProgDebugger implements Programmer  {
         }
     }
 
-    static final boolean IMMEDIATERETURN = true;
-    
+    static final boolean IMMEDIATERETURN = false;
+    static final int DELAY = 10;
     /**
      * Arrange for the return to be invoked on the Swing thread.
      */
@@ -249,7 +269,7 @@ public class ProgDebugger implements Programmer  {
         if (IMMEDIATERETURN) {
             javax.swing.SwingUtilities.invokeLater(run);
         } else {
-            javax.swing.Timer timer = new javax.swing.Timer(2, null);
+            javax.swing.Timer timer = new javax.swing.Timer(DELAY, null);
             java.awt.event.ActionListener l = new java.awt.event.ActionListener(){
                 javax.swing.Timer timer;
                 Runnable run;
