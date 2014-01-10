@@ -3829,7 +3829,7 @@ public class TrainBuilder extends TrainCommon {
 			return;
 		int numberLocos = 0;
 		// determine how many locos have already been assigned to the train
-		List<RollingStock> engines = EngineManager.instance().getByTrainList(train);
+		List<RollingStock> engines = EngineManager.instance().getList(train);
 		for (int i = 0; engines.size() > i; i++) {
 			Engine eng = (Engine) engines.get(i);
 			if (eng.getRouteLocation() == rl)
@@ -3880,7 +3880,7 @@ public class TrainBuilder extends TrainCommon {
 					removeCarsFromStaging();
 				}
 			}
-			int size = carManager.getByTrainList(train).size();
+			int size = carManager.getList(train).size();
 			if (size > 0) {
 				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
 						new Object[] { size, train.getName() }), Bundle.getMessage("buildResetTrain"),

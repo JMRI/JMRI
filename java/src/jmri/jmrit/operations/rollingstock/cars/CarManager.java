@@ -36,10 +36,8 @@ public class CarManager extends RollingStockManager {
 	// with Edit
 	private int[] _carsTableColumnWidths = { 60, 60, 65, 35, 75, 65, 190, 190, 65, 50, 65, 70 };
 
-	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores
-																							// Kernels
-																							// by
-																							// number
+	 // stores Kernels
+	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>();
 
 	public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 

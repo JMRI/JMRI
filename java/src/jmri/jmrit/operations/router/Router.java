@@ -370,10 +370,11 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (saveTrack == track)
 				continue; // don't use car's current track
-			// don't allow interchange to interchange move
-//			if (saveTrack.getLocation() == track.getLocation() && saveTrack.getTrackType().equals(track.getTrackType())
-//					&& _train.isServiceAllCarsWithFinalDestinationsEnabled())
-//				continue; // don't use same track types at the car's current location
+			// don't allow interchange to interchange or yard move
+//			if (_train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
+//					&& saveTrack.getLocation() == track.getLocation()
+//					&& saveTrack.getTrackType().equals(Track.INTERCHANGE))
+//				continue;
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue;
@@ -747,10 +748,11 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (track == car.getTrack())
 				continue; // don't use car's current track
-			// don't allow interchange to interchange move if forcing a car move
-//			if (car.getTrack().getLocation() == track.getLocation() && car.getTrack().getTrackType().equals(track.getTrackType())
-//					&& _train.isServiceAllCarsWithFinalDestinationsEnabled())
-//				continue; // don't use same track types at the car's current location
+			// don't allow interchange to interchange or yard move
+//			if (_train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
+//					&& car.getLocation() == track.getLocation()
+//					&& car.getTrack().getTrackType().equals(Track.INTERCHANGE))
+//				continue;
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue; // track doesn't accept this car

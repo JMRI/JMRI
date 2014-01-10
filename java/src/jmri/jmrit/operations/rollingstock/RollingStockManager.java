@@ -413,10 +413,9 @@ public class RollingStockManager {
 		List<RollingStock> out = new ArrayList<RollingStock>();
 		String rsIn;
 		for (int i = 0; i < sortIn.size(); i++) {
-			boolean rsAdded = false;	// use boolean rather than out.contains(car). Performance improvement by a factor of 2!
 			rsIn = (String) getRsAttribute(sortIn.get(i), attribute);
 			int start = 0;
-			// page to improve performance. Most have id = road+number
+			// page to improve performance
 			int divisor = out.size() / pageSize;
 			for (int k = divisor; k > 0; k--) {
 				String rsOut = (String) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
@@ -425,29 +424,30 @@ public class RollingStockManager {
 					break;
 				}
 			}
-			for (int j = start; j < out.size(); j++) {
-				String rsOut = (String) getRsAttribute(out.get(j), attribute);
-				if (rsIn.compareToIgnoreCase(rsOut) < 0) {
-					out.add(j, sortIn.get(i));
-					rsAdded = true;
+			int j;
+			for (j = start; j < out.size(); j++) {
+				if (rsIn.compareToIgnoreCase((String) getRsAttribute(out.get(j), attribute)) < 0) {
 					break;
 				}
 			}
-			if (!rsAdded) {
-				out.add(sortIn.get(i));
-			}
+			out.add(j, sortIn.get(i));
 		}
 		return out;
 	}
 
+	/**
+	 * Sorts by integer.
+	 * @param sortIn
+	 * @param attribute
+	 * @return list of rolling stock sorted by an integer
+	 */
 	protected List<RollingStock> getByIntList(List<RollingStock> sortIn, int attribute) {
 		List<RollingStock> out = new ArrayList<RollingStock>();
 		int rsIn;
 		for (int i = 0; i < sortIn.size(); i++) {
-			boolean rsAdded = false;	// use boolean rather than out.contains(car). Performance improvement by a factor of 2!
 			rsIn = (Integer) getRsAttribute(sortIn.get(i), attribute);
 			int start = 0;
-			// page to improve performance. Most have id = road+number
+			// page to improve performance
 			int divisor = out.size() / pageSize;
 			for (int k = divisor; k > 0; k--) {
 				int rsOut = (Integer) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
@@ -456,17 +456,13 @@ public class RollingStockManager {
 					break;
 				}
 			}
-			for (int j = start; j < out.size(); j++) {
-				int rsOut = (Integer) getRsAttribute(out.get(j), attribute);
-				if (rsIn < rsOut) {
-					out.add(j, sortIn.get(i));
-					rsAdded = true;
+			int j;
+			for (j = start; j < out.size(); j++) {
+				if (rsIn < (Integer) getRsAttribute(out.get(j), attribute)) {
 					break;
 				}
 			}
-			if (!rsAdded) {
-				out.add(sortIn.get(i));
-			}
+			out.add(j, sortIn.get(i));
 		}
 		return out;
 	}
@@ -564,21 +560,31 @@ public class RollingStockManager {
 	}
 
 	/**
-	 * Get a list of rolling stocks assigned to a train
+	 * Get a list of rolling stocks assigned to a train ordered by location
 	 * 
 	 * @param train
-	 * @return List of RollingStock assigned to the train
+	 * @return List of RollingStock assigned to the train ordered by location
 	 */
 	public List<RollingStock> getByTrainList(Train train) {
-		List<RollingStock> byLoc = getByLocationList();
-		List<RollingStock> inTrain = new ArrayList<RollingStock>();
-
-		for (int i = 0; i < byLoc.size(); i++) {
-			// get only rolling stock that is assigned to this train
-			if (byLoc.get(i).getTrain() == train)
-				inTrain.add(byLoc.get(i));
+//		List<RollingStock> shuffle = shuffle(getList(train));
+		List<RollingStock> out = getByList(getList(train), BY_LOCATION);
+		return out;
+	}
+	
+	/**
+	 * Returns a list (no order) of RollingStock in a train.
+	 * 
+	 * @return list of RollingStock
+	 */
+	public List<RollingStock> getList(Train train) {
+		Enumeration<RollingStock> en = _hashTable.elements();
+		List<RollingStock> out = new ArrayList<RollingStock>();
+		while (en.hasMoreElements()) {
+			RollingStock rs = en.nextElement();
+			if (rs.getTrain() == train)
+				out.add(rs);
 		}
-		return inTrain;
+		return out;
 	}
 
 	// Common sort routine
@@ -591,6 +597,15 @@ public class RollingStockManager {
 					break;
 			}
 			out.add(j, list.get(i));
+		}
+		return out;
+	}
+	
+	// not written!
+	protected List<RollingStock> shuffle(List<RollingStock> list) {
+		List<RollingStock> out = new ArrayList<RollingStock>();
+		for (int i = 0; i < list.size(); i++) {
+			out.add(i, list.get(i));
 		}
 		return out;
 	}
