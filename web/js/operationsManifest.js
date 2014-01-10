@@ -24,6 +24,11 @@ var $buildManifest = function($r, $s, $x){
 	$train = $r.data;  //everything of interest is in the data element
 	$('#trainName').text($train.name+ " " + $train.description);
 	$('title').html('Train Manifest - ' + $('#trainName').text() + " - " + $('#railRoad').text());
+	
+	//insert a link to the Conductor window "frame"  Note: the Conductor window must already be opened on the server
+	$("div#operationsFooter").append(" <a href='/frame/Train%20Conductor%20(" + $train.name + ").html'>[Conductor]</td>");
+	$("div#operationsFooter").append(" <a href='#' onclick='location.reload(true);return false;'>[Refresh]</td>");
+
 	$h += "<ul class='manifest'>" + $train.name + " " + $train.description;
 	if ($train.comment !== "") {
 		$h += "<span class='comment'> - " + $train.comment+"</span>";

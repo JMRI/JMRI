@@ -23,7 +23,9 @@ var $showTrainList = function(){
 					$h += "<td>" + $train.trainTerminatesName + "</td>";
 					$h += "<td>" + $train.location + "</td>";
 					$h += "<td>" + $train.status + "</td>";
-					$h += "<td><a href='/web/operationsConductor.html?trainid=" + $train.id + "'>Conductor</td>";
+					//TODO: use Conductor web app instead of frame when it is written
+					//$h += "<td><a href='/web/operationsConductor.html?trainid=" + $train.id + "'>Conductor</td>";
+					$h += "<td><a href='/frame/Train%20Conductor%20(" + $train.name + ").html''>Conductor</td>";
 					$h += "<td><a href='/json/train/" + $train.id + "'>" + $train.id + "</td>";
 					$h += "</tr>";
 					$count++;

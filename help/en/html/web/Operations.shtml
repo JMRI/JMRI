@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: PanelServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<title>JMRI: Operations web functions</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>JMRI: Operations web functions</h1>
+
+<p><a href="/help/en/package/jmri/jmrit/operations/Operations.shtml">JMRI Operations</a> is a feature-rich area of <a href='http://jmri.org'>JMRI</a>.  
+You can learn more about JMRI Operations <a class="help" href="/help/en/package/jmri/jmrit/operations/Operations.shtml">[here]
+</a>.</p>
+<p>Providing access to these Operations features from mobile devices and web browsers is still in its early stages.<br />  
+The current functionality can be accessed by visiting the <a href='/web/operationsTrains.html'>/web/operationsTrains.html</a> URL.<br />  
+This page lists all available trains, with a link to the Manifest page for each Train. <br /> 
+From each Manifest page, you can view the Locations to be visited, and the current status of the Train.<br />
+You can click on each location and the status line to display additional details about the pickups, setouts, and cars on the train.<br />  
+</p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
