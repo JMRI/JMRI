@@ -90,7 +90,19 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         return mProgrammer;
     }
     
-    public void setProgrammer(Programmer p) { mProgrammer = p; }
+    public void setProgrammer(Programmer p) { 
+        mProgrammer = p;
+
+        // tell all existing
+        for (CvValue cv : _indxCvDisplayVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        for (CvValue cv : _indxCvAllVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        
+        log.debug("Set programmer in "+_indxCvAllVector.size()+"CVs");
+    }
 
 
     // basic methods for AbstractTableModel implementation
