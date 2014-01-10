@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -82,7 +84,7 @@ public class TrackerTableAction extends AbstractAction {
      * @author Peter Cressman
      *
      */
-    static class TableFrame extends JmriJFrame implements PropertyChangeListener 
+    static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener 
     {
         private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
@@ -90,6 +92,8 @@ public class TrackerTableAction extends AbstractAction {
         JTextField  _trainNameBox = new JTextField(30);
         JTextField  _trainLocationBox = new JTextField(30);
         JTextField  _status = new JTextField(80);
+        ArrayList<String> _statusHistory = new ArrayList<String>();
+        public static int _maxHistorySize = 20;
         boolean		_appendStatus = false;
         HashMap<OBlock, List<Tracker>> _blocks = new HashMap<OBlock, List<Tracker>>();
 
@@ -134,6 +138,7 @@ public class TrackerTableAction extends AbstractAction {
             p.add(_status);
             _status.setEditable(false);
             _status.setBackground(Color.white);
+            _status.addMouseListener(this);
             panel.add(p);
 
             p = new JPanel();
@@ -306,7 +311,7 @@ public class TrackerTableAction extends AbstractAction {
  	 	           	_trackerList.add(newTracker);
  	 	        	addBlockListeners(newTracker);
  	 	            _model.fireTableDataChanged();
- 	 		    	_status.setText(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
+ 	 		    	setStatus(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
  		            return newTracker;   	            		 	            	
  	            }
             }
@@ -555,16 +560,16 @@ public class TrackerTableAction extends AbstractAction {
 		            JOptionPane.showMessageDialog(this, msg, 
 		                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
 		            stopTrain(tracker);
-		        	_status.setText(msg);
+		        	setStatus(msg);
 		        	break;
 				case Tracker.ENTER_BLOCK:
 					adjustBlockListeners(oldRange, tracker.getRange(), tracker);
-		        	_status.setText(Bundle.getMessage("TrackerBlockEnter", tracker.getTrainName(),
+		        	setStatus(Bundle.getMessage("TrackerBlockEnter", tracker.getTrainName(),
 		        			block.getDisplayName()));
 		        	break;
 				case Tracker.LEAVE_BLOCK:
 					adjustBlockListeners(oldRange, tracker.getRange(), tracker);
-		        	_status.setText(Bundle.getMessage("TrackerBlockLeave", tracker.getTrainName(),
+		        	setStatus(Bundle.getMessage("TrackerBlockLeave", tracker.getTrainName(),
 		        			block.getDisplayName()));
 					break;
 				case Tracker.ERROR_BLOCK:
@@ -577,8 +582,31 @@ public class TrackerTableAction extends AbstractAction {
 			removeBlockListeners(t.getRange(), t);
 	    	_trackerList.remove(t);
 	    	t.stopTracking();
-	    	_status.setText(Bundle.getMessage("TrackerStopped", t.getTrainName()));
+	    	setStatus(Bundle.getMessage("TrackerStopped", t.getTrainName()));
 	    }
+	    
+	    public void mouseClicked(MouseEvent event) {
+	        javax.swing.JPopupMenu  popup = new javax.swing.JPopupMenu();
+	    	for (int i=_statusHistory.size()-1; i>=0; i--) {
+	    		popup.add(_statusHistory.get(i));
+	    	}
+	    	popup.show(_status, 0, 0);
+	    }
+	    public void mousePressed(MouseEvent event) {}
+	    public void mouseEntered(MouseEvent event) {}
+	    public void mouseExited(MouseEvent event) {}
+	    public void mouseReleased(MouseEvent event) {}
+
+	    void  setStatus(String msg) {
+	    	_status.setText(msg);
+	    	if (msg!=null && msg.length()>0) {
+	    		_statusHistory.add(msg);
+	    		while (_statusHistory.size()>_maxHistorySize) {
+	    			_statusHistory.remove(0);
+	    		}
+	    	}
+	    }
+
     }
     
     static class TrackerTableModel extends AbstractTableModel {

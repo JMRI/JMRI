@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -12,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -59,7 +62,7 @@ import jmri.util.table.ButtonRenderer;
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 
-class WarrantTableFrame  extends jmri.util.JmriJFrame 
+class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener 
 {
 	static final String halt = Bundle.getMessage("Halt");
 	static final String resume = Bundle.getMessage("Resume");
@@ -69,9 +72,11 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
 
     JTextField  _startWarrant = new JTextField(30);
     JTextField  _endWarrant = new JTextField(30);
-    NXFrame _nxFrame;
+    private NXFrame _nxFrame;
     JTextField  _status = new JTextField(90);
-    Color _background;
+    ArrayList<String> _statusHistory = new ArrayList<String>();
+    public static int _maxHistorySize = 20;
+//    Color _background;
     JScrollPane _tablePane;
     int _rowHeight;
     
@@ -143,10 +148,14 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
         tablePanel.add(title, BorderLayout.NORTH);
         tablePanel.add(_tablePane, BorderLayout.CENTER);
         
+        
         JPanel p = new JPanel();
         p.add(new JLabel("status"));
-    	_background = _status.getBackground();
+        _status.addMouseListener(this);
+		_status.setBackground(Color.white);
+//    	_background = _status.getBackground();
     	_status.setFont(jmri.util.FontUtil.deriveFont(_status.getFont(),java.awt.Font.BOLD));
+        setStatusText(BLANK.substring(0,90), null);
         p.add(_status);
         _status.setEditable(false);
         JPanel ps = new JPanel();
@@ -331,13 +340,13 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
         if (msg==null) {
         	msg = w.checkRoute();
         	if (msg!=null) {
-               	setStatusText(msg, Color.yellow);                        		
+               	setStatusText(msg, Color.orange);                        		
         	}
         }
         if (msg==null) {
         	msg = w.checkStartBlock();
         	if (msg!=null) {
-               	setStatusText(msg, Color.yellow);                        		
+               	setStatusText(msg, Color.orange);                        		
         	}
         }
         msg = w.checkForContinuation();
@@ -347,18 +356,39 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame
         }
     	return msg;
     }
-        
+
+    public void mouseClicked(MouseEvent event) {
+        javax.swing.JPopupMenu  popup = new javax.swing.JPopupMenu();
+    	for (int i=_statusHistory.size()-1; i>=0; i--) {
+    		popup.add(_statusHistory.get(i));
+    	}
+    	popup.show(_status, 0, 0);
+    }
+
+    public void mousePressed(MouseEvent event) {}
+    public void mouseEntered(MouseEvent event) {}
+    public void mouseExited(MouseEvent event) {}
+    public void mouseReleased(MouseEvent event) {}
+    
     void setStatusText(String msg, Color c) {
-    	if (c==null) {
-    		_status.setBackground(_background);
+    	if (WarrantTableModel.myGold.equals(c)) {
+    		_status.setBackground(Color.lightGray);
     	} else if (Color.red.equals(c)) {
         	_status.setBackground(Color.white);   		
     	} else {
-        	_status.setBackground(Color.gray);    		
+        	_status.setBackground(Color.white);    		
     	}
     	_status.setForeground(c);
     	_status.setText(msg);
+    	if (msg!=null && msg.length()>0) {
+    		_statusHistory.add(msg);
+    		while (_statusHistory.size()>_maxHistorySize) {
+    			_statusHistory.remove(0);
+    		}
+    	}
+    	
     }
+    static String BLANK = "                                                                                                 ";
     
     
     static Logger log = LoggerFactory.getLogger(WarrantTableFrame.class.getName());

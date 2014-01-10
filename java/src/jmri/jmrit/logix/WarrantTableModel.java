@@ -62,6 +62,8 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     WarrantTableFrame _frame;
     private ArrayList <Warrant>       _warList;
     private ArrayList <Warrant>       _warNX;	// temporary warrants appended to table
+    static Color myGreen = new Color(0, 100, 0);
+    static Color myGold = new Color(80, 80, 0);
 
     public WarrantTableModel(WarrantTableFrame frame) {
         super();
@@ -261,6 +263,29 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
             case CONTROL_COLUMN:
                 String msg = w.getRunningMessage();
+/*                int state = w.getState();
+                Color color = myGreen;
+                switch (state) {
+            		case Warrant.HALT:
+            		case Warrant.RESUME:
+            		case Warrant.RETRY:
+            			color = myGreen;
+            			break;
+            		case Warrant.ABORT:
+            			color = Color.red;
+            			break;
+            		case Warrant.WAIT_FOR_TRAIN:
+            		case Warrant.SPEED_RESTRICTED:
+            		case Warrant.WAIT_FOR_CLEAR:
+            		case Warrant.WAIT_FOR_SENSOR:
+            			color = myGold;
+            		case Warrant.RUNNING:
+            			state = 0;
+           			break;          		
+                }
+                if (state > 0) {
+        			_frame.setStatusText(Bundle.getMessage("trainReport", w.getTrainId(), msg), color);                	
+                }*/
                 WarrantFrame frame = WarrantTableAction.getWarrantFrame(w.getDisplayName());
                 if (frame !=null) {
                     frame._statusBox.setText(msg);
@@ -278,7 +303,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
         Warrant w = getWarrantAt(row);
         String msg = null;
-    	_frame.setStatusText(null, null);
+//    	_frame.setStatusText(null, null);
     	switch (col) {
             case WARRANT_COLUMN:
             case ROUTE_COLUMN:
@@ -323,7 +348,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             case ALLOCATE_COLUMN:
                 msg = w.allocateRoute(null);
                 if (msg == null) {
-                	_frame.setStatusText(Bundle.getMessage("completeAllocate", w.getDisplayName()),Color.green);
+                	_frame.setStatusText(Bundle.getMessage("completeAllocate", w.getDisplayName()),myGreen);
                 } else {
                 	_frame.setStatusText(msg, Color.red);
                 	msg = null;
@@ -333,15 +358,15 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 if (w.getRunMode() == Warrant.MODE_NONE) {
                     w.deAllocate();
                 } else {
-                	_frame.setStatusText(Bundle.getMessage("TrainRunning", w.getDisplayName()), Color.yellow);
+                	_frame.setStatusText(Bundle.getMessage("TrainRunning", w.getDisplayName()), myGold);
                 }
                 break;
             case SET_COLUMN:
                 msg = w.setRoute(0, null);
                 if (msg == null) {
-                	_frame.setStatusText(Bundle.getMessage("pathsSet", w.getDisplayName()), Color.green);
+                	_frame.setStatusText(Bundle.getMessage("pathsSet", w.getDisplayName()), myGreen);
                 } else {
-                	_frame.setStatusText(msg, Color.yellow);
+                	_frame.setStatusText(msg, myGold);
                 	msg = null;
                 }
                break;
@@ -424,7 +449,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                     	w.deAllocate();                       	
                     } else if (mode==Warrant.MODE_NONE) {
-                    	Bundle.getMessage("Idle");
+//                    	Bundle.getMessage("Idle");
                         msg = Bundle.getMessage("NotRunning", w.getDisplayName());
                     } else {
                     	getValueAt(row,col);
@@ -485,7 +510,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	if (newBlock==null) {
             		_frame.setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), oldBlock.getDisplayName()), Color.red);               	                		
             	} else {
-            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), Color.green);               	                		                		
+            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), myGreen);               	                		                		
             	}
             } else if (e.getPropertyName().equals("throttleFail")) {
             	_frame.setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(), e.getNewValue()), Color.red);               	                		                	

@@ -98,8 +98,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     // _state not used (yet?)
-    public int getState() { 
-        return UNKNOWN;  
+    public int getState() {
+    	if (_engineer!=null) {
+    		return _engineer.getRunState();
+    	}
+        return 0;  
     }
     public void setState(int state) {
     }
@@ -413,6 +416,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 switch (_engineer.getRunState()) {
                     case Warrant.HALT:
                         key = "Halted";
+                        break;
+                    case Warrant.RESUME:
+                        key = "reStarted";
                         break;
                     case Warrant.ABORT:
                     	if (_engineer.getCurrentCommandIndex()>=_commands.size()-1) {
