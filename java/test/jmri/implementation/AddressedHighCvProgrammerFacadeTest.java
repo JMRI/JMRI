@@ -76,6 +76,35 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("read back", 12, readValue);
     }
     
+    public void testWriteReadDirectHighCVRightSide() throws jmri.ProgrammerException, InterruptedException {
+
+        ProgDebugger dp = new ProgDebugger();
+        dp.setTestReadLimit(256);
+        dp.setTestWriteLimit(1024);
+
+        Programmer p = new AddressedHighCvProgrammerFacade(dp, "256", "253", "254", "255", "100");
+        ProgListener l = new ProgListener(){
+                public void programmingOpReply(int value, int status) {
+                    log.debug("callback value="+value+" status="+status);
+                    replied = true;
+                    readValue = value;
+                }
+            };
+        p.writeCV("258", 12, l);
+        waitReply();
+        Assert.assertEquals("target written", 12, dp.getCvVal(258));
+        Assert.assertTrue("index H not written", !dp.hasBeenWritten(253));
+        Assert.assertTrue("index L not written", !dp.hasBeenWritten(254));
+        Assert.assertTrue("index val not written", !dp.hasBeenWritten(255));
+
+        dp.setTestReadLimit(1024);
+        dp.setTestWriteLimit(256);
+
+        p.readCV("258", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+    }
+    
     public void testWriteReadIndexed() throws jmri.ProgrammerException, InterruptedException {
         
         ProgDebugger dp = new ProgDebugger();

@@ -75,7 +75,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         _cv = Integer.parseInt(CV);
         _val = val;
         useProgrammer(p);
-        if (prog.getCanRead(CV) || _cv <= top) {
+        if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
             prog.writeCV(_cv, val, this);
         } else {
@@ -103,7 +103,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         log.debug("start readCV");
         _cv = Integer.parseInt(CV);
         useProgrammer(p);
-        if (prog.getCanWrite(CV) || _cv <= top) {
+        if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
             prog.readCV(_cv, this);
         } else {
