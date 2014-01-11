@@ -218,6 +218,18 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="cvNameType">
+    <xs:annotation>
+        <xs:documentation>
+          CV names can currently be numbers n or the n.n, n.n.n etc indexed forms.
+          The _n ending is allowed to grandfather some QSI definitions only.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="([0-9]*)|(([0-9]*\.)*[0-9]*)|(([0-9]*\.)*[0-9]*_[0-4])"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="yesNoType">
     <xs:annotation>
         <xs:documentation>

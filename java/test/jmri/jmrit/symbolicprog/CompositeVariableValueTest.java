@@ -27,12 +27,12 @@ public class CompositeVariableValueTest extends VariableValueTest {
     // abstract members invoked by tests in parent VariableValueTest class
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                          int cvNum, String mask, int minVal, int maxVal,
-                          Vector<CvValue> v, JLabel status, String item) {
+                          String cvNum, String mask, int minVal, int maxVal,
+                          HashMap<String, CvValue> v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+1,p);
         cvNext.setValue(0);
-        v.setElementAt(cvNext, cvNum+1);
+        v.put(cvNum+1, cvNext);
         return new CompositeVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
@@ -245,24 +245,24 @@ public class CompositeVariableValueTest extends VariableValueTest {
         ProgDebugger p = new ProgDebugger();
 
         // create 3 CVs
-        Vector<CvValue> v = createCvVector();
-        cv17 = new CvValue(17, p);
-        cv18 = new CvValue(18, p);
-        cv19 = new CvValue(19, p);
+        HashMap<String, CvValue> v = createCvMap();
+        cv17 = new CvValue("17", p);
+        cv18 = new CvValue("18", p);
+        cv19 = new CvValue("19", p);
         cv17.setValue(2);
         cv18.setValue(3);
         cv18.setValue(4);
-        v.setElementAt(cv17, 17);
-        v.setElementAt(cv18, 18);
-        v.setElementAt(cv19, 19);
+        v.put("17", cv17);
+        v.put("18", cv18);
+        v.put("19", cv19);
         
         // create variables for each CV
-        var17 = new DecVariableValue("label17", "comment17", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
-        var18 = new DecVariableValue("label18", "comment18", "", false, false, false, false, 18, "VVVVVVVV", 0, 255, v, null, null);
-        var19 = new DecVariableValue("label19", "comment19", "", false, false, false, false, 19, "VVVVVVVV", 0, 255, v, null, null);
+        var17 = new DecVariableValue("label17", "comment17", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null);
+        var18 = new DecVariableValue("label18", "comment18", "", false, false, false, false, "18", "VVVVVVVV", 0, 255, v, null, null);
+        var19 = new DecVariableValue("label19", "comment19", "", false, false, false, false, "19", "VVVVVVVV", 0, 255, v, null, null);
 
         // create composite variable
-        CompositeVariableValue testVar = new CompositeVariableValue("testVariable", "commentTest", "", false, false, false, false, 17, "VVVVVVVV", 0, 2, v, null, null);
+        CompositeVariableValue testVar = new CompositeVariableValue("testVariable", "commentTest", "", false, false, false, false, "17", "VVVVVVVV", 0, 2, v, null, null);
 
         // two choices
         testVar.addChoice("first");
@@ -285,12 +285,6 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return testVar;
     }
     
-    protected Vector<CvValue> createCvVector() {
-        Vector<CvValue> v = new Vector<CvValue>(512);
-        for (int i=0; i < 512; i++) v.addElement(null);
-        return v;
-    }
-
     // from here down is testing infrastructure
 
     public  CompositeVariableValueTest(String s) {

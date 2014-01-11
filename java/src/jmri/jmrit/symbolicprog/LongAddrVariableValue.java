@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.text.Document;
@@ -24,8 +24,8 @@ public class LongAddrVariableValue extends VariableValue
 
     public LongAddrVariableValue(String name, String comment, String cvName,
                                  boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                 int cvNum, String mask, int minVal, int maxVal,
-                                 Vector<CvValue> v, JLabel status, String stdname) {
+                                 String cvNum, String mask, int minVal, int maxVal,
+                                 HashMap<String, CvValue> v, JLabel status, String stdname, CvValue mHighCV) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -36,18 +36,22 @@ public class LongAddrVariableValue extends VariableValue
         _value.addActionListener(this);
         _value.addFocusListener(this);
         // connect for notification
-        CvValue cv = (_cvVector.elementAt(getCvNum()));
+        CvValue cv = (_cvMap.get(getCvNum()));
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
-        CvValue cv1 = (_cvVector.elementAt(getCvNum()+1));
-        cv1.addPropertyChangeListener(this);
-        cv1.setState(CvValue.FROMFILE);
+
+        highCV = mHighCV;
+        if (highCV == null) log.error("High CV not found in LongAddrVariableValue ctor");
+        highCV.addPropertyChangeListener(this);
+        highCV.setState(CvValue.FROMFILE);
     }
 
+    CvValue highCV;
+    
     public CvValue[] usesCVs() {
         return new CvValue[]{
-            _cvVector.elementAt(getCvNum()),
-            _cvVector.elementAt(getCvNum()+1)};
+            _cvMap.get(getCvNum()),
+            _cvMap.get(highCV)};
     }
 
     /** 
@@ -56,7 +60,7 @@ public class LongAddrVariableValue extends VariableValue
      */
      
      public String getCvDescription() {
-        return "CV"+getCvNum()+" & CV"+(getCvNum()+1);
+        return "CV"+getCvNum()+" & CV"+(highCV.number());
      }
      
     public void setToolTipText(String t) {
@@ -64,7 +68,7 @@ public class LongAddrVariableValue extends VariableValue
         _value.setToolTipText(t);  // set our value
     }
 
-    // the connection is to cvNum and cvNum+1
+    // the connection is to cvNum and highCV
 
     int _maxVal;
     int _minVal;
@@ -91,8 +95,8 @@ public class LongAddrVariableValue extends VariableValue
     void updatedTextField() {
         if (log.isDebugEnabled()) log.debug("actionPerformed");
         // called for new values - set the CV as needed
-        CvValue cv17 = _cvVector.elementAt(getCvNum());
-        CvValue cv18 = _cvVector.elementAt(getCvNum()+1);
+        CvValue cv17 = _cvMap.get(getCvNum());
+        CvValue cv18 = highCV;
         // no masking involved for long address
         int newVal;
         try { newVal = Integer.valueOf(_value.getText()).intValue(); }
@@ -184,31 +188,31 @@ public class LongAddrVariableValue extends VariableValue
      * @param state
      */
     public void setCvState(int state) {
-        (_cvVector.elementAt(getCvNum())).setState(state);
+        (_cvMap.get(getCvNum())).setState(state);
     }
 
     public boolean isChanged() {
-        CvValue cv1 = (_cvVector.elementAt(getCvNum()));
-        CvValue cv2 = (_cvVector.elementAt(getCvNum()+1));
+        CvValue cv1 = _cvMap.get(getCvNum());
+        CvValue cv2 = highCV;
         return (considerChanged(cv1)||considerChanged(cv2));
     }
 
     public void setToRead(boolean state) {
-        (_cvVector.elementAt(getCvNum())).setToRead(state);
-        (_cvVector.elementAt(getCvNum()+1)).setToRead(state);
+        _cvMap.get(getCvNum()).setToRead(state);
+        highCV.setToRead(state);
     }
 
     public boolean isToRead() {
-        return (_cvVector.elementAt(getCvNum())).isToRead() || (_cvVector.elementAt(getCvNum()+1)).isToRead();
+        return _cvMap.get(getCvNum()).isToRead() || highCV.isToRead();
     }
 
     public void setToWrite(boolean state) {
-        (_cvVector.elementAt(getCvNum())).setToWrite(state);
-        (_cvVector.elementAt(getCvNum()+1)).setToWrite(state);
+        _cvMap.get(getCvNum()).setToWrite(state);
+        highCV.setToWrite(state);
     }
 
     public boolean isToWrite() {
-        return (_cvVector.elementAt(getCvNum())).isToWrite() || (_cvVector.elementAt(getCvNum()+1)).isToWrite();
+        return _cvMap.get(getCvNum()).isToWrite() || highCV.isToWrite();
     }
 
     public void readChanges() {
@@ -226,7 +230,7 @@ public class LongAddrVariableValue extends VariableValue
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         _progState = READING_FIRST;
         if (log.isDebugEnabled()) log.debug("invoke CV read");
-        (_cvVector.elementAt(getCvNum())).read(_status);
+        (_cvMap.get(getCvNum())).read(_status);
     }
 
     public void writeAll() {
@@ -237,7 +241,7 @@ public class LongAddrVariableValue extends VariableValue
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         _progState = WRITING_FIRST;
         if (log.isDebugEnabled()) log.debug("invoke CV write");
-        (_cvVector.elementAt(getCvNum())).write(_status);
+        (_cvMap.get(getCvNum())).write(_status);
     }
 
     // handle incoming parameter notification
@@ -254,20 +258,20 @@ public class LongAddrVariableValue extends VariableValue
             case READING_FIRST:   // read first CV, now read second
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_FIRST");
                 _progState = READING_SECOND;
-                (_cvVector.elementAt(getCvNum()+1)).read(_status);
+                highCV.read(_status);
                 return;
             case READING_SECOND:  // finally done, set not busy
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_SECOND");
                 _progState = IDLE;
-                (_cvVector.elementAt(getCvNum())).setState(READ);
-                (_cvVector.elementAt(getCvNum()+1)).setState(READ);
+                (_cvMap.get(getCvNum())).setState(READ);
+                highCV.setState(READ);
                 //super.setState(READ);
                 setBusy(false);
                 return;
             case WRITING_FIRST:  // no, just a CV update
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_FIRST");
                 _progState = WRITING_SECOND;
-                (_cvVector.elementAt(getCvNum()+1)).write(_status);
+                highCV.write(_status);
                 return;
             case WRITING_SECOND:  // now done with complete request
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SECOND");
@@ -282,14 +286,14 @@ public class LongAddrVariableValue extends VariableValue
             }
         }
         else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvVector.elementAt(getCvNum());
+            CvValue cv = _cvMap.get(getCvNum());
             if (log.isDebugEnabled()) log.debug("CV State changed to "+cv.getState());
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv0 = _cvVector.elementAt(getCvNum());
-            CvValue cv1 = _cvVector.elementAt(getCvNum()+1);
+            CvValue cv0 = _cvMap.get(getCvNum());
+            CvValue cv1 = highCV;
             int newVal = (cv0.getValue()&0x3f)*256 + cv1.getValue();
             setValue(newVal);  // check for duplicate done inside setVal
             // state change due to CV state change, so propagate that
@@ -374,8 +378,8 @@ public class LongAddrVariableValue extends VariableValue
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
-        (_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-        (_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
+        (_cvMap.get(getCvNum())).removePropertyChangeListener(this);
+        highCV.removePropertyChangeListener(this);
 
         _value = null;
         // do something about the VarTextField

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Vector;
 import java.awt.Component;
 import javax.swing.*;
-
+import java.util.HashMap;
 /**
  * Represents a single Variable value; abstract base class.
  *
@@ -15,7 +15,7 @@ import javax.swing.*;
  * indicates whether a "write changes" or "read changes" operation
  * should handle this object.
  *
- * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
+ * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
  * @author   Howard G. Penny Copyright (C) 2005
  * @version  $Revision$
  */
@@ -25,7 +25,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     private String _item;
     private String _cvName;
 
-    protected Vector<CvValue> _cvVector;   // Vector of CV objects used to look up CVs
+    protected HashMap<String, CvValue> _cvMap;   // Vector of CV objects used to look up CVs
     protected JLabel _status = null;
 
     protected String _tooltipText = null;
@@ -148,7 +148,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     // methods implemented here:
     public VariableValue(String label, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                         int cvNum, String mask, Vector<CvValue> v, JLabel status, String item) {
+                         String cvNum, String mask, HashMap<String, CvValue> v, JLabel status, String item) {
         _label = label;
         _comment = comment;
         _cvName = cvName;
@@ -158,7 +158,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         _opsOnly = opsOnly;
         _cvNum = cvNum;
         _mask = mask;
-        _cvVector = v;
+        _cvMap = v;
         _status = status;
         _item = item;
     }
@@ -210,8 +210,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public boolean getOpsOnly() { return _opsOnly; }
     private boolean _opsOnly;
 
-    public int getCvNum() { return _cvNum; }
-    private int _cvNum;
+    public String getCvNum() { return _cvNum; }
+    private String _cvNum;
 
     public String getCvName() { return _cvName; }
 
@@ -241,13 +241,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly() || !getAvailable()) state = false;
-        _cvVector.elementAt(getCvNum()).setToRead(state);
+        _cvMap.get(getCvNum()).setToRead(state);
     }
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
      */
-    public boolean isToRead() { return _cvVector.elementAt(getCvNum()).isToRead(); }
+    public boolean isToRead() { return _cvMap.get(getCvNum()).isToRead(); }
 
     /**
      * Simple implementation for the case of a single CV. Intended
@@ -258,13 +258,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             state = false;
         }
         if (log.isDebugEnabled()) log.debug("setToWrite("+state+") for "+label()+" via CvNum "+getCvNum());
-        _cvVector.elementAt(getCvNum()).setToWrite(state);
+        _cvMap.get(getCvNum()).setToWrite(state);
     }
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
      */
-    public boolean isToWrite() { return _cvVector.elementAt(getCvNum()).isToWrite(); }
+    public boolean isToWrite() { return _cvMap.get(getCvNum()).isToWrite(); }
 
     /**
      * Propogate a state change here to the CVs that are related, which will

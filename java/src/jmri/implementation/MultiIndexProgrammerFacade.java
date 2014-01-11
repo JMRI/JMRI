@@ -14,7 +14,8 @@ import jmri.jmrix.AbstractProgrammerFacade;
  * Used through the String write/read/confirm interface.  Accepts address formats:
  *<ul>
  *<li> 123 Do write/read/confirm to 123
- *<li> 13.123 Writes 13 to the index CV, then does write/read/confirm to 123
+ *<li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to 123
+ *<li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV, then does write/read/confirm to 123
  *</ul>
  *
  * @author      Bob Jacobsen  Copyright (C) 2013
@@ -23,29 +24,45 @@ import jmri.jmrix.AbstractProgrammerFacade;
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param indexCV  CV to which the first value is to be written for NN.NN forms
+     * @param indexPI  CV to which the first value is to be written for NN.NN and NN.NN.NN forms
+     * @param indexSI  CV to which the second value is to be written for NN.NN.NN forms
      */
-    public MultiIndexProgrammerFacade(Programmer prog, int indexCV) {
+    public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI) {
         super(prog);
-        this.indexCV = indexCV;
+        this.indexPI = indexPI;
+        this.indexSI = indexSI;
     }
     
-    int indexCV;
+    String indexPI;
+    String indexSI;
 
     // members for handling the programmer interface
 
     int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
-    int _indexVal;  //  value to write to index or -1
+    String _cv;	// remember the cv number being read/written
+    int valuePI;  //  value to write to PI or -1
+    int valueSI;  //  value to write to SI or -1
 
     void parseCV(String cv) {
+        valuePI = -1;
+        valueSI = -1;
         if (cv.contains(".")) {
             String[] splits = cv.split("\\.");
-            _indexVal = Integer.parseInt(splits[0]);
-            _cv = Integer.parseInt(splits[1]);
+            if (splits.length == 2) {
+                valuePI = Integer.parseInt(splits[1]);
+                _cv = splits[0];
+            } else if (splits.length == 3) {
+                valuePI = Integer.parseInt(splits[1]);
+                valueSI = Integer.parseInt(splits[2]);
+                _cv = splits[0];
+            } else {
+                log.error("Too many parts in CV name "+cv);
+                valuePI = Integer.parseInt(splits[1]);
+                valueSI = Integer.parseInt(splits[2]);
+                _cv = splits[0];
+            }
         } else {
-            _indexVal = -1;
-            _cv = Integer.parseInt(cv);
+            _cv = cv;
         }
     }
     
@@ -54,13 +71,13 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         _val = val;
         useProgrammer(p);
         parseCV(CV);
-        if (_indexVal == -1 ) {
+        if (valuePI==-1) {
             state = ProgState.PROGRAMMING;
             prog.writeCV(_cv, val, this);
         } else {
             // write index first
             state = ProgState.FINISHWRITE;
-            prog.writeCV(indexCV, _indexVal, this);
+            prog.writeCV(indexPI, valuePI, this);
         }
     }
 
@@ -71,13 +88,13 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
-        if (_indexVal == -1 ) {
+        if (valuePI==-1) {
             state = ProgState.PROGRAMMING;
             prog.readCV(_cv, this);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
-            prog.writeCV(indexCV, _indexVal, this);
+            prog.writeCV(indexPI, valuePI, this);
         }
     }
 
@@ -116,19 +133,41 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 temp.programmingOpReply(value, status);
                 break;
             case FINISHREAD:
-                try {
-                    state = ProgState.PROGRAMMING;
-                    prog.readCV(_cv, this);
-                } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing final read", e);
+                if (valueSI == -1 ) {
+                    try {
+                        state = ProgState.PROGRAMMING;
+                        prog.readCV(_cv, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing final read", e);
+                    }
+                } else {
+                    try {
+                        int tempSI = valueSI;
+                        valueSI = -1;
+                        state = ProgState.FINISHREAD;
+                        prog.writeCV(indexSI, tempSI, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI for read", e);
+                    }
                 }
                 break;
             case FINISHWRITE:
-                try {
-                    state = ProgState.PROGRAMMING;
-                    prog.writeCV(_cv, _val, this);
-                } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing final write", e);
+                if (valueSI == -1 ) {
+                    try {
+                        state = ProgState.PROGRAMMING;
+                        prog.writeCV(_cv, _val, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing final write", e);
+                    }
+                } else {
+                    try {
+                        int tempSI = valueSI;
+                        valueSI = -1;
+                        state = ProgState.FINISHWRITE;
+                        prog.writeCV(indexSI, tempSI, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI for write", e);
+                    }
                 }
                 break;
             default:

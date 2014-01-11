@@ -120,10 +120,10 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-        if (variableModel.piCv() >= 0) {
+        if (variableModel.piCv() != "") {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() >= 0) {
+        if (variableModel.siCv() != "") {
             resetModel.setSiCv(variableModel.siCv());
         }
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);

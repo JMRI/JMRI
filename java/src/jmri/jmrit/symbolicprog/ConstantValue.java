@@ -5,7 +5,7 @@ package jmri.jmrit.symbolicprog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Component;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.*;
 import java.awt.Color;
 
@@ -24,8 +24,8 @@ public class ConstantValue extends VariableValue {
 
     public ConstantValue(String name, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly,  boolean opsOnly,
-                         int cvNum, String mask, int minVal, int maxVal,
-                         Vector<CvValue> v, JLabel status, String stdname) {
+                         String cvNum, String mask, int minVal, int maxVal,
+                         HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;

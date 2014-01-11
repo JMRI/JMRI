@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(JUnitAppenderTest.suite());
         suite.addTest(NamedBeanHandleTest.suite());
         suite.addTest(OrderedHashtableTest.suite());
+        suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(I18NTest.suite());
         

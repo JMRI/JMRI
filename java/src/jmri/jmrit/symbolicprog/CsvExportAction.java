@@ -51,9 +51,9 @@ public class CsvExportAction  extends AbstractAction {
                 str.println("CV, value");
                 for (int i=0; i<mModel.getRowCount(); i++) {
                     CvValue cv = mModel.getCvByRow(i);
-                    int num = cv.number();
+                    String num = cv.number();
                     int value = cv.getValue();
-                    str.println(""+num+","+value);
+                    str.println(num+","+value);
                 }
 
                 str.flush();

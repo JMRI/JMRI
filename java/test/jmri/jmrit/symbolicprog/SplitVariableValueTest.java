@@ -19,22 +19,22 @@ import junit.framework.*;
 
 
 public class SplitVariableValueTest extends VariableValueTest {
-    final int lowCV = 12;
-    final int offset = 6;
+    final String lowCV = "12";
+    final String highCV = "18";
     ProgDebugger p = new ProgDebugger();
 
     // abstract members invoked by tests in parent VariableValueTest class
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                          int cvNum, String mask, int minVal, int maxVal,
-                          Vector<CvValue> v, JLabel status, String item) {
+                          String cvNum, String mask, int minVal, int maxVal,
+                          HashMap<String, CvValue> v, JLabel status, String item) {
         // make sure next CV exists
-        CvValue cvNext = new CvValue(cvNum+offset, p);
+        CvValue cvNext = new CvValue(highCV, p);
         cvNext.setValue(0);
-        v.setElementAt(cvNext, cvNum+offset);
+        v.put(highCV, cvNext);
         return new SplitVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                                       cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
-                                      cvNum+offset, 1, 0, "VVVVVVVV");
+                                      highCV, 1, 0, "VVVVVVVV");
     }
 
 
@@ -68,17 +68,17 @@ public class SplitVariableValueTest extends VariableValueTest {
     public void testWriteSynch2() {}        // programmer synch is different
 
     public void testSplitAddressFromCV1() {
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
+        CvValue cv2 = new CvValue(highCV, p);
         cv1.setValue(2);
         cv2.setValue(3);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                                                         "VVVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+                                                        highCV, 1, 0, "VVVVVVVV");
 
         ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -95,17 +95,17 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV2() {
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
+        CvValue cv2 = new CvValue(highCV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                                                         "XXXXVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+                                                        highCV, 1, 0, "VVVVVVVV");
 
         ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -122,17 +122,17 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV3() {
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
+        CvValue cv2 = new CvValue(highCV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                                                         "VVVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "XXVVVVXX");
+                                                        highCV, 1, 0, "XXVVVVXX");
 
         ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -149,17 +149,17 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV4() {
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
+        CvValue cv2 = new CvValue(highCV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                                                         "XVVVVVVX", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "XVVVVVXX");
+                                                        highCV, 1, 0, "XVVVVVXX");
 
         ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -184,15 +184,15 @@ public class SplitVariableValueTest extends VariableValueTest {
     public void testSplitAddressRead1() {
         log.debug("testSplitAddressRead starts");
 
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        CvValue cv2 = new CvValue(highCV, p);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+                                                        highCV, 1, 0, "VVVVVVVV");
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -239,15 +239,15 @@ public class SplitVariableValueTest extends VariableValueTest {
     // check a long address write operation
     public void testSplitAddressWrite1() {
 
-        Vector<CvValue> v = createCvVector();
+        HashMap<String, CvValue> v = createCvMap();
         CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
+        CvValue cv2 = new CvValue(highCV, p);
+        v.put(lowCV, cv1);
+        v.put(highCV, cv2);
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+                                                        highCV, 1, 0, "VVVVVVVV");
         ((JTextField)var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -272,12 +272,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         Assert.assertEquals("Var state", AbstractValue.STORED, var.getState() );
         Assert.assertEquals("last write", 74,p.lastWrite());
         // how do you check separation of the two writes?  State model?
-    }
-
-    protected Vector<CvValue> createCvVector() {
-        Vector<CvValue> v = new Vector<CvValue>(512);
-        for (int i=0; i < 512; i++) v.addElement(null);
-        return v;
     }
 
     // from here down is testing infrastructure

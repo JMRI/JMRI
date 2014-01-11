@@ -9,7 +9,7 @@ import java.beans.*;
 
 import javax.swing.*;
 
-import java.util.Vector;
+import java.util.*;
 
 import jmri.*;
 
@@ -26,16 +26,20 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	
 	private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1024;
-    private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
-    private Vector<CvValue> _cvAllVector = new Vector<CvValue>(MAXCVNUM+1);  // vector of all possible CV objects
-    public Vector<CvValue> allCvVector() { return _cvAllVector; }
+    private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display-row order, for doing row mapping
+    
+    private HashMap<String, CvValue> _cvAllMap = new HashMap<String, CvValue>();
+    public HashMap<String, CvValue> allCvMap() { 
+        return _cvAllMap; 
+    }
+        
     private Vector<JButton> _writeButtons = new Vector<JButton>();
     private Vector<JButton> _readButtons = new Vector<JButton>();
     private Vector<JButton> _compareButtons = new Vector<JButton>();
     private Programmer mProgrammer;
 
     // Defines the columns
-    private static final int NUMCOLUMN   = 0;
+    public static final int NUMCOLUMN   = 0;
     private static final int VALCOLUMN   = 1;
     private static final int STATECOLUMN = 2;
     private static final int READCOLUMN  = 3;
@@ -55,8 +59,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         mProgrammer = pProgrammer;
         // save a place for notification
         _status = status;
-        // initialize the MAXCVNUM+1 long _cvAllVector;
-        for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
         // boudreau: not sure why we need the statement below, 
@@ -76,14 +78,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public void setProgrammer(Programmer p) { 
         mProgrammer = p;
         // tell all variables
-        for (CvValue cv : _cvAllVector) {
+        for (CvValue cv : allCvMap().values()) {
             if (cv!=null) cv.setProgrammer(p);
         }
         for (CvValue cv : _cvDisplayVector) {
             if (cv!=null) cv.setProgrammer(p);
-        }
-        log.debug("Set programmer in "+_cvAllVector.size()+"CVs");
-        
+        }        
     }
 
     // basic methods for AbstractTableModel implementation
@@ -147,7 +147,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     }
 
     public CvValue getCvByRow(int row) { return _cvDisplayVector.elementAt(row); }
-    public CvValue getCvByNumber(int row) { return _cvAllVector.elementAt(row); }
+    public CvValue getCvByNumber(String number) { return _cvAllMap.get(number); }
 
     public Object getValueAt(int row, int col) {
         switch (col) {
@@ -212,11 +212,10 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     }
 
     public void addCV(String s, boolean readOnly, boolean infoOnly, boolean writeOnly) {
-        int num = Integer.valueOf(s).intValue();
-        if (_cvAllVector.elementAt(num) == null) {
-            CvValue cv = new CvValue(num, mProgrammer);
+        if (_cvAllMap.get(s) == null) {
+            CvValue cv = new CvValue(s, mProgrammer);
             cv.setReadOnly(readOnly);
-            _cvAllVector.setElementAt(cv, num);
+            _cvAllMap.put(s, cv);
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
@@ -265,7 +264,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             fireTableDataChanged();
         }
         // make sure readonly set true if required
-        CvValue cv = _cvAllVector.elementAt(num);
+        CvValue cv = _cvAllMap.get(s);
         if (readOnly) cv.setReadOnly(readOnly);
         if (infoOnly) {
             cv.setReadOnly(infoOnly);
@@ -308,9 +307,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         // null references, so that they can be gc'd even if this isn't.
         _cvDisplayVector.removeAllElements();
         _cvDisplayVector = null;
-
-        _cvAllVector.removeAllElements();
-        _cvAllVector = null;
 
         _writeButtons.removeAllElements();
         _writeButtons = null;

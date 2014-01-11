@@ -22,13 +22,13 @@ public class CvValueTest extends TestCase {
     ProgDebugger p = new ProgDebugger();
 
     public void testStart() {
-        new CvValue(12,p);
+        new CvValue("12",p);
     }
 
     // can we create one and manipulate info?
     public void testCvValCreate() {
-        CvValue cv = new CvValue(19, p);
-        Assert.assertTrue(cv.number() == 19);
+        CvValue cv = new CvValue("19", p);
+        Assert.assertTrue(cv.number() == "19");
         cv.setValue(23);
         Assert.assertTrue(cv.getValue() == 23);
     }
@@ -37,7 +37,7 @@ public class CvValueTest extends TestCase {
     public void testCvValRead() {
 
         // create the CV value
-        CvValue cv = new CvValue(91, p);
+        CvValue cv = new CvValue("91", p);
         cv.read(null);
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
@@ -58,7 +58,7 @@ public class CvValueTest extends TestCase {
     public void testCvValConfirmFail() {
 
         // create the CV value
-        CvValue cv = new CvValue(66, p);
+        CvValue cv = new CvValue("66", p);
         cv.setValue(91);
 
         cv.confirm(null);
@@ -82,7 +82,7 @@ public class CvValueTest extends TestCase {
     public void testCvValConfirmPass() {
 
         // create the CV value
-        CvValue cv = new CvValue(67, p);
+        CvValue cv = new CvValue("67", p);
         cv.setValue(123);
         cv.write(null); // force out, so dummy read works
         // release, to ensure
@@ -117,7 +117,7 @@ public class CvValueTest extends TestCase {
         log.debug("start testCvValWrite");
 
         // create the CV value
-        CvValue cv = new CvValue(91, p);
+        CvValue cv = new CvValue("91", p);
         cv.setValue(12);
         cv.write(null);
         // wait for reply (normally, done by callback; will check that later)
@@ -138,7 +138,7 @@ public class CvValueTest extends TestCase {
 
     // check the state diagram
     public void testCvValStates() {
-        CvValue cv = new CvValue(21, p);
+        CvValue cv = new CvValue("21", p);
         Assert.assertTrue(cv.getState() == CvValue.UNKNOWN);
         cv.setValue(23);
         Assert.assertTrue(cv.getState() == CvValue.EDITED);
@@ -146,13 +146,13 @@ public class CvValueTest extends TestCase {
 
     // check the initial color
     public void testInitialColor() {
-        CvValue cv = new CvValue(21, p);
+        CvValue cv = new CvValue("21", p);
         Assert.assertEquals("initial color", CvValue.COLOR_UNKNOWN, cv.getTableEntry().getBackground());
     }
 
     // check color update for EDITED
     public void testEditedColor() {
-        CvValue cv = new CvValue(21, p);
+        CvValue cv = new CvValue("21", p);
         cv.setValue(23);
         Assert.assertEquals("edited color", CvValue.COLOR_EDITED, cv.getTableEntry().getBackground());
     }

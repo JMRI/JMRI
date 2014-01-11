@@ -28,13 +28,13 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     // abstract members invoked by tests in parent VariableValueTest class
     VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                          int cvNum, String mask, int minVal, int maxVal,
-                          Vector<CvValue> v, JLabel status, String item) {
+                          String cvNum, String mask, int minVal, int maxVal,
+                          HashMap<String, CvValue> v, JLabel status, String item) {
         // make sure next CV exists
-        CvValue cvNext = new CvValue(cvNum+1,p);
+        CvValue cvNext = new CvValue("18",p);
         cvNext.setValue(0);
-        v.setElementAt(cvNext, cvNum+1);
-        return new LongAddrVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
+        v.put(cvNum+1, cvNext);
+        return new LongAddrVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, cvNext);
     }
 
 
@@ -67,15 +67,15 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     public void testWriteSynch2() {}        // programmer synch is different
     // can we create long address , then manipulate the variable to change the CV?
     public void testLongAddressCreate() {
-        Vector<CvValue> v = createCvVector();
-        CvValue cv17 = new CvValue(17, p);
-        CvValue cv18 = new CvValue(18, p);
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv17 = new CvValue("17", p);
+        CvValue cv18 = new CvValue("18", p);
         cv17.setValue(2);
         cv18.setValue(3);
-        v.setElementAt(cv17, 17);
-        v.setElementAt(cv18, 18);
+        v.put("17", cv17);
+        v.put("18", cv18);
         // create a variable pointed at CV 17&18, check name
-        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null, cv18);
         Assert.assertTrue(var.label() == "label");
         // pretend you've edited the value, check its in same object
         ((JTextField)var.getCommonRep()).setText("4797");
@@ -89,15 +89,15 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
     // can we change both CVs and see the result in the Variable?
     public void testLongAddressFromCV() {
-        Vector<CvValue> v = createCvVector();
-        CvValue cv17 = new CvValue(17, p);
-        CvValue cv18 = new CvValue(18, p);
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv17 = new CvValue("17", p);
+        CvValue cv18 = new CvValue("18", p);
         cv17.setValue(2);
         cv18.setValue(3);
-        v.setElementAt(cv17, 17);
-        v.setElementAt(cv18, 18);
+        v.put("17", cv17);
+        v.put("18", cv18);
         // create a variable pointed at CV 17 & 18
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null, cv18);
         ((JTextField)var.getCommonRep()).setText("1029");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -116,13 +116,13 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         log.debug("testLongAddressRead starts");
         // initialize the system
 
-        Vector<CvValue> v = createCvVector();
-        CvValue cv17 = new CvValue(17, p);
-        CvValue cv18 = new CvValue(18, p);
-        v.setElementAt(cv17, 17);
-        v.setElementAt(cv18, 18);
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv17 = new CvValue("17", p);
+        CvValue cv18 = new CvValue("18", p);
+        v.put("17", cv17);
+        v.put("18", cv18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, null, null, cv18);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -168,13 +168,13 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     public void testLongAddressWrite() {
         // initialize the system
 
-        Vector<CvValue> v = createCvVector();
-        CvValue cv17 = new CvValue(17, p);
-        CvValue cv18 = new CvValue(18, p);
-        v.setElementAt(cv17, 17);
-        v.setElementAt(cv18, 18);
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv17 = new CvValue("17", p);
+        CvValue cv18 = new CvValue("18", p);
+        v.put("17", cv17);
+        v.put("18", cv18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, null, null, cv18);
         ((JTextField)var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -198,12 +198,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         Assert.assertEquals("Var state", AbstractValue.STORED, var.getState() );
         Assert.assertTrue(p.lastWrite() == 189);
         // how do you check separation of the two writes?  State model?
-    }
-
-    protected Vector<CvValue> createCvVector() {
-        Vector<CvValue> v = new Vector<CvValue>(512);
-        for (int i=0; i < 512; i++) v.addElement(null);
-        return v;
     }
 
     // from here down is testing infrastructure

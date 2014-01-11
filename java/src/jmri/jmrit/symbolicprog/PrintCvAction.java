@@ -127,11 +127,10 @@ public class PrintCvAction  extends AbstractAction {
             // get each CV and value
             for (int i=0; i<mModel.getRowCount(); i++) {
                 CvValue cv = mModel.getCvByRow(i);
-                int num = cv.number();
                 int value = cv.getValue();
 
                 //convert and pad numbers as needed
-                String numString = Integer.toString(num);
+                String numString = cv.number();
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
                 if (value<16) valueStringHex = "0"+ valueStringHex;

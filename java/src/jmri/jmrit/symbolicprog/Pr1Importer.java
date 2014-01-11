@@ -103,7 +103,7 @@ public class Pr1Importer {
         for( int cvNum = lowCV; cvNum <= highCV; cvNum++ ){
           if( cvNum <= CvTableModel.MAXCVNUM ){   // MAXCVNUM is the highest number, so is included
             try {
-                CvValue cv = pCvTable.getCvByNumber( cvNum ) ;
+                CvValue cv = pCvTable.allCvMap().get( ""+cvNum ) ;
                 if (cv!=null) {
                     cv.setValue( getCV( cvNum ) );
                 }

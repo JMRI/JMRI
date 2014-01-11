@@ -406,7 +406,63 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
             }
         }
+        
+        // set the programming mode
+        if (pProg != null) {
+            if (jmri.InstanceManager.programmerManagerInstance() != null) {
+                // go through in preference order, trying to find a mode
+                // that exists in both the programmer and decoder.
+                // First, get attributes. If not present, assume that
+                // all modes are usable
+                Element programming = null;
+                boolean paged = true;
+                boolean directbit= true;
+                boolean directbyte= true;
+                boolean register= true;
+                if (decoderRoot != null
+                    && (programming = decoderRoot.getChild("decoder").getChild("programming"))!= null) {
+                    
+                    // set the programming attributes for DCC
+                    if ( (a = programming.getAttribute("paged")) != null )
+                        if (a.getValue().equals("no")) paged = false;
+                    if ( (a = programming.getAttribute("direct")) != null ) {
+                        if (a.getValue().equals("no")) { directbit = false; directbyte = false; }
+                        else if (a.getValue().equals("bitOnly")) { directbit = true; directbyte = false; }
+                        else if (a.getValue().equals("byteOnly")) { directbit = false; directbyte = true; }
+                    }
+                    if ( (a = programming.getAttribute("register")) != null )
+                        if (a.getValue().equals("no")) register = false;
+                    
+                    Programmer pf = jmri.implementation.ProgrammerFacadeSelector.loadFacadeElements(programming, mProgrammer);
+                    log.debug("new programmer "+pf);
+                    mProgrammer = pf;
+                    cvModel.setProgrammer(pf);
+                    iCvModel.setProgrammer(pf);
+                    resetModel.setProgrammer(pf);
+                    log.debug("Found programmers: "+cvModel.getProgrammer()+" "+iCvModel.getProgrammer());
+                    
+                }
+    
+                // is the current mode OK?
+                int currentMode = mProgrammer.getMode();
+                log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+currentMode);
 
+                // find a mode to set it to
+                if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
+                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+                else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
+                    mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
+                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
+                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
+                else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
+                    mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
+                else log.warn("No acceptable mode found, leave as found");
+                
+            } else {
+                log.error("Can't set programming mode, no programmer instance");
+            }
+        }
+        
         pack();
 
         if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+pFrameTitle
@@ -463,10 +519,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         
         // load reset from decoder tree
-        if (variableModel.piCv() >= 0) {
+        if (variableModel.piCv() != "") {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() >= 0) {
+        if (variableModel.siCv() != "") {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
@@ -667,7 +723,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     int defaultCvValues[] = null;
-    int defaultCvNumbers[] = null;
+    String defaultCvNumbers[] = null;
     int defaultIndexedCvValues[] = null;
 
     /**
@@ -677,7 +733,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void saveDefaults() {
         int n = cvModel.getRowCount();
         defaultCvValues = new int[n];
-        defaultCvNumbers = new int[n];
+        defaultCvNumbers = new String[n];
 
         for (int i=0; i<n; i++) {
             CvValue cv = cvModel.getCvByRow(i);

@@ -60,13 +60,13 @@ public class Pr1WinExportAction  extends AbstractAction {
                 str.println("[DecoderData]");
                 for (int i=1; i<=256; i++) {
                     int lowCvIndex = (i-1)*4;
-                    CvValue cv1 = mModel.allCvVector().elementAt(lowCvIndex+1);
+                    CvValue cv1 = mModel.allCvMap().get(""+(lowCvIndex+1));
                     int value1 = (cv1!=null) ? cv1.getValue() : 0;
-                    CvValue cv2 = mModel.allCvVector().elementAt(lowCvIndex+2);
+                    CvValue cv2 = mModel.allCvMap().get(""+(lowCvIndex+2));
                     int value2 = (cv2!=null) ? cv2.getValue() : 0;
-                    CvValue cv3 = mModel.allCvVector().elementAt(lowCvIndex+3);
+                    CvValue cv3 = mModel.allCvMap().get(""+(lowCvIndex+3));
                     int value3 = (cv3!=null) ? cv3.getValue() : 0;
-                    CvValue cv4 = mModel.allCvVector().elementAt(lowCvIndex);
+                    CvValue cv4 = mModel.allCvMap().get(""+(lowCvIndex));
                     int value4 = (cv4!=null) ? cv4.getValue() : 0;
 
 

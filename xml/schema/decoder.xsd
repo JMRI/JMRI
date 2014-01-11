@@ -499,7 +499,7 @@
                   <xs:sequence minOccurs="0" maxOccurs="unbounded">
                     <xs:element name="shortAddressChanges" >
                       <xs:complexType>
-                        <xs:attribute name="cv" type="xs:int" use="required" />
+                        <xs:attribute name="cv" type="cvNameType" use="required" />
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -563,7 +563,7 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CV" type="xs:int"/>
+          <xs:attribute name="CV" type="cvNameType"/>
           <xs:attribute name="mask" type="xs:string" default="VVVVVVVV" />
           <xs:attribute name="readOnly" type="yesNoType" default="no" />
           <xs:attribute name="infoOnly" type="yesNoType" default="no" />
@@ -640,7 +640,7 @@
               </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CVname" type="xs:string"/>
+          <xs:attribute name="CVname" type="cvNameType"/>
           <xs:attribute name="CV" type="xs:int"/>
           <xs:attribute name="PI" type="xs:int"/>
           <xs:attribute name="SI" type="xs:int"/>
@@ -673,7 +673,7 @@
             <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CV" type="xs:string"/>
+          <xs:attribute name="CV" type="cvNameType"/>
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
@@ -686,7 +686,7 @@
             <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
-          <xs:attribute name="CVname" type="xs:string"/>
+          <xs:attribute name="CVname" type="cvNameType"/>
           <xs:attribute name="CV" type="xs:string"/>
           <xs:attribute name="PI" type="xs:string"/>
           <xs:attribute name="SI" type="xs:string"/>

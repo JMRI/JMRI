@@ -47,7 +47,14 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         _status = status;
     }
 
-    public void setProgrammer(Programmer p) { mProgrammer = p; }
+    public void setProgrammer(Programmer p) { 
+        mProgrammer = p;
+        
+        // pass on to all contained CVs
+        for (CvValue cv : rowVector) {
+            cv.setProgrammer(p);
+        }
+    }
     
     public int getRowCount() {
         return rowVector.size();
@@ -108,14 +115,14 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
             return "hmmm ... missed it";
     }
 
-    private int _piCv;
-    private int _siCv;
+    private String _piCv;
+    private String _siCv;
 
-    public void setPiCv(int piCv) {
+    public void setPiCv(String piCv) {
         _piCv = piCv;
     }
 
-    public void setSiCv(int siCv) {
+    public void setSiCv(String siCv) {
         _siCv = siCv;
     }
 
@@ -123,8 +130,11 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) log.debug("Starting to setRow \"" +
                                             label + "\"");
-        int cv   = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
+        String cv = e.getAttribute("CV").getValue();
         int cvVal = Integer.valueOf(e.getAttribute("default").getValue()).intValue();
+
+        if (log.isDebugEnabled()) log.debug("            CV \"" +cv+ "\" value "+cvVal);
+
         CvValue resetCV = new CvValue(cv, mProgrammer);
         resetCV.setValue(cvVal);
         resetCV.setWriteOnly(true);
@@ -135,7 +145,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     public void setIndxRow(int row, Element e) {
-        if (_piCv >=0 && _siCv >= 0) {
+        if (_piCv != "" && _siCv != "") {
             // get the values for the VariableValue ctor
             String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
             if (log.isDebugEnabled()) log.debug("Starting to setIndxRow \"" +
@@ -146,10 +156,10 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                          Integer.valueOf(e.getAttribute("SI").getValue()).
                          intValue() :
                          -1);
-            int iCv   = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
+            String iCv   = e.getAttribute("CV").getValue();
             int icvVal = Integer.valueOf(e.getAttribute("default").getValue()).intValue();
 
-            CvValue resetCV = new CvValue(row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
+            CvValue resetCV = new CvValue(""+row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
             resetCV.addPropertyChangeListener(this);
 
             JButton bw = new JButton("Write");
@@ -164,8 +174,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     protected void performReset(int row) {
-        CvValue cv = rowVector.elementAt(row);
-        if (cv.piCv() > 0 && cv.iCv() > 0) {
+        CvValue cv = rowVector.get(row);
+        if (log.isDebugEnabled()) log.debug("performReset: "+cv+" with piCv \""+cv.piCv()+"\"");
+        if (cv.piCv() != null && cv.piCv() != "" && cv.iCv() != null && cv.iCv() != "") {
             _iCv = cv;
             indexedWrite();
         } else {
@@ -193,7 +204,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     public void indexedWrite() {
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
          // lets skip the SI step if SI is not used
-        if (_iCv.siVal() >= 0) {
+        if (_iCv.siVal() > 0) {
             _progState = WRITING_PI;
         } else {
             _progState = WRITING_SI;

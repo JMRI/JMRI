@@ -5,7 +5,7 @@ package jmri.jmrit.symbolicprog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.JLabel;
 
@@ -18,15 +18,15 @@ public class HexVariableValue extends DecVariableValue {
 
         public HexVariableValue(String name, String comment, String cvName,
                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                int cvNum, String mask, int minVal, int maxVal,
-                                Vector<CvValue> v, JLabel status, String stdname) {
+                                String cvNum, String mask, int minVal, int maxVal,
+                                HashMap<String, CvValue> v, JLabel status, String stdname) {
             super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         }
 
         void updatedTextField() {
                 if (log.isDebugEnabled()) log.debug("updatedTextField");
                 // called for new values - set the CV as needed
-                CvValue cv = _cvVector.elementAt(getCvNum());
+                CvValue cv = _cvMap.get(getCvNum());
                 // compute new cv value by combining old and request
                 int oldCv = cv.getValue();
                 int newVal;

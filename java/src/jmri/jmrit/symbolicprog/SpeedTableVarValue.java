@@ -11,10 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
@@ -65,7 +62,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
  * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
  * be removed.
  *<P>
- * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
+ * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004, 2013
  * @author  Dave Heap           Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @author  Dave Heap           Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart & Vhigh not written)
  * @author  Dave Heap                              - generate cvList array to incorporate Vstart & Vhigh
@@ -74,12 +71,12 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
-    static final int VSTART_CV = 2;
-    static final int VHIGH_CV = 5;
+    static final String VSTART_CV = "2";
+    static final String VHIGH_CV = "5";
 
     int nValues;
     int numCvs;
-    int[] cvList;
+    String[] cvList;
     BoundedRangeModel[] models;
     int _min;
     int _max;
@@ -93,8 +90,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     public SpeedTableVarValue(String name, String comment, String cvName,
                               boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                              int cvNum, String mask, int minVal, int maxVal,
-                              Vector<CvValue> v, JLabel status, String stdname, int entries, boolean mfxFlag) {
+                              String cvNum, String mask, int minVal, int maxVal,
+                              HashMap<String, CvValue> v, JLabel status, String stdname, int entries, boolean mfxFlag) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
@@ -105,12 +102,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 		if (mfx) {
 			numCvs = nValues + 2;
-			cvList = new int[numCvs];
+			cvList = new String[numCvs];
 			cvList[nValues] = VSTART_CV;
  			cvList[nValues + 1] = VHIGH_CV;
 		} else {
 			numCvs = nValues;
-			cvList = new int[numCvs];
+			cvList = new String[numCvs];
 		}
 
         models = new BoundedRangeModel[nValues];
@@ -118,7 +115,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // create the set of models
         for (int i=0; i<nValues; i++) {
             // populate cvList
-            cvList[i] = getCvNum()+i;
+            cvList[i] = Integer.toString(Integer.parseInt(getCvNum())+i);
             // create each model
             DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(_range*i/(nValues-1)+_min, 0, _min, _max);
             models[i] = j;
@@ -128,7 +125,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // Note that the default values in the CVs are zero, but are the ramp
             // values here.  We leave that as work item 177, and move on to set the
             // CV states to "FromFile"
-            CvValue c = _cvVector.elementAt(cvList[i]);
+            CvValue c = _cvMap.get(cvList[i]);
             c.setValue(_range*i/(nValues-1)+_min);
             c.addPropertyChangeListener(this);
             c.setState(CvValue.FROMFILE);
@@ -151,7 +148,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         CvValue[] retval = new CvValue[numCvs];
         int i;
         for (i=0; i<numCvs; i++)
-            retval[i] = _cvVector.elementAt(cvList[i]);
+            retval[i] = _cvMap.get(cvList[i]);
         return retval;
     }
 
@@ -181,7 +178,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         if (i < nValues && models[i].getValue() != value)
             models[i].setValue(value);
         // update the CV
-        _cvVector.elementAt(cvList[i]).setValue(value);
+        _cvMap.get(cvList[i]).setValue(value);
         // if programming, that's it
         if (isReading || isWriting) return;
         else if (i < nValues && !(mfx && (i == 0 || i == (nValues-1)))) {
@@ -245,16 +242,16 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         for (int i = modifiedStepIndex-1; i >= 0 ; i--) {
             if (stepCheckBoxes.get(i).isSelected()) {
                 // now have two ends to adjust
-                int leftval = _cvVector.elementAt(cvList[i]).getValue();
-                int rightval = _cvVector.elementAt(cvList[modifiedStepIndex]).getValue();
+                int leftval = _cvMap.get(cvList[i]).getValue();
+                int rightval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
                 int steps = modifiedStepIndex-i;
                 log.debug("left found "+leftval+" "+rightval+" "+steps);
                 // loop to set values
                 for (int j = i+1; j < modifiedStepIndex; j++) {
                     int newValue = leftval + (rightval-leftval)*(j-i)/steps;
                     log.debug("left set "+j+" to "+newValue);
-                    if (_cvVector.elementAt(cvList[j]).getValue() != newValue)
-                        _cvVector.elementAt(cvList[j]).setValue(newValue);
+                    if (_cvMap.get(cvList[j]).getValue() != newValue)
+                        _cvMap.get(cvList[j]).setValue(newValue);
                 }
                 return;
             }
@@ -268,16 +265,16 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         for (int i = modifiedStepIndex+1; i < nValues ; i++) { // need at least one intervening point
             if (stepCheckBoxes.get(i).isSelected()) {
                 // now have two ends to adjust
-                int rightval = _cvVector.elementAt(cvList[i]).getValue();
-                int leftval = _cvVector.elementAt(cvList[modifiedStepIndex]).getValue();
+                int rightval = _cvMap.get(cvList[i]).getValue();
+                int leftval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
                 int steps = i-modifiedStepIndex;
                 log.debug("right found "+leftval+" "+rightval+" "+steps);
                 // loop to set values
                 for (int j = modifiedStepIndex+1; j < i; j++) {
                     int newValue = leftval + (rightval-leftval)*(j-modifiedStepIndex)/steps;
                     log.debug("right set "+j+" to "+newValue);
-                    if (_cvVector.elementAt(cvList[j]).getValue() != newValue)
-                        _cvVector.elementAt(cvList[j]).setValue(newValue);
+                    if (_cvMap.get(cvList[j]).getValue() != newValue)
+                        _cvMap.get(cvList[j]).setValue(newValue);
                 }
                 return;
             }
@@ -292,11 +289,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void enforceEndPointsMfx() {
         if (mfx) {
-            if (_cvVector.elementAt(cvList[0]).getValue() != _min) {
-                _cvVector.elementAt(cvList[0]).setValue(_min);
+            if (_cvMap.get(cvList[0]).getValue() != _min) {
+                _cvMap.get(cvList[0]).setValue(_min);
             }
-            if (_cvVector.elementAt(cvList[nValues-1]).getValue() != _max) {
-                _cvVector.elementAt(cvList[nValues-1]).setValue(_max);
+            if (_cvMap.get(cvList[nValues-1]).getValue() != _max) {
+                _cvMap.get(cvList[nValues-1]).setValue(_max);
             }
         }
     }
@@ -304,15 +301,15 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public int getState()  {
         int i;
         for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == UNKNOWN ) return UNKNOWN;
+            if (_cvMap.get(cvList[i]).getState() == UNKNOWN ) return UNKNOWN;
         for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == EDITED ) return EDITED;
+            if (_cvMap.get(cvList[i]).getState() == EDITED ) return EDITED;
         for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == FROMFILE ) return FROMFILE;
+            if (_cvMap.get(cvList[i]).getState() == FROMFILE ) return FROMFILE;
         for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == READ ) return READ;
+            if (_cvMap.get(cvList[i]).getState() == READ ) return READ;
         for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == STORED ) return STORED;
+            if (_cvMap.get(cvList[i]).getState() == STORED ) return STORED;
         log.error("getState did not decode a possible state");
         return UNKNOWN;
     }
@@ -370,7 +367,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             cs.gridy = 0;
             cs.gridx = i;
 
-            CvValue cv = _cvVector.elementAt(cvList[i]);
+            CvValue cv = _cvMap.get(cvList[i]);
             JSlider s = new VarSlider(models[i], cv, i+1);
             s.setOrientation(JSlider.VERTICAL);
             s.addChangeListener(this);
@@ -380,7 +377,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             DecVariableValue decVal = new DecVariableValue("val"+i,"","", false, false, false, false,
                                                            cvList[i], "VVVVVVVV", _min, _max,
-                                                           _cvVector, _status, "");
+                                                           _cvMap, _status, "");
             decVal.setValue(currentValue);
             decVal.setState(currentState);
 
@@ -470,7 +467,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		// add Vstart & Vhigh if applicable
 		JPanel l = new JPanel();
 
-		int ThisCV;
+		String ThisCV;
 		CvValue cv;
 		Component v;
 		int currentState;
@@ -481,13 +478,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 		if (mfx) {
 			ThisCV = VSTART_CV;
-			cv = _cvVector.elementAt(ThisCV);
+			cv = _cvMap.get(ThisCV);
 			currentState = cv.getState();
 			currentValue = cv.getValue();
             cv.addPropertyChangeListener(this);
 			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
 														   ThisCV, "VVVVVVVV", _min, _max,
-														   _cvVector, _status, "");
+														   _cvMap, _status, "");
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
@@ -509,13 +506,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			l.add ( label );
 						
 			ThisCV = VHIGH_CV;
-			cv = _cvVector.elementAt(ThisCV);
+			cv = _cvMap.get(ThisCV);
 			currentState = cv.getState();
 			currentValue = cv.getValue();
             cv.addPropertyChangeListener(this);
 			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
 														   ThisCV, "VVVVVVVV", _min, _max,
-														   _cvVector, _status, "");
+														   _cvMap, _status, "");
 			decVal.setValue(currentValue);
 			decVal.setState(currentState);
 			v = decVal.getCommonRep();
@@ -549,24 +546,24 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set the values to a straight line from _min to _max
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
-        _cvVector.elementAt(cvList[0]).setValue(_min);
-        _cvVector.elementAt(cvList[nValues-1]).setValue(_max);
+        _cvMap.get(cvList[0]).setValue(_min);
+        _cvMap.get(cvList[nValues-1]).setValue(_max);
         doMatchEnds(e);
     }
     /**
      * Set the values to a straight line from existing ends
      */
     void doMatchEnds(java.awt.event.ActionEvent e) {
-        int first = _cvVector.elementAt(cvList[0]).getValue();
-        int last = _cvVector.elementAt(cvList[nValues-1]).getValue();
+        int first = _cvMap.get(cvList[0]).getValue();
+        int last = _cvMap.get(cvList[nValues-1]).getValue();
         log.debug(" first="+first+" last="+last);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        _cvVector.elementAt(cvList[0]).setValue(last);
+        _cvMap.get(cvList[0]).setValue(last);
         // and push each one down
         for (int i = 0; i<nValues; i++) {
             int value = first+i*(last-first)/(nValues-1);
-            _cvVector.elementAt(cvList[i]).setValue(value);
+            _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
     }
@@ -575,19 +572,19 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set a constant ratio curve
      */
     void doRatioCurve(java.awt.event.ActionEvent e) {
-        double first = _cvVector.elementAt(cvList[0]).getValue();
+        double first = _cvMap.get(cvList[0]).getValue();
         if (first<1.) first=1.;
-        double last = _cvVector.elementAt(cvList[nValues-1]).getValue();
+        double last = _cvMap.get(cvList[nValues-1]).getValue();
         if (last<first+1) last = first+1.;
         double step = Math.log(last/first)/(nValues-1);
         log.debug("log ratio step is "+step);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        _cvVector.elementAt(cvList[0]).setValue((int)Math.round(last));
+        _cvMap.get(cvList[0]).setValue((int)Math.round(last));
         // and push each one down
         for (int i = 0; i<nValues; i++) {
             int value = (int)(Math.floor(first*Math.exp(step*i)));
-            _cvVector.elementAt(cvList[i]).setValue(value);
+            _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
     }
@@ -596,13 +593,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Set a log curve
      */
     void doLogCurve(java.awt.event.ActionEvent e) {
-        double first = _cvVector.elementAt(cvList[0]).getValue();
-        double last = _cvVector.elementAt(cvList[nValues-1]).getValue();
+        double first = _cvMap.get(cvList[0]).getValue();
+        double last = _cvMap.get(cvList[nValues-1]).getValue();
         if (last<first+1.) last = first+1.;
         double factor = 1./10.;
         // to avoid repeatedly bumping up later values, push the second one
         // all the way up now
-        _cvVector.elementAt(cvList[1]).setValue((int)Math.round(last));
+        _cvMap.get(cvList[1]).setValue((int)Math.round(last));
         // and push each one down (except the first, left as it was)
         double previous = first;
         double ratio = Math.pow(1.-factor, nValues-1.);
@@ -610,7 +607,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         for (int i = 1; i<nValues; i++) {
             previous = limit-(limit-first)*ratio/Math.pow(1.-factor, nValues-1.-i);
             int value = (int)(Math.floor(previous));
-            _cvVector.elementAt(cvList[i]).setValue(value);
+            _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
     }
@@ -620,8 +617,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
         for (int i = 0; i<nValues-1; i++) {
-            int value = _cvVector.elementAt(cvList[i]+1).getValue();
-            _cvVector.elementAt(cvList[i]).setValue(value);
+            int value = _cvMap.get(cvList[i]+1).getValue();
+            _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
     }
@@ -631,8 +628,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void doShiftRight(java.awt.event.ActionEvent e) {
         for (int i = nValues-1; i>0; i--) {
-            int value = _cvVector.elementAt(cvList[i]-1).getValue();
-            _cvVector.elementAt(cvList[i]).setValue(value);
+            int value = _cvMap.get(cvList[i-1]).getValue();
+            _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
     }
@@ -665,12 +662,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * @param state
      */
     public void setCvState(int state) {
-        _cvVector.elementAt(cvList[0]).setState(state);
+        _cvMap.get(cvList[0]).setState(state);
     }
 
     public boolean isChanged() {
         for (int i=0; i<numCvs; i++) {
-            if (considerChanged(_cvVector.elementAt(cvList[i])) ) {
+            if (considerChanged(_cvMap.get(cvList[i])) ) {
                 // this one is changed, return true
                 return true;
             }
@@ -743,7 +740,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // read operation start/continue
         // check for retry if needed
         if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (_cvVector.elementAt(cvList[_progState]).getState() != CvValue.READ) ) {
+                && (_cvMap.get(cvList[_progState]).getState() != CvValue.READ) ) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {    
@@ -761,7 +758,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             return;
         }
         // not done, proceed to do the next
-        CvValue cv = _cvVector.elementAt(cvList[_progState]);
+        CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
         if (!onlyChanges || considerChanged(cv) ) cv.read(_status);
@@ -772,7 +769,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // write operation start/continue
         // check for retry if needed
         if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (_cvVector.elementAt(cvList[_progState]).getState() != CvValue.STORED) ) {
+                && (_cvMap.get(cvList[_progState]).getState() != CvValue.STORED) ) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
         } else {    
@@ -788,7 +785,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             setBusy(false);
             return;
         }
-        CvValue cv = _cvVector.elementAt(cvList[_progState]);
+        CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
         if (!onlyChanges || considerChanged(cv) ) cv.write(_status);
@@ -809,7 +806,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             else return;
         }
         else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvVector.elementAt(cvList[0]);
+            CvValue cv = _cvMap.get(cvList[0]);
             if (log.isDebugEnabled()) log.debug("CV State changed to "+cv.getState());
             setState(cv.getState());
         }
@@ -819,7 +816,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = cv.getValue();
             // find the index of that CV
             for (int i=0; i<numCvs; i++) {
-                if (_cvVector.elementAt(cvList[i]) == cv) {
+                if (_cvMap.get(cvList[i]) == cv) {
                     // this is the one, so use this i
                     setModel(i, value);
                     break;
@@ -876,7 +873,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         if (log.isDebugEnabled()) log.debug("dispose");
         // the connection is to cvNum through cvNum+numCvs (28 values typical)
         for (int i=0; i<numCvs; i++) {
-            _cvVector.elementAt(cvList[i]).removePropertyChangeListener(this);
+            _cvMap.get(cvList[i]).removePropertyChangeListener(this);
         }
 
         // do something about the VarSlider objects

@@ -13,11 +13,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.HashMap;
 
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2013
  * @version	$Revision$
  *
  */
@@ -25,8 +26,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     public EnumVariableValue(String name, String comment, String cvName,
                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                             int cvNum, String mask, int minVal, int maxVal,
-                             Vector<CvValue> v, JLabel status, String stdname) {
+                             String cvNum, String mask, int minVal, int maxVal,
+                             HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -38,7 +39,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public EnumVariableValue() {}
 
     public CvValue[] usesCVs() {
-        return new CvValue[]{_cvVector.elementAt(getCvNum())};
+        return new CvValue[]{_cvMap.get(getCvNum())};
     }
 
     public void nItems(int n) {
@@ -79,7 +80,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
-        CvValue cv = _cvVector.elementAt(getCvNum());
+        CvValue cv = _cvMap.get(getCvNum());
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
     }
@@ -126,7 +127,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         int oldVal = getIntValue();
         
         // called for new values - set the CV as needed
-        CvValue cv = _cvVector.elementAt(getCvNum());
+        CvValue cv = _cvMap.get(getCvNum());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal = getIntValue();
@@ -261,11 +262,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * @param state
      */
     public void setCvState(int state) {
-        _cvVector.elementAt(getCvNum()).setState(state);
+        _cvMap.get(getCvNum()).setState(state);
     }
 
     public boolean isChanged() {
-        CvValue cv = _cvVector.elementAt(getCvNum());
+        CvValue cv = _cvMap.get(getCvNum());
         return considerChanged(cv);
     }
 
@@ -284,14 +285,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public void readAll() {
         setToRead(false);
         setBusy(true);  // will be reset when value changes
-        _cvVector.elementAt(getCvNum()).read(_status);
+        _cvMap.get(getCvNum()).read(_status);
     }
 
     public void writeAll() {
         setToWrite(false);
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
-        _cvVector.elementAt(getCvNum()).write(_status);
+        _cvMap.get(getCvNum()).write(_status);
     }
 
     // handle incoming parameter notification
@@ -304,13 +305,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 setBusy(false);
             }
         } else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvVector.elementAt(getCvNum());
+            CvValue cv = _cvMap.get(getCvNum());
             if (cv.getState() == STORED) setToWrite(false);
             if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv = _cvVector.elementAt(getCvNum());
+            CvValue cv = _cvMap.get(getCvNum());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
@@ -365,7 +366,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         if (log.isDebugEnabled()) log.debug("dispose");
         
         // remove connection to CV
-        _cvVector.elementAt(getCvNum()).removePropertyChangeListener(this);
+        _cvMap.get(getCvNum()).removePropertyChangeListener(this);
 
         // remove connection to graphical representation
         disposeReps();

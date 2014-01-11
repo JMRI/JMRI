@@ -795,10 +795,10 @@ public class EcosLocoToRoster implements EcosListener {
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         
         // load reset from decoder tree
-        if (variableModel.piCv() >= 0) {
+        if (variableModel.piCv() != "") {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() >= 0) {
+        if (variableModel.siCv() != "") {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);

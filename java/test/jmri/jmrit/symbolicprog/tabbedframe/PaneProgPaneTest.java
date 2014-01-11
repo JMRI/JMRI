@@ -299,7 +299,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
 
         // mark some as needing to be written
-        (cvModel.allCvVector().elementAt(1)).setValue(12);
+        (cvModel.allCvMap().get("1")).setValue(12);
 
         Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true,false));
         Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false,false));
@@ -307,7 +307,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
         Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
 
-        (cvModel.allCvVector().elementAt(69)).setValue(12);
+        (cvModel.allCvMap().get("69")).setValue(12);
             // careful - might change more than one CV!
 
         Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));

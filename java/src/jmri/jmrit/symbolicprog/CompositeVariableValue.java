@@ -11,10 +11,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Extends EnumVariableValue to represent a composition of variable values.
@@ -49,7 +46,7 @@ import java.util.Iterator;
  *  to target variables on the same programming page.
  *</ol>
  * <P>
- * @author	Bob Jacobsen   Copyright (C) 2001, 2005
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2005, 2013
  * @version	$Revision$
  *
  */
@@ -57,8 +54,8 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
 
     public CompositeVariableValue(String name, String comment, String cvName,
                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                             int cvNum, String mask, int minVal, int maxVal,
-                             Vector<CvValue> v, JLabel status, String stdname) {
+                             String cvNum, String mask, int minVal, int maxVal,
+                             HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;

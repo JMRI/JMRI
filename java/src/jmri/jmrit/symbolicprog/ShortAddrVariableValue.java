@@ -6,13 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Representation of a short address (CV1).
  * <P>
  * This is a decimal value, extended to modify the other CVs when
- * written.  The CVs to be modified and there new values are
+ * written.  The CVs to be modified and their new values are
  * stored in two arrays for simplicity.
  * <P>
  * 
@@ -29,22 +29,22 @@ public class ShortAddrVariableValue extends DecVariableValue {
 
     public ShortAddrVariableValue(String name, String comment, String cvName,
                                   boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                  int cvNum, String mask,
-                                  Vector<CvValue> v, JLabel status, String stdname) {
+                                  String cvNum, String mask,
+                                  HashMap<String, CvValue> v, JLabel status, String stdname) {
         // specify min, max value explicitly
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
 
         // add default overwrites as per NMRA spec
         firstFreeSpace = 0;
-        setModifiedCV(19);         // consisting
-        setModifiedCV(29);         // control bits
+        setModifiedCV("19");         // consisting
+        setModifiedCV("29");         // control bits
     }
 
     /**
      * Register a CV to be modified regardless of
      * current value
      */
-    public void setModifiedCV(int cvNum) {
+    public void setModifiedCV(String cvNum) {
         if (firstFreeSpace>=maxCVs) {
             log.error("too many CVs registered for changes!");
             return;
@@ -59,7 +59,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
      */
     private void updateCvForAddrChange() {
         for (int i=0; i<firstFreeSpace; i++) {
-            CvValue cv = _cvVector.elementAt(cvNumbers[i]);
+            CvValue cv = _cvMap.get(cvNumbers[i]);
             if (cv == null) continue;  // if CV not present this decoder...
             if (cvNumbers[i]!=cv.number())
                 log.error("CV numbers don't match: "
@@ -72,7 +72,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
 
     int firstFreeSpace = 0;
     static final int maxCVs = 20;
-    int[] cvNumbers = new int[maxCVs];
+    String[] cvNumbers = new String[maxCVs];
     int[] newValues = new int[maxCVs];
 
     public void writeChanges() {
@@ -81,7 +81,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
         // and change the value of this one
-        _cvVector.elementAt(getCvNum()).write(_status);
+        _cvMap.get(getCvNum()).write(_status);
     }
 
     public void writeAll() {
@@ -90,7 +90,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
         // and change the value of this one
-        _cvVector.elementAt(getCvNum()).write(_status);
+        _cvMap.get(getCvNum()).write(_status);
     }
 
     // clean up connections when done

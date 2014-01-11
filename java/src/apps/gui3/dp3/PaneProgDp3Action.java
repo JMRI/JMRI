@@ -351,8 +351,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         if(progPane!=null){
             progPane.setVariableValue("Short Address", cv1);
             progPane.setVariableValue("Long Address", longAddress);
-            progPane.setCVValue(29, cv29);
-            progPane.setCVValue(19, cv19);
+            progPane.setCVValue("29", cv29);
+            progPane.setCVValue("19", cv19);
         }
     }
     
@@ -469,8 +469,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
 
             progPane.setVariableValue("Short Address", cv1);
             progPane.setVariableValue("Long Address", longAddress);
-            progPane.setCVValue(29, cv29);
-            progPane.setCVValue(19, cv19);
+            progPane.setCVValue("29", cv29);
+            progPane.setCVValue("19", cv19);
             rosterPanel.add(progPane, BorderLayout.CENTER);
             rosterPanel.revalidate();
             rosterPanel.setVisible(true);
@@ -669,7 +669,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             }
         }
         
-        public void setCVValue(int cv, int value){
+        public void setCVValue(String cv, int value){
             if(_cvModel.getCvByNumber(cv)!=null){
                 (_cvModel.getCvByNumber(cv)).setValue(value);
                 (_cvModel.getCvByNumber(cv)).setState(AbstractValue.READ);

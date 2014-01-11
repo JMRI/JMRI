@@ -19,6 +19,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.table.*;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
@@ -1389,9 +1390,18 @@ public class PaneProgPane extends javax.swing.JPanel
     void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
         log.debug("starting to build CvTable pane");
 
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(_cvModel);
+
         JTable			cvTable		= new JTable(_cvModel);
-        cvTable.setAutoCreateRowSorter(true);
-        cvTable.getRowSorter().toggleSortOrder(0);  // sort on left most
+
+        sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.PreferNumericComparator());
+
+        List <RowSorter.SortKey> sortKeys 
+            = new ArrayList<RowSorter.SortKey>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys); 
+
+        cvTable.setRowSorter(sorter);
         
         cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
         cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1939,11 +1949,10 @@ public class PaneProgPane extends javax.swing.JPanel
                 int cvNum = cvList.get(i).intValue();
                 CvValue cv = _cvModel.getCvByRow(cvNum);
 
-                int num = cv.number();
                 int value = cv.getValue();
 
                 //convert and pad numbers as needed
-                String numString = Integer.toString(num);
+                String numString = cv.number();
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
                 if (value < 16)

@@ -13,23 +13,24 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
+ * @author	  Bob Jacobsen   Copyright (C) 2013
  * @version   $Revision$
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener {
 
-    public IndexedEnumVariableValue(int row, String name, String comment, String cvName,
+    public IndexedEnumVariableValue(String name, String comment, String cvName,
                                     boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                    int cvNum, String mask,
-                                    Vector<CvValue> v, JLabel status, String stdname) {
+                                    String cvNum, String mask,
+                                    HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
-        _row    = row;
     }
 
     /**
@@ -37,13 +38,12 @@ public class IndexedEnumVariableValue extends VariableValue
      */
     protected IndexedEnumVariableValue() {}
 
-    int _row;
     int _minVal;
     int _maxVal;
 
     public CvValue[] usesCVs() {
         return new CvValue[]{
-            _cvVector.elementAt(_row)};
+            _cvMap.get(getCvName())};
     }
 
     /** 
@@ -98,7 +98,8 @@ public class IndexedEnumVariableValue extends VariableValue
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
-        CvValue cv = (_cvVector.elementAt(_row));
+        CvValue cv = (_cvMap.get(getCvName()));
+        if (cv==null) log.warn("Did not find CV "+getCvName());
         cv.addPropertyChangeListener(this);
         if (cv.getInfoOnly()) {
             cv.setState(CvValue.READ);
@@ -136,7 +137,7 @@ public class IndexedEnumVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("action event: "+e);
 
         // called for new values - set the CV as needed
-        CvValue cv = _cvVector.elementAt(_row);
+        CvValue cv = _cvMap.get(getCvName());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal = getIntValue();
@@ -301,23 +302,23 @@ public class IndexedEnumVariableValue extends VariableValue
      * @param state
      */
     public void setCvState(int state) {
-        (_cvVector.elementAt(getCvNum())).setState(state);
+        (_cvMap.get(getCvName())).setState(state);
     }
 
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly()) state = false;
-        (_cvVector.elementAt(_row)).setToRead(state);
+        (_cvMap.get(getCvName())).setToRead(state);
     }
-    public boolean isToRead() { return getAvailable() && (_cvVector.elementAt(_row)).isToRead(); }
+    public boolean isToRead() { return getAvailable() && (_cvMap.get(getCvName())).isToRead(); }
 
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) state = false;
-        (_cvVector.elementAt(_row)).setToWrite(state);
+        (_cvMap.get(getCvName())).setToWrite(state);
     }
-    public boolean isToWrite() { return getAvailable() && (_cvVector.elementAt(_row)).isToWrite(); }
+    public boolean isToWrite() { return getAvailable() && (_cvMap.get(getCvName())).isToWrite(); }
 
     public boolean isChanged() {
-        CvValue cv = (_cvVector.elementAt(_row));
+        CvValue cv = (_cvMap.get(getCvName()));
         return considerChanged(cv);
     }
 
@@ -334,7 +335,7 @@ public class IndexedEnumVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
          // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4R;
         } else { // lets skip this step if SI is not used
             _progState = WRITING_SI4R;
@@ -342,7 +343,7 @@ public class IndexedEnumVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
         // to read any indexed CV we must write the PI
-        (_cvVector.elementAt(_row)).writePI(_status);
+        (_cvMap.get(getCvName())).writePI(_status);
     }
 
     public void writeAll() {
@@ -353,7 +354,7 @@ public class IndexedEnumVariableValue extends VariableValue
         setToWrite(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4W;
         } else {
             _progState = WRITING_SI4W;
@@ -361,7 +362,7 @@ public class IndexedEnumVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
         // to write any indexed CV we must write the PI first
-        (_cvVector.elementAt(_row)).writePI(_status);
+        (_cvMap.get(getCvName())).writePI(_status);
     }
     
     public void confirmAll() {
@@ -369,7 +370,7 @@ public class IndexedEnumVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(_row)).siVal() >= 0) {
+        if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4C;
         } else {
             _progState = WRITING_SI4C;
@@ -377,7 +378,7 @@ public class IndexedEnumVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV confirm");
         // to read any indexed CV we must write the PI
-        (_cvVector.elementAt(_row)).writePI(_status);
+        (_cvMap.get(getCvName())).writePI(_status);
     }
 
     // handle incoming parameter notification
@@ -396,11 +397,11 @@ public class IndexedEnumVariableValue extends VariableValue
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    (_cvVector.elementAt(_row)).writePI(_status);
+                    (_cvMap.get(getCvName())).writePI(_status);
                     return;
                 }
                 // success, move on to next
@@ -412,7 +413,7 @@ public class IndexedEnumVariableValue extends VariableValue
                 	_progState = WRITING_SI4C;
                 else
                 	_progState = WRITING_SI4W;
-                (_cvVector.elementAt(_row)).writeSI(_status);
+                (_cvMap.get(getCvName())).writeSI(_status);
                 return;
             case WRITING_SI4R:  // have written the SI if needed, now read or write CV
             case WRITING_SI4C:
@@ -420,35 +421,35 @@ public class IndexedEnumVariableValue extends VariableValue
                 if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    (_cvVector.elementAt(_row)).writeSI(_status);
+                    (_cvMap.get(getCvName())).writeSI(_status);
                     return;
                 }
                 // success, move on to next
                 retries = 0;
                 if (_progState == WRITING_SI4R ) {
                     _progState = READING_CV;
-                    (_cvVector.elementAt(_row)).readIcV(_status);
+                    (_cvMap.get(getCvName())).readIcV(_status);
                 } else if (_progState == WRITING_SI4C ) {
                     _progState = COMPARE_CV;
-                    (_cvVector.elementAt(_row)).confirmIcV(_status);
+                    (_cvMap.get(getCvName())).confirmIcV(_status);
                  } else {
                     _progState = WRITING_CV;
-                    (_cvVector.elementAt(_row)).writeIcV(_status);
+                    (_cvMap.get(getCvName())).writeIcV(_status);
                 }
                 return;
             case READING_CV:  // now done with the read request
                 if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV");
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.READ) ) {
+                    && ( (_cvMap.get(getCvName())).getState() != CvValue.READ) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    (_cvVector.elementAt(_row)).readIcV(_status);
+                    (_cvMap.get(getCvName())).readIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -461,14 +462,14 @@ public class IndexedEnumVariableValue extends VariableValue
 
                 // check for success SAME or DIFF?
                 if ((retries < RETRY_MAX)
-						&& (( _cvVector.elementAt(_row))
+						&& (( _cvMap.get(getCvName()))
 								.getState() != CvValue.SAME)
-						&& (( _cvVector.elementAt(_row))
+						&& (( _cvMap.get(getCvName()))
 								.getState() != CvValue.DIFF)) {
 					// need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    (_cvVector.elementAt(_row)).confirmIcV(_status);
+                    (_cvMap.get(getCvName())).confirmIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -481,11 +482,11 @@ public class IndexedEnumVariableValue extends VariableValue
                 if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
                 // check for success
                 if ((retries < RETRY_MAX)
-                    && ( (_cvVector.elementAt(_row)).getState() != CvValue.STORED) ) {
+                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
                     // need to retry on error; leave progState as it was
                     log.debug("retry");
                     retries++;
-                    (_cvVector.elementAt(_row)).writeIcV(_status);
+                    (_cvMap.get(getCvName())).writeIcV(_status);
                     return;
                 }
                 // success, move on to next
@@ -500,11 +501,11 @@ public class IndexedEnumVariableValue extends VariableValue
                 return;
             }
         } else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvVector.elementAt(_row);
+            CvValue cv = _cvMap.get(getCvName());
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cv = _cvVector.elementAt(_row);
+            CvValue cv = _cvMap.get(getCvName());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
@@ -558,7 +559,7 @@ public class IndexedEnumVariableValue extends VariableValue
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
-        (_cvVector.elementAt(_row)).removePropertyChangeListener(this);
+        (_cvMap.get(getCvName())).removePropertyChangeListener(this);
 
         for (int i = 0; i<comboCBs.size(); i++) {
             comboCBs.get(i).dispose();

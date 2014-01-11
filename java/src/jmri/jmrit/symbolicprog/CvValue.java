@@ -23,13 +23,13 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2013
  * @author    Howard G. Penny   Copyright (C) 2005
  * @version   $Revision$
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
-    public CvValue(int num, Programmer pProgrammer) {
+    public CvValue(String num, Programmer pProgrammer) {
         _num = num;
         mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
@@ -37,7 +37,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
-    public CvValue(int num, String cvName, int piCv, int piVal, int siCv, int siVal, int iCv, Programmer pProgrammer) {
+    public CvValue(String num, String cvName, String piCv, int piVal, String siCv, int siVal, String iCv, Programmer pProgrammer) {
         _num   = num;
         _cvName  = cvName;
         if (cvName == null) log.error("cvName == null in ctor num: "+num);
@@ -59,26 +59,26 @@ public class CvValue extends AbstractValue implements ProgListener {
     
     void setProgrammer(Programmer p) { mProgrammer = p; }
     
-    public int number() { return _num; }
-    private int _num;
+    public String number() { return _num; }
+    private String _num;
 
     public String cvName() { return _cvName; }
     private String _cvName = "";
 
-    public int piCv() { return _piCv; }
-    private int _piCv;
+    public String piCv() { return _piCv; }
+    private String _piCv;
 
     public int piVal() { return _piVal; }
     private int _piVal;
 
-    public int siCv() { return _siCv; }
-    private int _siCv;
+    public String siCv() { return _siCv; }
+    private String _siCv;
 
     public int siVal() { return _siVal; }
     private int _siVal;
 
-    public int iCv() { return _iCv; }
-    private int _iCv;
+    public String iCv() { return _iCv; }
+    private String _iCv;
 
     private JLabel _status = null;
 
@@ -402,7 +402,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                 java.text.MessageFormat.format(
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
-                log.warn("Exception during CV write: "+e);
+                log.warn("Exception during CV write of '"+_num+"' to '"+_value+"'",e);
                 setBusy(false);
             }
         } else {
@@ -432,7 +432,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                 java.text.MessageFormat.format(
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
-                log.warn("Exception during CV write: "+e);
+                log.warn("Exception during CV write of '"+_piCv+"' to '"+_piVal+"'",e);
                 setBusy(false);
             }
         } else {

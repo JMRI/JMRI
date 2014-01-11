@@ -81,12 +81,11 @@ class LocoFile extends XmlFile {
                 String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
-                int cv = Integer.valueOf(name).intValue();
-                cvObject = (cvModel.allCvVector().elementAt(cv));
+                cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
-                    log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
+                    log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
                     cvModel.addCV(name, false, false, false);
-                    cvObject = (cvModel.allCvVector().elementAt(cv));
+                    cvObject = cvModel.allCvMap().get(name);
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
@@ -104,19 +103,19 @@ class LocoFile extends XmlFile {
                 }
 
                 String name  = ((elementList.get(i))).getAttribute("name").getValue();
-                int piCv  = Integer.valueOf(((elementList.get(i))).getAttribute("piCv").getValue()).intValue();
+                String piCv  = elementList.get(i).getAttribute("piCv").getValue();
                 int piVal = Integer.valueOf(((elementList.get(i))).getAttribute("piVal").getValue()).intValue();
-                int siCv  = Integer.valueOf(((elementList.get(i))).getAttribute("siCv").getValue()).intValue();
+                String siCv  = elementList.get(i).getAttribute("siCv").getValue();
                 int siVal = Integer.valueOf(((elementList.get(i))).getAttribute("siVal").getValue()).intValue();
-                int iCv   = Integer.valueOf(((elementList.get(i))).getAttribute("iCv").getValue()).intValue();
+                String iCv   = elementList.get(i).getAttribute("iCv").getValue();
                 String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
                 // Hack to fix ESU LokSound V4.0 existing decoder file Indexed CV names
                 if (family.equals("ESU LokPilot V4.0")||family.equals("ESU LokSound Select")||family.equals("ESU LokSound V4.0")) {
-                    if (piCv  == 32) {
-						piCv  = 31;
-						siCv  = 32;
+                    if (piCv  == "32") {
+						piCv  = "31";
+						siCv  = "32";
 						siVal = piVal;
 						piVal = 16;
                     }
@@ -131,7 +130,7 @@ class LocoFile extends XmlFile {
                 if (cvObject == null) {
                     log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
                     log.debug("attempt to add "+i+" "+name+" "+piCv+" "+piVal+" "+siCv+" "+siVal+" "+iCv);
-                    iCvModel.addIndxCV(i, name, piCv, piVal, siCv, siVal, iCv, false, false, false);
+                    iCvModel.addIndxCV(name, piCv, piVal, siCv, siVal, iCv, false, false, false);
                     cvObject = (iCvModel.allIndxCvVector().elementAt(i));
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
@@ -146,7 +145,7 @@ class LocoFile extends XmlFile {
         // ugly hack - set CV17 back to fromFile if present
         // this is here because setting CV17, then CV18 seems to set
         // CV17 to Edited.  This needs to be understood & fixed.
-        cvObject = (cvModel.allCvVector().elementAt(17));
+        cvObject = cvModel.allCvMap().get("17");
         if (cvObject!=null) cvObject.setState(CvValue.FROMFILE);
     }
 
