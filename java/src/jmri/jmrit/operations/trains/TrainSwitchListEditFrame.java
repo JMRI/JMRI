@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -169,6 +171,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		addCheckBoxAction(switchListRealTimeCheckBox);
 		addCheckBoxAction(switchListAllTrainsCheckBox);
 		addCheckBoxAction(switchListPageCheckBox);
+		
+		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true); // NOI18N

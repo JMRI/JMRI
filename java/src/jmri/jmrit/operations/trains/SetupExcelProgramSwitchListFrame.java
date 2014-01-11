@@ -1,4 +1,4 @@
-// SetupExcelProgramFrame.java
+// SetupExcelProgramSwitchListFrame.java
 
 package jmri.jmrit.operations.trains;
 
@@ -20,13 +20,13 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Frame for user edit of the name and directory of an Excel program.
+ * Frame for user edit of the name and directory of an Excel program used for switch lists.
  * 
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 22249 $
  */
 
-public class SetupExcelProgramFrame extends OperationsFrame {
+public class SetupExcelProgramSwitchListFrame extends OperationsFrame {
 
 	// text windows
 	JTextField fileName = new JTextField(30);
@@ -44,13 +44,13 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		// row 1
 		JPanel pDirectoryName = new JPanel();
 		pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DirectoryName")));
-		pDirectoryName.add(new JLabel(TrainCustomManifest.getDirectoryName()));
+		pDirectoryName.add(new JLabel(TrainCustomSwitchList.getDirectoryName()));
 
 		JPanel pFileName = new JPanel();
 		pFileName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("FileName")));
 		pFileName.add(fileName);
 
-		fileName.setText(TrainCustomManifest.getFileName());
+		fileName.setText(TrainCustomSwitchList.getFileName());
 
 		// row 4 buttons
 		JPanel pB = new JPanel();
@@ -77,17 +77,17 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 	// Save and Test
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 
-		TrainCustomManifest.setFileName(fileName.getText());
+		TrainCustomSwitchList.setFileName(fileName.getText());
 
 		if (ae.getSource() == testButton) {
-			if (TrainCustomManifest.manifestCreatorFileExists()) {
+			if (TrainCustomSwitchList.manifestCreatorFileExists()) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
-						new Object[] { TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }),
+						new Object[] { TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }),
 						Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
 						Bundle.getMessage("LoadDirectoryNameFileName"), new Object[] {
-								TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
+								TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -103,5 +103,5 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrame.class.getName());
 }

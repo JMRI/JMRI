@@ -1546,17 +1546,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return The number of cars currently in the train
 	 */
 	public int getNumberCarsInTrain() {
-		RouteLocation rl = getCurrentLocation();
-		int number = 0;
-		List<RollingStock> cars = CarManager.instance().getList(this);
-		// remove cars that aren't in the train
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
-			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
-				number++;
-			}
-		}
-		return number;
+		return getNumberCarsInTrain(getCurrentLocation());
 	}
 
 	/**
@@ -1585,7 +1575,6 @@ public class Train implements java.beans.PropertyChangeListener {
 					break;
 			}
 		}
-
 		return number;
 	}
 
@@ -1625,26 +1614,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Gets the train's length at the current location in the train's route.
 	 * 
-	 * @return The train length at this location
+	 * @return The train length at the train's current location
 	 */
 	public int getTrainLength() {
-		RouteLocation rl = getCurrentLocation();
-		int length = 0;
-		List<RollingStock> engines = EngineManager.instance().getList(this);
-		for (int i = 0; i < engines.size(); i++) {
-			Engine eng = (Engine) engines.get(i);
-			if (eng.getRouteLocation() == rl && eng.getRouteDestination() != rl) {
-				length += eng.getTotalLength();
-			}
-		}
-		List<RollingStock> cars = CarManager.instance().getByTrainList(this);
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
-			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
-				length += car.getTotalLength();
-			}
-		}
-		return length;
+		return getTrainLength(getCurrentLocation());
 	}
 
 	/**
@@ -1694,23 +1667,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return Train's weight in tons.
 	 */
 	public int getTrainWeight() {
-		RouteLocation rl = getCurrentLocation();
-		int weight = 0;
-		List<RollingStock> engines = EngineManager.instance().getList(this);
-		for (int i = 0; i < engines.size(); i++) {
-			Engine eng = (Engine) engines.get(i);
-			if (eng.getRouteLocation() == rl && eng.getRouteDestination() != rl) {
-				weight = weight + eng.getAdjustedWeightTons();
-			}
-		}
-		List<RollingStock> cars = CarManager.instance().getList(this);
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = (Car) cars.get(i);
-			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
-				weight = weight + car.getAdjustedWeightTons();
-			}
-		}
-		return weight;
+		return getTrainWeight(getCurrentLocation());
 	}
 
 	public int getTrainWeight(RouteLocation routeLocation) {
