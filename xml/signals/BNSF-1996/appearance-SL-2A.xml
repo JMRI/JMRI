@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-12-30</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>BNSF-1996</aspecttable>
+  <name>Double head absolute searchlight signal</name>
+  <reference> 	As described in the 1996 BNSF special instructions.</reference>
+  <description>Appearances for a double head searchlight signal used in Automatic Block, CTC and Interlocking Systems</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 9.1.3</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.3-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>flashgreen</show>
+      <reference>Rule 9.1.4</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.4-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Rule 9.1.5</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.5-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Rule 9.1.6</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium (Diverging)</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Rule 9.1.6</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-b.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Restricting</aspectname>
+      <show>yellow</show>
+      <show>flashred</show>
+      <reference>Rule 9.1.7</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.7-b.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 9.1.8</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.8-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 9.1.9</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear (Fifty)</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 9.1.9</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear (Medium)</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 9.1.9</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear (Slow)</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 9.1.9</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach Medium</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Rule 9.1.11</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.11-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 9.1.12</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.12-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach (Slow)</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 9.1.12</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.12-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>flashred</show>
+      <show>red</show>
+      <reference>Rule 9.1.13</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.13-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting (Diverging)</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Rule 9.1.13</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.13-b.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 9.1.15</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.15-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/unlit-a.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <!-- End of Specific Appearances list -->
+  <!-- End of Aspect Mapping -->
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium (Diverging)</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Restricting</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear (Fifty)</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Clear (Fifty)</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear (Medium)</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Diverging Clear (Medium)</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear (Slow)</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Diverging Clear (Slow)</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging (Fifty)</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging (Medium)</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Medium</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach (Slow)</advancedAspect>
+      <ourAspect>Approach Medium (Diverging)</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting (Diverging)</advancedAspect>
+      <ourAspect>Approach Restricting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+      <ourAspect>Restricting (Diverging)</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>
