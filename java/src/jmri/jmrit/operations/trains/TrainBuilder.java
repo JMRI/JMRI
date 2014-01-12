@@ -2715,7 +2715,7 @@ public class TrainBuilder extends TrainCommon {
 			return false; // no load generated for this car
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
-				car.toString(), car.getTypeName(), car.getLoadName(), car.getTrackName() }));
+				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
 		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {
@@ -3614,8 +3614,8 @@ public class TrainBuilder extends TrainCommon {
 		if (loads.size() == 0)
 			return false;
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackLoadStaging"),
-				new Object[] { car.toString(), car.getTypeName(), car.getLoadName(), car.getTrackName(),
-						stageTrack.getLocation().getName(), stageTrack.getName() }));
+				new Object[] { car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(),
+						car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName() }));
 		for (int i = loads.size() - 1; i >= 0; i--) {
 			String load = loads.get(i);
 			if (!car.getTrack().shipsLoad(load, car.getTypeName()) || !stageTrack.acceptsLoad(load, car.getTypeName())

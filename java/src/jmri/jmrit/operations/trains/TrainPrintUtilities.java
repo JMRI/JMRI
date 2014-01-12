@@ -93,11 +93,14 @@ public class TrainPrintUtilities {
 			writer.close();
 			return;
 		}
-		String line = " ";
+		String line;
 
 		if (!isBuildReport && (!logoURL.equals(""))) {
 			ImageIcon icon = new ImageIcon(logoURL);
-			writer.write(icon.getImage(), new JLabel(icon));
+			if (icon.getIconWidth() == -1)
+				log.error("Logo not found: " + logoURL);
+			else
+				writer.write(icon.getImage(), new JLabel(icon));
 		}
 		Color c = null;
 		while (true) {
