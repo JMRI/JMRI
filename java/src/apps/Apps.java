@@ -80,6 +80,9 @@ import jmri.managers.DefaultUserMessagePreferences;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
+import jmri.profile.ProfileManagerDialog;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
@@ -110,6 +113,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
+    static String profileFilename;
+
     @edu.umd.cs.findbugs.annotations.SuppressWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
     public Apps(JFrame frame) {
 
@@ -137,21 +142,78 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // as a special case, register a ShutDownTask to write out blocks
         InstanceManager.shutDownManagerInstance().
                 register(new AbstractShutDownTask("Writing Blocks") {
-            @Override
-            public boolean execute() {
-                // Save block values prior to exit, if necessary
-                log.debug("Start writing block info");
-                try {
-                    new BlockValueFile().writeBlockValues();
-                } //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
-                catch (IOException ioe) {
-                    log.error("Exception writing blocks: {}", ioe);
-                }
+                    @Override
+                    public boolean execute() {
+                        // Save block values prior to exit, if necessary
+                        log.debug("Start writing block info");
+                        try {
+                            new BlockValueFile().writeBlockValues();
+                        } //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
+                        catch (IOException ioe) {
+                            log.error("Exception writing blocks: {}", ioe);
+                        }
 
                 // continue shutdown
                 return true;
             }
         });
+
+        // Get configuration profile
+        // Needs to be done before loading a ConfigManager or UserPreferencesManager
+        FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Needs to be declared final as we might need to
+        // refer to this on the Swing thread
+        final File profileFile;
+        profileFilename = configFilename.replaceFirst(".xml", ".properties");
+        // decide whether name is absolute or relative
+        if (!new File(profileFilename).isAbsolute()) {
+            // must be relative, but we want it to
+            // be relative to the preferences directory
+            profileFile = new File(FileUtil.getPreferencesPath() + profileFilename);
+        } else {
+            profileFile = new File(profileFilename);
+        }
+        ProfileManager.defaultManager().setConfigFile(profileFile);
+        // See if the profile to use has been specified on the command line as
+        // a system property jmri.profile as a profile id.
+        if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
+            ProfileManager.defaultManager().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
+        }
+        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        if (!ProfileManager.defaultManager().getConfigFile().exists()) { // no profile config for this app
+            try {
+                if (ProfileManager.defaultManager().migrateToProfiles(configFilename)) { // migration or first use
+                    // notify user of change only if migration occured
+                    // TODO: a real migration message
+                    JOptionPane.showMessageDialog(sp,
+                            Bundle.getMessage("ConfigMigratedToProfile"),
+                            jmri.Application.getApplicationName(),
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(sp,
+                        ex.getLocalizedMessage(),
+                        jmri.Application.getApplicationName(),
+                        JOptionPane.ERROR_MESSAGE);
+                log.error(ex.getMessage(), ex);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(sp,
+                        ex.getLocalizedMessage(),
+                        jmri.Application.getApplicationName(),
+                        JOptionPane.ERROR_MESSAGE);
+                log.error(ex.getMessage(), ex);
+            }
+        }
+        try {
+            ProfileManagerDialog.getStartingProfile(sp);
+            // Manually setting the configFilename property since calling
+            // Apps.setConfigFilename() does not reset the system property
+            configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
+            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
+            log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
+        } catch (IOException ex) {
+            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+        }
 
         // Install configuration manager and Swing error handler
         ConfigXmlManager cm = new ConfigXmlManager();
@@ -179,7 +241,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
         // find preference file and set location in configuration manager
-        FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File file;
@@ -718,7 +779,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(cf);
         }
 
-
         this.revalidate();
     }
 
@@ -917,29 +977,28 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugFired = false;
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
-                @Override
-                public void eventDispatched(AWTEvent e) {
-                    if (!debugFired) {
-                        /*We set the debugmsg flag on the first instance of the user pressing any button
-                         and the if the debugFired hasn't been set, this allows us to ensure that we don't
-                         miss the user pressing F8, while we are checking*/
-                        debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            KeyEvent ky = (KeyEvent) e;
-                            if (ky.getKeyCode() == 119) {
-                                startupDebug();
+                        @Override
+                        public void eventDispatched(AWTEvent e) {
+                            if (!debugFired) {
+                                /*We set the debugmsg flag on the first instance of the user pressing any button
+                                 and the if the debugFired hasn't been set, this allows us to ensure that we don't
+                                 miss the user pressing F8, while we are checking*/
+                                debugmsg = true;
+                                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                                    KeyEvent ky = (KeyEvent) e;
+                                    if (ky.getKeyCode() == 119) {
+                                        startupDebug();
+                                    }
+                                } else {
+                                    debugmsg = false;
+                                }
                             }
-                        } else {
-                            debugmsg = false;
                         }
-                    }
-                }
-            },
+                    },
                     AWTEvent.KEY_EVENT_MASK);
         }
 
         // bring up splash window for startup
-
         if (sp == null) {
             if (debug) {
                 sp = new SplashWindow(splashDebugMsg());
@@ -1033,7 +1092,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // now indicate logging locations
         @SuppressWarnings("unchecked")
         Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
-
         while (e.hasMoreElements()) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender) e.nextElement();
             if (a instanceof org.apache.log4j.RollingFileAppender) {

@@ -1,8 +1,6 @@
 // Beans.java
 package jmri.beans;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
@@ -11,13 +9,15 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JMRI-specific extensions to the Java Beans utility class.
  * <p>
  * Since this class extends {@link java.beans.Beans}, classes using methods from
  * both classes need only import this class.
- * 
+ *
  * @author rhwood
  */
 @SuppressWarnings("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
@@ -37,7 +37,7 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
-                        ((IndexedPropertyDescriptor)pd).getIndexedWriteMethod().invoke(object, new Object[]{index, value});
+                        ((IndexedPropertyDescriptor) pd).getIndexedWriteMethod().invoke(object, new Object[]{index, value});
                         return; // short circut, since there is nothing left to do at this point.
                     }
                 }
@@ -68,7 +68,7 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
-                        return ((IndexedPropertyDescriptor)pd).getIndexedReadMethod().invoke(object, new Object[]{index});
+                        return ((IndexedPropertyDescriptor) pd).getIndexedReadMethod().invoke(object, new Object[]{index});
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
@@ -90,12 +90,13 @@ public class Beans extends java.beans.Beans {
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
      * {@link jmri.beans.BeanInterface#setProperty(java.lang.String, java.lang.Object)},
-     * otherwise it calls 
+     * otherwise it calls
      * {@link jmri.beans.Beans#setIntrospectedProperty(java.lang.Object, java.lang.String, java.lang.Object)}.
-     * 
+     *
      * @param object
      * @param value
-     * @see jmri.beans.BeanInterface#setProperty(java.lang.String, java.lang.Object) 
+     * @see jmri.beans.BeanInterface#setProperty(java.lang.String,
+     * java.lang.Object)
      */
     public static void setProperty(Object object, String key, Object value) {
         if (implementsBeanInterface(object)) {
@@ -113,9 +114,9 @@ public class Beans extends java.beans.Beans {
      * {@link String}, this method will not attempt to set the property
      * (JavaBeans introspection rules require that <i>key</i> be a String, while
      * other JMRI coding patterns accept that <i>key</i> can be an Object).
-     * 
+     *
      * @param object
-     * @param value 
+     * @param value
      */
     public static void setIntrospectedProperty(Object object, String key, Object value) {
         if (object != null && key != null) {
@@ -146,12 +147,13 @@ public class Beans extends java.beans.Beans {
      * If the property <i>key</i> cannot be found, this method returns null.
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
-     * {@link jmri.beans.BeanInterface#getProperty(java.lang.String)}, otherwise it calls 
+     * {@link jmri.beans.BeanInterface#getProperty(java.lang.String)}, otherwise
+     * it calls
      * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.Object, java.lang.String)}.
-     * 
+     *
      * @param object
      * @return value of property <i>key</i>
-     * @see jmri.beans.BeanInterface#getProperty(java.lang.String) 
+     * @see jmri.beans.BeanInterface#getProperty(java.lang.String)
      */
     public static Object getProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
@@ -167,11 +169,11 @@ public class Beans extends java.beans.Beans {
      * If the property <i>key</i> cannot be found, this method returns null.
      * <p>
      * This method relies on the standard JavaBeans coding patterns to get and
-     * invoke the property's read method. Note that if <i>key</i> is not
-     * a {@link String}, this method will not attempt to get the property
+     * invoke the property's read method. Note that if <i>key</i> is not a
+     * {@link String}, this method will not attempt to get the property
      * (JavaBeans introspection rules require that <i>key</i> be a String, while
      * other JMRI coding patterns accept that <i>key</i> can be an Object).
-     * 
+     *
      * @param object
      * @return value of property <i>key</i> or null
      */
@@ -202,9 +204,10 @@ public class Beans extends java.beans.Beans {
      * Test if <i>object</i> has the property <i>key</i>.
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
-     * {@link jmri.beans.BeanInterface#hasProperty(java.lang.String)}, otherwise it calls 
+     * {@link jmri.beans.BeanInterface#hasProperty(java.lang.String)}, otherwise
+     * it calls
      * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.Object, java.lang.String)}.
-     * 
+     *
      * @param object
      * @return true if <i>object</i> has property <i>key</i>
      */
@@ -224,7 +227,7 @@ public class Beans extends java.beans.Beans {
      * will not attempt to find the property (JavaBeans introspection rules
      * require that <i>key</i> be a String, while other JMRI coding patterns
      * accept that <i>key</i> can be an Object).
-     * 
+     *
      * @param object
      * @return true if <i>object</i> has property <i>key</i>
      */
@@ -274,13 +277,12 @@ public class Beans extends java.beans.Beans {
 
     /**
      * Test that <i>object</i> implements {@link jmri.beans.BeanInterface}.
-     * 
+     *
      * @param object
      * @return true if <i>object</i> implements BeanInterface.
      */
     public static boolean implementsBeanInterface(Object object) {
         return (null != object && BeanInterface.class.isAssignableFrom(object.getClass()));
     }
-    
     static Logger log = LoggerFactory.getLogger(Beans.class.getName());
 }

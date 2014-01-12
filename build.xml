@@ -750,6 +750,7 @@
             description="build and run build and run CornwallRR app">
         <antcall target="-run-jmri-application">
              <param name="application.classname" value="apps.cornwall.CornwallRR"/>
+             <param name="antargline" value="CornwallConfig2.xml"/>
         </antcall>
     </target>
 
@@ -1162,9 +1163,9 @@
        host will only be able to create the Windows & Linux packages.  If there are HFS+ filesystem
        tools available for Windows, that's news to me.
 
-       Someone could get clever and put dependencies in place to make sure that the right targets
-       are used when on a limited OS (e.g., don't build Mac OS X packages on Windows).  Not me.
-  -->
+         Someone could get clever and put dependencies in place to make sure that the right targets
+         are used when on a limited OS (e.g., don't build Mac OS X packages on Windows).  Not me.
+    -->
 
     <target name="packages"
             description="create all OS-specific release packages"
@@ -1368,7 +1369,7 @@
 
 
     <!-- macro task to perform token replacement when copying the startup
-         script template file to an application specific file -->
+    script template file to an application specific file -->
 
     <macrodef name="make-startup-script">
         <attribute name="script.name"/>
@@ -1385,7 +1386,7 @@
                 </filterset>
             </copy>
             <chmod perm="ugo+rx" file="@{dest}"/>
-       </sequential>
+        </sequential>
     </macrodef>
 
 
@@ -1423,13 +1424,13 @@
 
 
 
-<!-- targets to support revision control repository management -->
+    <!-- targets to support revision control repository management -->
 
     <!-- where is the SVN repository -->
     <property name="repository.base-url" value="svn+ssh://${sourceforge.userid}@svn.code.sf.net/p/jmri/code/"/>
 
     <!-- you can set these to alternate values in local.properties
-         when you need to test.  Please do not change them here! -->
+    when you need to test.  Please do not change them here! -->
     <property name="svndir.trunk" value="/trunk/jmri"/>
     <property name="svndir.releases" value="/branches/jmri/releases"/>
 
@@ -1442,15 +1443,15 @@
 
 
     <!-- several steps are involved in creating a new test release
-         branch from trunk/HEAD.  This target intends to manage as
-         many of them as possible -->
+    branch from trunk/HEAD.  This target intends to manage as
+    many of them as possible -->
     <target name="make-test-release-branch"
             description="Make a new test release branch in SVN, copying the head of the trunk to the new release dir">
 
         <!-- copy the trunk/HEAD to the new release directory.  Since
-             the trunk's release.properties always points to the NEXT
-             release (aka, the one we're making), release.properties and
-             ${release} will be correct for this new branch -->
+        the trunk's release.properties always points to the NEXT
+        release (aka, the one we're making), release.properties and
+        ${release} will be correct for this new branch -->
 
         <svn refid="svn.settings">
             <copy srcUrl="${repository.jmri-trunk}"
@@ -1459,9 +1460,9 @@
         </svn>
 
         <!-- now we check out JUST the very top level of the trunk and
-             the new release branch (that what depth="files" does).
-             This working copy might not be the trunk HEAD, so we
-             don't want to modify the file right here -->
+        the new release branch (that what depth="files" does).
+        This working copy might not be the trunk HEAD, so we
+        don't want to modify the file right here -->
         <delete dir="${tempdir}"/>
         <mkdir dir="${tempdir}"/>
         <svn refid="svn.settings">
@@ -1474,20 +1475,20 @@
         </svn>
 
         <!-- in the trunk release.properties file, we now increment
-             the release.build value in order to point to the NEW next
-             release (the one after we're branching to create) -->
+        the release.build value in order to point to the NEW next
+        release (the one after we're branching to create) -->
         <propertyfile file="${head-dir}/release.properties">
             <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
 
         <!-- and in the newly created release branch, we modify
-             release.properties to show that we have indeed branched -->
+        release.properties to show that we have indeed branched -->
         <propertyfile file="${branch-dir}/release.properties">
             <entry key="release.is_branched" type="string" operation="=" value="true"/>
         </propertyfile>
 
         <!-- now we check in the now modified files from trunk/HEAD
-             and the new branch -->
+        and the new branch -->
         <svn refid="svn.settings">
             <commit file="${branch-dir}/release.properties"
                     message="set release.is-branched to true"/>
@@ -1496,8 +1497,8 @@
         </svn>
 
         <!-- lastly, since we're probably in a HEAD tree, we're going
-             to try to update the release.properties file in this directory
-             to help keep things in sync -->
+        to try to update the release.properties file in this directory
+        to help keep things in sync -->
         <svn refid="svn.settings">
             <update file="release.properties"/>
         </svn>

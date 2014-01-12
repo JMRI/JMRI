@@ -6,19 +6,34 @@ import apps.AppsBase;
 import apps.CreateButtonModel;
 import apps.SplashWindow;
 import apps.SystemConsole;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.swing.AboutDialog;
+import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
@@ -190,6 +205,7 @@ public abstract class Apps3 extends AppsBase {
     /**
      * Final actions before releasing control of app to user
      */
+    @Override
     protected void start() {
         // TODO: splash(false);
         super.start();
@@ -264,6 +280,7 @@ public abstract class Apps3 extends AppsBase {
     private void prepareFontLists() {
         // Prepare font lists
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 log.debug("Prepare font lists...");
                 FontComboUtil.prepareFontLists();
@@ -295,6 +312,74 @@ public abstract class Apps3 extends AppsBase {
                 return handleQuit();
             }
         });
+    }
+
+    /**
+     * Configure the {@link jmri.profile.Profile} to use for this application.
+     * <p>
+     * Overrides super() method so dialogs can be displayed.
+     */
+    @Override
+    protected void configureProfile() {
+        String profileFilename;
+        FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Needs to be declared final as we might need to
+        // refer to this on the Swing thread
+        File profileFile;
+        profileFilename = getConfigFileName().replaceFirst(".xml", ".properties");
+        // decide whether name is absolute or relative
+        if (!new File(profileFilename).isAbsolute()) {
+            // must be relative, but we want it to
+            // be relative to the preferences directory
+            profileFile = new File(FileUtil.getPreferencesPath() + profileFilename);
+        } else {
+            profileFile = new File(profileFilename);
+        }
+        ProfileManager.defaultManager().setConfigFile(profileFile);
+        // See if the profile to use has been specified on the command line as
+        // a system property jmri.profile as a profile id.
+        if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
+            ProfileManager.defaultManager().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
+        }
+        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        if (!ProfileManager.defaultManager().getConfigFile().exists()) { // no profile config for this app
+            try {
+                if (ProfileManager.defaultManager().migrateToProfiles(getConfigFileName())) { // migration or first use
+                    // notify user of change only if migration occured
+                    // TODO: a real migration message
+                    JOptionPane.showMessageDialog(sp,
+                            Bundle.getMessage("ConfigMigratedToProfile"),
+                            jmri.Application.getApplicationName(),
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(sp,
+                        ex.getLocalizedMessage(),
+                        jmri.Application.getApplicationName(),
+                        JOptionPane.ERROR_MESSAGE);
+                log.error(ex.getMessage(), ex);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(sp,
+                        ex.getLocalizedMessage(),
+                        jmri.Application.getApplicationName(),
+                        JOptionPane.ERROR_MESSAGE);
+                log.error(ex.getMessage(), ex);
+            }
+        }
+        try {
+            // GUI should use ProfileManagerDialog.getStartingProfile here
+            if (ProfileManager.getStartingProfile() != null) {
+                // Manually setting the configFilename property since calling
+                // Apps.setConfigFilename() does not reset the system property
+                System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
+                log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
+            } else {
+                log.error("Specify profile to use as command line argument.");
+                log.error("Profiles not configurable. Using fallback per-application configuration.");
+            }
+        } catch (IOException ex) {
+            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(Apps3.class.getName());

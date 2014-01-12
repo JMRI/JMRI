@@ -12,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import java.util.Hashtable;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;

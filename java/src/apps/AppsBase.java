@@ -3,6 +3,7 @@ package apps;
 
 import apps.gui3.TabbedPreferences;
 import java.io.File;
+import java.io.IOException;
 import java.util.Enumeration;
 import javax.swing.SwingUtilities;
 import jmri.Application;
@@ -20,6 +21,8 @@ import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.DefaultUserMessagePreferences;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
 import jmri.util.PythonInterp;
@@ -96,6 +99,8 @@ public abstract class AppsBase {
             initLog4J();
         }
 
+        configureProfile();
+
         installConfigurationManager();
 
         installShutDownManager();
@@ -142,6 +147,64 @@ public abstract class AppsBase {
         };
         Thread thr2 = new Thread(r, "initialize python interpreter");
         thr2.start();
+    }
+
+    /**
+     * Configure the {@link jmri.profile.Profile} to use for this application.
+     * <p>
+     * Note that GUI-based applications must override this method, since this
+     * method does not provide user feedback.
+     */
+    protected void configureProfile() {
+        String profileFilename;
+        FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Needs to be declared final as we might need to
+        // refer to this on the Swing thread
+        File profileFile;
+        profileFilename = getConfigFileName().replaceFirst(".xml", ".properties");
+        // decide whether name is absolute or relative
+        if (!new File(profileFilename).isAbsolute()) {
+            // must be relative, but we want it to
+            // be relative to the preferences directory
+            profileFile = new File(FileUtil.getPreferencesPath() + profileFilename);
+        } else {
+            profileFile = new File(profileFilename);
+        }
+        ProfileManager.defaultManager().setConfigFile(profileFile);
+        // See if the profile to use has been specified on the command line as
+        // a system property jmri.profile as a profile id.
+        if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
+            ProfileManager.defaultManager().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
+        }
+        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        if (!ProfileManager.defaultManager().getConfigFile().exists()) { // no profile config for this app
+            try {
+                if (ProfileManager.defaultManager().migrateToProfiles(getConfigFileName())) { // migration or first use
+                    // GUI should show message here
+                    log.info(Bundle.getMessage("ConfigMigratedToProfile"));
+                }
+            } catch (IOException ex) {
+                    // GUI should show message here
+                log.error("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+            } catch (IllegalArgumentException ex) {
+                    // GUI should show message here
+                log.error("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+            }
+        }
+        try {
+            // GUI should use ProfileManagerDialog.getStartingProfile here
+            if (ProfileManager.getStartingProfile() != null) {
+                // Manually setting the configFilename property since calling
+                // Apps.setConfigFilename() does not reset the system property
+                System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
+                log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
+            } else {
+                log.error("Specify profile to use as command line argument.");
+                log.error("Profiles not configurable. Using fallback per-application configuration.");
+            }
+        } catch (IOException ex) {
+            log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+        }
     }
 
     protected void installConfigurationManager() {
@@ -313,7 +376,8 @@ public abstract class AppsBase {
         }
     }
 
-    // We will use the value stored in the system property 
+    // We will use the value stored in the system property
+    // TODO: change to return profile-name/profile.xml
     static public String getConfigFileName() {
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return System.getProperty("org.jmri.Apps.configFilename");
