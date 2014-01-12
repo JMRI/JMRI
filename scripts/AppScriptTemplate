@@ -39,9 +39,26 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
+# ensure JMRI options are always set
+JMRI_OPTIONS=${JMRI_OPTIONS:-}
+
+# set default config name
+CONFIGNAME=""
+
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
 
+# process command line arguments
+while [ $# -gt 0 ]; do
+    case $1 in
+	-d|--debug) DEBUG="yes" ;;
+	--profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"${1#*=}\"" ;;
+        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"$2\"" ;;
+        --config=*) CONFIGNAME="${1#*=}" ;;
+        -c) CONFIGNAME="$2";
+    esac
+    shift
+done
 
 ## ask the user if they want to install Java, and open the Java web site if yes
 OfferJavaDownload() {
@@ -244,13 +261,11 @@ fi
 
 # we only process a config file name when the application is
 # NOT the default one this script was built for.
-if [ "$APPNAME" != "$DEFAULT_APP_NAME" ]
-then
-
-    CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
-
+if [ "$APPNAME" != "$DEFAULT_APP_NAME" ] ; then
+    if [ -z "${CONFIGNAME}" ] ; then
+        CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
+    fi
     CONFIGFILE="config=${CONFIGNAME}Config.xml"
-
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 fi
 
