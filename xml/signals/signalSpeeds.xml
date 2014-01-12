@@ -1,68 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="/xml/XSLT/speedtable.xsl" type="text/xsl"?>
-
-<speedtable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/speedtable.xsd"
->
-
+<speedtable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/speedtable.xsd">
   <name>Speed Requirements for Signal Aspects</name>
-  <reference>Speeds commonly commonly associated to signals</reference>
-
+  <reference>Speeds commonly associated to signals</reference>
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2010</year><year>2010</year><holder>JMRI</holder>
+    <year>2010</year>
+    <year>2014</year>
+    <holder>JMRI</holder>
   </copyright>
-
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
-    </author>    
+      <personname>
+        <firstname>Pete</firstname>
+        <surname>Cressman</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2010-03-28</date>
-        <authorinitials>PWC</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+      <revnumber>1</revnumber>
+      <date>2010-03-28</date>
+      <authorinitials>PWC</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2014-01-10</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Increase Normal speed to 80 and add new speeds of Sixty and Fifty to accomodate BNSF signal system definition</revremark>
+    </revision>
   </revhistory>
-
-<!-- Meaning of the number used for the aspectSpeeds names in the aspectSpeeds  -->
-<!-- table below. The table maps the names used in signal aspects.xml files to  -->
-<!-- a number that is translated to a throttle setting.                         -->
-<!-- percentNormal is the percentage of the recorded speed (the "Normal" speed  --> 
-<!-- percentThrottle is the percentage of the full throttle speed               --> 
+  <!-- Meaning of the number used for the aspectSpeeds names in the aspectSpeeds  -->
+  <!-- table below. The table maps the names used in signal aspects.xml files to  -->
+  <!-- a number that is translated to a throttle setting.                         -->
+  <!-- percentNormal is the percentage of the recorded speed (the "Normal" speed  -->
+  <!-- percentThrottle is the percentage of the full throttle speed               -->
   <interpretation>percentThrottle</interpretation>
-
-<!-- Speed changes are ramped from the current indication to the next.          -->
-<!-- Throttle speed commands are sent incrementally with a delay between them.  -->
-<!-- The delay in milliseconds between speed increments sent to the throttle.   -->
+  <!-- Speed changes are ramped from the current indication to the next.          -->
+  <!-- Throttle speed commands are sent incrementally with a delay between them.  -->
+  <!-- The delay in milliseconds between speed increments sent to the throttle.   -->
   <msPerIncrement>750</msPerIncrement>
-<!-- Time needed to ramp a speed change can be shortened      -->
-<!-- by increasing the number of steps per throttle command   -->   
+  <!-- Time needed to ramp a speed change can be shortened      -->
+  <!-- by increasing the number of steps per throttle command   -->
   <stepsPerIncrement>1</stepsPerIncrement>
-  
-<!-- Map speed names to ratios used in throttle settings                            -->
-<!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
-<!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
-<!-- however the names must match those in the "appearanceSpeeds" table below for   -->
-<!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
-<!-- These speeds are enforced at the entrance to a block                           -->
+  <!-- Map speed names to ratios used in throttle settings                            -->
+  <!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
+  <!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
+  <!-- however the names must match those in the "appearanceSpeeds" table below for   -->
+  <!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
+  <!-- These speeds are enforced at the entrance to a block                           -->
   <aspectSpeeds>
     <Maximum>100</Maximum>
-    <Normal>60</Normal>
+    <Normal>80</Normal>
+    <Sixty>60</Sixty>
+    <Fifty>50</Fifty>
     <Limited>35</Limited>
     <Medium>20</Medium>
     <Slow>10</Slow>
     <Restricted>3</Restricted>
     <Stop>0</Stop>
   </aspectSpeeds>
-
-<!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
-<!-- Appearance names are those listed in jmri.implementation.DefaultSignalHead       -->
-<!-- speed names must agree with the names in the above "speeds" elements             --> 
-<!-- These speeds are enforced at the entrance to a block                             -->
+  <!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
+  <!-- Appearance names are those listed in jmri.implementation.DefaultSignalHead       -->
+  <!-- speed names must agree with the names in the above "speeds" elements             -->
+  <!-- These speeds are enforced at the entrance to a block                             -->
   <appearanceSpeeds>
     <SignalHeadStateRed>Stop</SignalHeadStateRed>
     <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
@@ -71,8 +78,6 @@
     <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
     <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
     <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
-    <SignalHeadStateFlashingLunar>slow</SignalHeadStateFlashingLunar>    
+    <SignalHeadStateFlashingLunar>slow</SignalHeadStateFlashingLunar>
   </appearanceSpeeds>
-
 </speedtable>
-  
