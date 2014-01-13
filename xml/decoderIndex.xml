@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20131206-1931-jake on Fri Dec 06 11:31:51 PST 2013 $Id$-->
-  <decoderIndex version="296">
+  <!--Written by JMRI version 20140113-2147-jake on Mon Jan 13 13:47:29 PST 2014 $Id$-->
+  <decoderIndex version="297">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1633,22 +1633,14 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="AUX 5" maxcurrent="5mA" />
-          <output name="8" label="AUX 6" maxcurrent="5mA" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Fire" />
-          <output name="13" label="Dim" />
-          <output name="14" label="Cross" />
-          <output name="15" label="Shift" />
+        <model model="LokPilot V4.0" numOuts="112" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
+          <output name="97" label="not/used" />
+          <output name="98" label="not/used" />
+          <output name="99" label="not/used" />
+          <output name="100" label="not/used" />
+          <output name="101" label="not/used" />
+          <output name="102" label="not/used" />
+          <output name="103" label="not/used" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
           <protocols>
@@ -1657,41 +1649,25 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4DCC">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="AUX 5" maxcurrent="5mA" />
-          <output name="8" label="AUX 6" maxcurrent="5mA" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Fire" />
-          <output name="13" label="Dim" />
-          <output name="14" label="Cross" />
-          <output name="15" label="Shift" />
+        <model model="LokPilot DCC V4.0" numOuts="112" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
+          <output name="97" label="not/used" />
+          <output name="98" label="not/used" />
+          <output name="99" label="not/used" />
+          <output name="100" label="not/used" />
+          <output name="101" label="not/used" />
+          <output name="102" label="not/used" />
+          <output name="103" label="not/used" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
-        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4">
-          <output name="1" label="Headlight" maxcurrent="150mA" />
-          <output name="2" label="Rear light" maxcurrent="150mA" />
-          <output name="3" label="AUX 1" maxcurrent="150mA" />
-          <output name="4" label="AUX 2" maxcurrent="150mA" />
-          <output name="5" label="AUX 3" maxcurrent="5mA" />
-          <output name="6" label="AUX 4" maxcurrent="5mA" />
-          <output name="7" label="AUX 5" />
-          <output name="8" label="AUX 6" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Fire" />
-          <output name="13" label="Dim" />
-          <output name="14" label="Cross" />
-          <output name="15" label="Shift" />
+        <model model="LokPilot Micro V4.0" numOuts="112" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
+          <output name="97" label="not/used" />
+          <output name="98" label="not/used" />
+          <output name="99" label="not/used" />
+          <output name="100" label="not/used" />
+          <output name="101" label="not/used" />
+          <output name="102" label="not/used" />
+          <output name="103" label="not/used" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
           <protocols>
@@ -1700,22 +1676,14 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4DCC">
-          <output name="1" label="Headlight" maxcurrent="150mA" />
-          <output name="2" label="Rear light" maxcurrent="150mA" />
-          <output name="3" label="AUX 1" maxcurrent="150mA" />
-          <output name="4" label="AUX 2" maxcurrent="150mA" />
-          <output name="5" label="AUX 3" maxcurrent="5mA" />
-          <output name="6" label="AUX 4" maxcurrent="5mA" />
-          <output name="7" label="AUX 5" />
-          <output name="8" label="AUX 6" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Fire" />
-          <output name="13" label="Dim" />
-          <output name="14" label="Cross" />
-          <output name="15" label="Shift" />
+        <model model="LokPilot Micro DCC V4.0" numOuts="112" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
+          <output name="97" label="not/used" />
+          <output name="98" label="not/used" />
+          <output name="99" label="not/used" />
+          <output name="100" label="not/used" />
+          <output name="101" label="not/used" />
+          <output name="102" label="not/used" />
+          <output name="103" label="not/used" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, Next18" -->
         </model>
@@ -1793,220 +1761,26 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
-        <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="AUX 5" maxcurrent="5mA" />
-          <output name="8" label="AUX 6" maxcurrent="5mA" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Dim" />
-          <output name="13" label="Cross" />
-          <output name="14" label="Notch" />
-          <output name="15" label="Dop" />
-          <output name="16" label="Shift" />
-          <output name="17" label="Snd" />
-          <output name="18" label="SS2" />
-          <output name="19" label="SS3" />
-          <output name="20" label="SS4" />
-          <output name="21" label="SS5" />
-          <output name="22" label="SS6" />
-          <output name="23" label="SS7" />
-          <output name="24" label="SS8" />
-          <output name="25" label="SS9" />
-          <output name="26" label="SS10" />
-          <output name="27" label="SS11" />
-          <output name="28" label="SS12" />
-          <output name="29" label="SS13" />
-          <output name="30" label="SS14" />
-          <output name="31" label="SS15" />
-          <output name="32" label="SS16" />
-          <output name="33" label="SS17" />
-          <output name="34" label="SS18" />
-          <output name="35" label="SS19" />
-          <output name="36" label="SS20" />
-          <output name="37" label="SS21" />
-          <output name="38" label="SS22" />
-          <output name="39" label="SS23" />
-          <output name="40" label="SS24" />
+        <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound V4.0 21MTC" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54499">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="AUX 5" maxcurrent="5mA" />
-          <output name="8" label="AUX 6" maxcurrent="5mA" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Dim" />
-          <output name="13" label="Cross" />
-          <output name="14" label="Notch" />
-          <output name="15" label="Dop" />
-          <output name="16" label="Shift" />
-          <output name="17" label="Snd" />
-          <output name="18" label="SS2" />
-          <output name="19" label="SS3" />
-          <output name="20" label="SS4" />
-          <output name="21" label="SS5" />
-          <output name="22" label="SS6" />
-          <output name="23" label="SS7" />
-          <output name="24" label="SS8" />
-          <output name="25" label="SS9" />
-          <output name="26" label="SS10" />
-          <output name="27" label="SS11" />
-          <output name="28" label="SS12" />
-          <output name="29" label="SS13" />
-          <output name="30" label="SS14" />
-          <output name="31" label="SS15" />
-          <output name="32" label="SS16" />
-          <output name="33" label="SS17" />
-          <output name="34" label="SS18" />
-          <output name="35" label="SS19" />
-          <output name="36" label="SS20" />
-          <output name="37" label="SS21" />
-          <output name="38" label="SS22" />
-          <output name="39" label="SS23" />
-          <output name="40" label="SS24" />
+        <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM651" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54800">
-          <output name="1" label="Headlight" maxcurrent="150mA" />
-          <output name="2" label="Rear light" maxcurrent="150mA" />
-          <output name="3" label="AUX 1" maxcurrent="150mA" />
-          <output name="4" label="AUX 2" maxcurrent="150mA" />
-          <output name="5" label="AUX 3" maxcurrent="5mA" />
-          <output name="6" label="AUX 4" maxcurrent="5mA" />
-          <output name="7" label="AUX 5" />
-          <output name="8" label="AUX 6" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Dim" />
-          <output name="13" label="Cross" />
-          <output name="14" label="Notch" />
-          <output name="15" label="Dop" />
-          <output name="16" label="Shift" />
-          <output name="17" label="Snd" />
-          <output name="18" label="SS2" />
-          <output name="19" label="SS3" />
-          <output name="20" label="SS4" />
-          <output name="21" label="SS5" />
-          <output name="22" label="SS6" />
-          <output name="23" label="SS7" />
-          <output name="24" label="SS8" />
-          <output name="25" label="SS9" />
-          <output name="26" label="SS10" />
-          <output name="27" label="SS11" />
-          <output name="28" label="SS12" />
-          <output name="29" label="SS13" />
-          <output name="30" label="SS14" />
-          <output name="31" label="SS15" />
-          <output name="32" label="SS16" />
-          <output name="33" label="SS17" />
-          <output name="34" label="SS18" />
-          <output name="35" label="SS19" />
-          <output name="36" label="SS20" />
-          <output name="37" label="SS21" />
-          <output name="38" label="SS22" />
-          <output name="39" label="SS23" />
-          <output name="40" label="SS24" />
+        <model model="LokSound Micro V4.0 NEM651" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54899">
-          <output name="1" label="Headlight" maxcurrent="150mA" />
-          <output name="2" label="Rear light" maxcurrent="150mA" />
-          <output name="3" label="AUX 1" maxcurrent="150mA" />
-          <output name="4" label="AUX 2" maxcurrent="150mA" />
-          <output name="5" label="AUX 3" maxcurrent="5mA" />
-          <output name="6" label="AUX 4" maxcurrent="5mA" />
-          <output name="7" label="AUX 5" />
-          <output name="8" label="AUX 6" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Dim" />
-          <output name="13" label="Cross" />
-          <output name="14" label="Notch" />
-          <output name="15" label="Dop" />
-          <output name="16" label="Shift" />
-          <output name="17" label="Snd" />
-          <output name="18" label="SS2" />
-          <output name="19" label="SS3" />
-          <output name="20" label="SS4" />
-          <output name="21" label="SS5" />
-          <output name="22" label="SS6" />
-          <output name="23" label="SS7" />
-          <output name="24" label="SS8" />
-          <output name="25" label="SS9" />
-          <output name="26" label="SS10" />
-          <output name="27" label="SS11" />
-          <output name="28" label="SS12" />
-          <output name="29" label="SS13" />
-          <output name="30" label="SS14" />
-          <output name="31" label="SS15" />
-          <output name="32" label="SS16" />
-          <output name="33" label="SS17" />
-          <output name="34" label="SS18" />
-          <output name="35" label="SS19" />
-          <output name="36" label="SS20" />
-          <output name="37" label="SS21" />
-          <output name="38" label="SS22" />
-          <output name="39" label="SS23" />
-          <output name="40" label="SS24" />
+        <model model="LokSound Micro V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0 Next18" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54898">
-          <output name="1" label="Headlight" maxcurrent="150mA" />
-          <output name="2" label="Rear light" maxcurrent="150mA" />
-          <output name="3" label="AUX 1" maxcurrent="150mA" />
-          <output name="4" label="AUX 2" maxcurrent="150mA" />
-          <output name="5" label="AUX 3" maxcurrent="5mA" />
-          <output name="6" label="AUX 4" maxcurrent="5mA" />
-          <output name="7" label="AUX 5" />
-          <output name="8" label="AUX 6" />
-          <output name="9" label="ABV" />
-          <output name="10" label="Shunt" />
-          <output name="11" label="DB" />
-          <output name="12" label="Dim" />
-          <output name="13" label="Cross" />
-          <output name="14" label="Notch" />
-          <output name="15" label="Dop" />
-          <output name="16" label="Shift" />
-          <output name="17" label="Snd" />
-          <output name="18" label="SS2" />
-          <output name="19" label="SS3" />
-          <output name="20" label="SS4" />
-          <output name="21" label="SS5" />
-          <output name="22" label="SS6" />
-          <output name="23" label="SS7" />
-          <output name="24" label="SS8" />
-          <output name="25" label="SS9" />
-          <output name="26" label="SS10" />
-          <output name="27" label="SS11" />
-          <output name="28" label="SS12" />
-          <output name="29" label="SS13" />
-          <output name="30" label="SS14" />
-          <output name="31" label="SS15" />
-          <output name="32" label="SS16" />
-          <output name="33" label="SS17" />
-          <output name="34" label="SS18" />
-          <output name="35" label="SS19" />
-          <output name="36" label="SS20" />
-          <output name="37" label="SS21" />
-          <output name="38" label="SS22" />
-          <output name="39" label="SS23" />
-          <output name="40" label="SS24" />
+        <model model="LokSound Micro V4.0 Next18" numOuts="128" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model model="LokSound XL V4.0 Screw Terminals" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+          <size length="51" width="41" height="14" units="mm" />
+        </model>
+        <model model="LokSound XL V4.0 PIN connector" numOuts="128" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+          <size length="51" width="41" height="14" units="mm" />
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -2074,836 +1848,82 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select.xml">
-        <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Alco 244" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73402">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Alco 251" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73427">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Alco 251-16" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 539T" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73411">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Alco 539T" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606_606NA" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73446">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Baldwin 606_606NA" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606SC_606A" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73447">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Baldwin 606SC_606A" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin VO-6" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Baldwin VO-6" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 567" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73406">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 567" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73407">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 645E" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73443">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 12-645 non turbo" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645E3" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73439">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 12-645E3" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73426">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 16-645 non turbo" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD F40PH" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73430">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD F40PH" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73450">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 16-645F" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E/F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73408">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 645E/F" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 710GB" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73410">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD 710GB" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD70M-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73425">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD SD70M-2" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD80MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73461">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD SD80MAC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD90MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73431">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD SD90MAC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD MP40PH-2C" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73428">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select EMD MP40PH-2C" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE Cat-44" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73444">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select GE Cat-44" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73403">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select GE FDL" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73445">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select GE FDL-16" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE 7FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73404">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select GE 7FDL" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select Baldwin" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select PCC trolley steetcar" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73418">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="DB" />
-          <output name="20" label="Comp" />
-          <output name="21" label="Fan" />
-          <output name="22" label="Det" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Air" />
-          <output name="28" label="Pop" />
-          <output name="29" label="S Horn" />
+        <model model="LokSound Select PCC trolley steetcar" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
@@ -2932,260 +1952,28 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
-        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select SP Cab Forward" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73409">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select SP Cab Forward" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Y6B 2-8-8-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73457">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Y6B 2-8-8-2" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 3 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73413">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Steam 3 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 4 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73414">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Steam 4 Driven Axles" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Geared" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73415">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Steam Geared" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Articulated" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Steam Articulated" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Collection" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73417">
-          <output name="1" label="Headlight" maxcurrent="250mA" />
-          <output name="2" label="Rear light" maxcurrent="250mA" />
-          <output name="3" label="AUX 1" maxcurrent="250mA" />
-          <output name="4" label="AUX 2" maxcurrent="250mA" />
-          <output name="5" label="AUX 3" maxcurrent="250mA" />
-          <output name="6" label="AUX 4" maxcurrent="250mA" />
-          <output name="7" label="Acc" />
-          <output name="8" label="Sw" />
-          <output name="9" label="DB" />
-          <output name="10" label="Dim" />
-          <output name="11" label="Cross" />
-          <output name="12" label="Notch" />
-          <output name="13" label="Dop" />
-          <output name="14" label="Shift" />
-          <output name="15" label="Prime" />
-          <output name="16" label="Horn" />
-          <output name="17" label="Bell" />
-          <output name="18" label="Coup" />
-          <output name="19" label="Dyno" />
-          <output name="20" label="Pump" />
-          <output name="21" label="Blow" />
-          <output name="22" label="Inj" />
-          <output name="23" label="Comm" />
-          <output name="24" label="Clak" />
-          <output name="25" label="Brake" />
-          <output name="26" label="Sand" />
-          <output name="27" label="Oil" />
-          <output name="28" label="Coal" />
-          <output name="29" label="S Whsl" />
+        <model model="LokSound Select Steam Collection" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
@@ -3345,11 +2133,10 @@
           <output name="4" label="4 - Purple" />
         </model>
       </family>
-      <family name="R8249" mfg="Hornby" file="Hornby8249.xml">
+      <family name="Digital" mfg="Hornby" highVersionID="13" lowVersionID="13" file="Hornby8249.xml">
         <model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes" nmraWarrantStart="200808" maxTotalCurrent="0.5A" maxMotorCurrent="0.5A">
           <size length="17" width="10" height="3.5" units="mm" />
         </model>
-        <!-- don't know version id, maybe lowVersionID="13"?  -->
       </family>
       <family name="Digital" mfg="Hornby" file="HornbyDigital.xml">
         <model model="DCC-Fitted (Motored)" numOuts="2" numFns="1" nmraWarrant="no" maxTotalCurrent="0.5A" formFactor="DCC Fitted" comment="Pendolino, other light only locos" />
@@ -3816,6 +2603,12 @@
       </family>
       <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_F_Unit.xml">
         <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
+      </family>
+      <family name="N Scale - No Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_N_scale_Non_sound.xml">
+        <model model="N Gauge Atlas GP and Others - 1641" numOuts="2" numFns="4" maxTotalCurrent="1.0A" />
+        <model model="N Gauge Kato SD70 MAC and AC4400 - 1642" numOuts="2" numFns="4" maxTotalCurrent="1.0A" />
+        <model model="N Gauge Kato F Unit - 1659" numOuts="2" numFns="4" maxTotalCurrent="1.0A" />
+        <model model="N Gauge Kato P42 / E8 / E9 - 1664" numOuts="2" numFns="4" maxTotalCurrent="1.0A" />
       </family>
       <family name="Rapido" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Rapido_TurboTrain.xml">
         <model model="TurboTrain" numOuts="0" numFns="26" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
@@ -9487,6 +8280,44 @@
       <family name="AC1" mfg="Spectrum Engineering" comment="AC1 is an animation accessory decoder with secondary OPS access as a LOCO" file="Spectrum_AC8824.xml">
         <model model="AC1" lowVersionID="16" highVersionID="16" />
       </family>
+      <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH" file="TAMS_FD-LED.xml">
+        <model model="FD-LED" numOuts="3" numFns="30" productID="FD-LED">
+          <output name="1" label="AUX 1" maxcurrent="300mA" />
+          <output name="2" label="AUX 2" maxcurrent="300mA" />
+          <output name="3" label="AUX 3 (max. 2 LEDs)" maxcurrent="10mA" />
+          <size length="21.5" width="11.5" height="4.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH" file="TAMS_FD-R_Basic.xml">
+        <model model="FD-R Basic" numOuts="2" numFns="14" productID="FD-R-B">
+          <output name="1" label="AUX 1" maxcurrent="100mA" />
+          <output name="2" label="AUX 2" maxcurrent="100mA" />
+          <size length="12.5" width="9.5" height="3.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
+      <family name="Function decoders (FD)" mfg="Tams Elektronik GmbH" file="TAMS_FD-R_Extended.xml">
+        <model model="FD-R Extended" numOuts="6" numFns="30" maxTotalCurrent="1.5A" productID="FD-R-Ext">
+          <output name="1" label="AUX 1" maxcurrent="500mA" />
+          <output name="2" label="AUX 2" maxcurrent="500mA" />
+          <output name="3" label="AUX 3" maxcurrent="500mA" />
+          <output name="4" label="AUX 4" maxcurrent="500mA" />
+          <output name="5" label="AUX 5" maxcurrent="500mA" />
+          <output name="6" label="AUX 6" maxcurrent="500mA" />
+          <size length="24" width="14" height="2.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+      </family>
       <family name="Standard Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10" file="TAMS_LD-G-21.xml">
         <model model="LD-G-21" numOuts="4" numFns="10">
           <output name="1" label="X2" />
@@ -9502,6 +8333,62 @@
           <output name="3" label="Acceleration Delay" />
           <output name="4" label="Shunting gear" />
           <output name="5" label="Shunting light" />
+        </model>
+      </family>
+      <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">
+        <model model="WIB-31" numOuts="8" numFns="14" comment="yellow LEDs" productID="WIB-31">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+          <output name="3" label="LED 3" />
+          <output name="4" label="LED 4" />
+          <output name="5" label="LED 5" />
+          <output name="6" label="LED 6" />
+          <output name="7" label="LED 7" />
+          <output name="8" label="LED 8" />
+          <output name="9" label="AUX 1" maxcurrent="300mA" />
+          <output name="10" label="AUX 2 (LED)" maxcurrent="20mA" />
+          <output name="11" label="AUX 3" maxcurrent="300mA" />
+          <size length="240" width="9" height="3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="WIB-32" numOuts="8" numFns="14" comment="cold white LEDs" productID="WIB-32">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+          <output name="3" label="LED 3" />
+          <output name="4" label="LED 4" />
+          <output name="5" label="LED 5" />
+          <output name="6" label="LED 6" />
+          <output name="7" label="LED 7" />
+          <output name="8" label="LED 8" />
+          <output name="9" label="AUX 1" maxcurrent="300mA" />
+          <output name="10" label="AUX 2 (LED)" maxcurrent="20mA" />
+          <output name="11" label="AUX 3" maxcurrent="300mA" />
+          <size length="240" width="9" height="3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="WIB-33" numOuts="8" numFns="14" comment="warm white LEDs" productID="WIB-33">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+          <output name="3" label="LED 3" />
+          <output name="4" label="LED 4" />
+          <output name="5" label="LED 5" />
+          <output name="6" label="LED 6" />
+          <output name="7" label="LED 7" />
+          <output name="8" label="LED 8" />
+          <output name="9" label="AUX 1" maxcurrent="300mA" />
+          <output name="10" label="AUX 2 (LED)" maxcurrent="20mA" />
+          <output name="11" label="AUX 3" maxcurrent="300mA" />
+          <size length="240" width="9" height="3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
         </model>
       </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" file="TCS_A1.xml">
