@@ -511,7 +511,7 @@
                 A decimal value, but stored across two CVs using some simple calculations
                 </xs:documentation></xs:annotation>
                 <xs:complexType>
-                  <xs:attribute name="highCV" type="xs:int"/>
+                  <xs:attribute name="highCV" type="cvNameType" use="required" />
                   <xs:attribute name="min" type="xs:int" default="0"/>
                   <xs:attribute name="max" type="xs:int" default="255"/>
                   <xs:attribute name="default" type="xs:int"/>
