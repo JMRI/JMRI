@@ -1371,18 +1371,17 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 					// now check car's destination
 					for (int k = j; k < rLocations.size(); k++) {
-						rLoc = rLocations.get(k);
-						if (rLoc.getName().equals(car.getDestinationName())
-								&& rLoc.isDropAllowed()
-								&& rLoc.getMaxCarMoves() > 0
-								&& !skipsLocation(rLoc.getId())
-								&& (!isSendCarsToTerminalEnabled() || TrainCommon.splitString(car.getDestinationName())
-										.equals(TrainCommon.splitString(getTrainTerminatesName())))
-								&& ((car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())
-								&& ( !Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack().acceptsDestination(car.getDestination()))) {
-							// found a destination, now check destination track
+						RouteLocation rldest = rLocations.get(k);
+						if (rldest.getName().equals(car.getDestinationName())
+								&& rldest.isDropAllowed()
+								&& rldest.getMaxCarMoves() > 0
+								&& !skipsLocation(rldest.getId())
+								&& ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) > 0 || isLocalSwitcher())
+								&& (!Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack()
+										.acceptsDestination(car.getDestination()))) {
+						// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
-								if (((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
+								if (((car.getDestinationTrack().getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher())
 										|| !car.getDestinationTrack().acceptsDropTrain(this)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
@@ -1391,9 +1390,9 @@ public class Train implements java.beans.PropertyChangeListener {
 												car.getDestinationName(), rLocations.get(k) }));
 									continue;
 								}
-							} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
+							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
 									&& getStatus().equals(BUILDING) && getTerminationTrack() != null
-									&& getTerminationTrack().getLocation() == rLoc.getLocation()) {
+									&& getTerminationTrack().getLocation() == rldest.getLocation()) {
 								if (debugFlag)
 									log.debug("Car (" + car.toString() + ") destination is staging, check train ("
 											+ getName() + ") termination track (" + getTerminationTrack().getName() // NOI18N
@@ -1414,10 +1413,10 @@ public class Train implements java.beans.PropertyChangeListener {
 											+ car.getDestinationName());
 								// determine if there's a track that is willing to accept this car
 								String status = "";
-								List<String> trackIds = rLoc.getLocation().getTrackIdsByIdList();
+								List<String> trackIds = rldest.getLocation().getTrackIdsByIdList();
 								for (int i = 0; i < trackIds.size(); i++) {
-									Track track = rLoc.getLocation().getTrackById(trackIds.get(i));
-									if (((track.getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
+									Track track = rldest.getLocation().getTrackById(trackIds.get(i));
+									if (((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher())
 											|| !track.acceptsDropTrain(this))
 										continue;
 									// will the track accept this car?
@@ -1441,9 +1440,26 @@ public class Train implements java.beans.PropertyChangeListener {
 									continue;
 								}
 							}
+							// carry cars only to terminal?
+							if (isSendCarsToTerminalEnabled()
+									&& !TrainCommon.splitString(car.getLocationName()).equals(
+											TrainCommon.splitString(getTrainDepartsName())) && !TrainCommon
+									.splitString(car.getDestinationName()).equals(
+											TrainCommon.splitString(getTrainTerminatesName()))) {
+								if (debugFlag)
+									log.debug("option send cars to terminal is enabled");
+								if (addToReport)
+									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+											.getMessage("trainCanNotCarryCarOption"), new Object[] { getName(),
+											car.toString(), car.getLocationName(), car.getTrackName(),
+											car.getDestinationName(), car.getDestinationTrackName() }));
+
+								continue;
+								
+							}
 							// allow car to return to staging?
 							if (isAllowReturnToStagingEnabled() && car.getTrack().getTrackType().equals(Track.STAGING)
-								&& rLoc.getLocation() == car.getLocation()) {
+								&& rldest.getLocation() == car.getLocation()) {
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 											.getMessage("trainCanReturnCarToStaging"), new Object[] { getName(),
@@ -1465,9 +1481,13 @@ public class Train implements java.beans.PropertyChangeListener {
 											car.toString(), car.getLocationName() }));
 								continue;
 							}
-							// TODO should this be checking departure and termination names?
-							if (!isAllowThroughCarsEnabled() && j == 0 && k == rLocations.size() - 1
-									&& !isLocalSwitcher() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
+							// Can cars travel from origin to terminal?
+							if (!isAllowThroughCarsEnabled()
+									&& TrainCommon.splitString(getTrainDepartsName()).equals(
+											TrainCommon.splitString(rLoc.getName()))
+									&& TrainCommon.splitString(getTrainTerminatesName()).equals(
+											TrainCommon.splitString(rldest.getName())) && !isLocalSwitcher()
+									&& !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
 								if (debugFlag)
 									log.debug("Through car (" + car.toString() + ") not allowed");
 								if (addToReport)
@@ -1477,11 +1497,11 @@ public class Train implements java.beans.PropertyChangeListener {
 								continue;
 							}
 							// check to see if moves are available
-							if (getStatus().equals(BUILDING) && rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
+							if (getStatus().equals(BUILDING) && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
 								setServiceStatus(MessageFormat.format(Bundle.getMessage("trainNoMoves"), new Object[] {
-									getName(), getRoute().getName(), rLoc.getId(), rLoc.getName() }));
+									getName(), getRoute().getName(), rldest.getId(), rldest.getName() }));
 								if (debugFlag)
-									log.debug("No available moves for destination " + rLoc.getName());
+									log.debug("No available moves for destination " + rldest.getName());
 								if (addToReport)
 									TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
 								continue;
@@ -1493,15 +1513,15 @@ public class Train implements java.beans.PropertyChangeListener {
 							return true;
 						}
 						// check to see if train length is okay
-						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
+						if (getStatus().equals(BUILDING) && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
 							setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
-									new Object[] { getName(), getRoute().getName(), rLoc.getId(),
-											rLoc.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-											rLoc.getName(), car.toString() }));
+									new Object[] { getName(), getRoute().getName(), rldest.getId(),
+											rldest.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
+											rldest.getName(), car.toString() }));
 						if (debugFlag)
 								log.debug("Car (" + car.toString() + ") exceeds maximum train length "
-										+ rLoc.getMaxTrainLength() + " when departing (" // NOI18N
-										+ rLoc.getName() + ")");
+										+ rldest.getMaxTrainLength() + " when departing (" // NOI18N
+										+ rldest.getName() + ")");
 							if (addToReport)
 								TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
 							return false;
