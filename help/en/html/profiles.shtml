@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2008 -->
+<!-- $Id: Errors.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>JMRI: Configuration Profiles</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: Configuration Profiles</h1>
+
+<p><em>Configuration Profiles</em> allow a single JMRI application to be launched
+    with one of multiple user-specified configurations. A configuration profile
+    contains all preferences set in the JMRI preferences dialog, and may,
+    optionally, include user files, a roster, and throttles.</p>
+
+<p>When a JMRI application is launched for the first time, it checks for a
+    configuration profile. If no profile exists, the application will create a
+    default profile and use it without prompting you. If only a single profile
+    is found, the application will use that profile without prompting you.
+    If there are multiple profiles, the application will prompt you for the
+    profile to use. You may specify that the application always start with the
+    same profile.</p>
+
+<h2>Profile Management</h2>
+
+<p>Configuration profiles can be managed in the application preferences, under
+    the Profile Configuration tab.</p>
+
+<h2>Upgrading from Earlier Versions of JMRI</h2>
+
+<p>When you first run a JMRI application after upgrading from an earlier version
+    of JMRI, the application will copy its existing configuration to a new profile,
+    and use that profile. If you are using a JMRI application you had not used
+    prior to upgrading, the application will behave as described above.</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

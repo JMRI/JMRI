@@ -542,6 +542,8 @@
  </tocitem>
  <tocitem text="USB " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
+ <tocitem text="Configuration Profiles " target="html.profiles"/>
+
  <tocitem text="Web " target="html.web.index"/>
 
 </toc>
