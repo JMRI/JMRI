@@ -628,7 +628,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // ensure highCVnumber indexed CV exists
         if (log.isDebugEnabled()) log.debug("Add high indexed CV "+highCVname);
-        int highCVrow = _indxCvModel.addIndxCV(highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
+        _indxCvModel.addIndxCV(highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
         
         // order
         boolean upperFirst = false;

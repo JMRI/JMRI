@@ -99,12 +99,15 @@ public class IndexedEnumVariableValue extends VariableValue
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
         CvValue cv = (_cvMap.get(getCvName()));
-        if (cv==null) log.warn("Did not find CV "+getCvName());
-        cv.addPropertyChangeListener(this);
-        if (cv.getInfoOnly()) {
-            cv.setState(CvValue.READ);
+        if (cv!=null) {
+            cv.addPropertyChangeListener(this);
+            if (cv.getInfoOnly()) {
+                cv.setState(CvValue.READ);
+            } else {
+                cv.setState(CvValue.FROMFILE);
+            }
         } else {
-            cv.setState(CvValue.FROMFILE);
+            log.warn("Did not find CV "+getCvName());
         }
     }
 

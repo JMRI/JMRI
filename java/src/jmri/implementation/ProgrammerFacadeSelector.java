@@ -24,14 +24,14 @@ public class ProgrammerFacadeSelector  {
     @SuppressWarnings("unchecked") // needed because JDOM getChildren returns plain List, not List<Element>
     public static Programmer loadFacadeElements(Element element, Programmer programmer) {
         // iterate over any facades and add them
-        List<Element> facades = (List<Element>)element.getChildren("capability");
+        List<Element> facades = element.getChildren("capability");
         if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability elements");
         for (Element facade : facades) {
             String fname = facade.getChild("name").getText();
             if (log.isDebugEnabled()) log.debug("Process capability facade: "+fname);
 
 
-            List<Element> parameters = (List<Element>)facade.getChildren("parameter");
+            List<Element> parameters = facade.getChildren("parameter");
             if (log.isDebugEnabled()) log.debug("Found "+facades.size()+" capability parameters");
             for (Element parameter : parameters) {
                 String pval = parameter.getText();
