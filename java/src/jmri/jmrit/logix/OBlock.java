@@ -221,15 +221,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     		if (log.isDebugEnabled()) log.debug("no sensor named \""+pName+"\" exists.");
         }
         
-        if (jmri.InstanceManager.sensorManagerInstance()!=null) {
-            sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
-            if (sensor != null) {
-                _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-                getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
-                return true;
-            }
-        } else {
-            log.error("No SensorManager for this protocol");
+        sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
+        if (sensor != null) {
+            _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
+            getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+            return true;
         }
         return false;
     }
@@ -525,8 +521,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         //				"\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant!=null) {
         	if (!_warrant.equals(warrant)) {
-        		return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
-        					"\" owns block \""+getDisplayName()+"\"!";
+        		// check if _warrant exists - could be an NX warrant that no longer exists
+            	if (jmri.InstanceManager.getDefault(WarrantManager.class).getBySystemName(_warrant.getSystemName()) != null) {
+            		return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
+        					"\" owns block \""+getDisplayName()+"\"!";            		
+            	}
+            	// warrant not found, fall through and clear
         	}
             removePropertyChangeListener(_warrant);
         }
@@ -554,7 +554,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         return null;
     }
-
+    
     public void setOutOfService(boolean set) {
         if (set) {
             setState(getState() | OUT_OF_SERVICE);  // set OoS bit

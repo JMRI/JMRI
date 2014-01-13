@@ -63,7 +63,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     private ArrayList <Warrant>       _warList;
     private ArrayList <Warrant>       _warNX;	// temporary warrants appended to table
     static Color myGreen = new Color(0, 100, 0);
-    static Color myGold = new Color(80, 80, 0);
+    static Color myGold = new Color(50, 50, 0);
 
     public WarrantTableModel(WarrantTableFrame frame) {
         super();
@@ -263,29 +263,6 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
             case CONTROL_COLUMN:
                 String msg = w.getRunningMessage();
-/*                int state = w.getState();
-                Color color = myGreen;
-                switch (state) {
-            		case Warrant.HALT:
-            		case Warrant.RESUME:
-            		case Warrant.RETRY:
-            			color = myGreen;
-            			break;
-            		case Warrant.ABORT:
-            			color = Color.red;
-            			break;
-            		case Warrant.WAIT_FOR_TRAIN:
-            		case Warrant.SPEED_RESTRICTED:
-            		case Warrant.WAIT_FOR_CLEAR:
-            		case Warrant.WAIT_FOR_SENSOR:
-            			color = myGold;
-            		case Warrant.RUNNING:
-            			state = 0;
-           			break;          		
-                }
-                if (state > 0) {
-        			_frame.setStatusText(Bundle.getMessage("trainReport", w.getTrainId(), msg), color);                	
-                }*/
                 WarrantFrame frame = WarrantTableAction.getWarrantFrame(w.getDisplayName());
                 if (frame !=null) {
                     frame._statusBox.setText(msg);
@@ -446,6 +423,27 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                             s = Warrant.ABORT;
                         }
                         w.controlRunTrain(s);
+                        if (s>0) {
+                			_frame.setStatusText(Bundle.getMessage("trainReport", w.getTrainName(), setting), myGreen);                	
+/*                            switch (state) {
+                        		case Warrant.HALT:
+                        		case Warrant.RESUME:
+                        		case Warrant.RETRY:
+                        			color = myGreen;
+                        			break;
+                        		case Warrant.ABORT:
+                        			color = Color.red;
+                        			break;
+                        		case Warrant.WAIT_FOR_TRAIN:
+                        		case Warrant.SPEED_RESTRICTED:
+                        		case Warrant.WAIT_FOR_CLEAR:
+                        		case Warrant.WAIT_FOR_SENSOR:
+                        			color = myGold;
+                        		case Warrant.RUNNING:
+                        			state = 0;
+                       			break;          		
+                            }*/
+                        }
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                     	w.deAllocate();                       	
                     } else if (mode==Warrant.MODE_NONE) {
@@ -512,6 +510,9 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	} else {
             		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), myGreen);               	                		                		
             	}
+            } else if (e.getPropertyName().equals("SpeedRestriction")) {
+            	_frame.setStatusText(Bundle.getMessage("speedChange", bean.getTrainName(), bean.getCurrentBlockOrder().getBlock().getDisplayName(),
+            			e.getNewValue()), myGold);               	                		                	
             } else if (e.getPropertyName().equals("throttleFail")) {
             	_frame.setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(), e.getNewValue()), Color.red);               	                		                	
             }

@@ -612,11 +612,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     	return null;
     }
 
-    void abortWarrant(@NonNull String msg) {
+    private void abortWarrant(@NonNull String msg) {
         _delayStart = false;	// script should start - no more delay
         log.error("Abort warrant \""+ getDisplayName()+"\" "+msg);
         setRunMode(Warrant.MODE_NONE, null, null, null, false);
-        firePropertyChange("throttleFail", msg, msg);
+//        firePropertyChange("throttleFail", msg, msg);
     }
     
     /**
@@ -652,6 +652,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         break;
                     case RESUME:
                         _engineer.setHalt(false);
+                        moveIntoNextBlock();
                         break;
                     case RETRY:
                     	retryBlocKWaiting();
@@ -866,7 +867,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((state & OBlock.DARK) != 0) {
             msg = Bundle.getMessage("BlockDark", block.getDisplayName());
          } else if ((state & OBlock.OCCUPIED) == 0) {
-            msg = Bundle.getMessage("badStart", block.getDisplayName());
+            msg = Bundle.getMessage("warnStart", getTrainId(), block.getDisplayName());
         }
     	return msg;
     }
@@ -1094,6 +1095,31 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         log.info( "Warrant \""+getDisplayName()+"\" sets _stoppingBlock= \""+
         		_stoppingBlock.getDisplayName()+"\"");
     }
+
+    /**
+     * check that it is safe to go into the next block
+     * 
+     * @return true if OK to move
+     */
+    private boolean moveIntoNextBlock() {
+    	// getNextSpeed() calls allocateNextBlock(getBlockOrderAt(_idxCurrentOrder+1))
+        String nextSpeed = getNextSpeed();        	
+        float len = getBlockAt(_idxCurrentOrder).getLengthIn();
+        if ("Stop".equals(nextSpeed) && 0<len && len<6) {
+        	nextSpeed = "EStop";
+        }
+        if (_engineer!=null) {
+			OBlock nextBlock = getBlockAt(_idxCurrentOrder+1);
+			if ((nextBlock.getState() & OBlock.DARK) > 0 || _tempRunBlind) {
+				_engineer.setRunOnET(true);
+			} else {
+				_engineer.setRunOnET(false);
+			}
+			// notify engineer of control point
+            _engineer.rampSpeedTo(nextSpeed, 0);
+        }
+        return !"Stop".equals(nextSpeed);
+    }
     /**
     * Block in the route is going active.
     * check if this is the next block of the train moving under the warrant
@@ -1115,7 +1141,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	// Not found or starting block, in which case 0 is handled as the _stoppingBlock
         	if (activeIdx==0 && _idxCurrentOrder==0) {
                 block.setOccupationPending(true);
-                // safety for late turnout throws -especially when coming from a dark block
+                // safety for late turnout throws
                 getBlockOrderAt(activeIdx).setPath(this);
         	}
         	return;
@@ -1129,7 +1155,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             } else {
                 if (_debug) log.debug("Train entering Block "+block.getDisplayName()
                 							+" for warrant= "+getDisplayName());
-                // we assume it is our train entering the block - cannot guarantee it, but what else?
+                // if we are moving we assume it is our train entering the block
+                //  - cannot guarantee it, but what else?
+                if ("Stop".equals(_currentSpeed)) {
+                	return;
+                }
                 _idxCurrentOrder = activeIdx;
                 // set block state to show our train occupies the block
 //                block.setValue(_trainName);
@@ -1137,7 +1167,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
         	OBlock nextBlock = getBlockAt(_idxCurrentOrder+1);
-        	if ((nextBlock.getState() | OBlock.DARK) !=0 && block.equals(getBlockAt(_idxCurrentOrder+2))) {
+        	if ((nextBlock.getState() & OBlock.DARK) !=0 && block.equals(getBlockAt(_idxCurrentOrder+2))) {
         		// passing through a dark block - only one allowed          		
                 _idxCurrentOrder = activeIdx;
                 if (_debug) log.debug("firePropertyChange(\"blockChange\", "+getBlockAt(oldIndex).getDisplayName()+
@@ -1158,17 +1188,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	log.error("activeIdx ("+activeIdx+") < _idxCurrentOrder ("+_idxCurrentOrder+")!");
         	return;
         }
-        getBlockOrderAt(activeIdx).setPath(this);// safety for late TO throws -especially when coming from a dark block
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);        	
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
         // Do signals, speed etc.
-        String currentSpeed = "Stop";
         if (_idxCurrentOrder == _orders.size()-1) {
             // must be in destination block, No 'next block' for last BlockOrder
             // If Auto running, let script finish according to recorded times.
         	// End of script will deallocate warrant.
-            currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);        	
+        	// getCurrentSpeedAt() will (re)set the path for safety
+        	String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);        	
             if (_engineer!=null) {
                 // notify engineer of control point
                 _engineer.rampSpeedTo(currentSpeed, 0);
@@ -1181,28 +1210,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 }
         	}
         } else {
-        	// allocate and set path, if necessary
-            if (allocateNextBlock(getBlockOrderAt(_idxCurrentOrder+1))) {
-                currentSpeed = getNextSpeed();        	
-            }
-            float len = getBlockAt(_idxCurrentOrder).getLengthIn();
-            if ("Stop".equals(currentSpeed) && 0<len && len<6) {
-            	currentSpeed = "EStop";
-            }
-            if (_engineer!=null) {
-    			OBlock nextBlock = getBlockAt(_idxCurrentOrder+1);
-    			if ((nextBlock.getState() & OBlock.DARK) > 0 || _tempRunBlind) {
-    				_engineer.setRunOnET(true);
-    			} else {
-    				_engineer.setRunOnET(false);
-    			}
-    			// notify engineer of control point
-                _engineer.rampSpeedTo(currentSpeed, 0);
-            }
+        	boolean moveOK = moveIntoNextBlock();
 
             if (_runMode==MODE_LEARN || _tempRunBlind) {
                 // recording must be done with signals and occupancy clear.
-                if (currentSpeed.equals("Stop")) {
+                if (!moveOK) {
     	            log.error("Signals or occupancy ahead forces train to stop at block "+
     	            				getBlockAt(_idxCurrentOrder).getDisplayName()+ " ABORT recording.");        				
                     firePropertyChange("abortLearn", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
@@ -1216,7 +1228,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (b.allocate(this)!=null) {
                 	break;
                 }
-//                bo.setPath(this);		only set path in allocateNextBlock()
                 if ((b.getState() & OBlock.OCCUPIED) > 0) {
                      break;
                 }
@@ -1273,7 +1284,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     if (_debug) log.debug("firePropertyChange(\"blockChange\", "+block.getDisplayName()+
                     		", null) for warrant= "+getDisplayName());
                     firePropertyChange("blockChange", block, null);
-                    _engineer.setHalt(true);
+               		if (_engineer!=null) {
+               			_engineer.setHalt(true);
+               		}
                     return;
                	}
         	} else {
@@ -1373,7 +1386,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * If block cannot be allocated, will set a listener on the block.
      * @param block is the next block from some current location
-     * @return
+     * @return true if block is allocated to this warrant
      */
     private boolean allocateNextBlock(BlockOrder bo) {
     	if (bo==null) {

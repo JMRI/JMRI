@@ -618,8 +618,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
                     endSpeed = modifySpeed(endSpeed, endSpeedType);
                     float speed = _throttle.getSpeedSetting();
-                    _warrant.fireRunStatus("SpeedRestriction", old, 
-                                       (endSpeed > speed ? "increasing" : "decreasing"));
+//                    _warrant.fireRunStatus("SpeedRestriction", old, 
+//                                       (endSpeed > speed ? "increasing" : "decreasing"));
 
                     float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
                     switch (_throttle.getSpeedStepMode()) {

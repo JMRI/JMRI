@@ -38,6 +38,8 @@ import jmri.Sensor;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+
+import org.python.antlr.PythonParser.return_stmt_return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,18 +52,19 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
     static public final int COMMENTCOL = 2;
-    static public final int SENSORCOL = 3;
-    static public final int EDIT_COL = 4;			// Path button
-    static public final int DELETE_COL = 5;
-    static public final int LENGTHCOL = 6;
-    static public final int UNITSCOL = 7;
-    static public final int REPORTERCOL = 8;
-    static public final int REPORT_CURRENTCOL = 9;
-    static public final int PERMISSIONCOL = 10;
-    static public final int SPEEDCOL = 11;
-    static public final int ERR_SENSORCOL = 12;
-    static public final int CURVECOL = 13;
-    static public final int NUMCOLS = 14;
+    static public final int STATECOL = 3;
+    static public final int SENSORCOL = 4;
+    static public final int EDIT_COL = 5;			// Path button
+    static public final int DELETE_COL = 6;
+    static public final int LENGTHCOL = 7;
+    static public final int UNITSCOL = 8;
+    static public final int REPORTERCOL = 9;
+    static public final int REPORT_CURRENTCOL = 10;
+    static public final int PERMISSIONCOL = 11;
+    static public final int SPEEDCOL = 12;
+    static public final int ERR_SENSORCOL = 13;
+    static public final int CURVECOL = 14;
+    static public final int NUMCOLS = 15;
 
     static public final String noneText = AbstractTableAction.rb.getString("BlockNone");
     static public final String gradualText = AbstractTableAction.rb.getString("BlockGradual");
@@ -146,6 +149,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
        return _pickList.get(index);
     }
 
+    static String ZEROS ="00000000";
     @Override
      public Object getValueAt(int row, int col) 
     {
@@ -168,6 +172,14 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     return b.getComment();
                 } else {
                 	return tempRow[col];
+                }
+            case STATECOL:
+            	if (b!=null) {
+            		int state = b.getState();
+            		int num = Integer.numberOfLeadingZeros(state)-24;
+            		return ZEROS.substring(0, num)+Integer.toBinaryString(state);
+            	} else {
+                	return ZEROS;
                 }
             case SENSORCOL:
                 if (b != null) {
@@ -391,6 +403,15 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 block.setComment((String)value);
                 fireTableRowsUpdated(row,row);
                 return;
+            case STATECOL:
+            	int state = 0;
+            	try {
+                	state = Integer.valueOf((String)value);            		
+            	} catch (NumberFormatException nfe) {}
+            	if (state <0) state = -state;
+            	block.setState(state % 255);
+                fireTableRowsUpdated(row,row);
+                return;
             case SENSORCOL:
                 if (!block.setSensor((String)value)) {
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
@@ -505,6 +526,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     public String getColumnName(int col) {
         switch (col) {
             case COMMENTCOL: return AbstractTableAction.rb.getString("Comment");
+            case STATECOL: return AbstractTableAction.rb.getString("ColumnState");
             case SENSORCOL: return AbstractTableAction.rbean.getString("BeanNameSensor");
             case CURVECOL: return AbstractTableAction.rb.getString("BlockCurveColName");
             case LENGTHCOL: return AbstractTableAction.rb.getString("BlockLengthColName");
@@ -583,6 +605,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             case SYSNAMECOL: return new JTextField(18).getPreferredSize().width;
             case USERNAMECOL: return new JTextField(18).getPreferredSize().width;
             case COMMENTCOL: return new JTextField(10).getPreferredSize().width;
+            case STATECOL: return new JTextField("00000000").getPreferredSize().width;
             case SENSORCOL: return new JTextField(15).getPreferredSize().width;
             case CURVECOL: return new JTextField(6).getPreferredSize().width;
             case LENGTHCOL: return new JTextField(5).getPreferredSize().width;

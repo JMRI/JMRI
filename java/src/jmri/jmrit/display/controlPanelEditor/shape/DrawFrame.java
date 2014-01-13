@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -25,6 +27,8 @@ import javax.swing.event.ChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
+import jmri.jmrit.display.palette.ItemPalette;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +60,8 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     JSlider 	_lineSlider;
     JSlider		_fillSlider;
 	JTextField	_sensorName = new JTextField(30);
+	JCheckBox	_hideCheckBox;
+	JComboBox	_levelComboBox;
     
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
@@ -164,9 +170,25 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	
     protected JPanel makeSensorPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-        panel.add(new JLabel(Bundle.getMessage("VisibleSensor")));
-        panel.add(_sensorName);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel p = new JPanel();
+        p.add(new JLabel(Bundle.getMessage("VisibleSensor")));
+        p.add(_sensorName);
+        panel.add(p);
+        
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        _hideCheckBox = new JCheckBox(Bundle.getMessage("HideOnSensor"));
+        p1.add(_hideCheckBox);
+        p1.add(Box.createHorizontalStrut(ItemPalette.STRUT_SIZE));
+        p1.add(new JLabel(Bundle.getMessage("ChangeLevel")));
+        _levelComboBox = new JComboBox();
+        _levelComboBox.addItem(Bundle.getMessage("SameLevel"));
+        for (int i=1; i<11; i++) {
+        	_levelComboBox.addItem(Bundle.getMessage("Level")+" "+Integer.valueOf(i));
+        }
+        p1.add(_levelComboBox);
+        panel.add(p1);
 	    return panel;
     }
 	
@@ -189,7 +211,13 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		_fillColor = ps.getFillColor();
 		NamedBeanHandle<Sensor> handle = ps.getControlSensorHandle();
 		if (handle!=null) {
-			_sensorName.setText(handle.getName());			
+			_sensorName.setText(handle.getName());
+			_hideCheckBox.setSelected(ps.isHideOnSensor());
+			int level = ps.getChangeLevel();
+			if (level<0) {
+				level = 0;
+			}
+			_levelComboBox.setSelectedIndex(level);
 		}
 	}
 
@@ -199,8 +227,14 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         ps.setFillColor(_fillColor);
         ps.setLineWidth(_lineSlider.getValue());
         String text = _sensorName.getText().trim();
+        String levelStr = (String)_levelComboBox.getSelectedItem();
+        int level = -1;
+        if (!Bundle.getMessage("SameLevel").equals(levelStr)) {
+        	levelStr = levelStr.substring(Bundle.getMessage(Bundle.getMessage("Level")).length()+1);
+        	level = Integer.valueOf(levelStr);
+        }
         if (text.length()>0) {
-        	ps.setControlSensor(text);
+        	ps.setControlSensor(text, _hideCheckBox.isSelected(),  level);
         } else {
         	ps.dispose();
         }

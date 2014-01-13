@@ -79,6 +79,8 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 		if (handle!=null) {
 	        element.setAttribute("controlSensor", handle.getName());
 		}
+        element.setAttribute("hideOnSensor", p.isHideOnSensor ()?"true":"false");
+        element.setAttribute("changeLevelOnSensor", String.valueOf(p.getChangeLevel()));
     }
     
     public Element storeColor(String name, Color c) {
@@ -159,15 +161,26 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         
         ps.makeShape();
         ps.rotate(getInt(element, "degrees"));
+        
+        a = element.getAttribute("hideOnSensor");
+        boolean hide = false;
+        if (a!=null){
+        	hide = a.getValue().equals("true");
+        }
+        int changeLevel = -1;
+        try {
+        	changeLevel = getInt(element, "changeLevelOnSensor");
+         } catch ( Exception e) {
+            log.error("failed to get changeLevel attribute ex= "+e);
+        }
         try {
         	Attribute attr = element.getAttribute("controlSensor");
         	if (attr!=null) {
-                ps.setControlSensor(attr.getValue());
+                ps.setControlSensor(attr.getValue(), hide, changeLevel);
         	}
         } catch ( NullPointerException e) { 
             log.error("incorrect information for controlSensor of PositionableShape");
         }
-        
         ps.updateSize();
    }
 	
