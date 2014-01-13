@@ -143,7 +143,7 @@ public class ProfileManagerDialog extends JDialog {
                         .addComponent(btnCreate)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelect))
-                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -162,6 +162,8 @@ public class ProfileManagerDialog extends JDialog {
                 .addContainerGap())
         );
 
+        listLabel.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -177,7 +179,7 @@ public class ProfileManagerDialog extends JDialog {
     private void btnCreateActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         timer.stop();
         countDownLbl.setVisible(false);
-        AddProfileDialog apd = new AddProfileDialog(this, true);
+        AddProfileDialog apd = new AddProfileDialog(this, true, false);
         apd.setLocationRelativeTo(this);
         apd.setVisible(true);
     }//GEN-LAST:event_btnCreateActionPerformed

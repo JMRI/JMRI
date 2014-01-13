@@ -18,7 +18,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -109,7 +108,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
         jTabbedPane1 = new JTabbedPane();
         enabledPanel = new JPanel();
         chkStartWithActiveProfile = new JCheckBox();
-        jLabel1 = new JLabel();
         jScrollPane1 = new JScrollPane();
         profilesTbl = new JTable();
         btnOpenExistingProfile = new JButton();
@@ -118,7 +116,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
         btnActivateProfile = new JButton();
         btnExportProfile = new JButton();
         searchPathsPanel = new JPanel();
-        jLabel2 = new JLabel();
         jScrollPane2 = new JScrollPane();
         searchPaths = new JList();
         btnRemoveSearchPath = new JButton();
@@ -162,8 +159,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
                 chkStartWithActiveProfileActionPerformed(evt);
             }
         });
-
-        jLabel1.setText(bundle.getString("ProfilePreferencesPanel.jLabel1.text")); // NOI18N
 
         profilesTbl.setModel(new ProfileTableModel());
         profilesTbl.getSelectionModel().addListSelectionListener(this);
@@ -216,8 +211,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
             enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(enabledPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(enabledPanelLayout.createSequentialGroup()
@@ -229,10 +222,10 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
                                 .addComponent(btnOpenExistingProfile)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCreateNewProfile)
-                                .addGap(103, 103, 103)
-                                .addComponent(btnDeleteProfile)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportProfile)))
+                                .addComponent(btnExportProfile)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeleteProfile)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -240,11 +233,7 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
             enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(enabledPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(enabledPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOpenExistingProfile)
@@ -257,9 +246,7 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle_1"), enabledPanel); // NOI18N
-
-        jLabel2.setText(bundle.getString("ProfilePreferencesPanel.jLabel2.text")); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle"), enabledPanel); // NOI18N
 
         searchPaths.setModel(new SearchPathsListModel());
         searchPaths.addListSelectionListener(new ListSelectionListener() {
@@ -291,31 +278,24 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
             searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(searchPathsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(searchPathsPanelLayout.createSequentialGroup()
                         .addComponent(btnAddSearchPath)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemoveSearchPath)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
                 .addContainerGap())
         );
         searchPathsPanelLayout.setVerticalGroup(
             searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(searchPathsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPathsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(searchPathsPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAddSearchPath)
-                            .addComponent(btnRemoveSearchPath))))
+                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddSearchPath)
+                    .addComponent(btnRemoveSearchPath))
                 .addContainerGap())
         );
 
@@ -331,6 +311,8 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1)
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     private void renameMIActionPerformed(ActionEvent evt) {//GEN-FIRST:event_renameMIActionPerformed
@@ -389,7 +371,7 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
     }//GEN-LAST:event_btnActivateProfileActionPerformed
 
     private void btnCreateNewProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnCreateNewProfileActionPerformed
-        AddProfileDialog apd = new AddProfileDialog((Frame) SwingUtilities.getWindowAncestor(this), true);
+        AddProfileDialog apd = new AddProfileDialog((Frame) SwingUtilities.getWindowAncestor(this), true, true);
         apd.setLocationRelativeTo(this);
         apd.setVisible(true);
     }//GEN-LAST:event_btnCreateNewProfileActionPerformed
@@ -447,8 +429,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
     private JMenuItem deleteMI;
     private JCheckBoxMenuItem enabledMI;
     private JPanel enabledPanel;
-    private JLabel jLabel1;
-    private JLabel jLabel2;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
     private JPopupMenu.Separator jSeparator1;
@@ -463,12 +443,12 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
 
     @Override
     public String getPreferencesItem() {
-        return "Profiles";
+        return "Profiles"; // NOI18N
     }
 
     @Override
     public String getPreferencesItemText() {
-        return "Profiles";
+        return Bundle.getMessage("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle");
     }
 
     @Override
@@ -507,10 +487,14 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (profilesTbl.getSelectedRow() != -1) {
+        if (profilesTbl.getSelectedRow() != -1 && profilesTbl.getSelectedRow() < ProfileManager.defaultManager().getAllProfiles().size()) {
             Profile p = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
             this.btnDeleteProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
-            this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getNextActiveProfile()));
+            if (ProfileManager.defaultManager().getNextActiveProfile() != null) {
+                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getNextActiveProfile()));
+            } else {
+                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
+            }
             this.btnExportProfile.setEnabled(true);
         } else {
             this.btnDeleteProfile.setEnabled(false);
