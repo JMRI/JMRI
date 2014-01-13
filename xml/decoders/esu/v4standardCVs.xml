@@ -337,18 +337,15 @@
       <constant item="PICV" default="31" comment="CV used for Primary Index"/>
       <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
       <!-- Firmware Version -->
-      <ivariable label="Firmware Build Number" CVname="285.0.255" CV="285" PI="0" SI="255" readOnly="yes" item="Firmware Build Number">
-        <indexedPairVal highCVname="286.0.255"/>
-      </ivariable>
-      <ivariable label="Firmware Build Number highCV" CVname="286.0.255" CV="286" PI="0" SI="255" readOnly="yes" comment="Dummy to work around sheet operations/indexedPairVal issue">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Minor Version" CVname="287.0.255" CV="287" PI="0" SI="255" readOnly="yes" item="Firmware Minor Version">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Major Version" CVname="288.0.255" CV="288" PI="0" SI="255" readOnly="yes" item="Firmware Major Version">
-        <indexedVal/>
-      </ivariable>
+      <variable label="Firmware Build Number" CV="285.0.255" readOnly="yes" item="Firmware Build Number">
+        <splitVal highCV="286.0.255"/>
+      </variable>
+      <variable label="Firmware Minor Version" CV="287.0.255" readOnly="yes" item="Firmware Minor Version">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Major Version" CV="288.0.255" readOnly="yes" item="Firmware Major Version">
+        <decVal/>
+      </variable>
       <!-- Function Outputs -->
       <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4fnMapCVs.xml"/>
