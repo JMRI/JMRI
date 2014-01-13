@@ -1441,6 +1441,15 @@ public class Train implements java.beans.PropertyChangeListener {
 									continue;
 								}
 							}
+							// allow car to return to staging?
+							if (isAllowReturnToStagingEnabled() && car.getTrack().getTrackType().equals(Track.STAGING)
+								&& rLoc.getLocation() == car.getLocation()) {
+								if (addToReport)
+									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+											.getMessage("trainCanReturnCarToStaging"), new Object[] { getName(),
+											car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
+								return true;
+							}
 							// is this a local move?
 							if (!isAllowLocalMovesEnabled()
 									&& !car.isCaboose()
