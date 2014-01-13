@@ -57,24 +57,32 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 profilesTbl.repaint();
-                profilesValueChanged(null);
+                valueChanged(null);
             }
         });
         ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.SEARCH_PATHS, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 searchPaths.repaint();
-                profilesValueChanged(null);
+                valueChanged(null);
             }
         });
         ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.ACTIVE_PROFILE, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                profilesValueChanged(null);
+                profilesTbl.repaint();
+                valueChanged(null);
+            }
+        });
+        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.NEXT_PROFILE, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                profilesTbl.repaint();
+                valueChanged(null);
             }
         });
         this.chkStartWithActiveProfile.setSelected(ProfileManager.defaultManager().isAutoStartActiveProfile());
-        this.profilesValueChanged(null);
+        this.valueChanged(null);
         int index = ProfileManager.defaultManager().getAllProfiles().indexOf(ProfileManager.defaultManager().getActiveProfile());
         this.profilesTbl.setRowSelectionInterval(index, index);
         // Hide until I can figure out good way to export a profile
@@ -371,7 +379,9 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
 
     private void btnActivateProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnActivateProfileActionPerformed
         try {
-            ProfileManager.defaultManager().saveActiveProfile(ProfileManager.defaultManager().getProfiles(profilesTbl.getSelectedRow()), ProfileManager.defaultManager().isAutoStartActiveProfile());
+            Profile p = ProfileManager.defaultManager().getProfiles(profilesTbl.getSelectedRow());
+            ProfileManager.defaultManager().setNextActiveProfile(p);
+            ProfileManager.defaultManager().saveActiveProfile(p, ProfileManager.defaultManager().isAutoStartActiveProfile());
         } catch (IOException ex) {
             log.error("Unable to save profile preferences", ex);
             JOptionPane.showMessageDialog(this, "Usable to save profile preferences.\n" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -451,16 +461,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
     private JPanel searchPathsPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void profilesValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_profilesValueChanged
-        ProfileManager mgr = ProfileManager.defaultManager();
-        if (profilesTbl.getSelectedRow() != -1
-                && mgr.getAllProfiles().get(profilesTbl.getSelectedRow()).equals(mgr.getActiveProfile())) {
-            this.btnActivateProfile.setEnabled(false);
-        } else {
-            this.btnActivateProfile.setEnabled(true);
-        }
-    }
-
     @Override
     public String getPreferencesItem() {
         return "Profiles";
@@ -509,13 +509,8 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
     public void valueChanged(ListSelectionEvent e) {
         if (profilesTbl.getSelectedRow() != -1) {
             Profile p = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
-            if (p.equals(ProfileManager.defaultManager().getActiveProfile())) {
-                this.btnDeleteProfile.setEnabled(false);
-                this.btnActivateProfile.setEnabled(false);
-            } else {
-                this.btnDeleteProfile.setEnabled(true);
-                this.btnActivateProfile.setEnabled(true);
-            }
+            this.btnDeleteProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
+            this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getNextActiveProfile()));
             this.btnExportProfile.setEnabled(true);
         } else {
             this.btnDeleteProfile.setEnabled(false);

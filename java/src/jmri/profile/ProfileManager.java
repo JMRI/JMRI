@@ -37,12 +37,14 @@ public class ProfileManager extends Bean {
     private final ArrayList<Profile> profiles = new ArrayList<Profile>();
     private final ArrayList<File> searchPaths = new ArrayList<File>();
     private Profile activeProfile = null;
+    private Profile nextActiveProfile = null;
     private final File catalog;
     private File configFile = null;
     private boolean readingProfiles = false;
     private boolean autoStartActiveProfile = true;
     private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
+    public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
     private static final String CATALOG = "profiles.xml"; // NOI18N
     private static final String PROFILE = "profile"; // NOI18N
@@ -138,6 +140,23 @@ public class ProfileManager extends Bean {
         FileUtil.setProfilePath(profile.getPath().toString());
         this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
         log.debug("Setting active profile to {}", profile.getId());
+    }
+
+    protected Profile getNextActiveProfile() {
+        return this.nextActiveProfile;
+    }
+
+    protected void setNextActiveProfile(Profile profile) {
+        Profile old = this.nextActiveProfile;
+        if (profile == null) {
+            this.nextActiveProfile = null;
+            this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
+            log.debug("Setting next active profile to null");
+            return;
+        }
+        this.nextActiveProfile = profile;
+        this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
+        log.debug("Setting next active profile to {}", profile.getId());
     }
 
     /**
@@ -269,6 +288,10 @@ public class ProfileManager extends Bean {
                 if (profiles.remove(profile)) {
                     this.fireIndexedPropertyChange(PROFILES, index, profile, null);
                     this.writeProfiles();
+                }
+                if (profile.equals(this.getNextActiveProfile())) {
+                    this.setNextActiveProfile(null);
+                    this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
                 }
             }
         } catch (IOException ex) {
