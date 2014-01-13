@@ -38,18 +38,24 @@ import org.slf4j.LoggerFactory;
 public class AddProfileDialog extends javax.swing.JDialog {
 
     private String profileId;
+    private boolean setNextProfile = false;
 
-    /**
-     * Creates new form AddProfileDialog
-     */
-    public AddProfileDialog(java.awt.Frame parent, boolean modal) {
+    public AddProfileDialog(java.awt.Frame parent, boolean modal, boolean setNextProfile) {
         super(parent, modal);
+        this.setNextProfile = setNextProfile;
         initComponents();
     }
 
-    AddProfileDialog(Dialog parent, boolean modal) {
+    private AddProfileDialog(java.awt.Frame parent, boolean modal) {
+    }
+
+    AddProfileDialog(Dialog parent, boolean modal, boolean setNextProfile) {
         super(parent, modal);
+        this.setNextProfile = setNextProfile;
         initComponents();
+    }
+
+    private AddProfileDialog(Dialog parent, boolean modal) {
     }
 
     /**
@@ -271,7 +277,11 @@ public class AddProfileDialog extends javax.swing.JDialog {
         try {
             Profile p = new Profile(this.profileName.getText(), this.profileId, new File(this.profileFolder.getText()));
             ProfileManager.defaultManager().addProfile(p);
-            ProfileManager.defaultManager().setActiveProfile(p);
+            if (this.setNextProfile) {
+                ProfileManager.defaultManager().setNextActiveProfile(p);
+            } else {
+                ProfileManager.defaultManager().setActiveProfile(p);
+            }
             this.dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
