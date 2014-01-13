@@ -110,6 +110,11 @@
             <parameter name="Access Register CV">99</parameter>
             <parameter name="Modulo">100</parameter>
         </capability>
+        <capability>
+            <name>Indexed CV access</name>
+            <parameter name="PI">31</parameter>
+            <parameter name="SI">32</parameter>
+        </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
