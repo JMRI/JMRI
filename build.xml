@@ -762,11 +762,11 @@
         </antcall>
     </target>
 
-    <target name="faceless"
+    <target name="SampleMinimalProgram"
             depends="debug"
-            description="build and run build and run faceless app">
+            description="build and run build and run SampleMinimalProgram class">
         <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.FacelessApp"/>
+            <param name="application.classname" value="apps.SampleMinimalProgram"/>
         </antcall>
     </target>
 

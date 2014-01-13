@@ -38,12 +38,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for the core of JMRI applications. <p> This provides a non-GUI
- * base for applications. Below this is the {@link apps.gui3.Apps3} class which
- * provides basic Swing GUI support. <p> For an example of using this, see
- * {@link apps.FacelessApp} and comments therein. <p> There are a series of
- * steps in the configuration: <dl> <dt>preInit<dd>Initialize log4j, invoked
- * from the main() <dt>ctor<dd> </dl> <P>
+ * Base class for the core of JMRI applications. 
+ * <p> This provides a non-GUI
+ * base for applications. Below this is the {@link apps.gui3.Apps3} subclass which
+ * provides basic Swing GUI support. 
+ * <p> There are a series of
+ * steps in the configuration: 
+ * <dl> 
+ * <dt>preInit<dd>Initialize log4j, invoked from the main() 
+ * <dt>ctor<dd> 
+ * </dl> 
+ * <P>
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  * @version $Revision$

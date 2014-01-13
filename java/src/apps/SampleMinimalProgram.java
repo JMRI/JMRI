@@ -1,4 +1,4 @@
-// FacelessApp.java
+// SampleMinimalProgram.java
 
 package apps;
 
@@ -26,7 +26,7 @@ import jmri.web.server.WebServerManager;
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007, 2010
  * @version     $Revision$
  */
-public class FacelessApp {
+public class SampleMinimalProgram {
 	static String name = "Faceless App";
 
     // Main entry point
@@ -35,7 +35,7 @@ public class FacelessApp {
         initLog4J();
         log.info(apps.Apps.startupInfo(name));
         
-        new FacelessApp(args);   // start the application class itself
+        new SampleMinimalProgram(args);   // start the application class itself
 
         log.debug("main initialization done");
         
@@ -79,7 +79,7 @@ public class FacelessApp {
 	 * Constructor starts the JMRI application running, and then
 	 * returns.
 	 */
-    public FacelessApp(String[] args) {
+    public SampleMinimalProgram(String[] args) {
 
         // Load from preference file, by default the DecoderPro
         // one so you can use DecoderPro to load the preferences values.
@@ -126,7 +126,7 @@ public class FacelessApp {
 	}
 	
 
-    static Logger log = LoggerFactory.getLogger(FacelessApp.class.getName());
+    static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class.getName());
 }
 
 
