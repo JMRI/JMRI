@@ -1829,7 +1829,7 @@ public class TrainBuilder extends TrainCommon {
 						&& splitString(car.getFinalDestinationName()).equals(splitString(terminateLocation.getName()))
 						&& !splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName()))) {
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasFinalDestination"),
-							new Object[] { car.toString(), departLocation.getName(), terminateLocation.getName() }));
+							new Object[] { car.toString(), car.getLocationName(), car.getFinalDestinationName() }));
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
 							new Object[] { departLocation.getName(), terminateLocation.getName() }));
 					// don't remove car from list if departing staging
@@ -3250,10 +3250,17 @@ public class TrainBuilder extends TrainCommon {
 		if (routeList.size() > 1)
 			start++; // yes!, no car drops at departure
 		// all pick ups to terminal?
-		if (train.isSendCarsToTerminalEnabled() && routeIndex > 0 && routeEnd == routeList.size()) {
+		if (train.isSendCarsToTerminalEnabled()
+				&& !splitString(rl.getName()).equals(splitString(departLocation.getName()))
+				&& routeEnd == routeList.size()) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSendToTerminal"),
 					new Object[] { terminateLocation.getName() }));
 			start = routeEnd - 1;
+			while (start > routeIndex) {
+				if (!splitString(routeList.get(start - 1).getName()).equals(splitString(terminateLocation.getName())))
+					break;
+				start--;
+			}
 		}
 		for (int k = start; k < routeEnd; k++) {
 			rld = routeList.get(k);
