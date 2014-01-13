@@ -104,7 +104,7 @@ class LocoFile extends XmlFile {
                 String name  = element.getAttribute("name").getValue();
                 String piCv  = element.getAttribute("piCv").getValue();
                 int piVal = Integer.valueOf(element.getAttribute("piVal").getValue()).intValue();
-                String siCv  = element.getAttribute("siCv").getValue();
+
                 int siVal = Integer.valueOf(element.getAttribute("siVal").getValue()).intValue();
                 String iCv   = element.getAttribute("iCv").getValue();
                 String value = element.getAttribute("value").getValue();
@@ -114,7 +114,7 @@ class LocoFile extends XmlFile {
                 if (family.equals("ESU LokPilot V4.0")||family.equals("ESU LokSound Select")||family.equals("ESU LokSound V4.0")) {
                     if (piCv  == "32") {
 						piCv  = "31";
-						siCv  = "32";
+
 						siVal = piVal;
 						piVal = 16;
                     }
