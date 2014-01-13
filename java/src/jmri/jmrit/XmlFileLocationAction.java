@@ -37,14 +37,15 @@ public class XmlFileLocationAction extends AbstractAction {
 
         final String user = FileUtil.getUserFilesPath();
         final String roster = Roster.getFileLocation();
-        final String config = FileUtil.getPreferencesPath();
+        final String profile = FileUtil.getProfilePath();
+        final String settings = FileUtil.getPreferencesPath();
         final String scripts = FileUtil.getScriptsPath();
         final String prog = System.getProperty("user.dir");
         String configName = System.getProperty("org.jmri.Apps.configFilename");
         if (!new File(configName).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            configName = config+configName;
+            configName = profile+configName;
         }
 
 
@@ -79,13 +80,24 @@ public class XmlFileLocationAction extends AbstractAction {
                 }
             }
         });
-        b = new JButton("Open Default Location");
+        b = new JButton("Open Profile Location");
         buttons.add(b);
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
-                    Desktop.getDesktop().open(new java.io.File(config));
+                    Desktop.getDesktop().open(new java.io.File(profile));
+                } catch (java.io.IOException e) {
+                }
+            }
+        });
+        b = new JButton("Open Settings Location");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    Desktop.getDesktop().open(new java.io.File(settings));
                 } catch (java.io.IOException e) {
                 }
             }
@@ -124,13 +136,15 @@ public class XmlFileLocationAction extends AbstractAction {
 
         textPane.append("Roster Location: " + roster + "\n");
 
-        textPane.append("Default Location: " + config + "\n");
+        textPane.append("Profile Location: " + profile + "\n");
+
+        textPane.append("Settings Location: " + settings + "\n");
 
         textPane.append("Scripts Location: " + scripts + "\n");
 
         textPane.append("Program Location: " + prog + "\n");
 
-        textPane.append("Config file: " + configName + "\n");
+        textPane.append("Current Config file: " + configName + "\n");
 
         addLogFiles(textPane);
 
