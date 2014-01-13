@@ -63,23 +63,22 @@ class LocoFile extends XmlFile {
         
         if (values != null) {
             // get the CV values and load
-            List<Element> elementList = values.getChildren("CVvalue");
-            if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
+            if (log.isDebugEnabled()) log.debug("Found "+values.getChildren("CVvalue").size()+" CVvalues");
 
-            for (int i=0; i<elementList.size(); i++) {
+            for (Element element : (List<Element>)values.getChildren("CVvalue")) {
                 // locate the row
-                if ( ((elementList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
+                if ( element.getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+element+" "+element.getAttributes());
                     break;
                 }
-                if ( ((elementList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
+                if ( element.getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+element+" "+element.getAttributes());
                     break;
                 }
 
-                String name = ((elementList.get(i))).getAttribute("name").getValue();
-                String value = ((elementList.get(i))).getAttribute("value").getValue();
-                if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+                String name = element.getAttribute("name").getValue();
+                String value = element.getAttribute("value").getValue();
+                if (log.isDebugEnabled()) log.debug("CV named "+name+" has value: "+value);
 
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
@@ -90,26 +89,26 @@ class LocoFile extends XmlFile {
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
             }
-            elementList = values.getChildren("indexedCVvalue");
-            if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" indexedCVvalues");
-            for (int i=0; i<elementList.size(); i++) {
-                if ( ((elementList.get(i))).getAttribute("name") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
+
+            if (log.isDebugEnabled()) log.debug("Found "+values.getChildren("indexedCVvalue").size()+" indexedCVvalues");
+            for (Element element : (List<Element>)values.getChildren("indexedCVvalue")) {
+                if ( element.getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+element+" "+element.getAttributes());
                     break;
                 }
-                if ( ((elementList.get(i))).getAttribute("value") == null) {
-                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((elementList.get(i)))+" "+((elementList.get(i))).getAttributes());
+                if ( element.getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+element+" "+element.getAttributes());
                     break;
                 }
 
-                String name  = ((elementList.get(i))).getAttribute("name").getValue();
-                String piCv  = elementList.get(i).getAttribute("piCv").getValue();
-                int piVal = Integer.valueOf(((elementList.get(i))).getAttribute("piVal").getValue()).intValue();
-                String siCv  = elementList.get(i).getAttribute("siCv").getValue();
-                int siVal = Integer.valueOf(((elementList.get(i))).getAttribute("siVal").getValue()).intValue();
-                String iCv   = elementList.get(i).getAttribute("iCv").getValue();
-                String value = ((elementList.get(i))).getAttribute("value").getValue();
-                if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+                String name  = element.getAttribute("name").getValue();
+                String piCv  = element.getAttribute("piCv").getValue();
+                int piVal = Integer.valueOf(element.getAttribute("piVal").getValue()).intValue();
+                String siCv  = element.getAttribute("siCv").getValue();
+                int siVal = Integer.valueOf(element.getAttribute("siVal").getValue()).intValue();
+                String iCv   = element.getAttribute("iCv").getValue();
+                String value = element.getAttribute("value").getValue();
+                if (log.isDebugEnabled()) log.debug("iCV named "+name+" has value: "+value);
 
                 // Hack to fix ESU LokSound V4.0 existing decoder file Indexed CV names
                 if (family.equals("ESU LokPilot V4.0")||family.equals("ESU LokSound Select")||family.equals("ESU LokSound V4.0")) {
@@ -125,13 +124,12 @@ class LocoFile extends XmlFile {
                 // cvObject = (iCvModel.allIndxCvVector().elementAt(i));
                 cvObject = iCvModel.getMatchingIndexedCV(name);
                 if (log.isDebugEnabled())
-                    log.debug("Matched name "+name+" with CV "+cvObject);
+                    log.debug("Matched name "+name+" with iCV "+cvObject);
                     
                 if (cvObject == null) {
-                    log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
-                    log.debug("attempt to add "+i+" "+name+" "+piCv+" "+piVal+" "+siCv+" "+siVal+" "+iCv);
-                    iCvModel.addIndxCV(name, piCv, piVal, siCv, siVal, iCv, false, false, false);
-                    cvObject = (iCvModel.allIndxCvVector().elementAt(i));
+                    log.info("Indexed CV "+name+" was in loco file, but not as iCv in definition; migrating");
+                    cvModel.addCV(name, false, false, false);
+                    cvObject = cvModel.allCvMap().get(name);
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 if ( cvObject.getInfoOnly() ) {
