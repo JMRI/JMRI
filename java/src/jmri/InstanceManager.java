@@ -2,25 +2,20 @@
 
 package jmri;
 
-import jmri.implementation.NmraConsistManager;
-import jmri.implementation.DccConsistManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.gui3.TabbedPreferences;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-// Please don't add any more dependencies on other packages via import
-// statements.  Instead, add new items with the store/getDefault methods
-// described below.
-import jmri.jmrit.roster.RosterIconFactory;
+import java.util.Vector;
+import jmri.implementation.DccConsistManager;
+import jmri.implementation.NmraConsistManager;
 import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
-import apps.gui3.TabbedPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides methods for locating various interface implementations.
@@ -71,6 +66,11 @@ import apps.gui3.TabbedPreferences;
 public class InstanceManager {
 
     static private HashMap<Class<?>,ArrayList<Object>> managerLists;
+    /* properties */
+    public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
+    public static String COMMAND_STATION = "commandstation"; // NOI18N
+    public static String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
+    public static String THROTTLE_MANAGER = "throttlemanager"; // NOI18N
     
     /**
      * Store an object of a particular type for later
@@ -218,7 +218,7 @@ public class InstanceManager {
 		    && consistManagerInstance() == null) {
 			setConsistManager(new DccConsistManager());
 		}
-        instance().notifyPropertyChangeListener("programmermanager", null, null);
+        instance().notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
     }
 
     static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
@@ -483,7 +483,7 @@ public class InstanceManager {
 
     static public void setThrottleManager(ThrottleManager p) {
         store(p, ThrottleManager.class);
-        instance().notifyPropertyChangeListener("throttlemanager", null, null);
+        instance().notifyPropertyChangeListener(THROTTLE_MANAGER, null, null);
     }
 
     private SignalHeadManager signalHeadManager = null;
@@ -560,7 +560,7 @@ public class InstanceManager {
 
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
-        instance().notifyPropertyChangeListener("consistmanager", null, null);
+        instance().notifyPropertyChangeListener(CONSIST_MANAGER, null, null);
     }
 
 
@@ -573,7 +573,7 @@ public class InstanceManager {
                 // manager.
 		setConsistManager(new NmraConsistManager());
 	 }
-         instance().notifyPropertyChangeListener("commandstation", null, null);
+         instance().notifyPropertyChangeListener(COMMAND_STATION, null, null);
     }
 
     private ReporterManager reporterManager = null;
