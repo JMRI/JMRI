@@ -128,18 +128,24 @@ class LocoFile extends XmlFile {
                     
                 if (cvObject == null) {
                     log.info("Indexed CV "+name+" was in loco file, but not as iCv in definition; migrating");
-                    // Skip, because the cvFirst condition may change mapping
-                    // Rely on the variable values to do recovery
-                    //cvModel.addCV(name, false, false, false);
-                    //cvObject = cvModel.allCvMap().get(name);
-                } else {
-                    cvObject.setValue(Integer.valueOf(value).intValue());
-                    if ( cvObject.getInfoOnly() ) {
-                        cvObject.setState(CvValue.READ);
-                    } else {
-                        cvObject.setState(CvValue.FROMFILE);
+                    // check the two possible orders
+                    cvObject = cvModel.allCvMap().get(name);
+                    if (cvObject == null) {
+                        cvObject = cvModel.allCvMap().get(piVal+"."+siVal+"."+iCv);
                     }
+                    if (cvObject == null) {
+                        log.warn("Didn't find match during migration");
+                        continue;
+                    }
+                } 
+                
+                cvObject.setValue(Integer.valueOf(value).intValue());
+                if ( cvObject.getInfoOnly() ) {
+                    cvObject.setState(CvValue.READ);
+                } else {
+                    cvObject.setState(CvValue.FROMFILE);
                 }
+
             }
         } else log.error("no values element found in config file; CVs not configured");
 
