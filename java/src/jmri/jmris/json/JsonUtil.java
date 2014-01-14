@@ -196,10 +196,14 @@ public class JsonUtil {
      * exist.
      */
     static public void delConsist(DccLocoAddress address) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            InstanceManager.consistManagerInstance().delConsist(address);
-        } else {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+        try {
+            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+                InstanceManager.consistManagerInstance().delConsist(address);
+            } else {
+                throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage("ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -231,28 +235,32 @@ public class JsonUtil {
      * exist.
      */
     static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            ObjectNode root = mapper.createObjectNode();
-            root.put(TYPE, CONSIST);
-            ObjectNode data = root.putObject(DATA);
-            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
-            data.put(ADDRESS, consist.getConsistAddress().getNumber());
-            data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
-            data.put(TYPE, consist.getConsistType());
-            ArrayNode engines = data.putArray(ENGINES);
-            for (DccLocoAddress l : consist.getConsistList()) {
-                ObjectNode engine = mapper.createObjectNode();
-                engine.put(ADDRESS, l.getNumber());
-                engine.put(IS_LONG_ADDRESS, l.isLongAddress());
-                engine.put(FORWARD, consist.getLocoDirection(l));
-                engine.put(POSITION, consist.getPosition(l));
-                engines.add(engine);
+        try {
+            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+                ObjectNode root = mapper.createObjectNode();
+                root.put(TYPE, CONSIST);
+                ObjectNode data = root.putObject(DATA);
+                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+                data.put(ADDRESS, consist.getConsistAddress().getNumber());
+                data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
+                data.put(TYPE, consist.getConsistType());
+                ArrayNode engines = data.putArray(ENGINES);
+                for (DccLocoAddress l : consist.getConsistList()) {
+                    ObjectNode engine = mapper.createObjectNode();
+                    engine.put(ADDRESS, l.getNumber());
+                    engine.put(IS_LONG_ADDRESS, l.isLongAddress());
+                    engine.put(FORWARD, consist.getLocoDirection(l));
+                    engine.put(POSITION, consist.getPosition(l));
+                    engines.add(engine);
+                }
+                data.put(ID, consist.getConsistID());
+                data.put(SIZE_LIMIT, consist.sizeLimit());
+                return root;
+            } else {
+                throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
             }
-            data.put(ID, consist.getConsistID());
-            data.put(SIZE_LIMIT, consist.sizeLimit());
-            return root;
-        } else {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage("ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -267,9 +275,13 @@ public class JsonUtil {
      * @throws JsonException
      */
     static public void putConsist(DccLocoAddress address, JsonNode data) throws JsonException {
-        if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            InstanceManager.consistManagerInstance().getConsist(address);
-            setConsist(address, data);
+        try {
+            if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+                InstanceManager.consistManagerInstance().getConsist(address);
+                setConsist(address, data);
+            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage("ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -281,11 +293,15 @@ public class JsonUtil {
      * @throws JsonException
      */
     static public JsonNode getConsists() throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
-        for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
-            root.add(getConsist(address));
+        try {
+            ArrayNode root = mapper.createArrayNode();
+            for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
+                root.add(getConsist(address));
+            }
+            return root;
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage("ErrorNoConsistManager")); // NOI18N
         }
-        return root;
     }
 
     /**
@@ -311,38 +327,42 @@ public class JsonUtil {
      * @throws JsonException
      */
     static public void setConsist(DccLocoAddress address, JsonNode data) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
-            if (data.path(ID).isTextual()) {
-                consist.setConsistID(data.path(ID).asText());
-            }
-            if (data.path(TYPE).isInt()) {
-                consist.setConsistType(data.path(TYPE).asInt());
-            }
-            if (data.path(ENGINES).isArray()) {
-                ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
-                // add every engine in
-                for (JsonNode engine : data.path(ENGINES)) {
-                    DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
-                    if (!consist.contains(engineAddress)) {
-                        consist.add(engineAddress, engine.path(FORWARD).asBoolean());
-                    }
-                    consist.setPosition(engineAddress, engine.path(POSITION).asInt());
-                    engines.add(engineAddress);
+        try {
+            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+                if (data.path(ID).isTextual()) {
+                    consist.setConsistID(data.path(ID).asText());
                 }
-                @SuppressWarnings("unchecked")
-                ArrayList<DccLocoAddress> consistEngines = (ArrayList<DccLocoAddress>) consist.getConsistList().clone();
-                for (DccLocoAddress engineAddress : consistEngines) {
-                    if (!engines.contains(engineAddress)) {
-                        consist.remove(engineAddress);
+                if (data.path(TYPE).isInt()) {
+                    consist.setConsistType(data.path(TYPE).asInt());
+                }
+                if (data.path(ENGINES).isArray()) {
+                    ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
+                    // add every engine in
+                    for (JsonNode engine : data.path(ENGINES)) {
+                        DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
+                        if (!consist.contains(engineAddress)) {
+                            consist.add(engineAddress, engine.path(FORWARD).asBoolean());
+                        }
+                        consist.setPosition(engineAddress, engine.path(POSITION).asInt());
+                        engines.add(engineAddress);
+                    }
+                    @SuppressWarnings("unchecked")
+                    ArrayList<DccLocoAddress> consistEngines = (ArrayList<DccLocoAddress>) consist.getConsistList().clone();
+                    for (DccLocoAddress engineAddress : consistEngines) {
+                        if (!engines.contains(engineAddress)) {
+                            consist.remove(engineAddress);
+                        }
                     }
                 }
+                try {
+                    (new ConsistFile()).writeFile(InstanceManager.consistManagerInstance().getConsistList());
+                } catch (IOException ex) {
+                    throw new JsonException(500, ex.getLocalizedMessage());
+                }
             }
-            try {
-                (new ConsistFile()).writeFile(InstanceManager.consistManagerInstance().getConsistList());
-            } catch (IOException ex) {
-                throw new JsonException(500, ex.getLocalizedMessage());
-            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage("ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -1063,8 +1083,8 @@ public class JsonUtil {
                 data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
             }
             data.put(LOCATION, train.getCurrentLocationName());
-            if (train.getCurrentLocation()  != null) {
-            	data.put(LOCATION_ID, train.getCurrentLocation().getId());
+            if (train.getCurrentLocation() != null) {
+                data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
             data.put(STATUS, train.getStatus());
             data.put(LENGTH, train.getTrainLength());
@@ -1273,13 +1293,10 @@ public class JsonUtil {
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
-     * <code>number(type)</code> or
-     * <code>number</code>.
+     * <code>number(type)</code> or <code>number</code>.
      *
-     * Type may be
-     * <code>L</code> for long or
-     * <code>S</code> for short. If the type is not specified, type is assumed
-     * to be short.
+     * Type may be <code>L</code> for long or <code>S</code> for short. If the
+     * type is not specified, type is assumed to be short.
      *
      * @param address
      * @return The DccLocoAddress for address.
@@ -1292,5 +1309,5 @@ public class JsonUtil {
             isLong = true;
         }
         return new DccLocoAddress(number, isLong);
-    }    
+    }
 }

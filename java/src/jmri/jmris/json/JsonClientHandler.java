@@ -89,6 +89,7 @@ public class JsonClientHandler {
 
     public void onClose() {
         this.throttleServer.onClose();
+        this.consistServer.onClose();
     }
 
     /**

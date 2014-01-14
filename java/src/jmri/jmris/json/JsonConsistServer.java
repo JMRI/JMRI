@@ -4,9 +4,13 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import jmri.ConsistListListener;
 import jmri.ConsistListener;
+import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
@@ -31,19 +35,61 @@ public class JsonConsistServer {
     private final JmriConnection connection;
     private final ObjectMapper mapper;
     private final static Logger log = LoggerFactory.getLogger(JsonConsistServer.class);
+    private final JsonConsistListListener consistListListener = new JsonConsistListListener();
+    private final ArrayList<JsonConsistListener> consistListeners = new ArrayList<JsonConsistListener>();
+    private final PropertyChangeListener instanceManagerListener = new PropertyChangeListener() {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER)) {
+                if (evt.getNewValue() != null) {
+                    InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+                    try {
+                        (new ConsistFile()).readFile();
+                    } catch (IOException e) {
+                        log.warn("error reading consist file: {}", e.getLocalizedMessage());
+                    } catch (JDOMException e) {
+                        log.warn("error reading consist file: {}", e.getLocalizedMessage());
+                    }
+                    InstanceManager.consistManagerInstance().addConsistListListener(consistListListener);
+                    for (JsonConsistListener l : consistListeners) {
+                        InstanceManager.consistManagerInstance().getConsist(l.consistAddress).addConsistListener(l);
+                    }
+                }
+                if (evt.getOldValue() != null) {
+                    for (JsonConsistListener l : consistListeners) {
+                        ((ConsistManager) evt.getOldValue()).getConsist(l.consistAddress).removeConsistListener(l);
+                    }
+                }
+            }
+        }
+    };
 
     public JsonConsistServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();
-        InstanceManager.consistManagerInstance().requestUpdateFromLayout();
-        try {
-            (new ConsistFile()).readFile();
-        } catch (IOException e) {
-            log.warn("error reading consist file: {}", e.getLocalizedMessage());
-        } catch (JDOMException e) {
-            log.warn("error reading consist file: {}", e.getLocalizedMessage());
+        if (InstanceManager.consistManagerInstance() != null) {
+            InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+            try {
+                (new ConsistFile()).readFile();
+            } catch (IOException e) {
+                log.warn("error reading consist file: {}", e.getLocalizedMessage());
+            } catch (JDOMException e) {
+                log.warn("error reading consist file: {}", e.getLocalizedMessage());
+            }
+            InstanceManager.consistManagerInstance().addConsistListListener(this.consistListListener);
         }
-        InstanceManager.consistManagerInstance().addConsistListListener(new JsonConsistListListener());
+    }
+
+    public void onClose() {
+        InstanceManager.removePropertyChangeListener(this.instanceManagerListener);
+        if (InstanceManager.consistManagerInstance() != null) {
+            InstanceManager.consistManagerInstance().removeConsistListListener(this.consistListListener);
+            for (JsonConsistListener l : new ArrayList<JsonConsistListener>(this.consistListeners)) {
+                l.onClose();
+                this.consistListeners.remove(l);
+            }
+        }
     }
 
     public void parseRequest(JsonNode data) throws IOException, JsonException {
@@ -86,8 +132,10 @@ public class JsonConsistServer {
 
         private final DccLocoAddress consistAddress;
 
+        @SuppressWarnings("LeakingThisInConstructor")
         private JsonConsistListener(DccLocoAddress address) {
             this.consistAddress = address;
+            consistListeners.add(this);
         }
 
         @Override
@@ -108,6 +156,12 @@ public class JsonConsistServer {
             try {
                 connection.sendMessage(mapper.writeValueAsString(message));
             } catch (IOException ex) {
+                InstanceManager.consistManagerInstance().getConsist(this.consistAddress).removeConsistListener(this);
+            }
+        }
+
+        private void onClose() {
+            if (InstanceManager.consistManagerInstance() != null) {
                 InstanceManager.consistManagerInstance().getConsist(this.consistAddress).removeConsistListener(this);
             }
         }

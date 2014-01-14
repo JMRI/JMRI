@@ -4,6 +4,8 @@ package jmri.web.servlet.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -95,10 +97,22 @@ public class JsonServlet extends WebSocketServlet {
     private ObjectMapper mapper;
     private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
+    private final PropertyChangeListener instanceManagerListener = new PropertyChangeListener() {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER) && evt.getNewValue() != null) {
+                InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+            }
+        }
+    };
 
     public JsonServlet() {
         super();
-        InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+        if (InstanceManager.consistManagerInstance() != null) {
+            InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+        }
+        InstanceManager.addPropertyChangeListener(this.instanceManagerListener);
     }
 
     @Override
@@ -122,6 +136,11 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     @Override
+    public void destroy() {
+        InstanceManager.removePropertyChangeListener(this.instanceManagerListener);
+    }
+
+    @Override
     public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
         log.debug("Creating WebSocket for {} at {}", hsr.getRemoteHost(), hsr.getRequestURL());
         return new JsonWebSocket();
@@ -140,9 +159,13 @@ public class JsonServlet extends WebSocketServlet {
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
      * note that data will vary for each type
-     * @param request an HttpServletRequest object that contains the request the client has made of the servlet
-     * @param response an HttpServletResponse object that contains the response the servlet sends to the client
-     * @throws java.io.IOException if an input or output error is detected when the servlet handles the GET request
+     *
+     * @param request an HttpServletRequest object that contains the request the
+     * client has made of the servlet
+     * @param response an HttpServletResponse object that contains the response
+     * the servlet sends to the client
+     * @throws java.io.IOException if an input or output error is detected when
+     * the servlet handles the GET request
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
