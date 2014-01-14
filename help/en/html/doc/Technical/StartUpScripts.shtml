@@ -247,6 +247,8 @@ In this section, we briefly describe the launcher application command-line optio
 <dt>/32bit (Optional - from JMRI 2.99.4)
 <dd>If this option is set on the command line, the launcher will force the use of a 32-bit Java Runtime Environment on 64-bit machines.
     This option has no effect on 32-bit machines.
+<dt>/profile &lt;profileID&gt; (Optional - from JMRI 3.7.1)
+<dd>If this option is set on the command line, the launcher will use profile &lt;profileID&gt; as the <a href="/help/en/html/profiles.shtml">JMRI configuration profile</a> to use instead of the default one.
 <dt>Class Parameter
 <dd>The first parameter of LaunchJMRI.exe, after any of the above options, is the name of the main class to execute.
 <dd>An example to launch DecoderPro would be "apps.DecoderPro.DecoderPro"
