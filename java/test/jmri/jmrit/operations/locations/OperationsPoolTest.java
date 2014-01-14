@@ -104,7 +104,7 @@ public class OperationsPoolTest extends TestCase {
 		p.add(t1);
 		Assert.assertEquals("Added one track", 1, p.getSize());
 		Assert.assertTrue("Was fired", opcl.isFired());
-		Assert.assertEquals("List changed", "listChange", opcl.getEvent()
+		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent()
 				.getPropertyName());
 
 		// Try to add it again
@@ -129,7 +129,7 @@ public class OperationsPoolTest extends TestCase {
 
 		Assert.assertEquals("Removed one track", 0, p.getSize());
 		Assert.assertTrue("Was fired", opcl.isFired());
-		Assert.assertEquals("List changed", "listChange", opcl.getEvent()
+		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent()
 				.getPropertyName());
 
 		// Try to remove it when it is not there.

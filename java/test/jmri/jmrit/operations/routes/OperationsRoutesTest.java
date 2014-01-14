@@ -61,7 +61,7 @@ public class OperationsRoutesTest extends TestCase {
 
 		Assert.assertEquals("Route Constant LISTCHANGE_CHANGED_PROPERTY", "routeListChange",
 				Route.LISTCHANGE_CHANGED_PROPERTY);
-		Assert.assertEquals("Route Constant DISPOSE", "dispose", Route.DISPOSE);
+		Assert.assertEquals("Route Constant DISPOSE", "routeDispose", Route.DISPOSE);
 	}
 
 	// test Route attributes
@@ -119,7 +119,7 @@ public class OperationsRoutesTest extends TestCase {
 				RouteLocation.PICKUP_CHANGED_PROPERTY);
 		Assert.assertEquals("RouteLocation Constant MAXMOVES_CHANGED_PROPERTY", "maxMovesChange",
 				RouteLocation.MAXMOVES_CHANGED_PROPERTY);
-		Assert.assertEquals("RouteLocation Constant DISPOSE", "dispose", RouteLocation.DISPOSE);
+		Assert.assertEquals("RouteLocation Constant DISPOSE", "routeLocationDispose", RouteLocation.DISPOSE);
 	}
 
 	// test RouteLocation attributes

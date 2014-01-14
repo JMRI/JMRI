@@ -17,8 +17,8 @@ import jmri.jmrit.operations.BeanBase;
  */
 public class Pool extends BeanBase {
 
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange"; // NOI18N
-	public static final String DISPOSE = "dispose"; // NOI18N
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "poolListChange"; // NOI18N
+	public static final String DISPOSE = "poolDispose"; // NOI18N
 
 	static Logger log = LoggerFactory.getLogger(Pool.class);
 

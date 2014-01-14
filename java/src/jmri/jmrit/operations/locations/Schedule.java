@@ -28,8 +28,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	protected int _IdNumber = 0; // each item in a schedule gets its own id
 	protected int _sequenceNum = 0; // each item has a unique sequence number
 
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange"; // NOI18N
-	public static final String DISPOSE = "dispose"; // NOI18N
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "scheduleListChange"; // NOI18N
+	public static final String DISPOSE = "scheduleDispose"; // NOI18N
 
 	public Schedule(String id, String name) {
 		log.debug("New schedule (" + name + ") id: " + id);

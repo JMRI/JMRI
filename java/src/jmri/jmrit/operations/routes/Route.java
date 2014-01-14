@@ -38,7 +38,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final int SOUTH = 8;
 
 	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange"; // NOI18N
-	public static final String DISPOSE = "dispose"; // NOI18N
+	public static final String DISPOSE = "routeDispose"; // NOI18N
 
 	public static final String OKAY = Bundle.getMessage("Okay");
 	public static final String ORPHAN = Bundle.getMessage("Orphan");

@@ -86,7 +86,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String USEDLENGTH_CHANGED_PROPERTY = "locationUsedLength"; // NOI18N
 	public static final String NAME_CHANGED_PROPERTY = "locationName"; // NOI18N
 	public static final String SWITCHLIST_CHANGED_PROPERTY = "switchList"; // NOI18N
-	public static final String DISPOSE_CHANGED_PROPERTY = "dispose"; // NOI18N
+	public static final String DISPOSE_CHANGED_PROPERTY = "locationDispose"; // NOI18N
 	public static final String STATUS_CHANGED_PROPERTY = "locationStatus"; // NOI18N
 	public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged"; // NOI18N
 	public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N

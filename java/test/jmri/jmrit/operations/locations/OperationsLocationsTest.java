@@ -75,7 +75,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Constant USEDLENGTH_CHANGED_PROPERTY", "locationUsedLength", Location.USEDLENGTH_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant NAME_CHANGED_PROPERTY", "locationName", Location.NAME_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant SWITCHLIST_CHANGED_PROPERTY", "switchList", Location.SWITCHLIST_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant DISPOSE_CHANGED_PROPERTY", "dispose", Location.DISPOSE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant DISPOSE_CHANGED_PROPERTY", "locationDispose", Location.DISPOSE_CHANGED_PROPERTY);
 	}
 
 	// test ScheduleItem class
@@ -85,7 +85,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "scheduleItemType", ScheduleItem.TYPE_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "scheduleItemRoad", ScheduleItem.ROAD_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "scheduleItemLoad", ScheduleItem.LOAD_CHANGED_PROPERTY);
-		Assert.assertEquals("Location ScheduleItem Constant DISPOSE", "dispose", ScheduleItem.DISPOSE);
+		Assert.assertEquals("Location ScheduleItem Constant DISPOSE", "scheduleItemDispose", ScheduleItem.DISPOSE);
 	}
 
 	// test ScheduleItem attributes
@@ -119,8 +119,8 @@ public class OperationsLocationsTest extends TestCase {
 	// test Schedule class
 	// test schedule public constants
 	public void testScheduleConstants() {
-		Assert.assertEquals("Location Schedule Constant LISTCHANGE_CHANGED_PROPERTY", "listChange", Schedule.LISTCHANGE_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Schedule Constant DISPOSE", "dispose", Schedule.DISPOSE);
+		Assert.assertEquals("Location Schedule Constant LISTCHANGE_CHANGED_PROPERTY", "scheduleListChange", Schedule.LISTCHANGE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Schedule Constant DISPOSE", "scheduleDispose", Schedule.DISPOSE);
 	}
 
 	// test schedule attributes

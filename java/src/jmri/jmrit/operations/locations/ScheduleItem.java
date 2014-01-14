@@ -35,7 +35,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "scheduleItemDestinationTrack"; // NOI18N
 	public static final String WAIT_CHANGED_PROPERTY = "scheduleItemWait"; // NOI18N
 	public static final String HITS_CHANGED_PROPERTY = "scheduleItemHits"; // NOI18N
-	public static final String DISPOSE = "dispose"; // NOI18N
+	public static final String DISPOSE = "scheduleItemDispose"; // NOI18N
 
 	/**
 	 * 
