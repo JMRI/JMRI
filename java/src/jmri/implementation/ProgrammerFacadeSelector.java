@@ -69,9 +69,10 @@ public class ProgrammerFacadeSelector  {
                 // going to create a specific one
                 String PI           = parameters.get(0).getText();
                 String SI           = (parameters.size()>1) ? parameters.get(1).getText() : null;
+                boolean cvFirst     = (parameters.size()>2) ? (parameters.get(2).getText().equals("false") ? false : true) : true;
 
                 jmri.implementation.MultiIndexProgrammerFacade pf =
-                    new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI);
+                    new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst);
             
                 log.debug("new programmer "+pf);
                 programmer = pf; // to go around and see if there are more
