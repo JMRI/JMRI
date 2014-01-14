@@ -4,6 +4,7 @@
       <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
       <label label=" "/>
       <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;"/>
+      <label label=" "/>
       <separator/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;Factory Reset Warning&lt;/h2&gt;&lt;/html&gt;"/>
@@ -15,6 +16,7 @@
       <label label="optional step to write new 'factory' defaults suited to the project, a"/>
       <label label="subsequent reset will most likely render the sounds inoperable due to incorrect"/>
       <label label="CV defaults. If in doubt, consult your dealer before resetting."/>
+      <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
@@ -28,10 +30,22 @@
       <label label="It is planned to eventually rewrite it in a more compact and readable form, similar"/>
       <label label="to the way it is done in LokProgrammer software, but this will be a big job."/>
       <label label=" "/>
-      <label label="If you have an NCE Power Pro system, a firmware issue prevents it from correctly writing"/>
-      <label label="Indexed CVs on the Programming track. You can read Indexed CVs into Decoder Pro, but you will"/>
-      <label label="have to switch to Programming on Main to change the value of any indexed CVs. A workaround will"/>
-      <label label="be made available in a future release of JMRI."/>
+      <label label="If you have an NCE Power Pro system, there is now a workaround in JMRI for the"/>
+      <label label="firmware issue that prevents the Power Pro from correctly writing Indexed CVs on"/>
+      <label label="the Programming Track. You can now safely use the the Programming Track to read"/>
+      <label label="or write any CVs in this definition."/>
+      <label label=" "/>
+      <label label="Due to changes in the internal structure of JMRI, the Indexed CVs pane is now"/>
+      <label label="obsolete and should be empty. If you find this pane is not empty, please report"/>
+      <label label="back to us by posting to either the JMRI or LokSound Yahoo&#174; groups or log a"/>
+      <label label="bug report on the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
+      <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
+      <label label=" "/>
+      <label label="The naming convention for Indexed CVs has been changed for these decoders to"/>
+      <label label="conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the"/>
+      <label label="CVs list in the same order as in the ESU documentation and LokProgrammer software."/>
+      <label label="The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'."/>
+      <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
@@ -47,6 +61,7 @@
       <label label="You may experience very slow scrolling of the Function Map table with some Mac OS X computers."/>
       <label label="If affected, change the JMRI GUI setting in Decoder Pro > Preferences > Display > GUI to any"/>
       <label label="setting other than Mac OS X."/>
+      <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;The Speed Table&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
@@ -70,6 +85,7 @@
       <label label="The Minimum and Maximum speeds cannot be set by using the speed table steps 1"/>
       <label label="and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at"/>
       <label label="1 and 255 respectively."/>
+      <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;Further Assistance&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
@@ -78,12 +94,14 @@
       <label label="If you think there is a problem with this decoder definition, please report back to us by"/>
       <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or by logging a bug report on"/>
       <label label="the JMRI SourceForge page at http//sourceforge.net/p/jmri/bugs/"/>
+      <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;Decoder Information&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
             <display item="Firmware Major Version"/>
             <display item="Firmware Minor Version"/>
             <display item="Firmware Build Number"/>
+      <label label=" "/>
       <separator/>
     </column>
   </pane>
