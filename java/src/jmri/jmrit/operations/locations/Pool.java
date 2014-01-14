@@ -1,11 +1,10 @@
 package jmri.jmrit.operations.locations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
-
-import jmri.jmrit.operations.BeanBase;
+import jmri.beans.Bean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a pool of tracks that share their length.
@@ -15,7 +14,7 @@ import jmri.jmrit.operations.BeanBase;
  * 
  * @version $Revision$
  */
-public class Pool extends BeanBase {
+public class Pool extends Bean {
 
 	public static final String LISTCHANGE_CHANGED_PROPERTY = "poolListChange"; // NOI18N
 	public static final String DISPOSE = "poolDispose"; // NOI18N
