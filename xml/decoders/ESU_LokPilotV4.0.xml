@@ -117,6 +117,7 @@
             <name>Indexed CV access</name>
             <parameter name="PI">31</parameter>
             <parameter name="SI">32</parameter>
+            <parameter name="cvFirst">false</parameter>
         </capability>
     </programming>
     <variables>

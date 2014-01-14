@@ -337,13 +337,13 @@
       <constant item="PICV" default="31" comment="CV used for Primary Index"/>
       <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
       <!-- Firmware Version -->
-      <variable label="Firmware Build Number" CV="285.0.255" readOnly="yes" item="Firmware Build Number">
-        <splitVal highCV="286.0.255"/>
+      <variable label="Firmware Build Number" CV="0.255.285" readOnly="yes" item="Firmware Build Number">
+        <splitVal highCV="0.255.286"/>
       </variable>
-      <variable label="Firmware Minor Version" CV="287.0.255" readOnly="yes" item="Firmware Minor Version">
+      <variable label="Firmware Minor Version" CV="0.255.287" readOnly="yes" item="Firmware Minor Version">
         <decVal/>
       </variable>
-      <variable label="Firmware Major Version" CV="288.0.255" readOnly="yes" item="Firmware Major Version">
+      <variable label="Firmware Major Version" CV="0.255.288" readOnly="yes" item="Firmware Major Version">
         <decVal/>
       </variable>
       <!-- Function Outputs -->
