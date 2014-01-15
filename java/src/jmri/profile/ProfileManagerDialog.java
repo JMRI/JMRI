@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.profile;
 
 import java.awt.Dimension;
@@ -32,6 +28,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Display a list of {@link Profile}s that can be selected to start a JMRI
+ * application.
+ * <p>
+ * This dialog is designed to be displayed while an application is starting. If
+ * the last profile used for the application can be found, this dialog will
+ * automatically start the application with that profile after 10 seconds unless
+ * the user intervenes.
  *
  * @author rhwood
  */

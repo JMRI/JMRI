@@ -205,6 +205,7 @@ public abstract class AppsBase {
                 log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
             } else {
                 log.error("Specify profile to use as command line argument.");
+                log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
                 log.error("Profiles not configurable. Using fallback per-application configuration.");
             }
         } catch (IOException ex) {
