@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id: Names.shtml,v 1.10 2010/03/05 00:05:12 jacobsen Exp $ -->
-
+<!-- $Id: Names.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-09-10 -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -22,165 +22,165 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Système de Noms Grapevine 
+JMRI: Noms Syst&#232;mes Grapevine 
 </h1>
 
-Les Entrées individuelles (capteurs) et sorties (aiguillages et feux)
+Les Entr&#233;es individuelles (capteurs) et sorties (aiguillages et feux)
 dans JMRI sont accessibles via des noms.
-Pour plus d'informations sur le régime général, s'il vous plaît voir
+Pour plus d'informations sur le r&#233;gime g&#233;n&#233;ral, s'il vous pla&#238;t voir
 la
-<a href="../../doc/Technical/Names.shtml">  désignation des pages </a>
+<a href="../../doc/Technical/Names.shtml"> d&#233;signation des pages</a>
 dans la
-<a href="../../doc/Technical/index.shtml"> documentation technique </a>.
+<a href="../../doc/Technical/index.shtml"> documentation technique</a>.
 
 <p>
-Pour les systèmes de Grapevine, tous les noms commencent par une lettre système de "G".
-Après cela, il ya une
-<a href="../../doc/Technical/Names.shtml#type"> lettre type </a>,
-ensuite un certain nombre de nœuds et un numéro d'identification.
+Pour les syst&#232;mes de Grapevine, tous les noms commencent par une lettre syst&#232;me de "G".
+Apr&#232;s cela, il y a une
+<a href="../../doc/Technical/Names.shtml#type"> lettre type</a>,
+ensuite un certain nombre de noeuds et un num&#233;ro d'identification.
 
 <p>
 Le nombre de broches est de trois chiffres ("101", "324", "004"), ou commence
-avec un caractère alphabétique en minuscule ("p12", "s1"). Voir la
-sections sur les entrées et les sorties ci-dessous pour les significations spécifiques
-de ces différents formats.
+avec un caract&#232;re alphab&#233;tique en minuscule ("p12", "s1"). Voir la
+sections sur les entr&#233;es et les sorties ci-dessous pour les significations sp&#233;cifiques
+de ces diff&#233;rents formats.
 
 <p>
-Le numéro de nœud  précède le numéro de la broche. Si c'est utile, vous pouvez penser le numéro de nœud comme étant la partie «milliers»
- du numéro combiné, et le nombre de broches que les trois premiers chiffres.
+Le num&#233;ro de noeud  pr&#233;c&#232;de le num&#233;ro de la broche. Si c'est utile, vous pouvez penser le num&#233;ro de noeud comme &#233;tant la partie "milliers"
+ du num&#233;ro combin&#233;, et le nombre de broches les trois premiers chiffres.
 
 
 <p>
-Par exemple, la premiere broche d'entrée du capteur Grapevine, du nœuds 23 serait
-nommé GS23001 ou GS23p1. Le cinquième aiguillage sur le nœud 2 serait GT2005.
+Par exemple, la premiere broche d'entr&#233;e du capteur Grapevine, du noeuds 23 serait
+nomm&#233; GS23001 ou GS23p1. Le cinqui&#232;me aiguillage sur le noeud 2 serait GT2005.
 
-<h2>  numérotation des Nœuds </h2>
-Chaque nœud a un certain numéro Grapevine, de 1 à 127.
+<h2>  num&#233;rotation des Noeuds</h2>
+Chaque noeud a un certain num&#233;ro Grapevine, de 1 &#224; 127.
 
 <p>
-Avant de pouvoir accéder au nœud JMRI, vous devez le définir pour
-le programme. Vous pouvez le faire soit à partir de la 
-<a  href="../../../package/apps/TabbedPreferences.shtml"> fenêtre Préférences </a>
+Avant de pouvoir acc&#233;der au noeud JMRI, vous devez le d&#233;finir pour
+le programme. Vous pouvez le faire soit &#224; partir de la 
+<a  href="../../../package/apps/TabbedPreferences.shtml"> fen&#234;tre Pr&#233;f&#233;rences</a>
 (sous Modifier dans le menu principal)
 ou en utilisant l'outil
-<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml"> configurer les nœuds </a>
+<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml"> configurer les noeuds</a>
  dans le menu Grapevine.
 
-<h2>Entrées</h2>
+<h2>Entr&#233;es</h2>
 
-Les nœuds Grapevine ont un nombre d'entrées possibles:
+Les noeuds Grapevine ont un nombre d'entr&#233;es possibles:
 <dl>
   <dt>
-     Entrées parallèles
-  </ dt> <dd>
-     Il y a huit connecteurs à trois broches sur un nœud de Grapevine
-     qui peuvent être utilisés comme entrées en général. Ces capteurs sont
-     référencé 001 à 008. Ils peuvent également être référencés
-     dans un format plus court (où les trois chiffres complets ne sont pas nécessaires)
-     comme P1 à P8.
+     Entr&#233;es parall&#232;les
+ </ dt> <dd>
+     Il y a huit connecteurs &#224; trois broches sur un noeud de Grapevine
+     qui peuvent &#234;tre utilis&#233;s comme entr&#233;es en g&#233;n&#233;ral. Ces capteurs sont
+     r&#233;f&#233;renc&#233; 001 &#224; 008. Ils peuvent &#233;galement &#234;tre r&#233;f&#233;renc&#233;s
+     dans un format plus court (o&#249 les trois chiffres complets ne sont pas n&#233;cessaires)
+     comme P1 &#224; P8.
      <p>
-     En outre, il ya huit broches supplémentaires dans le
-     Connecteur à 14 broches qui peut être référencé en tant que capteurs
-     009 à 016 ou par le biais p9 p16, où le «p» indique d'entrée parallèle.
-  </dd>
- <dt>
-    Les cartes série de capteur d'occupation
-  </ dt> <dd>
-     Les cartes série avancées de capteur d'occupation (ASCs) peuvent être rattachées 
-     à chaque nœud. Chacune d'elles surveillent huit segments de voie, et 3 cartes peuvent être rattachées à un nœud.
-     En outre, «l'occupation» et le «mouvement» sont
-     détectés séparément.
-     <p>
-     Les aiguillages sur ces cartes sont numérotés de façon séquentielle, en commençant
-     avec 101. Les capteurs de mouvement sont également numérotés,
-     commençant par 201. Cela signifie que le sens "d'occupation" 101 
-     et "mouvement"201 sur le connecteur de la première carte , respectivement,
-     109 et 209 sont des détecteurs de mouvement sur le premier
-     connecteur de la deuxième carte, etc
-     <p>
-     Ceux-ci peuvent également être référencé nœuds  nœuds  nœuds  dans une formule plus courte, par le préfixe
-     lettre «a», capteur d'occupation  ASD, ou "m" pour capteur de mouvement ASD,
-     et le nombre 1-24 du connecteur.
-     <p>
-     Des exemples, le tout pour 22 nœuds:
-     <ul>
-     <li> GS22a1 ou GS22101 est le capteur d'occupation pour le premier bloc d'entrée le 1er ASC. <br/>
-         GS22m1 ou GS22201 est le capteur de mouvement correspondante pour le premier
-         bloc d'entrée le 1er ASC.
-     GS22a9 <li> ou GS22109 est le capteur d'occupation pour le pr nœuds emier bloc d'entrée sur le deuxième ASC. <br/>
-         GS22m9 ou GS22209 est le capteur de mouvement correspondante pour le premier
-         bloc d'entrée sur le deuxième ASC.
-     <li> GS22a24 ou GS124 est le capteur d'occupation de l'entrée du bloc 8ème au 3ème ASC. <br/>
-         GS22m24 ou GS224 est le capteur de mouvement correspondante pour le 8e
-         bloc d'entrée sur le 3ème ASC.
-           <p>
-        </ul>
+     En outre, il y a huit broches suppl&#233;mentaires dans le
+     Connecteur &#224; 14 broches qui peut &#234;tre r&#233;f&#233;renc&#233; en tant que capteurs
+     009 &#224; 016 ou par le biais p9 p16, o&#249 le "p" indique entr&#233;e parall&#232;le.
  </dd>
  <dt>
-    Les détecteurs d'occupation âgés
-  </dt> <dd>
-     Les nœuds peuvent aussi avoir plus de détecteurs d'occupation de série
-     ci-joint. Si vous avez un de ceux-ci, les capteurs apparaissent
-    de 021 à 036. Ceux-ci peuvent également être référencé en tant que «S1 »à
-     "s16". </dd>
+    Les Cartes S&#233;rie de Capteur d'Occupation
+ </ dt> <dd>
+     Les cartes s&#233;rie avanc&#233;es de capteur d'occupation (ASCs) peuvent &#234;tre rattach&#233;es 
+     &#224; chaque noeud. Chacune d'elles surveillent huit segments de voie, et 3 cartes peuvent &#234;tre rattach&#233;es &#224; un noeud.
+     En outre, "l'occupation" et le "mouvement" sont
+     d&#233;tect&#233;s s&#233;par&#233;ment.
+     <p>
+     Les aiguillages sur ces cartes sont num&#233;rot&#233;s de fa&#231;on s&#233;quentielle, en commen&#231;ant
+     avec 101. Les capteurs de mouvement sont &#233;galement num&#233;rot&#233;s,
+     commen&#231;ant par 201. Cela signifie que le sens "d'occupation" 101 
+     et "mouvement"201 sur le connecteur de la premi&#232;re carte , respectivement,
+     109 et 209 sont des d&#233;tecteurs de mouvement sur le premier
+     connecteur de la deuxi&#232;me carte, etc
+     <p>
+     Ceux-ci peuvent &#233;galement &#234;tre r&#233;f&#233;renc&#233; dans une formule plus courte, par le pr&#233;fixe
+     lettre "a", capteur d'occupation  ASD, ou "m" pour capteur de mouvement ASD,
+     et le nombre 1-24 du connecteur.
+     <p>
+     Des exemples, le tout pour 22 noeuds:
+     <ul>
+     <li> GS22a1 ou GS22101 est le capteur d'occupation pour le premier bloc d'entr&#233;e le 1er ASC. <br/>
+         GS22m1 ou GS22201 est le capteur de mouvement correspondante pour le premier
+         bloc d'entr&#233;e le 1er ASC.
+     GS22a9 <li> ou GS22109 est le capteur d'occupation pour le pr noeuds emier bloc d'entr&#233;e sur le deuxi&#232;me ASC. <br/>
+         GS22m9 ou GS22209 est le capteur de mouvement correspondante pour le premier
+         bloc d'entr&#233;e sur le deuxi&#232;me ASC.
+     <li> GS22a24 ou GS124 est le capteur d'occupation de l'entr&#233;e du bloc 8&#232;me au 3&#232;me ASC. <br/>
+         GS22m24 ou GS224 est le capteur de mouvement correspondante pour le 8e
+         bloc d'entr&#233;e sur le 3&#232;me ASC.
+           <p>
+       </ul>
+</dd>
+ <dt>
+    Les d&#233;tecteurs d'occupation &#226;g&#233;s
+ </dt> <dd>
+     Les noeuds peuvent aussi avoir des d&#233;tecteurs d'occupation s&#233;rie anciens
+   . Si vous avez un de ceux-ci, les capteurs apparaissent
+    de 021 &#224; 036. Ceux-ci peuvent &#233;galement &#234;tre r&#233;f&#233;renc&#233; en tant que "s1 "&#224;
+     "s16".</dd>
 </dl>
 
-<h2>Sorties </h2>
+<h2>Sorties</h2>
 
-Chaque nœud Grapevine peut avoir jusqu'à quatre cartes de sortie qui s'y rattachent.
-(une partie de la documentation de Grapevine et ProTrak les désigne sous le
-quatre «banques».)
-Les sorties sur la première carte sont référencés à partir de 101, et
-peut aller jusqu'à 124 selon le type de carte.
-Les sorties sur le début deuxième carte à 201 et aller jusqu'à 224.
-Les cartes de troisième et quatrième commencent à partir de 301 et 401 respectivement.
+Chaque noeud Grapevine peut avoir jusqu'&#224; quatre cartes de sortie qui s'y rattachent.
+(une partie de la documentation de Grapevine et ProTrak les d&#233;signe sous le
+quatre "banques".)
+Les sorties sur la premi&#232;re carte sont r&#233;f&#233;renc&#233;s &#224; partir de 101, et
+peut aller jusqu'&#224; 124 selon le type de carte.
+Les sorties sur le d&#233;but deuxi&#232;me carte &#224; 201 et aller jusqu'&#224; 224.
+Les cartes de troisi&#232;me et quatri&#232;me commencent &#224; partir de 301 et 401 respectivement.
 <p>
-Si cela peut vous aider, vous pouvez penser que le chiffre "centaines" est le numéro de la carte ou de la banque
-, et les plus bas de deux chiffres les plus bas comme le numéro du connecteur.
+Si cela peut vous aider, vous pouvez penser que le chiffre "centaines" est le num&#233;ro de la carte ou de la banque
+, et les plus bas de deux chiffres les plus bas comme le num&#233;ro du connecteur.
 <p>
-Chacun d'eux peut être utilisé comme un
+Chacun d'eux peut &#234;tre utilis&#233; comme un
 <a href="../../tools/Turnouts.shtml"> aiguillage</a> JMRI,
-<a href="../../tools/Lights.shtml"> Lumière </a>JMRI,
+<a href="../../tools/Lights.shtml"> Lumi&#232;re</a>JMRI,
 ou
-<a href="../../tools/Signals.shtml"> TéteSignaL </a>JMRI
+<a href="../../tools/Signals.shtml"> Cible SignaL</a>JMRI
 
 
- <h3>Aiguillages </h3>
+ <h3>Aiguillages</h3>
 
-Les sorties Grapevine peuvent être utilisées pour le contrôle des moteurs d'aiguillage.
-Dans ce cas, ele JMRIs doivent être référencées comme des 
-<a href="../../tools/Turnouts.shtml"> Aiguillages </a> JMRI , avec
+Les sorties Grapevine peuvent &#234;tre utilis&#233;es pour la commande des moteurs d'aiguillage.
+Dans ce cas, ils  doivent &#234;tre r&#233;f&#233;renc&#233;es comme des 
+<a href="../../tools/Turnouts.shtml"> Aiguillages</a> JMRI , avec
 des noms comme GT98201 pour la premiere sortie de la carte de 2e conducteur du
 noeud 98.
 
-<h3> Lumières</h3>
+<h3> Lumi&#232;res</h3>
 
-Les sorties Grapevine  peuvent être utilisés pour contrôler les lumières sur le réseau, 
-auquel cas elles doivent être  référencées comme des
- <a href="../../tools/Lights.shtml"> Lumières </a>JMRI
+Les sorties Grapevine  peuvent &#234;tre utilis&#233;s pour contr&#244;ler les lumi&#232;res sur le r&#233;seau, 
+auquel cas elles doivent &#234;tre  r&#233;f&#233;renc&#233;es comme des
+ <a href="../../tools/Lights.shtml"> Lumi&#232;res</a>JMRI
 .
-Système de noms pour les feux commencent par GL, pour GL54102 exemple pour la
-2ème sortie sur la carte du  premier conducteur sur le nœud 54.
+Syst&#232;me de noms pour les feux commencent par GL, pour GL54102 exemple pour la
+2&#232;me sortie sur la carte du  premier conducteur sur le noeud 54.
 
-<h3> Signaux </h3>
+<h3> Signaux</h3>
 Pour utiliser une sortie Grapevine comme unJMRI
-<a  href="../../tools/Signals.shtml">signal </a>MRI
+<a  href="../../tools/Signals.shtml">signal</a>MRI
 ,
 capable d'afficher
-rouge/jaune/vert et aspects clignotant associés ,
-vous devez le définir comme un " tête de signal Grapevine" en utilisant le bouton<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a> dans la
-<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml"> table tête de signal</a>.
-Donnez-lui un nom de système qui commence par «GH», et est suivie par le nœud et
-numéros de sortie..  
+rouge/jaune/vert et aspects clignotant associ&#233;s ,
+vous devez le d&#233;finir comme un " cible de signal Grapevine" en utilisant le bouton<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a> dans le
+<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml"> tableau cible de signal</a>.
+Donnez-lui un nom syst&#232;me qui commence par "GH", et est suivie par le noeud et
+num&#233;ros de sortie..  
 
 <p>
-Par exemple, pour utiliser le troisième connecteur sur la carte du deuxième conducteur sur le nœud 1,
-définir une tête de signal en utilisant Grapevine GH1203 nom du système.
+Par exemple, pour utiliser le troisi&#232;me connecteur sur la carte du deuxi&#232;me conducteur sur le noeud 1,
+d&#233;finir une cible de signal en utilisant nom syst&#232;me Grapevine GH1203 .
 
-<h2> Plus d'informations </h2>
+<h2> Plus d'informations</h2>
 
-Pour plus d'informations sur le matériel Grapevine consulter  le
-<a href="http://www.protrak.cc"> site web  ProTrak  </a>.
+Pour plus d'informations sur le mat&#233;riel Grapevine consulter le
+<a href="http://www.protrak.cc"> site web ProTrak </a>.
 
 
 <!--#include virtual="/Footer" -->

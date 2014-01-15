@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StatusFrame.shtml,v 1.1 2008/09/07 04:05:45 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<!--  $Id: StatusFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 <title>JMRI: ECoS Info Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -18,7 +18,8 @@
 </HEAD>
 
 <BODY>
-<!--#include virtual="/Header" -->
+<!--#includommunication est active.
+e virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -27,8 +28,8 @@ JMRI: Outil Info ECoS
 </h1>
 
 
-L'outil Info ECoS affiche les informations de version de l'unité de commande ECoS
-. C'est un bon moyen de vérifier que la communication est active.
+L'outil Info ECoS affiche les informations de version de l'unit&#233; de commande ECoS
+. C'est un bon moyen de v&#233;rifier que la communication est active.
 
 
 

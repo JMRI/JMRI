@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleClockFrame.shtml,v 1.7 2009/09/26 04:58:48 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-6--> 
+<!-- $Id: SimpleClockFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Setup Fast Clock
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Setup Fast Clock">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,149 +29,151 @@
 
 <H2>Introduction aux Horloges Rapides JMRI </H2>
 JMRI fournit une horloge rapide qui peut obtenir son temps d'une horloge interne rapide
-ou une horloge rapide matérielle sélectionnée s'il en existe une sur votre système DCC. Cette boîte de dialogue
-(Accessible depuis <b>Installation Horloge Rapide</b> dans le sous-menu  <b>Horloges</b> dans
-le menu<b> Outils </b>) permet de définir les options pour ce système d'horloge rapide.
-L'informations que vous avez congigurée ici est enregistrée lorsque vous enregistrez vos panneaux et la configuration.
-Cette boîte de dialogue vous permet de définir les options de démarrage qui prennent effet lorsque vous chargez vos panneaux et la configuration. JMRI a aussi une horloge affichée  qui peut fonctionner en
+ou d'une horloge rapide mat&#233;rielle s&#233;lectionn&#233;e s'il en existe une sur votre syst&#232;me DCC. Cette bo&#238;te de dialogue
+(Accessible depuis <b>Installation Horloge Rapide</b> dans le sous-menu <b>Horloges</b> dans
+le menu<b>Outils</b> ) permet de d&#233;finir les options pour ce syst&#232;me d'horloge rapide.
+L'informations que vous avez congigur&#233;e ici est enregistr&#233;e lorsque vous enregistrez vos panneaux et la configuration.
+Cette bo&#238;te de dialogue vous permet de d&#233;finir les options de d&#233;marrage qui prennent effet lorsque vous chargez vos panneaux et la configuration. JMRI a aussi une horloge affich&#233;e  qui peut fonctionner en
  dialogues autonome ou sur un panneau PanelPro.
 <H3> Configuration de votre Source de Temps </H3>
 <p>
-Regardez dans le menu contextuel <b>Source de Temps </b> pour voir ce qui pourrait être disponible pour
-votre système. Si vous n'avez pas une horloge rapide  matériel, passez à la section suivante.
-Habituellement, vous voulez sélectionner<b> l'Horloge Interne  Informatique </b>, même si
-une horloge matérielle rapide est disponible. Habituellement aussi, vous voulez vérifier
-<b>la Synchronisation de l'Horloge Interne Rapide avec xxxxx Horloge Rapide </b> afin que les deux
-horloges montrent la même heure, même sur de longues périodes.  L'<b>Horloge Taux Rapide
-</b> et le <b> Temps d'Horloge Rapide </b> sont synchronisées lorsque vous cochez cette
+Regardez dans le menu contextuel <b>Source de Temps</b>  pour voir ce qui pourrait &#234;tre disponible pour
+votre syst&#232;me. Si vous n'avez pas une horloge rapide  mat&#233;riel, passez &#224; la section suivante.
+Habituellement, vous voulez s&#233;lectionner<b>l'Horloge Interne  Informatique</b>  , m&#234;me si
+une horloge mat&#233;rielle rapide est disponible. Habituellement aussi, vous voulez v&#233;rifier
+<b>la Synchronisation de l'Horloge Interne Rapide avec xxxxx Horloge Rapide</b>  afin que les deux
+horloges montrent la m&#234;me heure, m&#234;me sur de longues p&#233;riodes.  L'<b>Horloge Taux Rapide
+</b> et le <b>Temps d'Horloge Rapide</b>  sont synchronis&#233;es lorsque vous cochez cette
 option. </p>
-<p>Pour certaines horloges matérielles rapides, il y a une autre case à cocher, <b> une horloge matérielle correct </b>,
-sera affichée. Si vous avez essayé d'utiliser votre centrale de commande DCC afin de créer une horloge rapide, vous avez sans doute remarqué qu'elle n'a pas tenu l'heure particulièrement bonne. Si
-<b>l'Horloge matérielle correct </b> est disponible et vous le vérifier, JMRI ajustera
-le taux de votre horloge matérielle afin qu'il conserve mieux le temps. </p>
+<p>Pour certaines horloges mat&#233;rielles rapides, il y a une autre case &#224; cocher, <b>une horloge mat&#233;rielle correct</b>,
+sera affich&#233;e. Si vous avez essay&#233; d'utiliser votre centrale DCC afin de cr&#233;er une horloge rapide, vous avez sans doute remarqu&#233; qu'elle n'a pas tenu l'heure particuli&#232;rement correct. Si
+<b>l'Horloge mat&#233;rielle correct</b>  est disponible et vous le v&#233;rifier, JMRI ajustera
+le taux de votre horloge mat&#233;rielle afin qu'il conserve mieux le temps. </p>
 <p>
-Certaines horloges rapide matérielles ne supporte pas changer l'option d'affichage 12/24 heures
-partir de l'ordinateur. Pour ceux qui le font, une case à cocher <b>Utiliser Affichage sur 12 heures
- </b>, sera affiché. Si vous cochez cette option, votre horloge matérielle sera
-mis en place pour un affichage de l'horloge de 12 heures. Si cette option est décochée (par défaut), un
+Certaines horloges rapide mat&#233;rielles ne supportent pas de changer l'option d'affichage 12/24 heures &#224;
+partir de l'ordinateur. Pour ceux qui le font, une case &#224; cocher <b>Utiliser Affichage sur 12 heures
+</b>, sera affich&#233;. Si vous cochez cette option, votre horloge mat&#233;rielle sera
+mise en place pour un affichage de l'horloge de 12 heures. Si cette option est d&#233;coch&#233;e (par d&#233;faut), un
  affichage de l'horloge sur 24 heures sera mis en place. </P>
 <p>
-Si vous sélectionnez <b> horloge Informatique Interne </b> en tant que votre source de temps, et ne
-Vérifiez pas soit les  options <b> Synchroniser...</b> ou <b> correct...</b>, seule l'horloge interne sera utilisé, et aucune commande ne sera envoyée à votre horloge matérielle
+Si vous s&#233;lectionnez <b>horloge Informatique Interne</b>  en tant que votre source de temps, et ne
+V&#233;rifiez pas soit les  options <b>Synchroniser...</b> ou <b>correct...</b> , seule l'horloge interne sera utilis&#233;, et aucune commande ne sera envoy&#233;e &#224; votre horloge mat&#233;rielle
 . A la fin de cette documentation il y a plus d'informations sur des
-horloges matérielles rapide, y compris des recommandations sur la meilleure façon de les mettre en place. </p>
+horloges mat&#233;rielles rapide, y compris des recommandations sur la meilleure fa&#231;on de les mettre en place. </p>
 <p>
-<b> Attention: Ce dialogue peut montrer que vous avez une horloge matérielle rapide alors que vous
-n'en avez pas pas vraiment une. </b> Par exemple, si vous éxecuter un Simulateur LocoNet, une horloge rapide LocoNet sera listée mais n'existera pas. Sauf si vous savez que vous avez l'horloge rapide matérielle répertoriée, vous ne devriez pas
-sélectionnez l'horloge matérielle en tant que votre Source de Temps, et vous ne devriez vérifier les options soit<b> Synchroniser ...</ b> ou <b> correct...</b> , même si elles montrent cette boîte de dialogue. </p>
-  <H2>Réglage du Taux de l'Horloge Rapide et l'Heure d'Horloge Rapide </H2>
+<b>Attention: Ce dialogue peut montrer que vous avez une horloge mat&#233;rielle rapide alors que vous
+n'en avez pas pas vraiment une.</b>  Par exemple, si vous &#233;xecuter un Simulateur LocoNet, une horloge rapide LocoNet sera list&#233;e mais n'existera pas. Sauf si vous savez que vous avez l'horloge rapide mat&#233;rielle r&#233;pertori&#233;e, vous ne devriez pas
+s&#233;lectionnez l'horloge mat&#233;rielle en tant que votre Source de Temps, et vous ne devriez v&#233;rifier les options soit<b>Synchroniser ...</b> ou <b>correct...</b> , m&#234;me si elles montrent cette bo&#238;te de dialogue. </p>
+  <H2>R&#233;glage du Taux de l'Horloge Rapide et l'Heure d'Horloge Rapide </H2>
 <p>
-Le <b> Taux d'Horloge Rapide </b> est un facteur qui multiplie le débit de l'horloge murale.
-Par exemple, une fréquence d'horloge rapide de 4,000 signifie que l'horloge rapide se déroulera 4 fois
-plus vite que l'horloge murale, ou se déplace d'une heure lorsque l'horloge murale ne se déplace que
-15 minutes. Entrez votre fréquence d'horloge rapide après<b> Fréquence d'Horloge Rapide: </b>, puis
-Cliquez sur le bouton <b>Valider </b> à droite de celui-ci. Lorsque ce bouton est enfoncé,
-JMRI vérifie la valeur que vous avez entré. Si quelque chose ne va pas, un message d'erreur
-est affiché et rien n'est changé. Si le taux d'entrée est vérifié, il est
-envoyé à toutes les horloges. (Il est important que toutes les horloges fonctionner avec la même vitesse,
-même si elles sont synchronisées.) </p>
-<p><b>l' Heure l'Horloge Rapide </b> est entrée en heures et minutes en utilisant une horloge 24-heures
-. Après la saisie cliquez sur le bouton <b>Valider </b>, de sorte que JMRI va vérifier l'heure entrée
+Le <b>Taux d'Horloge Rapide</b>  est un facteur qui multiplie la rapidit&#233; de l'horloge murale.
+Par exemple, une fr&#233;quence d'horloge rapide de 4,000 signifie que l'horloge rapide se d&#233;roulera 4 fois
+plus vite que l'horloge murale, ou se d&#233;place d'une heure lorsque l'horloge murale ne se d&#233;place que
+15 minutes. Entrez votre fr&#233;quence d'horloge rapide apr&#232;s <b>Fr&#233;quence d'Horloge Rapide:</b>, puis
+Cliquez sur le bouton <b>Valider</b>  &#224; droite de celui-ci. Lorsque ce bouton est enfonc&#233;,
+JMRI v&#233;rifie la valeur que vous avez entr&#233;. Si quelque chose ne va pas, un message d'erreur
+est affich&#233; et rien n'est chang&#233;. Si le taux entr&#233;e est v&#233;rifi&#233;, il est
+envoy&#233; &#224; toutes les horloges. (Il est important que toutes les horloges fonctionnent avec la m&#234;me vitesse,
+m&#234;me si elles sont synchronis&#233;es.) </p>
+<p><b>Heure Horloge Rapide</b>  est entr&#233;e en heures et minutes en utilisant une horloge 24-heures
+. Apr&#232;s la saisie cliquez sur le bouton <b>Valider</b>, de sorte que JMRI va v&#233;rifier l'heure entr&#233;e
 . Si quelque chose ne va pas, un message d'erreur s'affiche, et le temps n'est
-pas changé. Si l'entrée est correcte, l'heure est immédiatement changée sur toutes les
+pas chang&#233;. Si l'entr&#233;e est correcte, l'heure est imm&#233;diatement chang&#233;e sur toutes les
 horloges. </p>
 
-<H2>Réglage Options de Démarrage </H2>
+<H2>R&#233;glage Options de D&#233;marrage </H2>
 <p>
-Les options définies dans la présente section prennent effet lorsque vous chargez votre fichier de panneau (ou
-fichier de configuration si vous n'avez pas les panneaux). Si <b> Démarrer avec Horloge Rapide
-Arrêté </b> est cochée, votre horloge rapide va démarrer arrêtée (en pause). Si
-pas cochée, votre horloge rapide commencera à fonctionner immédiatement après le chargement.
-Vous pouvez demander que votre horloge rapide commence à une heure spécifiée, en vérifiant
-<b> Heure configurée horloge rapide à </b> et entrer dedans l'heure après. Comme avec<b> Horloge Heure Rapide </b>, le temps est entré en heures et minutes en utilisant une horloge 24-heures 
-. Après avoir entré l'heure, soyez sûr de frapper le bouton <b>Valider </b> sorte que l'heure sera lue dans l'ordinateur. </p>
+Les options d&#233;finies dans la pr&#233;sente section prennent effet lorsque vous chargez votre fichier de panneau (ou
+fichier de configuration si vous n'avez pas les panneaux). Si <b>D&#233;marrer avec Horloge Rapide
+Arr&#234;t&#233;</b> est coch&#233;e, votre horloge rapide va d&#233;marrer arr&#234;t&#233;e (en pause). Si
+pas coch&#233;e, votre horloge rapide commencera &#224; fonctionner imm&#233;diatement apr&#232;s le chargement.
+Vous pouvez demander que votre horloge rapide commence &#224; une heure sp&#233;cifi&#233;e, en v&#233;rifiant
+<b>Heure configur&#233;e horloge rapide &#224;</b>  et entrer dedans l'heure . Comme avec <b>Horloge Heure Rapide</b>, le temps est entr&#233; en heures et minutes en utilisant une horloge 24-heures 
+. Apr&#232;s avoir entr&#233; l'heure, soyez s&#251r de frapper le bouton <b>Valider</b>  sorte que l'heure sera lue dans l'ordinateur. </p>
 <p>
-Si vous sélectionnez un affichage de l'horloge dans le menu contextuel<b> Horloge de Départ Sélectionnée </b> ,
-l'affichage de l'horloge sera lancée automatiquement lorsque votre fichier sera chargé. Cette
-option s'applique uniquement aux affichages d'horloge qui s'exécute dans une fenêtre autonome. Les Horloges
-affichées sur un panneau PanelPro sont configurés en utilisant l'Éditeur Panneaux ou l'Éditeur Réseau,
-et sont enregistrées et redémarrées avec votre panneau. </p>
+Si vous s&#233;lectionnez un affichage de l'horloge dans le menu contextuel <b>Horloge de D&#233;part S&#233;lectionn&#233;e</b>  ,
+l'affichage de l'horloge sera lanc&#233;e automatiquement lorsque votre fichier sera charg&#233;. Cette
+option s'applique uniquement aux affichages d'horloge qui s'ex&#233;cute dans une fen&#234;tre autonome. Les Horloges
+affich&#233;es sur un panneau PanelPro sont configur&#233;s en utilisant l'&#201;diteur Panneaux ou l'&#201;diteur R&#233;seau,
+et sont enregistr&#233;es et red&#233;marr&#233;es avec votre panneau. </p>
 <p>
-<b> Important: Pour conserver les paramètres et les options entrés dans ce dialogue,
-vous devez sauvegarder votre configuration. </b> réglages de l'horloge rapide sont stockées dans le cadre de votre configuration dans le même fichier que vos panneaux (si vous en avez). La façon la plus sûr
-et la plus simple de s'assurer que tous vos éléments de configuration et les panneaux sont sauvés
-est de sauver en utilisant <b> Sauvegarder panneaus...</b>. <b>Sauvegarder panneaux...</ b> peut être trouvé dans le menu <b>Panneaux</b> et le menu <b> Fichier</b> de l'Éditeur de Réseau  et l'Éditeur panneaux
-(<b> Sauvegarder panneaux ..</b> peut être utilisé même si vous n'avez pas de panneaux.) Si vous voulez
- charger automatiquement le fichier du panneau lorsque votre application démarre, ajoutez-le à
-de<b> fichiers du panneau à charger au démarrage: </b> dans les<b> Préférences  Avancée </b> de votre
-Fenêtre<b> Préférences...</b>.</p>
+<b>Important: Pour conserver les param&#232;tres et les options entr&#233;s dans ce dialogue,
+vous devez sauvegarder votre configuration.</b> Les r&#233;glages de l'horloge rapide sont stock&#233;s dans le cadre de votre configuration dans le m&#234;me fichier que vos panneaux (si vous en avez). La fa&#231;on la plus s&#251r
+et la plus simple de s'assurer que tous vos &#233;l&#233;ments de configuration et les panneaux sont sauv&#233;s
+est de sauver en utilisant <b>Sauvegarder panneaus...</b> . <b>Sauvegarder panneaux...</b> peut &#234;tre trouv&#233; dans le menu <b>Panneaux</b> et le menu <b>Fichier</b> de l'&#201;diteur de R&#233;seau  et l'&#201;diteur de panneaux
+(<b>Sauvegarder panneaux ..</b> peut &#234;tre utilis&#233; m&#234;me si vous n'avez pas de panneaux.) Si vous voulez
+ charger automatiquement le fichier du panneau lorsque votre application d&#233;marre, ajoutez-le &#224;
+ <b>fichiers du panneau &#224; charger au d&#233;marrage:</b> dans les<b>Pr&#233;f&#233;rences Avanc&#233;e</b> de votre
+Fen&#234;tre<b>Pr&#233;f&#233;rences...</b> .</p>
 
-<H2> Démarrage et arrêt de l'horloge rapide </H2>
+<H2> D&#233;marrage et arr&#234;t de l'horloge rapide </H2>
 <p>
-Votre horloge rapide peut être démarré et arrêté à l'aide des boutons de l'horloge <b> Démarrer/Arrêter l'horloge </b>
- au bas de cette fenêtre. Ou vous pouvez utiliser le bouton <b> Run/Pause</b>
-au bas de l'horloge analogique. Ou vous pouvez cliquer sur une icône du <b> capteur</b> sur
-votre panneau PanelPro (éditeur de panneau ou de Layout Editor) que vous avez lié au
-capteur interne avec le nom du système <b> <i> ISCLOCKRUNNING </i> </b>. L'état de ce Capteur suit automatiquement l'état de l'horloge rapide <b> Actif </b> si l'horloge rapide tourne, et <b> Inactif </b> si l'horloge rapide est arrêtée. La modification de l'état de ce capteur va démarrer et arrêter votre horloge rapide. Indépendamment de la méthode que vous utilisez pour démarrer et arrêter  votre horloge rapide les étiquettes des boutons, et l'Etat capteur
-<b> <i> ISCLOCKRUNNING </i></b> suivent. Lorsque l'horloge rapide est
-redémarrée après avoir été arrêtée, l'heure  d'horloge rapide continue là où elle s'était
-arretée. </p>
+Votre horloge rapide peut &#234;tre d&#233;marr&#233;e et arr&#234;t&#233;e &#224; l'aide des boutons de l'horloge <b>D&#233;marrer/Arr&#234;ter l'horloge</b>  
+ au bas de cette fen&#234;tre. Ou vous pouvez utiliser le bouton <b>Run/Pause</b> 
+au bas de l'horloge analogique. Ou vous pouvez cliquer sur une ic&#244;ne du <b>capteur</b> sur
+votre panneau PanelPro (&#233;diteur de panneau ou de Layout Editor) que vous avez li&#233; au
+capteur interne avec le nom du syst&#232;me <b><i> ISCLOCKRUNNING </i></b>. L'&#233;tat de ce Capteur suit automatiquement l'&#233;tat de l'horloge rapide <b>Actif</b> si l'horloge rapide tourne, et <b>Inactif</b>  si l'horloge rapide est arr&#234;t&#233;e. La modification de l'&#233;tat de ce capteur va d&#233;marrer et arr&#234;ter votre horloge rapide. Ind&#233;pendamment de la m&#233;thode que vous utilisez pour d&#233;marrer et arr&#234;ter  votre horloge rapide les &#233;tiquettes des boutons, et l'Etat capteur
+<b><i> ISCLOCKRUNNING </i></b> suivent. Lorsque l'horloge rapide est
+red&#233;marr&#233;e apr&#232;s avoir &#233;t&#233; arr&#234;t&#233;e, l'heure  d'horloge rapide continue l&#224; o&#249; elle s'&#233;tait
+arret&#233;e. </p>
 </P>
 
-<H2> Horloges Matérielles Supportées </H2>
+<H2> Horloges Mat&#233;rielles Support&#233;es </H2>
 <ul>
 <p> <li>
-<b> Horloge Rapide LocoNet </b> - Un LocoNet Digitrax peut contenir sa propre horloge rapide, entraîné par le DCS100, DCS200 ou centrale de commande DCS50  Une 
-LocoNet horloge rapide séparé est disponible à partir de Logic Rail Technologies. JMRI peut travailler
-avec n'importe laquelle d'entre elles, ou avec n'importe quelle horloge qui utilise la méthode standard Digitrax pour contrôler les horloges rapide. Les paramètres recommandés pour travailler avec ces horloges
-dont les la suivants:  mettre <b>Source Temps </b>  à'<b>Horloge Interne Ordinateur </b>, et vérifier
- les Options <b>Synchroniser ...</ b> et <b> correct ...</b> . Cependant, vous
-pouvez essayer d'autres réglages. Si vous utilisez l'horloge interne de l'ordinateur comme la
-source de temps, vous ne serez pas en mesure de changer la fréquence d'horloge rapide ou le
-l'heure de l'horloge rapide à partir d'un régulateur. </p>
+<b>Horloge Rapide LocoNet</b>  - Un LocoNet Digitrax peut contenir sa propre horloge rapide, entra&#238;n&#233; par le DCS100, DCS200 ou centrale de commande DCS50  Une 
+LocoNet horloge rapide s&#233;par&#233; est disponible &#224; partir de Logic Rail Technologies. JMRI peut travailler
+avec n'importe laquelle d'entre elles, ou avec n'importe quelle horloge qui utilise la m&#233;thode standard Digitrax pour contr&#244;ler les horloges rapide. Les param&#232;tres recommand&#233;s pour travailler avec ces horloges
+dont les la suivants:  mettre <b>Source Temps</b>   &#224;'<b>Horloge Interne Ordinateur</b>  , et v&#233;rifier
+ les Options <b>Synchroniser ...</b> et <b>correct ...</b> . Cependant, vous
+pouvez essayer d'autres r&#233;glages. Si vous utilisez l'horloge interne de l'ordinateur comme la
+source de temps, vous ne serez pas en mesure de changer la fr&#233;quence d'horloge rapide ou le
+l'heure de l'horloge rapide &#224; partir d'un r&#233;gulateur. </p>
 <p>
-Si vous utilisez une horloge rapide Logic Rail Technologies, elle devrait être mis en place comme une
-horloge esclave, et non comme maître. Vous pouvez remarquer que l'horloge rapide Logic Rail Technologies retarde d'une minute d'horloge rapide. Soyez assurés que les
-commandes correctes sont envoyées par JMRI. Ce décalage, s'il est présent, est juste
+Si vous utilisez une horloge rapide Logic Rail Technologies, elle devrait &#234;tre mise en place comme une
+horloge esclave, et non comme ma&#238;tre. Vous pouvez remarquer que l'horloge rapide Logic Rail Technologies retarde d'une minute d'horloge rapide. Soyez assur&#233;s que les
+commandes correctes sont envoy&#233;es par JMRI. Ce d&#233;calage, s'il est pr&#233;sent, c'est juste
 un artifice de la programmation de l'horloge interne de Logic Rail .
 </P> </li>
 <p> <li>
-<b> Horloge Rapide NCE</b> - L'horloge rapide NCE  peut être soit une source de
-temps rapide ou peut être commandée pour suivre l'horloge interne.
+<b>Horloge Rapide NCE</b> - L'horloge rapide NCE  peut &#234;tre soit une source de
+temps rapide ou peut &#234;tre command&#233;e pour suivre l'horloge interne.
 La meilleure synchronisation est lorsque l'horloge NCE est la source principale.
 Il fonctionne en ajustant le ratio horloge interne de sorte que les minutes rapides vont
-être les mêmes.
-L'offre pour les horloges est d'être fondamentalement en synchro tout le temps.
-Des ajustements sont effectués toutes les 20 secondes rapides.
+&#234;tre les m&#234;mes.
+L'offre pour les horloges est d'&#234;tre fondamentalement en synchro tout le temps.
+Des ajustements sont effectu&#233;s toutes les 20 secondes rapides.
 <p>
-Vous pouvez également avoir l'horloge interne qui pilote l'horloge rapide NCE .
-Cependant, cela nécessite un certain nombre de secondes à ajouter ou sauter
-dans l'horloge rapide  NCE pour les minutes qui seront reportées dans le même temps.
-Ce déploiement de minute est plus critique pour le NCE puisque c'est l'heure
- envoyée à tous les ProCab (régulateurs)
-Grâce à des ajustements limités dans l'horloge rapide NCE  cette méthode pousse l'horloge
-à avancer vite pour une partie de la minute et ralentirlente pour l'autre partie de la minute
-de sorte que le déroulement de la minute plus est correcte.
+Vous pouvez &#233;galement avoir l'horloge interne qui pilote l'horloge rapide NCE .
+Cependant, cela n&#233;cessite un certain nombre de secondes &#224; ajouter ou sauter
+dans l'horloge rapide  NCE pour les minutes qui seront report&#233;es dans le m&#234;me temps.
+Ce d&#233;ploiement de minute est plus critique pour le NCE puisque c'est l'heure
+ envoy&#233;e &#224; tous les ProCab (r&#233;gulateurs)
+Gr&#226;ce &#224; des ajustements limit&#233;s dans l'horloge rapide NCE  cette m&#233;thode pousse l'horloge
+&#224; avancer vite pour une partie de la minute et ralentirlente pour l'autre partie de la minute
+de sorte que le d&#233;roulement de la minute plus est correcte.
 </P> </li></ul>
 
-<H2> Horloge liées aux Capteur et à la Mémoire </H2>
-Lorsque l'horloge est en marche, JMRI crée un capteur interne et une variable en mémoire
-que vous pouvez utiliser pour contrôler et accéder à l'horloge.
+<H2> Horloge li&#233;es aux Capteur et &#224; la M&#233;moire </H2>
+Lorsque l'horloge est en marche, JMRI cr&#233;e un capteur interne et une variable en m&#233;moire
+que vous pouvez utiliser pour contr&#244;ler et acc&#233;der &#224; l'horloge.
 
 <p>
 Le capteur ISCLOCKRUNNING
-contrôle si l'horloge est en marche (Actif) ou arrêtée (Inactif).
+contr&#244;le si l'horloge est en marche (Actif) ou arr&#234;t&#233;e (Inactif).
 
 <p>
-La mémoire contient IMCURRENTTIME l'heure actuelle de l'horloge rapide ,
-et peut être facilement accessible
-à partir de Logix et de scripts.
-Le format de la chaîne de heure/date est contrôlé par le
+La m&#233;moire contient IMCURRENTTIME l'heure actuelle de l'horloge rapide ,
+et peut &#234;tre facilement accessible
+&#224; partir de Logix et de scripts.
+Le format de la cha&#238;ne de heure/date est contr&#244;l&#233; par le
 jmri.jmrit.simpleclock.SimpleClockBundle TimeStorageFormat property,
-et peut être changé via le mécanisme d'<a href="../../../../html/doc/Technical/I8N.shtml">internationalisation </a>de JMRI
+et peut &#234;tre chang&#233; via le m&#233;canisme d'<a href="../../../../html/doc/Technical/I8N.shtml">internationalisation </a>de JMRI
 .
-Plus d'informations sur le mécanisme utilisé pour Date/Format ce n'est
+Plus d'informations sur le m&#233;canisme utilis&#233; pour Date/Format ce n'est
 disponible<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
+
+Ceci est la page d'aide help/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml
 
 <!--#include virtual="/Footer" -->
 </body>

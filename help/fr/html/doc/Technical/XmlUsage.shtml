@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlUsage.shtml,v 1.9 2010/02/15 07:52:46 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-06-->
+<!-- $Id: XmlUsage.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
 
 <html lang="fr">
 <head>
@@ -11,7 +11,7 @@
     <meta name="keywords" content="JMRI technical code xml usage">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -27,61 +27,61 @@
 <H1>JMRI: Utilisation XML </H1>
 
 JMRI utilise XML pour un certain nombre d'objectifs:
-de maintenir les définitions de décodeur , pour son
-<a href="XmlPersistance.shtml"> système de persistance </a>
+de maintenir les d&#233;finitions de d&#233;codeur , pour son
+<a href="XmlPersistance.shtml"> syst&#232;me de persistance </a>
 pour la configuration et panneau d'information,
-et pour créer des parties du site web à partir d'autres fichiers.
-Cette page décrit certains aspects de ceux-ci.
+et pour cr&#233;er des parties du site web &#224; partir d'autres fichiers.
+Cette page d&#233;crit certains aspects de ceux-ci.
 
-<h2>Définitions des Format de Fichier</h2>
+<h2>D&#233;finitions des Format de Fichier</h2>
 
 
-À partir de JMRI 2.9.4 les
-formats de fichiers sont spécifiés par Schema XML.
-Les schémas XML sont décrits sur une
-<a href="XmlSchema.shtml"> page séparée </a>.
+&#224; partir de JMRI 2.9.4 les
+formats de fichiers sont sp&#233;cifi&#233;s par Schema XML.
+Les sch&#233;mas XML sont d&#233;crits sur une
+<a href="XmlSchema.shtml"> page s&#233;par&#233;e </a>.
  
 <p>
-Avant cela, les DTD ont été utilisés.
+Avant cela, les DTD ont &#233;t&#233; utilis&#233;s.
 
 <P>
-Ces schéma et  DTDs ont besoin  d'être disponibles pour le programme quand il
-lit les fichiers, car ils définissent les valeurs par défaut des 
-attributs manquants et d'autres informations nécessaires..
+Ces sch&#233;ma et  DTDs ont besoin  d'&#234;tre disponibles pour le programme quand il
+lit les fichiers, car ils d&#233;finissent les valeurs par d&#233;faut des 
+attributs manquants et d'autres informations n&#233;cessaires..
 
 <P>
-Dans les distributions JMRI, ceux-ci sont stockés dans les répertoires.
+Dans les distributions JMRI, ceux-ci sont stock&#233;s dans les r&#233;pertoires.
 <a href="/xml/schema"> xml/schema </a>
 et
 <a href="/xml/DTD"> xml/DTD </a>
 .
 
-<p> JMRI écrit tous les fichiers de schéma de référence en utilisant des
+<p> JMRI &#233;crit tous les fichiers de sch&#233;ma de r&#233;f&#233;rence en utilisant des
 URL comme "http://jmri.org/xml/schema/layout.xsd".
 Lors de la lecture par le programme
-ce sera automatiquement géré correctement par un résolveur personnalisé.
-Lors de la lecture par exemple par un navigateur web, le navigateur  peut obtenir le schéma des
+ce sera automatiquement g&#233;r&#233; correctement par un r&#233;solveur personnalis&#233;.
+Lors de la lecture par exemple par un navigateur web, le navigateur peut obtenir le sch&#233;ma des
 principaux serveurs web JMRI en cas de besoin.
 
 <p>
-Le DTDs sont été localisés à partir des déclarations de définition
+Le DTDs sont &#233;t&#233; localis&#233;s &#224; partir des d&#233;clarations de d&#233;finition
  DOCTYPE 
 dans les fichiers XML. Pour des raisons historiques, ceux-ci peuvent
-être sous plusieurs formats. L'ensemble complexe des règles pour
-la cartographie de ceux-ci vers un emplacement répertoire est décrit sur une
-<a href="XmlDtdUsage.shtml"> page séparée </a>.
+&#234;tre sous plusieurs formats. L'ensemble complexe des r&#232;gles pour
+la cartographie de ceux-ci vers un emplacement r&#233;pertoire est d&#233;crit sur une
+<a href="XmlDtdUsage.shtml"> page s&#233;par&#233;e </a>.
 
 <h2> Autres Informations </h2>
 
-JMRI fichiers XML peuvent généralement être en forme et
-vu dans les navigateurs web. Nous contrôlons la mise en forme
-en utilisant les transformations XSLT. Le processus est décrit sur une
-<a href="XmlView.shtml"> page séparée </a>.
+JMRI fichiers XML peuvent g&#233;n&#233;ralement &#234;tre en forme et
+vu dans les navigateurs web. Nous contr&#244;lons la mise en forme
+en utilisant les transformations XSLT. Le processus est d&#233;crit sur une
+<a href="XmlView.shtml"> page s&#233;par&#233;e </a>.
  
 <p>
-Les fichiers XML peuvent être édités avec un éditeur de texte, mais
-un éditeur dédié peut aider beaucoup. Nous avons un
-liste<a  href="XmlEditors.shtml"> des éditeurs </a>, ainsi que quelques commentaires sur chacun d'eux
+Les fichiers XML peuvent &#234;tre &#233;dit&#233;s avec un &#233;diteur de texte, mais
+un &#233;diteur d&#233;di&#233; peut aider beaucoup. Nous avons une
+liste<a  href="XmlEditors.shtml"> des &#233;diteurs </a>, ainsi que quelques commentaires sur chacun d'eux
 
 <!--#include virtual="/Footer" -->
 

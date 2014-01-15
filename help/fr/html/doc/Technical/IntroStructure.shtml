@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IntroStructure.shtml,v 1.3 2009/04/26 18:53:55 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-05-06--> 
+<!-- $Id: IntroStructure.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Updated by Blorec Herv&#233; le 2013-09-06--> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,50 +30,51 @@
 
 	<div id="mainContent">
 
-<H1>JMRI: Introduction à la Structure de la Librairie de JMRI</H1>
+<H1>JMRI: Introduction &#224; la Structure de la Librairie de JMRI</H1>
 
-Parce que nous nous attendons à avoir des interfaces différentes dans le paquet jmrix, les outils JMRI ne créez pas directement 
-les objets d'interface dont ils ont besoin. Plutôt, ils demandent des exemples d'interfaces. Pour les interfaces dans le package jmri, 
-qui pourraient être mises en œuvre par beaucoup de types de réseaux différents, jmri.InstanceManager répond à ces demandes.
+Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet jmrix, les outils JMRI ne cr&#233;ez pas directement 
+les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples d'interfaces. Pour les interfaces dans le package jmri, 
+qui pourraient &#234;tre mises en oeuvre par beaucoup de types de r&#233;seaux diff&#233;rents, jmri.InstanceManager r&#233;pond &#224; ces demandes.
 
 <P>
-Plus d'informations sur la façon dont les choses (par exemple des objets représentant les éléments sur la mise en page)
-sont nommées et
-<A HREF="Names.shtml"> sont disponibles sur une page séparée </a>.
+Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur ler &#233;seau)
+sont nomm&#233;es et
+<A HREF="Names.shtml"> sont disponibles sur une page s&#233;par&#233;e </a>.
 
 <p>
-Plus précisément:
+Plus pr&#233;cis&#233;ment:
 
 <dl>
 <dt> jmri
-<dd> contient des interfaces et implémentations de classe de base pour les objets communs JMRI . Ceci est l'interface de base
-de la bibliothèque globale JMRI et de ses capacités. Le Code dans le paquet jmri devrait dépendre d'aucun autre code JMRI,  
-mais elle peut dépendre de code externes (log4j, etc)
+<dd> contient des interfaces et impl&#233;mentations de classe de base pour les objets communs JMRI . Ceci est l'interface de base
+de la biblioth&#232;que globale JMRI et de ses capacit&#233;s. Le Code dans le paquet jmri devrait d&#233;pendre d'aucun autre code JMRI,  
+mais il peut d&#233;pendre de code externes (log4j, etc)
 
 <dt>jmrit 
-<dd> contient des outils utiles et souvent des extensions. Il peut dépendre de JMRI .* et externes. Il ne doit pas dépendre jmrix.*
+<dd> contient des outils utiles et des extensions commun&#233;ment utiles. Il peut d&#233;pendre de jmri.* et externes. Il ne doit pas d&#233;pendre de jmrix.*
 
  <dt>jmrix
-<dd> contient le code qui est spécifique à un système externe particulier. Cela inclut les implémentations des interfaces de jmri
- qui sont spécifiques à un système, plus spécifiques au système outils (à long terme, celles-ci pourraient certainement être séparées)
-jmrix peut dépendre de jmri et d'externes, mais pas de interfaces jmrit.
+<dd> contient le code qui est sp&#233;cifique &#224; un syst&#232;me externe particulier. Cela inclut les impl&#233;mentations des interfaces de jmri
+ qui sont sp&#233;cifiques &#224; un syst&#232;me, plus les outils syst&#233;me sp&#233;cifiques (&#224; long terme, ceux-ci pourraient certainement &#234;tre s&#233;par&#233;es)
+jmrix peut d&#233;pendre de jmri et d'externes, mais pas de  jmrit.
 
  <dt>util
-<dd> classes des services généraux qui sont des outils _pas_ niveau de l'utilisateur.
+<dd> classes des services g&#233;n&#233;raux qui ne sont_pas_des outils au niveau de l'utilisateur.
 
-<dt>gestionnaires 
-<dd> les implémentations Résumées et par défaut des différents Gestionnaires de type JMRI, par exemple, les classes concrètes de 
-la InstanceManager. Il s'agit d'un accident de l'histoire que ceux-ci aient leurs propres paquets, plutôt que d'être roulé 
+<dt>gestionnaires (managers)
+<dd> R&#233;sum&#233; et impl&#233;mentations par d&#233;faut des diff&#233;rents
+Gestionnaires de type JMRI, par exemple, les classes concr&#232;tes de 
+l'InstanceManager. Il s'agit d'un accident de l'histoire que ceux-ci aient leurs propres paquets, plut&#244;t que d'&#234;tre incorpor&#233;s
 dans jmri.implementations.
 
-<dt>implémentations 
-<dd>L'implémentations Abrégée et par défaut des objets jmri; pas de code système ou Swing permis ici.Ils sont dans un paquet séparé, 
-plutôt que dans jmri lui-même, pour rendre le paquet jmri simple à comprendre pour les personnes qui veulent juste utiliser la bibliothèque.
+<dt>impl&#233;mentations 
+<dd> R&#233;sum&#233; et impl&#233;mentations par d&#233;faut des diff&#233;rents objets jmri; pas de code syst&#232;me sp&#233;cifique ou code Swing permis ici.Ils sont dans un paquet s&#233;par&#233;, 
+plut&#244;t que dans jmri lui-m&#234;me, pour rendre le paquet jmri simple &#224; comprendre pour les personnes qui veulent juste utiliser la biblioth&#232;que.
 
-<dt>applications 
+<dt>applications (apps)
 <dd> contient les bases de l'application qui peut utiliser les classes jmri, jmrit, et jmrix , ainsi que toute autre chose.
-En ayant cela ici, nous brisons la dépendance entre les classes et jmrix jmrit (quelqu'un doit créer les objets outil généraux 
-et spécifiques au système pour une application; que la dépendance est de l'apps package)
+En ayant cela ici, nous brisons la d&#233;pendance entre les classes et jmrix jmrit (quelqu'un doit cr&#233;er les objets outil g&#233;n&#233;raux 
+et sp&#233;cifiques au syst&#232;me pour une application; que la d&#233;pendance est du paquet apps)
 </dl>
 
 En gros:
@@ -89,26 +90,26 @@ En gros:
 
 
 </PRE>
-(Cela devrait montrer des applications en utilisant jmrit et jmrix aussi, mais c'est trop difficile à dessiner en ASCII)
+(Cela devrait montrer des applications en utilisant jmrit et jmrix aussi, mais c'est trop difficile &#224; dessiner en ASCII)
 
 <P>
-L'utilisation intensive du pattern Factory via des objets que nous appelons «gestionnaire » des objets.</dl>
+L'utilisation intensive du pattern Factory via des objets que nous appelons "gestionnaire" des objets.</dl>
 
 
      
 <h3>Exemple: un Aiguillage</h3>
-Aiguillage implique:
+Aiguillages impliquent:
 <UL>
-<LI> aiguillage - l'interface de base. C'est ce que vous devriez vous attendre à trouver lorsque vous écrivez votre code d'automatisation 
-du réseau, c'est ce que vous obtenez lorsque vous faites une demande de la TurnoutManager, etc
-<LI> AbstractTurnout - fournit pour la commodité lors de l'implémentation de l'interface de l'aiguillage pour du matériel spécifique, 
-ceci offre la mise en œuvre de base .
-<LI> LnTurnout - une implémentation spécifique pour les aiguillages LocoNet - connectés.
-</ UL>
+<LI> aiguillage - l'interface de base. C'est ce que vous devriez vous attendre &#224; trouver lorsque vous &#233;crivez votre code d'automatisation 
+du r&#233;seau, c'est ce que vous obtenez lorsque vous faites une demande du TurnoutManager, etc
+<LI> AbstractTurnout - fournit pour la commodit&#233; lors de l'impl&#233;mentation de l'interface de l'aiguillage pour du mat&#233;riel sp&#233;cifique, 
+ceci offre la mise en oeuvre de base .
+<LI> LnTurnout - une impl&#233;mentation sp&#233;cifique pour les aiguillages LocoNet - connect&#233;s.
+</UL>
 
 <P>
-Pour obtenir une exemple d'Aiguillage spécifique qui représente quelque chose sur le réseau, vous faite une demande d'un TurnoutManager. 
-Il s'agit également d'une interface, avec une implémentation semblable du modèle. </UL>
+Pour obtenir une exemple d'Aiguillage sp&#233;cifique qui repr&#233;sente quelque chose sur le r&#233;seau, vous faite une demande au TurnoutManager. 
+Il s'agit &#233;galement d'une interface, avec une impl&#233;mentation semblable du mod&#232;le. </UL>
 
 
 

@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Names.shtml,v 1.4 2011/02/20 22:18:31 jacobsen Exp $ -->
+<!--  $Id: Names.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 
-<!-- Translated  by Blorec Hervé le 2011-11-06-->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
 <title>JMRI: CBUS Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=  utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=  iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,38 +24,38 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: désignation CBUS
+JMRI: d&#233;signation CBUS
 </h1>
 
-Cette page explique comment JMRI utilise des noms de système
-pour accéder aux ressources CBUS-jointes.
+Cette page explique comment JMRI utilise des noms syst&#232;me
+pour acc&#233;der aux ressources jointes &#224; CBUS.
 <p>
 
 Pour en savoir plus sur le support CBUS JMRI, voir la
-<a href="index.shtml"> page principale CBUS </a>.
+<a href="index.shtml"> page principale CBUS</a>.
 
-<h2>JMRI Utilisation des noms </h2>
-JMRI fournit une interface au réseau réel via des
-objets internes, tels que les aiguillages, les capteurs, etc qui
-sont étroitement cartographiés correspondants à des périphériques physiques.
-Cette cartographie est réalisée via la désignation "Noms de systèmes", qui à la fois
-identifie comment accéder à un dispositif particulier, et sont les clés
+<h2>Utilisation des noms JMRI</h2>
+JMRI fournit une interface au r&#233;seau r&#233;el via des
+objets internes, tels que les Aiguillages, les Capteurs, etc qui
+sont &#233;troitement cartographi&#233;s correspondants &#224; des p&#233;riph&#233;riques physiques.
+Cette cartographie est r&#233;alis&#233;e via la d&#233;signation "Noms Syst&#232;mes", qui &#224; la fois
+identifie comment acc&#233;der &#224; un dispositif particulier, et sont les cl&#233;s
  de la recherche d'un objet correspondant dans JMRI.
 
 
 
-<h2> événements CBUS </h2>
+<h2> &#233;v&#233;nements CBUS</h2>
 
-<a href="http://www.merg.org.uk/"> MERG </a>  
-<a href="http://www.merg.org.uk/resources/lcb.html"> CBUS </a>
+<a href="http://www.merg.org.uk/"> MERG</a>  
+<a href="http://www.merg.org.uk/resources/lcb.html"> CBUS</a>
 communique par messages avec un format fixe:
-Un octet de commande et d'information sur la longueur, suivi éventuellement
-par des octets de données supplémentaires.
-Et ceci est la forme la plus simple, il est utilisé pour envoyer des "événements" identifiables
- À leur tour, les événements sont de deux types: "ON" et "OFF".
+Un octet de commande et d'information sur la longueur, suivi &#233;ventuellement
+par des octets de donn&#233;es suppl&#233;mentaires.
+Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233;v&#233;nements" identifiables
+ &#224; leur tour, les &#233;v&#233;nements sont de deux types: "ON" et "OFF".
 
 
-<    
+   
 <!--#include virtual="/Footer" -->
 </body>
 </html>

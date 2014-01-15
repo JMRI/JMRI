@@ -2,28 +2,28 @@
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<!-- Translated  by Blorec Hervé le 2011-10-01--> 
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- Updated  by Blorec Herv&#233; 2013-09-02--> 
 <dl class=toc>
 
 <dt><h3>Informations PanelPro</h3></dt><DD><UL>
 <LI><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Editeur de Panneau</A>
-<LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de mise en page</A>
+<LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de R&#233;seau</A>
 <LI><a href="FAQ.shtml">FAQ</A>
 <LI><A HREF="http://jmri.sf.net/community/examples/Gallery.shtml">Mises en Page Utilisateur</a>
-<LI><A HREF="http://jmri.sf.net/community/examples/Modules.shtml">Exemple de Mise en Page Modulair</a>
+<LI><A HREF="http://jmri.sf.net/community/examples/Modules.shtml">Exemple de R&#233;seau Modulaire</a>
 <LI><A HREF="ShowPanel.shtml">Affichage Fichier de Panneau</a>
-<LI><A HREF="AdvIcons.shtml">Icônes Avancées</a>
+<LI><A HREF="AdvIcons.shtml">Ic&#244;nes Avanc&#233;es</a>
 </UL>
 
 
-<dt><h3>Other Useful Info</h3></dt><DD><UL>
+<dt><h3>Autres Infos Utiles</h3></dt><DD><UL>
 
-<LI><a HREF="../../tools/Sensors.shtml">Sensors</a>
-<LI><A HREF="../../tools/Signalling/index.shtml">Signals</a>
-<LI><A HREF="../../tools/Routes.shtml">Routes</a>
-<LI><A HREF="../../tools/fastclock/index.shtml">Fast Clocks</a>
-<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback</a>
+<LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
+<LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
+<LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
+<LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
+<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troactions Aiguillage</a>
 </UL>
 
 </dl>

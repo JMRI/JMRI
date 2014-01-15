@@ -66,6 +66,54 @@ The user selects "Update decoder definitions" from the Debug Menu, and
 all existing roster entries what point a decoder definitions with replacementModel and/or
 replacementFamily defined will be updated to those replacements.
 
+<h3>Programming Capabilities</h3>
+
+Some decoders can do extra things, for example bypassing limitations on CV
+programming in the command station.  "Capability" elements are used to 
+tell DecoderPro about these.
+
+<h4>Access to High CV addresses</h4>
+
+Certain command stations can only access up to CV 256 or CV512.  Some
+decoder manufacturers have built in mechanisms to bypass this.  For example,
+some ESU decoders can use writes to various CVs to access high-address CVs.
+To tell DecoderPro that a decoder can do this, use an element like:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Double Index&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
+            &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
+            &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+For an example of where to position it, etc, see the 
+<a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+
+
+<h4>Indexed CV Access</h4>
+
+To access indexed CVs via regular variables (not iVariables), include this capability element:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;Indexed CV access&lt;/name&gt;
+            &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
+            &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
+            &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+If cvFirst is true, the format is CV.PI or CV.PI.SI as used by QSI.
+If it's false, the format is PI.CV or PI.SI.CV as used by ESU.
+<p>
+If both this and the "access to high CV" capabilities are present, this one
+should be listed second.
+<p>
+For an example of where to position it, etc, see the 
+<a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+
+
+
 <!--#include virtual="/Footer" -->
 </div>
 </body>

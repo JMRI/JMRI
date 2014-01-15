@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Names.shtml,v 1.3 2011/02/27 23:16:54 jacobsen Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/23-->
+<!-- $Id: Names.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--UpDated by Herv&#233; Blorec 2013-09-17-->
 <title>JMRI: OpenLCB Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,35 +23,35 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Désignation OpenLCB 
+JMRI: D&#233;signation OpenLCB 
 </h1>
 
-Cette page explique comment JMRI utilise les noms système pour
-accéder aux ressources attachée-OpenLCB.
+Cette page explique comment JMRI utilise les noms syst&#232;me pour
+acc&#233;der aux ressources li&#233;es-OpenLCB.
 
 <p>
-Pour de plus sur le support de JMRI OpenLCB, voir la
+Pour plus d'information sur le support de JMRI OpenLCB, voir la
 <a href="index.shtml">page principale OpenLCB </a>.
 
 <h2>Utilisation des Noms JMRI</h2>
-JMRI fournit une interface pour la configuration réelle via des
+JMRI fournit une interface pour la configuration r&#233;elle via des
 objets internes tels que les aiguillages, les capteurs, etc qui
-sont étroitement associés à des dispositifs physiques correspondants.
-Cette cartographie se fait via "Noms systèmes», qui à la fois
-identifient comment accéder à un périphérique particulier, et
-sont la clé de la recherche jusqu'à l'objet correspondant dans JMRI.
+sont &#233;troitement associ&#233;s &#224; des dispositifs physiques correspondants.
+Cette cartographie se fait via "Noms syst&#232;mes», qui &#224; la fois
+identifient comment acc&#233;der &#224; un p&#233;riph&#233;rique particulier, et
+sont la cl&#233; de la recherche jusqu'&#224; l'objet correspondant dans JMRI.
 
-<h2>Évènements OpenLCB</h2>
+<h2>&#233;v&#232;nements OpenLCB</h2>
 
 <a href="http://openlcb.org">OpenLCB</a>
-communique les événements via des messages avec un format fixe: huit octets de
-contenu. Nous convertissons celui-ci en un code de 16 chiffres hexadécimaux avec un
- caractère de tête "x", par exemple "x1234567890ABCDEF".
+communique les &#233;v&#233;nements via des messages avec un format fixe: huit octets de
+contenu. Nous convertissons celui-ci en un code de 16 chiffres hexad&#233;cimaux avec un
+ caract&#232;re de t&#234;te "x", par exemple "x1234567890ABCDEF".
 Nous vous recommandons d'utiliser les majuscules pour les lettres A-F..
 
-Vous pouvez également y entrer avec des périodes séparant les octets: "12.34.56.78.90.AB.CD.EF".
-Dans ce cas seulement, un zéro en tête par octet peut être omit lors de la frappe de l'événement;
-JMRI va les insérer automatiquement dans les noms. Par exemple, "00.01.02.03.04.05.06.07» peut être tapé comme «0.1.2.3.4.5.6.7"
+Vous pouvez &#233;galement y entrer avec des p&#233;riodes s&#233;parant les octets: "12.34.56.78.90.AB.CD.EF".
+Dans ce cas seulement, un z&#233;ro en t&#234;te par octet peut &#234;tre omit lors de la frappe de l'&#233;v&#233;nement;
+JMRI va les ins&#233;rer automatiquement dans les noms. Par exemple, "00.01.02.03.04.05.06.07» peut &#234;tre tap&#233; comme «0.1.2.3.4.5.6.7"
 
     
 <!--#include virtual="/Footer" -->

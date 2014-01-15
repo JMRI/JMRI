@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RP.shtml,v 1.4 2010/03/11 03:28:39 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-07-06-->
+<!-- $Id: RP.shtml 22697 2013-02-01 12:36:41Z jacobsen $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Recommended Practices
-    </TITLE>
+   </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code standards recommendation Swing">
 
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,70 +30,109 @@
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Pratiques Recommandées </H1>
+	    <H1>JMRI: Pratiques Recommand&#233;es</H1>
 
-Voici la page d'infos diverses et des pointeurs pour les développeurs JMRI.
+Voici la page d'infos diverses et des pointeurs pour les d&#233;veloppeurs JMRI.
 
- <h2>Préférences Class Library </h2>
+ <h2>Class Library Preferences</h2>
 
 <ul>
 
 <LI>
-Nous utilisons Java Swing pour notre développement Interface Graphique Utilisateur (GUI). Il est beaucoup plus puissant
-que l'AWT d'origine, et le prix est juste. Nous avons recommandé un
-modèle d'organisation et d'utilisation qui est documenté sur
-<a href="Swing.shtml"> une autre page </a>.
+Nous utilisons Java Swing pour notre d&#233;veloppement de l'Interface Graphique Utilisateur (GUI). Il est beaucoup plus puissant
+que l'AWT d'origine, et le prix est juste. Nous avons recommand&#233; un
+mod&#232;le d'organisation et d'utilisation qui est document&#233; sur
+<a href="Swing.shtml"> une autre page</a>.
 
-<LI> JMRI utilise les bibliothèques RXTX pour soutenir les communications série sur Macintosh,
+<LI> JMRI utilise les biblioth&#232;ques RXTX pour soutenir les communications s&#233;rie sur Macintosh,
 Linux et Windows. Sous Windows uniquement, le paquet de Serialio
-<A HREF="http://Serialio.com"> Serialio.com </a> est également utilisé
-pour être en mesure d'utiliser la vitesse de transmission  MS100. Pour ce faire, la
-classe jmri.jmrix.loconet.ms100.MS100Adapter a été converti pour utiliser la
- réflexion de Java pour décider si le paquet Serialio est 
-disponible; sur d'autres systèmes, il utilise RXTX.
-Notez que notre licence de Serialio est limitée à ce seul usage;
-nous ne sommes pas autorisés à distribuer la bibliothèques à d'autres fins.
+<A HREF="http://Serialio.com"> Serialio.com</a> est &#233;galement utilis&#233;
+pour &#234;tre en mesure d'utiliser la vitesse de transmission  MS100. Pour ce faire, la
+classe jmri.jmrix.loconet.ms100.MS100Adapter a &#233;t&#233; converti pour utiliser la
+ r&#233;flexion de Java pour d&#233;cider si le paquet Serialio est 
+disponible; sur d'autres syst&#232;mes, il utilise RXTX.
+Notez que notre licence de Serialio est limit&#233;e &#224; ce seul usage;
+nous ne sommes pas autoris&#233;s &#224; distribuer la biblioth&#232;ques &#224; d'autres fins.
 
-<LI>Prenez quelques instants pour en apprendre davantage sur les types différents de
-<a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html"> collections Java </a>
+<LI>Prenez quelques instants pour en apprendre davantage sur les types diff&#233;rents de
+<a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html"> collections Java</a>
 qui sont disponibles
-(<a  href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">Liste </a>,
-<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html"> HashMap </a>,
+(<a  href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">Liste</a>,
+<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html"> HashMap</a>,
 etc)
 dans les
-<a href=""> paquets java.util </a>.
-Tout ne doit pas être un vecteur ou un tableau.
+<a href=""> paquets java.util</a>.
+Tout ne doit pas &#234;tre un Vecteur ou un tableau.
 
 <LI>
 JMRI utilise largement les
-<a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html"> génériques Java </a>
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html"> g&#233;n&#233;riques Java</a>
 pour
-<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> réduire les erreurs et améliorer la compréhension </a>.
-Avec beaucoup de gens qui écrivent et le partage de code, à l'aide de
-génériques au lieu de 'casts', il est beaucoup plus facile de comprendre le code, et permettre au compilateur de corriger de nombreux malentendus sur la façon dont les choses devraient être utilisées. La plupart des informations importantes à leur sujet peuvent être trouvées sur
-<a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html"> cette page </a>
-du Tutoriel Java.
+<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> r&#233;duire les erreurs et am&#233;liorer la compr&#233;hension</a>.
+Avec beaucoup de gens qui &#233;crivent et le partage de code, &#224; l'aide de
+g&#233;n&#233;riques au lieu de casts, il est beaucoup plus facile de comprendre le code, et permettre au compilateur de corriger de nombreux malentendus sur la fa&#231;on dont les choses devraient &#234;tre utilis&#233;es. La plupart des informations importantes &#224; leur sujet peuvent &#234;tre trouv&#233;es sur
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html"> cette page</a> du Tutoriel Java.
 
 <LI>
-Si vous avez besoin d'utiliser les variables séparées par des virgules (CSV),
-s'il vous plaît utiliser les
-<A HREF="http://javacsv.sourceforge.net/"> API javacsv </a>
-si possible. Nous utilisons déjà , dans un certain nombre de lieux,
+Si vous avez besoin d'utiliser les variables s&#233;par&#233;es par des virgules (CSV),
+s'il vous pla&#238;t utiliser les
+<A HREF="http://javacsv.sourceforge.net/"> API javacsv</a>
+si possible. Nous utilisons d&#233;j&#224;, dans un certain nombre de d'endroit,
 et probablement l'utiliser plus. Si cela ne donne pas
-suffisamment de fonctionnalités, nous pourrions éventuellement passer à l'
-<A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv </a>, mais comme nous voulons n'en utiliser qu'un
+suffisamment de fonctionnalit&#233;s, nous pourrions &#233;ventuellement passer &#224; l'
+<A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv</a>, mais comme nous voulons n'en utiliser qu'un
 la conversion demandera beaucoup de travail.
 </UL>
 
 <h2>Format du Code</h2>
 Les
-<A HREF="http://java.sun.com/docs/codeconv/"> recommandations Java  </A>
+<A HREF="http://java.sun.com/docs/codeconv/"> recommandations Java </A>
 pour les noms, mise en forme, etc sont vraiment utiles.
-Si vous trouvez que vous ne pouvez pas lire un morceau de code, ceux-ci vous aideront à mieux faire.
+Si vous trouvez que vous ne pouvez pas lire un morceau de code, ceux-ci vous aideront &#224; mieux faire.
 
+<h2>Code Obsol&#232;te</h2>
+
+Comme le d&#233;veloppement se poursuit, parfois d'anciennes fa&#231;ons de faire les choses doivent &#234;tre remplac&#233;es par
+de nouvelles fa&#231;ons.
+Dans de nombreux cas, vous pouvez simplement changer tout le code &#224; l'aide de SVN,
+et avancer.
+Pour les interfaces g&#233;n&#233;rales qui pourraient &#234;tre utilis&#233;s &#224; l'ext&#233;rieur de JMRI,
+comme dans les scripts et les CATS,
+il peut &#234;tre bon de laisser l'ancienne interface en place pendant un certain temps, en la marquant comme "obsol&#232;te" de sorte que les gens peuvent d&#233;couvrir qu'elle finira par dispara&#238;tre. Apr&#232;s un nombre suffisant de cycles de lib&#233;ration, l'Interface obsol&#232;te peutt alors &#234;tre retir&#233;e.
+<p>
+Notez que l'interface obsol&#232;te est destin&#233;e &#224; travailler encore.
+Obsol&#232;te devrait seulement dire que vous
+ne pouvez pas compter sur l'interface obsol&#232;te pour travail &#224; l'avenir,
+de sorte qu'il serait bon de coder ailleurs, pendant que &#231;a fonctionne toujours.
+
+<p>
+Vous pouvez travailler avec les contr&#244;les relatifs &#224; l'obsolescence "on" lors de la compilation.
+Pour ce faire, changez cette ligne de build.xml:
+<code><pre>
+&lt;property name="deprecation" value="on" /&gt;
+</pre></code>
+
+Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation que vous code.
+
+<p>
+Il existe deux formes pour marquer quelque chose comme obsol&#232;te (tag JavaDoc et Annotation),
+et tous deux vous permettent d'ajouter des informations suppl&#233;mentaires. Une belle discussion
+des techniques est
+<A href="http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">ici</a>.
+
+Nous les utilisons de cette fa&#231;on:
+
+<code> <pre>
+* @ Deprecated 2.7.8
+
+@ Deprecated // 2.7.8
+</ pre> </ code>
+
+o&#249; la ligne contenant la version dans laquelle la d&#233;valorisation est appliqu&#233;e.
+Cela vous permet de savoir facilement depuis combien de temps elle a &#233;t&#233; d&#233;sapprouv&#233;e.
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>

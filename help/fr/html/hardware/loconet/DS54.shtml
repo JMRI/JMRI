@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DS54.shtml,v 1.4 2009/11/04 19:10:04 plocher Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-06-15-->
+<!-- $Id: DS54.shtml 22555 2013-01-19 22:15:18Z jacobsen $ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-13 -->
 <html lang="fr">
 <head>
     <TITLE>
@@ -10,7 +10,7 @@
     <meta name="keywords" content="JMRI LocoNet DS54">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,102 +26,128 @@
 <H1>JMRI: DS54 Examples</H1>
 <p class=subtitle> Exemples d'utilisations de Digitrax DS54 avec JMRI. </p>
 <p>
-Le décodeur d'accessoires DS54  peut être configuré dans un grand nombre de
+Le d&#233;codeur d'accessoires DS54  peut &#234;tre configur&#233; dans un grand nombre de
 cas.
 (<a href="../../../manual/index.shtml"> DecoderPro </a> peut vous aider )
 
 <P>
-Walter Thompson à parcouru les détails de celle-ci:
+Walter Thompson a parcouru les d&#233;tails de celui-ci:
 
 <P>
-Avec le DS54 par défaut ce sont les msgs LocoNet quand un l'interrupteur
-ou Aux A va au(+) mettant l'aiguillage en état de basculer dans les deux états: 
+Avec le DS54 par d&#233;faut ce sont les msgs LocoNet&reg; quand soit l'interrupteur A ou Aux A va au(+) mettant l'aiguillage en &#233;tat de basculer: 
 <BR>
 Quand Switch A (fil bleu) va au (+), message loconet [b2 8 70 35].
 <BR>
 Lorsque Aux A (fil orange) va au (+), message loconet [b2 8 50 15]
 
 <P>
-Je mets alors «Quand l'entrée du Switch A change, envoyez" = "msg de rétro-signalisation de l' aiguillage"
+Je mets alors "Quand l'entr&#233;e du Switch A change, envoyez" = "msg de r&#233;tro-signalisation de l' aiguillage"
 <BR>
 Lorsque Switch A (fil bleu) va au (+), message loconet [b2 8 70 36]
 <BR>
 Lorsque Aux A (fil orange) va au (+), message loconet [b2 8 50 15]
 
 <P>
-Je mets alors «Quand l'entrée  Aux A entrée change,  envoyer"="message de rétro-signalisation de l'aiguillage"
+Je mets alors "Quand l'entr&#233;e  Aux A entr&#233;e change, envoyez"="message de r&#233;tro-signalisation de l'aiguillage"
 <BR>
 Lorsque Switch A (fil bleu) va au (+,) message loconet [b2 8 70 36]
 <BR>
 Lorsque Aux A (fil orange) va  au (+), message loconet [b2 8 50 16]
 
 <P>
-Par conséquent, lorsque l'interrupteur et les entrées Aux sont réglés pour envoyer un 
-message de rétro-signalisation, les mécanismes de rétro-signalisation intégrés dans les versions récentes
-de JMRI peuvent être utilisés pour suivre l'état de l'aiguillage lorsque 
-les entrées locales sont utilisées pour modifier l'aiguillage.
+Par cons&#233;quent, lorsque l'interrupteur et les entr&#233;es Aux sont r&#233;gl&#233;s pour envoyer un 
+message de r&#233;tro-signalisation de l'aiguillage, les m&#233;canismes de r&#233;tro-signalisation int&#233;gr&#233;s dans les versions r&#233;centes
+de JMRI peuvent &#234;tre utilis&#233;s pour suivre l'&#233;tat de l'aiguillage lorsque 
+les entr&#233;es locales sont utilis&#233;es pour modifier l'aiguillage.
 
-<h2> Rétro-Signalisation  exacte </h2>
+<h2> R&#233;tro-Signalisation  exacte </h2>
 
-Pour utiliser les informations exactes, vous avez besoin de connecter deux micros-contacts à
- l'aiguillage et de raccorder le Switch  aux entrées Aux sur la DS54.
+Pour utiliser les informations exactes, vous avez besoin de connecter deux micros-contacts &#224;
+ l'aiguillage et de raccorder le Switch  aux entr&#233;es Aux sur la DS54.
 (Vous pouvez utiliser les contacts des Tortoise pour cela)
 <P>
 Configurer le canal DS54 avec:
 <PRE>
-  Aux A, entrée "=" Active ON, déclenchement sur le changement,niveau (+) "
-  Aux A, tâche "=" Pas de changement de sortie " d'	
-  Lorsque  l'entrée Aux A change, envoyer "=" message de rétro-signalisation de l'aiguillage exact "
-  Switch A, entrée "=" Active ON, déclencher sur le changement, niveau (+)"
-  Switch A, tâche, tâche "=" Pas de changement de sortie "
-  Switch A, changement entrée, envoyez "="  message de rétro-signalisation de l'aiguillage exact "
+  Aux A, entr&#233;e "=" Active ON, d&#233;clenchement sur le changement,niveau (+) "
+  Aux A, t&#226;che "=" Pas de changement de sortie "	
+  Lorsque  l'entr&#233;e Aux A change, envoyer "=" message de r&#233;tro-signalisation de l'aiguillage exact "
+  Switch A, entr&#233;e "=" Active ON, d&#233;clencher sur le changement, niveau (+)"
+  Switch A, t&#226;che, "=" Pas de changement de sortie "
+  Switch A, entr&#233;e change, envoyez "="  message de r&#233;tro-signalisation de l'aiguillage exact "
 </PRE>
-Configurer l'aiguillage LT9  (via le tableau aiguillage) pour utiliser la rétro-signalisation action "EXACT".
+Configurer l'aiguillage LT9  (via le tableau aiguillage) pour utiliser la r&#233;tro-signalisation "EXACT".
 <P>
 <table border="1">
      <tr> <th> Commentaire </th> <th>messages LocoNet </th> </tr>
      <td>
-             Commencez par l'aiguillage 9 direct <br>
-             commutateur A sera fermé et Aux A ouvert.
+             Commencez par l'aiguillage 9 droit <br>
+             Commutateur A sera ferm&#233; et Aux A ouvert.
      </td>
-    <td>terminé</td> </tr>
+    <td>termin&#233;</td> </tr>
          <tr> <th colspan="2">&nbsp;</th> </tr>
     <tr><td>
-            Envoyer une commande "Aiguillage 9  Dévié" à partir depuis <br>
-             le régulateur ou le tableau d'aiguillage
+            Envoyer une commande "Aiguillage 9  D&#233;vi&#233;" &#224; depuis <br>
+             le r&#233;gulateur ou le tableau d'aiguillage
          </td>
-         <td> <code> [b0 8 10 57] </code> Demande Switch 9 vers Dévié (sortie On) <br>
-             <code> [b0 8 0 47] </code> Demande Switch 9 vers Dévié (sortie Off) </td> </tr>
+         <td> <code> [b0 8 10 57] </code> Demande Switch 9 vers D&#233;vi&#233; (sortie On) <br>
+             <code> [b0 8 0 47] </code> Demande Switch 9 vers D&#233;vi&#233; (sortie Off) </td> </tr>
      <tr><td>
-             L'aiguillage a  commence à bouger et ouvre l'interrupteur A
-      </td> <td> <code> [b1 8 60 26] </code> L' entrée du commutateur de l'aiguillage 9 est déviée (entrée sur On) </td> </tr>
+             L'aiguillage a  commence &#224; bouger et ouvre l'interrupteur A
+      </td> <td> <code> [b1 8 60 26] </code> L' entr&#233;e du commutateur de l'aiguillage 9 est d&#233;vi&#233;e (entr&#233;e sur On) </td> </tr>
      <tr><td>
 	L'aiguillage bouge et ferme l'auxilliaire A et atteint la fin de son mouvement.
   </td>
    </td><td>
-	<code>[b1 8 50 16]</code>Aiguillage 9 Entrée Auxilliaire est Déviéet (entrée Off)
+	<code>[b1 8 50 16]</code>Aiguillage 9 Entr&#233;e Auxilliaire est D&#233;vi&#233;e (entr&#233;e Off)
 	</td> </tr>
         <tr><th colspan="2">&nbsp;</th></tr>
     <tr><td>
-           Maintenant envoyez une commande "Aiguillage 9 Dévié" 
+           Maintenant envoyez une commande "Aiguillage 9 D&#233;vi&#233;" 
         </td><td> 
-       <code> [b0 8 30 77] </code> Switch Demande à 9 de Direct (sortie On) <br>
-       <code>  [b0 8 20 67] </code> Switch Demande a 9 de Direct (sortie off)
+       <code> [b0 8 30 77] </code> Demande Switch &#224; 9 vers Droit (sortie On) <br>
+       <code>  [b0 8 20 67] </code> Demande Switch &#224; 9 vers Droit (sortie off)
  </td> </tr>
      <tr><td>
-             L'aiguillage commence à bouger, ouvre Aux A
+             L'aiguillage commence &#224; bouger, ouvre Aux A
          </td>
          <td>
-             <code> [b1 8 40 &nbsp; 6] </code>Entrée Aux de l'aiguillage 9 est Dévié (entrée sur On)
+             <code> [b1 8 40 &nbsp;6] </code>Entr&#233;e Aux de l'aiguillage 9 est D&#233;vi&#233; (entr&#233;e sur On)
          </td> </tr>
     <tr><tr><tr><td>
-            Le Déplacement de l'aiguillage ferme l'interrupteur A et arrive à la fin de sa course.
+            Le D&#233;placement de l'aiguillage ferme l'interrupteur A et arrive &#224; la fin de sa course.
          </td> <td>
-             <code> [b1 8 70 36] </code> Entrée de commutateur de l'aiguillage 9 est Direct (Entrée Off)
+             <code> [b1 8 70 36] </code> Entr&#233;e de commutateur de l'aiguillage 9 est Droit (Entr&#233;e Off)
         
         </td></tr>
 </table>
 
+<H1> Programmation de la DS54</H1>
+<p> Les valeurs des CVs DS54 peuvent &#234;tre programm&#233;es via JMRI en utilisant les outils de programmation JMRI
+     en utilisant le "Mode Service" voie de programmation. Cela n&#233;cessite une connexion JMRI
+     &#224; une centrale et les entr&#233;es voie du DS54 doivent &#234;tre connect&#233;s &#224; la voie de
+     programmation. Comme d&#233;crit dans la documentation DS54, il est n&#233;cessaire de
+     connecter un  r&#233;sistance de 100 Ohm de 2 watts entre un des rails de la voie de programmation
+     et le fil d'entr&#233;e "Jaune" de l'un des connecteurs de sortie de la DS54.
+     Il est &#233;galement n&#233;cessaire de d&#233;connecter toutes les autres sources de signal d'entr&#233;e.</P>
+<p> Une fois que les connexions d&#233;crites ci-dessus ont &#233;t&#233; r&#233;alis&#233;es, placez le cavalier de programmation
+     sur les broches du cavalier de programmation et ouvrir l'outil JMRI "Programmateur Mode Service". Naviguer vers l'entr&#233;e "Digitrax "et s&#233;lectionnez DS54 comme type de d&#233;codeur, et appuyez sur le bouton "Ouvrir Programmateur". Vous pouvez alors lire et
+     &#233;crire les CV comme n'importe quel d&#233;codeur mobile.</p>
+<p> Lorsque vous &#234;tes pr&#234;t &#224; placer la DS54 de retour en service normal, d&#233;branchez les connexions &#224; la voie de programmation et la r&#233;sistance de programmation, et assurez-vous que le cavalier de programmation a &#233;t&#233; enlev&#233;.</p>
+
+<H1> DS54 c&#226;blage</H1>
+<p> Il est fortement recommand&#233; que lorsque plusieurs DS54s sont utilis&#233;s, qu'ils soient
+     reli&#233;s aux rails de la voie avec une concordance des phases . En d'autres termes, tous les appareils
+     DS54 devraient relier la connexion Rail A &#224; la m&#234;me position terminale
+     sur la DS54, et que tous les DS54s relient la connexion Rail B &#224; <i>l'autre</i>
+     position terminale. Il est important de s'assurer qu'il n'y a pas un 
+     le flux de courant inattendu sur ​​le c&#226;ble LocoNet en raison de d'inversion de phase lors de la connexions des DS54 &#224; la voie. Notez que cela signifie que les connexions DS54 &#224; la voie ne <i>devrait pas</i> se faire sur l'alimentation de la voie qui est en provenance d'un booster <i> &#224; inversion automatique</i>.</p>
+<p>Les d&#233;tails techniques &#224; ce sujet peuvent &#234;tre trouv&#233;es dans <a href="DigitraxPower/index.shtml"> une discussion sur
+         fils d'alimentation des composants Digitrax</a>.</p>
+
+<p> LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc.</a></p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

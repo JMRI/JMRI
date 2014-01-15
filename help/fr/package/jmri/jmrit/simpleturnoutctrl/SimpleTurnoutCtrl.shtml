@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleTurnoutCtrl.shtml,v 1.7 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-5--> 
+<!-- $Id: SimpleTurnoutCtrl.shtml 17977 2011-07-18 17:23:46Z zoo $-->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Turnout Control</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Route Add Edit">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,76 +23,79 @@
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-<H1>Contrôle de l'aiguillage</H1>
+<H1>Commande de l'aiguillage</H1>
 
-Saisissez le numéro de l'accessoire ou le nom système de aiguillage pour l'accessoire ou
-l'aiguillage que vous souhaitez contrôler dans la case à droite de "aiguillage". Pour
-Par exemple, entrer 678 et en appuyant sur le bouton Dévié ou Direct
-, vous devriez être capable de changer l'état de l'accessoires 678
-sur le réseau. Un autre exemple, un nom système valide d'aiguillage des NCE
-pourrait être NT456. Puis en appuyant sur le bouton Dévié ou Direct, vous
-devriez être capable de changer l'état de l'aiguillage ou de l'accessoire numéro 456
-sur le réseau. Un autre exemple, un nom système valide de l'aiguillage pourrait être IT123
-qui est un aiguillage interne numéro 123. En appuyant sur Dévié ou Direct feront
-seulement changer l'état de l'aiguillage interne et ne changera pas un aiguillage sur le réseau.
+Saisissez le num&#233;ro de l'accessoire ou le nom syst&#232;me d'aiguillage pour l'accessoire ou
+l'aiguillage que vous souhaitez commander dans la case &#224 droite de "aiguillage". Pour
+Par exemple, entrer 678 et en appuyant sur le bouton D&#233;vi&#233; ou Direct
+, vous devriez &#234;tre capable de changer l'&#233;tat de l'accessoires 678
+sur le r&#233;seau. Un autre exemple, un nom syst&#232;me valide d'aiguillage des NCE
+pourrait &#234;tre NT456. Puis en appuyant sur le bouton D&#233;vi&#233; ou Direct, vous
+devriez &#234;tre capable de changer l'&#233;tat de l'aiguillage ou de l'accessoire num&#233;ro 456
+sur le r&#233;seau. Un autre exemple, un nom syst&#232;me valide de l'aiguillage pourrait &#234;tre IT123
+qui est un aiguillage interne num&#233;ro 123. En appuyant sur D&#233;vi&#233; ou Direct feront
+seulement changer l'&#233;tat de l'aiguillage interne et ne changera pas un aiguillage sur le r&#233;seau.
 Voir "<A HREF="../../../../html/doc/Technical/Names.shtml"> Noms </A>"
-dans l'aide générale pour plus d'informations.
+dans l'aide g&#233;n&#233;rale pour plus d'informations.
 
 <p>
 Pour plus d'informations sur les aiguillages JMRI, consultez le
 <a href="../../../../html/tools/Turnouts.shtml"> page d'aide Aiguillage </a>.
 
- <H2> Boutons de Contrôle d'Aiguillage et Statuts </H2>
+ <H2> Boutons de Commande d'Aiguillage et Statuts </H2>
 
-<DL>
-<DT> État actuel: </DT>
-<DD> Montre l'état actuel connu de l'aiguillage. Un aiguillage peut
-avoir quatre états: inconnu, incohérent, dévié, et direct. L'
-état inconnu est quand JMRI ne sait pas si l'aiguillage est dévié ou
-direct. L'état incohérent, c'est quand un aiguillage sur le réseau est
-commandé pour être dévié ou direct, mais que lse retour d'informations du réseau  n'ont pas
-été reçus. A noter également que l'état incohérent ne peut se produire que si
-un aiguillage a des rétrosignalisations. Les Etats Déviés et Directs sont ce que le programme JMRI
- sait ou croit être l'état de l'aiguillage. </dd>
+<DL>informations
+<DT> &#201;tat actuel: </DT>
+<DD> Montre l'&#233;tat actuel connu de l'aiguillage. Un aiguillage peut
+avoir quatre &#233;tats: inconnu, incoh&#233;rent, d&#233;vi&#233;, et droit. L'
+&#233;tat inconnu est quand JMRI ne sait pas si l'aiguillage est d&#233;vi&#233; ou
+droit. L'&#233;tat incoh&#233;rent, c'est quand un aiguillage sur le r&#233;seau est
+command&#233; pour &#234;tre d&#233;vi&#233; ou direct, mais que les retour d'informations du r&#233;seau n'ont pas
+&#233;t&#233; re&#231;us. A noter &#233;galement que l'&#233;tat incoh&#233;rent ne peut se produire que si
+un aiguillage a des r&#233;trosignalisations. Les Etats D&#233;vi&#233;s et Droits sont ce que le programme JMRI
+ sait ou croit &#234;tre l'&#233;tat de l'aiguillage. </dd>
 
- <DT>Mode de rétroaction: </DT>
-<DD> Montre le mode de rétroaction de l'aiguillage. les modes d' <a HREF= "# Feedback"> informations </a>disponibles sont: DIRECT, un capteur, DEUX
+ <DT>Mode de r&#233;troaction: </DT>
+<DD> Montre le mode de r&#233;troaction de l'aiguillage. les modes d' <a HREF= "#Feedback"> informations </a>disponibles sont: DIRECT, un capteur, DEUX
 CAPTEUR et le suivi. Un aiguillage  utilisant le mode DIRECT n'a pas de
-rétroaction du réseau. Quand une commande direct ou dévié est envoyée l'exécution du
-Programme JMRI suppose que la commande se réalise toujours. Une utilisation un CAPTEUR
-un capteur sur la disposition fournit une rétroaction sur l'état de l'
-l'aiguillage. DEUX capteur utilise deux capteurs de rétroaction, un pour dévié et
-un pour direct. SUIVI obtient la rétroaction du système, soit à
-l'écoute de commandes de régulateur sur le réseau ou de scrutation pour le système de
-statut de l'aiguillage. Voir le
+r&#233;troaction du r&#233;seau. Quand une commande "droit" ou "d&#233;vi&#233;" est envoy&#233;e l'ex&#233;cution du
+Programme JMRI suppose que la commande se r&#233;alise toujours.  Un CAPTEUR:
+un capteur sur la r&#233;seau fournit une r&#233;troaction sur l'&#233;tat de 
+l'aiguillage. DEUX capteur: utilise deux capteurs de r&#233;troaction, un pour d&#233;vi&#233; et
+un pour droit. SUIVI obtient la r&#233;troaction du syst&#232;me, soit &#224
+l'&#233;coute de commandes de r&#233;gulateur sur le r&#233;seau ou de scrutation pour le syst&#232;me de
+statut de l'aiguillage. Voir leinformations
 <A HREF="../../../../html/doc/Technical/TurnoutFeedback.shtml"> page d'informationss aiguillage </A>
 pour plus d'informations. </dd>
 
-	<DT>Dévié  </DT>
-<DD> Appuyez sur ce bouton pour dévié l'aiguillage. </Dd>
+	<DT>D&#233;vi&#233;  </DT>
+<DD> Appuyez sur ce bouton pour d&#233;vi&#233; l'aiguillage. </Dd>
 
-<DT> Direct</DT>
-<DD> Appuyez sur ce bouton pour mettre en direct l'aiguillage. </Dd>
-
-<DT>Opération Cabine: </ DT>
-<DD>Certains aiguillages peuvent être verrouillés. Si le bouton de commande est grisé
+<DT> Droit</DT>
+<DD> Appuyez sur ce bouton pour mettre en droit l'aiguillage. </Dd>
+informations
+<DT>Op&#233;ration poste: </DT>
+<DD>Certains aiguillages peuvent &#234;tre verrouill&#233;s. Si le bouton de commande est gris&#233;
 , les fonctions de verrouillage nesont pas disponibles. Voir 
     <a HREF="#NCETurnoutLockFeature"> Aiguillage NCE fonction de verrouillage </A>
      ci-dessous. </dd>
 
 </DL>
 
-<H3> <A NAME="NCETurnoutLockFeature"></A>Aiguillage NCE fonction de verrouillage </H3>
+<H3> <A NAME="NCETurnoutLockFeature"></A>Aiguillage NCE, fonction de verrouillage </H3>
 
-<P> La fonction de verrouillage de l'aiguillage vous permet de désactiver de manière sélective les commandes des
-accessoire (aiguillages)  à partir des régulateurs. En verrouillant un aiguillage, le programme JMRI
- suivra l'adresse accessoire de l'aiguillage et s'il détecte une
-changement de commande à partir d'un régulateur, annulera la commande immédiatement par
-l'envoi de la commande opposée à l'aiguillage. </P>
-<P> Pour utiliser cette fonctionnalité, vous devez sélectionner SUIVI comme mode de rétroaction pour l'aiguillage et la station de commande doit avoir des NCE de 2007 ou de
-nouvelles EPROM. </P>
-<P> Pour vous aider à sélectionner un ensemble d'appareils de voie à verrouiller, un itinéraire peut être
-verrouillé. Tous les aiguillages qui sont supervisés par le programme JMRIet qui sont inclus dans l'itinéraire seront verrouillés. </P>
+<P> La fonction de verrouillage de l'aiguillage vous permet de d&#233;sactiver de mani&#232;re s&#233;lective les commandes des
+accessoire (aiguillages)  &#224 partir des r&#233;gulateurs. En verrouillant un aiguillage, le programme JMRI
+ suivra l'adresse accessoire de l'aiguillage et s'il d&#233;tecte une
+changement de commande &#224 partir d'un r&#233;gulateur, annulera la commande imm&#233;diatement par
+l'envoi de la commande oppos&#233;e &#224 l'aiguillage. </P>
+<P> Pour utiliser cette fonctionnalit&#233;, vous devez s&#233;lectionner SUIVI comme mode de r&#233;troaction pour l'aiguillage et la station de commande doit avoir des NCE de 2007 ou une
+nouvelle EPROM. </P>
+<P> Pour vous aider &#224 s&#233;lectionner un ensemble d'appareils de voie &#224 verrouiller, un itin&#233;raire peut &#234;tre
+verrouill&#233;. Tous les aiguillages qui sont supervis&#233;s par le programme JMRI et qui sont inclus dans l'itin&#233;raire seront verrouill&#233;s. </P>
+<P> 
+Ceci est la page d'aide help/fr/package/jmri/jmrit/simpletournoutctrl/SimpleTurnoutCtrl.shtml
+<P> <P> 
 
 <!--#include virtual="/Footer" -->
 </BODY>

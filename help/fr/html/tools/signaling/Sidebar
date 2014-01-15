@@ -1,36 +1,39 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2011-11-07-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
 <html lang="fr">
 	  <hr class="hide">
 	  <div id="mBody">
+	  
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI ..est.<div>
+	    <div style="text-align: center">JMRI c'est...</div>
 	    <dl>
 
 		<dt><h3><a href="index.shtml">Signalisation</a></h3></dt>
-		<dd>Ajouté des signaux sur votre réseau avec JMRI.
+		<dd>Ajout&#233; des signaux sur votre r&#233;seau avec JMRI.
 		    <UL>
 		    <LI><dfn><a href="IntroToSignalingYourMRR.html">Introduction</a></dfn>
 		    <LI><dfn><a href="SimpleSignalExample.shtml">Exemple Signal Simple</a></dfn>
 		    <LI><dfn><a href="Logic.shtml">Logic</a></dfn>
 		    <LI><dfn><a href="AspectSignaling.shtml">Aspect (Prototypique) de la signalisation</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">Têtes de Signal</a></dfn>
-		    <LI><dfn><a href="SignalMasts.shtml">Mâts de SignauxSignal Masts</a></dfn>
+		    <LI><dfn><a href="../Signals.shtml">T&#234;tes de Signal</a></dfn>
+		    <LI><dfn><a href="SignalMasts.shtml">M&#226;ts de SignauxSignal Masts</a></dfn>
 		    <LI><dfn><a href="ldt/output.shtml">Signals LDT</a></dfn>
+		    <LI><dfn><a href="interlock/index.shtml">Entr&#233;e Sortie & Enclenchement</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="index.shtml">Outils Généraux</a></h3></dt>
-		<dd>JMRIfournit des outils puissants pour travailler avec votre réseau.
+		<dt><h3><a href="index.shtml">Outils Gen&#233;raux</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec votre r&#233;seau.
 		    <UL>
 		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
 		    <LI><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
 		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
 		    <LI><dfn><a href="../Signals.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
 		    <LI><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
@@ -38,33 +41,14 @@
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="../automation/index.shtml">Automatisation du réseau</a></h3></dt>
-		<dd>
-
-		<dt><h3><a href="index.shtml">Outils Généraux</a></h3></dt>
-		<dd>JMRIfournit des outils puissants pour travailler avec votre réseau.
-		    <UL>
-		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
-		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
-		    <LI><dfn><a href="../scripting/index.shtml">Scrip</a></dfn>
-		    </UL>
-		</dd>
-
-		<dt><h3><a href="../automation/index.shtml">Automatisation du réseau</a></h3></dt>
-		<dd>JMRI peut être utilisé pour automatiser certaines parties
-de votre réseau, du simple contrôle d'une commande de barrière jusqu'à faire circuler des trains dans le fond..
+		<dt><h3><a href="../automation/index.shtml">Automatisation du r&#233;seau</a></h3></dt>
+		
+		<dd>JMRI peut &#234;tre utilis&#233; pour automatiser certaines parties
+de votre r&#233;seau, du simple contr&#244;le d'une commande de barri&#232;re jusqu'&#224; faire circuler des trains dans le fond..
 		    <UL>
 		    <LI><dfn><a href="./index.shtml">Signalisation</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
-		    <LI><dfn><a href="../fastclock">>Horloges Rapides</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+		    <LI><dfn><a href="../fastclock">Horloges Rapides</a></dfn>
 		    <LI><dfn><a href="../scripting/index.shtml">Script</a></dfn>
 		    </UL>
 		</dd>

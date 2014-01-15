@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: SystemInfoFrame.shtml,v 1.1 2008/02/03 07:19:56 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<!-- $Id: SystemInfoFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 
 <title>JMRI: System Info Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"

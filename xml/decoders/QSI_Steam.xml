@@ -2819,16 +2819,6 @@
       <!-- CV 56.254 About Quantum Decoder -->
       <!-- QSI Product ID -->
       <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-      <!-- CV 56.255 Play Build Information (for ops mode) -->
-      <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Day" CVname="56.255_1" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_1" default="1">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Year" CVname="56.255_2" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_2" default="2">
-        <indexedVal/>
-      </ivariable>
     </variables>
     <resets>
       <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>

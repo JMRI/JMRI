@@ -2,12 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.4 2011/06/06 05:46:56 jacobsen Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/22-->
+<!-- $Id: index.shtml 22760 2013-02-10 02:01:45Z jacobsen $ -->
+<!-- UpDated by Herv&#233; Blorec le 2013-09-18-->
 <title>JMRI: OpenLCB Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,73 +24,92 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Support OpenLCB 
+JMRI: Support OpenLCB
 </h1>
 
-<em>Le support de cette page évolue rapidement; le code actuel peut être en avance ou en retard sur la documentation un jour donné.</em><p>
+<em> Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
+pour un jour donn&#233;.</em> <p>
 
-JMRI fournit un support pour JMRI en générale
-<a href="../../../tools/Sensors.shtml"> Capteurs </a>
-et
-<a href="../../../tools/Turnouts.shtml"> Aiguillages </a>
-en termes d'«événements» OpenLCB. 
+JMRI fournit un support pour les
+<a href="../../tools/Sensors.shtml"> Capteurs JMRI</a> 
+et les
+<a href="../../tools/Turnouts.shtml"> Aiguillages</a> en g&#233;n&#233;ral.
+en termes "d'&#233;v&#233;nements" OpenLCB.
 
 <p>
-Vous pouvez directement utiliser le réseau OpenLCB
-via <a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"> l'outil envoyer trame </a>. 
+Vous pouvez directement utiliser le r&#233;seau OpenLCB
+par l'
+<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"> envoi de trame outil</a>.
+Pour la navigation et les param&#232;tres de configuration, consultez les
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml"> outils de  configuration de noeud du navigateur</a>.
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
+    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
+         width="128" height="149" align="right"
+         alt="Configuration Tool window"></a>
+
+
 <p>
-Voir aussi la
-<a href="../index.shtml"> page d'aide principale </a> que JMRI peut soutenir,
-incluant des liens vers divers outils généraux, et la
+Voir aussi l'
+<a href="../index.shtml"> page d'aide principale</a> pourle support JMRI CAN
+y compris des liens vers divers outils g&#233;n&#233;raux et la
 page sur les
- <a href="Details.shtml"> Détails techniques </a>
-du support de JMRI sur OpenLCB..
+<a href="Details.shtml"> d&#233;tails techniques</a>
+de soutien OpenLCB de JMRI.
 
-<h2>Désignation</h2>
+<h2>D&#233;signation</h2>
 
-La  <a href="../../../doc/Technical/Names.shtml">lettre du système </a>
-pour les connexions OpenLCB est "M". 
-Les noms d'événement OpenLCB et des objets sont
-présentés ci-dessous, avec des détails supplémentaires et des formats sur une
-<a href="Names.shtml">page séparée </a>.
+La <a href="../../../html/doc/Technical/Names.shtml"> lettre du syst&#232;me</a>
+pour les connexions OpenLCB est "M". Les noms OpenLCB d'&#233;v&#233;nement et d'objet sont
+pr&#233;sent&#233; ci-dessous, avec des d&#233;tails et des formats suppl&#233;mentaires sur une
+<a href="Names.shtml"> page s&#233;par&#233;e</a>.
 
 <p>
-JMRI associe des événements OpenLCB avec des Objets individuels 
-JMRI (capteurs, aiguillages, etc) via le
-nom système JMRI. Un système comme le nom
-"<code>MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>"
-définit un Capteur qui suit l'évènement OpenLCB  "1.2.3.4.5.6.7.8" qui suit
-pour changer d'état. 
+JMRI associ&#233;s &#233;v&#233;nements OpenLCB avec des
+Objets JMRI individuels (capteurs, les Aiguillages, etc) via le
+Noms syst&#232;me JMRI. Un nom de syst&#232;me comme
+"<code> MS1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>"
+d&#233;finit un capteur qui suit le "1.2.3.4.5.6.7.8"
+et l'&#233;v&#233;nements OpenLCB "1.2.3.4.5.6.7.9" 
+&#224; changer d'&#233;tat.
 <p>
-Un autre format pour les IDs d'événement est une chaîne
-continue hexadécimale, comme
+Un autre format pour les ID d'&#233;v&#233;nement est une
+cha&#238;ne hexad&#233;cimale continue, tels que
 "x0102030405060709".
 <p>
-Ces noms systèmes peuvent devenir très long, auquel cas, les "noms utilisateurs" deviennent beaucoup plus utiles. 
+Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
+cas, les "noms utilisateur" deviennent beaucoup plus utile.
 
-<h2>Capteurs</h2>
 
-Les messages OpenLCB entrés dans les applications JMRI peuvent être consultés
-via des objets capteur JMRI. Le 
- <a href="Names.shtml"> nom du système </a> du capteur
-détermine les événements OpenLCB auxquels il correspond.
+<h2> Capteurs</h2>
+
+Les mMessages OpenLCB &#224; venir dans les applications JMRI peuvent &#234;tre consult&#233;s
+via des objets de capteur JMRI. Le  
+<a href="Names.shtml">syst&#232;me de nom capteur</a> 
+d&#233;termine les &#233;v&#233;nements de OpenLCB il correspond.
 
 <p>
-Un capteur est défini par deux événements: Celui qui l'active, et 
-celui qui le désactive. Les numéros d'événement sont essentiellement
-arbitraire, et doivent tous deux être spécifiés.
-Comme les événements ne sont pas intrinsèquement liés à un objets matériel spécifique
-, et parce que les gens peuvent utiliser les ID d'événement de plusieurs manières,
-les ID d'événement spécifiques pour un capteur doivent être fournies.
-Vous créez les capteurs en utilisant le bouton
-<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
-sur la <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Table Capteur</a>.
+Un capteur est d&#233;fini par deux &#233;v&#233;nements: celui qui la d&#233;finit ACTIFe et
+celui qui d&#233;finit INACTIF. Les num&#233;ros d'&#233;v&#233;nements sont essentiellement
+arbitraire, et sont d&#233;finis par les noeuds OpenLCB qui les envoient.
+Parce que les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;e &#224; un objet mat&#233;riel sp&#233;cifique
+, et parce que les gens peuvent utiliser les ID d'&#233;v&#233;nement &#224; bien des fa&#231;ons,
+une ID sp&#233;cifique d'ev&#232;nement pour un capteur doit &#234;tre fourni.
+Vous cr&#233;ez des Capteurs en utilisant le bouton
+<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"> Ajouter ...</a>
+ sur le
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml"> tableau Capteur</a>.
+Si vous fournissez deux ID d'&#233;v&#233;nement, le premier va r&#233;gler le d&#233;tecteur ACTIF et
+le second vous permettra de passer INACTIF. Si vous fournissez un seul, il
+fixera le capteur ACTIF, et il se r&#233;initialise automatiquement &#224; INACTIF
+peu de temps apr&#232;s. Ceci peut &#234;tre utilis&#233; pour des &#233;v&#233;nements qui indiquent des choses momentan&#233;es sur
+le r&#233;seaut comme "il est midi".
 
-<h2>Aiguillages</h2>
+<h2> Aiguillages</h2>
 
-Le schéma pour les Aiguillages est similaire aux Capteurs vu ci-dessus, 
-sauf que JMRI émet les trames OpenLCB au lieu de les recevoir, et
-la lettre type est "T" au lieu de "S", exemple (<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>)
+Le r&#233;gime des aiguillages est similaire aux capteurs ci-dessus,
+sauf que JMRI &#233;met les trames OpenLCB au lieu de les recevoir, et
+la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>".
+
 
 <!--#include virtual="/Footer" -->
 </body>

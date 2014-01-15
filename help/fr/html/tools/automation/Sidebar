@@ -1,6 +1,6 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2012-01-18-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Translated by Blorec Herv&#233; le 2012-01-18-->
 <html lang="fr">  
 	  <hr class="hide">
 	  <div id="mBody">
@@ -8,30 +8,30 @@
 	    <div style="text-align: center">JMRI is...</div>
 	    <dl>
 
-		<dt><h3><a href="../scripting/index.shtml">Écriture de Scripts</a></h3></dt>
-		<dd>Information sur écriture de scripts pour contrôler JMRI plus en detail:
+		<dt><h3><a href="../scripting/index.shtml">&#201;criture de Scripts</a></h3></dt>
+		<dd>Information sur &#233;criture de scripts pour contr&#244;ler JMRI plus en detail:
 		    <UL>
 		    <LI><dfn><a href="../scripting/Start.shtml">Introduction</a></dfn>
 		    <LI><dfn><A HREF="../scripting/Python.shtml">Le Langage</a></dfn>
 		    <LI><dfn><a href="../scripting/Examples.shtml">Examples</a></dfn>
-		    <LI><dfn><a href="../scripting/FAQ.shtml">Frequently Questions Posées (FAQs)</a></dfn>
-		    <LI><dfn><a href="../scripting/ex_set_turnouts.shtml">Exemple: Réglage Aiguillages</a></dfn>
+		    <LI><dfn><a href="../scripting/FAQ.shtml">Frequently Questions Pos&#233;es (FAQs)</a></dfn>
+		    <LI><dfn><a href="../scripting/ex_set_turnouts.shtml">Exemple: R&#233;glage Aiguillages</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="../index.shtml">Outils Généraux</a></h3></dt>
-		<dd>Les objets généraux disponibles pour contrôler votre réseau.
+		<dt><h3><a href="../index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
+		<dd>Les objets g&#233;n&#233;raux disponibles pour contr&#244;ler votre r&#233;seau.
 		    <UL>
 		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
 		    <LI><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
 		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
 		    <LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="../fastclock/index.shtml">Horloge Rapide</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Tachymètre</a></dfn>
+		    <LI><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
 		    </UL>
 		</dd>
 

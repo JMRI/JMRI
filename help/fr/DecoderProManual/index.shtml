@@ -1,19 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id: index.shtml,v 1.11 2009/02/23 02:02:23 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-05-21-->
+<!-- updated by Blorec Herv&#233; le 2013-08-30-->
 <html lang="fr">
-<head><TITLE>JMRI: Redirected Page</TITLE>
+<head><TITLE>JMRI: Redirection</TITLE>
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="Refresh" CONTENT="0; URL=../manual/index.shtml ">
 </head>
 <body>
-Cette page a été déplacée à un autre endroit
+Cette page a &#233;t&#233; d&#233;plac&#233;e &#&#224; un autre endroit
 (<A HREF="../manual/index.shtml">../manual/index.shtml</a>)
-dans le cadre de la mise à jour notre site web.
-<P>S'il vous plaît mettez à jour vos signet.  
-<P>Si vous avez accédé à cette page depuis un autre JMRI, s'il vous plaît tes le  nous savoir pour voir si nous pouvons y remédier.
-<P> Vous devriez être redirigé vers la nouvelle page immédiatement.
-<BR/> site est hébergé par: <BR/>
+dans le cadre de la mise &#&#224; jour notre site web.
+<P>S'il vous pla&#238;t mettez &#&#224; jour vos signet.  
+<P>Si vous avez acc&#233;d&#233; &#&#224; cette page depuis un autre JMRI, s'il vous pla&#238;t faites le nous savoir pour voir si nous pouvons y rem&#233;dier.
+<P> Vous devriez &#234;tre redirig&#233; vers la nouvelle page imm&#233;diatement.
+<BR/> site est h&#233;berg&#233; par: <BR/>
 <A href="http://sourceforge.net"> 
 <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 </body>

@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Hervé Blorec le 2012/01/19-->
+<!-- UpDated by Herv&#233; Blorec 2013-09-26 -->
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AppleScript.shtml,v 1.2 2009/07/03 15:36:47 jacobsen Exp $ -->
+<!--  $Id: AppleScript.shtml 21896 2012-12-19 12:12:05Z rhwood $ -->
 <title>JMRI: AppleScript</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -25,22 +25,22 @@
 JMRI: AppleScript
 </H1>
 
-Sur Mac OS X, vous pouvez utiliser AppleScript avec JMRI. Il y a deux façons de faire cela:
+Sur Mac OS X, vous pouvez utiliser AppleScript avec JMRI. Il y a deux fa&#231;ons de faire cela:
 <ul>
 <li> Un script JMRI peut utiliser AppleScript pour demander Mac OS X de faire des choses.
-<li> Un AppleScripts s'exécutant en dehors de JMRI peut demander à une application JMRI de faire des choses.
+<li> Un AppleScripts s'ex&#233;cutant en dehors de JMRI peut demander &#224; une application JMRI de faire des choses.
 </Ul>
 
 Ensemble, ils simplifient la connexion entre JMRI et le reste de votre Mac,
 afin qu'ils puissent travailler facilement ensemble.
 
-<h2> Fonctionnement de Votre Mac à partir JMRI via un AppleScript</h2>
+<h2> Fonctionnement de Votre Mac &#224; partir JMRI via un AppleScript</h2>
 
-Vous pouvez écrire des commandes AppleScript et des programmes (scripts) dans
+Vous pouvez &#233;crire des commandes AppleScript et des programmes (scripts) dans
 JMRI Jython scripts  et ensuite les invoquer pour que votre Mac effectue des
 fonctions en dehors de JMRI. Un exemple de ceci est dans le
-<a href="http://jmri.org/jython/AppleScript.py"> AppleScript.py</a> exemple de script distribué avec
-JMRI. Il exécute un script AppleScript très simple:
+<a href="http://jmri.org/jython/AppleScript.py"> AppleScript.py</a> exemple de script distribu&#233; avec
+JMRI. Il ex&#233;cute un script AppleScript tr&#232;s simple:
 <code> <pre>
   tell application "Finder"
     make new folder at desktop
@@ -48,15 +48,15 @@ JMRI. Il exécute un script AppleScript très simple:
 </Pre></code>
 Pour ce faire, il doit
 <ul>
-<li> importation de certaines bibliothèques pour accéder à AppleScript
-<li> Créer une chaîne qui détient le script lui-même
-<li> Créer des objets pour interpréter le script et gérer les erreurs
-<li> Ensuite, exécutez le script
+<li> importation de certaines biblioth&#232;ques pour acc&#233;der &#224; AppleScript
+<li> Cr&#233;er une cha&#238;ne qui d&#233;tient le script lui-m&#234;me
+<li> Cr&#233;er des objets pour interpr&#233;ter le script et g&#233;rer les erreurs
+<li> Ensuite, ex&#233;cutez le script
 </Ul>
 L'exemple de script montre comment faire cela, et peut facilement former la base pour la course
-vos AppleScripts propres de l'intérieur JMRI.
+vos AppleScripts propres de l'int&#233;rieur JMRI.
 
-<h2> Contrôle JMRI via un AppleScript</h2>
+<h2> Contr&#244;le de JMRI via un AppleScript</h2>
 
 Cette section a besoin de beaucoup de travail, en attendant, essayez
 <code> <pre>
@@ -71,13 +71,13 @@ Aussi, la recherche de "AppleScript" et "System Events" sur
 <a href="http://developer.apple.com/documentation/Java/Conceptual/Java14Development/07-NativePlatformIntegration/NativePlatformIntegration.html#//apple_ref/doc/uid/TP40001909">cette page</a>.
 <p>
 <p>
-Notez la nécessité de mettre accessible, mentionné sur cette  
+Notez la n&#233;cessit&#233; de mettre accessible, mentionn&#233; sur cette  
 <a href="http://lists.apple.com/archives/java-dev/2005/Nov/msg00258.html"> page</a>.
 Cela se fait sur le
-Volet Accès universel des Préférences Système (rangée Système, près du bas),
-représenté par cette case en bas:
+Volet Acc&#232;s universel des Pr&#233;f&#233;rences Syst&#232;me (rang&#233;e Syst&#232;me, pr&#232;s du bas),
+repr&#233;sent&#233; par cette case en bas:
 <pre>
-  [] Activer l'accès pour les appareils fonctionnels
+  [] Activer l'acc&#232;s pour les appareils fonctionnels
 </Pre>
 
 <p>
@@ -88,25 +88,25 @@ http://lists.apple.com/archives/java-dev/2005/May/msg00170.html
   
 <h2> Information AppleScript</h2>
 
-Pour plus d'informations sur AppleScript, y compris la façon de les écrire et les déboguer 
-S'il vous plaît voir:
+Pour plus d'informations sur AppleScript, y compris la fa&#231;on de les &#233;crire et les d&#233;boguer 
+S'il vous pla&#238;t voir:
 <ul>
 
 La <li> <a href="http://www.apple.com/applescript/"> page AppleScript</a> sur le <a href="http://www.apple.com/">  site web d'Apple</a>.
-La section a des exemples utiles" pour web d'Apple <a href="http://www.apple.com/applescript/learn.html"> En savoir plus</a>" .
-<li>Le <a href="http://en.wikipedia.org/wiki/AppleScript"> WikiPedia AppleScript entrée</a> a quelques informations de fond intéressantes.
+La section <a href="http://www.apple.com/applescript/learn.html"> Learn</a> a des exemples utiles" .
+<li>L'entr&#233;e <a href="http://en.wikipedia.org/wiki/AppleScript"> WikiPedia AppleScript</a> a quelques informations de fond int&#233;ressantes.
 <li>Il y a un 
 <a href="http://developer.apple.com/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">guide language AppleScript </a>
-sur Apple
-<ahref="http://developer.apple.com/applescript/">  développeur AppleScript site</a>.
-<li> Il y a un très bon
+sur site Apple
+<a href="http://developer.apple.com/applescript/"> d&#233;veloppeur AppleScript site</a>.
+<li> Il y a un tr&#232;s bon
 <a href="http://www.oreilly.com/pub/a/mac/2003/02/25/apple_scripting.html"> article d'O'Reilly </a>
 sur la combinaison d'AppleScript et Java, par exemple JMRI. Il couvre les aspects techniques de
-la gestion de votre Mac à partir de l'intérieur JMRI.
+la gestion de votre Mac &#224; partir de l'int&#233;rieur JMRI.
 </Ul>
-Et, bien sûr, une
-<a href="http://www.google.com/search?client=safari&rls=en-us&q=applescript&ie=UTF-8&oe=UTF-8"> recherche Google</a>
-retrouvera de nombreuses ressources intéressantes.    
+Et, bien s&#251;r, une
+<a href="http://www.google.com/search?client=safari&rls=en-us&q=applescript&ie=iso-8859-1&oe=iso-8859-1"> recherche Google</a>
+retrouvera de nombreuses ressources int&#233;ressantes.    
 <!--#include virtual="/Footer" -->
 </body>
 </html>

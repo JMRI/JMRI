@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SystemStructure.shtml,v 1.2 2010/12/09 01:34:58 jacobsen Exp $ -->
-
-<!-- Translated by Blorec Hervé le 2011-09-20-->  
+<!-- $Id: SystemStructure.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Updated by Blorec Herv&#233;  2013-09-08-->  
 <html lang="fr">
 <head>
     <TITLE>
@@ -15,7 +14,7 @@
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=  utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=  .iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -31,80 +30,80 @@
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-<H1>JMRI: Structure du Système </H1>
+<H1>JMRI: Structure du Syst&#232;me </H1>
 
-Historiquement, les systèmes ne sont pas disposés de cette façon, de sorte que le
-code existant peut ne pas être un bon exemple.
+Historiquement, les syst&#232;mes ne sont pas dispos&#233;s de cette fa&#231;on, de sorte que le
+code existant peut ne pas &#234;tre un bon exemple.
 <p>
-Voulez-vous exposer très peu au-dessus le paquet jmrix.
+Voulez-vous exposer tr&#232;s peu au-dessus le paquet jmrix.
 <p>
 Le Noyau de base est le code de communication, souvent un "trafficmanager"
 <p>
 Les outils doivent aller dans un sous-ensemble Swing
 <p>
-Les types de connexion spécifiques pour un seul protocole peuvent aller dans des
-sous-répertoires.
+Les types de connexion sp&#233;cifiques pour un seul protocole peuvent aller dans des
+sous-r&#233;pertoires.
 <p>
-Rôle de ConnectionConfig, SystemConnectionMemo
+R&#244;le de ConnectionConfig, SystemConnectionMemo
 <p>
-ActiveFlag obsolète
+ActiveFlag obsol&#232;te
 <p>
 Voir aussi la page 
-<a href="MultiConnectionUpdate.shtml">Mise à jour ces Connexions Multiples</a>
+<a href="MultiConnectionUpdate.shtml">Mettre &#224; jour ces Connexions Multiples</a>
 .
 
 
-<h2> Séquence d'Initialisation </h2>
+<h2> S&#233;quence d'Initialisation </h2>
 
-Cette section décrit la mise en œuvre de la nouvelle configuration du système LocoNet (2010)
-. "NN" se réfère à par exemple le locobuffer, ou pr3 ou
-similaires à la classe de connexion spécifique .
+Cette section d&#233;crit la mise en oeuvre de la nouvelle configuration syst&#232;me de LocoNet (2010)
+. "NN" se r&#233;f&#232;re &#224; par exemple le locobuffer, ou pr3 ou, classe de
+ connexion sp&#233;cifique similaire .
 
 <ol>
-<li>jmri.jmrix.loconet.NN.configurexml.ConnectionConfigXml  est invoqué
-par le mécanisme de configurexml lorsque la classe spécifique n'est pas nommée dans un fichier d'entrée XML
+<li>jmri.jmrix.loconet.NN.configurexml.ConnectionConfigXml  est invoqu&#233;
+par le m&#233;canisme de configurexml lorsque la classe sp&#233;cifique n'est pas nomm&#233;e dans un fichier d'entr&#233;e XML
 .
 
 <li> L'objet ConnectionConfigXml
 est un descendant de la classe jmri.jmrix.configurexml.AbstractConnectionConfigXml,
-qui invoque la méthode getInstance () de celui-ci (et non la méthode statique
-) dans sa méthode load ()de charger la variable "adaptateur" avec un membre
-* Adaptateur spécifique de classe, par exemple, MS100Adapter.
+qui invoque la m&#233;thode getInstance () de celui-ci (et non la m&#233;thode statique
+) dans sa m&#233;thode de chargementload ()pour charger la variable "adaptateur" avec un membre
+* Adaptateur sp&#233;cifique de classe, par exemple, MS100Adapter.
 
-<li> ultérieurement, après que le port soit (espérons le) en place,
-AbstractConnectionConfigXml invoque la méthode de configuration() de l'adaptateur.
+<li> ult&#233;rieurement, apr&#232;s que le port soit (esp&#233;rons le) en place,
+AbstractConnectionConfigXml invoque la m&#233;thode de configuration() de l'adaptateur.
 
 .
     
-<li> Que la méthode de configuration () de l'adaptateur fait, dans l'ordre
-     (ce qui a été remaniée avec la LocoNetSystemConnectionMemo
-        lui-même, si cette liste doit être réorganisés)
+<li> Que la m&#233;thode de configuration () de l'Adaptateur fait, dans l'ordre
+     (ce qui a &#233;t&#233; remani&#233;e avec la LocoNetSystemConnectionMemo
+        lui-m&#234;me, si cette liste doit &#234;tre r&#233;organis&#233;e)
      <ol>
-     <li> mettre en place Paketiseur/port/etc en fonction des besoins
-     <li>configureCommandStation() à partir LnPortController
-     <li>configureManagers() à partir LnPortController,
+     <li> mettre en place Paketiser/port/etc en fonction des besoins
+     <li>configureCommandStation() &#224; partir LnPortController
+     <li>configureManagers() &#224; partir LnPortController,
          mais par exemple de substitution dans PR3Adapter.
      <li> faire toute autre initialisation de son propre chef, par exemple StartThreads()
  </li>    <p>
-<p>À ce stade, le système est fondamentalement prêt à fonctionner.
+<p>A ce stade, le syst&#232;me est fondamentalement pr&#234;t &#224; fonctionner.
 <p> Enfin,un objet est jmri.jmrix.loconet.LocoNetSystemConnectionMemo
-        créé et enregistré avec le InstanceManager.
+        cr&#233;&#233; et enregistr&#233; avec le InstanceManager.
         
     <ol>
  
 <li>Plus tard, jmri.jmrix.ActiveSystemsMenu et/ou jmri.jmrix.SystemsMenu
-veulent créer des menus utilisateur, et trouve l'objet LocoNetSystemConnectionMemo
+veulent cr&#233;er des menus utilisateur, et trouve l'objet LocoNetSystemConnectionMemo
  dans l'InstanceManager
 
-<li>Le code de menu demande l'objet spécifique SystemConnectionMemo
-pour créer et retourner au menu. Il le fait, dans le processus
-reliant chaque action à elle-même de telle sorte que les différents outils
-seront en mesure de se connecter au bon ?? Par exemple TrafficController,
+<li>Le code de menu demande l'objet sp&#233;cifique SystemConnectionMemo
+pour cr&#233;er et retourner au menu. Il le fait, dans le processus
+reliant chaque action &#224; lui-m&#234;me de telle sorte que les diff&#233;rents outils
+seront en mesure de se connecter au bon , par exemple: TrafficController,
 SlotMonitor, etc
 
-<li> Quand une action est déclenchée par la suite, la classe invoquée (es) se renseigne auprès
+<li> Quand une Action est d&#233;clench&#233;e par la suite, la(es) classe(s) invoqu&#233;e (es) se renseigne aupr&#232;s
 de LocoNetSystemConnectionMemo quand elle a besoin d'une ressource,
-au lieu de se référer à un exemple () dans la classe de
+au lieu de se r&#233;f&#233;rer &#224; un exemple () dans la classe de
 ressource.
    
     
@@ -112,7 +111,7 @@ ressource.
 Pour adapter un type, par exemple, Aiguillage:
 <ol>
 <li> Le gestionnaire Basique doit avoir getSystemPrefix en plus de la lettre
-<li> ProxyManager doit vérifier pour le préfixe du système, pas la lettre
+<li> ProxyManager doit v&#233;rifier  le pr&#233;fixe du syst&#232;me, pas la lettre
 </ol>
 
 <!--#include virtual="/Footer" -->

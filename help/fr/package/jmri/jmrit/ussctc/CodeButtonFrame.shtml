@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CodeButtonFrame.shtml,v 1.2 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<!--  $Id: CodeButtonFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Code Button Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help OS Indicator">
+    <META name="keywords" content="JMRI help OS Indicator">É
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,18 +24,18 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Bouton codé </H1>
+<H1>Bouton cod&#233; </H1>
 
-<b> Ce n'est pas encore complètement mis en oeuvre </b> <p>
+<b> Ce n'est pas encore compl&#232;tement mis en oeuvre </b> <p>
 
-Un bouton de code sur un panneau USS CTC commence l'activité
+Un bouton de code sur un panneau USS CTC commence l'activit&#233;
 pour une section.
 
 <p>
-Entrées et sorties pour cet outil:
+Entr&#233;es et sorties pour cet outil:
 <dl>
-<dt>Bouton  <dd>Capteur qui devient ACTIF lorsque le bouton est pressé.
-<dt>Lampe <dd> Aiguillage qui est mis DÉVIÉ tandis que le code est en cours.
+<dt>Bouton<dd>Capteur qui devient ACTIF lorsque le bouton est press&#233;.
+<dt>Lampe <dd> Aiguillage qui est mis D&#201;VI&#201; tandis que le code est en cours.
 </dl>
 
 <p>  

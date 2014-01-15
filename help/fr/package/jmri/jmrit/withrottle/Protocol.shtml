@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: bhoffman351 $) 2009 -->
-<!-- $Id: Protocol.shtml,v 1.2 2010/01/11 21:04:19 bhoffman351 Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-3--> 
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!--  $Id: Protocol.shtml 21618 2012-11-09 23:47:52Z jacobsen $ -->
+<!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
 
 <title>JMRI: WiFi Throttle Communications Protocol</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,65 +24,65 @@
     <div id="mainContent">
 
 <h1> 
-JMRI:Protocole de Communications Régulateur WiFi 
+JMRI:Protocole de Communications R&#233;gulateur WiFi 
 </h1>
 
-Cette page décrit le protocole fournit par le paquet
+Cette page d&#233;crit le protocole fournit par le paquet
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
-pourcontrôler un train à travers JMRI via un lien TCP/IP.
+pour contr&#244;ler un train &#224; travers JMRI via un lien TCP/IP.
 
 
 
 <p>
-Ouvrez un lienTCP/IP  avec le port annoncé via ZeroConf/Bonjour comme le service "_withrottle._tcp.local.".
+Ouvrez un lienTCP/IP  avec le port annonc&#233; via ZeroConf/Bonjour comme le service "_withrottle._tcp.local.".
 
 <p>
-La première lettre est interprèter par la DeviceServer class pour déterminer où envoyer le reste du paquet.
+La premi&#232;re lettre est interpr&#232;ter par la DeviceServer class pour d&#233;terminer o&#249; envoyer le reste du paquet.
 <ol>
     <li>
-        'T' envoyés à la class throttle controller.
+        'T' envoy&#233;s &#224; la class throttle controller.
     </li>
     <li>
         'N' est le nom du dispositif.
     </li>
     <li>
-        'Q' indique que le dispositif a quitté, fermer cette fenêtre .
+        'Q' indique que le dispositif a quitt&#233;, fermer cette fen&#234;tre .
     </li>
     <li>
-        'C' n'est pas plus utilisé et avance au contrôleur de régulateur.
+        'C' n'est pas plus utilis&#233; et avance au contr&#244;leur de r&#233;gulateur.
     </li>
 </ol>
 
 <p>
 <h3>
-    Contrôleur de Régulateur:
+    Contr&#244;leur de R&#233;gulateur:
 </h3>
 <p>
 Ceci devrait suivte le 'T'
-<p>Envoyer Laddr, ou Saddr pour allouer un régulateur
+<p>Envoyer Laddr, ou Saddr pour allouer un r&#233;gulateur
 .  "L" signifie adresse Longue DCC, "S"signifie adresse Courte DCC
-exemple TL345 voudra dire que le contrôleur de régulateur requière une adresse longue 345. Quand l'adresse est déterminée, le Device Server
+exemple TL345 voudra dire que le contr&#244;leur de r&#233;gulateur requi&#232;re une adresse longue 345. Quand l'adresse est d&#233;termin&#233;e, l'Equipement Serveur
 enverra l'adresse aquise au dispositif mobile.
 
 <p>
-R0 est inverse, R1 est avant. Exemple TR1 dit au contrôleur de régulateur de fixer la direction en avant.
+R0 est inverse, R1 est avant. Exemple TR1 dit au contr&#244;leur de r&#233;gulateur de fixer la direction en avant.
 
 <p>
-Viii détermine la vitesse, où iii est une valeur entière entre 0 et 126.
-Exemple: TV63 verra le contrôleur de régulateur fixer la valeur de la vitesse à 50%
+Viii d&#233;termine la vitesse, o&#249; iii est une valeur enti&#232;re entre 0 et 126.
+Exemple: TV63 verra au contr&#244;leur de r&#233;gulateur la valeur de la vitesse &#224; 50%
 
 <p>
-'r' et 'd' "libère" and "distribue" le régulateur.  Pour la plupart des systèmes DCC c'est la même chose; S'il y a un doute, utilisez libère.
-Le serveur Équipement enverra alors "Pas Encore Défini" à l'équipement mobile.
+'r' et 'd' "lib&#232;re" et "distribue" le r&#233;gulateur.  Pour la plupart des syst&#232;mes DCC c'est la m&#234;me chose; S'il y a un doute, utilisez lib&#232;re.
+L'&#233;quipement serveur  enverra alors "Pas Encore D&#233;fini" &#224; l'&#233;quipement mobile.
 
 <p>
-Les boutons de fonction ne sont pas verrouillés par le dispositif mobile connecté.
-Au lieu de cela les paquets envoyés à partir du périphérique indiquent à quand JMRI
-un bouton est pressé, et quand il est libéré. Le format est "F"
-suivi par 0 ou 1 pour libéré et pressé, suivi par le
-numéro de fonction. par exemple TF13 dit que  le bouton de la fonction 3 est pressé,
-TF03 et est envoyé lorsque le bouton de la fonction 3 est libéré. Le régulateur vérifie ensuite si cette fonction est momentané,
-et il gère en conséquence
+Les boutons de fonction ne sont pas verrouill&#233;s par le dispositif mobile connect&#233;.
+Au lieu de cela les paquets envoy&#233;s &#224; partir du p&#233;riph&#233;rique indiquent &#224; quand JMRI
+un bouton est press&#233;, et quand il est lib&#233;r&#233;. Le format est "F"
+suivi par 0 ou 1 pour lib&#233;r&#233; et press&#233;, suivi par le
+num&#233;ro de fonction. par exemple TF13 dit que  le bouton de la fonction 3 est press&#233;,
+TF03 et est envoy&#233; lorsque le bouton de la fonction 3 est lib&#233;r&#233;. Le r&#233;gulateur v&#233;rifie ensuite si cette fonction est momentan&#233;,
+et il g&#232;re en cons&#233;quence
 <p>
 Ceci est la page d'aide help/en/package/jmri/jmrit/withrottle/Protocol.shtml
 <!--#include virtual="/Footer" -->

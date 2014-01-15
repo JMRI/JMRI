@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-04-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
   
- <meta content="text/html; charset=utf-8" http-equiv="content-type" ><title>Throttles list window</title>
+ <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttles list window</title>
  
       <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 	<meta name="Description" content="Throttle documentation for JMRI project" >
@@ -12,7 +12,7 @@
 	<meta name="Robots" content="Index, Follow" >
 	<meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
@@ -22,39 +22,39 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>Liste des fenêtres Régulateurs</h1>
+<h1>Fen&#234;tre Liste des R&#233;gulateurs</h1>
 
 <p><img src="images/ThrottleListWindow.png" alt="" ></p>
 
-Cette liste est accessible depuis la barre <a href="ThrottleToolBar.shtml"> fenêtre d'accélérateur. </A> <br>
+Cette liste est accessible depuis la barre <a href="ThrottleToolBar.shtml"> fen&#234;tre r&#233;gulateur. </A> <br>
 <span style="font-weight: bold;"> <br>
-</span> La liste affiche tous les régulateurs actuellement ouvert en JMRI, si une icône <a href="RostersMediaPane.shtml"> est disponible pour les listes dans leur DB </a>, elle sera automatiquement utilisée. <br>
+</span> La liste affiche tous les r&#233;gulateurs actuellement ouvert en JMRI, si une ic&#244;ne <a href="RostersMediaPane.shtml"> est disponible pour les listes dans leur DB </a>, elle sera automatiquement utilis&#233;e. <br>
 <br>
 
-Cliquer sur une ligne amènera jusqu'au régulateur correspondant. <br>
+Cliquer sur une ligne am&#232;nera jusqu'au r&#233;gulateur correspondant. <br>
 <br>
 <h2>
 Nouveau bouton </h2>
 
-Ce bouton ouvre une fenêtre nouveau régulateur. (donc différent du bouton Nouveau dans la fenêtre <a href="ThrottleToolBar.shtml">  barre d'outils Régulateur </a> <br>
+Ce bouton ouvre une nouvelle fen&#234;tre r&#233;gulateur. (donc diff&#233;rent du bouton Nouveau dans la fen&#234;tre <a href="ThrottleToolBar.shtml">  barre d'outils R&#233;gulateur </a>) <br>
 
 <br>
 <h2>
 Bouton d'alimentation </h2>
 
-Même que dans <a href="ThrottleToolBar.shtml"> Fenêtre  barre d'outils Régulateur </a>. <br>
+Le M&#234;me que dans <a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'outils R&#233;gulateur </a>. <br>
 
 <br>
 <h2>
-Bouton d'arrêt </h2>
+Bouton d'arr&#234;t </h2>
 
-Même que dans<a  href="ThrottleToolBar.shtml"> Fenêtre barre d'outils Régulateur </a>. <br>
+Le M&#234;me que dans<a  href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'outils R&#233;gulateur </a>. <br>
 
 <br >
 <h2>
 Stop button</h2>
 
-Même que dans <a href="ThrottleToolBar.shtml">Fenêtre barre d'outils Régulateur</a>.<br >
+Le M&#234;me que dans <a href="ThrottleToolBar.shtml">la Fen&#234;tre barre d'outils R&#233;gulateur</a>.<br >
 
 
 

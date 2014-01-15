@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id: BlockAddEdit.shtml,v 1.3 2010/04/03 19:08:16 jacobsen Exp $ -->
-<!-- translated by Hervé Blorec le 2012/01/02-->  
+<!-- translated by Herv&#233; Blorec le 2012/01/02-->  
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Block Add/Edit Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Block Table">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,18 +25,18 @@
     <div id="mainContent">
     <p>
  
-  <H1> Ajouter/Modifier les entrées de Table Canton </H1>
+  <H1> Ajouter/Modifier les entr&#233;es de Tableau Canton </H1>
 
 <p>
-Entrez le nom système pour le Canton que vous voulez ajouter. Par exemple, un nom
-valide comme nom  système de Canton pour un réseau  pourrait être LocoNet LB456. Un autre
- exemple, un nom système interne valide pour un capteur pourrait être IB123. Le
-nom utilisateur facultatif peut être quelque chose que vous voulez pour décrire le Canton. Voir la page d'aide
+Entrez le nom syst&#232;me pour le Canton que vous voulez ajouter. Par exemple, un nom
+valide comme nom  syst&#232;me de Canton pour un r&#233;seau LocoNet pourrait &#234;tre LB456. Un autre
+ exemple, un nom syst&#232;me interne valide pour un capteur pourrait &#234;tre IB123. Le
+nom utilisateur facultatif peut &#234;tre quelque chose que vous voulez pour d&#233;crire le Canton. Voir la page d'aide
 "<A HREF="../../../../html/doc/Technical/Names.shtml"> Noms </A>"
-l pour plus d'informations.
+pour plus d'informations.
 <p>
 
-C'est le paquet/page d'aide JMRI/jmrit/beantable/BlockAddEdit
+C'est la page d'aide package/jmri/jmrit/beantable/BlockAddEdit
 <br>
 
 <!--#include virtual="/Footer" -->

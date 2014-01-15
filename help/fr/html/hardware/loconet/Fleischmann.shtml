@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Fleischmann.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-06-15-->
+<!-- $Id: Fleischmann.shtml 22760 2013-02-10 02:01:45Z jacobsen $ -->
+<!-- Translated  by Blorec Herv&#233; le 2013-09-13-->
 <html lang="fr">
 <head>
  <TITLE>
  JMRI Install Guide: Fleischmann Twin Centre via Serial Port
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Michael Beck" name=Author>
     <META content="John Plocher" name=Author>
     <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
@@ -30,24 +30,24 @@
     <div id="mainContent">
 
       <H1> 
-     Guide d'Installation JMRI: Centrale Twin  Fleischmann via Port Série
+     Guide d'Installation JMRI: Centrale Twin  Fleischmann via Port S&#233;rie
       </H1>
 
-<P>DecoderPro peut communiquer avec une Centrale Twin  Fleischmann via le port série 
-intégré et le protocole LocoNet.
+<P>DecoderPro peut communiquer avec une Centrale Twin  Fleischmann via le port s&#233;rie 
+int&#233;gr&#233; et le protocole LocoNet&reg;.
 <p>
-Notez que cette fonctionnalité a été ajoutée à JMRI en test sur la version 1.5.2,
-et n'est pas présente dans la Version précédente 1.4 de production.
+Notez que cette fonctionnalit&#233; a &#233;t&#233; ajout&#233;e &#224; JMRI en test sur la version 1.5.2,
+et n'est pas pr&#233;sente dans la Version pr&#233;c&#233;dente 1.4 de production.
 Si vous utilisez une version avant la version 1.5.2 JMRI,
-S'il vous plaît aller à la
-<A HREF="../download/index.shtml"> page de téléchargement </a>
-pour télécharger la dernière version.
+S'il vous pla&#238;t aller &#224; la
+<A HREF="http://jmri.org/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+pour t&#233;l&#233;charger la derni&#232;re version.
 
 <P>
-La Centrale Twin a besoin d'avoir ce logiciel mis à jour
-à la version 1.1 ou ultérieure.
+La Centrale Twin a besoin d'avoir ce logiciel mis &#224; jour
+&#224; la version 1.1 ou ult&#233;rieure.
 <P>
-Configurer les options de votre Centrale Twin à:
+Configurer les options de votre Centrale Twin &#224;:
 <UL>
 <LI> SO 2 valeur 4
 <LI> SO 5 valeur 1
@@ -56,15 +56,15 @@ Configurer les options de votre Centrale Twin à:
 <LI>Baudrate 19200
 </UL>
 
-Ensuite, démarrez le programme JMRI et le configurer pour:
+Ensuite, d&#233;marrez le programme JMRI et le configurer pour:
 
 <UL>
 <LI> "LocoNet Intellibox Serial Port" protocole
 <LI> 19200 bauds
-<LI> Sélectionnez matériel Handshake
-<LI>Sélectionnez la centrale de commande DCS100
+<LI> S&#233;lectionnez mat&#233;riel Handshake
+<LI> S&#233;lectionnez la centrale de commande DCS100
 </UL>
-
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->
 </body>

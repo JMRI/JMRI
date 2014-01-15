@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.2 2009/11/02 20:10:52 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-27-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDates  by Blorec Herv&#233; 2013-09-26-->
 <title>JMRI: Scripting</title>
 
 <!-- Style -->
@@ -28,13 +28,13 @@
         </H2>
 
 Ces pages aborde les scripts JMRI
-utilisant un langage appelé Jython.
+utilisant un langage appel&#233; Jython.
 
 <P>
 L'information est disponible sur
 <OL>
 <LI><A HREF="Start.shtml"> Mise en route avec des scripts simples </a>
-<LI> <A HREF="Python.shtml"> Le langage lui-même </a>
+<LI> <A HREF="Python.shtml"> Le langage lui-m&#234;me </a>
 <LI> <A HREF="Examples.shtml"> Exemples </a>
 <li><A  HREF="FAQ.shtml"> Foire aux questions </l'a>
 <LI> <A HREF="Jynstruments.shtml"> Modification de l'interface graphique avec Jynstruments </a>

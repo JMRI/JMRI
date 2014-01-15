@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: DebugMenu.shtml,v 1.2 2010/01/29 03:05:23 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-3--> 
+<!-- Copyright ($Author: mstevetodd $) 2009 -->
+<!-- $Id: DebugMenu.shtml 21723 2012-11-27 14:05:31Z mstevetodd $ -->
+<!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
 <title>JMRI: Debug Menu</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -22,41 +22,57 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-Menu Débogage
-</h1>
+<h1>Menu D&#233;bogage</h1>
 
-Le   menu JMRI "Debug" contient les éléments suivants:
+Le menu JMRI "D&#233;boger" contient les &#233;l&#233;ments suivants:
 <ul>
-   <li>Moniteur Utilisation Mémoire</li>
+   <li>Moniteur Utilisation M&#233;moire</li>
 </ul>
 <hr>
 <ul>
-  <li>Importer Fichier Décodeur </li>
-   <li>Importer URL Décodeur </li>
-   <li>Recréez Index Décodeur </li>
-   <li>Recréez Indice Liste </li>
+  <li>Importer Fichier D&#233;codeur</li>
+   <li>Importer URL D&#233;codeur</li>
+   <li>Recr&#233;ez Index des D&#233;codeurs</li>
+   <li>Recr&#233;ez Indice Liste</li>
+ <li>Mise &#224; jour d&#233;finitions des d&#233;codeurs</li>	
 </ul>
 <hr>
 <ul> 
-  <li>Vérifiez fichier XML </li>
+  <li>V&#233;rifiez fichier XML </li>
    <li>Valider un fichier XML </li>
-   <li>Vérifiez Noms Décodeur </li>
-   <li> Vérifier les Noms Programmateur</li>
+   <li>V&#233;rifiez les Noms D&#233;codeur </li>
+   <li> V&#233;rifier les Noms Programmateur</li>
 </ul>
 <hr>
 <ul>
-   <li> Charger Logixs Désactivés </li>
+   <li> Charger Logixs D&#233;sactiv&#233;s </li>
    <li> Message Connexion </li>
    <li> Afficher un Message de Connexion </li>
+   <li> Afficher les Cat&#233;gories de Connexions</li>
+</ul>
+<hr>
+<ul>
+   <li> D&#233;codeur Son Virtuel</li>
+</ul>
+<hr>
+<ul>
    <li> PRICOM </li>
-   <li> Contrôler  Entrée USB </li>
-   <li> Visionneur Matériel USB </li>
-   <li> Régulateur RailDriver </li>
-   <li> <a href="../../../html/web/index.shtml">Démarrer Mini Serveur Web </a></li>
-   <li> Démarrer RégulateurWi</li>
+</ul>
+<hr>
+<ul>
+   <li> Contr&#244;ler  Entr&#233;e USB </li>
+   <li> Visionneur Mat&#233;riel USB </li>
+</ul>
+<hr>
+<ul>
+   <li> R&#233;gulateur RailDriver </li>
+</ul>
+<hr>
+<ul>
+   <li> <a href="../../../html/web/index.shtml">D&#233;marrer Mini Serveur Web </a></li>
+   
 
-<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu help page. </p>
+<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu . </p>
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Hervé Blorec le 2012/01/19-->
+<!-- Translated by Herv&#233; Blorec le 2012/01/19-->
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: messages.shtml,v 1.1 2008/02/18 18:57:07 jacobsen Exp $ -->
+<!--  $Id: messages.shtml 22589 2013-01-24 05:48:23Z jacobsen $ -->
 <title>JMRI: Decoder Programmer Error Messages</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,118 +22,118 @@
 <div id="mainContent">
 
 <h2> 
-JMRI: Messages d'Erreur du Programmateur de Décodeur
+JMRI: Messages d'Erreur du Programmateur de D&#233;codeur
 </H2>
 
 Diverses choses peuvent mal se passer lorsque JMRI essaie de travailler
-avec votre centrale de commande DCC pour programmer un décodeur DCC.
-Cette page liste les message d'erreur qui peuvent en résulter, et les
-décrit leurs significations.
+avec votre centrale de commande DCC pour programmer un d&#233;codeur DCC.
+Cette page liste les message d'erreur qui peuvent en r&#233;sulter, le num&#233;ro qui les identifie, et les
+d&#233;crit leurs significations.
 
 <dl>
 
-<dt> délai de réponse dépassé</dt>
+<dt> d&#233;lai de r&#233;ponse d&#233;pass&#233; 306</dt>
 <dd>
-Le programme n'a pas de réponse de la centrale de commande lorsque
+Le programme n'a pas de r&#233;ponse de la centrale de commande lorsque
 l'on en attend une.
 <p>
-C'est de loin le message d'erreur la plus courante quand les gens
-commencez à utiliser JMRI. Dans ce cas, cela signifie généralement que
-la connexion à la centrale de commande n'est pas correcte. Cela pourrait être un
-problème avec le câble (s) de liaison, ou un problème avec la façon dont
-les préférences sont définies. Choisir le mauvais port série est particulièrement fréquent.
+C'est de loin le message d'erreur le plus courant quand les gens
+commencent &#224; utiliser JMRI. Dans ce cas, cela signifie g&#233;n&#233;ralement que
+la connexion &#224; la centrale de commande n'est pas correcte. Cela pourrait &#234;tre un
+probl&#232;me avec le c&#226;ble (s) de liaison, ou un probl&#232;me avec la fa&#231;on dont
+les pr&#233;f&#233;rences sont d&#233;finies. Choisir le mauvais port s&#233;rie est particuli&#232;rement fr&#233;quent.
 <p>
-Une fois que JMRI fonctionne correctement, cette erreur peut parfois arriver à cause d'une
-erreur passagère. DecoderPro généralement réessayez avec succès, dans ce cas.
+Une fois que JMRI fonctionne correctement, cette erreur peut parfois arriver &#224; cause d'une
+erreur passag&#232;re. DecoderPro g&#233;n&#233;ralement va r&#233;essayer avec succ&#232;s, dans ce cas.
 </Dd>
 
-<dt> pas de locomotive détectée </dt>
+<dt> Pas de locomotive d&#233;tect&#233;e 301</dt>
 <dd>
-La centrale de commande a indiqué qu'elle ne voit pas de 
+La centrale de commande a indiqu&#233; qu'elle ne voit pas de 
 locomotive sur la voie de programmation.
 <p>
 Cela peut arriver si les contacts entre la voie et la locomotive ne sont pas bons ou 
-s'il y a un défaut de câblage dans la locomotive.
+s'il y a un d&#233;faut de c&#226;blage dans la locomotive.
 </Dd>
 
-<dt>Pas d'acquittement de la locomotive</dt>
+<dt>Pas d'acquittement de la locomotive 308</dt>
 <dd>
-A la fin d'une lecture ou d'écriture d'un CV, la locomotive
-répond («reconnaît») à la centrale de commande en utilisant une impulsion
+A la fin d'une lecture ou d'&#233;criture d'un CV, la locomotive
+r&#233;pond ("reconna&#238;t") &#224; la centrale de commande en utilisant une impulsion
 de courant.
 <p>
-Si cette impulsion ne se voit pas, certaines centrales de commande fournissent ce message d'erreur
-. Elle pourrait être due à de mauvaises connexions électriques à sur la voie de programmation
- ou au sein de la locomotive. Il se pourrait aussi que le décodeur
+Si cette impulsion ne se voit pas, certaines centrales de commande fournissent ce message d'erreur.
+ Elle pourrait &#234;tre due &#224; de mauvaises connexions &#233;lectriques &#224; sur la voie de programmation
+ ou au sein de la locomotive. Il se pourrait aussi que le d&#233;codeur
 ne supporte pas la relecture.
 <p>
-Certains décodeurs sonores particulièrement certains décodeurs,
-sont tellement gourmand en courant que l'impulsion réponse n'est pas détectée par la centrale de commande.
-Dans ce cas, un "booster de programmation" différent peut résoudre le problème.
+Certains d&#233;codeurs sonores particuli&#232;rement certains d&#233;codeurs,
+sont tellement gourmand en courant que l'impulsion r&#233;ponse n'est pas d&#233;tect&#233;e par la centrale de commande.
+Dans ce cas, un "booster de programmation" diff&#233;rent peut r&#233;soudre le probl&#232;me.
 
 </Dd>
 
-<dt> court-circuit sur voie de programmation</dt>
+<dt> court-circuit sur voie de programmation 309</dt>
 <dd>
-La centrale de commande a rapporté avoir vu un court-circuit
-sur la voie de programmation. Cela empêche les opérations de programmation
+La centrale de commande a rapport&#233; avoir vu un court-circuit
+sur la voie de programmation. Cela emp&#234;che les op&#233;rations de programmation
 .
 <p>
-Vérifiez les connexions électriques à la voie de programmation, et
-également au sein de la locomotive.
+V&#233;rifiez les connexions &#233;lectriques &#224; la voie de programmation, et
+&#233;galement au sein de la locomotive.
 </Dd>
 
-<dt> programmateur occupé</dt>
+<dt> programmateur occup&#233; 302</dt>
 <dd>
-La centrale de commande a indiqué qu'il est occupé à faire
+La centrale de commande a indiqu&#233; qu'il est occup&#233; &#224; faire
 autre chose, et ne peut pas faire de programmation en ce moment.
-Cela signifie généralement que toute autre partie du système DCC
-fait une opération de programmation, par exemple un régulateur à main.
+Cela signifie g&#233;n&#233;ralement que toute autre partie du syst&#232;me DCC
+fait une op&#233;ration de programmation, par exemple un r&#233;gulateur &#224; main.
 <p>
-Certains systèmes de DCC ne peut pas faire de programmation ops mode (programmation sur la voie principale)
+Certains syst&#232;mes de DCC ne peut pas faire de programmation ops mode (programmation sur la voie principale)
 tout en utilisant aussi la voie de programmation en mode de service, auquel cas ils
 retournent ce message d'erreur.
 </Dd>
 
-<dt> demande ne peut pas être mise en œuvre dans la centrale de commande</dt>
+<dt> demande ne peut pas &#234;tre mise en oeuvre dans la centrale de commande 303</dt>
 <dd>
-Cela signifie que JMRI a demandé à la centrale de commande de faire quelque chose
+Cela signifie que JMRI a demand&#233; &#224; la centrale de commande de faire quelque chose
 qu'elle ne prend pas en charge.
 <P>
-Ce n'est pas censé se produire, comme JMRI doit désactiver les
+Ce n'est pas cens&#233; se produire, comme JMRI doit d&#233;sactiver les
 modes de programmation que la centrale de commande ne peut pas fournir.
-Si vous voyez ce message, s'il vous plaît signaler les circonstances à
+Si vous voyez ce message, s'il vous pla&#238;t signaler les circonstances &#224;
 la liste de diffusion jmriusers.
 </Dd>
 
-<dt> interrompu par l'utilisateur</dt>
+<dt> Interrompu par l'utilisateur 304</dt>
 <dd>
-L'utilisateur a demandé que la lecture ou l'écriture
-s'arrête au plus tôt.
+L'utilisateur a demand&#233; que la lecture ou l'&#233;criture
+s'arr&#234;te au plus t&#244;t.
 <p>
-Ceci est considéré comme une erreur, car la
-programme ne sais pas si le décodeur a vu réellement l'
-opération complète ou non.
+Ceci est consid&#233;r&#233; comme une erreur, car la
+programme ne sais pas si le d&#233;codeur a vu r&#233;ellement l'
+op&#233;ration compl&#232;te ou non.
 </Dd>
 
-<dt> Échec confirmé</dt>
+<dt> &#201;chec confirm&#233; 305</dt>
 <dd>
-Certaines centrales de commande vous permettent de «confirmer» le contenu d'
-un CV, plutôt que de lire sa valeur. En général, cela est plus rapide que
-faire une lecture complète. Si la valeur dans le CV ne correspond pas à la
-valeur attendue, ce message est émis. Il est considéré comme une erreur
+Certaines centrales de commande vous permettent de "confirmer" le contenu d'
+un CV, plut&#244;t que de lire sa valeur. En g&#233;n&#233;ral, cela est plus rapide que
+faire une lecture compl&#232;te. Si la valeur dans le CV ne correspond pas &#224; la
+valeur attendue, ce message est &#233;mis. Il est consid&#233;r&#233; comme une erreur
 parce que si les valeurs ne correspondent pas, nous savons que nous ne savons pas la
 valeur correcte pour le contenu CV.
 </Dd>
 
-<dt> erreur inconnue</dt>
+<dt> Erreur inconnue 307</dt>
 <dd>
 Une erreur s'est produite, mais JMRI n'en sait pas assez sur ce sujet
-pour être en mesure de rendre compte plus en détail.
+pour &#234;tre en mesure de rendre compte plus en d&#233;tail.
 <p>
-En général, JMRI est assez bon pour déchiffrer ce qui ne va pas, et
-Ce message n'est pas très commun.
-Si vous ne voyez ce message, s'il vous plaît signaler les circonstances à
+En g&#233;n&#233;ral, JMRI est assez bon pour d&#233;chiffrer ce qui ne va pas, et
+Ce message n'est pas tr&#232;s commun.
+Si vous ne voyez ce message, s'il vous pla&#238;t signaler les circonstances &#224;
 la liste de diffusion jmriusers.
 </Dd>
 </dl>

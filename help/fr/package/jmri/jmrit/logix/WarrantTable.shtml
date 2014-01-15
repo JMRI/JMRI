@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4. 01//EN" "http://www. w3. org/TR/html4/strict. dtd">
+<!-- $Id: WarrantTable. shtml 23180 2013-04-09 02:26:34Z pete_cressman $ -->
+<!-- Translated by Herv&#233; Blorec bzh56420@yahoo. fr 2013-11-03 -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Panel Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default. css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print. css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri. ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Cr&#233;ation et &#201;dition de Mandat</H1>
+
+Un mandat contient les informations n&#233;cessaires pour faire fonctionner un train. Cela comprend
+l'adresse de la locomotive DCC (s),
+l'itin&#233;raire que le train empruntera, les r&#233;glages aiguillages
+&#224; travers l'itin&#233;raire et les commandes de r&#233;gulateur &#224; utiliser
+&#224; diff&#233;rents points le long de la route-par exemple les vitesse, quand afficher lumi&#232;res, klaxons sonores ,
+cloches ou d'autres effets sonores. 
+<ul>
+        <b>Remarque:</b> Le Mandat ne peut &#234;tre cr&#233;&#233; si la configuration PanelPro
+        pr&#233;sente moins deux OCantons d&#233;finis.
+</ul>
+Il y a trois &#233;tapes dans la cr&#233;ation d'un mandat, 1. d&#233;finir l'itin&#233;raire; 2. s&#233;lectionner un
+ train, et 3. enregistrer les commandes de r&#233;gulateur.
+</p>
+<H2>D&#233;finir un Itin&#233;raire Mandat&#233; </h2>
+Les Itin&#233;raires sont cr&#233;&#233;s en utilisant l'onglet <b>D&#233;finir Itin&#233;raire</b> dans la fen&#234;tre d'&#233;dition des Mandats.P>
+ 
+<H3>Origine,Destination, Via et &#201;viter les Cantons</h3>
+
+Le Canton d'Origine est &#233;videmment o&#249; un train donn&#233; va commencer cet Itin&#233;raire et le
+chemin de d&#233;marrage dans le bloc d'origine est la voie c'est sur-par exemple un chemin nomm&#233;
+" D&#233;part Voie n&#176;3" dans le Canton nomm&#233; "Terminal Principal". 
+Choisir le portail de la voie , par exemple le portail "Approche Ouest &#224; # 3", o&#249; le
+train doit quitter le canton d'origine d&#233;termine la
+direction du train sur l'itin&#233;raire. Un algorithme informatique saura
+trouver les portails, les chemins et les cantons n&#233;cessaires pour amener le train au canton de destination et le
+chemin-par exemple "Piste d'arriv&#233;e n&#176;1 " dans le canton de destination.</P>
+<p>
+Un itin&#233;raire de mandat est cr&#233;&#233;e en s&#233;lectionnant le canton et le chemin o&#249;
+le train va commencer son voyage et le portail par lequel il doit partir. Ensuite, vous
+s&#233;lectionner le portail, le canton, le chemin et l'entr&#233;e du portail o&#249; le train doit mettre fin &#224; son voyage. 
+Appuyez sur le bouton <b>Calculer l'itin&#233;raire</b> et le l'ordinateur va d&#233;terminer tous les
+chemins interm&#233;diaires n&#233;cessaires pour faire le voyage. 
+<ul>
+        <b>NOTE:</b> dans la partie sup&#233;rieure droite de la fen&#234;tre Cr&#233;er/modifier
+        Cadre des mandats il y a un tableau r&#233;pertoriant tous les OCantons que vous avez d&#233;finis. 
+        Soit le nom  syst&#232;me ou utilisateur du canton peuvent &#234;tre gliss&#233;s et d&#233;pos&#233;s
+        dans les cantons de localisation sur le c&#244;t&#233; gauche sup&#233;rieur du cadre.
+</ul>
+<ul>
+        <li><b>Emplacement d'Origine</b> :-se compose d'un champ de texte pour le <b>Nom Cantons</b> d'origine, un menu d&#233;roulant pour s&#233;lectionner le 
+        <b>Nom du Chemin</b> de d&#233;part et un menu d&#233;roulant pour s&#233;lectionner le Nom du portail de sortie <b>
+        </b> . 
+        <ul>
+        Le canton peut avoir plusieurs chemins et le chemin par d&#233;faut
+        montr&#233; n'est peut-&#234;tre pas celui o&#249; vous comptiez voir le train de d&#233;marrer. 
+        En outre, puisque les chemins ont g&#233;n&#233;ralement deux portails, le portail de sortie
+        montr&#233; n'est peut-&#234;tre pas celui que le train doit traverser lorsqu'il
+       quitte le canton d'origine.
+       </ul>
+        Le R&#233;glage du Portail de Sortie d&#233;termine la direction que le train va prendre
+       . Il n'est plus n&#233;cessaire d'indiquer la direction, puisque l'algorithme ne fournira que des itin&#233;raires qui partent dans cette direction.li>
+
+        <li><b>Emplacement de Destination</b> :-Se compose d'un champ de texte pour le
+        <b>Nom Canton</b> de destination et un menu d&#233;roulant pour le
+        <b>Nom du Chemin</b> terminal et un menu d&#233;roulant pour s&#233;lectionner le Nom du Portail d'entr&#233;e <b>
+        </b> . 
+        <ul>
+        Comme ci-dessus le canton peut avoir plusieurs chemins et le chemin
+        o&#249; vous comptez  voir le train de finir son parcours doit &#234;tre sp&#233;cifi&#233;.
+        Il est important de pr&#233;ciser le Portail d'entr&#233;e de la destination. Ceci est n&#233;cessaire quand le r&#233;seau &#224; une boucle de retournement permettant la voie de s'inscrire &#224; partir de chaque extr&#233;mit&#233;. 
+        <i>Une erreur commune est o&#249; aucune route ne sera trouv&#233;e est de sp&#233;cifier un portail d'entr&#233;e
+         ou un chemin qui ne peut pas
+        &#234;tre atteint par la direction prise au moment de quitter le Canton d'origine.</i>
+       </ul>
+<ul>
+<b>Remarque :</b> lorsque un chemin est choisi, seuls les Portails de ce chemin sont affich&#233;s
+dans l'les menus d&#233;roulants des Portails d'entr&#233;e et de Sortie. Ainsi, m&#234;me si
+le canton peut avoir de nombreux portails, vous ne verrez au plus que deux portails.
+</ul>
+       </li>
+        <li><b>Via le Lieu</b> :-Se compose d'un champ de texte pour un
+        canton le <b>Via Nom</b> et un menu d&#233;roulant pour le
+        <b>Nom du chemin</b> . 
+     Typiquement, il n'est pas n&#233;cessaire d'entrer un nom de canton dans ce
+        champ , car il est probable que l'algorithme d&#233;tecte l'itin&#233;raire que
+        vous voulez. Cette entr&#233;e est utilis&#233;e quand il y a beaucoup
+        d'itin&#233;raires possibles de l'origine &#224; la destination et que vous voulez seulement
+        examiner les routes traversant un chemin particulier sur ce canton.
+       </li>
+        <li><b>&#201;viter Lieu</b> :-Se compose d'un champ de texte pour un
+        canton le <b>&#201;vitez Nom</b> et un menu d&#233;roulant pour l'
+        <b>Nom du chemin</b> . 
+        Typiquement, cette entr&#233;e est utilis&#233;e quand il y a beaucoup
+        itin&#233;raires possibles de l'origine &#224; la destination et que vous voulez seulement
+        envisager les itin&#233;raires qui ne passent pas par un chemin particulier sur ce canton.
+       </li>
+Plus d'informations sur <b>OBCantons</b> , <b>Portails</b> et <b>OChemins</b> 
+est disponible&#224; l'adresse <a href="OBlockTable. shtml">les Tableaux Cantons d'occupation</a>. 
+</p>
+
+<H3>Calculer et d&#233;boguer</h3>
+Apr&#232;s que les cantons et les chemins d'origine et de destination aient &#233;t&#233; choisis, appuyez sur le bouton
+<b>calculer Itin&#233;raire</b> . 
+La zone de texte "Recherche d'Itin&#233;raire" affichera des statistiques sur le nombre de d'itin&#233;raires
+et leur longueur en cantons qui ont &#233;t&#233; trouv&#233;s lors de la recherche d'itin&#233;raires.
+Le champ de texte " Nombre maximum de cantons dans l'itin&#233;raire " limite jusqu'o&#249; l'ordinateur se penchera pour calculer les itin&#233;raires. Le bouton <b>arr&#234;t</b> terminera
+la recherche d' itin&#233;raires.
+<p>
+Apr&#232;s que le bouton d'arr&#234;t ait &#233;t&#233; press&#233; ou que l'ordinateur ait &#233;puis&#233;
+tous les iitin&#233;raires qu'il a trouv&#233; et leurs longueurs.
+Choisir un itin&#233;raire en appuyant sur son bouton radio. Appuyant sur le bouton <b>Revoir</b> affichera pour vous pour l'examiner dans le Tableau Itin&#233;raire. Chaque canton, chemin
+et portails utilis&#233;s pour parcourir l'itin&#233;raire est affich&#233;.
+</p>
+Vous pouvez contr&#244;ler toutes les itin&#233;raires de cette
+mani&#232;re. Le choix d'un itin&#233;raire en appuyant sur le bouton <b>S&#233;lectionnez</b> 
+fermera le dialogue et mettra en place l'onglet <b>Script Enregistrement/Lecture</b> . 
+Si exactement une voie est trouv&#233;e, la bo&#238;te de dialogue liste est ignor&#233;e. 
+</p>
+<p>fr&#233;quemment, plus d'un itin&#233;raire sera trouv&#233; et la liste peut &#234;tre tr&#232;s longue
+- Surtout quand la route est une r&#233;p&#233;tition en boucle. Si la liste est trop longue, il ya plusieurs fa&#231;ons
+pour pouvoir restreindre le nombre d'itin&#233;raires trouv&#233;s.
+<ul>
+<li>1. Sp&#233;cifiez un nombre maximal de cantons &#224; utiliser dans un itin&#233;raire en entrant un
+nombre dans le <b>Nombre Max de Cantonss dans Itin&#233;raire</b> . L'ordinateur listera seulement
+les itin&#233;raires avec ce nombre ou moins de cantons</li>
+<li>2. Sp&#233;cifiez un canton interm&#233;diaire <b>Via Emplacement</b> et le chemin qui doit &#234;tre
+inclus dans l'itin&#233;raire. L'ordinateur calcule l'itin&#233;raire avec cette  restriction" doit inclure "
+ et vous pr&#233;senter uniquement des parcours &#224; travers le canton "Via" sp&#233;cifi&#233;
+et le chemin.li>
+<li>3. Sp&#233;cifiez un canton <b>&#201;vitez Emplacement</b> et le chemin qui ne doit pas &#234;tre sur la route.
+L'ordinateur n'&#233;num&#233;rera pas tous les itin&#233;raires contenant ce canton et chemin "doivent &#233;viter"</li>
+</ul></p>
+<p>
+Parfois, le message "Pas d'itin&#233;raires trouv&#233;s depuis le Canton d'Origine, chemin. . "etc
+s'affiche. R&#233;pondre <b>Oui </b> &#224; la
+question, "Afficher l'arbre de recherche ?"  ouvrira une fen&#234;tre avec une description graphique de
+tous les chemins commen&#231;ant sur le canton Origine, chemin et portail de sortie. Trace que vous pourrez
+croire &#224; un itin&#233;raire probable en cliquant sur les n&#339;uds. Chaque n&#339;ud est un bloc de chemin
+ et affichera son chemin et le nom du canton et les portails d'entr&#233;e et de sortie
+qu'il utilise. A la fin de chaque branche, le n&#339;ud feuille sera le point
+o&#249; l'itin&#233;raire ne pouvait pas continuer. Normalement, ces feuilles sont des embranchements. 
+Cependant, ce sont aussi les endroits o&#249; vous pouvez trouver une erreur ou
+omission que vous avez faite lors de la d&#233;finition des OCantons, OChemins et portails.
+Comme vous tracez les tentatives d'itin&#233;raires, vous
+pouvez constater que vous avez oubli&#233; de saisir un chemin ou mal &#233;tiquet&#233; un portail correct
+pour un chemin. <i>Une erreur courante consiste &#224; sp&#233;cifier incorrectement le portail qui doit &#234;tre utilis&#233;
+pour quitter le canton de d&#233;part ou pour entrer dans le canton de destination.</i></p>
+<p>
+Lorsque vous &#234;tes satisfait de l'itin&#233;raire, s&#233;lectionnez l'onglet <b>Script d'enregistrement/lecture</b> .</P>
+
+<H2>Enregistrement et modification d'un Script</h2>
+L'enregistrement d'un script est fait &#224; partir de l'onglet <b>Enregistrement/Lecture de Script</b> . 
+Les boutons radio de cet onglet vous permettent de s&#233;lectionner soit par l'itin&#233;raire ou le tableau de commande du r&#233;gulateur
+. Le Tableau Itin&#233;raire montre les circuits de voie (OCantons, Portails et chemins) que le mandat
+d&#233;finit. Le Tableau de Commande du R&#233;gulateur montre chaque commande du r&#233;gulateur qui est enregistr&#233;e
+en "Mode d'Apprentissage". Apr&#232;s l'enregistrement, le tableau peut &#234;tre modifi&#233;. Des &#233;l&#233;ments suppl&#233;mentaires sur cet onglet
+vous permettent de choisir la machine avec la puissance n&#233;cessit&#233;e par votre train et de tester et de modifier le script enregistr&#233;.
+
+<H3>Choisir un Train</h3>
+Le champ <b>Nom Train</b> est utilis&#233; pour fournir un nom qui peut &#234;tre affich&#233; par l'Ic&#244;ne indicatrice de Voie quand le train se d&#233;place le long du parcours du mandat. 
+</p>
+Si vous avez d&#233;fini une liste de locomotives JMRI, les noms des trains sont affich&#233;s dans la bo&#238;te d&#233;roulante
+<b>Liste des Machine</b> . La s&#233;lection d'un nom de cette liste
+remplira des champs de texte <b>Nom Train</b> et <b>Adresse</b> et les affectera au
+mandat. 
+<p>
+Une adresse DCC tap&#233; dans le champ texte <b>Adresse</b> sera utilis&#233; si oui ou non il se trouve dans l'
+Liste des Locomotives JMRI.
+</p>
+
+<H2>Mode d'apprentissage</h2>
+Les Commandes du R&#233;gulateur sont cr&#233;&#233;es en enregistrant les commandes que vous envoyez &#224; un train
+tout en op&#233;rant manuellement &#224; partir d'un r&#233;gulateur &#224; l'&#233;cran dans <b>Mode Apprentissage</b> . 
+
+<H3>R&#233;gulateur en Mode Apprentissage</h3>
+Si un train a &#233;t&#233; assign&#233;, c'est qu'il poss&#232;de une adresse DCC valide  dans le mandat,
+puis un r&#233;gulateur peut &#234;tre acquis en appuyant sur la touche <b>D&#233;marrer</b> . Cet
+acc&#233;l&#233;rateur actionnera le train et toutes les commandes r&#233;gulateur seront
+enregistr&#233;es jusqu'&#224; ce que le bouton <b>Arr&#234;t</b> soit press&#233;. 
+<p>
+Le script apprentissage doit se fairoe avec un itin&#233;raire compl&#232;tement libre-Tous les aiguillages 
+doivent &#234;tre r&#233;gl&#233;s pour l'itin&#233;raire, tous les cantons inoccup&#233;s (sauf origine), tout les
+signaux doivent &#234;tre r&#233;gl&#233;s pour une circulation libre et sans aucun changement au cours de la p&#233;riode d'enregistrement
+. Lorsque le train est g&#233;r&#233; par la lecture du script, tout changement de l'aspect des signaux doivent &#234;tre prisen compte et la vitesse et les heuresprogramm&#233;es devront en tenir compte
+<p>
+En appuyant sur le bouton <b>Arr&#234;t</b> pour terminer l'enregistrement.
+</p>
+
+<H2>Mode Ex&#233;cution</h2>
+En appuyant sur la touche <b>AutoRun</b> dans la bo&#238;te  <b>Ex&#233;cuter Train</b> 
+enverront les commandes du r&#233;gulateur au train pr&#233;cis&#233; dans le mandat.
+<ul>
+        <b>NOTE :</b> Assurez-vous que le train se trouve sur le chemin du canton d'origine
+        de l'itin&#233;raire et que la direction de la machine est compatible avec la premi&#232;re direction
+        sp&#233;cifi&#233; dans les commandes du r&#233;gulateur. 
+</ul>
+La bo&#238;te <b>Ex&#233;cuter Train</b> affiche chaque canton travers&#233; par le train durant
+le trajet. 
+<p>
+La d&#233;tection d'occupation et les commandes synchronis&#233;es &#224; utiliser pour notifier un train quand il entre dans
+un canton d&#233;pend d'une d&#233;tection pr&#233;cise de l'occupation. Si la d&#233;tection d'occupation du r&#233;seau n'est pas fiable
+, les trains automatis&#233;s peuvent fonctionner avec des cons&#233;quences inattendues. Les trains peuvent
+attendre ind&#233;finiment lors d'une fausse d&#233;tection. Le canton
+protection fait en entrant dans un bloc peut &#234;tre d&#233;sactiv&#233;. Les boutons radio suivants d&#233;finissent
+ceci:
+<ul>
+        <li><b>Circuler avec la protection de Canton</b> :-Ex&#233;cute le train avec la d&#233;tection d'occupation
+        lors de l'entr&#233;e des cantons et des fonctions de synchronisation.li>
+        <li><b>Circuler avec des cantons &#233;teints</b> :-Le train circule comme d&#233;crit pour les Cantons &#201;teints</li>
+</ul>
+
+<H2>Faire circuler des trains en Automatiques</h2>
+Les commandes du r&#233;gulateur enregistr&#233;es peuvent &#234;tre lues pour conduire le train. Lors de l'ex&#233;cution
+automatique, une commandle suppl&#233;mentaire du train peut se faire &#224; travers trois choix : <b>Halte</b> ,
+<b>Reprendre</b> et <b>Abandonner</b> . Comme le sugg&#232;re le nom, ces commandes arr&#234;tent un
+train en automatique, le red&#233;marrent ou abandonnent les commandes restantes du r&#233;gulateur. 
+<p>
+Bien qu'il existe des op&#233;rations distinctes dans le Tableau Liste Mandats pour r&#233;server un itin&#233;raire mandat&#233;
+(Attribuer) et
+d&#233;finir les aiguillages et signaux (D&#233;finir Itin&#233;raire), ces op&#233;rations n'ont pas &#224; &#234;tre faites pour ex&#233;cuter
+un train automatis&#233;. Une session <b>AutoRun</b> peut commencer sans eux. Le train
+cherchera les allocation et les aiguillages &#224; mesure qu'il avance sur l'itin&#233;raire. Lors de la confrontation avec un canton occup&#233;
+, le train va s'arr&#234;ter et attendre jusqu'&#224; ce que le canton se d&#233;gage. 
+Lorsque le canton suivant est d&#233;gag&#233;, mais que le canton au-del&#224; du bloc suivant est occup&#233;, l'
+train va s'approcher &#224; vitesse r&#233;duite. De m&#234;me, si les portails ont &#233;t&#233; d&#233;finis avec
+des T&#234;tes de signalisation ou des M&#226;ts de signalisation prot&#233;geant les cantons qu'ilsijoignent, le train va modifier sa
+vitesse selon l'apparence ou l'aspect du signal. Un train automatis&#233;
+tentera d'obtenir l'attribution des deux cantons suivants chaque fois qu'il entre dans un canton. Il v&#233;rifie &#233;galement si
+le canton est occup&#233; par un train inconnu et ne passe pas si le canton est occup&#233;.
+<p>
+Par mesure de s&#233;curit&#233;, chaque fois que le train mandat&#233; a l'autorisation d'entrer dans le
+canton suivant, les aiguillages sont remis &#224; z&#233;ro. Avoir l'autorisation des signaux signifie
+que la r&#233;initialisation des aiguillages ne devrait pas interf&#233;rer avec toute la logique de verrouillage.
+En l'absence de signaux, l'occupation ou l'affectation &#224; un autre mandat
+peuvent aussi refuser l'autorisation. C'est la plus restrictive de ces trois conditions
+qui donne au train automatis&#233; la permission de continuer. Quand un tel refus est
+effac&#233;, le train va se faire automatiquement. La seule chose qui l'emporte
+sur avoir la permission de proc&#233;der est de savoir si l'utilisateur a d&#233;fini la commande "Halte ". Le train
+ne bougera jusqu'&#224; ce que l'utilisateur d&#233;finisse " Reprendre ".
+<p>
+Si un mandat est lanc&#233; et que la canton de d&#233;part n'est pas occup&#233;, le mandat dera
+attendre jusqu'&#224; ce que le canton soit occup&#233;. Lorsque survient l'occupation, le mandat d&#233;butera
+l'ex&#233;cution aussi il est vital que le bon train, c'est &#224; dire l'adresse indiqu&#233;e dans
+le mandat, occupe le canton. 
+</p>
+Le champ de texte <b>R&#233;glage du R&#233;gulateur</b> 
+ peut &#234;tre utilis&#233; pour modifier le r&#233;glage du r&#233;gulateur par un rapport fixe pour toutes
+les commandes de vitesse-ou des commandes individuelles peuvent avoir leur r&#233;glage r&#233;gulateur ou les valeurs de temps &#233;coul&#233;
+chang&#233;es en modifiant la table du r&#233;gulateur. 
+<p>
+
+<H3>Tableau de Commande R&#233;gulateur</h3>
+Le Tableau de Commande R&#233;gulateur poss&#232;de les colonnes suivantes :
+<ul>
+        <li><b>ET(ms)</b> :-Le temps &#233;coul&#233; en millisecondes &#224; attendre avant
+        d'ex&#233;cuter la commande R&#233;gulateur.li>
+        <li><b>Commande</b> :-La commande R&#233;gulateur qui a &#233;t&#233; enregistr&#233;e (direction, vitesse,
+        ou appuyez sur le bouton ou le rejet).li>
+        <li><b>Valeur</b> :-La valeur de la commande</li>
+        <li><b>Canton</b> :-Le Canton du train occup&#233;e lorsque la commande R&#233;gulateur
+         a &#233;t&#233; enregistr&#233;e.li>
+</ul>
+</p>
+<H3>Synchronisationn des Commandes aux Cantons fronti&#232;res.</H3>
+Changer le couplage d'un train ou peut-&#234;tre m&#234;me un changement de temp&#233;rature
+entre l'enregistrement et la lecture, peut entra&#238;ner que le train n'effectue pas une commande R&#233;gulateur au m&#234;me endroit sur l'itin&#233;raire o&#249; le "Mode Apprentissage" les a enregistr&#233;es pour ce train. 
+<p>
+L'entr&#233;e dans chaque canton est enregistr&#233;e avec un marqueur "NoOp". Ces marqueurs sont utilis&#233;s pour
+synchroniser le temps &#233;coul&#233; pour le fonctionnement automatique du train quand il entre dans un canton
+avec  son temps de pr&#233;sence enregistr&#233;e dans le canton. 
+Les commandes de r&#233;gulateur
+du canton suivant seront retard&#233;es jusqu'&#224; ce que le train entre dans le canton si le train est
+arriv&#233; en retard , ou en sautant le temps &#233;coul&#233; et restant
+si le train arrive plus t&#244;t que pr&#233;vu.
+<p>
+Dans les cas extr&#234;mes o&#249; la synchronisation du bloc peut
+toujours ne pas &#234;tre satisfaisante. Vous pouvez &#233;galement allonger ou raccourcir les temps de pr&#233;sence pour
+ un canton en &#233;ditant les commandes de r&#233;gulateur.
+<p>
+Une autre option est d'utiliser le <b>R&#233;glage R&#233;gulateur</b> pour entrer un rapport pour multiplier le
+R&#233;glage du R&#233;gulateur et ainsi alimenter plus ou moins.
+<ul>
+        <b>NOTE :</b> Le facteur d'ajustement du R&#233;gulateur n'est pas sauvegard&#233; de fa&#231;on permanente. La valeur par d&#233;faut du
+        multiplicateur est toujours de 1,0. Chaque fois qu'un facteur est voulu, il doit &#234;tre entr&#233; manuellement &#224;
+        chaque fois que le mandat est ex&#233;cut&#233;.-<b>ou &#234;tre r&#233;gl&#233; par Logix</b> lorsque Logix est utilis&#233; pour d&#233;finir
+        l'ID train et ex&#233;cuter le mandat. Les commandes de r&#233;gulateur enregistr&#233;es et &#233;dit&#233;es sont les
+        r&#233;glages de base pour chaque cycle de mandat. ID Train et Facteur R&#233;gulateur peuvent &#234;tre r&#233;gl&#233;s
+comme vous le souhaitez pour chaque ex&#233;cution de mandat. 
+</ul>
+Si une mani&#232;re plus pr&#233;cise est n&#233;cessaire pour avoir un &#233;v&#233;nement de script se produisant &#224; un endroit particulier,
+voir la
+<b>Synchronisation Interne par des Ev&#233;nements Externes</b> ci-dessous. 
+</p>
+
+<H3>&#201;dition des Commandes R&#233;gulateurs Enregistr&#233;es</h3>
+Les commandes de R&#233;gulateur enregistr&#233;es dans le <b>Mode Apprentissage</b> peuvent &#234;tre modifi&#233;es , toutefois,
+des pr&#233;cautions doivent &#234;tre prises parce que  des changements m&#234;me modestes des nouvelles commandes
+lorsqu'elles sontt ex&#233;cut&#233;es en lecture pourraient causer des &#233;v&#233;nements dramatiques. Il peut &#234;tre sage d'
+r&#233;- enregistrer les commandes dans une nouvelle session de Mode d'Apprentissage si des changements importants sont apport&#233;s.
+<p>
+Les commandes de r&#233;gulateur enregistr&#233;es s'ex&#233;cutent en fonction du temps &#233;coul&#233; entre les commandes. 
+Le temps &#233;coul&#233; (colonne ET ) peut &#234;tre modifi&#233;, et m&#234;me la commande peut &#234;tre chang&#233;.
+Les Lignes peuvent &#234;tre supprim&#233;es et des lignes suppl&#233;mentaires ins&#233;r&#233;s.
+<p>
+Les lignes peuvent &#234;tre ins&#233;r&#233;es dans le Tableau Commande R&#233;gulateur de sorte que le train peut d&#233;finir l'&#233;tat d'un capteur externe
+ou r&#233;pondre &#224; l' &#233;tat ​​d'un capteur externe. 
+
+La protection de la circulation discut&#233; dans les sections pr&#233;c&#233;dentes et les commandes de synchronisation
+d&#233;pendent d'une d&#233;tection d'occupation fiable. Si le r&#233;seau est sujet &#224; avoir de
+faux signaux de d&#233;tection, alors le d&#233;roulement automatis&#233; sera insatisfaisant les trains peuvant attendre ind&#233;finiment qu'un train fant&#244;me lib&#232;re une occupation ou circule ind&#233;finiment par la non r&#233;ception d'un signal de synchronisation. Le train peut &#234;tre ex&#233;cut&#233; en utilisant les temps &#233;coul&#233;s
+entre les commandes et sautez la protection de canton mentionn&#233; ci-dessus &#224; savoir "Circuler avec
+des Cantons &#201;teints".
+
+<H3>Modification de Commandes R&#233;gulateur</h3>
+
+Toutes les colonnes du Tableau de Commandes R&#233;gulateur peuvent &#234;tre modifi&#233;es. Peut-&#234;tre que vous voulez
+retoucher les planning pour les coups de corne ou pour modifier les vitesses. Il suffit d'entrer les donn&#233;es que vous souhaitez.
+Les valeurs dans le Tableau de Commande R&#233;gulateur sont chang&#233;s en tapant de nouvelles entr&#233;es dans les cellules
+de la table. 
+<p>
+Des lLignes peuvent &#234;tre ins&#233;r&#233;es ou supprim&#233;es de la table &#224; l'aide des boutons &#224;
+droite de la table. Notez qu'une ligne ins&#233;r&#233;e a 0 temps &#233;coul&#233; depuis la pr&#233;c&#233;dente
+commande de sorte que vous pouvez ajuster cela en prenant du temps loin de soit la pr&#233;c&#233;dente ligne ou la ligne suivante et entrer dans la ligne ins&#233;r&#233;e. Aussi, quand une ligne est
+supprim&#233;e, son temps &#233;coul&#233; est ajout&#233;e &#224; la dur&#233;e de la ligne suivante. Ce d&#233;faut
+de temps &#233;coul&#233;s pour l'insertion et la suppression de lignes sont saisies pour garder le
+temps &#233;coul&#233; total constant dans le canton. 
+</p>
+
+<H3>&#201;v&#233;nements D&#233;clencheurs Externes &#224; Partir de Scripts</h3>
+
+Des animations externes ou d'autres &#233;v&#233;nements peuvent &#234;tre d&#233;clench&#233;s par la saisie d'une commande<i>"D&#233;finir Capteur"</i >"
+. Pour ce faire, ins&#233;rer une ligne avec les mots <b>Set Sensor</b> dans le
+Colonne de commande et un nom de capteur valable dans la colonne <i>Canton</i>. La colonne <i>valeur</i> doit
+disposer de l'action que vous voulez que le capteur prenne au moment de son ex&#233;cution -temps les mots "actif" ou "inactif". 
+Saisir &#233;galement le temps &#233;coul&#233; quand d&#233;clencher le r&#233;glage du capteur. Lors de la lecture
+lorsque cette commande est ex&#233;cut&#233;e l'&#233;tat du capteur sera d&#233;fini.
+</p>
+
+<H3>Synchronisation Interne par des &#201;v&#233;nements Externes</h3>
+Une ynchronisation suppl&#233;mentaire peut &#234;tre faite dans un Canton. Par exemple arr&#234;ter un train
+&#224; un ch&#226;teau d'eau ou sur un dispositif de d&#233;couplage ou pour une raison quelconque o&#249; l'utilisation du temps &#233;coul&#233; de la commande n'est pas assez pr&#233;cis. Pour ce faire, ins&#233;rer une ligne avec les mots
+<b>Wait Sensor</b> dans la colonne de commande et
+un nom de capteur valable dans la colonne <i>Canton</i>. La colonne <i>Valeur</i> doit
+disposer des mots d'action
+ "actif" ou "inactif". Lors de la lecture lorsque cette commande est ex&#233;cut&#233;e le script fait une 
+pause et le d&#233;placement courant  du train est maintenue jusqu'&#224; ce que le capteur passe &#224; l'&#233;tat sp&#233;cifi&#233;.
+Lorsque cela se produit le script continue d'ex&#233;cuter en accord avec le temps enregistr&#233;e. Dans ce cas, le "capteur d'attente " peut &#234;tre un capteur optique plac&#233; pour d&#233;tecter &#224; un point sp&#233;cifique. Support de la commande " capteur d'attente " avec les commandes de vitesse , l'
+un avant avec une vitesse tr&#232;s lente, l'un apr&#232;s avec la vitesse 0 (ou -1 ). Le script devra
+alors avancer le train &#224; la vitesse lente jusqu'&#224; ce que le capteur permette la d&#233;tection. 
+Ensuite, le script se poursuit et la commande de vitesse de 0 arr&#234;te le train.
+<p>
+De m&#234;me, le sscript et le train peuvent rester arr&#234;t&#233; jusqu'&#224; une deuxi&#232;me commande "Capteur Attente" qui
+d&#233;clenche le script pour continuer. 
+<p>
+Si le "capteur d'attente" est d&#233;j&#224; &#224; l'&#233;tat sp&#233;cifi&#233; lorsque la lecture ex&#233;cute sa
+commande,le script continue.
+
+<H3>S&#233;quen&#231;age automatique de scripts</h3>
+
+Il est possible de lancer un autre script &#224; partir d'un script. Pour ce faire, ins&#233;rer une ligne
+avec les mots
+<b> Run Warrant</b> dans la colonne Commande et le nom d'un mandat dans la colonne <i>Canton</i>. 
+cette commande
+lance le second mandat. Notez qu'un train &#224; l'adresse indiqu&#233;e dans la deuxi&#232;me
+mandat doit &#234;tre plac&#233; dans le canton de d&#233;part du deuxi&#232;me mandat.
+<p>
+Cette fonctionnalit&#233; peut &#234;tre utilis&#233;e pour boucler un train &#224; plusieurs reprises en utilisant le m&#234;me nom de mandat. 
+Si un script se termine avec le canton de destination
+&#233;gal au canton d'origine, il se r&#233;p&#232;te pour le nombre de fois entr&#233; dans la colonne 
+<i>Valeur</i>
+. Si un nombre n&#233;gatif est entr&#233; dans le script, il se r&#233;p&#232;te ind&#233;finiment jusqu'&#224; ce qu'une commande d'abandon est manuellement
+publi&#233;. Une autre possibilit&#233; serait d'utiliser mandat " de A &#224; B " et mandat
+" de B &#224; A",
+o&#249; mandat " de A &#224; B " court mandat " de B vers A " et mandat " de B &#224; A"
+court mandat " de A &#224; B " et chaque mandat sp&#233;cifie le m&#234;me train Id et le
+m&#234;me nombre de r&#233;p&#233;titions.
+</p>
+
+<H3>Faire Circuler des Trains sur les Cantonss &#201;teints</h3>
+Le mode d'apprentissage et les fonctions du Mode Run peuvent &#234;tre utilis&#233;s sur des Cantons qui n'ont pas
+des capteurs de d&#233;tection.
+Cependant, sans d&#233;tection, autre que le r&#233;glage initial des aiguillages, le mandat ne peut pas r&#233;initialiser les aiguillages ou de modifier sa vitesse alors que le train est en route. Cela signifie
+qu'il n'existe aucune protection au rouge des trains epertubant l'itin&#233;raire ou d'aiguillage en cours de modification
+tandis que le train est en route. Par cons&#233;quent la circulation des trains doit se faire
+avec prudence sur des cantons &#233;teintss. 
+<p>Notez que l'entr&#233;e dans un canton &#233;teint est d&#233;tect&#233; diff&#233;remment  d'un canton d'occupation.
+&#201;videmment, l'entr&#233;e dans un bloc d'occupation est constat&#233;e lorsque le canton d'occupation d&#233;tecte
+l'occupation. Mais l'entr&#233;e dans un bloc &#233;teint peut &#234;tre seulement enregistr&#233;e comme le moment o&#249; le
+canton d'occupation pr&#233;c&#233;dent ne montre aucune occupation. C'est que le temps &#233;coul&#233; pour l'entr&#233;e dans
+un bloc &#233;teint est enregistr&#233; par la queue du train, pas par la t&#234;te.p>
+
+<H2>Sauvegarde Etc</h2>
+Il y a trois boutons en bas de la fen&#234;tre. 
+
+<ul>
+        <li><b>Sauvegarder</b> :-Enregistre le mandat afin qu'il puisse &#234;tre affich&#233; dans la liste des mandats
+sur le Tableau Mandat. Une copie permanente du mandat est enregistr&#233;e lorsque le panneau est
+        enregistr&#233; dans le fichier de configuration.</li>
+<li><b>Copie</b> :-Donne une copie du mandat</li>
+        <li><b>Annuler</b> :-Annule toute modification qui pourrait avoir &#233;t&#233; faite</li>
+        <li><b>Supprimer</b> :-Supprime le mandat lorsque le panneau est
+        enregistr&#233; dans le fichier de configuration.li>
+</ul>
+<br>
+<!-# include virtual = " / Footer " ->
+</BODY>
+</HTML>

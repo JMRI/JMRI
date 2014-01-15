@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for install (host systems) pages -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<!-- Translated  by Blorec Hervé le 2011-10-01-->
+<!-- Updated by Blorec Herv&#233; 2013-09-01-->
 <hr class="hide">
 
 <div id="mBody">
@@ -9,7 +9,7 @@
     <h2>Outils LocoNet</h2>
 	<UL>
 	<LI><A href="index.shtml#locomon">Moniteur LocoNet</a>
-	<LI><A href="index.shtml#slotmon">Slot Monitor</a>
+	<LI><A href="index.shtml#slotmon">Moniteur de Slot</a>
 	<LI><A href="index.shtml#sendpkt">Source de Paquet</a>
 	<LI><A href="index.shtml#pm4">Programmateurs BDL16, BDL162, BDL168 et PM4 </a>
 	<LI><A href="LocoIO.shtml">Programmateur LocoIO</a>

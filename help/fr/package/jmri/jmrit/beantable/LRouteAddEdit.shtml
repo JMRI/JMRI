@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LRouteAddEdit.shtml,v 1.4 2009/04/22 06:47:07 pete_cressman Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/06-->
+<!-- $Id: LRouteAddEdit.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Adding/Editing LRoutes</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help LRoute Add Edit">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,91 +24,91 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
- <H1><A  NAME="Adding/Editing LItinéraires"></A> Ajout/Edition LItinéraire</H1>
-<p> Il y a quatre onglets pour ajouter et éditer LItinéraires:
+ <H1><A  NAME="Adding/Editing LItin&#233;raires"></A> Ajout/Edition LItin&#233;raire</H1>
+<p> Il y a quatre onglets pour ajouter et &#233;diter LItin&#233;raires:
 
-Onglet <H3> 1. LItinéraire Basique</H3>
+Onglet <H3> 1. LItin&#233;raire Basique</H3>
 
-<P> La première chose que vous devez faire lors de la création d'un itinéraire est de le nommer.Dans
-la case "Nom système», entrez un nom unique pour votre LItinéraire.
-Le préfixe «RTX» sera ajouté au nom système,
-Vous pouvez éventuellement entrer un nom plus descriptif dans la case ''Nom Uilisateur ".</P>
+<P> La premi&#232;re chose que vous devez faire lors de la cr&#233;ation d'un itin&#233;raire est de le nommer. Dans
+la case "Nom syst&#232;me", entrez un nom unique pour votre LItin&#233;raire.
+Le pr&#233;fixe "RTX" sera ajout&#233; au nom syst&#232;me,
+Vous pouvez &#233;ventuellement entrer un nom plus descriptif dans la case ''Nom Uilisateur ".</P>
 
 <dl>
-Type d'Itinéraire <dt> Logix</dt>
-<dd> Les boutons radio ci-dessous les descriptions d'onglet règlent le mode de déclenchement
-pour les variables «véto» de contrôle (voir ci-dessous pour une explication de véto).
-Pour émuler le comportement des itinéraires (par opposition à LItinéraires) sélectionner les
-<b>Anciennes</b> options. (Les Itinéraires standard ne se déclenchent pas lorsque la condition de véto est
-retirée.) Si vous voulez que le L-Itinéraire se déclenche lorsque la condition de véto est
-supprimé, sélectionnez les <b>Nouvelles</b> options.</dd>
+Type d'Itin&#233;raire <dt> Logix</dt>
+<dd> Les boutons radio sous les descriptions d'onglet r&#232;glent le mode de d&#233;clenchement
+pour les variables "v&#233;to" de commande (voir ci-dessous pour une explication de v&#233;to).
+Pour &#233;muler le comportement des itin&#233;raires (par opposition &#224; LItin&#233;raires) s&#233;lectionner les
+<b>Anciennes</b> options. (Les Itin&#233;raires standard ne se d&#233;clenchent pas lorsque la condition de v&#233;to est
+retir&#233;e.) Si vous voulez que le L-Itin&#233;raire se d&#233;clenche lorsque la condition de v&#233;to est
+supprim&#233;e, s&#233;lectionnez les <b>Nouvelles</b> options.</dd>
 </Dl>
 
-Les boutons situés au bas de la Table LItinéraire
+Les boutons situ&#233;s au bas du Tableau LItin&#233;raire
 
 <DL>
-<DT> Ajouter Itinéraire</DT>
-<DD> Appuyez sur ce bouton pour ajouter un nouvel Itinéraire Logix.</Dd>
+<DT> Ajouter Itin&#233;raire</DT>
+<DD> Appuyez sur ce bouton pour ajouter un nouvel Itin&#233;raire Logix.</Dd>
 
 <DT> Annuler</DT>
-<DD> Appuyez sur ce bouton pour annuler l'édition.</Dd>
+<DD> Appuyez sur ce bouton pour annuler l'&#233;dition.</Dd>
 </DL>
 
 Onglet <H3> 2. Actions (sortie)</h3>
 
-<p> Cet onglet contient une liste de sélection de tous les capteurs, les aiguillages, les lumières et signaux
-qui ont été créés. Cochez la case dans la  colonne <b>Inclure</b> pour sélectionner le
-périphérique que vous souhaitez inclure dans le L-Itinéraire. Ensuite choisissez l'action que vous voulez que l'appareil doit réaliser lorsque le L-Itinéraire est déclenché à partir du menu déroulant dans la colonne  <b>Obtenir
+<p> Cet onglet contient une liste de s&#233;lection de tous les capteurs, les aiguillages, les lumi&#232;res et signaux
+qui ont &#233;t&#233; cr&#233;&#233;s. Cochez la case dans la colonne <b>Inclure</b> pour s&#233;lectionner le
+p&#233;riph&#233;rique que vous souhaitez inclure dans le L-Itin&#233;raire. Ensuite choisissez l'action que vous voulez que l'appareil r&#233;alise lorsque le L-Itin&#233;raire est d&#233;clench&#233; &#224; partir du menu d&#233;roulant dans la colonne <b>Obtenir
 Action</b>.</P>
 
-<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
-avez sélectionnés.</p>
+<p> Les boutons radio vous permettent de limiter l'affichage des p&#233;riph&#233;riques &#224; seulement ceux que vous
+avez s&#233;lectionn&#233;s.</p>
 
-Onglet <H3> 3. Déclencheurs /Commandes (entrée)</h3>
+Onglet <H3> 3. D&#233;clencheurs/Commandes (entr&#233;e)</h3>
 
-<p> Cet onglet contient une liste de sélection de tous les capteurs, aiguillages, lumières et signaux
-qui ont été créés. Cochez la case dans la colonne <b>Inclure</b> pour sélectionner l'appareil que vous souhaitez utiliser pour le contrôle du L-Itinéraire. Ensuite, choisissez l'état que vous voulez que le
-périphérique à utiliser prenne pour déclencher le L-Itinéraire dans  le menu déroulant dans la colonne <b>
-Etat Déclencheur</b>.</P>
+<p> Cet onglet contient une liste de s&#233;lection de tous les capteurs, aiguillages, lumi&#232;res et signaux
+qui ont &#233;t&#233; cr&#233;&#233;s. Cochez la case dans la colonne <b>Inclure</b> pour s&#233;lectionner l'appareil que vous souhaitez utiliser pour la commande du L-Itin&#233;raire. Ensuite, choisissez l'&#233;tat que vous voulez que le
+p&#233;riph&#233;rique &#224; utiliser prenne pour d&#233;clencher le L-Itin&#233;raire dans le menu d&#233;roulant dans la colonne <b>
+Etat D&#233;clencheur</b>.</P>
 
- <p>Les Périphériques sélectionnés avec des états «non- véto" sont regroupés comme une clause "OR". Les Déclencheurs
-sélectionnés avec un Etat "véto" sont regroupés comme une clause "ET". Autrement dit, lorsque tout état de
-«Non- veto" devient vrai, le L-Itinéraire est capable de se déclencher. Toutefois, si l'un des états «Veto»,est vrai,le L-Itinéraire ne déclenchera pas.</P>
+ <p>Les P&#233;riph&#233;riques s&#233;lectionn&#233;s avec des &#233;tats "non- v&#233;to" sont regroup&#233;s comme une clause "OR". Les D&#233;clencheurs
+s&#233;lectionn&#233;s avec un Etat "v&#233;to" sont regroup&#233;s comme une clause "ET". Autrement dit, lorsque tout &#233;tat de
+"Non- veto" devient vrai, le L-Itin&#233;raire est capable de se d&#233;clencher. Toutefois, si l'un des &#233;tats "Veto",est vrai,le L-Itin&#233;raire ne d&#233;clenchera pas.</P>
 
 
-<p> sur l'onglet 1, le <b>Nouveau</b> type d'itinéraire Logix  sera mis à la logique ci-dessus en un seul
-Logix conditionnel. Si le <b>l'Ancienne</b> option est sélectionnée, chaque déclenchement d'un état 
-«non- veto" est mis dans une condition séparée. Le comportement de cette
+<p> sur l'onglet 1, le <b>Nouveau</b> type d'itin&#233;raire Logix  sera mis &#224; la logique ci-dessus en un seul
+Logix condition. Si <b>l'Ancienne</b> option est s&#233;lectionn&#233;e, chaque d&#233;clenchement d'un &#233;tat 
+"non- veto" est mis dans une condition s&#233;par&#233;e. Le comportement de cette
 option est que le
-L- itinéraire sera déclenché à chaque fois qu'un de ces états d'appareil devient vrai - même si
-l'expression logique dans son ensemble est déjà vrai. Une autre différence quand
-<b>l'Ancienne</b> option est spécifiée, c'est que les variables de «véto»  ne sont pas activées pour le déclenchement.
-Cela signifie que les actions ne sont pas déclenchées lorsque les vétos sont supprimés. Utilisez la  <b>Nouvelle</b>
-option si vous voulez que les actions se déclenchent lorsque les vétos sont supprimés.
-En résumé, le <b>l'Ancienne</b> option émule un itinéraire standard et la <b>Nouvelle</b>
-option a le comportement d'un Conditionnel Standart Logix . Les variations sur ces comportements
-peuvent être réglés avec des modifications supplémentaires dans le tableau Logix.
+L- itin&#233;raire sera d&#233;clench&#233; &#224; chaque fois qu'un de ces &#233;tats d'appareil devient vrai - m&#234;me si
+l'expression logique dans son ensemble est d&#233;j&#224; vrai. Une autre diff&#233;rence quand
+<b>l'Ancienne</b> option est sp&#233;cifi&#233;e, c'est que les variables de "v&#233;to" ne sont pas activ&#233;es pour le d&#233;clenchement.
+Cela signifie que les actions ne sont pas d&#233;clench&#233;es lorsque les v&#233;tos sont supprim&#233;s. Utilisez la <b>Nouvelle</b>
+option si vous voulez que les actions se d&#233;clenchent lorsque les v&#233;tos sont supprim&#233;s.
+En r&#233;sum&#233;,  <b>l'Ancienne</b> option &#233;mule un itin&#233;raire standard et la <b>Nouvelle</b>
+option a le comportement d'une Condition Standart Logix. Les variations sur ces comportements
+peuvent &#234;tre r&#233;gl&#233;es avec des modifications suppl&#233;mentaires dans le tableau Logix.
 
-<p> Notez que certaines variables de contrôle avec "sur le changement», déclare avoir besoin d'un Conditionnel Logix séparé  pour les actions  pour déclencher L-Itinéraire à chaque changement d'état
+<p> Notez que certaines variables de commandle avec "sur le changement", d&#233;clare avoir besoin d'une Condition Logix s&#233;par&#233;e  pour les actions  pour d&#233;clencher L-Itin&#233;raire &#224; chaque changement d'&#233;tat
 de ces variables.
 
-<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
-avez sélectionnés.</p>
+<p> Les boutons radio vous permettent de limiter l'affichage des p&#233;riph&#233;riques &#224; seulement ceux que vous
+avez s&#233;lectionn&#233;s.</p>
 
 Onglet <H3> 4. Alignement/Verrous/ Etc.</H3>
 
-<p> Cet onglet contient une liste de sélection des capteurs
-qui ont été créés. Cochez la case dans la colonne <b>Inclure</b>  pour sélectionner un
-capteur que vous souhaitez utiliser pour indiquer l'achèvement des actions L-Itinéraire. Ensuite, choisissez
-le type d'action que vous voulez que le capteur contrôle à partir du menu déroulant dans la colonne
-<b>Alignement</b>. Vous pouvez choisir d'avoir le capteur indiqué dans type particulier
-(capteur,aiguillage, de la lumière, le tête de signal, ou tous)</p>
+<p> Cet onglet contient une liste de s&#233;lection des capteurs
+qui ont &#233;t&#233; cr&#233;&#233;s. Cochez la case dans la colonne <b>Inclure</b>  pour s&#233;lectionner un
+capteur que vous souhaitez utiliser pour indiquer l'ach&#232;vement des actions L-Itin&#233;raire. Ensuite, choisissez
+le type d'action que vous voulez que le capteur commande &#224; partir du menu d&#233;roulant dans la colonne
+<b>Alignement</b>. Vous pouvez choisir d'avoir le capteur indiqu&#233; dans type particulier
+(capteur,aiguillage, de la lumi&#232;re, le t&#234;te de signal, ou tous)</p>
 
-<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
-avez sélectionné.</p>
+<p> Les boutons radio vous permettent de limiter l'affichage des p&#233;riph&#233;riques &#224; seulement ceux que vous
+avez s&#233;lectionn&#233;.</p>
 
-<p> Un fichier son peut être inscrit pour jouer lorsque le L-Itinéraire est déclenché. De même un fichier  script
-peut être exécuté lorsque le L-Itinéraire est déclenché.
+<p> Un fichier son peut &#234;tre inscrit pour jouer lorsque le L-Itin&#233;raire est d&#233;clench&#233;. De m&#234;me un fichier script
+peut &#234;tre ex&#233;cut&#233; lorsque le L-Itin&#233;raire est d&#233;clench&#233;.
  
 
 <!--#include virtual="/Footer" -->

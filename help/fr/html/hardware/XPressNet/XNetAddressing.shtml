@@ -2,12 +2,12 @@
 <html>
 <head>
 <html lang="fr">
-<!-- $Id: XNetAddressing.shtml,v 1.2 2010/01/08 19:37:00 pbender Exp $ -->
- <!-- Translated  by Blorec Hervé le 2011-20-06-->
+<!--  $Id: XNetAddressing.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+ <!-- UpDated  by Blorec Herv&#233;  2013-09-20-->
    <title>Lenz Feedback Bus Addressing</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,86 +23,86 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Bus Adressant les Rétro-Signalisation Lenz  </h1>
+<h1>Bus Adressant les R&#233;tro-Signalisation Lenz  </h1>
 
-Sur les systèmes de Lenz, la rétro-signalisation des périphériques d'entrée est assurée par le bus de rétro-signalisation.
+Sur les syst&#232;mes de Lenz, la r&#233;tro-signalisation des p&#233;riph&#233;riques d'entr&#233;e est assur&#233;e par le bus de r&#233;tro-signalisation.
 
-L'entrée disponible à partir du bus FeedBack (rétro-signalisation) est fournie par le LR100 Lenz
-et le Codeurs de Rétro-Signalisation LR101 ou décodeurs d'accessoires Lenz qui fournissent une capacité de rétro-signalisation (le LS100 par exemple)</h1>
+L'entr&#233;e disponible &#224; partir du bus FeedBack (r&#233;tro-signalisation) est fournie par le LR100 Lenz
+et le Codeurs de R&#233;tro-Signalisation LR101 ou d&#233;codeurs d'accessoires Lenz qui fournissent une capacit&#233; de r&#233;tro-signalisation (le LS100 par exemple)</h1>
 
 
-<h2>Adressagedes Décodeurs d'Accessoires avec XPressNet dans JMRI </h2>
+<h2>Adressagedes D&#233;codeurs d'Accessoires avec XPressNet dans JMRI </h2>
 <p>
-Chaque décodeur d'accessoires est abordé en lui donnant une adresse dans l'espace d'adresse
- alloué par le NMRA pour les décodeurs d'accessoires. Cela permet aux décodeurs d'accessoires
-les adresses de 1 à 1024.
+Chaque d&#233;codeur d'accessoires est abord&#233; en lui donnant une adresse dans l'espace d'adresse
+ allou&#233; par le NMRA pour les d&#233;codeurs d'accessoires. Cela autorise aux d&#233;codeurs d'accessoires
+les adresses de 1 &#224; 1024.
 </p>
 <p>
-Dans les outils JMRI, vous pouvez préfixer l'adresse avec XT pour dire que le système
-décodeur est accessible via un système base XPressNet . Si vous avez seulement un  système basé 
-XPressNet de configuré, vous pouvez simplement utiliser l'adresse et le
-programmes affectera automatiquement un préfixe XT pour vous.
+Dans les outils JMRI, vous pouvez pr&#233;fixer l'adresse avec XT pour dire que le syst&#232;me
+d&#233;codeur est accessible via un syst&#232;me base XPressNet . Si vous avez seulement un  syst&#232;me bas&#233; 
+XPressNet de configur&#233;, vous pouvez simplement utiliser l'adresse et le
+programmes affectera automatiquement un pr&#233;fixe XT pour vous.
 </p>
 <p>
-Sur le bus Feedback (Rétro--signalisations), les décodeurs d'accessoires sont autorisés à occuper les adresses
-1 à 64. Depuis le retour des décodeurs équipés que Lenz fournit en fait
-comprennent 4 décodeurs d'accessoires, cet espace d'adressage limités en réalité,
-correspond à l'adresse décodeur accessoire 1 à 256.
+Sur le bus Feedback (R&#233;tro-signalisations), les d&#233;codeurs d'accessoires sont autoris&#233;s &#224; occuper les adresses
+1 &#224; 64. Depuis le retour des d&#233;codeurs &#233;quip&#233;s que Lenz fournit en fait
+comprennent 4 d&#233;codeurs d'accessoires, cet espace d'adressage limit&#233;s en r&#233;alit&#233;,
+correspond &#224; l'adresse d&#233;codeur accessoire 1 &#224; 256.
 </p>
 <p>
-Pour calculer avec ce dispositif de rétroaction l'Adresses où réside un de vos décodeurs d'accessoires
+Pour calculer avec ce dispositif de r&#233;troaction l'Adresses o&#249; r&#233;side un de vos d&#233;codeurs d'accessoires
  arrondir au multiple de 4 suivant, et divisez ce
 nombre par quatre.
 </p>
 <p>
-Par exemple, si vous avez un décodeur d'accessoires avec l'adresse 121, le prochain
-multiple de 4 est de 124. 124 divisé par 4 est de 31, donc ce décodeur est inclus
-avec l'adresse de rétroaction 31.
+Par exemple, si vous avez un d&#233;codeur d'accessoires avec l'adresse 121, le prochain
+multiple de 4 est de 124. 124 divis&#233; par 4 est de 31, donc ce d&#233;codeur est inclus
+avec l'adresse de r&#233;troaction 31.
 </ p>
 <p>
-La rétro-signalisation des décodeurs d'accessoires est gérée automatiquement par l'outil des aiguillages fournis avec JMRI. Si l'aiguillage est équipé de rétro-signalisation, l'outil aiguillage, le tableau aiguillage, ou un panneau de contrôle ne sera pas mise à jour de
-jusqu'à ce que la réponse du bus de rétro-signalisation indique que l'aiguillage a été déplacé.
+La r&#233;tro-signalisation des d&#233;codeurs d'accessoires est g&#233;r&#233;e automatiquement par l'outil des aiguillages fournis avec JMRI. Si l'aiguillage est &#233;quip&#233; de r&#233;tro-signalisation, l'outil aiguillage, le tableau aiguillage, ou un panneau de contr&#244;le ne sera pas mise &#224; jour de
+jusqu'&#224; ce que la r&#233;ponse du bus de r&#233;tro-signalisation indique que l'aiguillage a &#233;t&#233; d&#233;plac&#233;.
 </ p>
 <p>
-Le statut des décodeurs qui ne déclarent pas la rétro-signalisation est géré par l'attente d'
-un message de réponse avant de changer le statut du décodeur
+Le statut des d&#233;codeurs qui ne d&#233;clarent pas la r&#233;tro-signalisation est g&#233;r&#233; par l'attente d'
+un message de r&#233;ponse avant de changer le statut du d&#233;codeur
 <p>
 </p>
-<h2>Adressage du Bus de Rétro-signalisations Capteurs Lenz dans JMRI </h2>
+<h2>Adressage du Bus de R&#233;tro-signalisations des Capteurs Lenz dans JMRI </h2>
 <p>
-Les Codeurs Lenz LR100 et LR101 de rétro-signalisations sont autorisés à avoir des rétro-signalisation adresses de 1 à 128.
- Lenz Recommande à partir de l'adresse 65 et pour
-éviter les conflits avec aiguillages fournissant  une rétro-signalisation.
+Les Codeurs Lenz LR100 et LR101 de r&#233;tro-signalisations sont autoris&#233;s &#224; avoir des r&#233;tro-signalisation adresses de 1 &#224; 128.
+ Lenz Recommande &#224; partir de l'adresse 65 et pour
+&#233;viter les conflits avec aiguillages fournissant  une r&#233;tro-signalisation.
 </p>
 <p>
-<p> NOTE: le LR100 a en fait 16 entrées, et  prends jusqu'à deux adresses.
+<p> NOTE: le LR100 a en fait 16 entr&#233;es, et  prends jusqu'&#224; deux adresses.
 </p>
 <p>
-Chaque rétro-signalisation comprend un encodeur 8 entrées. Ces entrées sont soit sur
-ou hors tension. Chaque entrée est numérotée de 1 à 8 sur le retour codeur.
+Chaque r&#233;tro-signalisation comprend un encodeur 8 entr&#233;es. Ces entr&#233;es sont soit sur
+ou hors tension. Chaque entr&#233;e est num&#233;rot&#233;e de 1 &#224; 8 sur le retour codeur.
 </p>
 <p>
-Pour déterminer quelle adresse rétro-signalisation est rapportée par le dispositif, vous devez
-connaître l'adresse de l'encodeur de rétro-signalisation, et qu'elle entrée vous
-utilisez. Consultez la documentation de Lenz pour déterminer comment le programme trouve les
-Adresse encodage Rétro-signalisation. Cela peut être fait avec le codeur en place sur
-le réseau.
+Pour d&#233;terminer quelle adresse r&#233;tro-signalisation est rapport&#233;e par le dispositif, vous devez
+conna&#238;tre l'adresse de l'encodeur de r&#233;tro-signalisation, et qu'elle entr&#233;e vous
+utilisez. Consultez la documentation de Lenz pour d&#233;terminer comment le programme trouve les
+Adresse encodage R&#233;tro-signalisation. Cela peut &#234;tre fait avec le codeur en place sur
+le r&#233;seau.
 </p>
 <p>
-Pour calculer l'adresse d'un capteur, il faut soustraire 1 de l'adresse de l'encodeur de rétro-signalisation , multipliez ce résultat par 8, puis ajoutez l'entrée
-numéro que vous utilisez.
+Pour calculer l'adresse d'un capteur, il faut soustraire 1 de l'adresse de l'encodeur de r&#233;tro-signalisation , multipliez ce r&#233;sultat par 8, puis ajoutez l'entr&#233;e
+num&#233;ro que vous utilisez.
 
 </p>
 <p>
 Par exemple, si vous utilisez le contact 3 sur un retour codeur avec l'adresse
-99, 99 - 1 = 98. 98 * 8 = 784. 784+3 = 787. L'adresse des rétro-signalisations que vous allez utiliser
+99, 99 - 1 = 98. 98 * 8 = 784. 784+3 = 787. L'adresse des r&#233;tro-signalisations que vous allez utiliser
 est 787.
 </p>
 <p>
-Dans les outils JMRI, vous pouvez préfixer l'adresse avec XS pour dire le système
-Capteur est accessible via un système basé XPressNet. Si vous n'avez seulement qu'un
-système basé XPressNet  configuré, vous pouvez simplement utiliser l'adresse et le
-programmes affectera automatiquement un préfixe XS pour vous</p>
+Dans les outils JMRI, vous pouvez pr&#233;fixer l'adresse avec XS pour dire le syst&#232;me
+Capteur est accessible via un syst&#232;me bas&#233; XPressNet. Si vous n'avez seulement qu'un
+syst&#232;me bas&#233; XPressNet  configur&#233;, vous pouvez simplement utiliser l'adresse et le
+programmes affectera automatiquement un pr&#233;fixe XS pour vous</p>
 <hr>
 Paul Bender<BR>
 paul.bender@acm.org

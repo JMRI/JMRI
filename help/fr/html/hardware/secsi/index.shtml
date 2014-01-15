@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008/02/16 18:17:54 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<!-- $Id: index.shtml 22697 2013-02-01 12:36:41Z jacobsen $ -->
+<!-- UpDated  by Blorec Hervé 2013-09-19-->
 <title>JMRI: Connecting to a TracTronics SECSI System</title>
 
 <!-- Style -->
@@ -25,11 +25,11 @@
 Connexion à un système TracTronics SECSI
 </h2>
 
-JMRI peut se connecter à un système de nœuds  
+JMRI peut se connecter à un système de noeuds  
 <a href="">TracTronics SECSI</a>.
     
 <p>
-La lettre système est "V", ainsi par exemple le premier capteur sur le nœud 5 serait VS5001.
+La lettre système est "V", ainsi par exemple le premier capteur sur le noeud 5 serait VS5001.
 
 <!--#include virtual="/Footer" -->
 </body>

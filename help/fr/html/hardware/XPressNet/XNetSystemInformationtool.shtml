@@ -2,12 +2,12 @@
 <html lang="fr">
 <html>
 <head>
-<!-- $Id: XNetSystemInformationtool.shtml,v 1.1 2008/01/13 06:47:34 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<!-- $Id: XNetSystemInformationtool.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-20-->
 <title>The JMRI XPressNet System Information Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,27 +23,27 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2>L'outil JMRI XPressNet Système d'information </H2>
-<img src = "images / XPressNetSystemInfo.jpg" alt = "Système XPressNet
+<H2>L'outil JMRI XPressNet Syst&#232;me d'information </H2>
+<img src = "images/XPressNetSystemInfo.jpg" alt = "Syst&#232;me XPressNet
 Image Information Tool ">
 <P>
-L'outil XPressNet Système d'information est utilisée pour déterminer quel matériel
-est connecté au système.
+L'outil XPressNet Syst&#232;me d'information est utilis&#233;e pour d&#233;terminer quel mat&#233;riel
+est connect&#233; au syst&#232;me.
 <P>
-Les deux premières lignes indiquent le type de centrale de commande et les version des logiciels
-qui sont connecté à travers votre ordinateur.
+Les deux premi&#232;res lignes indiquent le type de centrale de commande et les version des logiciels
+qui sont connect&#233; &#224; travers votre ordinateur.
 Cette information est lu dans le cadre du processus de configuration automatique lorsque
-JMRI débute la première fois, mais peut être relu à l'aide du bouton «Get System Info" (Obtenir Infos Système).
+JMRI d&#233;bute la premi&#232;re fois, mais peut &#234;tre relu &#224; l'aide du bouton "Get System Info" (Obtenir Infos Syst&#232;me).
 <P>
-Après la lecture de l'interface de ligne, la version du matériel et des logiciels d'
-Interface ordinateur est affichée. Ces derniers sont obtenus par le "Get System
-Info" (Obtenir Infos Système).
+Apr&#232;s la lecture de l'interface de ligne, la version du mat&#233;riel et des logiciels d'
+Interface ordinateur est affich&#233;e. Ces derniers sont obtenus par le "Get System
+Info" (Obtenir Infos Syst&#232;me).
 <P>
-L'image sur cette page montre les résultats obtenus en appuyant sur le bouton "Get
-System Info "avec une version du logiciel 2 LI101F connectée à un Atlas
+L'image sur cette page montre les r&#233;sultats obtenus en appuyant sur le bouton "Get
+System Info "avec une version du logiciel 2 LI101F connect&#233;e &#224; un Atlas
 Commander avec le logiciel 3.2.
 <P>
-Le bouton "Fermer" va fermer l'écran.
+Le bouton "Fermer" va fermer l'&#233;cran.
 <hr>
 Paul Bender <BR>
 paul.bender @ acm.org

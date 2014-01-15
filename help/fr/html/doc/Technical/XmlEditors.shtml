@@ -1,18 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlEditors.shtml,v 1.5 2010/09/06 18:52:13 matthewharris Exp $ -->
-
- <!--Translated by Hervé Blorec le 2011/9/21-->
+<!--  $Id: XmlEditors.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec  2013-09-09-->
 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: XML Editors
-    </TITLE>
+   </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml editors">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,56 +27,56 @@
 <H1>JMRI: Editeurs XML</H1>
 
 JMRI utilise XML pour un certain nombre d'objectifs:
-de tenir décodeur définitions, pour son
-<a href="XmlPersistance.shtml"> système de persistance </a>
+de tenir d&#233;codeur d&#233;finitions, pour son
+<a href="XmlPersistance.shtml"> syst&#232;me de persistance</a>
 pour la configuration et panneau d'information,
-et de créer des parties du site web à partir d'autres fichiers.
+et de cr&#233;er des parties du site web &#224; partir d'autres fichiers.
 <p>
-XML est un format texte, et vous pouvez l'éditer avec
-un éditeur de texte facile (bien que vous pourriez avoir des difficultés
+XML est un format texte, et vous pouvez l'&#233;diter avec
+un &#233;diteur de texte facile (bien que vous pourriez avoir des difficult&#233;s
 avec traitement de texte qui insistent sur le reformatage du contenu).
 <p>
-Pourtant, à l'aide d'un éditeur de "XML au courant » peut rendre les choses
-plus facile. Les éditeurs peuvent vérifier la syntaxe que vous travaillez,vous donnez
-des conseils utiles, et fournir des outils d'édition plus puissants.
+Pourtant, &#224; l'aide d'un &#233;diteur de "XML averti " peut rendre les choses
+plus facile. Les &#233;diteurs peuvent v&#233;rifier la syntaxe que vous travaillez,vous donnez
+des conseils utiles, et fournir des outils d'&#233;dition plus puissants.
 
 <p>
-Cette page donne la liste des éditeurs XML qui ont été mentionnés
+Cette page donne la liste des &#233;diteurs XML qui ont &#233;t&#233; mentionn&#233;s
 sur le
-<a href="http://groups.yahoo.com/group/jmriusers/">  groupe de discussion des utilisateurs JMRI </a>.
+<a href="http://groups.yahoo.com/group/jmriusers/"> groupe de discussion des utilisateurs JMRI</a>.
 
 <p>
-Pour plus d'informations sur XML lui-même, s'il vous plaît voir notre
-<a href="../../apps/DecoderPro/IntroXML.shtml"> page d'introduction </a>..
+Pour plus d'informations sur XML lui-m&#234;me, s'il vous pla&#238;t voir notre
+<a href="../../apps/DecoderPro/IntroXML.shtml"> page d'introduction</a>..
 
-<h2>Éditeurs Libres</h2>
+<h2>&#233;diteurs Libres</h2>
 <dl>
 <dt> Crimson Editor
-<dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/ </a>
+<dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/</a>
 
 <dt> Editra
-<dd> <a href="http://editra.org/"> http://editra.org/ </a>
+<dd> <a href="http://editra.org/"> http://editra.org/</a>
 
 <dt> Edxor
-<dd> <a href="http://www.snapfiles.com/get/edxor.html"> http://www.snapfiles.com/get/edxor.html </a>
+<dd> <a href="http://www.snapfiles.com/get/edxor.html"> http://www.snapfiles.com/get/edxor.html</a>
 
 jEdit <dt>
-<dd> <a href="http://www.jedit.org/"> http://www.jedit.org/ </a>
+<dd> <a href="http://www.jedit.org/"> http://www.jedit.org/</a>
 
 Komodo Edit <dt>
-<dd> <a href="http://www.openkomodo.com/"> http://www.openkomodo.com/ </a>
+<dd> <a href="http://www.openkomodo.com/"> http://www.openkomodo.com/</a>
 
 <dt> LopeEdit
-<dd> <a href="http://www.lopesoft.com/en/index.html"> http://www.lopesoft.com/en/index.html </a>
+<dd> <a href="http://www.lopesoft.com/en/index.html"> http://www.lopesoft.com/en/index.html</a>
 
 <dt> Notepad + +
 <dd> <a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://notepad-plus-plus.org/</a>
 
 <dt> Marker XML
-<dd> <a href="http://symbolclick.com/"> http://symbolclick.com/ </a>
+<dd> <a href="http://symbolclick.com/"> http://symbolclick.com/</a>
 
 <dt> PSPad
-<dd> <a href="http://www.pspad.com/"> http://www.pspad.com/ </a>
+<dd> <a href="http://www.pspad.com/"> http://www.pspad.com/</a>
 </dl>
 
 
@@ -95,22 +94,22 @@ Komodo Edit <dt>
 </dl>
 
 
-http://www.microsoft.com/downloads
-<h2>Non Recommandé</h2>
 
-Les outils suivants ont été rapportés pour ne  pas bien fonctionner avec JMRI.
+<h2>Non Recommand&#233;</h2>
+
+Les outils suivants ont &#233;t&#233; rapport&#233;s pour ne  pas bien fonctionner avec JMRI.
 
 <dl>
 
 <dt>XML Notepad 2007
-<dd> <a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en"> http://www.microsoft.com/download/ details.aspx? familyid = 72d6aa49-787d-4118-ba5f-4f30fe913628 & displaylang = fr </a>
+<dd> <a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en"> http://www.microsoft.com/download/ details.aspx? familyid = 72d6aa49-787d-4118-ba5f-4f30fe913628 & displaylang = fr</a>
 <p>
-Plusieurs utilisateurs ont signalé des problèmes avec XML Notepad 2007 l'écriture de fichiers qui ne peuvent plus
-être lus par JMRI. Cela semble être un problème avec son format de sortie UDF.
+Plusieurs utilisateurs ont signal&#233; des probl&#232;mes avec XML Notepad 2007 l'&#233;criture de fichiers qui ne peuvent plus
+&#234;tre lus par JMRI. Cela semble &#234;tre un probl&#232;me avec son format de sortie UDF.
 </dl>
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>

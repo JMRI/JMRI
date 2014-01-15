@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-22-->
+<!-- Updated by Blorec Hervé  2013-10-05-->
 
-<!-- $Id: Routes.shtml,v 1.2 2008/03/09 20:27:29 jacobsen Exp $ -->
+<!--  $Id: Routes.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <html lang="fr">
 <head>
   <TITLE>
@@ -37,27 +37,27 @@
 <h3>Que sont les Itinéraires? </H3>
 
 <p> Les Itinéraires sont des collections d'appareils de voie et/ou de capteurs dont les états peuvent être
- fixés tous à la fois. Aussi, quand un Itinéraire est déclenché, un son peut être joué,
+ détérminés tous à la fois. Aussi, quand un Itinéraire est déclenché, un son peut être joué,
 ou un script peut être exécuté. Par exemple, un Itinéraire peut être mis en place pour effacer tous les
 aiguillages sur une ligne principale avec un ordinateur ou les boutons d'un panneau de contrôle.
 Les Itinéraires peuvent également être mis en place pour contrôler le réglage des ensembles d'
 aiguillages dans les zones de garage ou de triages. Une autre utilisation consiste à fixer la disposition
 des aiguillages à la position par défaut lorsque l'on commence une session de fonctionnement.
-Les Itinéraires JMRI sont similaires aux itinéraires mis en œuvre dans le Digitrax Chief system
+Les Itinéraires JMRI sont similaires aux itinéraires mis en &#339;uvre dans le Digitrax Chief system
 , à l'exception des itinéraires JMRI où vous pouvez mélanger les aiguillages contrôlés par des
 systèmes matériels différents, et peut également mettre des capteurs, jouer un son, ou
 exécuter un script. </p>
 <p> Les option d'un Itinéraire peuvent être contrôlées par un maximum de trois capteurs et/ou par
-un aiguillage de contrôle. Lorsqu'un Itinéraire est créée, ou quand il est lu à partir d'un
-fichier de configuration, l'Itinéraire est «activé», il est mis en place
+un aiguillage de contrôle. Lorsqu'un Itinéraire est créé, ou quand il est lu à partir d'un
+fichier de configuration, l'Itinéraire est "activé", il est mis en place
 pour surveiller automatiquement les changements d'état de ses capteurs de contrôle
 et/ou de l'aiguillage de contrôle. Lorsque les capteurs de contrôle ou l'aiguillage change
-de la manière spécifiée par l'utilisateur, l'Itinéraire est 'set' ('déclenché'); inclus
-les aiguillages et les capteurs inclus sont fixés comme indiqué, et si
+de la manière spécifiée par l'utilisateur, l'Itinéraire est 'set' ('déclenché');
+les aiguillages et les capteurs inclus sont réglés comme indiqué, et si
 spécifié, un son est joué ou un script est exécuté. </p>
-<p> la Table Itinéraire contient une colonne "Activé". Pour un itinéraire 
+<p> le Tableau Itinéraire contient une colonne "Activé". Pour un itinéraire 
 déclenché par ses capteurs de contrôle ou ses aiguillage de contrôle,
-elle doit être «activé», la case dans la colonne "Activé" 
+elle doit être "activé", la case dans la colonne "Activé" 
 doit être cochée. Vous pouvez décocher cette case pour désactiver temporairement un
 itinéraire, c'est à dire l'empêcher de fixer ses aiguillages,
 capteurs, etc quand un capteur de contrôle ou l'aiguillage de contrôle change. </p>
@@ -67,16 +67,16 @@ capteurs, etc quand un capteur de contrôle ou l'aiguillage de contrôle change.
 <p> d'abord s'assurer que le Tableau Aiguillage  contient tous les aiguillages
 impliqués dans les Itinéraires à définir, et que le Tableau Capteur
 contient tous les capteurs nécessaires. Ensuite, sélectionnez <b>Outils--> Tableau Itinéraire> </b>,
-et cliquez sur le bouton <b> Ajouter ...</b> au bas de la table pour
+et cliquez sur le bouton <b> Ajouter ...</b> au bas de le tableau pour
 faire apparaître la fenêtre Ajouter/Modifier l'Itinéraire. </p>
 
 <a name="additinéraire"> <H3> Pour ajouter un nouvel Itinéraire: </H3> </a>
 
 <ol>
-<p> <li> Entrez un nom  système, telles que «IR100' - tout
+<p> <li> Entrez un nom  système, telles que "IR100' - tout
 Nom court peut être utilisé à condition qu'il soit différent du nom système 
 d'autres itinéraires. </p>
-<p> Par convention, les noms systèmes commencent généralement par «IR» pour Internal Route
+<p> Par convention, les noms systèmes commencent généralement par "IR" pour Internal Route
 . </P>
 </Li>
 <p> <li> Entrez un nom utilisateur. Toute chaîne de caractères qui est différente
@@ -122,7 +122,7 @@ déclenche, entrez son nom de fichier dans la zone de texte sur la droite. Le bo
 les informations sur le fichier script. </p>
 </Li>
 <p> <li> Si vous voulez que le réglage de l'Itinéraire soit contrôlé
-par une ou plusieurs capteurs d'entrée , entrez leurs noms (nom système ou nom utilisateur)
+par une ou plusieurs capteurs d'entrée, entrez leurs noms (nom système ou nom utilisateur)
 et sélectionner à quel genre de logique ils obéissent. Les Choix logique sont décrits dans
 <A  HREF="#sensorlogic">détails ci-dessous </a>. </P>
 <P> Lorsque vous enregistrez vos Itinéraires et les restaurez en utilisant un fichier de configuration,
@@ -176,11 +176,11 @@ corriger l'erreur et cliquez sur <b>Ajouter Itinéraire </b> à nouveau. </p> </
  
 <li>Modifier un itinéraire existant peut être démarré suivant l'une des deux façons suivantes:
 <ul>
-<li>Cliquez sur <b> Modifier un Itinéraire </b> dans la Table Itinéraire. </li>
+<li>Cliquez sur <b> Modifier un Itinéraire </b> dans le Tableau Itinéraire. </li>
 <li> Entrez le nom  système de l'Itinéraire à éditer dans la fenêtre 
 Ajouter/Modifier et cliquez sur le bouton <b> Modifier Itinéraire</b> au 
 bas de la fenêtre Ajouter/modifier Itinéraire. Ce doit être le même
-que le nom système indiqué dans la Table Itinéraire. </li>
+que le nom système indiqué dans le Tableau Itinéraire. </li>
 </Ul>
 Le bouton <b> Ajouter Itinéraire</b> et <b> Modifier Itinéraire </b>  dans la fenêtre
 Ajouter/Modifier va changer pour
@@ -206,7 +206,7 @@ modification n'est apportée à l'Itinéraire sélectionné. </li>
 <h3>Pour définir (déclencher) un Itinéraire: </h3>
 
 <p>Les Itinéraires peuvent être "déclenchés" en cliquant sur le bouton <b>Set </b> dans la colonne d'État
- de la Table Itinéraire. Un Itinéraire peut également être réglé par les boutons du tableau de commande.
+ du Tableau Itinéraire. Un Itinéraire peut également être réglé par les boutons du tableau de commande.
 Si les capteurs de ces boutons sont définis comme des capteurs de commande dans les informations de l'Itinéraire
 . Si une aiguillage de contrôle est défini dans les informations de l'Itinéraire, déviant
 ou mettant en direct l'aiguillage depuis votre régulateur physique qui déclenchera également l'Itinéraire.
@@ -252,7 +252,7 @@ capteurs définis passe à l'état actif, l'Itinéraire sera déclenché.
 Cela pourrait par exemple être utilisé pour définir un Itinéraire quand un canton est devenu occupé,
 ou quand un bouton a été poussé.
 <P>
-Une logique plus puissante peut aussi faire des choses comme «définir
+Une logique plus puissante peut aussi faire des choses comme "définir
 Itinéraires pour avoir la position d'un aiguillage qui suive la position d'un
 interrupteur du panneau ". Pour cela, chacun des trois capteurs a un" mode
 associé, qui peut être:
@@ -271,8 +271,8 @@ etc. </dd>
 change, que ce soit d'actif à inactif ou inactif à actif. </dd>
 
 <DT> "Véto actif" </dt> <dd> Si ce capteur est actif, les autres capteurs paramétrés
-"sur actif", "Sur inactif», "Le changement» seront ignorés, et un
- contrôle d'aiguillage réglé "sur Direct", "sur Dévié» ou «sur Changement» sera
+"sur actif", "Sur inactif", "Le changement" seront ignorés, et un
+ contrôle d'aiguillage réglé "sur Direct", "sur Dévié" ou "sur Changement" sera
 également ignoré. Cela a plusieurs utilisations, par exemple pour empêcher de dévier un
 aiguillage sous un train, lorsque le canton est montré occupé. </dd>
 
@@ -288,8 +288,8 @@ Itinéraire soit réalisé. </P>
 
 <a name="turnoutlogic">  <H3> Contrôle d'Itinéraire à partir d'un Aiguillage </H3> </a>
 <p> Le réglage (déclenchement) d'un Itinéraire peut être contrôlé à partir d'un aiguillage.
-Cet aiguillage peut être un aiguillage physique réel, un aiguillage «fantôme» (un numéro d'aiguillage
- DCC sans aiguillage physique correspondant), ou aiguillage «interne». </p>
+Cet aiguillage peut être un aiguillage physique réel, un aiguillage "fantôme" (un numéro d'aiguillage
+ DCC sans aiguillage physique correspondant), ou aiguillage "interne". </p>
 <UL>
 <LI> Si un aiguillage réel est utilisé, l'aiguillage réel va
 recevoir la commande d'activation original, puis l'
@@ -302,7 +302,7 @@ l'aiguillage est fixé à partir de JMRI, et/ou avec certains
 systèmes DCC (Digitrax LocoNet et Lenz XPressNet systèmes), il
  se déclenche quand un opérateur commande à l'aiguillage
  de changer d'état à partir d'un régulateurr de poche.
-<LI> Un aiguillage «fantôme  est une aiguillage DCC qui n'
+<LI> Un aiguillage "fantôme  est une aiguillage DCC qui n'
 existent pas réellement. Pour en utiliser un, il suffit de créer une entrée d'aiguillage
 pour un numéro d'adresse qui n'existe pas sur votre réseau.
 Les opérateurs peuvent sélectionner le numéro de l'aiguillage fantôme
@@ -314,7 +314,7 @@ Les opérateurs peuvent sélectionner le numéro de l'aiguillage fantôme
  logiciel JMRI, il ne correspond pas à une adresse particulière
 sur la réseau, et il ne correspond en particuluer à aucun
 matériel sur le réseau. Le nom  système des aiguillages internes
-commencer par «IT», par exemple «IT201». JMRI sait qu'ils sont 
+commencer par "IT", par exemple "IT201". JMRI sait qu'ils sont 
 distincts du réseau et n'a donc pas à envoyer de commandes au
 matériel connecté lorsque l'un change . Ceux-ci peuvent être utilisés avec des
 Itinéraires demandant une logique compliquée sous-jacente.
@@ -333,9 +333,9 @@ change, que ce soit de direct à partir dévié ou dévié à la position direct
 <DT> "Véto direct" </dt> <dd> Si cette aiguillage est direct, les capteurs mis 
 "Sur Actif", "Sur Inactif" "Sur Changement" seront ignorés. </dd>
 <DT> "Veto dévié" </dt> <dd> Si cette aiguillage est dévié, les capteurs mis en
-"Sur Actif", "Sur Inactif" Le changement» seront ignoré. </dd>
+"Sur Actif", "Sur Inactif" Le changement" seront ignoré. </dd>
 </DL>
-<p> Un seul "véto" aiguillage ou «veto»  capteur peut empêcher l'Itinéraire d'être
+<p> Un seul "véto" aiguillage ou "veto"  capteur peut empêcher l'Itinéraire d'être
 déclenché. Tous les "véto" des capteurs et des "véto" d'aiguillage, s'il y en a
  un, doivent être dans leur état non-véto_et_ au moins l'un des capteurs ou un des aiguillage de
 déclenchement doit voir le Changement approprié dpour que l'Itinéraire soit fixé

@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SprogSlotMonFrame.shtml,v 1.2 2008/11/01 17:33:02 jacobsen Exp $ -->
-<html lang="en">
+<!-- $Id: SprogSlotMonFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
+<html lang="fr">
 <head>
  <TITLE>
       JMRI: Monitor SPROG Slots
@@ -12,7 +13,7 @@
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="stylesheet" type="$Id: SprogSlotMonFrame.shtml 17977 2011-07-18 17:23:46Z zoo $text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -23,7 +24,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Monitor SPROG Slots
+<H1>Moniteur d'emplacements SPROG
 </H1>
     
 This is the help/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame help page

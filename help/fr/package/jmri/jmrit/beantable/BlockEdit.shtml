@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: BlockTable.shtml 22591 2013-01-24 05:53:00Z jacobsen $ -->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Block Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Memory Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Edit Block Window</h1>
+This edit window allows you to edit the following areas.<br>
+<a href="#basic">Basic</a><br>
+<a href="#sensor">Sensor</a><br>
+<a href="#reporter">Reporter</a><br>
+<a href="#properties">Properties</a>
+
+<a name="basic"><h2>Basic</h2></a>
+This provides basic information on the details of the block
+<ul>
+<li><p><b>System Name</b> - The system name of the Block. There is no functional 
+requirement for a type letter in the System Name of a Block, but by convention we use 
+'B' for 'Block'. The default implementation is not system-specific, so a system letter 
+of 'I' is appropriate. This leads to system names like "IB201".</p></li> 
+
+<li><p><b>User Name</b> - The user name of the Block. The user name of a Block created
+here may be set to any text.  The user name for a Block created by Layout Editor is 
+set by Layout Editor and should not be changed.</p></li>
+
+<li><p><b>Comment</b> - You may enter any text in this field that will help you 
+distinguish this Block from other Blocks, or provide useful notes about its use.</p></li></ul>
+
+<a name="sensor"><h2>Sensor</h2></a>
+This tabs allows you to assign a sensor to the block to change the occupancy state, it
+also allows certain information about the sensor to be changed.
+
+<ul><li><p><b>Sensor</b>
+Select the sensor from the drop down list that will be assoicated with this block.</li>
+
+You can edit the sensor debounce options from this tab, setting the Sensor Debounce 
+helps to prevent false triggers of a sensor being passed into the system and triggering 
+other events in the system.<br>
+Such false triggers could be due to a dirty piece of track or electrical interferance.
+<li><b>Use Global Debounce Values</b> check box, allows you to select if the sensor will
+ use the default sensor debounce values if configured.<br></li>
+<li><b>Sensor Inactive Debounce</b> and <b>Sensor Active Debounce</b> allow you to 
+specify the amount of time in milliSeconds that the system waits before registering 
+the state change of a sensor.</li></ul>
+
+<a name="reporter"><h2>Reporter</h2></a>
+<ul><li><p><b>Reporter</b>
+The Reporter assigned to this block. See the Reporter table. Puts the Reporter Value into 
+the Block value
+
+<li><p><b>Use Current?</b>
+If we consider the scenario whereby we want track a train around the layout, typically this 
+is achieved via the use of Memory objects associated with Blocks. Until the train is known, we 
+have nothing to track. Typically, we can manually type in the train ID into a panel and then 
+this is tracked around the layout based on block occupancy. If, however, we have an attached 
+device that can provide us with the train ID, such as an RFID reader, we no longer need to 
+manually type the train ID in - the reader does this for us. In essence, the reader is little 
+more than an 'intelligent' sensor - not only can it sense that 'something' is there, it can 
+tell us which something it is.
+Now to the implementation.
+A Sensor is purely ACTIVE or INACTIVE - i.e. something is there or it isn't.
+A Reporter, however, can tell us one of the following:
+<ol>
+<li>'Hey, I'm seeing something right now - this is it'
+<li>'Hmm, I'm not seeing anything right now'
+<li>'Hey, I saw something a while back - this was it'
+<li>'Hmm, I've not seen anything yet'
+</ol>
+The first two are from the CurrentReport; the last two from LastReport.
+At start-up (assuming there is nothing within the range of the reader), both 2 and 4 are the initial 
+state. Once something is seen, both 1 and 3 return the same result. 
+When the something is 'out-of-range' 2 and 3 are then active.
+With 'Use Current?' selected the Block value will switch between 1 and 2, 
+whereas with 'Use Current?' unselected the Block value will switch between 3 and 4.</li></ul>
+
+<a name="properties"><h2>Properties</h2></a>
+
+<ul><li><p><b>Length</b> (optional) - Displays the length of the Block.  Optionally, you may 
+enter the length of the Block here.  The length is used for automatic running of trains. 
+If '0.0' is displayed, the length has not been entered. The entered length should be the 
+actual length of the Block on the model railroad layout. Length is entered and displayed 
+in either inches or centimeters, depending on which unit is requested at the bottom of 
+the Block Table.</p></li>
+
+<li><p><b>Curvature</b> (optional) - Displays the curvature selected for the track in 
+the Block. Curvature is used for automatic running of trains, and need not be entered 
+if trains will not be run automatically. Curvature, if present, indicates to the computer 
+that it should slow the train as it runs through the Block. If <b>None</b> or 
+<b>Gradual</b> are selected, an automatic train will proceed at normal speed. <b>Tight</b> 
+should be selected if the train should slow down some; <b>Severe </b>should be selected 
+if the train should slow by a maximum amount. If the Block has variable curvature, your 
+selection should be made according to the most limiting part of the Block.</p></li>
+
+<li><p><b>Speed</b>
+The speed is used with certain automation tools and logic, to help
+determine the speed at which a train can be set through the block.
+It is also used by the signal mast logic for determining which aspect should
+be displayed in a signal path.
+<P>In the drop down list, you are presented a set of named fixed speeds that
+have been predefined in the signalSpeed.xml file, in addition to a global option.  
+<br>It is also possible to enter in a numerical value to represent a speed.
+<p>The global value is set via the <b>Speeds</b> menu option.</p></li>
+
+<li><p><b>Permissive</b>
+The permissive option is used to identify blocks that can be entered while the 
+block is occupied.  It is used with certain automation tools and logic, to help
+determine if a train can enter an occupied block and what aspect should be displayed
+on a signal mast.</li></ul>
+
+</ul>
+
+<p>
+<a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
+<p>
+<a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
+<br>
+
+
+Located at package/jmri/jmrt/beantable/BlockTable
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

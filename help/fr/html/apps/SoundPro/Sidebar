@@ -2,11 +2,13 @@
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- UpDated  by Blorec Herv&#233; le 2013-9-02--> 
+
 <dl class=toc>
 
 <dt><h3>SoundPro Info</h3></dt><DD><UL>
-<LI><a href="../../tools/Audio.shtml">Détail du Paquet Audio</A>
+<LI><a href="../../tools/Audio.shtml">D&#233;tail du Paquet Audio</A>
 <LI><a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Table Audio</A>
 </UL>
 
@@ -15,13 +17,13 @@
 
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
 <LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
-<LI><A HREF="../../tools/Routes.shtml">Itinéraires</a>
-<LI><A HREF="../../tools/fastclock/index.shtml">Horloge Rapide</a>
-<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">Rétrosignalisation Aiguillage</a>
+<LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
+<LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
+<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;trosignalisation Aiguillage</a>
 </UL>
 
 </dl>
-<a href="/donations.shtml">
+<a href="/donations.shtml">é
  <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
 </a> 
 

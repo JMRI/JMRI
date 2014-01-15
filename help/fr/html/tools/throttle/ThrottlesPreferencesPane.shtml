@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- UpDated by Blorec Herv&#233;  2013-10-04-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 
-<meta content="text/html; charset=utf-8" http-equiv="content-type" ><title>Throttles Preferences Pane</title>
+<meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttles Preferences Pane</title>
 
 <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 <meta name="Description" content="Throttle documentation for JMRI project" >
@@ -12,7 +12,7 @@
 <meta name="Robots" content="Index, Follow" >
 <meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
@@ -23,7 +23,7 @@
 <div id="mainContent">
 
 
-<h1>Volet des préférences Régulateurs</h1>
+<h1>Volet des pr&#233;f&#233;rences R&#233;gulateurs</h1>
 
 
 
@@ -31,104 +31,104 @@
 
 <br >
 
-Pour une meilleure expérience, le choix recommandé est cellui illustrée ici. <br>
+Pour une meilleure exp&#233;rience, le choix recommand&#233; est cellui illustr&#233;e ici. <br>
 <br>
-Ce panneau de préférences est accessible à partir des sous-menus Régulateurs <a href="ToolsMenuThrottleEntry.shtml"> dans les sous-menus Régulateur dans l'entrée du menu Outils </a>. <br>
+Ce panneau de pr&#233;f&#233;rences est accessible &#224; partir des  <a href="ToolsMenuThrottleEntry.shtml"> des sous-menus R&#233;gulateur dans l'entr&#233;e du menu Outils </a>. <br>
 
 <br>
 
-Il est recommandé de fermer toutes les fenêtres Régulateurs avant d'appliquer une nouvel
-ensemble de préférences, puis rouvrez les une fois les nouveaux paramètres 
-appliquée ou sauvés. <br>d'entrée 
+Il est recommand&#233; de fermer toutes les fen&#234;tres R&#233;gulateurs avant d'appliquer une nouvel
+ensemble de pr&#233;f&#233;rences, puis rouvrez les une fois les nouveaux param&#232;tres 
+appliqu&#233;e ou sauv&#233;s. <br
 <ul>
    <li>
 
-Le bouton Annuler ferme la fenêtre et laisse les paramètres actuels des régulateurs comme ils sont. </Li>
-   <li>d'entrée 
-
-Le bouton Appliquer appliquera l'ensemble actuel des préférences et la
-fenêtre des préférences  d'entrée restera ouverte. </li>
+Le bouton Annuler ferme la fen&#234;tre et laisse les param&#232;tres actuels des r&#233;gulateurs comme ils sont. </Li>
    <li>
-d'entrée 
-Le bouton Enregistrer enregistrera vos préférences actuelles, et fermerera les fenêtres Préférences, les réglages seront
-chargés automatiquement au prochain démarrage du JMRI. </li>
+
+Le bouton Appliquer appliquera l'ensemble actuel des pr&#233;f&#233;rences et la
+fen&#234;tre des pr&#233;f&#233;rences restera ouverte. </li>
+   <li>
+
+Le bouton Enregistrer enregistrera vos pr&#233;f&#233;rences actuelles, et fermerera les fen&#234;tres Pr&#233;f&#233;rences, les r&#233;glages seront
+charg&#233;s automatiquement au prochain d&#233;marrage du JMRI. </li>
 </ ul>
 
 
- <h2>Utilisez  Régulateur étendu </h2>
+ <h2>Utilisez le R&#233;gulateur &#233;tendu </h2>
 
-Ce réglage active/désactive toutes les fonctionnalités étendues des régulateurs. <br>
+Ce r&#233;glage activera/d&#233;sactivera toutes les fonctionnalit&#233;s &#233;tendues des r&#233;gulateurs. <br>
 
 <br>
 
-<h2>Réglez Contrôles transparents </h2>
+<h2>R&#233;glez les Commandes transparentes </h2>
 
-Mettra le fond de la fenêtre interne du régulateur transparente ou semi-
-transparente. <br>
+Mettra le fond de la fen&#234;tre interne du r&#233;gulateur en transparence ou semi-
+transparence. <br>
 
 <br >
 
-<span style="font-style: italic;"> Cette fonctionnalité est appelée à bien travailler
- sur OS X, Lin d'entrée ux et Windows, mais pour être travaillé, varie totalement
-selon l'interface actuelle Java  (modifiable dans préférences principales JMRI 
+<span style="font-style: italic;"> Cette fonctionnalit&#233; est appel&#233;e &#224; bien travailler
+ sur OS X, mais Linux et Windows peuvent aussi fonctionner, cela varie compl&#232;tement
+suivant l'interface actuelle Java  (modifiable dans pr&#233;f&#233;rences principales JMRI 
 ) </span> <br
 
 <br>
 
- <h2> Utiliser l'image du fichier comme fond </h2>
+ <h2> Utiliser l'image de la Liste comme fond </h2>
 
-Quand une liste est sélectionnée, l'image définie dans son <a href="RostersMediaPane.shtml"> Panneau des médias </a> sera
-chargée comme un fond pour la fenêtre de commande du régulateur. <br>
+Quand une liste est s&#233;lectionn&#233;e, l'image d&#233;finie dans son <a href="RostersMediaPane.shtml"> Panneau des m&#233;dias </a> sera
+charg&#233;e comme un fond pour la fen&#234;tre de commande du r&#233;gulateur. <br>
 <br>
-Lorsque cette option est activée et l'adresse sélectionnée est 0 ou 3, une image par défaut sera chargée. <br>
+Lorsque cette option est activ&#233;e et l'adresse s&#233;lectionn&#233;e est 0 ou 3, une image par d&#233;faut sera charg&#233;e. <br>
 <br> 
- <h2>Redimensionnez la fenêtre à la taille de l'image </h2>
+ <h2>Redimensionnez la fen&#234;tre &#224; la taille de l'image </h2>
 
-Quand une image de fond est chargée pour les régulateurd'entrée s actuels, va forcer la taille de Fenêtre du Régulateur à celle de cette image. <br>
+Quand une image de fond est charg&#233;e pour le r&#233;gulateur actuel, cela va forcer la taille de la Fen&#234;tre du R&#233;gulateur &#224; celle de cette image. <br>
 
 <br>
   
-<h2>Recherche liste infos quand adresse indiquée </h2>
-Quand une adresse est inscrite  dans<a href="BasicThrottleWindow.shtml"> l'AdressPanel </a>, la base de données JMRI 
-recherchera  une entrée de registre correspondante (et sera donc des options de déclenchements
-décrits ci-dessus et ci-dessous s'ils sont activés). <br>
+<h2>Rechercher les infos liste  quand l'adresse est indiqu&#233;e </h2>
+Quand une adresse est inscrite  dans<a href="BasicThrottleWindow.shtml"> l'AdressPanel </a>, la base de donn&#233;es JMRI 
+recherchera  une entr&#233;e de registre correspondante (et sera donc des options de d&#233;clenchements
+d&#233;crites ci-dessus et ci-dessous si elles sont activ&#233;s). <br>
 
 <br>
 
-<h2> Chargement automatique de la fenêtre de préférences régulateurs lorsqu'un lien est trouvé avec la Liste </h2>
+<h2> Chargement automatique de la fen&#234;tre de pr&#233;f&#233;rences r&#233;gulateurs lorsqu'un lien est trouv&#233; avec la Liste </h2>
 
-Quand une liste est sélectionnée, si un fichier de définition régulateur correspondant existe,
+Quand une liste est s&#233;lectionn&#233;e, si un fichier de d&#233;finition r&#233;gulateur correspondant existe,
 JMRI le chargera automatiquement. <br>
 <br>
-Ces fichiers sont stockés dans &lt;JMRI
-Preference Folder&gt;/Throttle/XYZ.xml où XYZ dans l'ID de la Liste. <br>
+Ces fichiers sont stock&#233;s dans &lt;le R&#233;pertoire Preference JMRI
+&gt;/Throttle/XYZ.xml o&#249; XYZ est dans l'ID de la Liste. <br>
 Utiliser
-le<a href="ThrottleWindowMenus.shtml"> entrée  menu Enregistrer du
-Menu Fichier </a> dans une fenêtre régulateur va créer ou mettre à jour ces fichiers. <br>
+Le<a href="ThrottleWindowMenus.shtml"> l'entr&#233;e Enregistrer du
+Menu Fichier </a> dans une fen&#234;tre r&#233;gulateur va cr&#233;er ou mettre &#224; jour ces fichiers. <br>
 
 <br>
-<h2> Ignorer position du cadre Régulateur </h2>
-Pour les vieux fichiers régulateurs qui contiennent des position de Fenêtre Régulateur en eux. Faites comme
-décrit. <br>
+<h2> Ignorer position du cadre R&#233;gulateur </h2>
+Pour les vieux fichiers r&#233;gulateurs qui contiennent des position de Fen&#234;tre R&#233;gulateur en eux. Faites comme
+d&#233;crit. <br>
 <br>
-<span style="font-style: italic;"> Remarque: les positions des Fenêtre Régulateurs sont maintenant sauvegardées dans le <span style="font-weight: bold;"> mise en page Régulateur</span>Fichiers de sauvegarde (pas dans n'importe quels fichiers de sauvegardes Régulateurs ) </span> <br
+<span style="font-style: italic;"> Remarque: les positions des Fen&#234;tre R&#233;gulateurs sont maintenant sauvegard&#233;es dans le Fichier de Sauvegar<span style="font-weight: bold;"> Configuration R&#233;gulateur</span> (pas dans n'importe quels fichiers de sauvegardes R&#233;gulateurs ) </span> <br
 
 <br> 
 
-<h2> Masquage indéfini de la Liste Boutons  </h2>
+<h2>Masquage ind&#233;fini de la Liste Boutons  </h2>
 
-Quand une liste est sélectionnée, les boutons des panneaux d'adresse sont initialisés comme
-définis dans le panneau de Fonctions dans DecoderPro, si cette option est activée,
-les boutons ne sont pas définis (sans texte) au PanelPro seront automatiquement cachés dans le
-Panneau Fonction <a href="BasicThrottleWindow.shtml">Panneau Fonction </a>. <br>
+Quand une liste est s&#233;lectionn&#233;e, les boutons des panneaux d'adresse sont initialis&#233;s comme
+d&#233;finis dans le panneau de Fonctions dans DecoderPro, si cette option est activ&#233;e,
+les boutons non d&#233;finis (sans texte) dans PanelPro seront automatiquement cach&#233;s dans le
+<a href="BasicThrottleWindow.shtml">Panneau Fonction </a>. <br>
 
 <br>  
-<span style="font-style: italic;"> Remarque: vous pouvez réinitialiser la visibilité des Fonctions Boutons dans une fenêtre régulateur en allant dans Menu Afficher <a href="ThrottleWindowMenus.shtml"> et cliquer sur "afficher tous les boutons de fonction" </a>. </span> <br>
+<span style="font-style: italic;"> Remarque: vous pouvez r&#233;initialiser la visibilit&#233; des boutons de Fonctions dans une fen&#234;tre r&#233;gulateur en allant dans le Menu Afficher <a href="ThrottleWindowMenus.shtml"> et cliquer sur "afficher tous les boutons de fonction" </a>. </span> <br>
 
 <h2>Activer la barre d'outils papillon </h2>
- d'entrée  
-Cette option activera une<a  href="ThrottleToolBar.shtml">  barre d'outils qui
-apparaîtra dans toutes les Fenêtres Régulateurs </a>.
+
+Cette option activera une <a  href="ThrottleToolBar.shtml"> barre d'outils qui
+appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
 
 
 

@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: index.shtml,v 1.5 2008/06/30 18:13:40 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-18-->
 <title>JMRI: RailDriver Throttle</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,15 +26,15 @@
 
 
 <h2> 
-JMRI: Régulateur RailDriver
+JMRI: R&#233;gulateur RailDriver
 </h2>
 
 <img src="../../../images/bangdesk.gif" align="left">
 Cette page est en construction.
-Le soutien RailDriver JMRI a d'abord été disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
-Il évolue rapidement, alors revenez ici ou sur le
-<a href="http://groups.yahoo.com/group/jmriusers/"> jmriusers mailing liste </a>
+Le soutien RailDriver JMRI a d'abord &#233;t&#233; disponible en
+<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7</a>.
+Il &#233;volue rapidement, alors revenez ici ou sur le
+<a href="http://groups.yahoo.com/group/jmriusers/"> jmriusers mailing liste</a>
 pour des changements.
 
 <br>
@@ -44,16 +44,16 @@ pour des changements.
 
 <p>
 JMRI vous permet d'utiliser un
-<a href="http://www.raildriver.com/"> RailDriver </a> à partir de
-<a href="http://www.piengineering.com/"> PI Engineering </a>
-comme un accélérateur pour les locomotives avec votre système DCC.
+<a href="http://www.raildriver.com/"> RailDriver</a> &#224; partir de
+<a href="http://www.piengineering.com/"> PI Engineering</a>
+comme un r&#233;gulateur pour les locomotives avec votre syst&#232;me DCC.
     
 <p>
-Tout d'abord, connectez votre ordinateur à votre système DCC et faire en sorte que
+Tout d'abord, connectez votre ordinateur &#224; votre syst&#232;me DCC et faire en sorte que
 les 
-<a href="../../tools/throttle/ThrottleMain.shtml"> Régulateurs JMRI </a>,
+<a href="../../tools/throttle/ThrottleMain.shtml"> R&#233;gulateurs JMRI</a>,
 fonctionnent bien. (Sauf si vous faites cela d'abord, le
-débogage des problèmes possibles reliant les RailDriver est très difficile)
+d&#233;bogage des probl&#232;mes possibles &#224; la connexion des RailDriver est tr&#232;s difficile)
 
 <p>
 Ensuite, branchez le RailDriver dans un port USB sur votre ordinateur pendant que
@@ -61,60 +61,58 @@ votre application JMRI (PanelPro ou DecoderPro) ne fonctionne pas..
 
 <p>
 Enfin, lancez le programme JMRI
-et sélectionnez "Régulateurs, lancez le programme JMRI
-et sélectionnez "Throttle RailDriver" dans le menu Debug.
-(Il est temporairement là pendant que nous développons le support)
-Une fenêtre d'accélérateur avec le titre "RailDriver" devrait s'ouvrir.
+et s&#233;lectionnez "Throttle RailDriver" dans le menu Debug.
+(Il est temporairement l&#224; pendant que nous d&#233;veloppons le support)
+Une fen&#234;tre r&#233;gulateur avec le titre "RailDriver" devrait s'ouvrir.
 <br>
-<img src="../../tools/throttle/images/jmri012.jpg" alt="throttle fenêtre" align="right" height="188" width="154">
+<img src="../../tools/throttle/images/jmri012.jpg" alt="throttle fen&#234;tre" align="right" height="188" width="154">
 
 <p>
 Tapez l'adresse de votre locomotive (adresse DCC) dans la zone adresse,
 tout comme un
-<a href="../../tools/throttle/ThrottleMain.shtml"> régulateur JMRI </a>,
+<a href="../../tools/throttle/ThrottleMain.shtml"> r&#233;gulateur JMRI</a>,
 et cliquez sur "Set".
-Ceci relie les deux  fenêtre régulateur et la console RailDriver à travers le système DCC
-pour le décodeur. Vous devriez maintenant être en mesure de conduire la locomotive depuis le
+Ceci relie les deux  fen&#234;tre r&#233;gulateur et la console RailDriver &#224; travers le syst&#232;me DCC
+pour le d&#233;codeur. Vous devriez maintenant &#234;tre en mesure de conduire la locomotive depuis le
 RailDriver.
 
 <p>
-La rangée supérieure de boutons sur le bord avant  contrôle les fonctions du décodeur.
-Le plus à gauche (1 dans la figure) est F0, habituellement le phare.
-Le bouton à côté de la droite (2 dans la figure) est F1, etc
-Lorsque vous appuyez sur le bouton, la bascule de fonction: de OFF à ON ou sur OFF.
-Essayez d'appuyer sur un, et de voir si les touches de fonction du régulateur sur l'écran et les
-fonctions dans la locomotive répondes. 
+La rang&#233;e sup&#233;rieure de boutons sur le bord avant  contr&#244;le les fonctions du d&#233;codeur.
+Le plus &#224; gauche (1 dans la figure) est F0, habituellement le phare.
+Le bouton &#224; c&#244;t&#233; de la droite (2 dans la figure) est F1, etc
+Lorsque vous appuyez sur le bouton, la fonction bascule: de Off &#224; On ou de On sur Off.
+Essayez d'appuyer sur un, et de voir si les touches de fonction du r&#233;gulateur sur l'&#233;cran et les
+fonctions dans la locomotive r&#233;pondent. 
 <p>
-Le bouton  «Bell» (37 sur la figure) La «Bell» pilote F3 (cela peut être changé par l'édition d'un fichier dans le
-la distribution JMRI si votre système DCC utilise quelque chose de différent).
-C'est momentanée, alors F3 est On lorsque le bouton est pressé, et Off quand il est 
-libéré.
+Le bouton  "Bell" (37 sur la figure) pilote F3 (cela peut &#234;tre chang&#233; par la modification d'un fichier dans
+la distribution JMRI si votre syst&#232;me DCC utilise quelque chose de diff&#233;rent).
+C'est momentan&#233;e, alors F3 est On lorsque le bouton est press&#233;, et Off quand il est 
+lib&#233;r&#233;.
 
 <p>
-Le levier de la corne (38 sur la figure) opère sur F2.
-Poussez vers l'avant ou revenir à leur tour sur F2, et la libération ou le centre de manière à désactiver F2.
+Le levier de la corne (38 sur la figure) op&#232;re sur F2.
+Poussez vers l'avant ou revenir pour mettre F2 sur On, et lib&#233;rez ou centrez de mani&#232;re &#224; mettre F2 sur Off.
 
 <p>
-La poignée de gauche la plus grande, étiquetée Avant N Arrière N" (39 sur la figure)
-sert à contrôler la direction.
-Depuis (la plupart) des décodeurs DCC n'ont pas une position neutre,
-la position N n'est pas utilisée.
+La poign&#233;e de gauche la plus grande, &#233;tiquet&#233;e "Avant N Arri&#232;re" (39 sur la figure)
+sert &#224; contr&#244;ler la direction.
+Depuis (la plupart) que les d&#233;codeurs DCC n'ont pas de position neutre,
+la position N n'est pas utilis&#233;e.
 
 <p>
-Le levier suivant, intitulée «Régulateur frein Dyn" (40 sur la figure),
-contrôle le réglage de la vitesse du décodeur
- Pour l'instant, la vitesse zéro est (grossièrement) le centre, et des vitesses supérieures
-sont lorsque le levier est tiré vers l'arrière.
+Le levier suivant, intitul&#233;e "R&#233;gulateur frein Dyn" (40 sur la figure),
+contr&#244;le le r&#233;glage de la vitesse du d&#233;codeur
+ Pour l'instant, la vitesse z&#233;ro est (grossi&#232;rement) le centre, et les vitesses sup&#233;rieures
+sont lorsque le levier est tir&#233; vers l'arri&#232;re.
 <p>
 
 <p>
-Finalement, nous aimerions faire une simulation plus détaillée disponible
-en connectant le reste des contrôles, et en ajoutant un modèle détaillé de
-les trains en freinage et en accelaration.
+Finalement, nous aimerions faire une simulation plus d&#233;taill&#233;e disponible
+en connectant le reste des commandes, et en ajoutant un mod&#232;le d&#233;taill&#233; de trains en freinage et en acc&#233;laration.
 
 <p>
-Pour des renseignements techniques, s'il vous plaît voir la
-<a href="details.shtml"> page de détails </a>.
+Pour des renseignements techniques, s'il vous pla&#238;t voir la
+<a href="details.shtml"> page de d&#233;tails</a>.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

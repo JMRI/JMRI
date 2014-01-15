@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: showPanelHelp.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<!-- Translated by Herv&#233; Blorec 2013-10-08 -->
+<title>JMRI: showPanel web application</title>
+
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: application web showPanel
+</h1>
+
+<h3>Contexte</h3>
+<p> JMRI <a href="FrameServlet.shtml"> FrameServlet</a> est un outil utile pour &#233;tendre JMRI aux navigateurs en saisissant p&#233;riodiquement une copie d'&#233;cran d'une fen&#234;tre demand&#233;e (fonctionnant sur un serveur JMRI), l'afficher dans le navigateur, et transmission de tout clics de souris clique en retour &#224; la fen&#234;tre JMRI. Malheureusement, il y a quelques
+inconv&#233;nients &#224; cette approche (r&#233;ponse diff&#233;r&#233;e, la charge importante du serveur, pas de mise en valeur des &#233;l&#233;ments actifs, souris "partag&#233;e", etc.).
+</p>
+Avec l'ajout de <a href="PanelServlet.shtml"> PanelServlet JMRI</a>, il est devenu possible pour une application cliente de r&#233;cup&#233;rer les d&#233;tails complets d'un
+panneau, il suffit de recr&#233;er le panneau dans le client. La <a href="XMLIO.shtml"> XMLIOServlet</a> fournit la mise &#224; jour des &#233;l&#233;ments JMRI, et pour le suivi des
+modifications apport&#233;es &#224; ces &#233;l&#233;ments.
+<h3>Nouvelle application web</h3>
+<p> <em> showPanel.html</em></b> est une application web moderne qui dessine les panneaux JMRI actifs sur un &#233;cran du navigateur. Il r&#233;cup&#232;re les d&#233;finitions de panneaux de JMRI
+  via le <a href="PanelServlet.shtml"> PanelServlet</a> et panneau construit c&#244;t&#233; client, y compris les fonctions de clic.
+  Il envoie des changements et &#224; l'&#233;coute des changements touchant des &#233;l&#233;ments du panneau en utilisant le <a href="XMLIO.shtml"> serveur xmlio</a>.</P>
+  <p>Les Liens vers tous les panneaux disponibles sont affich&#233;s sur la page d'accueil du serveur Web JMRI (vous pourriez avoir besoin de le reconstruire dans Prefs pour voir les liens)</p> 
+<p> l'URL de base est "/web/showPanel.html". En l'absence de param&#232;tres, la page liste les liens vers les panneaux disponibles,
+  ou vous pouvez passer un param&#232;trem du format "? name = [type]/[panelname]" pour ouvrir directement le panneau sp&#233;cifi&#233;.
+  Par exemple: http://192.168.0.7:12080/web/showPanel.html?name=Layout/MyPanel "</ p>
+  <p> Cette application n&#233;cessite un navigateur moderne "HTML5" (Chrome, FireFox, Safari, IE9).</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

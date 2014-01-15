@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008/11/04 00:55:12 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Updated by Blorec Herv&#233; 2013-10-05-->
 
 <title>JMRI: USS CTC Tools</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -28,42 +28,42 @@
 JMRI:Outils USS CTC </h2>
 
 
-JMRI contient quelques outils pour aider à l'automatisation des panneaux USS CTT
+JMRI contient quelques outils pour aider &#224; l'automatisation des panneaux USS CTT
 .
-Ceux-ci peuvent être utilisés soit pour les panneaux à base d'écran , ou à
-l'entraînement physique avec un panneau de véritables leviers et des voyants.
+Ceux-ci peuvent &#234;tre utilis&#233;s soit pour les panneaux &#224; base d'&#233;cran , ou &#224;
+piloter un panneau physique avec de v&#233;ritables leviers et des voyants.
 
 <dl>
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml"> Suiveur </a>
 <dd>
-Les esclaves d'un dispositif de sortie d'Aiguillage pour suivre l'état d'un dispositif de capteur d'entrée.
-Cela pourrait, par exemple, faire un aiguillage du réseau suivi par un commutateur du panneau de contrôle relié à un capteur.
+Les esclaves d'un dispositif de sortie d'Aiguillage pour suivre l'&#233;tat d'un dispositif de capteur d'entr&#233;e.
+Cela pourrait, par exemple, &#234;tre un aiguillage du r&#233;seau suivi par un commutateur du panneau de contr&#244;le reli&#233; &#224; un Capteur.
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"> OS Indicateur </a>
 <dd>
-Piloter les voyants d'occupation sur le panneau. Cela prend l'entrée d'un capteur
-pour montrer la section de voie occupée, et aussi éventuellement peut allumer le voyant
-si la section a été débloquée.
+Piloter les voyants d'occupation sur le panneau. Cela prend l'entr&#233;e d'un capteur
+pour montrer la section de voie occup&#233;e, et aussi &#233;ventuellement peut allumer le voyant
+si la section a &#233;t&#233; d&#233;bloqu&#233;e.
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml"> Levier d' Aiguillage </a>
 <dd>
-Contrôle un aiguillage depuis un levier situé sur le panneau, avec les deux
+Contr&#244;le un aiguillage depuis un levier situ&#233; sur le panneau, avec les deux
 voyants. (Pas encore sorti)
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"> levier signal </a>
 <dd>
-Contrôles d'un ensemble de signaux provenant d'un levier situé sur le panneau, avec les trois
+Contr&#244;les d'un ensemble de signaux provenant d'un levier situ&#233; sur le panneau, avec les trois
 voyants. (Pas encore sorti)
 
 <dt>
-Bouton code <a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Bouton code </a>
+<a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Bouton code </a>
 <dd>
-Implémente le bouton de code et une lampe de code. (Pas encore sorti)
+Impl&#233;mente le bouton de code et une lampe de code. (Pas encore sorti)
 <dl>
 
 

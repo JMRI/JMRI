@@ -634,11 +634,6 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.JmriDemo.JMRIdemo" \
                    "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start JMRI Demo"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\CornwallRR.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.cornwall.CornwallRR" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start CornwallRR"
     !insertmacro MUI_STARTMENU_WRITE_END
   SectionEnd ; SEC_OCSMSC
 SectionGroupEnd ; SEC_SMSC
@@ -796,7 +791,7 @@ LangString DESC_SEC_XML ${LANG_ENGLISH} "XML files (Decoder definitions, etc.)"
 LangString DESC_SEC_WEB ${LANG_ENGLISH} "Web files"
 LangString DESC_SEC_SMSC ${LANG_ENGLISH} "Select Start Menu Shortcuts to create"
 LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for DecoderPro, PanelPro and InstallTest"
-LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMRI Demo and CornwallRR"
+LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcut for JMRI Demo"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro3"

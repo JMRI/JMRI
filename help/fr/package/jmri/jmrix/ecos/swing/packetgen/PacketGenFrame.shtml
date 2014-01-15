@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PacketGenFrame.shtml,v 1.2 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<!-- $Id: PacketGenFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ --> 
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 --> 
 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Command Generator</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Dan Boudreau" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI Help NCE Command Generator">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -25,10 +25,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Commande du Générateur ECoS</H1>
+<H1>Commande du G&#233;n&#233;rateur ECoS</H1>
 
-L'outil générateur de commande ECoS vous permet de taper un message
-pour la station de commande ECoS et puis l'envoyer.
+L'outil g&#233;n&#233;rateur de commande ECoS vous permet de taper un message
+pour la station de commande ECoS et puis de l'envoyer.
 
 
 </BODY>

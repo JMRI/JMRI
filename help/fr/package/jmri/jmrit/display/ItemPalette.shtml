@@ -1,15 +1,15 @@
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ItemPalette.shtml,v 1.4 2011/06/15 07:22:03 pete_cressman Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-13--> 
+<!-- $Id: ItemPalette.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-31--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Item Palette Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Item Palette">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,161 +24,161 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> L'élément Palette</H1>
+<H1> L'&#233;l&#233;ment Palette</H1>
 
-<b>L'élément Palette </b> est utilisé pour placer des icônes et du texte sur l'<b>Éditeur de TCO</b>
-. La palette est une fenêtre à onglets avec des onglets pour chaque type d'élément. La méthode commune
-en usage pour tous les éléments pour en ajouter un à un TCO est «Glisser et Déposer". Chaque onglet dispose d'un 
-Panneau avec bordure étiqueté <b>Glisser vers le Panneau</b>. Faites glisser l'élément à l'intérieur de cette frontière vers le panneau. Dans le
- cas où l'icône représente un dispositif de configuration (par exemple un aiguillage, un capteur, etc), vous
-devez sélectionner une ligne d'une table à associer à ce dispositif particulier avec l'icône - et ensuite
-faites glisser l'icône sur le TCO.</p>
+<b>L'&#233;l&#233;ment Palette</b> est utilis&#233; pour placer des ic&#244;nes et du texte sur l'<b>&#233;diteur de TCO</b>
+. La palette est une fen&#234;tre &#224; onglets avec des onglets pour chaque type d'&#233;l&#233;ment. La m&#233;thode commune
+en usage pour tous les &#233;l&#233;ments pour en ajouter un par un TCO est "Glisser et D&#233;poser". Chaque onglet dispose d'un 
+Panneau avec bordure &#233;tiquet&#233; <b>Glisser vers le Panneau</b>. Faites glisser l'&#233;l&#233;ment &#224; l'int&#233;rieur de cette fronti&#232;re vers le panneau. Dans le
+ cas o&#249; l'ic&#244;ne repr&#233;sente un dispositif de configuration (par exemple un aiguillage, un capteur, etc), vous
+devez s&#233;lectionner une ligne d'une table &#224; associer &#224; ce dispositif particulier avec l'ic&#244;ne - et ensuite
+faites glisser l'ic&#244;ne sur le TCO.</p>
 
 <H2> Articles Iconiques</H2>
-Pour ces articles utilisant des icônes, de multiples ensembles d'icônes sont offerts par l'élément Palette.
-Dans chacun de ces cas plusieurs jeux d'icônes différents sont fournis par défaut. Les boutons radio
-sont utilisés pour sélectionner un jeu d'icônes.</p> Par exemple, sous l'onglet du capteur vous pouvez avoir des ensembles de
-grands bijoux grands, petits bijoux, chaque taille avec plusieurs jeux avec des couleurs différentes pour les actifs et
+Pour ces articles utilisant des ic&#244;nes, de multiples ensembles d'ic&#244;nes sont offerts par l'&#233;l&#233;ment Palette.
+Dans chacun de ces cas plusieurs jeux d'ic&#244;nes diff&#233;rents sont fournis par d&#233;faut. Les boutons radio
+sont utilis&#233;s pour s&#233;lectionner un jeu d'ic&#244;nes.</p> Par exemple, sous l'onglet du capteur vous pouvez avoir des ensembles de
+grands voyants, petits voyants, chaque taille avec plusieurs jeux avec des couleurs diff&#233;rentes pour les actifs et
 inactfs - par exemple rouge-vert, jaune-noir, etc  
 <p>
   
-Le bouton <b>Montrer Icônes</b>
- affiche toutes les icônes dans le jeu sélectionné. Le bouton <b>Modifier Icônes</b>  ouvre une boîte de dialogue
-où les icônes peuvent être modifiées en faisant glisser de nouvelles icônes depuis le catalogue icône.</p>
+Le bouton <b>Montrer Ic&#244;nes</b>
+affiche toutes les ic&#244;nes dans le jeu s&#233;lectionn&#233;. Le bouton <b>Modifier Ic&#244;nes</b> ouvre une bo&#238;te de dialogue
+o&#249; les ic&#244;nes peuvent &#234;tre modifi&#233;es en faisant glisser de nouvelles ic&#244;nes depuis le catalogue ic&#244;ne.</p>
    
-<H3> Nouveaux Jeux Icônes</H3>
-Des jeux d'icônes peuvent
-être ajoutés ou supprimés à partir de la boite de dialogue <b>Modifier Icônes</b> . Il n'y a aucune limite sur le
-nombre de jeux d'icônes qui
-peuvent être ajoutés à un onglet . Lorsque l'Élément Palette est personnalisé avec d'autres jeux d'icônes, la fermeture de la Palette avec le bouton de fermeture dans la barre de titre va ouvrir une
-boîte de dialogue vous demandant si vous souhaitez enregistrer vos modifications.
-Lorsque des modifications sont sauvegardées l'Élément Palette est stocké dans le fichier CatalogTrees.xml dans le répertoire des préférences.
+<H3> Nouveaux Jeux Ic&#244;nes</H3>
+Des jeux d'ic&#244;nes peuvent
+&#234;tre ajout&#233;s ou supprim&#233;s &#224; partir de la boite de dialogue <b>Modifier Ic&#244;nes</b>. Il n'y a aucune limite sur le
+nombre de jeux d'ic&#244;nes qui
+peuvent &#234;tre ajout&#233;s &#224; un onglet. Lorsque l'&#233;l&#233;ment Palette est personnalis&#233; avec d'autres jeux d'ic&#244;nes, la fermeture de la Palette avec le bouton de fermeture dans la barre de titre va ouvrir une
+bo&#238;te de dialogue vous demandant si vous souhaitez enregistrer vos modifications.
+Lorsque des modifications sont sauvegard&#233;es l'&#233;l&#233;ment Palette est stock&#233; dans le fichier CatalogTrees.xml dans le r&#233;pertoire des pr&#233;f&#233;rences.
 .</p>
 <p>
-La boite de dialogue <b>Modifier Icônes</b> 
-est utilisée pour supprimer un jeu d'icônes ou d'ajouter un jeu d'icônes supplémentaires. Le bouton <b>Supprimer Jeu d'Icônes</b>
- supprime le jeu d'icônes sélectionné. Lorsque le bouton <b>Ajouter Jeu d'Icones </b> est pressé, le jeu d'icônes sélectionné est sauvegardé et un jeu d'icônes avec des icônes "inconnues" est affiché (Dark X). Changer ces icônes pour celles que vous voulez en faisant glisser des icônes du 
-catalogue d'icônes. Le nouveau jeu d'icônes doit être nommé dans le champ de texte au sommet de la boite de
-dialogue. Enfin, appuyez sur le bouton <b>Créer Jeu d'Icones </b> et la boîte de dialogue est fermée avec
-le nouveau jeu d'icônes  ajouté à la liste des boutons radio.</p>
+La boite de dialogue <b>Modifier Ic&#244;nes</b> 
+est utilis&#233;e pour supprimer un jeu d'ic&#244;nes ou d'ajouter un jeu d'ic&#244;nes suppl&#233;mentaires. Le bouton <b>Supprimer Jeu d'Ic&#244;nes</b>
+ supprime le jeu d'ic&#244;nes s&#233;lectionn&#233;. Lorsque le bouton <b>Ajouter Jeu d'Icones </b> est press&#233;, le jeu d'ic&#244;nes s&#233;lectionn&#233; est sauvegard&#233; et un jeu d'ic&#244;nes avec des ic&#244;nes "inconnues" est affich&#233; (Dark X). Changer ces ic&#244;nes pour celles que vous voulez en faisant glisser des ic&#244;nes du 
+catalogue d'ic&#244;nes. Le nouveau jeu d'ic&#244;nes doit &#234;tre nomm&#233; dans le champ de texte au sommet de la boite de
+dialogue. Enfin, appuyez sur le bouton <b>Cr&#233;er Jeu d'Icones</b> et la bo&#238;te de dialogue est ferm&#233;e avec
+le nouveau jeu d'ic&#244;nes ajout&#233; &#224; la liste des boutons radio.</p>
 
 
-<H3>Table des Éléments</H3>
-Les éléments associés à une table ont un bouton <b>Ajouter un Nouvel Élément à la Table</b>. Ce bouton ouvre
-un dialogue où un nouvel élément d'un dispositif peut être ajouté à cette table. Les onglets avec des tableaux nécessitent  la sélection d'un dispositif (une ligne dans la table) avant que l'icône puisse être glissée sur un TCO pour le représenter.
+<H3>Table des &#233;l&#233;ments</H3>
+Les &#233;l&#233;ments associ&#233;s &#224; une table ont un bouton <b>Ajouter un Nouvel &#233;l&#233;ment au Tableau</b>. Ce bouton ouvre
+un dialogue o&#249; un nouvel &#233;l&#233;ment d'un dispositif peut &#234;tre ajout&#233; &#224; cette table. Les onglets avec des tableaux n&#233;cessitent la s&#233;lection d'un dispositif (une ligne dans le tableau) avant que l'ic&#244;ne puisse &#234;tre gliss&#233;e sur un TCO pour le repr&#233;senter.
    
-<H2>Onglets Élément Palette</H2>
+<H2>Onglets &#233;l&#233;ment Palette</H2>
 
 <ul>
-        <li> <b>Aiguillage</b> Les jeux d'icônes d'aiguillage à la fois droite et gauche sont contenues dans cet onglet.
-                        Sélectionnez un aiguillage depuis la table et un jeu d'icônes, puis faites glisser sur le TCO.</Li>
-        <li> <b>Capteur</b> Sélectionner un capteur de la table et un jeu d'icônes, puis faites glisser sur le TCO.</li>
-        <li> <b>Tête de Signal</b> Quand une tête de signal est sélectionnée dans le tableau, le Bouton [Montrer Icônes]
-                        n'affiche que les icônes pour les apparences valides du signal. Lorsque aucune ligne n'est sélectionnée
-                        toutes les icônes avec les apparence possibles sont indiquées. Lorsque vous ajoutez un nouveau jeu d'icônes, toutes les icônes avec les apparence possibles sont indiquées.</li>
-        <li> <b>Mât de Signal</b> Un mât de signal doit être sélectionné depuis la table pour faire glisser son icône sur le TCO et d'afficher l'icône qu'il utilise pour ses aspects.</li>
-        <li> <b>Mémoire</b> Sélectionnez un emplacement mémoire dans la table. Les trois types de mémoire ont chacun une zone 
-                         "Glisser sur le TCO". Faites glisser l'élément à l'intérieur de la frontière "Glisser sur le TCO"
-                        sur le TCO. Notez que les types <b>Entrée</b> et <b>Spinner</b> ne peuvent
-                        être traînés par les bords de leurs zones de texte.</li>
-        <li> <b>Journal</b> Sélectionner un journal dans la table et faites glisser l'élément à l'intérieur de la frontière "Glisser sur le TCO" sur le TCO.</Li>
-        <li> <b>Lumière</b> Sélectionnez une lumière (comme un objet CMRI) de la table et faites glisser sur le TCO.</li>
-        <li> <b> Multicapteurs </b> La table affiche 
-                        la Table Capteur et le jeu d'icônes par défaut à trois positions de levier. Pour le
-                        cas par défaut, trois rangées doivent être sélectionnées depuis la table pour placer
-                        l'icône de multicapteurs dans un panneau. Les sélections de table sont étiquetées «première»,
-                        "Seconde", etc, et ces étiquettes correspondant aux étiquettes s'affiche lorsque
-                        le jeu d'icônes complet est affiché. Quand vous éditez un jeu d'icônes des niveau de position,
-                        peuvent être ajoutés ou supprimés. Autrement dit, vous pouvez faire un capteur à deux multicapteurs
-                        ou un jeu d'icônes de quatre ou cinq multicapteur. </li>
-        <li> <b> Icône</b> Les icônes affichées à la frontière (étiquetées à leur nom) peuvent être glissées
-                        directement sur un TCO. Les icônes peuvent aussi être glissées directement à partir du Catalogue d'icônes
+        <li> <b>Aiguillage</b> Les jeux d'ic&#244;nes d'aiguillage &#224; la fois droite et gauche sont contenues dans cet onglet.
+                        S&#233;lectionnez un aiguillage depuis la table et un jeu d'ic&#244;nes, puis faites glisser sur le TCO.</Li>
+        <li> <b>Capteur</b> S&#233;lectionner un capteur de la table et un jeu d'ic&#244;nes, puis faites glisser sur le TCO.</li>
+        <li> <b>T&#234;te de Signal</b> Quand une t&#234;te de signal est s&#233;lectionn&#233;e dans le tableau, le Bouton [Montrer Ic&#244;nes]
+                        n'affiche que les ic&#244;nes pour les apparences valides du signal. Lorsque aucune ligne n'est s&#233;lectionn&#233;e
+                        toutes les ic&#244;nes avec les apparence possibles sont indiqu&#233;es. Lorsque vous ajoutez un nouveau jeu d'ic&#244;nes, toutes les ic&#244;nes avec les apparence possibles sont indiqu&#233;es.</li>
+        <li> <b>M&#226;t de Signal</b> Un m&#226;t de signal doit &#234;tre s&#233;lectionn&#233; depuis la table pour faire glisser son ic&#244;ne sur le TCO et d'afficher l'ic&#244;ne qu'il utilise pour ses aspects.</li>
+        <li> <b>M&#233;moire</b> S&#233;lectionnez un emplacement m&#233;moire dans la table. Les trois types de m&#233;moire ont chacun une zone 
+                         "Glisser sur le TCO". Faites glisser l'&#233;l&#233;ment &#224; l'int&#233;rieur de la fronti&#232;re "Glisser sur le TCO"
+                        sur le TCO. Notez que les types <b>Entr&#233;e</b> et <b>Spinner</b> ne peuvent
+                        &#234;tre tra&#238;n&#233;s par les bords de leurs zones de texte.</li>
+        <li> <b>Rapport</b> S&#233;lectionner un rapport dans le tableau et faites glisser l'&#233;l&#233;ment &#224; l'int&#233;rieur de la fronti&#232;re "Glisser sur le TCO" sur le TCO.</Li>
+        <li> <b>Lumi&#232;re</b> S&#233;lectionnez une lumi&#232;re (comme un objet CMRI) de la table et faites glisser sur le TCO.</li>
+        <li> <b>Multicapteurs </b> La table affiche 
+                        le Tableau Capteur et le jeu d'ic&#244;nes par d&#233;faut &#224; trois positions de levier. Pour le
+                        cas par d&#233;faut, trois rang&#233;es doivent &#234;tre s&#233;lectionn&#233;es depuis la table pour placer
+                        l'ic&#244;ne de multicapteurs dans un panneau. Les s&#233;lections de tableau sont &#233;tiquet&#233;s "premi&#232;re",
+                        "Seconde", etc, et ces &#233;tiquettes correspondant aux &#233;tiquettes s'affichent lorsque
+                        le jeu d'ic&#244;nes complet est affich&#233;. Quand vous &#233;ditez un jeu d'ic&#244;nes des niveau de position,
+                        peuvent &#234;tre ajout&#233;s ou supprim&#233;s. Autrement dit, vous pouvez faire un capteur &#224; deux multicapteurs
+                        ou un jeu d'ic&#244;nes de quatre ou cinq multicapteur. </li>
+        <li> <b>Ic&#244;ne</b> Les ic&#244;nes affich&#233;es &#224; la fronti&#232;re (&#233;tiquet&#233;es &#224; leur nom) peuvent &#234;tre gliss&#233;es
+                        directement sur un TCO. Les ic&#244;nes peuvent aussi &#234;tre gliss&#233;es directement &#224; partir du Catalogue d'ic&#244;nes
                        .</Li>
-        <li> <b> Arrière Plan</b> Les icônes d'arrière Plan sont placées dans un panneau comme le sont les icônes normales.
-                        Cependant, elle sont affectés du plus bas niveau d'affichage et ne peut être
-                        sélectionnés avec un simple clic de souris. Utilisez "Ctrl-Clic" pour sélectionner
-                        une icône de fond. Plutôt qu'une icône, une couleur de fond personnalisée peut
-                        être choisie avec le bouton<b>Couleur de Fond </b>. Ce bouton affiche
-                        un sélecteur de couleur avec des onglets pour les différentes façons de définir une couleur.</li>
-        <li> <b> Texte</b> L'onglet Texte affiche un champ de texte pour entrer le texte et les options d'attribut de rendu
-                        du texte. Styles et taille de Police, la justification et les attributs de la frontière peut être choisi.
-                        Un sélecteur de couleur fournit des couleurs personnalisées pour les polices, les arrière plans et les bordures.
-                        <b> Remarque</b> <i>La "touche Entrée» doit être pressée pour
-                        afficher le texte avec ses attributs dans le Panneau de Prévisualisation.</i> Faites glisser l'          élément du panneau de prévisualisation vers le TCO.</li>
-        <li> <b> RPSReporter</b> Faites glisser l'icône "Glisser vers le TCO"  sur le TCO et installer le RPSReporter partir de son menu déroulant.</Li>
+        <li> <b>Arri&#232;re Plan</b> Les ic&#244;nes d'arri&#232;re Plan sont plac&#233;es dans un panneau comme le sont les ic&#244;nes normales.
+                        Cependant, elle sont affect&#233;s du plus bas niveau d'affichage et ne peut &#234;tre
+                        s&#233;lectionn&#233;s avec un simple clic de souris. Utilisez "Ctrl-Clic" pour s&#233;lectionner
+                        une ic&#244;ne de fond. Plut&#244;t qu'une ic&#244;ne, une couleur de fond personnalis&#233;e peut
+                        &#234;tre choisie avec le bouton <b>Couleur de Fond</b>. Ce bouton affiche
+                        un s&#233;lecteur de couleur avec des onglets pour les diff&#233;rentes fa&#231;ons de d&#233;finir une couleur.</li>
+        <li> <b>Texte</b> L'onglet Texte affiche un champ de texte pour entrer le texte et les options d'attribut de rendu
+                        du texte. Styles et taille de Police, la justification et les attributs de la fronti&#232;re peut &#234;tre choisi.
+                        Un s&#233;lecteur de couleur fournit des couleurs personnalis&#233;es pour les polices, les arri&#232;re plans et les bordures.
+                        <b>Remarque</b> <i>La "touche Entr&#233;e" doit &#234;tre press&#233;e pour
+                        afficher le texte avec ses attributs dans le Panneau de Pr&#233;visualisation.</i> Faites glisser l'          &#233;l&#233;ment du panneau de pr&#233;visualisation vers le TCO.</li>
+        <li> <b> RPSReporter</b> Faites glisser l'ic&#244;ne "Glisser vers le TCO"  sur le TCO et installer le RPSReporter &#224; partir de son menu d&#233;roulant.</Li>
         <li> <b>Horloge Rapide</b> Glisser l'horloge sur le TCO.</li>
-        <li><b>Indicateur de Voie </b> L'indicateur de voie est conçu pour être utilisé quand les circuits de voie sont configurés avec les                        OBlocks. La plupart des éléments dans cet onglet appartient à leur utilisation comme  présentations 
-                        des OBlocks et leur utilisation avec des itinéraires mandatés. Cependant, si les OBlocks ne sont pas définis,
-                        mais que les capteurs d'occupation sont installés sur le TCO comme des circuits de voie, le
+        <li><b>Indicateur de Voie </b> L'indicateur de voie est con&#231;u pour &#234;tre utilis&#233; quand les circuits de voie sont configur&#233;s avec les OBlocks. La plupart des &#233;l&#233;ments dans cet onglet appartient &#224; leur utilisation comme  pr&#233;sentations 
+                        des OBlocks et leur utilisation avec des itin&#233;raires mandat&#233;s. Cependant, si les OBlocks ne sont pas d&#233;finis,
+                        mais que les capteurs d'occupation sont install&#233;s sur le TCO comme des circuits de voie, le
                         <b> Circuit Occupation</b> acceptera un nom de capteur. Lorsque c'est le cas
-                        seuls les couleurs «Occupés» et «Libres» peuvent être affichées.</li>
+                        seuls les couleurs "Occup&#233;s" et "Libres" peuvent &#234;tre affich&#233;es.</li>
         <li> <b> Indicateur d'Aiguillage</b> Le commentaire ci-dessus s'applique aussi aux Indicateurs d'Aiguillage.</li>
 </Ul>
 
 
 <H2>Plus d'Infos sur les Indicateurs de Voies </H2>
 
-Les Indicateurs de Voies (à savoir les segments de voie et aiguillages) ont des couleurs pour afficher l'état du circuit de voie
- qu'ils représentent. Lorsque le circuit de voie est configuré par un OBlock, et les Portails et Chemins
-qu'il contient, les Statuts d'état suivants sont  affichés en couleur:
+Les Indicateurs de Voies (&#224; savoir les segments de voie et aiguillages) ont des couleurs pour afficher l'&#233;tat du circuit de voie
+ qu'ils repr&#233;sentent. Lorsque le circuit de voie est configur&#233; par un OBlock, et les Portails et Chemins
+qu'il contient, les Statuts d'&#233;tat suivants sont  affich&#233;s en couleur:
 <ul>
-        <li> <b> Libre</b> Indique prêt à l'emploi. Plus précisément, le circuit est dans un état connu et
+        <li> <b> Libre</b> Indique pr&#234;t &#224; l'emploi. Plus pr&#233;cis&#233;ment, le circuit est dans un &#233;tat connu et
                         aucun des autre status ne s'applique.</li>
-        <li> <b> Occupés</b> (Jaune) La voie est occupée par un train inconnu ou voiture.</li>
-        <li> <b> Alloué</b> (Vert) La voie est réservée pour une utilisation par un mandat.</li>
-        <li> <b>Position du Train</b> (Bleu) La voie est occupé par un train sous mandat et c'est sa
+        <li> <b> Occup&#233;s</b> (Jaune) La voie est occup&#233;e par un train inconnu ou voiture.</li>
+        <li> <b> Allou&#233;</b> (Vert) La voie est r&#233;serv&#233;e pour une utilisation par un mandat.</li>
+        <li> <b>Position du Train</b> (Bleu) La voie est occup&#233; par un train sous mandat et c'est sa
                         position actuelle.</li>
-        <li> <b> Non En cours d'utilisation</b> (Gris) L'état de la voie n'est pas connu ou qu'elle a été fixée à
-                        hors de service. Cet état est également utilisé lorsque les cantons sont
-                        supervisés par un panneau local.</li>
-        <li> <b> Erreur Alimentation</b> (Rouge) C'est l'état d'un autre capteur - pas le capteur d'occupation.
-                        S'il est utilisé, le plus probable, il serait câblé pour indiquer un court-circuit ou un
-                        échec d'alimentation.</li>
+        <li> <b> Non En cours d'utilisation</b> (Gris) L'&#233;tat de la voie n'est pas connu ou qu'elle a &#233;t&#233; fix&#233;e &#224;
+                        hors de service. Cet &#233;tat est &#233;galement utilis&#233; lorsque les cantons sont
+                        supervis&#233;s par un panneau local.</li>
+        <li> <b> Erreur Alimentation</b> (Rouge) C'est l'&#233;tat d'un autre capteur - pas le capteur d'occupation.
+                        S'il est utilis&#233;, le plus probable, il serait c&#226;bl&#233; pour indiquer un court-circuit ou un
+                        &#233;chec d'alimentation.</li>
 </ul>
 <p>
 <b> Remarque:</b>
-La configuration des Icônes Indicateur Voie  peut être fait en groupe automatiquement - y compris la conversion automatique
-des icônes de voie régulièrement avec le <b> Générateur de Circuit r</b>. Le seul élément où vous pouvez vouloir éditer un indicateur
-Icône de Voie individuellement est de choisir l'icône qui montre le nom du train quand le bloc
-représenté est occupé en vertu d'un mandat. (Souvent, plusieurs icônes affichent un OBlock et vous voulez seulement
+La configuration des Ic&#244;nes Indicateur Voie peut &#234;tre fait en groupe automatiquement - y compris la conversion automatique
+des ic&#244;nes de voie r&#233;guli&#232;rement avec le <b>G&#233;n&#233;rateur de Circuit</b>. Le seul &#233;l&#233;ment o&#249; vous pouvez vouloir &#233;diter un indicateur
+Ic&#244;ne de Voie individuellement est de choisir l'ic&#244;ne qui montre le nom du train quand le bloc
+repr&#233;sent&#233; est occup&#233; en vertu d'un mandat. (Souvent, plusieurs ic&#244;nes affichent un OBlock et vous voulez seulement
 l'un d'eux pour montrer le marqueur.)</p>
 
 <H3>Onglet Indicateur de Voie</H3>
 
-Entrez le nom du circuit de voie (OBlock), cette icône  voie représente dans le champs <b>Circuit d'Occupation</b>
-. La bouton  <b>Ouvrir Liste de Sélection de Détecteur</b> ouvre une liste de choix montrant les circuits voie OBlock définis .
-Faites glisser ou copier le nom du champ du Circuit d'Occupation. <i> <b> Ne pas utiliser</b> l'onglet "Table Capteur" de la liste de sélection
-<b> à moins qu'</b>il n'y ait pas de OBlocks configurés et que vous souhaitiez utiliser uniquement le statut "Occupé/Inoccupé".</i></p>
+Entrez le nom du circuit de voie (OBlock), cette ic&#244;ne  voie repr&#233;sente dans le champs <b>Circuit d'Occupation</b>
+. La bouton <b>Ouvrir Liste de S&#233;lection de D&#233;tecteur</b> ouvre une liste de choix montrant les circuits voie OBlock d&#233;finis .
+Faites glisser ou copier le nom du champ du Circuit d'Occupation. <i> <b>Ne pas utiliser</b> l'onglet "Table Capteur" de la liste de s&#233;lection
+<b>&#224; moins qu'</b>il n'y ait pas de OBlocks configur&#233;s et que vous souhaitiez utiliser uniquement le statut "Occup&#233;/Inoccup&#233;".</i></p>
 <p>
-(Obsolète) Quand un nom de OBlock valide est entré dans le champ Circuit d'Occupation, un panneau <b>CircuitPath </b> est ajouté à
-l'onglet. Si les chemins ont été définis pour le bloc, ils sont représentés dans ce panneau. Vérifiez les chemins du circuit de voie qui passent sur cette icône. Lorsque ces chemins font partie d'un itinéraire alloué  ou sont occupés par un train mandaté, elles montrent ce statut par la couleur.</p>
+(Obsol&#232;te) Quand un nom de OBlock valide est entr&#233; dans le champ Circuit d'Occupation, un panneau <b>CircuitPath </b> est ajout&#233; &#224;
+l'onglet. Si les chemins ont &#233;t&#233; d&#233;finis pour le bloc, ils sont repr&#233;sent&#233;s dans ce panneau. V&#233;rifiez les chemins du circuit de voie qui passent sur cette ic&#244;ne. Lorsque ces chemins font partie d'un itin&#233;raire allou&#233;  ou sont occup&#233;s par un train mandat&#233;, elles montrent ce statut par la couleur.</p>
 <p>
-Si les chemins ont été créés ou édités par le Générateur de Circuit, la fonction ci-dessus se fait automatiquement. Dans l'avenir
+Si les chemins ont &#233;t&#233; cr&#233;&#233;s ou &#233;dit&#233;s par le G&#233;n&#233;rateur de Circuit, la fonction ci-dessus se fait automatiquement. Dans l'avenir
 ci-dessus un "sous" panneau sera mis en lecture seule.</p>
 <p>
-En dessous du champ de circuit d'occupation est une case libélé <b> Affichage du Nom du Train quand occupé par un train mandaté</b>.
+En dessous du champ de circuit d'occupation est une case lib&#233;l&#233; <b>Affichage du Nom du Train quand occup&#233; par un train mandat&#233;</b>.
 
-Quand un train mandaté occupe le circuit de voie, les icônes circuit ayant cette case cochée, montrent
-un marqueur avec l'Id du train occupant. Très probablement, vous ne voulez seulement l'une des icônes dans le
+Quand un train mandat&#233; occupe le circuit de voie, les ic&#244;nes circuit ayant cette case coch&#233;e, montrent
+un marqueur avec l'Id du train occupant. Tr&#232;s probablement, vous ne voulez seulement l'une des ic&#244;nes dans le
 circuits de voie pour afficher l'ID du train.</p>
 <p>
-Les boutons radio <b>Jeux d'Icônes </b> , la zone <b>Glisser sur le TCO</b> et les boutons de fonction <b> Afficher les Icônes</b> et <b>Modifier Icônes</b>  comme décrit avant.</p>
+Les boutons radio <b>Jeux d'Ic&#244;nes</b> , la zone <b>Glisser sur le TCO</b> et les boutons de fonction <b> Afficher les Ic&#244;nes</b> et <b>Modifier Ic&#244;nes</b>  comme d&#233;crit avant.</p>
 
  <H3>Onglet Indicateur Aiguillage </H3>
 
-Cet onglet contient les mêmes fonctions que l'onglet Indicateur de Voie avec l'ajout d'une table Aiguillage.
-Un aiguillage doit être sélectionné dans la Table Aiguillage pour être en mesure de faire glisser une icône sur un TCO.</P>
+Cet onglet contient les m&#234;mes fonctions que l'onglet Indicateur de Voie avec l'ajout d'un tableau Aiguillage.
+Un aiguillage doit &#234;tre s&#233;lectionn&#233; dans la Table Aiguillage pour &#234;tre en mesure de faire glisser une ic&#244;ne sur un TCO.</P>
 <p>
-Une légère variation sont les  boutons
-<b>Ajouter Jeu d'Icônes</b> et <b> Supprimer Jeu d'Icônes</b> au bas de l'onglet. En outre, le bouton<b>Afficher les Icônes</b>
- affiche le jeu d'icône  dans une matrice où les lignes montrent l'état de l'icône pour chaque état de l'aiguillage - direct,
-Dévié, Incohérent et Inconnu. À la droite de chaque ligne de la matrice est un bouton <b>Modifier des Icônes</b>.
-. Ces boutons ouvrent une boîte de dialogue Modifier des Icônes pour chaque ligne de la matrice. Le bouton
-<b> Masquer les Icônes</b> ferme la matrice icône et retourne sur l'onglet à son point d'origine.</p>
+Une l&#233;g&#232;re variation sont les  boutons
+<b>Ajouter Jeu d'Ic&#244;nes</b> et <b>Supprimer Jeu d'Ic&#244;nes</b> au bas de l'onglet. En outre, le bouton<b>Afficher les Ic&#244;nes</b>
+ affiche le jeu d'ic&#244;ne  dans une matrice o&#249; les lignes montrent l'&#233;tat de l'ic&#244;ne pour chaque &#233;tat de l'aiguillage - direct,
+D&#233;vi&#233;, Incoh&#233;rent et Inconnu. &#224; la droite de chaque ligne de la matrice est un bouton <b>Modifier des Ic&#244;nes</b>.
+. Ces boutons ouvrent une bo&#238;te de dialogue Modifier des Ic&#244;nes pour chaque ligne de la matrice. Le bouton
+<b> Masquer les Ic&#244;nes</b> ferme la matrice ic&#244;ne et retourne sur l'onglet &#224; son point d'origine.</p>
 <p>
-Quand un des boutons <b> Modifier des Icône</b> est pressé sur une rangée de l'affichage de l'icône, une boîte de dialogue d'édition de la ligne
-est ouverte. Les icônes peuvent être modifiés en faisant glisser des icônes à partir du Catalogue d'Icônes. Aussi le statut entier
-peut être retiré par le bouton <b> Supprimer Statut</b> - ou restaurés par le bouton <b> Ajouter État Manquant</b>
+Quand un des boutons <b>Modifier des Ic&#244;ne</b> est press&#233; sur une rang&#233;e de l'affichage de l'ic&#244;ne, une bo&#238;te de dialogue d'&#233;dition de la ligne
+est ouverte. Les ic&#244;nes peuvent &#234;tre modifi&#233;s en faisant glisser des ic&#244;nes &#224; partir du Catalogue d'Ic&#244;nes. Aussi le statut entier
+peut &#234;tre retir&#233; par le bouton <b> Supprimer Statut</b> - ou restaur&#233; par le bouton <b> Ajouter &#233;tat Manquant</b>
 .</p>
 <p>
 

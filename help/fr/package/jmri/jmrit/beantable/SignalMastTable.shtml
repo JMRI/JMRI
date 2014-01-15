@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastTable.shtml,v 1.4 2010/01/09 22:25:56 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/09-->
+<!-- $Id: SignalMastTable.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-12-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Signal Mast Table Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Signal Mast Table">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,30 +24,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> La Table Mât de Signal
+<H1> Le Tableau M&#226;t Signal
 </H1>
 
  <a href="SignalMastTable.png"><img src = "SignalMastTable.png"
-height = "86" width = "338" align = "right">
+height = "173" width = "376" align = "right">
 
 </a>
 
 <p>
-Pour plus d'informations sur les Mâts de Signaux et les aspect de la signalisation,
+Pour plus d'informations sur les M&#226;ts de Signaux et les aspect de la signalisation,
 voir la
-<a href="../../../../html/tools/signaling/AspectSignaling.shtml">  page  introduction </a>.
+<a href="../../../../html/tools/signaling/AspectSignaling.shtml"> page  introduction</a>.
 
-<P> Pour définir un nouveau mât de signal , cliquez sur le bouton" <a HREF="SignalMastAddEdit.shtml"> Ajouter .." </a>.
-Il  vous sera
-demandé toutes les informations de configuration nécessaires.
+<P> Pour d&#233;finir un nouveau m&#226;t de signal, cliquez sur le bouton" <a HREF="SignalMastAddEdit.shtml"> Ajouter .." </a>.
+Il  vous sera demand&#233; toutes les informations de configuration n&#233;cessaires.
 
 <P> Utilisez l'option Stocker dans le menu Fichier pour enregistrer les informations de signalisation sur le disque.
-Ces informations sont enregistrées avec la configuration dans un fichier XML, 
-avec l'installation du panneau de commande et des chosess similaires. Pour stocker vos panneaux dans le même
-fichier (recommandé), sélectionnez <b> Fichier> Stocker > Stocker Configuration et les panneaux dans
-Fichier ...</b> ou sélectionnez <b> Panneaux...</b> dans la fenêtre principale JMRI.
-<P> Pour plus d'informations sur la création et l'affichage des panneaux, y compris la manière de
-montrer des signaux sur vos panneaux, s'il vous plaît voir les
+Ces informations sont enregistr&#233;es avec la configuration dans un fichier XML, 
+avec l'installation du panneau de commande et des chosess similaires. Pour stocker vos panneaux dans le m&#234;me
+fichier (recommand&#233;), s&#233;lectionnez <b> Fichier> Stocker > Stocker Configuration et les panneaux dans
+Fichier ...</b> ou s&#233;lectionnez <b> Panneaux...</b> dans la fen&#234;tre principale JMRI.
+<P> Pour plus d'informations sur la cr&#233;ation et l'affichage des panneaux, y compris la mani&#232;re de
+montrer les signaux sur vos panneaux, s'il vous pla&#238;t voir les
 <A HREF="../../../../html/apps/PanelPro/Panels.shtml"> pages Panneaux</a>.
 
 

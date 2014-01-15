@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- Translated by Blorec Herv&#233; le 2011-09-28-->
 <html lang="en"><head><title>Rosters Media Pane</title>
 
 
@@ -19,7 +19,7 @@
 
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -31,15 +31,15 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>Réglage des Listes Images et des Icônes</h1>
+<h1>R&#233;glage des Listes Images et des Ic&#244;nes</h1>
 
 
 <img src="images/DecProRosterMediaPane.png" alt=""><br>
 
 <br>
 
-Le volet liste des médias est accessible lorsque vous utiliseze DecoderPro en
-mode avancé.<br>
+Le volet liste des m&#233;dias est accessible lorsque vous utiliseze DecoderPro en
+mode avanc&#233;.<br>
 
 <br>
 
@@ -47,87 +47,87 @@ mode avancé.<br>
 
 <br>
 
-<h2>Entrée d'Image </h2>
+<h2>Entr&#233;e d'Image </h2>
 
-La suppression d'un fichier image dans le cadre intérieur mettra à jour cette entrée (il doita être un fichier image, donc après avoir cherché sur le web pour une image que vous
-voulez, de l'enregistrer sur le bureau, puis déposer le fichier dans l'entrée,
-(déposer le contenu des images directement à partir de la fenêtre du navigateur ne fonctionne pas). <br>
-
-<br>
-
-Le bouton Supprimer supprime l'entrée d'image en entrée de la liste actuelle. <br>
+La suppression d'un fichier image dans le cadre int&#233;rieur mettra &#224; jour cette entr&#233;e (il doit &#234;tre un fichier image, donc apr&#232;s avoir cherch&#233; sur le web pour une image que vous
+voulez, de l'enregistrer sur le bureau, puis d&#233;poser le fichier dans l'entr&#233;e,
+(d&#233;poser le contenu des images directement &#224; partir de la fen&#234;tre du navigateur ne fonctionne pas). <br>
 
 <br>
 
-Liste des images sont stockées dans &lt;dossier JMRI Préférences &gt;/ressources.
-Lorsque l'image est mise à jour ou retirée de la liste, le fichier image n'est
-pas retiré de son stockage dans &lt;dossier JMRI Préférences
-&gt;/ ressources. <br>
+Le bouton Supprimer supprime l'entr&#233;e d'image en entr&#233;e de la liste actuelle. <br>
 
 <br>
 
-l'entrée d'Image est utilisée comme un fond pour <a href="ThrottlesPreferencesPane.shtml">les limites JMRI lorsque cette option est activée</a>.<br>
+Liste des images sont stock&#233;es dans &lt;dossier JMRI Pr&#233;f&#233;rences &gt;/ressources.
+Lorsque l'image est mise &#224; jour ou retir&#233;e de la liste, le fichier image n'est
+pas retir&#233; de son stockage dans &lt;dossier JMRI Pr&#233;f&#233;rences
+&gt;/ressources. <br>
 
 <br>
 
-<h2> Icône d'Entrée </h2>
+l'entr&#233;e d'Image est utilis&#233;e comme un fond pour <a href="ThrottlesPreferencesPane.shtml">les limites JMRI lorsque cette option est activ&#233;e</a>.<br>
 
-Déposer un fichier image&nbsp; dans le cadre intérieur mettra à jour cette entrée
-(il doit être un fichier image, donc après avoir cherché sur le web pour une
-image qui vous plaît, enregistrez-la sur le bureau, puis déposer le fichier dans l'
-entrée, laisser déposer le contenu des images directement à partir de fenêtre du navigateur ne fonctionnera pas
+<br>
+
+<h2> Ic&#244;ne d'Entr&#233;e </h2>
+
+D&#233;poser un fichier image&nbsp; dans le cadre int&#233;rieur mettra &#224; jour cette entr&#233;e
+(il doit &#234;tre un fichier image, donc apr&#232;s avoir cherch&#233; sur le web pour une
+image qui vous pla&#238;t, enregistrez-la sur le bureau, puis d&#233;poser le fichier dans l'
+entr&#233;e, laisser d&#233;poser le contenu des images directement &#224; partir de fen&#234;tre du navigateur ne fonctionnera pas
 ). <br>
 
 .<br>
 
-Le bouton Supprimer supprime l'entrée dans l'entrée liste Icône actuelle. <br>
+Le bouton Supprimer supprime l'entr&#233;e dans l'entr&#233;e liste Ic&#244;ne actuelle. <br>
 
 <br>
 
 
-Liste des icônes estt stockées dans &lt; dossier JMRI Préférences&gt;/ressources.
-Lorsque l'icône est mise à jour ou supprimée de la liste, le fichier image n'est
-pas retiré de son stockage dans &lt;dossier JMRI Préférences&lt;/ressources. <br>
+Liste des ic&#244;nes estt stock&#233;es dans &lt; dossier JMRI Pr&#233;f&#233;rences&gt;/ressources.
+Lorsque l'ic&#244;ne est mise &#224; jour ou supprim&#233;e de la liste, le fichier image n'est
+pas retir&#233; de son stockage dans &lt;dossier JMRI Pr&#233;f&#233;rences&lt;/ressources. <br>
 <br>
 
-L'entrée icône est utilisé dans diverses zones de liste déroulante Liste de JMRI, et dans la
-<a href="ThrottlesListWindow.shtml">  Liste des fenêtres Régulateurs </a>. <br>
+L'entr&#233;e ic&#244;ne est utilis&#233; dans diverses zones de liste d&#233;roulante Liste de JMRI, et dans la
+<a href="ThrottlesListWindow.shtml">  Liste des fen&#234;tres R&#233;gulateurs </a>. <br>
 <br>
-Il est recommandé d'utiliser des images GIF ou PNG avec un fond transparent
-et d'avoir les images tournées afin que la tête de locomotive soit à la
+Il est recommand&#233; d'utiliser des images GIF ou PNG avec un fond transparent
+et d'avoir les images tourn&#233;es afin que la t&#234;te de locomotive soit &#224; la
 droite. Cela permettra de faciliter les transformations de l'image dans des applications plus tard. <br>
 
 <br style="font-style: italic;">
 
-<span style="font-style: italic;"> Remarque: un moyen facile de trouver des icônes
-est à la recherche pour "train GIF» ou regarder des ressources liée à la circulation "<a href="http://www.fsz.bme.hu/traffic/indexe.htm">
-Screensaver </a> "dans votre moteur de recherche Internet préféré". </Span> <br>
+<span style="font-style: italic;"> Remarque: un moyen facile de trouver des ic&#244;nes
+est &#224; la recherche pour "train GIF" ou regarder des ressources li&#233;e &#224; la circulation "<a href="http://www.fsz.bme.hu/traffic/indexe.htm">
+Screensaver </a> "dans votre moteur de recherche Internet pr&#233;f&#233;r&#233;". </Span> <br>
 
 
-<h2> Référence Web  </h2>
+<h2> R&#233;f&#233;rence Web  </h2>
 
-Cette entrée est dédiée à stocker une URL, ici je point au
-Wikipédia pour un prototype de liste.<br> 
+Cette entr&#233;e est d&#233;di&#233;e &#224; stocker une URL, ici je joint au
+Wikip&#233;dia pour un prototype de liste.<br> 
 
 <br>
 
-<h1> fonction Étiquettes Liste </h1>
+<h1> fonction &#233;tiquettes Liste </h1>
 
 <img src="images/DecProFunctionLabels.png" alt=""> <br>
 
 <br>
 
-Il est également recommandé de remplir les étiquettes de fonction des entrées dans le volet
-Étiquettes Fonction de DecoderPro (également accessible à partir du mode Avancé). Ces entrées seront réutilisées par le Groupe Fonction <a href="BasicThrottleWindow.shtml"> dans les fenêtres Régulateurs  </a>. <br>
+Il est &#233;galement recommand&#233; de remplir les &#233;tiquettes de fonction des entr&#233;es dans le volet
+&#233;tiquettes Fonction de DecoderPro (&#233;galement accessible &#224; partir du mode Avanc&#233;). Ces entr&#233;es seront r&#233;utilis&#233;es par le Groupe Fonction <a href="BasicThrottleWindow.shtml"> dans les fen&#234;tres R&#233;gulateurs  </a>. <br>
 
 <br>
 
-Il y a une option pour les Limite JMRI qui montrera les boutons  Fonction Régulateur <a href="ThrottlesPreferencesPane.shtml">s uniquement pour une entrée
-qui est définie ici </a>. <br>
+Il y a une option pour les Limite JMRI qui montrera les boutons  Fonction R&#233;gulateur <a href="ThrottlesPreferencesPane.shtml">s uniquement pour une entr&#233;e
+qui est d&#233;finie ici </a>. <br>
 <br>
 
 <br>
-Vous pouvez également jeter un oeil à Jynstruments pour le bouton de fonction avancée.<br>
+Vous pouvez &#233;galement jeter un oeil &#224; Jynstruments pour le bouton de fonction avanc&#233;e.<br>
 
 <br>
 </div>

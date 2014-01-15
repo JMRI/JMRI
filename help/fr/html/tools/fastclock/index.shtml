@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2009/09/26 04:58:48 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/19-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-09-25-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Setup Fast Clock
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Setup Fast Clock">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -29,53 +29,53 @@
  <H2> Configuration Horloge Rapide
 </H2>
     
-JMRI fournit deux types  d'horloge rapide:
+JMRI fournit deux types d'horloge rapide:
 
 <UL>
 <LI> Interne - l'horloge des ordinateurs fournit les informations en temps
-<LI> Externe - le système DCC fournit des informations en temps
+<LI> Externe - le syst&#232;me DCC fournit des informations en temps
 </UL>
 
-Cette page d'aide décrit la structure globale. Il y a
+Cette page d'aide d&#233;crit la structure globale. Il y a
  des pages distinctes pour
 <a href="LocoNetClock.shtml"> horloges LocoNet</a> et <a href="../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">horloges NCE</a>.
-Pour l'instant, nous n'avons pas d'interfaces pour des horloges dans les autres systèmes DCC.
+Pour l'instant, nous n'avons pas d'interfaces pour des horloges dans les autres syst&#232;mes DCC.
 
 <P>
-Il y a deux parties différentes à considérer: Une «base de temps" fournit la base d'
-informations en temps, tandis que un ou plusieurs écrans vous montrer ce qui se passe.
+Il y a deux parties diff&#233;rentes &#224; consid&#233;rer: Une "base de temps" fournit la base d'
+informations en temps, tandis que un ou plusieurs &#233;crans vous montrent ce qui se passe.
 <P>
-Pour créer une base de temps, utilisez l'élément
+Pour cr&#233;er une base de temps, utilisez l'&#233;l&#233;ment
 "<a href="../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml"> Installation Rapide Horloge</a>"
-  dans le sous-menu "Horloges"  sous le menu "Outils". Cela vous donne une fenêtre
-où vous pouvez:
+  dans le sous-menu "Horloges"  sous le menu "Outils". Cela vous donne une fen&#234;tre
+o&#249; vous pouvez:
 <UL>
-<LI> Sélectionnez la source de base de temps à contrôler (typiquement, il s'agit de horloge interne de l'ordinateur)
-<LI> Régler la vitesse à laquelle l'horloge tourne
-<LI> Réglez l'heure
-<LI> Démarrer et arrêter l'horloge
+<LI> S&#233;lectionnez la source de base de temps &#224; contr&#244;ler (typiquement, il s'agit de l'horloge interne de l'ordinateur)
+<LI> R&#233;gler la vitesse &#224; laquelle l'horloge tourne
+<LI> R&#233;glez l'heure
+<LI> D&#233;marrer et arr&#234;ter l'horloge
 </UL>
 
-Une fois que vous avez créé une base de temps en la configurant dans cette fenêtre, vous
-pouvez ouvrir des horloges qui s'afficheront sur votre écran. Actuellement, JMRI a trois
+Une fois que vous avez cr&#233;&#233; une base de temps en la configurant dans cette fen&#234;tre, vous
+pouvez ouvrir des horloges qui s'afficheront sur votre &#233;cran. Actuellement, JMRI a trois
 types disponibles:
 <UL>
 <LI> Horloge analogique - l'horloge traditionnelle circulaire avec les aiguilles. Vous pouvez la redimensionner
- en faisant glisser les bords de la fenêtre. Il y a aussi un bouton pause/marche.
-<LI> Horloge Nixie - une horloge numérique qui ressemble à des anciens tubes de style Nixie
-<LI> Horloge Panneau- vous pouvez également intégrer une horloge dans un TCO (au lieu d'une fenêtre séparée)
-de l'éditeur de panneau.
+ en faisant glisser les bords de la fen&#234;tre. Il y a aussi un bouton pause/marche.
+<LI> Horloge Nixie - une horloge num&#233;rique qui ressemble &#224; des anciens tubes de style Nixie
+<LI> Horloge Panneau- vous pouvez &#233;galement int&#233;grer une horloge dans un TCO (au lieu d'une fen&#234;tre s&#233;par&#233;e)
+de l'&#233;diteur de panneau.
 </UL>
 
 <p>
-Lorsque l'horloge est en marche, JMRI crée un capteur interne et une variable en mémoire
-que vous pouvez utiliser pour contrôler et accéder à l'horloge. Le capteur ISCLOCKRUNNING
-contrôle si l'horloge est en marche (ACTIVE) ou arrêtée (INACTIVE).
-La mémoire contient IMCURRENTTIME l'heure actuelle de l'horloge rapide, et peut être facilement accessible
-à partir de Logix et de scripts.
+Lorsque l'horloge est en marche, JMRI cr&#233;e un capteur interne et une variable en m&#233;moire
+que vous pouvez utiliser pour contr&#244;ler et acc&#233;der &#224; l'horloge. Le capteur ISCLOCKRUNNING
+contr&#244;le si l'horloge est en marche (ACTIVE) ou arr&#234;t&#233;e (INACTIVE).
+La m&#233;moire contient IMCURRENTTIME l'heure actuelle de l'horloge rapide, et peut &#234;tre facilement accessible
+&#224; partir de Logix et de scripts.
 
 <p>
-Chronométrage heureux!
+Chronom&#233;trage heureux!
     
 <!--#include virtual="/Footer" -->
 </body>

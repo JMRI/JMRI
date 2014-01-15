@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ThrottleTOC.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Translated by Herv&#233; Blorec 2013-10-04 -->
+<html lang="fr">
+<head>
+  <title>Throttle: Table of Contents </title>
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="Keywords" content="JMRI">
+  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
+  <meta name="Language" content="EN">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+<h1 style="color:#ff0000">Mise &#224; Jour de la version documentaire R&#233;gulateur</h1>
+
+<p>Notez que cette documentation a &#233;t&#233; mise &#224; jour, se r&#233;f&#233;rer au lien ci-dessous:</p>
+<ul>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur dans JMRI</a></li>
+  <li>La <a href="BasicThrottleWindow.shtml">Fen&#234;tre R&#233;gulateur elle-m&#234;me</a></li>
+  <li>La <a href="ThrottleWindowMenus.shtml">Menu Fen&#234;tre R&#233;gulateur</a></li>
+  <li>La <a href="ThrottleToolBar.shtml">Fen&#234;tre barre d'outils R&#233;gulateur</a></li>
+  <li>La <a href="AdvancedThrottleControl.shtml">Fen&#234;tre Commandes R&#233;gulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Fenêtre Liste Régulateur</a></li>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet des pr&#233;f&#233;rences R&#233;gulateur
+  </a></li>
+</ul>
+
+<h1>Tables des Mati&#232;res (TOC)</h1>
+<dl class="toc">
+  <dt><a href="ThrottleMain.shtml"
+  title="Introduction and table of contents (this page)">INTRODUCTION</a></dt>
+  <dir>
+  </dir>
+  <dt><a href="ThrottleMain.shtml" title="What is the thttps://ixquick.com/do/searchhrottle tool?">A. Qu'est ce que l'Outil R&#233;gulateur?</a></dt>
+  <dt><a href="ThrottleMain.shtml#HowToUse" title="How to use this guide">B.
+  Comment utiliser ce Guide</a></dt>
+  <br>
+  <dl>
+    <dt><a href="ThrottleChapter1.shtml"
+    title="Getting started with Throttle Tool">D&#201;MARRAGE</a></dt>
+  </dl>
+
+  <dir>
+  </dir>
+  <dt><a href="ThrottleChapter1.shtml#HowToFind"
+  title="Where do I find the throttle tool?">A. O&#249; trouver les R&#233;gulateurs?</a></dt>
+  <dir>
+  </dir>
+  <dt><a href="ThrottleChapter1.shtml#MainMenu" title="https://ixquick.com/do/searchThe Main Menu">1. Le Menu Principal (ou Primaire)  </a></dt>
+  <dt><a href="ThrottleChapter1.shtml#ThrottlesSub"
+  title="The Throttles Sub-Menu">2. Le Sous-Menu R&#233;gulateur</a></dt>
+  <br>
+  <dl>
+    <dt><a href="ThrottleChapter2.shtml"
+    title="Chapter 2 - Open and Configure a New Throttle Window">OUVRIR/CONFIGURER UNE NOUVELLE FEN&#202;TRE R&#201;GULATEUR</a></dt>
+  </dl>
+
+  <dir>
+  </dir>
+  <dt>A. <a href="ThrottleChapter2.shtml"
+  title="Open A New Throttle Window">Ouvrir une Nouvelle Fen&#234;tre R&#233;gulateur</a></dt>
+  <dir>
+  </dir>
+  <dt>1. <a href="ThrottleChapter2.shtml#StructWin"
+  title="Structure of a Throttle Window">Structure D'Une Fen&#234;tre R&#233;gulateur</a></dt>
+  <dt>B. <a href="ThrottleChapter2.shtml#WinConfig"
+  title="Configure a New Throttle">Configurer Un Nouveau R&#233;gulateur</a></dt>
+  <dir>
+  </dir>
+  <dt>1. <a href="ThrottleChapter2.shtml#AddressPanel"
+  title="Assign a Decoder Address to a Throttle Window">Assigner une Adresse D&#233;codeur &#224; une Fen&#234;tre R&#233;gulateur</a></dt>
+  <dt>2. <a href="ThrottleChapter2.shtml#ControlPanel"
+  title="Control Panel — Let's Run a Train">Panneau de Commande &#8212; Lan&#231;ons un Train</a></dt>
+  <dir>
+  </dir>
+  <dt>a. <a href="ThrottleChapter2.shtml#StandardActions"
+  title="The Standard Keypad Actions">Clavier de Commande</a></dt>
+  <dt>b. <a href="ThrottleChapter2.shtml#MouseControl"
+  title="Mouse Control">Commande Souris</a></dt>
+  <dir>
+  </dir>
+  <dt>i. <a href="ThrottleChapter2.shtml#SliderBar" title="The Slider Bar">Le Curseur</a></dt>
+  <dt>3. <a href="ThrottleChapter2.shtml#Acquiring"
+  title="Acquiring a Dispatched Locomotive">Acquisition d'une Locomotive Enregistr&#233;e</a></dt>
+  <dt>4. <a href="ThrottleChapter2.shtml#FunctionPanel"
+  title="The Function Panel">Le Panneau de Fonction</a></dt>
+  <br>
+  <dl>
+    <dt><a href="ThrottleChapter3.shtml"
+    title="Chapter 3 - Advanced Throttle Configuration">CONFIGURATION AVANC&#201;E DU R&#201;GULATEUR</a></dt>
+  </dl>
+
+  <dir>
+  </dir>
+  <dt>A. <a href="ThrottleChapter3.shtml"
+  title="Advanced Configuration of the Function Panel">Configuration Avanc&#233;e du panneau de Fonction</a></dt>
+  <dt>B. <a href="ThrottleChapter3.shtml#WinMenuOptions"
+  title="Throttle Window Menu Options">Options du menu Fen&#234;tre R&#233;gulateur</a></dt>
+  <dir>
+  </dir>
+  <dt>1. <a href="ThrottleChapter3.shtml#ViewPanels" title="View (Panels)">Voir
+  (Panneaux)</a></dt>
+  <dt>2. <a href="ThrottleChapter3.shtml#EditFrameProperties"
+  title="Edit (Frame Properties)">Modifier (Propri&#233;t&#233;s du Cadre)</a></dt>
+  <br>
+  <dl>
+    <dt><a href="ThrottleChapter4.shtml"
+    title="Chapter 4 - Saving/Opening Throttle Layouts">SAUVEGARDE/OUVERTURE DES CONFIGURATIONS R&#201;GULATEUR</a></dt>
+  </dl>
+
+  <dir>
+  </dir>
+  <dt>A. <a href="ThrottleChapter4.shtml#SaveLayout"
+  title="Saving a Throttle Layout">Sauvegarde d'une Configuration R&#233;gulateur</a></dt>
+  <dir>
+  </dir>
+  <dt>1. <a href="ThrottleChapter4.shtml#SaveMultiple"
+  title="Saving Multiple Throttle Windows">Sauvegarde de Multiples Fen&#234;tres R&#233;gulateur</a></dt>
+  <dt>B. <a href="ThrottleChapter4.shtml#LoadLayout"
+  title="Open/Load a Throttle Layout">Ouverture/Chargement d'une Configuration R&#233;gulateur<a></dt>
+  <dir>
+  </dir>
+  <dt>2. <a href="ThrottleChapter4.shtml#Merging"
+  title="Merging Throttle Windows">Fuusionner des Fen&#234;tres R&#233;gulateur</a></dt>
+  <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
+  title="Closing A Throttle Window">Fermeture d'une Fen&#234;tre R&#233;gulateur</a></dt>
+</dl>
+<br>
+<br>
+<br>
+<!--#include virtual="/Footer" --> </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-05-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
   
-  <meta content="text/html; charset=utf-8" http-equiv="content-type" ><title>Throttle Tool Bar</title>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttle Tool Bar</title>
   
       <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 	<meta name="Description" content="Throttle documentation for JMRI project" >
@@ -12,7 +12,7 @@
 	<meta name="Robots" content="Index, Follow" >
 	<meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
@@ -22,61 +22,61 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>Barre d'outils Régulateur</h1>
+<h1>Barre d'outils R&#233;gulateur</h1>
 
 <img src="images/ThrottleToolBar.png" alt="" ><br >
 
 <br >
-La barre d'outils régulateur est activable depuis le <a href="ThrottlesPreferencesPane.shtml"> Panneau des Préférences Régulateurs </a>. <br>
+La barre d'outils r&#233;gulateur est activable depuis le <a href="ThrottlesPreferencesPane.shtml"> Panneau des Pr&#233;f&#233;rences R&#233;gulateurs </a>. <br>
 <br>
-Lorsque elles sont activées, une Fenêtre Régulateur peut accueillir un ensemble de Régulateurs, ces Régulateurs peuvent être  listés utilisant le: <br>
+Lorsque elle est activ&#233;e, une Fen&#234;tre R&#233;gulateur peut accueillir un ensemble de R&#233;gulateurs, ces R&#233;gulateurs peuvent &#234;tre  list&#233;s en utilisant le: <br>
 
-<h2> bouton Précédent </h2>
+<h2> bouton Pr&#233;c&#233;dent </h2>
 
-Déplacer vers le Régulateur précédent pour cette Fenêtre de Régulateur. <br>
+D&#233;placer vers le R&#233;gulateur pr&#233;c&#233;dent pour cette Fen&#234;tre de R&#233;gulateur. <br>
 
 <br>
 
 <h2> bouton Suivant </h2>
 
-Déplacer vers le Régulateur suivant pour cette Fenêtre de Régulateur. <br>
+D&#233;placer vers le R&#233;gulateur suivant pour cette Fen&#234;tre de R&#233;gulateur. <br>
 
 <br>
 
-<h2> Nouveau bouton </h2>
+<h2> Bouton Nouveau </h2>
 
-Ajouter un nouveau Régulateur dans cette Fenêtre de Régulateur. <br> <br>
-Une fois que le nombre de Régulateurs dans une Fenêtre Régulateur est supérieure à un, ensuite les boutons Précédent et Corbeille sont activés. <br>
+Ajouter un nouveau R&#233;gulateur dans cette Fen&#234;tre de R&#233;gulateur. <br> <br>
+Une fois que le nombre de R&#233;gulateurs dans une Fen&#234;tre R&#233;gulateur est sup&#233;rieure &#224; un, ensuite les boutons Pr&#233;c&#233;dent et Corbeille sont activ&#233;s. <br>
 
 <br>
 
 <h2>Bouton Corbeille  </h2>
 
-Retirez le Régulateur actuel de cette Fenêtre de Régulateur. <br>
+Retirez le R&#233;gulateur actuel de cette Fen&#234;tre de R&#233;gulateur. <br>
 <br>
 
 
 
-Lorsque le nombre de Régulateur dans une Fenêtre de Régulateur est égal à un, les boutons  Suivant, Précédent et Corbeille sont désactivés 
+Lorsque le nombre de R&#233;gulateur dans une Fen&#234;tre de R&#233;gulateur est &#233;gal &#224; un, les boutons  Suivant, Pr&#233;c&#233;dent et Corbeille sont d&#233;sactiv&#233;s 
 
 <br >
 
 
 
- <h2>Bouton d'arrêt </h2>
+ <h2>Bouton d'arr&#234;t </h2>
 
-Envoyer un message d'arrêt à tous les Régulateurs gérés par JMRI. <br>
+Envoyer un message d'arr&#234;t &#224; tous les R&#233;gulateurs g&#233;r&#233;s par JMRI. <br>
 
 <br>
 
  <h2>Le bouton d'alimentation </h2>
 
-Permet le contrôle de l'alimentation du réseau  si possible (rouge est Arrêt,  vert Marche , le jaune est le statut inconnu). <br>
+Permet la commandee de l'alimentation du r&#233;seau  si possible (rouge = Arr&#234;t,  vert = Marche , le jaune est le statut inconnu). <br>
 <br>
 
 <h2> Bouton Liste </h2>
 
-Afficher/Masquer la liste des fenêtre Régulateurs <a href="ThrottlesListWindow.shtml"> . </A> <br>
+Afficher/Masquer la liste des fen&#234;tre R&#233;gulateurs <a href="ThrottlesListWindow.shtml"> . </A> <br>
 
 
 <br >

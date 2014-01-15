@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: AdvIcons.shtml,v 1.3 2008/03/09 20:27:27 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!--  $Id: AdvIcons.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-01-->
 
 <title>JMRI: Advanced Icons in PanelPro</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,61 +22,61 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>JMRI: Icônes Avancées dans PanelPro</h1>
+<h1>JMRI: Ic&#244;nes Avanc&#233;es dans PanelPro</h1>
 
-<a name="memoryicon"><h3>Icônes de mémoire</h3></a>
+<a name="memoryicon"><h3>Ic&#244;nes de M&#233;moire</h3></a>
 
-Les Objets Mémoire sont conçus pour les scripts de
-contrôle; la première application est un MemoryIcon qui vous permet de placer une icône 
-multi-état sur l'écran.
+Les Objets M&#233;moire sont con&#231;us pour les scripts de
+contr&#244;le; la premi&#232;re application est un MemoryIcon qui vous permet de placer une ic&#244;ne 
+multi-&#233;tat sur l'&#233;cran.
 <P>
-Objets MemoryIcon travaille de deux façons: Si une série d'icônes est définie dans le fichier, 
-le contenu de la mémoire sera traduit par l'intermédiaire de cette table (ce fut le comportement 
-d'origine). S'il n'y a pas toutes les icônes définies, le contenu de la mémoire est affichée
-directement, sous forme de chaîne si c'est une chaîne et en tant que NamedIcon si c'est un NamedIcon.
+Objets MemoryIcon travaillent de deux fa&#231;ons: Si une s&#233;rie d'ic&#244;nes est d&#233;finie dans le fichier, 
+le contenu de la m&#233;moire sera traduit par l'interm&#233;diaire de cette table (ce fut le comportement 
+d'origine). S'il n'y a pas toutes les ic&#244;nes d&#233;finies, le contenu de la m&#233;moire est affich&#233;e
+directement, sous forme de cha&#238;ne si c'est une cha&#238;ne et en tant que NamedIcon si c'est un NamedIcon.
 <P>
 Voir xml/samples/MemoryIconExample.xml pour tout savoir
-sur la façon de le mettre en place.
+sur la fa&#231;on de le mettre en place.
 
-<a name="reportericon"><h3>Icônes Reporter</h3></a>
+<a name="reportericon"><h3>Ic&#244;nes Journal</h3></a>
 
-La première implémentation de Reporter est le transpondeur Digitrax.
-En ajoutant les éléments appropriés à vos fichiers panneau, vous pouvez afficher des informations sur 
-l'ID de votre décodeur sur votre panneau.  
+La premi&#232;re impl&#233;mentation de Journal est le transpondeur Digitrax.
+En ajoutant les &#233;l&#233;ments appropri&#233;s &#224; vos fichiers panneau, vous pouvez afficher des informations sur 
+l'ID de votre d&#233;codeur sur votre panneau.  
 <P>
 Voir xml/samples/ReporterIconExample.xml  pour tout savoir
-sur la façon de le mettre en place.
+sur la fa&#231;on de le mettre en place.
 
 <UL>
-<LI>Vérifiez d'abord que JMRI voit bien les messages LocoNet. Parmi le menu outils, ouvrez le "Tableau 
-Reporter". Faites rouler une locomotive à travers vos sections équipées transpondeur, et vous devriez voir l'arrivée 
-et le départ. Afficher l'état sur une des lignes dans la table.
+<LI>V&#233;rifiez d'abord que JMRI voit les messages LocoNet OK. Parmi le menu outils, ouvrez le "Tableau 
+Journal". Faites rouler une locomotive &#231; travers vos sections &#233;quip&#233;es de transpondeur, et vous devriez voir l'arriv&#233;e 
+et le d&#233;part. Afficher l'&#233;tat sur une des lignes dans la table.
 
 <LI>
 Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement ceci dans le fichier du panneau.
 <P>
-Rechercher dans le "xml/samples" dans le répertoire JMRI un fichier appelé "ReporterIconExample.xml.
+Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; "ReporterIconExample.xml".
 <P>
-(Il est également disponible <a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml"> sur le Web </a>
-mais de nombreux navigateurs vont essayer de l'interpréter au lieu de vous montrer le texte, (votre option 
-navigateur "Afficher la source" tableau pourrait vous aider à cet égard)
+(Il est &#233;galement disponible <a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml"> sur le Web </a>
+mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer le texte, (votre option 
+navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
 <P>
 Vous verrez cette ligne:
 <P>
 &lt;reporter reportericon = "LR12" x = "10" y = "10" class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
-<P>C'est en réalité pas aussi difficile qu'il y paraît. Le "x"et "y" définissent l'endroit où vous le voulez sur 
-votre panneau. Le "LR12" est le nom de l'objet reporter, par exemple, le nom de celui que vous avez vu changer 
-quand vous étiez à la recherche de la table.
+<P> Le "x"et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur 
+votre panneau. Le "LR12" est le nom de l'objet journal, par exemple, le nom de celui que vous avez vu changer 
+quand vous cherchiez sur la table.
 <LI>
-Ouvrez votre fichier de panneau avec votre éditeur favori (WordPad, si vous n'avez rien de mieux), et insérer 
-une ligne comme celle ci juste au-dessus _après_ avoir la ligne qui commence par
+Ouvrez votre fichier de panneau avec votre &#233;diteur favori (WordPad, si vous n'avez rien de mieux), et ins&#233;rer 
+une ligne comme celle ci juste au-dessus _apr&#232;s_ la ligne qui commence par
 <P>
   &lt;classe paneleditor = "jmri.jmrit.display.configxml.PanelEditorXml"&gt;
 <P>
 (La ligne "paneleditor" commence sur un nouveau panneau. Si vous avez plus d'un panneau dans le fichier, vous devrez chercher le titre du panneau pour voir
-où insérer la nouvelle ligne)
+o&#249; ins&#233;rer la nouvelle ligne)
 </UL>
-C'est en réalité pas aussi difficile qu'il y paraîtC'est en réalité pas aussi difficile qu'il y paraît
+En r&#233;alit&#233; ce n''est  pas aussi difficile qu'il y para&#238;t
 
 	    </div> <!-- closes .list -->
 

@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Signals.shtml,v 1.3 2008/03/17 09:25:21 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/12-->
+<!-- $Id: Signals.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec  2013-09-10-->
 <html lang="fr">
 <head>
  <TITLE>      JMRI Hardware Guide: Signals with C/MRI
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI signals">
 
@@ -26,61 +26,61 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> séquences
-      JMRI Guide Matériel: Signaux avecC/MRI
+      <H2> s&#233;quences
+      JMRI Guide Mat&#233;riel: Signaux avec C/MRI
       </H2>
 <P>
 
-Pour des signaux séparés avec des diodes rouge/jaune/vert, la situation est simple: Connectez chacune à une sortie séparée avec la bonne polarité, ont le programme qui pilote ces trois sorties, et cela marchera. Le type "Sortie triple"  signal gère ce type de câblage.
+Pour des signaux s&#233;par&#233;s avec des diodes rouge/jaune/vert, la situation est simple: Connectez chacune &#224; une sortie s&#233;par&#233;e avec la bonne polarit&#233;, avoir le programme qui pilote ces trois sorties, et cela marchera. Le type de signal "Sortie triple" g&#232;re ce type de c&#226;blage.
      
 <P>
 
-Pour les signaux avec des simples diodes rouge et verte, il y a deux façons de les câbler entre elles:
+Pour les signaux avec des simples diodes rouge et verte, il y a deux fa&#231;ons de les c&#226;bler entre elles:
 
 <P>
 A) Les diodes ont une connexion commune, plus un fil pour alimenter
-chaque diode. Ceci est aussi appelé le type « trois fils ». Notez qu'il y a encore seulement deux diodes ici, 
+chaque diode. Ceci est aussi appel&#233; le type "trois fils . Notez qu'il y a encore seulement deux diodes ici, 
 mais il y a trois 3 fils.
 
 <P>
-B) Les diodes sont câblées dos à dos. C'est ce qu'on appelle le type «deux fils» 
+B) Les diodes sont c&#226;bl&#233;es dos &#224; dos. C'est ce qu'on appelle le type "deux fils" 
 
 <P>
-Dans les deux cas vous câblez ceux-ci à deux sorties C/MRI. Il y a un certain
-paire de résistances supplémentaires, et peut-être une source d'alimentation externe
-impliquées, de sorte que lorsque l'une des sorties C/MRI est activée, la puissance
-est appliquée à une diode et elle s'allume, et quand l'autre est
-activé l'autre diode est alimentée. Cela rend Rouge et Vert. Le type signal "Double sortie" gère ces séquences
+Dans les deux cas vous c&#226;blez ceux-ci &#224; deux sorties C/MRI. Il y a un certain
+paire de r&#233;sistances suppl&#233;mentaires, et peut-&#234;tre une source d'alimentation externe
+impliqu&#233;es, de sorte que lorsque l'une des sorties C/MRI est activ&#233;e, la puissance
+est appliqu&#233;e &#224; une diode et elle s'allume, et quand l'autre est
+activ&#233; l'autre diode est aliment&#233;e. Cela rend Rouge et Vert. Le type signal "Double sortie" g&#232;re ces s&#233;quences
 
 <P>
-Pour obtenir Jaune, vous devez alimenter les deux LED. C'est facile avec le câblage
-(A) ci-dessus, le programme active tout à la fois des sorties, les deux voyants 
+Pour obtenir Jaune, vous devez alimenter les deux LED. C'est facile avec le c&#226;blage
+(A) ci-dessus, le programme active tout &#224; la fois les sorties, les deux voyants 
 s'allument, et le rouge et le vert se combinent pour faire Jaune.
 
 <P>
-Avec le câblage B,  vous ne pouvez pas avoir simultanément les deux voyants lumineux, puisque le courant 
-ne peut pas circuler dans les deux directions en même temps. Mais "en même temps "est la clé; simplement alterner le sens du courant très rapidement, trop rapidement pour que l'œil voit les transitions, et les couleurs vont fusionner
-en jaune. Il y a deux façons de faire cela:
+Avec le c&#226;blage B,  vous ne pouvez pas avoir simultan&#233;ment les deux voyants lumineux, puisque le courant 
+ne peut pas circuler dans les deux directions en m&#234;me temps. Mais "en m&#234;me temps "est la cl&#233;; simplement alterner le sens du courant tr&#232;s rapidement, trop rapidement pour que l'œil voit les transitions, et les couleurs vont fusionner
+en jaune. Il y a deux fa&#231;ons de faire cela:
 
 <P>
-A1) Utiliser un circuit externe. Il y a une carte driveséquencer signal pour faire ceci et qui se relie
+A1) Utiliser un circuit externe. Il y a une carte drives&#233;quencer signal pour faire ceci et qui se relie
  les sorties C/MRI et les fils des LEDs. Lorsque
-il détecte que les deux sorties sont sur _on_, il alterne rapidement  les
-tension à la LED, ce qui donne le  jaune. Ce circuit peut être utilisé avec
-tout type de système C/MRI t, et vous n'avez pas à dire quoi que ce soit PanelPro
+il d&#233;tecte que les deux sorties sont sur _on_, il alterne rapidement  les
+tension &#224; la LED, ce qui donne le  jaune. Ce circuit peut &#234;tre utilis&#233; avec
+tout type de syst&#232;me C/MRI, et vous n'avez pas &#224; dire quoi que ce soit PanelPro
 pour le faire fonctionner.
 
 <P>
 <a href="NodeConfig.jpg"><img src="NodeConfig.jpg" alt="Config Pane" align="right" height="212" width="205"> </a>
-A2) Utiliser un support  intégré dans la carte SMINI. Une carte SMINI peut être 
-configuré de manière à faire une chose semblable. Lorsque la SMIN  détecte les deux
-sorties  activées,elle alterne la tension. Pour configurer cela, vous
-devez aller dans les préférences PanelPro, cliquez sur "Configurer  noeuds C/MRI
-", sélectionnez une SMINI  à configurer, cliquez sur l'une des petites
- cases à cocher pour configurer une sortie spécifique comme « Signal à deux fils à séquences oscillante
- ". Cliquez sur" Éditer Noeud "pour mettre à jour, puis fermer ce panneau, cliquez sur
-"Enregistrer" et redémarrer le programme. Une fois cela fait, un double "
-Type  de signal d'aiguillage" fera également  générer des signaux jaunes sur ces
+A2) Utiliser un support  int&#233;gr&#233; dans la carte SMINI. Une carte SMINI peut &#234;tre 
+configur&#233; de mani&#232;re &#224; faire une chose semblable. Lorsque la SMIN  d&#233;tecte les deux
+sorties  activ&#233;es,elle alterne la tension. Pour configurer cela, vous
+devez aller dans les pr&#233;f&#233;rences PanelPro, cliquez sur "Configurer  noeuds C/MRI
+", s&#233;lectionnez une SMINI  &#224; configurer, cliquez sur l'une des petites
+ cases &#224; cocher pour configurer une sortie sp&#233;cifique comme " Signal &#224; deux fils &#224; s&#233;quences oscillante
+ ". Cliquez sur" &#233;diter Noeud "pour mettre &#224; jour, puis fermer ce panneau, cliquez sur
+"Enregistrer" et red&#233;marrer le programme. Une fois cela fait, un double "
+Type  de signal d'aiguillage" fera &#233;galement  g&#233;n&#233;rer des signaux jaunes sur ces
 sorties.
 
 

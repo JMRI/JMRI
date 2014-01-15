@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewType.shtml,v 1.2 2008/01/22 06:17:20 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-06-06--> 
+<!-- $Id: NewType.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-08--> 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Adding A New Data Type
-    </TITLE>
+   </TITLE>
     <META content="Bob Jacoben" name=Author>
     <meta name="keywords" content="JMRI technical type add">
 
@@ -14,7 +14,7 @@
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,219 +30,219 @@
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-	    <H1>JMRI: Ajouter un Nouveau Type de Données</H1>
+	    <H1>JMRI: Ajouter un Nouveau Type de Donn&#233;es</H1>
 
 		<div class=para>
-		<p>Cette page décrit les étapes pour ajouter un nouveau type de données,
-par exemple, Aiguillage, à JMRI. </P>
+		<p>Cette page d&#233;crit les &#233;tapes pour ajouter un nouvelle donn&#233;e-types,
+par exemple, Aiguillage, &#224; JMRI.</P>
 
 <p> Elle utilise comme exemple l'ajout
-du type Journal en Juillet 2004. Journal est un nouveau
-type de NamedBean utilisé pour apporter des informations complexes
-en retour du réseau ferré . </p>
+du type Rapport en Juillet 2004. Rapport est un nouveau
+type de NamededBean utilis&#233; pour apporter des informations complexes
+en retour du r&#233;seau ferr&#233; .</p>
 </div>
 		<div class=list>
-		<p>Nous listons les fichiers qui sont modifiés et créés dans l'
-ordre dans lequel ils ont été fait dans ce cas, des ordres différents peuvent aussi travailler,
-et vous ne pourriez pas avoir besoin de faire tout cela. </p>
+		<p>Nous listons les fichiers qui sont modifi&#233;s et cr&#233;&#233;s dans l'
+ordre dans lequel ils ont &#233;t&#233; fait dans ce cas, des ordres diff&#233;rents peuvent aussi travailler,
+et vous ne pourriez pas avoir besoin de faire tout cela.</p>
 <P>
-Dans ce cas particulier, notre première mise en œuvre est
-un seul système matériel (LocoNet). Comment
-nous avons ordonné cela, et réduit la nécessité d'avoir des tests unitaires
-en place au début. En travaillant à travers la première implémentation de LocoNet
-, nous pourrions avoir une meilleure idée de savoir si
-l'interface  Reporter proposée  a fait ce qui est nécessaire.
-Si vous créez un nouveau type que plusieurs système auront besoin
- dans un premier temps, vous devez également créer des tests unitaires au début du
-processus pour encoder ce que vous pensez être le comportement commun.
+Dans ce cas particulier, notre premi&#232;re mise en oeuvre est
+un seul syst&#232;me mat&#233;riel (LocoNet). Cela influe sur la fa&#231;on dont
+nous avons ordonn&#233; cela, et r&#233;duit la n&#233;cessit&#233; d'avoir des tests unitaires
+en place au d&#233;but. En travaillant &#224; travers la premi&#232;re impl&#233;mentation de LocoNet
+, nous pourrions avoir une meilleure id&#233;e de savoir si
+l'interface  Reporter propos&#233;e  a fait ce qui &#233;tait n&#233;cessaire.
+Si vous cr&#233;ez un nouveau type que plusieurs syst&#232;me auront besoin
+ dans un premier temps, vous devez &#233;galement cr&#233;er des tests unitaires au d&#233;but du
+processus pour encoder ce que vous pensez &#234;tre le comportement commun.
 		
 		<P>.
-En général, les nouvelles classes et interfaces définies ci-dessous
-peuvent plus facilement être faites en copiant un modèle existant. Dans ce
-cas, on copie le fichier "* Turnout*" pour correspondre à un fichier
+En g&#233;n&#233;ral, les nouvelles classes et interfaces d&#233;finies ci-dessous
+peuvent plus facilement &#234;tre faites en copiant un mod&#232;le existant. Dans ce
+cas, on copie le fichier "* Turnout*" pour correspondre &#224; un fichier
 "*Reporter*".
 		<dl>
 
-		<h3>Definir le Nouveau Type et son Gestionnaire </h3>
+		<h3>Definir le Nouveau Type et son Gestionnaire</h3>
 
-		    <dt>Reporter (Journal)</dt>
+		    <dt>Reporter (Rapport)</dt>
 		    <dd>
-			<p>Cette interface définit les propriétés nécessaires.
-Il doit hériter de NamedBean, vous pouvez
-ajouter des accessoires nouveaux comme vous le souhaitez. </p>
+			<p>Cette interface d&#233;finit les propri&#233;t&#233;s n&#233;cessaires.
+Il doit h&#233;riter de NamedBean, vous pouvez
+ajouter des accessoires nouveaux comme vous le souhaitez.</p>
 </dd>
 
 <dt>ReporterManager</dt>
 <dd>
-<p> Cette interface fournit des méthodes pour obtenir un objet Journal
- soit seulement à partir du nom du système (de préférence)
-ou avec des paramètres supplémentaires </p>
+<p> Cette interface fournit des m&#233;thodes pour obtenir un objet Rapport
+ soit seulement &#224; partir du nom du syst&#232;me (de pr&#233;f&#233;rence)
+ou avec des param&#232;tres suppl&#233;mentaires</p>
 </dd>
 
-<P> À ce stade, assurez - vous que vous pouvez compiler. </P>
+<P> A ce stade, assurez-vous que vous pouvez compiler.</P>
 
-<dt> doc/technical/Names.shtml </dt>
+<dt> doc/technical/Names.shtml</dt>
 <dd>
-<p> mise à jour de la discussion de la dénomination pour inclure la lettre - type
- dans votre nouveau type. Pendant que vous y êtes
- mettez à jour les pages spécifiques au système de dénomination en fonction des besoins.
+<p> mise &#224; jour de la discussion de la d&#233;nomination pour inclure la lettre-type
+ dans votre nouveau type. Pendant que vous y &#234;tes
+ mettez &#224; jour les pages de d&#233;nomination sp&#233;cifiques au syst&#232;me en fonction des besoins.
 .</p>
-< dd>
-
-		    <dt>AbstractReporter </dt>
 <dd>
-<p> Il s'agit d'une application de base. </p>
+
+		    <dt>AbstractReporter</dt>
+<dd>
+<p> Il s'agit d'une application de base.</p>
 </dd>
 
- <dt>AbstractReporterManager </dt>
+ <dt>AbstractReporterManager</dt>
 <dd>
-<p> Application de base; choses qui est utile à
-toutes les applications spécifiques au système </p>
+<p> Application de base; choses qui est utile &#224;
+toutes les applications sp&#233;cifiques au syst&#232;me</p>
 </dd>
 
-<P> À ce stade, assurez - vous que vous pouvez compiler. </P>
+<P> A ce stade, assurez-vous que vous pouvez compiler.</P>
 
- <dt>managers.ProxyReporterManager </dt>
+ <dt>managers.ProxyReporterManager</dt>
 <dd>
-<p> poignées ayant plus d'un système fournissant des
-objets Journal . Il prend zéro ou plusieurs 
-application ReporterManager , et route les demande d'accès Journal
-à celle de droite. </p>
+<p> Ces traitements ayant plus d'un syst&#232;me fournissant des
+objets Rapport. Il prend soit aucune ou plusieurs 
+r&#233;alisation ReporterManager, et et achemine les demandes d'acc&#232;s au bon Rapport
+.</p>
 </dd>
 
-<dt>InstanceManager  </dt>
+<dt>InstanceManager </dt>
 <dd>
-<p> Il existe plusieurs façons historiques d'installer des
-choses dans l' InstanceManager. La procédure actuelle est
+<p> Il existe plusieurs fa&#231;ons historiques d'installer des
+choses dans l'InstanceManager. La proc&#233;dure actuelle est
 d'utiliser des "proxies" pour permettre l'utilisation de  multiples
-systèmes de réseaux ferrés, donc s'il vous plaît copier l'Aiguillage en tant que  modèle. </p>
+syst&#232;mes de r&#233;seaux ferr&#233;s, donc s'il vous pla&#238;t copier l'Aiguillage en tant que mod&#232;le.</p>
 </dd>
 
 
-		    <P>À ce stade, assurez-vous que vous pouvez compiler.</P>
+		    <P>A ce stade, assurez-vous que vous pouvez compiler.</P>
 
-		<h3>Fournir la Première Mise en œuvre Spécifiques au Système</h3>
+		<h3>Fournir la Premi&#232;re r&#233;alisation sp&#233;cifique syst&#232;me</h3>
 
 		    <dt>jmrix.loconet.LnReporterManager</dt>
 		    <dd>
-			<p>Cette classe écoute l'activité indiquant un
-nouveau Journal LocoNet spécifique, et appelle à en
- créer un si nécessaire. Autre que cela, et fournissant
-la lettre spécifique au système à droite ('L' par exemple), ce n'est
-juste qu'une une copie directe. </p>
+			<p>Cette classe &#233;coute l'activit&#233; indiquant un
+nouveau Rapport sp&#233;cifique-LocoNet , et appelle &#224; en
+ cr&#233;er un si n&#233;cessaire. Autrement, elle fournit
+la bonne lettre sp&#233;cifique au syst&#232;me ('L' par exemple), ce n'est
+juste qu'une une copie directe.</p>
 </dd>
 
- <dt> jmrix.loconet/LnReporter </dt>
+ <dt> jmrix.loconet/LnReporter</dt>
 <dd>
-<p> Convertit le message spécifique en actions Journal et en rapport.
-Tout le reste de la substance est juste pour avoir cela en place. </p>
+<p> Convertit les message sp&#233;cifiques dans le Rapport actions et en rapport.
+Tout le reste de la substance est juste pour mettre cela en place.</p>
 </dd>
 
-<P> À ce stade, assurez - vous que vous pouvez compiler.
-Rien ne se passera lorsque vous exécutez jusqu'à la prochaine étape. </P>
+<P> A ce stade, assurez - vous que vous pouvez compiler.
+Rien ne se passera lorsque vous ex&#233;cutez jusqu'&#224; la prochaine &#233;tape.</P>
 <dd>
 
-<dt>jmrix.loconet.LnPortController </dt>
+<dt>jmrix.loconet.LnPortController</dt>
 <dd>
-<p> ici (ou peut-être ailleurs dans un autre système), vous
-créer une instance de la classe ReporterManager correcte au démarrage du système
-et l'installer dans l' InstanceManager. </p>
-		 		    </dd>
+<p> ici (ou peut-&#234;tre ailleurs dans un autre syst&#232;me), vous
+cr&#233;er une instance de la classe ReporterManager correcte au d&#233;marrage du syst&#232;me
+et l'installer dans l' InstanceManager.</p>
+		 		   </dd>
 
-		<h3>Ajouter à la Charge des Scripts</h3>
+		<h3>Ajouter &#224; la Charge des Scripts</h3>
 
 		    <dt>jython/jmri_defaults.py</dt>
 		    <dd>
-			<p> Ajouter une nouvelle variable pour donner un accès facile au nouveau gestionnaire. </p>
+			<p> Ajouter une nouvelle variable pour donner un acc&#232;s facile au nouveau gestionnaire.</p>
 </dd>
 
-<dt> doc/technical/Jython.shtml </dt>
+<dt> doc/technical/Jython.shtml</dt>
 <dd>
-<p>Mise à jour de celle-ci pour se référer à la nouvelle variable Jython
-(Il peut y avoir d'autres pages web aussi!) </p>
+<p>Mise &#224; jour de celle-ci pour se r&#233;f&#233;rer &#224; la nouvelle variable Jython
+(Il peut y avoir d'autres pages web aussi!)</p>
 </dd>
 
-<P> À ce stade, vous devriez être en mesure de compiler et
-d'exécuter à droite à droite les essais du nouveau code de la ligne de commande jython</P>
+<P> A ce stade, vous devriez &#234;tre en mesure de compiler et
+d'ex&#233;cuter tester le nouveau code de la ligne de commande jython</P>
 
-		<h3>Ajouter un Nouveau Tableau d'Outils d'Accès (en option</h3>
+		<h3>Ajouter un Nouveau Tableau d'Outils d'Acc&#232;s (en option</h3>
 		
 			<dt>jmrit.beantable.ReporterTableAction</dt>
 		    <dd>
-			<p>Créez un nouveau "tableau" pour regarder ceux-ci en action. </P>
-<p> Dans ce cas particulier, le code a dû être  un peu modifié
-(au lieu d'être simplement copiés) parce qu'un Journal n'a pas vraiment
-eu un moyen de supporter les "cliquer pour changer"</p>
-		    </dd>
+		<p>Cr&#233;ez un nouveau "tableau" pour regarder celui-ci en action.</P>
+<p> Dans ce cas particulier, le code a d&#251; &#234;tre  un peu modifi&#233;
+(au lieu d'&#234;tre simplement copi&#233;) parce qu'un Rapport n'a pas vraiment
+eu moyen de supporter les "clic pour changer"</p>
+		   </dd>
 
 		    <dt>jmrit/beantable/BeanTableBundle.properties</dt>
 		    <dd>
-			<p>Ajouter des chaînes pour les propriétés nouvelles que vous avez défini
-à l'étape précédente. Vous pouvez également traduire celles-ci
-dans les autres propriétés des fichiers lorsque cela est possible.</p>
-		    </dd>
+			<p>Ajouter des cha&#238;nes pour les propri&#233;t&#233;s nouvelles que vous avez d&#233;finies
+&#224; l'&#233;tape pr&#233;c&#233;dente. Vous pouvez &#233;galement traduire celles-ci
+dans les autres propri&#233;t&#233;s des fichiers lorsque cela est possible.</p>
+		   </dd>
 
 		    <dt>jmrit.ToolsMenu</dt>
 		    <dd>
 			<p>Ajoutez la nouvelle classe ReporterTableAction au menu.</p>
-		    </dd>
+		   </dd>
 
 		    <dt>jmrit/JmritToolsBundle.properties</dt>
 		    <dd>
-			<p>Ajouter des chaînes pour la nouvelle propriété que vous avez défini
-à l'étape précédente. Vous pouvez également traduire celle à droite dans les autres propriétés des fichiers lorsque cela est possible.</p>
-		    </dd>
+			<p>Ajouter des cha&#238;nes pour la nouvelle propri&#233;t&#233; que vous avez d&#233;fini
+&#224; l'&#233;tape pr&#233;c&#233;dente. Vous pouvez &#233;galement traduire celle dans les autres propri&#233;t&#233;s des fichiers lorsque cela est possible.</p>
+		   </dd>
 
-		    <P>À ce stade, vous devriez être en mesure de compiler et
-d'exécuter le test du nouveau tableau.</P>
+		    <P>A ce stade, vous devriez &#234;tre en mesure de compiler et
+d'ex&#233;cuter le test du nouveau tableau.</P>
 
 		<h3>Donner de la Persistance aux Types Objets et au Gestionnaire</h3>
 
 		    <dt>configxml.AbstractReporterManagerConfigXML</dt>
 		    <dd>
-			<p>Charger et enregistrer la date de configuration des applications ReporterManager </p>
-		    </dd>
+			<p>Charger et enregistrer la date de configuration des applications ReporterManager</p>
+		   </dd>
 
 		    <dt>jmrix.loconet.configurexml.LnReporterManagerXml</dt>
 		    <dd>
-			<p>Charger et stocker le système spécifique d'info LocoNet Gestionnaire Journal </p>
-		    </dd>
+			<p>Charger et stocker l'info sp&#233;cifique-syst&#232;me Gestionnaire Rapport LocoNet</p>
+		   </dd>
 		    
 		    <dt>xml/DTD/layout-config.dtd</dt>
 		    <dd>
-			<p>Ajouter de nouveaux éléments et attributs XML à la DTD</p>
-		    </dd>
+			<p>Ajouter de nouveaux &#233;l&#233;ments et attributs XML &#224; la DTD</p>
+		   </dd>
 
-		<h3>Donner une Classe d'Affichage IcôneAappropriée (facultatif)</h3>
+		<h3>Donner une Classe d'Affichage Ic&#244;ne Aappropri&#233;e (facultatif)</h3>
 
 		    <dt>jmrit.display.ReporterIcon</dt>
 		    <dd>
 			<p>discussion</p>
-		    </dd>
+		   </dd>
 
 		    <dt>jmrit.display.configxml.ReporterIconXml</dt>
 		    <dd>
 			<p>discussion</p>
-		    </dd>
+		   </dd>
 
 		    <dt>xml/DTD/layout-config.dtd</dt>
 		    <dd>
 			<p>discussion</p>
-		    </dd>
+		   </dd>
 
-		<h3>Complèter la Documentation</h3>
+		<h3>Compl&#232;ter la Documentation</h3>
 
 		    <dt>ant javadoc</dt>
 		    <dd>
-			<p>Créer des JavaDocs, et résoudre les éventuels problèmes nouveaux (ou anciens).</p>
-		    </dd>
+			<p>Cr&#233;er des JavaDocs, et r&#233;soudre les &#233;ventuels nouveaux probl&#232;mes (ou anciens).</p>
+		   </dd>
 
 		</dl>
 		</div>
 
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>

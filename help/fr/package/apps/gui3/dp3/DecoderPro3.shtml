@@ -1,13 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: DecoderPro3.shtml,v 1.1 2010/10/01 12:33:06 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-03-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-08-->
 <title>JMRI: DecoderPro3</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,16 +21,167 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: DecoderPro3
+Introduction &#224; DecoderPro3
 </h1>
 
-DecoderPro3 est une mise à jour de l'apparence
-du vénérable<a href="../../DecoderPro/DecoderPro.shtml">DecoderPro</a>.
+Ce fichier d'aide est en cours d'&#233;laboration</b>. S'il vous pla&#238;t aider JMRI en contribuant
+&#224; am&#233;liorer ce fichier d'aide!</p>
 
-<p>
-Cette page est un lieu réservé pour d'éventuelle pages d'aide DecoderPro3.
+<p> Decoder Pro 3 pr&#233;sente une liste de vos locomotives (la Liste) et fournit
+acc&#232;s aux outils pour les variables de configuration du d&#233;codeur de programmation (CV).</p>
 
-    
+<h1>Description de la Fen&#234;tre Decoder Pro 3</h1>
+
+<p> La fen&#234;tre d&#233;codeur Pro 3  est divis&#233;e en cinq grandes sections de haut en
+bas.</p>
+<img src="helpfile_dump1.jpg" width="526" height="266"> 
+<ol>
+   <li> <a href="#menubar"> La barre de menus</a>.</li>
+   <li> <a href="#toolbar"> La barre d'outils (ou barre de boutons). Contenant des boutons et
+     commandes.</a></li>
+   <li> Le Tableau Liste. Contenant une liste de d&#233;codeurs dans votre Liste. Une entr&#233;e
+     figurant dans le fichier peut &#234;tre mise en &#233;vidence avec la souris.</li>
+   <li> La zone d'information du d&#233;codeur. Celle-ci affiche des informations sur l'entr&#233;e en surbrillance dans le tableau de Liste.</li>
+   <li> Une barre d'&#233;tat. Celle-ci rapportes des informations sur une seule ligne. L'information d'erreur
+    est &#233;galement affich&#233;e ici.</li>
+</ol>
+
+<h1>Principales t&#226;ches avec d&#233;codeur Pro 3</h1>
+
+<p> Decoder Pro 3 est con&#231;u pour la gestion des d&#233;codeurs DCC &#233;quipant les
+locomotives. Les locomotives reconnues par Decoder Pro 3 sont affich&#233;es dans le Tableau Liste
+. Les t&#226;ches principales sont pr&#233;vues: la cr&#233;ation d'une nouvelle locomotive et le changement
+des param&#232;tres dans une locomotive existante (programmation).</p>
+
+<h2>Nouvelle locomotive</h2>
+
+<p> Pour ajouter une nouvelle locomotive (ou la premi&#232;re locomotive), cliquez sur le bouton "Nouvelle Loco"
+ de la barre d'outils. Cela va ouvrir une fen&#234;tre "Cr&#233;er Nouvelle Loco", o&#249; le
+d&#233;codeur peut &#234;tre soit identifi&#233; soit choisi dans la liste. Pour cr&#233;er la
+locomotive, apr&#232;s avoir s&#233;lectionn&#233; (ou identifi&#233;) un d&#233;codeur, s&#233;lectionner le Format du programmateur
+(de base ou complet) et cliquez sur "Ouvrir Programmateur". Une fen&#234;tre de programmation
+pour la nouvelle locomotive va ouvrir, avec l'onglet "Saisie de Liste" avant tout.
+Il est recommand&#233; de donner &#224; la locomotive un nom dans le "ID:", puis
+cliquez sur "Sauver dans la Liste". Vous pouvez &#233;galement proc&#233;der &#224; la programmation du d&#233;codeur, ce qui lui donne
+une adresse DCC (dans l'onglet "Basic"), et d&#233;finir d'autres valeurs. Apr&#232;s la fermeture de la Fen&#234;tre de programmation, si vous &#234;tes invit&#233;, enregistrez les r&#233;sultats dans la Liste.</p> 
+
+<h2> Identifier une Locomotive Existante</h2>
+
+<p> Si une locomotive est plac&#233;e sur la voie de programmation, le bouton "Identifier"
+lira les d&#233;tails du d&#233;codeur et essaiera de les faire correspondre &#224; une entr&#233;e dans le tableau
+Liste. Certains d&#233;codeurs ne fonctionnent qu'avec un nombre limit&#233; de modes de programmation
+, et il peut &#234;tre n&#233;cessaire de changer le mode de programmation avec le bouton "Set"
+. Si une locomotive est correctement identifi&#233;e, elle sera mise en &#233;vidence dans le Tableau Liste, et ses d&#233;tails apparaissent dans le coin inf&#233;rieurde la zone d' Information Decoder
+R&#233;gion.</p>
+
+ <h2>Programmation d'une locomotive existante</h2>
+
+<p>Une fois que la locomotive a &#233;t&#233; s&#233;lectionn&#233;, soit en la trouvant manuellement &#224; l'int&#233;rieur
+du tableau Liste, ou par le bouton "Identifier", un r&#233;sum&#233; de ses d&#233;tails
+appara&#238;tra dans la zone inf&#233;rieur d'information du d&#233;codeur. Les boutons pour ouvrir le
+programmateur sont &#224;  droite de la zone d'information du d&#233;codeur.</p>
+
+<p> S&#233;lectionnez le type de programmation n&#233;cessaire avec les boutons radio, s&#233;lectionnez
+entre la voie de programmation et la programmation sur la ligne principale ou modifier le fichier
+uniquement (pas de programmation d'une locomotive). Apr&#232;s avoir s&#233;lectionn&#233; le type de programmation,
+vous pouvez ouvrir soit le programmeur de base (qui permet le changement de l'adresse de la locomotive) ou le programmateur Complet (qui permet de  changer les caract&#233;ristiques du d&#233;codeur de locomotive connu de DecoderPro).</p> 
+
+<h2>Changement d'&#233;tiquettes de R&#233;gulateur et M&#233;dias de la Liste</h2>
+
+<p>Les &#233;tiquettes r&#233;gulateur sont utilis&#233;s par les &#233;crans des R&#233;gulateurs JMRI et par les r&#233;gulateurs smart-phone par l'interm&#233;diaire de l'interface  WiThrottle.
+Elless permettent aux Fonctions Cl&#233;s d'avoir des noms &#233;vocateurs tels que "Corne", "Whistle", plut&#244;t que "F2" et
+"F4". Leur utilisation est facultative.</p>
+
+<p>La Composition des Media Liste est l'endroit o&#249; les photos de locomotives peuvent &#234;tre charg&#233;es dans JMRI. Celles-ci
+sont affich&#233;es dans la Liste et peuvent &#234;tre utilis&#233;es dans les R&#233;gulateurs Throttles. Leur utilisation est
+en option.</p>
+
+<h2>Groupes de fiches</h2>
+
+<p>Les Groupes de fiches sont un moyen de filtrer les entr&#233;es dans la Liste. Par
+exemple , vous pourriez avoir " locos diesel ", " locos &#224; vapeur ", mais aussi " Locos Burlington
+ "et" Locos Canadien Pacifique ". Ainsi, une seul des locomotives dans la Liste
+pourrait &#234;tre membre de plusieurs groupes. Les Groupes de fiches sont utilis&#233;s pour filtrer la vue de la Liste dans Decoder Pro 3 , et s&#233;lectionner les locomotives offertes dans un &#233;cran R&#233;gulateur.</p>
+
+<p> Pour cr&#233;er votre premier Groupe de fiche, utilisez la commande " Cr&#233;er un groupe de Fiche " dans le
+le menu "R&#233;glages". Lorsque vous avez cr&#233;&#233; un groupe de Fiche , une nouvelle liste d&#233;roulante est
+ajout&#233;e &#224; la barre d'outils en Decoder Pro 3. Apr&#232;s avoir cr&#233;&#233; un groupe , c'est d'abord
+vide . L'&#233;tape suivante consiste &#224; ajouter des locomotives dans le groupe . Cela se fait avec la
+Commande " Liste du groupe Tableau  " dans le menu "Param&#232;tres" . avec l'
+Fen&#234;tre "Association groupe du tableau Liste" , s&#233;lectionnez le groupe de fiches dans la menu d&#233;roulant , puis
+placer une coche &#224; c&#244;t&#233; de toutes les locomotives exig&#233;es dans ce groupe. R&#233;p&#233;tez l'op&#233;ration pour tout les
+autres groupes, et lorsque vous avez termin&#233; fermer la fen&#234;tre avec le gros bouton dans le
+coin sup&#233;rieur droit .</p>
+
+<a name="menubar"></a>
+<h1>Barre de Menu</h1>
+
+<h2>Menu Fichier</h2>
+<ul>
+  <li>Nouvelle Fen&#234;tre DecoderPro</li>
+  <li>Importer Liste</li>
+  <li>Importer Entr&#233;e Liste</li>
+  <li>Importer Fichier D&#233;codeur</li>
+  <li>Importer URL D&#233;codeur</li>
+  <li>------------------</li>
+  <li>Exporter Entr&#233;e Liste</li>
+  <li>Exporter Liste Compl&#232;te</li>
+  <li>------------------</li>
+  <li>Imprimer Sommaire Liste</li>
+  <li>Imprimer Entr&#233;e Liste</li>
+  <li>Pr&#233;visualiser Sommaire Liste</li>
+  <li>Pr&#233;visualiser Entr&#233;e Liste</li>
+  <li>-------------------</li>
+  <li>Quitter</li>
+</ul>
+
+<h2>Menu Modifier</h2>
+<ul>
+  <li>Couper</li>
+  <li>Copier</li>
+  <li>Coller</li>
+  <li>Dupliquer Loco</li>
+  <li>Delete Loco</li>
+  <li>-----------</li>
+  <li>Pr&#233;f&#233;rences</li>
+</ul>
+
+<h2>menu R&#233;glages</h2>
+<ul>
+  <li>Cacher/Montrer le Sommaire Volet</li>
+  <li>R&#233;initialiser tailles de la fen&#234;tre</li>
+  <li>Cacher/Montrer image liste</li>
+  <li>--------------</li>
+  <li>Programmation -&gt; </li>
+  <li>--------------</li>
+  <li>Cr&#233;er un groupe Liste</li>
+  <li>effacer Groupe de Liste</li>
+  <li>Association groupe du tableau Liste</li>
+</ul>
+
+<h2>Menu Actions</h2>
+<ul>
+  <li>Programmateur Basic</li>
+  <li>Programmateur Complet</li>
+  <li>Programmateur CV Simple</li>
+  <li>Modifier Tableaux R&#233;gulateur</li>
+  <li>Modifier M&#233;dia Liste</li>
+  <li>--------------</li>
+  <li>Nouveau R&#233;gulateurs</li>
+  <li>Outil de Couplage</li>
+  <li>Outil Aiguillage</li>
+  <li>Commande Alimentation</li>
+  <li>Tachym&#232;tre</li>
+  <li>--------------</li>
+  <li>D&#233;marrer Serveur WiThrottle</li>
+  <li>D&#233;marrer Serveur Web</li>
+  <li>--------------</li>
+  <li>Recr&#233;er l'Index Liste </li>
+  <li>Recr&#233;er l'Index D&#233;codeur</li>
+  <li>--------------</li>
+  <li>Ex&#233;cuter Script</li>
+</ul>
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>

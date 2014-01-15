@@ -41,7 +41,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             
     # show what level of signal appearance causes a halt on dropping signal
     def returnSignalAppearanceHalt(self) :
-        return(int(self.haltOnSignalHeadAppearance).toString())
+        return(str(self.haltOnSignalHeadAppearance))
         
     # return userName if available, else systemName
     def giveBlockName(self, block) :
@@ -216,7 +216,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         if (b.getCurvature() != None) :
             self.msgText("Block Curvature: " + self.cvtCurvatureToText(b.getCurvature()) + "\n")
         if (b.getLengthIn() != None) :
-            self.msgText("Block Length: " + b.getLengthIn().toString() + "\n")
+            self.msgText("Block Length: " + str(b.getLengthIn()) + "\n")
         if (b.getDirection() != None) :
             self.msgText("Block Direction: " + jmri.Path.decodeDirection(b.getDirection()) + "\n")
         #if (b.getWorkingDirection() != None) :
@@ -226,7 +226,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         if (b.getBlockSpeed() != "") :
             self.msgText("Block Speed: " + b.getBlockSpeed() + "\n")
         if (b.getSpeedLimit() != "") :
-            self.msgText("Block Speed Limit: " + b.getSpeedLimit().toString() + "\n")
+            self.msgText("Block Speed Limit: " + str(b.getSpeedLimit()) + "\n")
         if (b.getPermissiveWorking()) :
             self.msgText("Block Permissive: True\n")
         else :
@@ -235,19 +235,19 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
 
     def displayPathData(self, block) :
         pathList = block.getPaths()
-        self.msgText("Paths from " + self.giveBlockName(block) + ": " + len(pathList).toString() + "\n")
+        self.msgText("Paths from " + self.giveBlockName(block) + ": " + str(len(pathList)) + "\n")
         for p in pathList :
             blockTest = p.getBlock()
             dirTest = p.getToBlockDirection()
             if (p.checkPathSet()) :
-                self.msgText("Path traversable: "  + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + "\n")
+                self.msgText("Path traversable: "  + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + str(dirTest) + "\n")
             else :
-                self.msgText("Path not traversable: " + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + "\n")
+                self.msgText("Path not traversable: " + self.giveBlockName(self.currentBlock) + " to " + self.giveBlockName(blockTest) + " " + jmri.Path.decodeDirection(dirTest) + ":" + str(dirTest) + "\n")
             sig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(block, blockTest)
             if (sig != None) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " signal: " + self.giveSignalName(sig) + " aspect: " + self.cvtSignalToText(sig) + "\n")
             else :
-                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signa headsl!\n")
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal headsl!\n")
             mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
             if (mast != None) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")

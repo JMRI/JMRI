@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: OCantonEdit.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--  UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02 -->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Canton Add/Edit Help
+</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help OCanton Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Cr&#233;ation et modification OCantons, Portails et OChemins</H1>
+Commencez par entrer chaque Canton d'occupation de votre r&#233;seau dans le <b>Tableau Canton d'occupations</b>.
+<ul>
+<p><b>1.</b> Entrez un nom syst&#232;me pour le OCanton.
+Si vous n'avez pas pr&#233;facer l'entr&#233;e avec "OB", il sera ajout&#233; &#224;
+votre entr&#233;e automatiquement.</p>
+<p><b>2.</b> (optionnel) Entrez le nom utilisateur pour le OCanton.</p>
+<p><b>3.</b> entrer dans le nom  syst&#232;me ou le nom utilisateur de le capteur de d&#233;tection pour le Canton. <i>Vous pouvez sauter
+cette entr&#233;e et y revenir et entrerles informations plus tard.</i>
+<UL>
+Note: <i>(Vous pouvez aussi lire cette note plus tard).</I> S'il y a plus d'un capteur qui d&#233;tecte
+l'occupation du Canton. , faire un 'OU' avec l'ensemble et d&#233;clencher un capteur interne simple pour utiliser
+cette entr&#233;e. Par exemple, supposons que, LS10, LS11 et LS12 soient des capteurs de d&#233;tection et IS100
+est un capteur interne. En supposant que "Actif" signifie occup&#233;, &#233;crire une condition
+Logix avec des Variables d'&#233;tat:
+<ul>
+<ul>
+&#201;tat Capteur "LS10" est Capteur Actif</br>
+&#201;tat Capteur "LS11" est Capteur Actif</br>
+&#201;tat Capteur "LS12" est Capteur Actif</br>
+</ul>
+S&#233;lectionnez <b>OU</b > comme op&#233;rateur logique .
+<br> ajouter les Actions:</br>
+<ul>
+Sur Changement pour Vraie, d&#233;finir le Capteur, "IS100" &#224; Actif .
+<br>Sur Changement pour faux, d&#233;finir le Capteur, "IS100" &#224; Inactif.</br>
+</ul>
+Note: La ligne d'une nouvelle entr&#233;e va retrouver sa position de tri comme ordonn&#233; par le nom du syst&#232;me .
+Pour continuer &#224; modifier la ligne, chercher en haut de la fen&#234;tre. il restera en place
+tant qu'il a le m&#234;me nom syst&#232;me .
+</Ul>
+</ul>
+Ensuite, entrez les portails entre les cantons dans le <b>Tableau Portail</b> .
+<ul>
+<b>4.</b> Pour chaque point entre les cantons que vous avez d&#233;finis dans le tableau Canton d'occupation ,
+entrer une rang&#233;e portail pour chaque portail (&#233;cart) entre les deux cantons.
+<p> Une paire de cantons adjacents
+peut avoir plusieurs portails entre eux. Ainsi il est juste de donner &#224; chacun un portail un nom unique,
+. Les noms Canton peuvent &#234;tre gliss&#233;s dans le tableau Canton d'occupation pour enregistrer la saisie.</P>
+<ul>
+Remarque: L'ordinateur vous informera de temps en temps jusqu'&#224; ce que vous ayez entr&#233; un Canton de chaque c&#244;t&#233;
+du nom de portail. Il n'est pas important de savoir de quel c&#244;t&#233; du portail vous entrez un nom de Canton,
+juste &#234;tre s&#251;r de rentrer les deux c&#244;t&#233;s
+<p>
+Note: Il peut &#234;tre utile d'ouvrir le <b>Tableau des R&#233;f&#233;rences Crois&#233;es Canton -Portail</b> pour v&#233;rifier que tous les
+portails ont &#233;t&#233; saisis .
+</ul>
+</ul>
+Ensuite, s'il y a des signaux &#224; un portail, saisissez-les dans le <b>Tableau Signal</b>.
+<ul>
+<b>5.</b> Entrer le nom syst&#232;me ou utilisateur du signal. Il peut s'agir d'un M&#226;t Signal ou T&#234;te Signal .
+<p> <b>6.</b> Entrez le nom du canton <b><i>face</i></b> au signal dans la colonne <b> du Canton D'(Approche)</b>
+. Il est important que le Canton approchant du signal soit correctement nomm&#233;. C'est le Canton
+qui permet de d&#233;tecter quand un changement de vitesse peut &#234;tre n&#233;cessaire.
+<p> <b>7.</b> Entrez le nom du portail ou le nom du Canton dont l'entr&#233;e est prot&#233;g&#233;e .
+<p> <b>8.</b> Entrez un retard de quelques millisecondes &#224; attendre apr&#232;s &#234;tre entr&#233; dans le canton d'approche avant de changer
+la vitesse du train. (Ce d&#233;lai est utilis&#233; seulement lorsque le signal indique un changement de vitesse.)
+</Ul>
+Ensuite, identifier les Chemins dans chaque Canton .
+<ul>
+<UL>
+Rappel: Vous pouvez utiliser ' drag and drop ' pour saisir du texte. Lorsque vous s&#233;lectionnez un &#233;l&#233;ment &#224; faire glisser. , il peut requ&#233;rir
+deux clics, l'un pour s&#233;lectionner la ligne et un second pour s&#233;lectionner l'entr&#233;e de la colonne. Tenir le second clic vers le bas ,
+vous pouvez faire glisser le texte &#224; partir de cette ligne, colonne champs .
+</ul>
+<b>9</b>Se d&#233;placer dans le Tableau Canton d'occupation ligne par ligne par rang&#233;e. :
+<ul>
+<b>9a</b>Appuyez sur le bouton <b>chemins</b> et ouvrez la table <b>Canton -Chemin</b> pour la ligne
+<p><b>9b.</b> Entrez un nom de chemin pour un chemin dans le canton de la ligne dans la colonne <b>Nom Chemin</b>.</p>
+<ul>
+Remarque: Le nom du canton est entre guillemets dans la barre de titre de la table.
+</ul>
+<b>9c.</b> Entrez les noms des portails o&#249; le chemin entre et sort du Canton .
+<ul>
+Note: Il n'est pas important de quel c&#244;t&#233; du nom du chemin que vous entrez un nom portail. Les Embranchements en impasse auront un seul portail .
+</ul>
+</Ul>
+</ul>
+Enfin, compl&#233;ter la d&#233;finition de chaque Chemin dans chaque canton .
+<UL>
+<b>10</b> Pour chaque chemin dans chaque <b>Tableau Canton- Chemin</b>, faire. :
+<ul>
+<p> <b>10a.</b> Pressez le bouton <b>Aiguillages</b> et ouvrez le tableau <b>Canton- Chemin - Aiguillage</b> pour chaque
+rang&#233;e dans la table <b>Canton -Chemin</b></P></p>
+<p><b>10b.</b>Entrer le nom syst&#232;me ou utilisateur d'un aiguillage dans le chemin.
+<ul>
+Remarque: Le nom du chemin et son canton sont entre guillemets dans la barre de titre de la table.
+</ul>
+. <p><b>10c</b> Entrer la position de l'aiguillage dans la colonne <b>R&#233;glage Aiguillage</b> - soit "droit"
+ou "d&#233;vi&#233;".
+</ul>
+</Ul>
+Tr&#232;s probablement, vous avez rencontr&#233; plusieurs bo&#238;tes de dialogue vous invitant &#224; corriger ceci ou cela, alors essayez de les
+r&#233;soudre.
+<p> Maintenant, vous &#234;tes pr&#234;t &#224; d&#233;finir des itin&#233;raires pour les Autorisations Restrictives. Bien s&#251;r, il y aura sans doute encore
+quelques erreurs ou des &#233;l&#233;ments manquants, mais la Fen&#234;tre "Cr&#233;er Mandat" fournit un outil pour trouver et corriger.</p>
+<UL>
+<b>11.</b> S&#233;lectionnez <b>Cr&#233;er un nouveau Mandat</b> depuis le menu <b>Mandat</b> dans un panneau de l'&#201;diteur de Panneau.
+</Ul>
+ 
+Pour lire comment les OCantons, Portails et OChemins peuvent &#234;tre utilis&#233;s pour g&#233;n&#233;rer des itin&#233;raires de train et de faire des
+scripts de trains automatis&#233;s, voir <a href="../logix/Warrant.shtml"> Mandat.</a>
+<p>
+Voir aussi <a href="../logix/WarrantTable.shtml">aide Tableau Mandat</a>
+pour plus de d&#233;tails sur la cr&#233;ation et l'&#233;dition de Mandat .
+<br>
+
+<! -#include virtual= /Footer"->
+</body>
+</html>

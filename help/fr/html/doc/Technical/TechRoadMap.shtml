@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.11 2010/01/08 06:24:40 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-06-07-->
+<!-- $Id: TechRoadMap.shtml 21896 2012-12-19 12:12:05Z rhwood $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=.iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -33,145 +33,146 @@
 
 	    <H1>JMRI: Cartographie Technologique</H1>
 
-Cette page est la feuille de route pour l'avenir du développement de JMRI, les
-changements, y compris l'utilisation de Technologies Java. Il est maintenu et mis à jour par le biais
+Cette page est la feuille de route pour l'avenir du d&#233;veloppement de JMRI, les
+changements, y compris l'utilisation de Technologies Java. Il est maintenu et mis &#224; jour par le biais
 de la poursuite de la discussion sur la
-<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers"> jmri-liste de diffusion des développeurs </a>.
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers"> jmri-liste de diffusion des d&#233;veloppeurs </a>.
 
-<h2>JMRI Communiqués</h2>
+<h2>JMRI Communiqu&#233;s</h2>
 
-Cette section décrit les plans
-(théorique) pour JMRI communiqués pourl'avenir.T.
+Cette section d&#233;crit les plans
+(th&#233;orique) pour JMRI communiqu&#233;s pourl'avenir.
 <P>
 
 <table border="1">
 <tr><th>Version</th><th>Description</th><th>Date</th><td>JRE</td><td>JDK</td></tr>
-<tr><td>1.8</td><td>Version de Production , point culminant des séries 1.7.* </td><td>Juillet 2007 <b>(fait)</b></td>  <td></td><td></td></tr>
-<tr><td>2.0</td><td>Version de Production , point culminant des séries 1.9.*</td><td>Décembre 2007 <b>(fait)</b></td>     <td>1.3</td><td>1.4</td></tr>
-<tr><td>2.1.*</td><td>series de Development  </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
-<tr><td>2.2</td><td>Version de Production,  point culminant des séries 2.1.* </td><td>Juin 2008 <b>(fait)</b></td><td>1.4</td><td>1.5</td></tr>
-<tr><td>2.3.*</td><td>series de Development </td><td></td>                           <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.4</td><td>Version de Production ,   point culminant des séries 2.3.* </td><td>Décembre 2008 (fait)</td>       <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.5.*</td><td>series de Development</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.6</td><td>Version de Production,  point culminant des séries 2.5.* </td><td>Juin 2009 (fait)</td><td>1.5</td><td>1.5</td></tr>
-<tr><td>2.7.*</td><td>series de Development</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.8</td><td>Version de Production,  point culminant des séries 2.7.* </td><td>Décembre 2009 (essai)</td><td>1.5</td><td>1.5</td></tr>
-<tr><td>2.9.*</td><td>series de Development</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.10/3.0</td><td>Version de Production, point culminant des séries 2.9.* </td><td>Juin 2010 (essai)</td><td>1.5</td><td>1.5</td></tr>
-<tr><td>?.?.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
-<tr><td>?.?</td><td>Version de Production ,  point culminant des séries ?.?.* series </td><td>Décembre 2010 (essai)</td><td>?</td><td>?</td></tr>
+<tr><td>1.8</td><td>Version de Production , point culminant des s&#233;ries 1.7.* </td><td>Juillet 2007 <b>(fait)</b></td><td></td><td></td></tr>
+<tr><td>1.9.*</td><td>S&#233;rie de D&#233;veloppment  </td><td></td>                                      <td>1.3</td><td>1.4</td></tr>
+<tr><td>2.0</td><td>Version de Production, point culminant des s&#233;ries 1.9.*</td><td>D&#233;cembre 2007 <b>(fait)</b></td><td>1.3</td><td>1.4</td></tr>
+<tr><td>2.1.*</td><td>S&#233;rie de D&#233;veloppment  </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
+<tr><td>2.2</td><td>Version de Production, point culminant des s&#233;ries 2.1.* </td><td>Juin 2008 <b>(fait)</b></td><td>1.4</td><td>1.5</td></tr>
+<tr><td>2.3.*</td><td>S&#233;rie de D&#233;veloppment </td><td></td>                           <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.4</td><td>Version de Production, point culminant des s&#233;ries 2.3.* </td><td>D&#233;cembre 2008 (fait)</td>       <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.5.*</td><td>S&#233;rie de D&#233;veloppment</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.6</td><td>Version de Production, point culminant des s&#233;ries 2.5.* </td><td>Juin 2009 (fait)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.7.*</td><td>S&#233;rie de D&#233;veloppment</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.8</td><td>Version de Production,  point culminant des s&#233;ries 2.7.* </td><td>D&#233;cembre 2009 (essai)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.9.*</td><td>S&#233;rie de D&#233;veloppment</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.10/3.0</td><td>Version de Production, point culminant des s&#233;ries 2.9.* </td><td>Juin 2010 (essai)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>?.?.*</td><td>S&#233;rie de D&#233;veloppement</td><td></td>                                              <td>?</td><td>?</td></tr>
+<tr><td>?.?</td><td>Version de Production ,  point culminant des s&#233;ries ?.?.* series </td><td>D&#233;cembre 2010 (essai)</td><td>?</td><td>?</td></tr>
 
 </table>
 
 <h4>JMRI 1.9, 2.0</h4>
 
-La série JMRI 1.9  développement avancé de JRE 1.3, JDK 1.4. Cette utilisation permet de:
+La s&#233;rie JMRI 1.9  d&#233;veloppement avanc&#233; de JRE 1.3, JDK 1.4. Cette utilisation permet de:
  
 <ul>
 <LI> Collections dans java.util au lieu de com.sun
-<LI> Java2D, avec le support d'impression associés
-<LI> Annotations  (dont nous avons besoin de développer des normes pour leur utilisation)
+<LI> Java2D, avec le support d'impression associ&#233;s
+<LI> Annotations  (dont nous avons besoin de d&#233;velopper des normes pour leur utilisation)
 <LI> JDOM 1.0 - Simplification du code XML, permet d'utiliser XSLT pour la combinaison dynamique
-<LI> JUnit 3.8 - Améliorations mineures pour tester la facilité d'écriture
+<LI> JUnit 3.8 - Am&#233;liorations mineures pour tester la facilit&#233; d'&#233;criture
 <LI>Fichiers jar  Moins inclus dans la distribution
-<LI>Le  regexp Jakarta expression régulières de la bibliothèque. (A d'autres points plus tard
-, nous aurons à faire avancer les choses à java.util.regexp, mais qui
-ne sera pas disponible jusqu'à Java 1.4 dans une version ultérieure de JMRI)
+<LI>Le  regexp Jakarta expression r&#233;guli&#232;res de la biblioth&#232;que. (A d'autres points plus tard
+, nous aurons &#224; faire avancer les choses &#224; java.util.regexp, mais qui
+ne sera pas disponible jusqu'&#224; Java 1.4 dans une version ult&#233;rieure de JMRI)
 </UL>
 
 <P>
-JMRI 1.9 et 2.0 fonctionnera sur Windows 95 et versions ultérieures, toutes les versions de Mac OS X, et
+JMRI 1.9 et 2.0 fonctionnera sur Windows 95 et versions ult&#233;rieures, toutes les versions de Mac OS X, et
 toutes les versions de Linux.
 <P>
-Pour construire JMRI 1,9 et 2,0, vous aurez besoin de Windows 98 1ère édition ou plus tard, n'importe quelle version de
-Mac OS X, ou (presque tous?) version de Linux..
+Pour construire JMRI 1,9 et 2,0, vous aurez besoin de Windows 98 1&#232;re &#233;dition ou plus tard, n'importe quelle version de
+Mac OS X, ou (presque toutes?) version de Linux..
 
 <h4>JMRI 2.1, 2.2</h4>
 
-La série JMRI  2.1  développement progresse à JRE 1.4, JDK 1.5.
+Le d&#233;veloppement de la s&#233;rie JMRI 2.1 progresse &#224; JRE 1.4, JDK 1.5.
 Cela permet d'utiliser
-(sous réserve de vérification):
+(sous r&#233;serve de v&#233;rification):
 
 <ul>
-<LI> SwingWorker (et mises à jour associées de liens)
-<LI> JUnit <4,0
+<LI> SwingWorker (et mises &#224; jour associ&#233;es de liens)
+<LI> JUnit 4,0
 <LI> Java3D
-<LI> JavaHelp mise à jour
-<LI>Drag and Drop
-<LI>Annotations  (nous aurons à développer pour ces conventions)
+<LI> Mise &#224; jourJavaHelp 
+<LI> Drag and Drop
+<LI> Annotations  (nous aurons &#224; d&#233;velopper pour ces conventions)
 <LI> JavaMail
-<LI> expressions régulières Java (java.util.regexp
+<LI> expressions r&#233;guli&#232;res Java (java.util.regexp
 </UL>
 
 <P>
-JMRI 2.1 et 2.2 qui seront exécutées sur Windows 98 1ère édition ou version ultérieure,
+JMRI 2.1 et 2.2 qui seront ex&#233;cut&#233;es sur Windows 98 1&#232;re &#233;dition ou version ult&#233;rieure,
 n'importe quelle version de Mac OS X,
-ou la version de Linux.
+ou de Linux.
 <P>
-Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou  version ultérieure,
-Mac OS X 10.4 ou  version ultérieur,
-ou (presque tous?) version de Linux.
+Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou  version ult&#233;rieure,
+Mac OS X 10.4 ou  version ult&#233;rieur,
+ou (presque toutes?) version de Linux.
 
 
 <h4>JMRI 2.3, 2.4</h4>
 
-La série de développement JMRI 2.3 développement progresse à JRE 1.5, JDK 1.5.
+La s&#233;rie de d&#233;veloppement JMRI 2.3 d&#233;veloppement progresse &#224; JRE 1.5, JDK 1.5.
 Cela permet d'utiliser
-(sous réserve de vérification):
+(sous r&#233;serve de v&#233;rification):
 
 <UL>
-<LI> JSpinner (et l'enlèvement de notre remplacement en jmri.util)
-<LI> Enums (nous aurons besoin pour prendre des décisions concernant les mises à jour l'interface utilisateur, par exemple Turnout.CLOSED)
+<LI> JSpinner (et l'enl&#232;vement de notre remplacement en jmri.util)
+<LI> Enums (nous aurons besoin pour prendre des d&#233;cisions concernant les mises &#224; jour de l'interface utilisateur, par exemple Turnout.CLOSED)
 <LI>,Printf, Formatter
-<LI> Génériques  (sous réserve des décisions sur les conventions et les mises à jour l'interface)
+<LI> G&#233;n&#233;riques (sous r&#233;serve des d&#233;cisions sur les conventions et les mises &#224; jour l'interface)
 </UL>
 
 <P>
-JMRI 2.3 et 2.4 fonctionne sur Windows 98 2nd Ed ou ultérieur,
-Mac OS X 10.4 ou ultérieur,
-ou (presque tous?) version de Linux.
+JMRI 2.3 et 2.4 fonctionne sur Windows 98 2nd Ed ou ult&#233;rieur,
+Mac OS X 10.4 ou ult&#233;rieur,
+ou (presque toutes?) version de Linux.
 <P>
-Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou ultérieur,
-Mac OS X 10.3 ou ultérieur,
-ou (presque tous?) version de Linux
+Pour construire JMRI 2.1 et 2.2, vous aurez besoin de Windows 98 2nd Ed ou ult&#233;rieur,
+Mac OS X 10.3 ou ult&#233;rieur,
+ou (presque toutes?) version de Linux
 <h4>JMRI 2.5, 2.6, 2.7, 2.8</h4>
 
 Ces versions continueront d'utiliser Java 1.5 pour les deux construction et l'exploitation.
 <p>
-Au cours de la série 2.7 Build, nous sommes passés de l'analyseur XML Crimson à Xerces  .
+Au cours de la s&#233;rie 2.7 Build, nous sommes pass&#233;s de l'analyseur XML Crimson &#224; Xerces  .
 
 JMRI <h4> 2,9, 2.10/3.0 </h4>
 
-Les plans pour la série de développement JMRI 2,9 ne sont pas
-finalisés.
+Les plans pour la s&#233;rie de d&#233;veloppement JMRI 2,9 ne sont pas
+finalis&#233;s.
 <p>
-Le choix JRE et JDK pour 2,9 JMRI développement
-dépendra des fonctions d'exécution souhaitées, et la disponibilité de nos utilisateurs populaires et des plates-formes de développement. Il est Java 1.5 
+Le choix JRE et JDK pour 2,9 JMRI d&#233;veloppement
+d&#233;pendra des fonctions d'ex&#233;cution souhait&#233;es, et la disponibilit&#233; de nos utilisateurs populaires et des plates-formes de d&#233;veloppement. C'est Java 1.5 
 <u> provisoirement </u>
- pour les deux construction et l'exploitation, qui est la même que JMRI 2,3 .* et les suivantes.
+ pour les deux, construction et l'exploitation, qui est la m&#234;me que JMRI 2,3 .* et les suivantes.
 <p>
-Au cours de la série 2.9 .*, nous avons l'intention de passer de la série de classes javax.comm aux
-classes gnu.io RXTX, soit par l'intermédiaire RXTX 2.2 pre2 ou une version ultérieure.
-Cela permettra d'éliminer un support pour le MS100 à partir d'applications JMRI
+Au cours de la s&#233;rie 2.9 .*, nous avons l'intention de passer de la s&#233;rie de classes javax.comm aux
+classes gnu.io RXTX, soit par l'interm&#233;diaire RXTX 2.2 pre2 ou une version ult&#233;rieure.
+Cela permettra d'&#233;liminer un support pour le MS100 &#224; partir d'applications JMRI
 
 
-<h4>JMRI après l'Été 2010</h4>
+<h4>JMRI apr&#232;s l'&#233;t&#233; 2010</h4>
 
-Après JMRI 2.10/3.0 au début de l'été 2010, le développement continue.
-Il est probable que peu de temps après, sinon avant, nous devrons aller vers un usage  de Java 1.6. 
+Apr&#232;s JMRI 2.10/3.0 au d&#233;but de l'&#233;t&#233; 2010, le d&#233;veloppement continue.
+Il est probable que peu de temps apr&#232;s, sinon avant, nous devrons aller vers un usage  de Java 1.6. 
 
-<h3>Version Java et d'Exploitation du Système de Support </h3>
+<h3>Version Java et d'Exploitation du Syst&#232;me de Support </h3>
 
-Plus d'informations sur les versions de Java et les systèmes d'exploitation
+Plus d'informations sur les versions de Java et les syst&#232;mes d'exploitation
 qui les supportent est sur une
-<a href="JVMCapabilities.shtml"> page séparée </a>.
+<a href="JVMCapabilities.shtml"> page s&#233;par&#233;e </a>.
 
 <P>
  <h3> Questions restantes </h3>
 
-Nous utilisons actuellement  Log4J pour la journalisation . À un certain point dans l'avenir, il
-pourra y avoir de bonnes raisons de migrer vers Java API de journalisation. Il a été introduit
-dans le JDK 1.4, et a une certaine localisation agréable et le formatage des caractéristiques
+Nous utilisons actuellement  Log4J pour le reportage . A un certain point dans l'avenir, il
+pourra y avoir de bonnes raisons de migrer vers Java API de Reportage. Il a &#233;t&#233; introduit
+dans le JDK 1.4, et a une certaine localisation agr&#233;able et le formatage des caract&#233;ristiques
 dans SDK 1.6. Cette version du plan ne traite pas de cette migration,
 toutefois.
 

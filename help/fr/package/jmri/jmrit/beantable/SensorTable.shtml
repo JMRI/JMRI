@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorTable.shtml,v 1.5 2011/05/22 09:34:50 kevin-dickerson Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/08-->
+<!-- $Id: SensorTable.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Sensor Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">META CONTENT="Bob Jacobsen" NAME="Author">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META NAME="keywords" CONTENT="JMRI help Sensor Table">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,77 +23,77 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> La Table du capteur</H1>
+<H1> Le Tableau Capteur</H1>
 
 <P> Cette table contient une liste des capteurs qui existent pour ce
 panneau.
 
-<H2>Colonnes  Tableau Capteur</H2>
+<H2>Colonnes Tableau Capteur</H2>
 
 <DL>
 <DT>Nom Utilisateur </DT>
 <DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
 capteur existant.</dd>
 
-<DT> État</DT>
-<DD> Appuyer sur le bouton "État" va changer l'état d'un
+<DT> &#233;tat</DT>
+<DD> Appuyer sur le bouton "&#233;tat" va changer l'&#233;tat d'un
 capteur existant.</dd>
 
 <DT> Supprimer</DT>
 <DD>
-Appuyer le  bouton «Supprimer» supprimera le capteur de la
-table.
+Appuyer le bouton "Supprimer" supprimera le capteur du
+tableau.
 <p>
 Notez que cela ne supprime pas le capteur de tous les fichiers que vous avez
-sauvegardés qui le contiennent Si vous chargez un de ces fichiers, peut-être
-lorsque vous redémarrez le programme, le capteur va réapparaître.
-Vous devez utiliser l'option  «Stocker dans un fichier" dans le menu"Fichier"
+sauvegard&#233;s qui le contiennent Si vous chargez un de ces fichiers, peut-&#234;tre
+lorsque vous red&#233;marrez le programme, le capteur va r&#233;appara&#238;tre.
+Vous devez utiliser l'option  "Stocker dans un fichier" dans le menu"Fichier"
 pour enregistrer de nouvelles versions de tous les fichiers qui contiennent ce capteur.
 </Dd>
 
-<DT> Inversé</DT>
-<DD> Quand elle est cochée, la commande du capteur et le statut est inversé. 
-Par exemple, un capteur inversé signifie que lorsque le réseau envoie une
-commande "actif" du capteur, il devient «inactif» pour JMRI.</dd>
+<DT> Invers&#233;</DT>
+<DD> Quand elle est coch&#233;e, la commande du capteur et le statut sont invers&#233;. 
+Par exemple, un capteur invers&#233; signifie que lorsque le r&#233;seau envoie une
+commande "actif" du capteur, il devient "inactif" pour JMRI.</dd>
 
- <DT>Utilisez  Retard Global</DT>
-<DD> Quand elle est cochée, le capteur va utiliser les valeurs spécifiées dans le système de
- "AntiRebond| défaut .." option de menu pour toute la durée où le système attend
- avant d'enregistre le changement d'état.
+ <DT>Utilisez Retard Global</DT>
+<DD> Quand elle est coch&#233;e, le capteur va utiliser les valeurs sp&#233;cifi&#233;es dans le syst&#232;me de
+ "AntiRebond&#166; d&#233;faut .." option de menu pour toute la dur&#233;e o&#249; le syst&#232;me attend
+ avant d'enregistre le changement d'&#233;tat.
 <a HREF="#Debounce"><p> Voir le Capteur AntiRebond ci-dessous</A>
 </Dd>
  <DT> Retard actif/Retard inactif</DT>
-<DD> Spécifiez la durée du temps en millisecondes pendant lequel le système attend avant
-l'enregistrement du changement d'état d'un capteur.
+<DD> Sp&#233;cifiez la dur&#233;e du temps en millisecondes pendant lequel le syst&#232;me attend avant
+l'enregistrement du changement d'&#233;tat d'un capteur.
 <a HREF="#Debounce"><p> Voir Capteur AntiRebond ci-dessous</A></dd>
 
 </DL>
 
 </DL>
 
-Contrôles <H2> Tableau capteur </H2>
+<H2>Commandes Tableau Capteur</H2>
 
 Il y a aussi un bouton au bas de la Table Capteur
 
 <DL>
-<DT> Ajouter </ DT>
+<DT>Ajouter</DT>
 <DD> Appuyez sur ce bouton pour ajouter un nouveau capteur. Pour plus d'informations, voir
- <A HREF="SensorAddEdit.shtml"> Ajouter/Éditer Capteurs </ A>. </ Dd>
+ <A HREF="SensorAddEdit.shtml"> Ajouter/&#233;diter Capteurs</A>.</Dd>
 </ DL>
 <H2> <A NAME="Debounce"></A> Capteur AntiRebond</H2>
-<p> L'installation d'un  Capteur Antirebond est là pour aider à prévenir les faux déclenchements d'un capteur
-étant passé dans le système et le déclenchement d'autres événements dans le système. <br>
-Ces faux déclenchements pourrait être dû à un morceau sale de la voie ou des interférences électriques.
+<p> L'installation d'un  Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
+et le d&#233;clenchement d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
+Ces faux d&#233;clenchements pourrait &#234;tre d&#249; &#224; un zone de la voie sale ou des interf&#233;rences &#233;lectriques.
 
-<p> L'installation vous permet d'assigner une durée en millisecondes avant que le changement
-soit enregistré avec le reste du système. Si après cette période l'État n'a
-pas changé alors l'état du capteur sera transmis au reste du système. <br>
+<p> L'installation vous permet d'assigner une dur&#233;e en millisecondes avant que le changement
+soit enregistr&#233; avec le reste du syst&#232;me. Si apr&#232;s cette p&#233;riode l'&#233;tat n'a
+pas chang&#233; alors l'&#233;tat du capteur sera transmis au reste du syst&#232;me. <br>
 
-Toutefois, si l'état des capteurs est différent après que la temporisation soit terminée, alors le
-système va redémarrer le processus, cette fois après que le minuteur ait terminé, il 
-vérifiera si l'état du capteur est dans le même état qu'il était avant qu'il ait redémarré
-le processus. Si ce n'est pas le cas , le processus est relancé à nouveau jusqu'à ce que l'État soit le même
-avant et après que le chronomètre ait été lancé.
+Toutefois, si l'&#233;tat des capteurs est diff&#233;rent apr&#232;s que la temporisation soit termin&#233;e, alors le
+syst&#232;me va red&#233;marrer le processus, cette fois apr&#232;s que le minuteur ait termin&#233;, il 
+v&#233;rifiera si l'&#233;tat du capteur est dans le m&#234;me &#233;tat qu'il &#233;tait avant qu'il ait red&#233;marr&#233;
+le processus. Si ce n'est pas le cas , le processus est relanc&#233; &#224; nouveau jusqu'&#224; ce que l'&#233;tat soit le m&#234;me
+avant et apr&#232;s que le chronom&#232;tre ait &#233;t&#233; lanc&#233;.
 
     
     

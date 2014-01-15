@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FileUpdate.shtml,v 1.4 2009/03/12 22:59:03 matthewharris Exp $ -->
-<!--Translated by Hervé Blorec le 2011/10/1 -->
+<!-- $Id: FileUpdate.shtml 21020 2012-08-18 21:03:10Z jacobsen $
+<!--Translated by Herv&#233; Blorec le 2013-09-25 -->
 <title>JMRI: DecoderPro User Guide - Updating Decoder Definitions</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,81 +22,81 @@
 <div id="mainContent">
 
 
-<H1> Guide Utilisateur DecoderPro  -Mise à jour des Définitions Décodeur</H1>
+<H1> Guide Utilisateur DecoderPro - Mise &#224; jour des D&#233;finitions D&#233;codeur</H1>
 
-Plein de personnes ont contribué aux fichiers de définitions de décodeur  DecoderPro.  Entre les nouvelles versions, de nouveau fichiers peuvent être créés et que vous vouliez les utiliser. Les nouveaux peuvent habituellement être trouvés soit sur 
+Beaucoup de personnes ont contribu&#233; aux fichiers de d&#233;finitions de d&#233;codeur DecoderPro.  Entre les nouvelles versions JMRI, de nouveaux fichiers peuvent &#234;tre cr&#233;&#233;s et que vous vouliez les utiliser. Les nouveaux peuvent habituellement &#234;tre trouv&#233;s soit sur 
 <a href="http://jmri.sf.net/xml/decoders">le site web JMRI</a>
 ou dans la 
-<a href="http://groups.yahoo.com/group/jmriusers/files/"> zône de fichiers du groupe utilisateurJMRI Yahoo</a>.
+<a href="http://groups.yahoo.com/group/jmriusers/files/"> z&#244;ne de fichiers du groupe utilisateurJMRI Yahoo</a>.
 <P>
-Pour utiliser ces fichiers .xml vous devez les télécharger et les installer.
+Pour utiliser ces fichiers .xml vous devez les t&#233;l&#233;charger et les installer.
 
 <p>
-Le processus d'installation était simplifié dans la version JMRI 2.3.6, où  les éléments de menu
-"Importer fichier Décodeur" et"URL Importation Décodeur" sont ajouter au menu Debogage.
+Le processus d'installation &#233;tait simplifi&#233; dans la version JMRI 2.3.6, o&#249;  les &#233;l&#233;ments de menu
+"Importer fichier D&#233;codeur" et"URL Importation D&#233;codeur" sont ajouter au menu Debug.
 
 <a name="after236">
-<h2>JMRI Version 2.3.6 et Après</h2>
+<h2>JMRI Version 2.3.6 et Apr&#232;s</h2>
 
-Cette section décrit l'addition d'une nouvelle définition de décodeur quand vous êtes utlisateur de JMRI verion 2.3.6 ou suivant.
+Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous &#234;tes utlisateJmriHelp_frTOC.xmlur de JMRI verion 2.3.6 ou suivant.
 
-<h3>Charger une définition depuis le web</h3>
-Si vous avez un URL pour une définition de décodeur, elle peut être copiée depuis une page web ou un courriel, et si votre ordinateur a une connexion Internet active , vous pouvez directement installer la définition.
+<h3>Charger une d&#233;finition depuis le web</h3>
+Si vous avez un URL pour une d&#233;finition de d&#233;codeur, elle peut &#234;tre copi&#233;e depuis une page web ou un courriel, et si votre ordinateur a une connexion Internet active , vous pouvez directement installer la d&#233;finition.
 .
 
 <ul>
-<li>Sélectionner l'élément "URL Importation Décodeur URL" depuis le menu "Débogage".
-<li>Vous serez invitez à saisir l'URL. Entré le , et cliquez OK.
+<li>S&#233;lectionner l'&#233;l&#233;ment "URL Importation D&#233;codeur URL" depuis le menu "D&#233;bogage".
+<li>Vous serez invitez &#224; saisir l'URL. Entr&#233; le , et cliquez OK.
 </ul>
 
-Sauf s'il y a des erreurs, le fichier sera copier sur votre ordinateur local et installé dans votre répertoire preference JMRI .
+Sauf s'il y a des erreurs, le fichier sera copier sur votre ordinateur local et install&#233; dans votre r&#233;pertoire preference JMRI .
 
-<h3>Charger une définition depuis un fichier</h3>
-Si vous avez un fichier local contenant une définition de décodeurs, peut être téléchargé depuis une page web ou reçu par un courriel, vous pouvez installer la définition dans JMRI. 
+<h3>Charger une d&#233;finition depuis un fichier</h3>
+Si vous avez un fichier local contenant une d&#233;finition de d&#233;codeurs, peut &#234;tre t&#233;l&#233;charg&#23JmriHelp_frTOC.xml3; depuis une page web ou re&#231;u par un courriel, vous pouvez installer la d&#233;finition dans JMRI. 
 
 
 <ul>
-<li>Sélectionnez l'élément "Importation fichier Décodeur " depuis le menu "Débogage".
-<li>Vous devriez voir un dialogue de sélection de fichier. 
-<li>Si le fichier n'a pas l'extension ".xml" vous devez sélectionner le filtre "Montrer tous les fichiers" au bas du dialogue.
-<li>Naviguer jusqu'à votre fichier et cliquer OK.
+<li>S&#233;lectionnez l'&#233;l&#233;ment "Importation fichier D&#233;codeur " depuis le menu "D&#233;bogage".
+<li>Vous devriez voir un dialogue de s&#233;lection de fichier. 
+<li>Si le fichier n'a pas l'extension ".xml" vous devez s&#233;lectionner le filtre "Montrer tous les fichiers" au bas du dialogue.
+<li>Naviguer jusqu'&#224; votre fichier et cliquer OK.
 </ul>
 
-Sauf s'il y a des erreurs, le fichier sera copié dans votre répertoire preferences JMRI et installé.
+Sauf s'il y a des erreurs, le fichier sera copi&#233; dans votre r&#233;pertoire "preferences" JMRI et install&#233;.
 
 <h3>Comment tout ceci fonctionne</h3>
 
-Ces deux outils prennent l'information de définition de décodeur depuis la source qui vous est indiquée et copiée sur votre répertoire locale Preferences JMRI de sorte qu'il sera disponible à partir de maintenant.
-. Pour que cela fonctionne ,vous ne pouvez pas déjà avoir un fichier de définition de décodeur avec le même nom. Si un tel fichier existe, le programme affichera une erreur et ne remplacera pas le fichier.
+Ces deux outils prennent l'information de d&#233;finition de d&#233;codeur depuis la source qui vous est indiqu&#233;e et copi&#233;e sur votre r&#233;pertoire local ""preferences"" JMRI de sorte qu'il serJmriHelp_frTOC.xmla disponible &#224; partir de maintenant.
+. Pour que cela fonctionne ,vous ne devez pas avoir d&#233;j&#224; un fichier de d&#233;finition de d&#233;codeur avec le m&#234;me nom. Si un tel fichier existe, le programme affichera une erreur et ne remplacera pas le fichier.
 
 <p>
-La définition est stockée dans votre fichier preferences, au lieu du répertoire de distribution JMRI, ainsi une nouvelle installation de JMRI ne l'effacera pas.  Notez, toutefois, que si une nouvelle version de JMRI arrive avec une copie de cette définition de décodeur installée, Le programme donne la priorité à la version spécifique sue vous avez importée.  JMRI pense que que vous saviez ce que vous faisiez quand vous avez spécialement importer cette version spécifique. Si vous préférez utiliser celle de la nouvelle version de JMRI, effacez juste votre version dans le répertoire preference et sélectionnez  "Reconstruire l'Index Décodeur" dans le menu débogage.
+La d&#233;finition est stock&#233;e dans votre fichier "preferences", au lieu du r&#233;pertoire de distribution JMRI, ainsi une nouvelle installation de JMRI ne l'effacera pas.  Notez, toutefois, que si une nouvelle version de JMRI arrive avec une copie de cette d&#233;finition de d&#233;codeur install&#233;e, Le programme donne la priorit&#233; &#224; la version sp&#233;cifique sue vous avez import&#233;e.  JMRI pense que que vous saviez ce que vous faisiez quand vous avez sp&#233;cialement importer cette version sp&#233;cifique. Si vous pr&#233;f&#233;rez utiliser celle de la nouvelle version de JMRI, effacez juste votre version dans le r&#233;pertoire preference et s&#233;lectionnez  "Rebuilt Decoder Index"  dans le menu d&#233;bug.
 
 
 
 <a name="before236">
 <h2>JMRI Version 2.3.5 et Avant</h2>
+JmriHelp_frTOC.xml
+Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous utilisez la version JMRI 2.3.5 ou avant.
 
-Cette section décrit l'addition d'une nouvelle définition de décodeur quand vous utilisez la version JMRI 2.3.5 ou avant.
-
-<h3>Sur un système Windows</h3>
+<h3>Sur un syst&#232;me Windows</h3>
 <UL>
-<LI>Allez au menu de fichiers ou le fichier decoder.xml est localisé et cliquer-droit sur le fichier. 
+<LI>Allez au menu de fichiers ou le fichier decoder.xml est localis&#233; et cliquer-droit sur le fichier. 
  <P>
-  (Ne faites pas un double click, vous ouvrez le fichier au lieu de le sauver.)
+  (Ne faites pas un double click ou vous ouvrez le fichier au lieu de le sauver.)
  
-<LI>Choisissez la sélection du menu "Enregistrer comme
-" ou "Enregistrer la cible sous".  Après que vous ayez choisi cet option de menu une fenêtre va s'afficher et vous demandera l'endroit où vous voulez enregistrer le fichier.
+<LI>Choisissez la s&#233;lection du menu "Enregistrer comme
+" ou "Enregistrer la cible sous".  Apr&#232;s que vous ayez choisi cet option de menu une fen&#234;tre va s'afficher et vous demandera l'endroit o&#249; vous voulez enregistrer le fichier.
  
-<P> Vous pouvez soit saisir un nom de répertoire ou cliquer le bouton navigation.  
-  Pour enregistrer une étape, je suggère que vous choisissiez la navigation et puis sélectionner le répertoire "programfiles/JMRI/XML/Decoders" . 
+<P> Vous pouvez soit saisir un nom de r&#233;pertoire ou cliquer le bouton navigation.  
+  Pour enregistrer une &#233;tape, je sugg&#232;re que vous choisissiez la navigation et puis s&#233;lectionner le r&#233;pertoire "programfiles/JMRI/XML/Decoders" . 
  
-<P>Si vous sauvez le fichier dans n'importe quel autre répertoire ou le bureau  vous devrez copier le fichier vers le répertoire correct en utilisant les copier et coller dans l'Explorateur Windows. Il est plus facile d'enregistrer dans le répertoire correct en premier. 
+<P>Si vous sauvez le fichier dans n'importe quel autre r&#233;pertoire ou le bureau, vous devrez copier le fichier vers le r&#233;pertoire correct en utilisant les copier et coller dans l'Explorateur Windows. Il est plus facile d'enregistrer dans le r&#233;pertoire correct en premier. 
+ JmriHelp_frTOC.xml
+<LI>Une fois que le fichier est dans le r&#233;pertoire d&#233;codeur, vous avez besoin d'ouvrir D&#233;coderPro et choisir l'option du menu Debug. C'est une des options du menu horizontal en haut dans la fen&#234;tre ouverte. 
  
-<LI>Une fois que le fichier est dans le répertoire décodeur, vous avez besoin d'ouvrir DécoderPro et choisir l'option du menu Debogage. C'est une des options du menu horizontal en haut dans la fenêtre ouverte. 
- 
-<LI>Depuis le menu déroulant de débogage choisissez l'option qui dit  "Reconstruire ou Recréer index décodeur ". Après que vous ayez reconstruit l'index décodeur, le décodeur devrait apparaître. 
-<P>La clé pour faire ce travail est que le fichier XML	télécharger doit être dans le répertoire JMRI/XML/decoders, autrement DecoderPro ne sait pas qu'il est là et ne le voit pas pas lorsqu'il reconstruit l'index décodeur.
+<LI>Depuis le menu d&#233;roulant de d&#233;bogage choisissez l'option qui dit  "Rebuilt ou Recreate d&#233;codeur index". Apr&#232;s que vous ayez reconstruit l'index d&#233;codeur, le d&#233;codeur devrait appara&#238;tre. 
+<P>La cl&#233; pour faire ce travail est que le fichier XML t&#233;l&#233;charger doit &#234;tre dans le r&#233;pertoire JMRI/XML/decoders, autrement DecoderPro ne sait pas qu'il est l&#224; et ne le voit pas pas lorsqu'il reconstruit l'index d&#233;codeur.
 </UL>
 
 

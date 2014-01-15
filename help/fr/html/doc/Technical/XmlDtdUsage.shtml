@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlDtdUsage.shtml,v 1.1 2010/02/15 07:52:46 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-08-06-->
+<!-- $Id: XmlDtdUsage.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -32,65 +32,65 @@
 
 <H1>JMRI: Utilisation de DTD XML</H1>
 
-Cette page décrit l'utilisation des DTD XML dans JMRI
-avant la version 2.9.4. Ces DTD ont été remplacés
-par un schéma XML dans JMRI 2.9.4.
+Cette page d&#233;crit l'utilisation des DTD XML dans JMRI
+avant la version 2.9.4. Ces DTD ont &#233;t&#233; remplac&#233;s
+par un sch&#233;ma XML dans JMRI 2.9.4.
 <P>
-Dans les distributions JMRI, les DTD sont stockés dans le répertoire
+Dans les distributions JMRI, les DTD sont stock&#233;s dans le r&#233;pertoire
 <a href="/xml/DTD"> xml/DTD </a>.
-Notez qu'ils ne sont pas stockés dans chaque répertoire
-à côté des fichiers XML. Il y a tout simplement de trop nombreux
-emplacements pour garder un tel ensemble de dossiers DTD à jour.
-JMRI lui-même, via la classe jmri.jmrit.XmlFile, fournit un support
+Notez qu'ils ne sont pas stock&#233;s dans chaque r&#233;pertoire
+&#224; c&#244;t&#233; des fichiers XML. Il y a tout simplement de trop nombreux
+emplacements pour garder un tel ensemble de dossiers DTD &#224; jour.
+JMRI lui-m&#234;me, via la classe jmri.jmrit.XmlFile, fournit un support
  pour localiser ces fichiers lorsque l'analyseur XML
 a besoin d'eux.
 <p/>
 Chaque fichier contient une ligne DOCTYPE qui
-spécifie un nom de DTD. Il existe trois méthodes différentes
-utilisées pour localiser le fichier DTD réel:
+sp&#233;cifie un nom de DTD. Il existe trois m&#233;thodes diff&#233;rentes
+utilis&#233;es pour localiser le fichier DTD r&#233;el:
 <ul>
-<li>Le navigateurs Web regarde exactement où est la ligne DOCTYPE précise,
+<li>Le navigateurs Web regarde exactement o&#249; est la ligne DOCTYPE pr&#233;cise,
 et doit trouver le DTD qui fonctionne.
-<li> JMRI 1,8 et antérieur
-suppose que le nom est relatif au répertoire
-xml/DTD du programme, et cherche à l'utiliser.
+<li> JMRI 1,8 et ant&#233;rieur
+suppose que le nom est relatif au r&#233;pertoire
+xml/DTD du programme, et cherche &#224; l'utiliser.
 En pratique, cela permet deux formes de la ligne DOCTYPE:
   <ul>
   <li>name.dtd
    <li> .. / DTD / name.dtd
   </Ul>
-Au début des fichiers XML utilisés à la fois, le programme lui-même pourrait générer
+Au d&#233;but des fichiers XML utilis&#233;s &#224; la fois, le programme lui-m&#234;me pourrait g&#233;n&#233;rer
 l'un ou l'autre en fonction des circonstances.
-<li> JMRI 1.9.2 et les versions ultérieures offrent une procédure de recherche plus puissante en utilisant les classe DTD
+<li> JMRI 1.9.2 et les versions ult&#233;rieures offrent une proc&#233;dure de recherche plus puissante en utilisant les classe DTD
 <a  href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver </a>
  Il analyse les
-références dans le DOCTYPE et les manipule  de plusieurs façons:
+r&#233;f&#233;rences dans le DOCTYPE et les manipule  de plusieurs fa&#231;ons:
     <ul>
-    <li> Si c'est une URL HTTP, les premières tentatives JMRI de
+    <li> Si c'est une URL HTTP, les premi&#232;res tentatives JMRI de
     trouver le fichier correspondant dans la distribution locale.
     Si c'est le cas, il utilise la copie locale, sinon, il tente de charger une copie
     de l'Internet en utilisant l'URL.
-    <li> Si c'est un chemin de fichier qui commence par ".. / DTD /",
+    <li> Si c'est un chemin de fichier qui commence par "../DTD/",
     JMRI regarde dans son xml local/DTD pour le fichier DTD.
     <li> Si le chemin est juste un nom de fichier,
     JMRI regarde dans son xml local/DTD pour le fichier DTD.
-    <li> Dans les autres cas, par exemple, un chemin d'accès local ou absolu,
-    JMRI regarde là pour le fichier DTD. Les chemins d'accès relatifs
-    sont interprétés comme à partir du répertoire d'installation JMRI.
+    <li> Dans les autres cas, par exemple, un chemin d'acc&#232;s local ou absolu,
+    JMRI regarde l&#224; pour le fichier DTD. Les chemins d'acc&#232;s relatifs
+    sont interpr&#233;t&#233;s comme &#224; partir du r&#233;pertoire d'installation JMRI.
     </Ul>
-    Si le fichier ne peut pas être trouvé, le fichier XML n'est pas ouvert.
+    Si le fichier ne peut pas &#234;tre trouv&#233;, le fichier XML n'est pas ouvert.
     <p/>
-    Ces versions JMRI écrivent uniquement le nom du fichier DTD dans la ligne DOCTYPE
-    lors de l'écriture de fichiers XML.
+    Ces versions JMRI &#233;crivent uniquement le nom du fichier DTD dans la ligne DOCTYPE
+    lors de l'&#233;criture de fichiers XML.
     <p/>
-    Cette offre est en complète compatibilité avec les
-    fichiers et les anciennes versions de JMRI retour à 1.7.1.
-    Dans le même temps, car il peut gérer les URL HTTP, même sans
-    une connexion Internet, il nous permet, à terme, d'aller de l'avant.  </ul>
+    Cette offre est en compl&#232;te compatibilit&#233; avec les
+    fichiers et les anciennes versions de JMRI retour &#224; 1.7.1.
+    Dans le m&#234;me temps, car il peut g&#233;rer les URL HTTP, m&#234;me sans
+    une connexion Internet, il nous permet, &#224; terme, d'aller de l'avant.</ul>
 
    </ul>
 
-En commençant avec JMRI 2.9.4, JMRI utilise un  <a href= "XmlSchema.shtml" > schéma XML </a> au lieu des DTDs et ce processus est différent.
+En commen&#231;ant avec JMRI 2.9.4, JMRI utilise un<a href= "XmlSchema.shtml" > sch&#233;ma XML</a> au lieu des DTDs et ce processus est diff&#233;rent.
 
 
 <!--#include virtual="/Footer" -->

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id: MiniServer.shtml 19110 2011-11-14 00:51:27Z mstevetodd $ -->
+<title>JMRI: Web Server</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Serveur Web
+</h1>
+
+JMRI comprend un serveur Web int&#233;gr&#233;, qui pr&#233;voit l'acc&#232;s
+aux fonctions JMRI via des protocoles Internet standards, &#224; partir d'autres ordinateurs
+et des p&#233;riph&#233;riques. <br />
+Le serveur web JMRI est construit sur le serveur web
+<a href="http://en.wikipedia.org/wiki/Jetty_(web_server)" target="_new" >
+Jetty</a>.
+
+<h2> Configuration</h2>
+
+Plusieurs fichiers de propri&#233;t&#233;s configurent le serveur web JMRI et ses
+fonctions par d&#233;faut. Il ya aussi une zone <a href="index.shtml#Configure"> Web Server Preferences</a> o&#249;
+beaucoup de ces valeurs peuvent &#234;tre modifi&#233;es.
+
+<dl>
+<dt>jmri/web/server/Services.properties 
+  <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/server/Services.properties" target=_new>
+ [view]</a>
+<dd> Ce fichier fournit une cartographie &#224; partir d'URL pour les servlets qui
+les manipulent.Int&#233;r&#234;ts particuliers sont: <ul>
+<li> FileServlet (sert le contenu des fichiers locaux)</li>
+<li> <a href="FrameServlet.shtml"> FrameServlet</a> (sert les images des images/fen&#234;tres JMRI ouvertes)</li>
+<li> <a href="RosterServlet.shtml"> RosterServlet</a> (sert la liste et les d&#233;tails des entr&#233;es d&#233;finies sur la liste)</li>
+<li> <a href="XMLIO.shtml"> XMLIOServlet</a> (qui fournit des listes et des valeurs des &#233;l&#233;ments d&#233;finis JMRI, accepte la modification de ces valeurs, et
+   peut surveiller les changements)</li>
+<li> <a href="PanelServlet.shtml"> PanelServlet</a> (sert d&#233;finitions XML des panneaux JMRI disponibles)</li>
+<li> <a href="JsonServlet.shtml"> JsonServlet</a> (qui fournit des listes et des valeurs des &#233;l&#233;ments JMRI d&#233;finies au format JSON. Poss&#232;de &#233;galement une fonction WebSocket
+   qui accepte la modification de ces valeurs, et peut surveiller les changements)</li>
+</ul>
+
+<dt>jmri/web/server/Html.properties
+  <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/server/Html.properties" target=_new>
+  [view]</a>
+<dd> fournit le texte "plaque chaudi&#232;re" pour les r&#233;ponses HTTP et certaines
+r&#233;ponses HTML. <br />
+
+<dt>jmri/web/serveur/FilePaths.properties
+   <a target = _new>
+   [view]</a>
+<dd>Les correspondance des URLs pr&#233;sent&#233;es au FileServlet &#224; des emplacements dans le syst&#232;me de fichiers.
+Ce servlet est quelque peu sp&#233;cifique JMRI, en ce qu'il sait au sujet de l'emplacement
+du r&#233;pertoire des pr&#233;f&#233;rences actuelles JMRI, voir le commentaire au d&#233;but du fichier.
+
+</dl>
+
+<h2> s&#233;curit&#233;</h2>
+
+Par d&#233;faut, JMRI permet uniquement un acc&#232;s limit&#233; &#224; votre ordinateur.
+Seuls les fichiers qui se trouvent dans le r&#233;pertoire de distribution JMRI
+ou le r&#233;pertoire JMRI preferences seront fournis en r&#233;ponse &#224; des
+demandes. Ce n'est pas la s&#233;curit&#233; &#233;tanche &#224; tout, cependant, et vous devriez faire
+attention &#224; ne pas mettre un contenu important dans ces r&#233;pertoires ou les lier
+&#224; d'autres parties de votre ordinateur.
+
+
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

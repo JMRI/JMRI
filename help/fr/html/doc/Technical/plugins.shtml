@@ -1,11 +1,11 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: plugins.shtml,v 1.7 2010/04/12 12:07:28 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-07-06--> <html lang="en">
+<!-- $Id: plugins.shtml 21896 2012-12-19 12:12:05Z rhwood $ -->
+<!-- Updated by Blorec Herv&#233; le 2013-09-08--> <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Plug-in mechanisms
-    </TITLE>
+   </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code plugins extension plug-in">
 
@@ -32,48 +32,47 @@
 	<div id="mainContent">
 
 
-<h1>JMRI: Mécanismes Plug-in </h1>
+<h1>JMRI: M&#233;canismes Plug-in</h1>
 
-L'objectif initial du projet était de produire une bibliothèque JMRI que les gens
-pourraient utiliser pour créer leurs propres applications. Bien que certaines personnes l'aient fait, en utilisant plus
- les applications existantes telles que DecoderPro, PanelPro et
-JmriDemo. Nous voulons le rendre plus souple en fournissant un moyen d'étendre
-ces programmes sans avoir à les reconstruire à partir de zéro. Cette note décrit le
-mécanismes de ce qui sera inclus dans JMRI 2.4 et ultérieures.
+L'objectif initial du projet &#233;tait de produire une biblioth&#232;que que les gens
+pourraient utiliser pour cr&#233;er leurs propres applications. Bien que certaines personnes l'aient fait, beaucoup utilisent les applications existantes telles que DecoderPro, PanelPro et
+JmriDemo. Nous voulons rendre ceci plus souple en fournissant un moyen d'&#233;tendre
+ces programmes sans avoir &#224; les reconstruire &#224; partir de z&#233;ro. Cette note d&#233;crit le
+m&#233;canismes de ce qui sera inclus dans JMRI 2.4 et ult&#233;rieures.
 
 <OL>
 
 <LI>CLASSPATH
 <P>
-DecoderPro et les autres sont gérés via une commande java qui fixe le CLASSPATH et diverses options. Comment c'est fait réellement, 
-varie en fonction de la plate-forme: csh ,scripts sur Unix, un <a href="StartUpScripts.shtml#windows"> lanceur d'applications </a>
+DecoderPro et les autres sont g&#233;r&#233;s via une commande java qui fixe le CLASSPATH et diverses options. Comment c'est fait r&#233;ellement, 
+&#231;a varie en fonction de la plate-forme: csh ,scripts sur Unix, un <a href="StartUpScripts.shtml#windows">lanceur d'applications</a>
 sous Windows, des kits d'applications sous Mac OS X, etc
 <P>
-Pour  rendre facile l'ajout des plug-ins, ils englobent tous les fichiers. jar dans le répertoire de l'application, et dans son 
-sous-répertoire "lib/", dans le CLASSPATH.
+Pour rendre facile l'ajout des plug-ins, ils englobent tous les fichiers.jar dans le r&#233;pertoire de l'application, et dans son 
+sous-r&#233;pertoire "lib/", dans le CLASSPATH.
 <P>
-Si vous créez un fichier jar, y compris votre code, il sera automatiquement
-trouvé. Vous pouvez aussi mettre vos classes dans les "classes" de l'annuaire
-répertoire de démarrage, ce qui est recherché en premier.
+Si vous cr&#233;ez un fichier jar, y compris votre code, il sera automatiquement
+trouv&#233;. Vous pouvez aussi mettre vos classes dans le r&#233;pertoire "classes" du
+r&#233;pertoire de d&#233;marrage, ce qui est recherch&#233; en premier.
 <p>
-Pour plus d'informations, voir la page<a  href="StartUpScripts.shtml"> sur les scripts de démarrage </a>.
+Pour plus d'informations, voir la page <a  href="StartUpScripts.shtml">sur les scripts de d&#233;marrage</a>.
 
 <LI>Remplacement des classes existantes
 <P>
 Notez que vous pouvez remplacer directement l'un des fichiers dans la distribution jmri.jar
-avec vos propres versions en les mettant dans un fichier jar c'est la première recherche.
-Par exemple, inclure une version modifiée d'un fichier .properties vous
-permet d'inclure des versions personnalisées de menu chaines.
-Cela peut aussi être fait avec un fichier .class, par exemple en changeant
-l'ordre des items du menu en remplaçant la classe DecoderPro.
+avec vos propres versions en les mettant dans un fichier jar c'est la premi&#232;re recherche.
+Par exemple, inclure une version modifi&#233;e d'un fichier .properties vous
+permet d'inclure des versions personnalis&#233;es de menu chaines.
+Cela peut aussi &#234;tre fait avec un fichier .class, par exemple en changeant
+l'ordre des items du menu en rempla&#231;ant la classe DecoderPro.
 
 
 <LI> Classes Plugin
 <P>
-L'emplacement d'une classe peut entraîner un surcroît de travail à long terme, le remplacement d'une
-classe peut être modifié quand JMRI évolue. Donc, nous fournissons également un crochet sur lequel
-accrocher le nouveau code. Après que l'initialisation soit terminée, les programmes seront
-tentés d'invoquer un membre statique de la forme:
+L'emplacement d'une classe peut entra&#238;ner un surcro&#238;t de travail &#224; long terme, le remplacement d'une
+classe peut &#234;tre modifi&#233; quand JMRI &#233;volue. Donc, nous fournissons &#233;galement un crochet sur lequel
+accrocher le nouveau code. Apr&#232;s que l'initialisation soit termin&#233;e, les programmes seront
+tent&#233;s d'invoquer un membre statique de la forme:
 
 <PRE>
 
@@ -83,41 +82,41 @@ tentés d'invoquer un membre statique de la forme:
   }
 
 </PRE>
-Cette méthode
+Cette m&#233;thode
 peut modifier la barre de menus par l'insertion, modification ou la suppression des menus ou le menu
 articles, ajouter des boutons sur le panneau principal, etc
 <p>
-Comme les gens utilisent cette capacité, vous aurez probablement envie de remanier certaines classes existantes
-afin de les rendre plus facile à étendre. Par exemple, une mise en forme monolithique de
-classe comme llnmon devrait être divisée en plus petits morceaux pour faciliter
+Comme les gens utilisent cette capacit&#233;, vous aurez probablement envie de remanier certaines classes existantes
+afin de les rendre plus facile &#224; &#233;tendre. Par exemple, une mise en forme monolithique de
+classe comme llnmon devrait &#234;tre divis&#233;e en plus petits morceaux pour faciliter
 l'ajout de nouveaux formats.
 
 </OL>
 
-<h2>Autres Mécanismes</h2>
+<h2>Autres M&#233;canismes</h2>
 
-Il est également possible de personnaliser votre version de JMRI utilisant des 
+Il est &#233;galement possible de personnaliser votre version de JMRI utilisant des 
 scripts, et en utilisant les
-<a href="../../../package/apps/TabbedPreferences.shtml"> préférences avancées </a>.
+<a href="../../../package/apps/TabbedPreferences.shtml"> pr&#233;f&#233;rences avanc&#233;es</a>.
 
 <p>
-Les scripts peuvent localiser et accéder à n'importe quelle fenêtre ouverte, par exemple.
+Les scripts peuvent localiser et acc&#233;der &#224; n'importe quelle fen&#234;tre ouverte, par exemple.
 L'exemple de script
-<a href="http://jmri.org/jython/AddButton.py"> AddButton.py </a>
- est un exemple de l'ajout d'un bouton de script sur la fenêtre principale.
-L'
-<a href="http://jmri.org/jython/DisableOpsMode.py"> DisableOpsMode.py </a>
-montre un exemple de script pour comment faire pour modifier la fenêtre principale et supprimer le
+<a href="http://jmri.org/jython/AddButton.py"> AddButton.py</a>
+ est un exemple de l'ajout d'un bouton de script sur la fen&#234;tre principale.
+Le
+<a href="http://jmri.org/jython/DisableOpsMode.py"> DisableOpsMode.py</a>
+montre un exemple de script pour comment faire pour modifier la fen&#234;tre principale et supprimer le
 bouton de programmation voie principale.
 
 
 L'exemple de script 
-<a href="http://jmri.org/jython/ReporterFontControl.py"> ReporterFontControl.py </a>
- est un exemple encore plus avancés qui
-modifie l'apparence des éléments sur les écrans du panneau.
+<a href="http://jmri.org/jython/ReporterFontControl.py"> ReporterFontControl.py</a>
+ est un exemple encore plus avanc&#233;s qui
+modifie l'apparence des &#233;l&#233;ments sur les &#233;crans du panneau.
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>

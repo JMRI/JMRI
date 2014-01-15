@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelPro.shtml,v 1.10 2010/03/06 20:08:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-02-->
+<!-- $Id: PanelPro.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-10-09-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: PanelPro Main Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
@@ -24,32 +24,32 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Fenêtre Principale  Window</H1>
+<H1>JMRI: Fen&#234;tre Principale  Window</H1>
 
-La fenêtre principale PanelPro vous donne accès à toutes les
-capacités de JMRI
+La fen&#234;tre principale PanelPro vous donne acc&#232;s &#224; toutes les
+capacit&#233;s de JMRI
 <p>
-Aide sur des menus spécifiques:
+Aide sur des menus sp&#233;cifiques:
 <ul>
-<li>Edit - (<a href="../TabbedPreferences.shtml">Préférences</a>)
+<li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
 <li><a href="../../jmri/jmrit/display/PanelMenuHelp.shtml">Panneaux</a>
-<li>((Menus spécifiques à votre connexion de mise en page apparaît ici)
+<li>((Menus sp&#233;cifiques &#224; votre connexion de mise en page appara&#238;t ici)
 <li><a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debogage</a>
-<li>Fenêtre - Affiche les fenêtres actuellement disponibles
+<li>Fen&#234;tre - Affiche les fen&#234;tres actuellement disponibles
      <ul>
-     <li> Réduire - réduit la fenêtre actuelle, elle se cache.
+     <li> R&#233;duire - r&#233;duit la fen&#234;tre actuelle, elle la cache.
 </ul>
-Aide <li>
+<li>Aide 
    <ul>
-   Fenêtre Aide<li> - Ouvre une page d'aide spécifique à la fenêtre courante. Pour la fenêtre principale, c'est cette page.
-   <li>Aide Générale - Ouvre la page d'aide principale JMRI
+  <li> Fen&#234;tre Aide - Ouvre une page d'aide sp&#233;cifique pour la fen&#234;tre courante. Pour la fen&#234;tre principale, c'est cette page.
+   <li>Aide G&#233;n&#233;rale - Ouvre la page d'aide principale JMRI
    <li>Licence - Affiche la licence JMRI.
-   <li> Emplacements - Montrer où les répertoires et les préférences du programme JMRI sont situés
-   <li> Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient être utiles
-             quand quelqu'un essaie de vous aider à résoudre un problème.
-   <li> Téléchargement  Infos de Débogage - Ouvre une fenêtre pour le téléchargement d'info débogage .
+   <li> Emplacements - Montrer o&#249; les r&#233;pertoires et les pr&#233;f&#233;rences du programme JMRI sont situ&#233;s
+   <li> Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient &#234;tre utiles
+             quand quelqu'un essaie de vous aider &#224; r&#233;soudre un probl&#232;me.
+   <li> T&#233;l&#233;chargement Infos de D&#233;bogage - Ouvre une fen&#234;tre pour le t&#233;l&#233;chargement d'info d&#233;bogage .
    </ul>
 </ul>
 

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SetSignalsSlip.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>2013-11-01 -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Set Signals at Throat-to-Throat Turnouts Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Kevin Dickerson" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor panel">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>D&#233;finir Signaux &#224; une Travers&#233;e Jonction Simple/Double</H1>
+<h2>Introduction</h2>
+<p>
+Cet outil fournit une proc&#233;dure automatique our affecter des signaux &#224; une TJS ou TJD.</p>
+<A href="./images/Slip.png"><IMG SRC="./images/Slip.png" 
+ALIGN=CENTER WIDTH="229" HEIGHT="104" HSPACE="0" VSPACE="0"></A>
+<p>
+Si n&#233;cessaire, cet outil permettra de placer des ic&#244;nes de signalisation sur le panneau aux quatre entr&#233;es,
+de la travers&#233;e et mettra en place une logique de commande pour les T&#234;tes de signalisation sp&#233;cifi&#233;s. Une ou
+deux t&#234;tes de signalisation peuvent &#234;tre plac&#233;es au niveau de chaque voie de la travers&#233;e. La voie continue est le
+chemin direct &#224; travers la travers&#233;e dans les deux sens , tandis que la voie divergente est l'
+voie qui s'&#233;carte de la voie directe. </p>
+<p>
+Avant de choisir cet outil, la travers&#233;e doit &#234;tre sur le panneau avec deux aiguillages affect&#233;s
+et configur&#233; correctement pour chaque trajet, les t&#234;tes de signalisation n&#233;cessaires doivent &#233;galement &#234;tre dans le Tableau T&#234;te Signal. La logique de commande cr&#233;&#233;e par cet outil ne fonctionne correctement que
+si chacun des segments de voie reli&#233;s aux voies de la travers&#233;e est associ&#233; &#224; un canton diff&#233;rent.
+ il est plus efficace si le segment de voie affect&#233;e au glissement est dans une cinqui&#232;me
+canton diff&#233;rent, mais ce n'est pas n&#233;cessaire. </p>
+<p>
+Lorsque cette option est s&#233;lectionn&#233;e, une bo&#238;te de dialogue s'affiche avec une liste d&#233;roulante pour choisir la travers&#233;e qui est sur le panneau actuel et les noms (syst&#232;me ou utilisateur) de six &#224; huit
+T&#234;tes de signal &#224; affecter aux deux aiguillages .
+<p>
+Pour chaque t&#234;te de signal, des cases &#224; cocher sont disponibles pour s&#233;lectionionner
+si l'ic&#244;ne doit &#234;tre plac&#233;e sur le panneau, et que la logique de commande
+doit &#234;tre cr&#233;&#233; pour la t&#234;te de signal. Peu importe si les ic&#244;nes
+sont plac&#233;es ou si la logique est cr&#233;&#233;e, l'&#201;diteur de circuits retiendra que l'entr&#233;e
+t&#234;tes de signaux sont affect&#233;es &#224; la travers&#233;e.</p>
+
+<h3>D&#233;marche de la D&#233;finition des Signaux de la Travers&#233;e</h3 >
+<p>
+Dans la liste d&#233;roulante, s&#233;lectionnez la Travers&#233;e qui se trouve sur le panneau que 
+vous souhaitez configurer, le nom rempli dans le menu d&#233;roulant est constitu&#233; du 
+noms des aiguillages utilis&#233;s pour cr&#233;er la travers&#233;e. En s&#233;lectionnant la travers&#233;e, si les signaux ont d&#233;j&#224; &#233;t&#233;
+affect&#233;s cette information sera automatiquement pr&#233;-rempli.
+<p>
+L'outil fournit &#224; l'entr&#233;e un ou deux signaux au niveau de chaque voie de la travers&#233;e, en fonction du
+type de travers&#233;e et de la branche s&#233;lectionn&#233;e. <br>
+Ces t&#234;tes de signaux indiquent l'&#233;tat de se d&#233;placer dans le chemin direct ou d&#233;vi&#233; &#224; travers la travers&#233;e .
+D'abord les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie droite</b> sont entr&#233;es . La T&#234;te de signalisation <b>  voie droite </b> est n&#233;cessaire, mais l'entr&#233;e <b>  voie d&#233;vi&#233;e</b> est facultative. Si seulement la T&#234;te de signalisation <b>   Voie directe</b> est entr&#233;e, l'outil suppose que la t&#234;te signale aussi
+les voies de l'autre aiguillage , similaire &#224; lorsque seule une t&#234;te de signal est plac&#233; &#224;
+la pointe d'un seul aiguillage.</p>
+<p>
+Ensuite les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie d&#233;vi&#233;e</b> sont entr&#233;es .
+Rappelez-vous que c'est pour quand le chemin &#224; travers la travers&#233;e  est pr&#234;t &#224; &#234;tre d&#233;vi&#233; .
+Lorsque les deux t&#234;tes sont entr&#233;es, la t&#234;te la plus proche de la travers&#233;e signale l'
+&#233;tat de la voie directe. <br>
+De m&#234;me, les t&#234;tes signal situ&#233;es &#224; <b>  Aiguillage 2 - voie droite</b> et 
+ <b> Aiguillage 2 - voie d&#233;vi&#233;e</b> sont entr&#233;s</p>
+<p>
+S'il y avait une t&#234;te de signal pr&#233;c&#233;demment attribu&#233; &#224; une
+position et que vous entrez une <i>t&#234;te de signal</i> diff&#233;rente dans le m&#234;me lieu ,
+la nouvelle t&#234;te de signal va remplacer la t&#234;te de signal pr&#233;c&#233;dente , et l'ic&#244;ne de
+la t&#234;te de signal pr&#233;c&#233;dente (s'il y en a une) sera supprim&#233;e &#224; partir du
+panneau. De m&#234;me, si vous remplacez une t&#234;te de signal <b>  Divergente</b > avec une entr&#233;e vide (pas de t&#234;te de signal), l'entr&#233;e pr&#233;c&#233;dente est supprim&#233;e et il n'y aura pas de t&#234;te de signal &#224; cette position. <b>  Si une t&#234;te signal
+est modifi&#233;, vous devez refaire la logique qui la concerne .</b> En particulier,
+si vous supprimez une t&#234;te de signal divergente, vous devez refaire la logique de l'
+t&#234;te de signal voie droite situ&#233;e sur la m&#234;me voie .</p>
+<p>
+V&#233;rifiez <b>Ajouter Ic&#244;ne de Signal au Tableau de Bord</b> pour demander qu'une ic&#244;ne t&#234;te signal
+soit plac&#233;e sur le panneau &#224; la position de l'aiguillage indiqu&#233; .</p>
+<p>
+Cochez <b>Mettre en place Logique</b >pour demander que l'outil mette en place une logique de commande signal
+pour une t&#234;te de signal. Pour chacune de ces t&#234;tes de signal, l'outil cr&#233;e une Logique Simple Signal pour la t&#234;te, et en plus cr&#233;e un Logix qui assure que le signal plac&#233; surl'aiguillage n'est pas d&#233;vi&#233; contre la voie o&#249; est plac&#233; le signal. L'outil va tenter de configurer la logique et de remplir automatiquement les entr&#233;es avec l'information disponible. Si l'outil n'a pas assez
+d'informations disponibles pour mettre en place la logique, un message en r&#233;sultera, et vous aurez
+&#224; y revenir plus tard, apr&#232;s que davantage de cantons (avec des d&#233;tecteurs de mouvement) et/ou des signaux aient
+&#233;t&#233; attribu&#233;s aux aiguillages et aux limites de cantons sur le panneau.</p>
+<h3>notes </h3>
+<p>
+
+<p>
+L'outil mettra en place la logique Simple signal pour d&#233;finir tous les signaux au
+rouge si la travers&#233;e est occup&#233;e . Si ce n'est pas ce que vous voulez ,
+vous devez modifier la logique simple signal 
+en supprimant le capteur d'occupation de ce canton.</p>
+<p>
+Lors de la configuration logique, cet outil suivra la voie dans
+un canton jusqu'&#224; ce qu'il trouve un signal &#224; la fin du canton de l'aiguillage
+signal&#233;. Si votre r&#233;seau contient des sections qui sont
+signal&#233;es et des sections qui ne le sont pas, pour obtenir que cet outil puisse mettre en place la logique
+correctement, vous pourriez &#234;tre amen&#233; &#224; cr&#233;er et assigner un signal virtuel (un signal qui
+ne correspond pas &#224; un signal actif sur le r&#233;seau) &#224; la fin d'un canton non signal&#233;
+ qui connecte une voie qui est signal&#233;e &#224; une voie qui n'est pas signal&#233;e.
+(Vous n'avez pas besoin d'ajouter une ic&#244;ne pour le signal virtuel &#224; votre panneau, mais il
+doit exister dans votre tableau de t&#234;te de signal, et doit &#234;tre affect&#233; &#224; un aiguillage ou &#224; une limite de canton  en utilisant l'outil D&#233;finir Signaux ... . ) Si un canton se termine par un
+butoir, aucun signal virtuel n'est n&#233;cessaire &#224; l' extr&#233;mit&#233; c&#244;t&#233; heurtoir.</p>
+<p>
+Si un canton a un aiguillage interne (l'aiguillage, et les segments de voie de la pointe et les voies font partie du canton), le programme pr&#233;voit des signaux
+&#224; cet aiguillage  m&#234;me si ce n'est pas &#224; la fin du canton. Cependant,
+ l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilis&#233; dans un canton.
+Lorsque vous suivez une voie &#224; travers un canton, le programme sautera l'
+aiguillage interne non signal&#233; si <b>   Passer Aiguillage Interne non Signal&#233;</b> est coch&#233;e dans le menu <b>  Outils</b> de l'&#201;diteur de R&#233;seau.
+Il avertira toujours cependant de ce qu'il fait. <b>   utiliser cette option avec
+prudence.</b> Il n'y a pas de signal de protection contre un aiguillage saut&#233; qui peut &#234;tre
+mal r&#233;gl&#233;, si un aiguillage interne non signal&#233; n'est pas r&#233;gl&#233; correctement, un d&#233;raillement de trains pourraient en r&#233;sulter.</p>
+<p>
+Lorsque vous configurez le Logix utilis&#233; dans la logique de commande, l'outil cr&#233;e 
+un capteur interne pour communiquer avec la logique simple du signal. Le Logix
+apparait dans votre tableau Logix , et le capteur interne appara&#238;tra dans votre
+Tableau de capteur . Les noms syst&#232;me du capteur Logix et internes seront, IX ou
+IS suivie par TTT_HHH, o&#249; TTT est le nom  syst&#232;me de l'aiguillage o&#249; l'
+t&#234;te de signal est localis&#233;e et HHH est le nom syst&#232;me de la t&#234;te de signal.
+Le but de ce Logix est de s'assurer que l'aspect de la t&#234;te de signal sera rouge si l'aiguillage o&#249;
+la t&#234;te de signal est situ&#233;e est commut&#233; contre la voie o&#249; le signal est activ&#233;.</p>
+<p>
+Cet outil met en place la signalisation de trois aspects. Quand une t&#234;te de signal montre l'
+&#233;tat lors du passage &#224; une voie d'&#233;vitement, l'outil sera mis en place pour limit&#233; la
+vitesse (l'aspect le moins restrictif n'est pas vert , mais jaune), et le signal
+montrera jaune quand il serait contraire au vert. Vous pouvez changer cela avec
+une simple modification (voir ci-dessous) .</p>
+<p>
+Si vous avez une situation particuli&#232;re &#224; un signal, vous pouvez avoir &#224; modifier les
+informations saisies par cet outil dans la logique simple signal. Si vous
+vouliez la signalisation de quatre aspects, vous pouvez modifier facilement manuellement la logique
+pour atteindre cet objectif. De m&#234;me avec des  modifications manuelles simples de la logique , vous pouvez
+ajouter de l'&#233;clairage d'approche. Si vous ne voulez pas jaune lors du passage &#224; l'itin&#233;raire divergent
+, mais pr&#233;f&#232;rez le vert, ouvrez la logique simple signal pour la t&#234;te que vous voulez
+changer et d&#233;cochez <b>  Vitesse limit&#233;e</b> . La bo&#238;te de dialogue logique simple signal est
+accessible &#224; partir du menu contextuel de chaque ic&#244;ne de signal. Si votre
+situation sp&#233;ciale ne peut pas &#234;tre manipul&#233;e par une logique simple signal, vous devez vous r&#233;f&#233;rer
+&#224; Logix pour adapter la logique du signal &#224; vos besoins.</p>
+<p>
+ <b>  S'il vous pla&#238;t n'oubliez pas d'enregistrer votre &#233;cran apr&#232;s l'utilisation de cet outil.</b> </p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: PreferencesFrame.shtml,v 1.1 2011/06/02 20:10:52 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<!-- $Id: PreferencesFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 --> 
 
 <title>JMRI: ECoS User Preferences</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,44 +24,44 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Préférences utilisateur ECoS
+JMRI: Pr&#233;f&#233;rences utilisateur ECoS
 </H1>
 
-Les préférences ECoS, vous permet de contrôler la façon dont les Ecos interagissent avec JMRI pour différentes fonctionnalités.
+Les pr&#233;f&#233;rences ECoS, vous permet de contr&#244;ler la fa&#231;on dont les Ecos interagissent avec JMRI pour diff&#233;rentes fonctionnalit&#233;s.
 
-<h2> Liste </h2>
-<b> Ajouter Locos à l'Ecos </b> <br>
-Quand une nouvelle Fiche  est créée dans JMRI, cette option vous permet de définir si la loco doit être ajoutée à l'Ecos.
+<h2>Liste</h2>
+<b> Ajouter Locos &#224; l'Ecos </b> <br>
+Quand une nouvelle Fiche est cr&#233;&#233;e dans JMRI, cette option vous permet de d&#233;finir si la loco doit &#234;tre ajout&#233;e &#224; l'Ecos.
 <p>
  <b> Retirer Locos de l'Ecos </b> <br>
-Quand une fiche est supprimée dans JMRI, cette option vous permet de définir si la loco doit être supprimée de l'Ecos ou pas.
+Quand une fiche est supprim&#233;e dans JMRI, cette option vous permet de d&#233;finir si la loco doit &#234;tre supprim&#233;e de l'Ecos ou pas.
 <p>
-<b> Ajouter des Locos à la Liste JMRI </b> <br>
-Lorsque JMRI détecte qu'une nouvelle loco  a été ajoutée dans la base de données Ecos, cette option vous permet de définir si la loco doit être ajoutée dans la liste ou non.
+<b> Ajouter des Locos &#224; la Liste JMRI </b> <br>
+Lorsque JMRI d&#233;tecte qu'une nouvelle loco  a &#233;t&#233; ajout&#233;e dans la base de donn&#233;es Ecos, cette option vous permet de d&#233;finir si la loco doit &#234;tre ajout&#233;e dans la liste ou non.
 <p>
 <b>Retirer des Locos de la Liste JMRI </b> <br>
-Lorsque JMRI détecter qu'un loco a été retirée de la base de données Ecos, cette option vous permet de définir si la loco doit être supprimée de la liste ou non.
-Remarque: Actuellement, si une locomotive a été retirée de l'Ecos quand il n'est pas connecté à JMRI, cette élimination n'est pas détectée.
+Lorsque JMRI d&#233;tecter qu'un loco a &#233;t&#233; retir&#233;e de la base de donn&#233;es Ecos, cette option vous permet de d&#233;finir si la loco doit &#234;tre supprim&#233;e de la liste ou non.
+Remarque: Actuellement, si une locomotive a &#233;t&#233; retir&#233;e de l'Ecos quand il n'est pas connect&#233; &#224; JMRI, cette &#233;limination n'est pas d&#233;tect&#233;e.
 <p>
 <b> Ecos Description Format Loco </b> <br>
 
-<h2> Régulateur</h2>
-<b> Locos temporaires </b> <br>
-L'Ecos nécessite une entrée dans sa base de données avant qu'il ne soit possible de contrôler une locomotive. Lorsque vous sélectionnez une fiche ou entrer  une adresse de loco dans la zone Adresse d'un régulateur et que cette adresse n'existe pas dans la base Ecos, JMRI créera automatiquement une fiche correspondante avec une description "Créé par JMRI ». Lorsque JMRI est arrêté, ces locos temporaires peuvent soit être laissées sur l'Ecos ou supprimées. Ce paramètre vous permet de définir comment cela fonctionne.
+<h2> R&#233;gulateur</h2>
+<b> Locos temporaires</b><br>
+L'Ecos n&#233;cessite d'entr&#233;e dans sa base de donn&#233;es avant qu'il ne soit possible de commander une locomotive. Lorsque vous s&#233;lectionnez une fiche ou entrer une adresse de loco dans la zone Adresse d'un r&#233;gulateur et que cette adresse n'existe pas dans la base Ecos, JMRI cr&#233;era automatiquement une fiche correspondante avec une description "Cr&#233;&#233; par JMRI". Lorsque JMRI est arr&#234;t&#233;, ces locos temporaires peuvent soit &#234;tre laiss&#233;es sur l'Ecos ou supprim&#233;es. Ce param&#232;tre vous permet de d&#233;finir comment cela fonctionne.
 <p>
-<b>Perte de contrôle  </b> <br>
-Si un autre contrôleur a un contrôle exclusif sur une locomotive, alors il n'est pas possible pour JMRI de prendre le contrôle ou d'exploiter cette loco. JMRI fera trois tentatives pour essayer de gagner cette loco, si la troisième tentative échoue, l'utilisateur sera présenté avec une invite sur l'opportunité de forcer le contrôle de loco. Ici vous pouvez choisir soit toujours forcer un contrôle pour prendre le relais, soit ne jamais forcer un contrôle ou à prendre toujours quand invité à le faire.
+<b>Perte de commande</b><br>
+Si un autre régulateur a un contr&#244;le exclusif sur une locomotive, alors il n'est pas possible pour JMRI de prendre le contr&#244;le ou d'exploiter cette loco. JMRI fera trois tentatives pour essayer de gagner cette loco, si la troisi&#232;me tentative &#233;choue, l'utilisateur sera pr&#233;sent&#233; avec une invite sur l'opportunit&#233; de forcer la commande de loco. Ici vous pouvez choisir soit toujours forcer une commande pour prendre le relais, soit ne jamais forcer une commande ou &#224; prendre toujours quand invit&#233; &#224; le faire.
 <p>
-<h2> Aiguillages </h2>
-<b>Retirer  Aiguillages de l'Ecos </b> <br>
-Si un aiguillage est retiré de la table aiguillage dans JMRI, ce paramètre détermine si l'aiguillage doit être supprimé de l'Ecos.
+<h2> Aiguillages</h2>
+<b>Retirer Aiguillages de l'Ecos</b><br>
+Si un aiguillage est retir&#233; du tableau aiguillage dans JMRI, ce param&#232;tre d&#233;termine si l'aiguillage doit &#234;tre supprim&#233; de l'Ecos.
 <p>
-<b> Ajouter Aiguillages dans JMRI </b> <br>
-Si JMRI reçoit une notification indiquant que l'aiguillage ou que l'accessoire a été ajouté à l'Ecos pendant que JMRI est en marche, ce paramètre détermine comment JMRI devrait réagir. <br>
-Remarque: C'est ce qui n'empêche pas JMRI de remplir la table d'aiguillage lorsque l'application est ouverte.
+<b>Ajouter Aiguillages dans JMRI</b><br>
+Si JMRI re&#231;oit une notification indiquant que l'aiguillage ou que l'accessoire a &#233;t&#233; ajout&#233; &#224; l'Ecos pendant que JMRI est en marche, ce param&#232;tre d&#233;termine comment JMRI devrait r&#233;agir.<br>
+Remarque: C'est ce qui n'emp&#234;che pas JMRI de remplir le tableau d'aiguillage lorsque l'application est ouverte.
 <p>
- <b>Retirer Aiguillages dans JMRI </b> <br>
-Si JMRI reçoit une notification indiquant que l'aiguillage ou que l'accessoire a été retiré de l'Ecos, ce paramètre détermine comment JMRI devrait réagir.
+ <b>Retirer Aiguillages dans JMRI</b><br>
+Si JMRI re&#231;oit une notification indiquant que l'aiguillage ou que l'accessoire a &#233;t&#233; retir&#233; de l'Ecos, ce param&#232;tre d&#233;termine comment JMRI devrait r&#233;agir.
 
     
 <!--#include virtual="/Footer" -->

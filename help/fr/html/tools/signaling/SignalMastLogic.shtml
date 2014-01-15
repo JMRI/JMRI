@@ -3,12 +3,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Kevin Dickerson 2011 -->
-<!-- $Id: SignalMastLogic.shtml,v 1.3 2011/06/13 16:09:41 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-28--> 
+<!-- $Id: SignalMastLogic.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; 2011-10-01--> 
 <title>JMRI: Signal Mast Logic</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -23,98 +23,98 @@
 <div id="mainContent">
 
 
-<H1>JMRI: Logiques Mât de Signal</H1>
+<H1>JMRI: Logiques M&#226;t de Signal</H1>
 <p class=subtitle>
-    Informations générales sur la Logique Mâts Signals
+    Informations g&#233;n&#233;rales sur la Logique M&#226;t Signal
 </p>
 
 <div class=para>
 
 
-Le JMRI "SignalMastLogic" vous permet de construire un ensemble de critères pour un
-mât de signal comme quel aspect il faut afficher pour un itinéraire spécifique
-grâce à un mât de destination.
+Le "SignalMastLogic" JMRI vous permet de construire un ensemble de crit&#232;res pour un
+m&#226;t de signal pour savoir quel aspect il faut afficher pour un itin&#233;raire sp&#233;cifique
+vers un m&#226;t de destination.
 <p>
-Chaque mât de signal logique est construit à partir d'une paire de mât de signal, source et destination  
-ainsi qu'une série de cantons, d'aiguillages et de capteurs entre les deux mâts et l'état qu'ils 
-doivent avoir pour que le mât de la source soit libéré d'un danger ou
-Aspect d'arrêt..
-<p>Signal Boar
+Chaque logique de m&#226;t de signal est construite &#224; partir d'une paire de m&#226;ts de signal, source et destination  
+ainsi qu'une s&#233;rie de cantons, d'aiguillages et de capteurs entre les deux m&#226;ts et l'&#233;tat qu'ils 
+doivent avoir pour que le m&#226;t de la source soit lib&#233;r&#233; d'un danger ou de l'
+Aspect d'arr&#234;t..
+<p>
 <img src="images/logic1.png" height="92" width="437"><br>Exemple 1
 <p>
-Dans l'exemple ci-dessus, vous avez un mât de signal source de SM20, il y a alors deux
-mâts destination  SM22 et SM23. <br>
-La logique derrière la paire de signalisation, SM20 et SM23, est que les blocs 2 et 3 doivent être
-inoccupés, et l'aiguillage IT1 doit être réglé sur "Direct". Une fois que les critères sont respectés, alors le
-signal de SM20, sera passera  de danger à  ralenti, si le mât de signal SM23 a été mis 
-à ralenti, alors SM20 serait mis à poursuivre et montrera un aspect vert. Dès
-que le bloc 2 ou 3 deviennent actifs ou  l'aiguillage  est dévié, le signal SM20 est remis sur Danger
+Dans l'exemple ci-dessus, vous avez un m&#226;t de signal source de SM20, il y a alors deux
+m&#226;ts destination  SM22 et SM23. <br>
+La logique derri&#232;re la paire de signalisation, SM20 et SM23, veut que les cantons 2 et 3 doivent &#234;tre
+inoccup&#233;s, et l'aiguillage IT1 doit &#234;tre r&#233;gl&#233; sur "Droit". Une fois que les crit&#232;res sont respect&#233;s, alors le
+signal de SM20, passera  de Danger &#224;  Ralenti, si le m&#226;t de signal SM23 a &#233;t&#233; mis 
+&#224; Ralenti, alors SM20 serait mis &#224; Libre et montrera un aspect Vert. D&#232;s
+que les canton 2 ou 3 deviennent occup&#233;s ou si l'aiguillage est d&#233;vi&#233;, le signal SM20 est remis sur Danger
  .
 <p>
-Chaque paire de mât de signal doit être directement accessible à partir de l'autre, sans aucun autre mât de signal entre les deux  dans la même direction.
+Chaque de m&#226;t de signal de la paire doit &#234;tre directement accessible &#224; partir de l'autre, sans aucun autre m&#226;t de signal entre les deux dans la m&#234;me direction.
 <p>
 <img src="images/logic2.png" height="93" width="511"><br>Exemple 2
 <p>
-Dans l'exemple ci-dessus, une logique de signalisation de SM20 à SM24 serait invalide qi SM23 est entre les deux. Vous n'avez pas à créer deux logiques distinctes, l'une comme ci-dessus pour SM20 à SM23, le second pour SM23 à SM24.
+Dans l'exemple ci-dessus, une logique de signalisation de SM20 &#224; SM24 serait invalide sii SM23 est entre les deux. Vous avez &#224; cr&#233;er deux logiques distinctes, l'une comme ci-dessus pour SM20 &#224; SM23, la secondd pour SM23 &#224; SM24.
 <p>
 <hr>
-L' aspect que notre  mât source affiche après avoir été libéré de danger est d'abord déterminé par la cartographie aspect qui a été défini dans le fichier de l'aspect du signal mât. S'il y a un seul aspect qui pourrait être affichée, alors le mât de signal sera fixé à cet aspect.
+L' aspect que notre  m&#226;t source affiche apr&#232;s avoir &#233;t&#233; lib&#233;r&#233; de Danger est d'abord d&#233;termin&#233; par la cartographie aspect qui a &#233;t&#233; d&#233;fini dans le fichier apparence du m&#226;t signal . S'il y a un seul aspect qui pourrait &#234;tre affich&#233;e, alors le m&#226;t de signal sera fix&#233; &#224; cet aspect.
 
-Cependant, s'il y a  de multiples aspects qui pourraient être affichés, alors
-la logique porte sur deux domaines afin de déterminer l'aspect résultant qui sera affiché <br>
-<li>Itinéraire divergent <br> <ul>
-<li> S'il ya des aspects pour une voie déviée et l'un des aiguillages sur le chemin est dévié, il utilisera alors l'aspect d'un itinéraire dévié. </Li>
-<li> Si aucune des aiguillages sur l'itinéraire n'est déviés, alors l'aspect qui n'est pas désignée comme un aspect divergent sera utilisé </li>
+Cependant, s'il y a  de multiples aspects qui pourraient &#234;tre potentiellement affich&#233;s, alors
+la logique regarde deux z&#244;nes afin de d&#233;terminer l'aspect r&#233;sultant qui sera affich&#233; <br>
+<li>Itin&#233;raire divergent <br> <ul>
+<li> S'il y a des aspects pour un itin&#233;raire d&#233;vi&#233; et l'un des aiguillages sur le chemin est d&#233;vi&#233;, il utilisera alors l'aspect d'un itin&#233;raire d&#233;vi&#233;. </Li>
+<li> Si aucun des aiguillages sur l'itin&#233;raire n'est d&#233;vi&#233;s, alors l'aspect qui n'est pas d&#233;sign&#233;e comme un aspect divergent sera utilis&#233; </li>
 </ul></li>
 <li>Canton/Signal de Vitesse<br>
 <ul><li>
-Si la voie déviée n'est pas disponible sur les aspects de signal, ou elle ne retourne pas un seul aspect potentiel, alors la vitesse du canton et la vitesse de l'aspect est utilisé.
+Si l'itin&#233;raire n'est pas disponible sur les aspects de signal, ou il ne retourne pas un seul aspect potentiel, alors la vitesse du canton et la vitesse de l'aspect est utilis&#233;.
 <br>
-Chaque aspect de canton  peut être configuré avec une valeur de Vitesse, la logique sera la plus faible vitesse définie sur les cantons dans l'itinéraire et choisir l'aspect avec la vitesse la plus élevée qui est sous la plus basse vitesse de parcours. c'est à dire si la vitesse minimale est 65 mph (105 kmh), alors il va choisir l'aspect qui a une vitesse égale ou inférieure à 65 mph (105 kmh)..
+Chaque aspect de canton peut &#234;tre configur&#233; avec une valeur de Vitesse, la logique sera la plus faible vitesse d&#233;finie sur les cantons dans l'itin&#233;raire et choisir l'aspect avec la vitesse la plus &#233;lev&#233;e qui est sous la plus basse vitesse de parcours. C'est &#224; dire si la vitesse minimale est 65 mph (105 kmh), alors il va choisir l'aspect qui a une vitesse &#233;gale ou inf&#233;rieure &#224; 65 mph (105 kmh)..
 </li></ul>
 <p>
-En plus d'être en mesure de préciser l'aiguillage, les cantons et les capteurs qui composent une logique, vous pouvez aussi spécifier quels autres mâts signal doivent être réglés sur un aspect spécifique avant que le mât source soit libéré. En général, il ne devrait pas y avoir  besoin d'ajouter des mâts de signal supplémentaire que l'itinéraire entre tout les différents mâts sources et le mât de destination doit avoir un critère unique. Cependant, il y a certaine situation, comme deux voies se croisant au même niveau où un autre itinéraire pourrait être fixé. Par conséquent, pour contourner ce problème, le mât de signal ou les mâts qui sont pour protéger le croisement devrait faire partie de chacun des autres critères.
+En plus d'&#234;tre en mesure de pr&#233;ciser les aiguillages, les cantons et les capteurs qui composent une logique, vous pouvez aussi sp&#233;cifier quels autres m&#226;ts signal doivent &#234;tre r&#233;gl&#233;s sur un aspect sp&#233;cifique avant que le m&#226;t source soit lib&#233;r&#233;. En g&#233;n&#233;ral, il ne devrait pas y avoir  besoin d'ajouter de m&#226;ts de signal suppl&#233;mentaire car l'itin&#233;raire entre tous les diff&#233;rents m&#226;ts sources et m&#226;ts de destination doit avoir un crit&#232;re unique. Cependant, il y a certaine situation, comme deux voies se croisant au m&#234;me niveau o&#248; un  itin&#233;raire imcompatible devrait &#234;tre d&#233;termin&#233;. Par cons&#233;quent, pour contourner ce probl&#232;me, le m&#226;t de signal ou les m&#226;ts qui sont pour prot&#233;ger le croisement devraientt faire partie de chacun des autres crit&#232;res.
 <p>
-<H2>Information Générée Manuellement et Automatiquement</H2>
+<H2>Information G&#233;n&#233;r&#233;e Manuellement et Automatiquement</H2>
 La logique de signalisation est tributaire de deux ensembles de cantons et de l'information de l'aiguillage, le premier 
-est d'abord généré par l'utilisateur, le deuxième est celui où un outil tel que celui utilisé avec l'éditeur de TCO (voir ci dessous) a automatiquement mis en place un ensemble de cantons ou d'aiguillages depuis l'agencement du panneau comme critère de signalisation. <p>
-Les deux ensembles de données sont utilisés par la logique de signalisation afin de déterminer si un signal peut être libéré ou pas, cependant les informations manuellement créées ont une plus grande priorité sur les informations générées automatiquement. Permettant ainsi à l'utilisateur de l'emporter sur ce que le système a déterminé. <p>
-Les informations générées automatiquement ne sont pas enregistrées avec le reste du tableau d'information, mais les informations utilisateurs générées manuellement le sont. Si l'éditeur de mise en page est utilisé comme base de la logique de signalisation (Voir ci-dessous), alors la logique de signalisation redécouvrira ces informations depuis le panneau à chaque fois qu'il est chargé, donc si des modifications ont été faites, elles seront découvertes. S'il vous plaît noter que cette nouvelle génération d'informations n'est pas faite au "vol" quand le panneau de l'éditeur de TCO est modifiée.
+est d'abord g&#233;n&#233;r&#233; par l'utilisateur, le deuxi&#232;me est celui o&#248; un outil tel que celui utilis&#233; avec l'&#233;diteur de TCO (voir ci dessous) a automatiquement mis en place un ensemble de cantons ou d'aiguillages depuis l'agencement du panneau comme crit&#232;re de signalisation. <p>
+Les deux ensembles de donn&#233;es sont utilis&#233;s par la logique de signalisation afin de d&#233;terminer si un signal peut &#234;tre lib&#233;r&#233; ou pas, cependant les informations manuellement cr&#233;&#233;es ont une plus grande priorit&#233; sur les informations g&#233;n&#233;r&#233;es automatiquement. Permettant ainsi &#224; l'utilisateur de l'emporter sur ce que le syst&#232;me a d&#233;termin&#233;. <p>
+Les informations g&#233;n&#233;r&#233;es automatiquement ne sont pas enregistr&#233;es avec le reste des informations du panneau, mais les informations utilisateurs g&#233;n&#233;r&#233;es manuellement le sont. Si l'&#233;diteur de r&#233;seau est utilis&#233; comme base de la logique de signalisation (Voir ci-dessous), alors la logique de signalisation red&#233;couvrira ces informations depuis le panneau &#224; chaque fois qu'il est charg&#233;, donc si des modifications ont &#233;t&#233; faites, elles seront d&#233;couvertes. S'il vous pla&#238;t noter que cette nouvelle g&#233;n&#233;ration d'informations n'est pas faite au "vol" quand le panneau de l'&#233;diteur de TCO est modifi&#233;e.
 <p>
-<H2>Logique d'une-Zone Signalé ou tampon d'arrêts </H2>
-La logique de signalisation ne fonctionne qu'entre une mât de signal source et mât de signal de destination , si vous avez un itinéraire valide pour un Heurtoir/tampon d'arrêt/zone sombre, alors il n'y a pas de mât de signal de destination spécifique. Dans ce cas, vous devez créer un mât de signal "factice"  pour agir en tant que mât de votre destination , il n'a pas besoin d'être un mât de signal réel sur le système ou têtes de signal réelles associés. Tout ce que ce mât de signal fictif a à faire est d'afficher un aspect Danger.
+<H2>Logique d'une Zone Non Signal&#233;e ou Z&#244;ne d'arr&#234;ts </H2>
+La logique de signalisation ne fonctionne qu'entr'un m&#226;t de signal source et m&#226;t de signal destination , si vous avez un itin&#233;raire valide pour un Heurtoir/z&#244;ne d'arr&#234;t/zone sans surveillance, alors il n'y a pas de m&#226;t de signal de destination sp&#233;cifique. Dans ce cas, vous devez cr&#233;er un m&#226;t de signal "factice"  pour agir en tant que m&#226;t de votre destination , il n'a pas besoin d'&#234;tre un m&#226;t de signal r&#233;el sur le syst&#232;me ou t&#234;tes de signal r&#233;elles associ&#233;es. Tout ce que ce m&#226;t de signal fictif a &#224; faire est d'afficher un aspect Danger.
 <p>
-<H2>Utilisation de l'éditeur de mise en page pour la Logique mât de signal </H2>
-En utilisant l'éditeur de mise en page de canton , il est possible d'avoir la logique mât de signal
-déterminer les paires de signalisation, ainsi que les cantons et les aiguillages qui forment les critères. Cela peut être fait dans tous les mâts de signal sur l'éditeur de TCO ou sur une source de base du mât du signal.
-<p> Il a l'avantage que si le panneau de l'éditeur de TCO est modifiée la logique de signalisation découvrira ce changement lorsque le panneau est rechargé et utiliser le nouveau canton et l'information de l'aiguillage.
-S'il vous plaît soyez conscient que la remise à jour lors du chargement du panneau ne sera pas de découvrir toutes les nouvelles paires de signalisation ou d'enlever des paires de signalisation invalides, il sera tout simplement de mettre à jour les informations entre les paires existantes..
+<H2>Utilisation de l'&#233;diteur de r&#233;seau pour la Logique M&#226;t de Signal </H2>
+En utilisant l'&#233;diteur de mise en page de canton , il est possible d'avoir la logique M&#226;t de Signal
+qui d&#233;termine les paires de signalisation, ainsi que les cantons et les aiguillages qui forment les crit&#232;res. Cela peut &#234;tre fait dans tous les m&#226;ts de signal sur l'&#233;diteur r&#233;seau ou sur une source de base du m&#226;t du signal.
+<p> Il a l'avantage que si le panneau de l'&#233;diteur de r&#233;seau est modifi&#233;, la logique de signalisation d&#233;couvrira ce changement lorsque le panneau est recharg&#233; et utilisera le nouveau canton et l'information de l'aiguillage.
+S'il vous pla&#238;t soyez conscient que la remise &#224; jour lors du chargement du panneau ne sera pas de d&#233;couvrir toutes les nouvelles paires de signalisation ou d'enlever des paires de signalisation invalides, il sera tout simplement de mettre &#224; jour les informations entre les paires existantes..
 <p>
-<H3>Placer les Mâts de Signaux </H3>
-Les mâts de signaaux peuvent être placés près des aiguillages, des points d'ancrage et les traversées,
-mais seulement où il y a une frontière entre deux cantons différentsur le réseau . <p>
-Pour ajouter le mât de signal, un clic droit sur l'aiguillage, la traversée ou le point d'ancrage et si une limite de cantons existant, il vous sera donné la possibilité de "mettre Mât de Signal .." <p>
+<H3>Placer les M&#226;ts de Signaux </H3>
+Les m&#226;ts de signaaux peuvent &#234;tre plac&#233;s pr&#232;s des aiguillages, des points d'ancrage et les travers&#233;es jonctions,
+mais seulement o&#248; il y a une fronti&#232;re entre deux cantons diff&#233;rent sur le r&#233;seau . <p>
+Pour ajouter le m&#226;t de signal, un clic droit sur l'aiguillage, la travers&#233;e ou le point d'ancrage et si une limite de cantons existant, il vous sera donn&#233; la possibilit&#233; de "mettre M&#226;t de Signal .." <p>
 <img src="images/popup.png" height="316" Exemple width="300"> <br> 
 <p>
-Il Vous sera alors présenté une fenêtre rafraichie qui vous permet d'entrer le
-nom du mât de signal qui va protéger une frontière entre deux cantons. <br>
-Pour les aiguillages et les traversées, vous ne pouvez ajouter un mât de signal pour entrer dans la limite de l'aiguillage ou de la traversée, il n'est pas possible d'ajouter un mât de signal pour la limite de sortie de l'aiguillage ou de la traversée. Par exemple, si le canton A est la section de la voie attachée à l'aiguillage et que l'aiguillage est dans le canton B, vous pouvez seulement ajouter un mât de signal qui fait face  au canton A, qui protège le canton B, vous ne pouvez pas ajouter un mât de signal qui fait face au canton B pour protéger le canton A.
+Il Vous sera alors pr&#233;sent&#233; une fen&#234;tre rafraichie qui vous permet d'entrer le
+nom du m&#226;t de signal qui va prot&#233;ger une fronti&#232;re entre deux cantons. <br>
+Pour les aiguillages et les travers&#233;es, vous ne pouvez ajouter un m&#226;t de signal pour entrer dans la limite de l'aiguillage ou de la travers&#233;e, il n'est pas possible d'ajouter un m&#226;t de signal pour la limite de sortie de l'aiguillage ou de la travers&#233;e. Par exemple, si le canton A est la section de la voie attach&#233;e &#224; l'aiguillage et que l'aiguillage est dans le canton B, vous pouvez seulement ajouter un m&#226;t de signal qui fait face  au canton A, qui prot&#232;ge le canton B, vous ne pouvez pas ajouter un m&#226;t de signal qui fait face au canton B pour prot&#233;ger le canton A.
 <p>
-<H3>Générer la Logique de Signalisation </H3>
-La logique de signalisation  peut être automatiquement générée de deux manières différentes. <br>
-La première est de la construire sur un mât de signal à partir d'un mât de signal de base. Cela peut être fait en sélectionnant «Logique Mât de Signal» à partir du menu contextuel de l'icône de mât de signal sur le panneau, à partir de là, vous cliquez ensuite sur le bouton "Découverte" , le système va chercher tous les mâts de destination potentielles qui sont valides par rapport au mât sélectionné. <p><img src="images/discover.png" height="209" width="502"> <p>
-La deuxième méthode est l'option «Paire» du menu dans le tableau de logiques mât de signal , cela va générer une logique basée sur l'ensemble de mât de signal sur le panneau de l'éditeur de TCO. <p> <Img src = "images/pairs.png" height = "125" width = "308"> <p>
-S'il vous plaît soyez conscient que sur les grand clichés  avec un grand nombre de mâts de signal configurés, cela peut prendre un certain temps
+<H3>G&#233;n&#233;rer la Logique de Signalisation </H3>
+La logique de signalisation  peut &#234;tre automatiquement g&#233;n&#233;r&#233;e de deux mani&#232;res diff&#233;rentes. <br>
+La premi&#232;re est de la construire sur un m&#226;t de signal &#224; partir d'un m&#226;t de signal de base. Cela peut &#234;tre fait en s&#233;lectionnant "Logique M&#226;t de Signal" &#224; partir du menu contextuel de l'ic&#244;ne de m&#226;t de signal sur le panneau, &#224; partir de l&#224;, vous cliquez ensuite sur le bouton "D&#233;couverte" , le syst&#232;me va chercher tous les m&#226;ts de destination potentielles qui sont valides par rapport au m&#226;t s&#233;lectionn&#233;. <p><img src="images/discover.png" height="209" width="502"> <p>
+La deuxi&#232;me m&#233;thode est l'option "Paire" du menu dans le tableau de logiques m&#226;t de signal, cela va g&#233;n&#233;rer une logique bas&#233;e sur l'ensemble de m&#226;t de signal sur le panneau de l'&#233;diteur de r&#233;seau. <p> <Img src = "images/pairs.png" height = "125" width = "308"> <p>
+S'il vous pla&#238;t soyez conscient que sur les grands r&#233;seaux avec un grand nombre de m&#226;ts de signal configur&#233;s, cela peut prendre un certain temps
 <p>
-L' accès à la configuration de Logiques mât de signal peut être fait à partir de trois endroit différent
+L' acc&#232;s &#224; la configuration de Logiques M&#226;t de Signal peut &#234;tre fait &#224; partir de trois endroit diff&#233;rent
 <ul>
-<li><a href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Table Logique Mat de Signal</a></li>
-<li> Sur la table de mât de signal, il y a un bouton Modifier contre chaque mât de signal </li>
-<li> Le menu contextuel sur l'icône mât de signal, il y a un élément de menu pour Logique mât de signal</li>
+<li><a href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t Signal</a></li>
+<li> Sur le Tableau de M&#226;t de Signal, il y a un bouton Modifier contre chaque M&#226;t de Signal </li>
+<li> Le menu contextuel sur l'Ic&#244;ne M&#226;t Signal, il y a un &#233;l&#233;ment de menu pour Logique M&#226;t Signal</li>
 </ul>
 
-Vous pouvez ajouter de nouveaux avec le bouton "Ajouter ..."  sur chacun des tableaux suivants, qui vous emmène à la
-<a href="../../../package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml">fenêtre "Ajouter éditer Logiques Mat de Signal"</a>.
+Vous pouvez ajouter de nouveaux avec le bouton "Ajouter ..."  sur chacun des tableaux suivants, qui vous emm&#232;ne &#224; la
+<a href="../../../package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml">fen&#234;tre "Ajouter &#233;diter Logiques Mat de Signal"</a>.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

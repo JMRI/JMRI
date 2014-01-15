@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Hervé le 2011-11-5-->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
 <html lang="fr"><head>
-<!-- $Id: ThrottleFrame.shtml,v 1.10 2009/12/06 18:06:40 hebbos Exp $ --><title>JMRI: Throttle</title>
+<!-- $Id: ThrottleFrame.shtml 21896 2012-12-19 12:12:05Z rhwood $ --><title>JMRI: Throttle</title>
 
 
 
  
     
   
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
     
   <meta content="Bob Jacobsen" name="Author">
@@ -19,7 +19,7 @@
 
 
   
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
   
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -39,40 +39,40 @@
     
 <div id="mainContent">
 
-<h1>Régulateur JMRI</h1>
+<h1>R&#233;gulateur JMRI</h1>
 
 
-Ceci est la page de référence rapide pour l'outil Régulateur JMRI.<br>
+Ceci est la page de r&#233;f&#233;rence rapide pour l'outil R&#233;gulateur JMRI.<br>
 <br>
 Plus d'informations sur: <br>
 <ul>
-   <li>Le menu Régulateur <a href="../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml"> dans JMRI </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/BasicThrottleWindow.shtml">fenêtre Régulateur elle-même </a> </li>
-   <li>Les <a href="../../../../html/tools/throttle/ThrottleWindowMenus.shtml">menus Fenêtres Régulateur </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/ThrottleToolBar.shtml"> Fenêtre barre d'outils Régulateur </a> </li>
-   <li>Les<a  href="../../../../html/tools/throttle/AdvancedThrottleControl.shtml"> contrôles Fenêtre Régulateur </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/ThrottlesListWindow.shtml">  Liste des Fenêtres Régulateurs </a> </li>
-   <li>Le <a href="../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">panneau des préférences Régulateurs </a> <br>
+   <li>Le <a href="../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI </a> </li>
+   <li>La <a href="../../../../html/tools/throttle/BasicThrottleWindow.shtml">fen&#234;tre R&#233;gulateur elle-m&#234;me </a> </li>
+   <li>Les <a href="../../../../html/tools/throttle/ThrottleWindowMenus.shtml">menus Fen&#234;tres R&#233;gulateur </a> </li>
+   <li>La <a href="../../../../html/tools/throttle/ThrottleToolBar.shtml"> Barre d'outils Fen&#234;tre R&#233;gulateur </a> </li>
+   <li>Les<a  href="../../../../html/tools/throttle/AdvancedThrottleControl.shtml"> Copmmandes Fen&#234;tre R&#233;gulateur </a> </li>
+   <li>La <a href="../../../../html/tools/throttle/ThrottlesListWindow.shtml">  Liste des Fen&#234;tres R&#233;gulateurs </a> </li>
+   <li>Le <a href="../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">panneau des pr&#233;f&#233;rences R&#233;gulateurs </a> <br>
    </li>
 </ul>
 <br>
 Voir aussi: <br>
 <ul>
-   <li> Les <a href="../../../../html/tools/throttle/RostersMediaPane.shtml"> médias et les panneaux étiquette Fonction dans DecoderPro </a> </li>
+   <li> Les <a href="../../../../html/tools/throttle/RostersMediaPane.shtml"> m&#233;dias et les panneaux &#233;tiquette Fonction dans DecoderPro </a> </li>
    <li> <a href="../../../../html/tools/scripting/Jynstruments.shtml"> Jynstruments </a> </li>
-   <li> <a href="../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml"> Comment construire un Régulateur orientée JMRI </a>. </li>
+   <li> <a href="../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml"> Comment construire un R&#233;gulateur orient&#233;e JMRI </a>. </li>
 </ul>
 
 <p>
 <br>
-Enfin la version précédente des pages d'aide<a href="../../../../html/tools/throttle/ThrottleMain.shtml"> de la page générale Régulateur</a> <a href = ".. /../../../ html/tools/throttle/ThrottleTOC.shtml "> (accès direct TOC) </a>.T
+Enfin la version pr&#233;c&#233;dente des pages d'aide<a href="../../../../html/tools/throttle/ThrottleMain.shtml"> de la page g&#233;n&#233;rale R&#233;gulateur</a> <a href = ".. /../../../ html/tools/throttle/ThrottleTOC.shtml "> (acc&#232;s direct TOC) </a>.
 
 
 </p>
 
 
 <p>
-<a id="prefs">Ceci est la page d'aide help/en/package/jmri/jmrit/throttle.ThrottleFrame
+<a id="prefs">Ceci est la page d'aide help/en/package/jmri/jmrit/throttle/ThrottleFrame
     
 <!--#include virtual="/Footer" -->
 </a></p>

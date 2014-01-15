@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id: index.shtml,v 1.6 2010/01/07 07:28:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-18-->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,38 +24,37 @@
 
 
 <h2> 
-JMRI: Contrôleurs CPL (Powerline)
+JMRI: Contr&#244;leurs CPL (Powerline)
 </h2>
 
-Cette page explique comment configurer JMRI pour parler aux 
-contrôleurs de la ligne électrique, par exemple X10.
+Cette page explique comment configurer JMRI pour dialoguer avec les 
+contr&#244;leurs de la ligne &#233;lectrique, par exemple X10.
 
 <p>
 Voir aussi la 
-<a href="Compatibility.shtml"> page de compatibilité  </a> associée, pour voir les interfaces
+<a href="Compatibility.shtml"> page de compatibilit&#233;  </a> associ&#233;e, pour voir les interfaces
  prises en charge.
 
 <p>
-Pour plus d'informations sur la façon de répondre à vos équipements via JMRI, s'il vous plaît
-voir la page<a href="Names.shtml"> sur le traitement et les noms de JMRI </a> pour X10.
+Pour plus d'informations sur la fa&#231;on d'adresser vos &#233;quipements via JMRI, s'il vous pla&#238;t
+voir la page<a href="Names.shtml"> sur l'adressaget et les noms de JMRI </a> pour X10.
 
 <p>
-Les lumières JMRI travaillent de manière intuitive avec des appareils CPL. Lorsque la Lumière JMRI
- est mis sur "ON", une commande est envoyée au périphérique distant pour le mettre sur "ON".
+Les lumi&#232;res JMRI travaillent de mani&#232;re intuitive avec des appareils CPL. Lorsque la Lumi&#232;re JMRI
+ est mis sur "ON", une commande est envoy&#233;e au p&#233;riph&#233;rique distant pour le mettre sur "ON".
 Idem pour "OFF". 
 
 <p>
-Il y a aussi un support limité pour la gradation (luminosité variable) Lumières.
+Il y a aussi un support limit&#233; pour la gradation (luminosit&#233; variable) Lumi&#232;res.
 Voir la
-<a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml"> page "Contrôle-Lumière" </a>
-pour plus d'informations à ce sujet.
+<a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml"> page "Contr&#244;le-Lumi&#232;re"</a> pour plus d'informations &#224; ce sujet.
 
 <p>
-L'aiguillage JMRI est disponible pour X10. Lorsque l'aiguillage JMRI
-est réglé sur "dévié", une commande est envoyée à l'appareil à distance qui
-est réglé à "BRIGHT". Ceci est une pleine puissance ,immédiate. Lorsque l'aiguillage
-est réglé sur "direct", au périphérique distant est envoyé une commande pour aller sur "OFF".Selon
-le matériel X10, ce peut être soit un arrêt immédiat, ou être baisse lente.
+Les Aiguillages JMRI sont disponibles pour X10. Lorsque l'Aiguillage JMRI
+est r&#233;gl&#233; sur "D&#233;vi&#233;", une commande est envoy&#233;e &#224; l'appareil &#224; distance qui
+est r&#233;gl&#233; &#224; "BRIGHT". Ceci est une pleine puissance ,imm&#233;diate. Lorsque l'Aiguillage
+est r&#233;gl&#233; sur "Droit", une commande est envoy&#233;e au p&#233;riph&#233;rique distant pour aller sur "OFF".Selon
+le mat&#233;riel X10, ce peut &#234;tre soit un arr&#234;t imm&#233;diat, ou &#234;tre baisse lente.
 
  
 <!--#include virtual="/Footer" -->

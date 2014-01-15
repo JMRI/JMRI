@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CircuitBuilder.shtml,v 1.6 2011/06/15 07:22:03 pete_cressman Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-28--> 
+<!-- $Id: CircuitBuilder.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Item Palette Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Item Palette">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,233 +24,224 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Générateur de Circuit</H1>
+<H1>G&#233;n&#233;rateur de Circuit</H1>
 
-<b>Le Générateur Circuit</b> est une vue d'un <b>Éditeur de Panneau de Configuration</b>
-Panneau utilisé pour créer des circuits de voie qui sont mis en œuvre dans JMRI par
-OBlocks, Portails et OPaths.Le nom prototype d'une voie ayant un appareil qui peut détecter l'occupation est le
-<b>Circuit de Voie</b>. En JMRI nous avons abusé du <i> terme «canton» </i> et
-<i> "OBlock" </i> pour se référer à ce qui dans le monde prototype est un circuit de voie.
-Le terme <b> Canton</b> dans le monde prototype est <i>une longueur de voie définie
-par des limites, dont l'usage est régie par des signaux de canton ou signaux en cabine ou des marqueurs de limites et des ordres de marche. </i> C'est Un canton  prototype qui intègre un
-système de signalisation offrant un moyen de gérer la sécurité de ses voies.La combinaison
- de circuits de voie JMRI en cantons seront abordées plus tard. Pour l'instant, l'outil Générateur de
-Circuit est concernée par la création de circuits de voie.
+<b>Le G&#233;n&#233;rateur Circuit</b> est une vue d'un <b>&#201;diteur de Panneau de Configuration</b> Panneau utilis&#233; pour cr&#233;er des circuits de voie qui sont mis en œuvre dans JMRI par
+OCantonss, Portails et OChemins. Le nom d'une voie ayant un appareil qui peut d&#233;tecter l'occupation est le
+<b>Circuit de Voie</b>. Dans JMRI nous avons abus&#233; du terme <i>"canton"</i> et
+<i>"OCanton"</i> pour se r&#233;f&#233;rer &#224; ce qui est un circuit de voie.
+Le terme <b>Canton</b> est <i>une longueur de voie d&#233;finie
+par des limites, dont l'usage est r&#233;gie par des signaux de canton ou signaux en cabine ou des marqueurs de limites et des ordres de marche.</i> C'est un canton qui int&#232;gre un syst&#232;me de signalisation offrant un moyen de g&#233;rer la s&#233;curit&#233; de ses voies. Les combinaisons de circuits de voie JMRI en cantons seront abord&#233;es plus tard. Pour l'instant, l'outil G&#233;n&#233;rateur de
+Circuit est concern&#233;e par la cr&#233;ation de circuits de voie.
 </P>
-<p>Le Générateur de Circuit est une alternative à l'utilisation des Table Occupation Canton.
-OBlocks, Portails et OPaths sont créés et liés par «pointer et cliquer» sur les
-icônes de votre schéma d'implantation ou du panneau. Les trois types d'éléments (OBlock, Portail,
-OPath) sont créés et modifiés à l'aide de trois modes d'édition de l'outil. Le résultat
-de cette modification transforme la voie de votre TCO en indicateur de voies  qui
-affiche les états des cantons et des chemins par la couleur sans altérer l'apparence
+<p>Le G&#233;n&#233;rateur de Circuit est une alternative &#224; l'utilisation des Table Occupation Canton.
+OCantons, Portails et OChemins qui sont cr&#233;&#233;es et li&#233;es par "pointer et cliquer" sur les
+ic&#244;nes de votre sch&#233;ma d'implantation ou du panneau. Les trois types d'&#233;l&#233;ments (OCanton, Portail,
+OChemin) sont cr&#233;&#233;s et modifi&#233;s &#224; l'aide de trois modes d'&#233;dition de l'outil. Le r&#233;sultat
+de cette modification transforme la voie de votre TCO en indicateur de voie qui
+affiche les &#233;tats des cantons et des chemins par la couleur sans alt&#233;rer l'apparence
  originelle du panneau. </P>
 <p>
-Les fichiers de panneaux préalablement faits avec l'Éditeur de Panneau
-peuvent être utilisés avec le Générateur de circuits tant qu'ils peuvent être chargés dans cette
-version de JMRI. Le Générateur de Circuit va moderniser les icônes de voie à
-icônes Indicateur de Voie . Voir <A HREF="ItemPalette.shtml"> L'article Palette</A>
-pour plus d'informations sur les icônes indicateurs de voie.
+Les fichiers de panneaux pr&#233;alablement faits avec l'&#201;diteur de Panneau
+peuvent &#234;tre utilis&#233;s avec le G&#233;n&#233;rateur de circuits tant qu'ils peuvent &#234;tre charg&#233;s dans cette
+version de JMRI. Le G&#233;n&#233;rateur de Circuit va moderniser les ic&#244;nes de voie en
+ic&#244;nes Indicateur de Voie . Voir <A HREF="ItemPalette.shtml"> L'article Palette</A>
+pour plus d'informations sur les ic&#244;nes indicateurs de voie.
 </P>
 
  
-<H3>Opérations Souris</H3>
-Lorsque dans l'un des modes d'édition,
-le Générateur de circuits a différentes conventions de clic de souris de ceux des éditeurs panneau.
-Dans le cadre de la fenêtre de base, il partage la plupart des opérations avec eux.
-Vous pouvez facilement aller et venir entre les éditeurs et les modes d'édition.
-des Générateur de circuits. Notez les points suivants:
+<H3>Op&#233;rations Souris</H3>
+Lorsque dans l'un des modes d'&#233;dition,
+le G&#233;n&#233;rateur de circuits a diff&#233;rentes conventions de clic de souris de ceux des &#233;diteurs panneau.
+Dans le cadre de la fen&#234;tre de base, il partage la plupart des op&#233;rations avec eux.
+Vous pouvez facilement aller et venir entre les &#233;diteurs et les modes d'&#233;dition des G&#233;n&#233;rateur de circuits. Notez les points suivants:
 <ul>
-<li>Glisser n'est pas autorisé dans les modes d'édition. (Sauf pour les icônes portail lors de l'édition Portails) </li>
-<li> Les menus contextuels pour les éléments du panneau ne peuvent être activés dans le cadre de la fenêtre de base. </li>
-<li> Ajout, modification et suppression d'éléments du panneau ne peuvent être faits dans le cadre de la fenêtre de base. </li>
-<li> Le montage Générateur de circuits est fait sur les cadres de fenêtre activés sous la rubrique "Ajouter/Modifier Circuits" du menu. </li>
-<li> Quand dans un mode d'édition, seules les icônes voies et portails peuvent être sélectionnées. </li>
+<li>Glisser n'est pas autoris&#233; dans les modes d'&#233;dition. (Sauf pour les ic&#244;nes portail lors de l'&#233;dition Portails) </li>
+<li> Les menus contextuels pour les &#233;l&#233;ments du panneau ne peuvent &#234;tre activ&#233;s dans le cadre de la fen&#234;tre de base. </li>
+<li> Ajout, modification et suppression d'&#233;l&#233;ments du panneau ne peuvent &#234;tre faits dans le cadre de la fen&#234;tre de base. </li>
+<li> Le montage G&#233;n&#233;rateur de circuits est fait sur les cadres de fen&#234;tre activ&#233;s sous la rubrique "Ajouter/Modifier Circuits" du menu. </li>
+<li> Quand dans un mode d'&#233;dition, seules les ic&#244;nes voies et portails peuvent &#234;tre s&#233;lectionn&#233;es. </li>
 </Ul>
 
 <H2> Les Menus</H2>
    
 
    <H3> Le menu Fichier </H3>
-L'élément de menu uniquement,<b> Change Vue pour Contrôler Éditeur de Panneaux</b>, renvoie la vue du Générateur de Circuits
-à la vue Contrôle Éditeur de Panneau.</P>
+L'&#233;l&#233;ment de menu uniquement,<b>Change Vue pour Contr&#244;ler &#201;diteur de Panneaux</b>, renvoie la vue du G&#233;n&#233;rateur de Circuits
+&#224; la vue Contr&#244;le &#201;diteur de Panneau.</P>
 
-<H3>Menus en Commun Avec le Contrôle Éditeur de Panneaux</H3>
- Les menus <b>Édition, Options, Zoom</b> et <b>Ajouter un élément</b>  sont identiques à celles de contrôle
-Éditeur de Panneaux. Quand dans un mode d'édition (c'est à dire dans l'un des éléments de menu sous le menu <b> Ajouter/Modifier Circuits</b>
-), ces menus sont désactivés.
+<H3>Menus en Commun Avec l'&#201;diteur de Panneaux de Commande</H3>
+ Les menus <b>&#201;dition, Options, Zoom</b> et <b>Ajouter un &#233;l&#233;ment</b> sont identiques &#224; ceux de contr&#244;le
+&#201;diteur de Panneaux. Quand dans un mode d'&#233;dition (c'est &#224; dire dans l'un des &#233;l&#233;ments de menu sous le menu <b>Ajouter/Modifier Circuits</b> ), ces menus sont d&#233;sactiv&#233;s.
 
 <H3> Le Menu Ajouter/Modifier Circuits </H3>
-Crée et Modifier OBlocks, Portails et OPaths et leurs icônes de l'écran. Le menu a les menus suivants:
+Cr&#233;e et Modifier OCantons, Portails et OChemins et leurs ic&#244;nes de l'&#233;cran. Le menu a les sous-menus suivants:
 <ul>
- <li> <b>Ajouter Circuit de Détection </b>-Créer un circuit de voie OBlock et assigner les icônes qui les affiche.
-        Vous serez invité à fournir les noms système et utilisateur pour créer un nouveau OBlock. Puis
-        vous serez en mode <b>édition de circuit</b>.</li>
- <li> <b> Modifier Circuit Canton</b>-Modifier un circuit existant (OBlock). Vous serez invité à sélectionner un OBlock
-        dans une liste de choix. Ensuite, vous serez en mode <b>édition de circuit</b>.</li>
- <li> <b> Modifier Circuit Portails</b>-Créer ou modifier la connexion de deux portails de circuits de voie. Vous serez
-        invité à sélectionner un OBlock dans une liste de choix. Ensuite, vous serez en mode <b>édition de portail</b>.</li>
- <li> <b> Modifier Circuit Chemins</b>-Créez ou modifiez les chemins (OPath) à travers un circuit de voie. Vous serez invité à sélectionner un OBlock dans une liste de choix. Ensuite, vous serez dans le mode <b>édition de chemin</b>.</li>
+ <li> <b>Ajouter Circuit de D&#233;tection</b>-Cr&#233;er un circuit de voie OCanton et assigner les ic&#244;nes qui les affiche.
+        Vous serez invit&#233; &#224; fournir les noms syst&#232;me et utilisateur pour cr&#233;er un nouveau OCanton. Puis
+        vous serez en mode <b>&#233;dition de circuit</b>.</li>
+ <li> <b>Modifier Circuit Canton</b>-Modifier un circuit existant (OCanton). Vous serez invit&#233; &#224; s&#233;lectionner un OCanton
+        dans une liste de choix. Ensuite, vous serez en mode <b>&#233;dition de circuit</b>.</li>
+ <li> <b>Modifier Circuit Portails</b>-Cr&#233;er ou modifier la connexion de deux portails de circuits de voie. Vous serez
+        invit&#233; &#224; s&#233;lectionner un OCanton dans une liste de choix. Ensuite, vous serez en mode <b>&#233;dition de portail</b>.</li>
+ <li> <b>Modifier Circuit Chemins</b>-Cr&#233;ez ou modifiez les chemins (OChemin) &#224; travers un circuit de voie. Vous serez invit&#233; &#224; s&#233;lectionner un OCanton dans une liste de choix. Ensuite, vous serez dans le mode <b>&#233;dition de chemin</b>.</li>
 </ Ul>
 
-<H3> Le Menu Vérification d'Erreur </H3>
-Vérifiez que OBlocks, Portails et OPaths sont complets et sans erreurs. Le menu a les menus suivants:
+<H3> Le Menu V&#233;rification d'Erreur </H3>
+V&#233;rifie que OCantons, Portails et OCheminss soient complets et sans erreurs. Le menu a le sous-menu suivant:
 <ul>
- <li> <b>Circuits sans icônes</b> - A un sous-menu pour chaque circuit de voie OBlock  qui ne possède pas d'icône.
-        Un circuit de voie nécessite au moins une icône indicatrice de voie pour afficher son état.</li>
- <li> <b>Circuits  dont les icônes ont besoin de conversion</b> - A un sous-menu pour chaque circuit de voie OBlock dont les  icônes de voies ne sont pas des icônes indicatrices de voie. 
-        <ul> <b> Remarque:</b> Si des <i> icônes de voies ne sont pas converties en icônes indicatrices de voies
-        les informations nécessaires pour afficher les états du circuit ne peuvent pas être sauvées.</i>
+ <li> <b>Circuits sans ic&#244;nes</b> - A un sous-menu pour chaque circuit de voie OCanton  qui ne poss&#232;de pas d'ic&#244;ne.
+        Un circuit de voie n&#233;cessite au moins une ic&#244;ne indicatrice de voie pour afficher son &#233;tat.</li>
+ <li> <b>Circuits  dont les ic&#244;nes ont besoin de conversion</b> - A un sous-menu pour chaque circuit de voie OCanton dont les  ic&#244;nes de voies ne sont pas des ic&#244;nes indicatrices de voie. 
+        <ul> <b>Remarque:</b> Si des <i>ic&#244;nes de voies ne sont pas converties en ic&#244;nes indicatrices de voies
+        les informations n&#233;cessaires pour afficher les &#233;tats du circuit ne peuvent pas &#234;tre sauv&#233;es.</i>
         </Ul></li>
- <li><b> Icônes de voie en Surbrillance ont besoin de conversion</b> - Surlignage de toutes les icônes de voies qui ne sont pas des
-        Icônes indicatrices de voie . Si toutes les icônes de voie sont des icônes indicatrices de voie, cet élément de menu est 
-         étiqueté <b> Toutes les icônes de voie sont des icônes indicatrice</b></li>
- <li> <b> Surlignage des Icônes indicatrices de voie sans circuits</b> - Mettre en évidence toutes les icônes de voies qui ne sont pas associées à un circuit de voie. Si chaque icône de la voie est associée à un circuit
-        Cet élément de menu est étiqueté <b> Toutes les icônes de voie appartiennent à Circuits</b></li>
- <li> <b>Circuits avec icônes Portail égarées</b> - A un sous-menu pour chaque circuit de voie OBlock qui
-        a un avertissement de positionnement de l'icône Portail. Les posibilités sont:
-        <ul> Une icône portail est mal placée. à savoir ne pas placer les deux cantons couvrant
+ <li><b>Ic&#244;nes de voie en Surbrillance ont besoin de conversion</b> - Surlignage de toutes les ic&#244;nes de voies qui ne sont pas des
+        Ic&#244;nes indicatrices de voie . Si toutes les ic&#244;nes de voie sont des ic&#244;nes indicatrices de voie, cet &#233;l&#233;ment de menu est 
+         &#233;tiquet&#233; <b>Toutes les ic&#244;nes de voie sont des ic&#244;nes indicatrices</b></li>
+ <li> <b>Surlignage des Ic&#244;nes indicatrices de voie sans circuits</b> - Surlignage de  toutes les ic&#244;nes de voies qui ne sont pas associ&#233;es &#224; un circuit de voie. Si chaque ic&#244;ne de la voie est associ&#233;e &#224; un circuit, cet &#233;l&#233;ment de menu est &#233;tiquet&#233; <b>Toutes les ic&#244;nes de voie appartiennent aux Circuits</b></li>
+ <li> <b>Circuits avec ic&#244;nes Portail mal plaac&#233;ess</b> - A un sous-menu pour chaque circuit de voie OCanton qui
+        a un avertissement de positionnement de l'ic&#244;ne Portail. Les posibilit&#233;s sont:
+        <ul> Une ic&#244;ne portail est mal plac&#233;e. Par exempler: ne pas placer les deux cantons couvrant
         celle du portail.
-        <br>Une icône portail couvre un circuit voisin sans icônes indicatrice.
+        <br>Une ic&#244;ne portail couvre un circuit voisin sans ic&#244;nes indicatrice.
         </Ul>
-        Remarque: Lorsque les icônes d'un circuit ne sont pas converties à des icônes indicatrices, après avoir sauvé et rechargé
-       les icônes portail ne seront pas en mesure de détecter si elles s'étendent sur ce circuit.</li>
- <li><b>Vérifiez les erreurs de Portail et de Chemin</b> - examiner les définitions du Portail et de OPath à la recherche
-        des erreurs ou des informations incomplètes. Une boîte de dialogue affiche la liste des erreurs
-        trouvées.</li>
+        Remarque: Lorsque les ic&#244;nes d'un circuit ne sont pas converties &#224; des ic&#244;nes indicatrices, apr&#232;s avoir sauv&#233; et recharg&#233;
+       les ic&#244;nes portail ne seront pas en mesure de d&#233;tecter si elles s'&#233;tendent sur ce circuit.</li>
+ <li><b>V&#233;rifiez les erreurs de Portail et de Chemin</b> - examiner les d&#233;finitions du Portail et de OChemin &#224; la recherche
+        des erreurs ou des informations incompl&#232;tes. Une bo&#238;te de dialogue affiche la liste des erreurs trouv&#233;es.</li>
 </Ul>
 
-<H2> Comment faire les OBlocks, Portails et OPaths </H2>
-La création et l'édition de ces objets sont faits , avec trois modes d'édition des Générateurs de Circuits.
-<H3>OBlocks-mode d'Édition Circuit</H3>
-<H4>Création de OBlocks </H4>
+<H2> Comment faire les OCantonss, Portails et OPortails </H2>
+La cr&#233;ation et l'&#233;dition de ces objets sont faits, avec trois modes d'&#233;dition des G&#233;n&#233;rateurs de Circuits.
+<H3>OCantons-mode d'&#201;dition Circuit</H3>
+<H4>Cr&#233;ation de OCantons </H4>
 <ul>
- 1. Depuis le menu <b>Ajouter/Modifier Circuits</b> , sélectionnez l'élément de menu  <b>Ajouter</b> Circuit de Détection .
- Cela ouvre une boîte de dialogue pour vous permettre de créer un circuit de OBlock en fournissant son nom système et nom utilisateur. Créer l'OBlock ouvre la  fenêtre <b>Ajouter Circuit Détecteur</b> .
+ 1. Depuis le menu <b>Ajouter/Modifier Circuits</b> , s&#233;lectionnez l'&#233;l&#233;ment de menu  <b>Ajouter</b> Circuit de D&#233;tection .
+ Cela ouvre une bo&#238;te de dialogue pour vous permettre de cr&#233;er un circuit de OCanton en fournissant son nom syst&#232;me et nom utilisateur. Cr&#233;er l'OCanton ouvre la  fen&#234;tre <b>Ajouter Circuit D&#233;tecteur</b> .
 <p>
- La fenêtre Ajouter Circuit Détecteur est identique à la fenêtre Edition Circuit. Voir la section ci-dessous mode d'Édition de Circuit pour plus d'informations sur cette fenêtre.
+ La fen&#234;tre Ajouter Circuit D&#233;tecteur est identique &#224; la fen&#234;tre Edition Circuit. Voir la section ci-dessous mode d'&#201;dition de Circuit pour plus d'informations sur cette fen&#234;tre.
 </Ul>
-<H4>Modification OBlocks</H4>
+<H4>Modification OCantons</H4>
 <ul>
- 1. Du menu <b>Ajouter/Modifier Circuits</b>, sélectionnez l'élément de menu <b>Modifier Circuit Canton</b> .
- Ceci ouvre une liste de choix pour vous permettre de sélectionner un circuit de OBlock à modifier. Sélection d'une ligne et en appuyant sur  le bouton <Ouvrer Circuit> ouvre la <b>Modifier Circuit</b>
+ 1. Dans le  menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Canton</b> .
+ Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier. S&#233;lection d'une ligne et en appuyant sur le bouton <Ouvrer Circuit> ouvre <b>Modifier Circuit</b>
 </Ul>
-<H4>mode d'Édition Circuit</H4>
-La fenêtre Modifier Circuit est identique à la fenêtre Ajouter Circuit de Détection. Son but est d'identifier
-toutes les icônes de voie qui sont utilisées pour afficher le circuit de voie. Il configure également les capteurs OBlock
- pour la détection de l'occupation et l'indication d'erreur. Les noms Oblock peuvent être changés et le circuit de voie
-supprimé. Enfin, les icônes de voie du circuit peuvent être améliorées pour les icônes indicatrice de Voie.
+<H4>Mode d'&#201;dition Circuit</H4>
+La fen&#234;tre Modifier Circuit est identique &#224; la fen&#234;tre Ajouter Circuit de D&#233;tection. Son but est d'identifier
+toutes les ic&#244;nes de voie qui sont utilis&#233;es pour afficher le circuit de voie. Il configure &#233;galement les capteurs OCanton
+ pour la d&#233;tection de l'occupation et l'indication d'erreur. Les noms OCanton peuvent &#234;tre chang&#233;s et le circuit de voie
+supprim&#233;. Enfin, les ic&#244;nes de voie du circuit peuvent &#234;tre am&#233;lior&#233;es pour les ic&#244;nes indicatrice de Voie.
 <ul>
- 1. Dans ce mode, les clics de souris sur une icône de la voie dans le cadre de la fenêtre de base permet de basculer la sélection de la voie.
- Sélectionnez les icônes que vous voulez utiliser
- pour afficher le circuit de voie (à savoir OBlock). Les icônes pour un circuit de voie doivent être contiguës.
- Les icônes qui affichent le circuit sont surlignés en bleu. La sélection des autres types d'icônes
- n'a aucun effet. En outre, des éléments du panneau ne peuvent pas être tirés et repositionnés.
+ 1. Dans ce mode, les clics de souris sur une ic&#244;ne de la voie dans le cadre de la fen&#234;tre de base permet de basculer la s&#233;lection de la voie.
+ S&#233;lectionnez les ic&#244;nes que vous voulez utiliser pour afficher le circuit de voie (&#224; savoir OCanton). Les ic&#244;nes pour un circuit de voie doivent &#234;tre contiguës.
+ Les ic&#244;nes qui affichent le circuit sont surlign&#233;s en bleu. La s&#233;lection des autres types d'ic&#244;nes
+ n'a aucun effet. En outre, des &#233;l&#233;ments du panneau ne peuvent pas &#234;tre tir&#233;s et repositionn&#233;s.
 </Ul>
    
-<H4>  Boîte de Dialogue mode Edition Circuit </H4>
+<H4>  Bo&#238;te de Dialogue mode Edition Circuit </H4>
 <ul>
- 2. Lorsque vous ajoutez ou modifiez un circuit, la fenêtre de dialogue a des champs de texte pour le nom du capteur qui détecte
- l'occupation et d'un capteur qui peut détecter des problèmes d'alimentation. Chacun de ces capteurs sont en option
- et peuvent être entrés plus tard. Si aucun capteur de détection d'occupation est nommé le circuit
- être un canton <b>Aveugle</b>. Il y a une [Ouvrir Liste de choix ] pour afficher les noms de capteurs qui peuvent être glissés
- et déposés dans les champs texte du capteur.
+ 2. Lorsque vous ajoutez ou modifiez un circuit, la fen&#234;tre de dialogue a des champs de texte pour le nom du capteur qui d&#233;tecte
+ l'occupation et d'un capteur qui peut d&#233;tecter des probl&#232;mes d'alimentation. Chacun de ces capteurs sont en option
+ et peuvent &#234;tre entr&#233;s plus tard. Si aucun capteur de d&#233;tection d'occupation est nomm&#233; le circuit
+ est un canton <b>Aveugle</b>. Il y a une[Ouvrir Liste de choix ] pour afficher les noms de capteurs qui peuvent &#234;tre gliss&#233;s
+ et d&#233;pos&#233;s dans les champs texte du capteur.
 <p>
- 3. La fenêtre de dialogue possède un champ pour montrer l'état actuel du circuit.
+ 3. La fen&#234;tre de dialogue poss&#232;de un champ pour montrer l'&#233;tat actuel du circuit.
 <p>
- 4. La fenêtre de dialogue a aussi des champs de commodité qui comptent les icônes de voie
- qui sont sélectionnées pour le circuit.
+ 4. La fen&#234;tre de dialogue a aussi des champs de commodit&#233; qui comptent les ic&#244;nes de voie
+ qui sont s&#233;lectionn&#233;es pour le circuit.
 <p>
- 5. La fenêtre de dialogue a un champ de texte pour changer le nom du circuit (nom utilisateur Oblock) et un
+ 5. La fen&#234;tre de dialogue a un champ de texte pour changer le nom du circuit (nom utilisateur OCanton) et un
  [Changement de nom] pour accomplir un changement de nom.
 <p>
- 6. Le bouton <b>convertir des Icônes</b> permet de convertir les icônes dans le circuit en icônes  Indicatrice de voie
- si elles ne sont pas déjà des icônes de ce type. Cela peut être fait plus tard. Les icônes Converties ont
- peut-être besoin d'être repositionnées. Cela peut être fait après avoir quitté le mode Édition de Circuit (en appuyant sur
- le bouton <Terminé>).
+ 6. Le bouton <b>convertir des Ic&#244;nes</b> permet de convertir les ic&#244;nes dans le circuit en ic&#244;nes Indicatrice de voie
+ si elles ne sont pas d&#233;j&#224; des ic&#244;nes de ce type. Cela peut &#234;tre fait plus tard. Les ic&#244;nes Converties ont
+ peut-&#234;tre besoin d'&#234;tre repositionn&#233;es. Cela peut &#234;tre fait apr&#232;s avoir quitt&#233; le mode &#201;dition de Circuit (en appuyant sur
+ le bouton <Termin&#233;>).
 <p>
- 7.Le bouton <b>Terminé</b> termine la création et l'édition du circuit de voie.
+ 7.Le bouton <b>Termin&#233;</b> termine la cr&#233;ation et l'&#233;dition du circuit de voie.
 <p>
- 8. Le bouton <b>Supprimer Circuit</b> supprime tous les composants du circuit de voie. Autrement dit, le OBlock,
- tous les OPaths en lui et les Portails dans et hors du canton.
+ 8. Le bouton <b>Supprimer Circuit</b> supprime tous les composants du circuit de voie. Autrement dit, le OCanton,
+ tous les OChemins en lui et les Portails dans et hors du canton.
 </Ul>
-Vous pouvez quitter des cantons <b>aveugles</b> (pas de détection d'occupation) avec icônes de Voie non converties.
+Vous pouvez quitter des cantons <b>aveugles</b> (pas de d&#233;tection d'occupation) avec ic&#244;nes de Voie non converties.
 Il y a un compromis ici sur l'apparence.
   
 <H3> Portails</H3>
 <ul>
- 1. Depuis le menu <b>Ajouter/Modifier Circuits</b>, sélectionnez l'élément de menu <b> Modifier Circuit Portails</b> .
- Ceci ouvre une liste de choix pour vous permettre de sélectionner un circuit de OBlock à modifier. Sélectionnez une ligne et en appuyant sur le bouton <Ouvrir Circuit> ouvre la fenêtre <b>Ajouter/Éditer Portail</b> .
- Le circuit de voie sera surligné en bleu et le cas échéant si des portails ont été définis, ils
- seront représentés avec un cercle rouge.
+ 1. Depuis le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Portails</b> .
+ Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier. S&#233;lectionnez une ligne et en appuyant sur le bouton <Ouvrir Circuit> ouvre la fen&#234;tre <b>Ajouter/&#201;diter Portail</b> .
+ Le circuit de voie sera surlign&#233; en bleu et le cas &#233;ch&#233;ant si des portails ont &#233;t&#233; d&#233;finis, ils
+ seront repr&#233;sent&#233;s avec un cercle rouge.
 </Ul>
-<H4> Mode Édition Portail</H4>
- Le but de cette fenêtre est de créer et éditer des portails. Un portail est représenté par une icône représentant un cercle rouge.
- Les cantons  connectés sont déterminés par le positionnement de l'icône portail afin qu'il couvre les deux
- cantons il se connecte. C'est,  l'écart de cercle entre les deux blocs avec le cercle rouge.
- Dans ce mode, seules les icônes portail peut être repositionnées. Aucun élément du panneau ne peut être déplacé ou sélectionné.
+<H4> Mode &#201;dition Portail</H4>
+ Le but de cette fen&#234;tre est de cr&#233;er et &#233;diter des portails. Un portail est repr&#233;sent&#233; par une ic&#244;ne repr&#233;sentant un cercle rouge.
+ Les cantons  connect&#233;s sont d&#233;termin&#233;s par le positionnement de l'ic&#244;ne portail afin qu'il couvre les deux
+ cantons il se connecte. C'est,  l'&#233;cart de cercle entre les deux blocs avec le cercle rouge.
+ Dans ce mode, seules les ic&#244;nes portail peuvent &#234;tre repositionn&#233;es. Aucun &#233;l&#233;ment du panneau ne peut &#234;tre d&#233;plac&#233; ou s&#233;lectionn&#233;.
  <p>
- Les icônes portail sont nécessaires pour définir graphiquement les <b>Chemins</b> (Voir la section suivante). Ils ne servent à rien
- d'autres. Après avoir défini tous les circuits de voie et les Portails et les Chemins
- nécessaires pour calculer les itinéraires, et avoir créé et exécuté des mandats; et avoir tout testé
- suffisamment, ces icônes peuvent être enlevées. D'autre part, il n'y a aucun mal à les laisser
- en permanence. Ils sont uniquement visibles dans la vue Générateur de circuit.
+ Les ic&#244;nes portail sont n&#233;cessaires pour d&#233;finir graphiquement les <b>Chemins</b> (Voir la section suivante). Elles ne servent &#224; rien
+ d'autres. Apr&#232;s avoir d&#233;fini tous les circuits de voie et les Portails et les Chemins
+ n&#233;cessaires pour calculer les itin&#233;raires, et avoir cr&#233;&#233; et ex&#233;cut&#233; des mandats; et avoir tout test&#233;
+ suffisamment, ces ic&#244;nes peuvent &#234;tre enlev&#233;es. D'autre part, il n'y a aucun mal &#224; les laisser
+ en permanence. Elless sont uniquement visibles dans la vue G&#233;n&#233;rateur de circuit.
 <ul>
- 1. La fenêtre Modifier Portail a une liste des portails déjà défini pour le
- circuits de voie (OBlock) et un champ texte pour nommer de nouveaux portails a créer. La fenêtre
- a aussi une icône pour représenter les portails comme un cercle rouge dans la fenêtre principale.
+ 1. La fen&#234;tre Modifier Portail a une liste des portails d&#233;j&#224; d&#233;finie pour le
+ circuits de voie (OCanton) et un champ texte pour nommer de nouveaux portails a cr&#233;er. La fen&#234;tre
+ a aussi une ic&#244;ne pour repr&#233;senter les portails comme un cercle rouge dans la fen&#234;tre principale.
 <p>
- 2. Le champ de texte peut être utilisé pour changer le nom d'un portail avec le
+ 2. Le champ de texte peut &#234;tre utilis&#233; pour changer le nom d'un portail avec le
  [Changement de nom] pour accomplir le changement de nom.
 <p>
- 3. Les portails sont créés en les nommant dans le champ de texte et faites glisser l'icône du cercle rouge à sa position entre les deux circuits de voie qu'il  connecte. Après avoir fait glisser l'icône à sa position, le portail est répertorié dans la Liste Portail.
+ 3. Les portails sont cr&#233;&#233;s en les nommant dans le champ de texte et faites glisser l'ic&#244;ne du cercle rouge &#224; sa position entre les deux circuits de voie qu'il  connecte. Apr&#232;s avoir fait glisser l'ic&#244;ne &#224; sa position, le portail est r&#233;pertori&#233; dans la Liste Portail.
 <p>
- 4. Les Portails qui ont été créés dans les <b>tableaux d'occupation </b> n'ont pas d'icônes cercle rouge.
- Pour tout portail dans la liste Portail qui ne possède pas une icône, le sélectionner dans la liste et
- faites glisser une icône cercle rouge à sa position entre les blocs, il se connecte.
- Les icônes Portail sont nécessaires pour créer et afficher des chemins. S'il vous plaît <i> soyez sûr que tous les portails sont
- représentés par des icônes avant de faire des chemins. </i>
+ 4. Les Portails qui ont &#233;t&#233; cr&#233;&#233;s dans les <b>tableaux d'occupation</b> n'ont pas d'ic&#244;nes cercle rouge.
+ Pour tout portail dans la liste Portail qui ne poss&#232;de pas une ic&#244;ne, le s&#233;lectionner dans la liste et
+ faites glisser une ic&#244;ne cercle rouge &#224; sa position entre les blocs, il se connecte.
+ Les ic&#244;nes Portail sont n&#233;cessaires pour cr&#233;er et afficher des chemins. S'il vous pla&#238;t <i>soyez s&#251;r que tous les portails sont
+ repr&#233;sent&#233;s par des ic&#244;nes avant de faire des chemins. </i>
  <p>
- 5. Pour modifier le nom d'un portail, d'abord le sélectionner dans la liste, puis modifiez le nom dans le champ de texte <b> Nom du Portail</b> et enfin, appuyez sur le bouton <b>changer nom </b> 
+ 5. Pour modifier le nom d'un portail, d'abord le s&#233;lectionner dans la liste, puis modifiez le nom dans le champ de texte <b>Nom du Portail</b> et enfin, appuyez sur le bouton <b>changer nom</b> 
  <p>
- 6. .Pour supprimer un portail, le sélectionner dans la liste et appuyez sur le bouton <b>Supprimer Portail</b>.
+ 6. .Pour supprimer un portail, le s&#233;lectionner dans la liste et appuyez sur le bouton <b>Supprimer Portail</b>.
  <p>
- 7. Le bouton <b>Terminé</b> termine la création et/ou l'édition de Portails.
+ 7. Le bouton <b>Termin&#233;</b> termine la cr&#233;ation et/ou l'&#233;dition de Portails.
 </Ul>
 
 <H3>Chemins</H3>
 <ul>
- 1. Depuis le menu <b>Ajouter/Modifier Circuits</b> sélectionner l'élément de menu <b>Modifier Circuit Chemins</b> .
- Ceci ouvre une liste de choix pour vous permettre de sélectionner un circuit de OBlock à modifier. Sélectionnez d'une ligne et en appuyant sur
- le bouton <Ouvrir Circuit> ouvre la fenêtre <b> Ajouter/Editer Chemin</b>.
- Le circuit de voie sera surlignée en bleu et le cas échéant les Portails ont été définis, ils
- seront représenté avec un cercle rouge.
+ 1. Depuis le menu <b>Ajouter/Modifier Circuits</b> s&#233;lectionner l'&#233;l&#233;ment de menu <b>Modifier Circuit Chemins</b> .
+ Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier. S&#233;lectionnez une ligne et en appuyant sur le bouton <Ouvrir Circuit> ouvre la fen&#234;tre <b>Ajouter/Editer Chemin</b>.
+ Le circuit de voie sera surlign&#233; en bleu et le cas &#233;ch&#233;ant les Portails ont &#233;t&#233; d&#233;finis, ils
+ seront repr&#233;sent&#233; avec un cercle rouge.
 <p>
 </Ul>
-<H4> mode d'Édition Chemin</H4>
- Le but de cette fenêtre est de créer et de modifier les chemins dans le circuit de voie.
- Dans ce mode, aucun des éléments du panneau ne peut être déplacé ou sélectionné.
+<H4> Mode d'&#201;dition Chemin</H4>
+ Le but de cette fen&#234;tre est de cr&#233;er et de modifier les chemins dans le circuit de voie.
+ Dans ce mode, aucun des &#233;l&#233;ments du panneau ne peut &#234;tre d&#233;plac&#233; ou s&#233;lectionn&#233;.
 <ul>
- 1. La fenêtre Modifier les Chemins a une liste des chemins, déjà définies pour le circuit de voie
-  et un champ de texte pour le nom des chemins a créer.
+ 1. La fen&#234;tre Modifier les Chemins a une liste de chemins, d&#233;j&#224; d&#233;finie pour le circuit de voie
+  et un champ de texte pour le nom des chemins a cr&#233;er.
 <p>
- 2. Le champ de texte peut être utilisé pour changer le nom d'un chemin avec le
+ 2. Le champ de texte peut &#234;tre utilis&#233; pour changer le nom d'un chemin avec le
  [Changement de nom] pour accomplir le changement de nom.
 <p>
- 3. Les chemins sont créés en sélectionnant les icônes qui affichent le chemin. Les icônes sélectionnées 
- s'affichent en vert. Un deuxième clic de souris sur l'icône la désélectionne.
+ 3. Les chemins sont cr&#233;&#233;s en s&#233;lectionnant les ic&#244;nes qui affichent le chemin. Les ic&#244;nes s&#233;lectionn&#233;es 
+ s'affichent en vert. Un deuxi&#232;me clic de souris sur l'ic&#244;ne la d&#233;s&#233;lectionne.
 <p>
- 4. Lorsque vous sélectionnez une icône d'aiguillage pour le chemin, elle doit avoir ses points réglés correctement. Pour garder
- l'icône sélectionnée verte quand vous basculez l'interrupteur, maintenez la touche Maj enfoncée lorsque vous cliquez dessus
- avec la souris. Ceci permet de garder en vert la sélection tout en basculant le commutateur.
+ 4. Lorsque vous s&#233;lectionnez une ic&#244;ne d'aiguillage pour le chemin, elle doit avoir ses points r&#233;gl&#233;s correctement. Pour garder
+ l'ic&#244;ne s&#233;lectionn&#233;e verte quand vous basculez l'interrupteur, maintenez la touche Maj enfonc&#233;e lorsque vous cliquez dessus
+ avec la souris. Ceci permet de garder en vert la s&#233;lection tout en basculant le commutateur.
 <p>
- 5. Il est important pour les portails d'entrée et/ou de sortie que la voie soit aussi choisies.
- Quand une icône de portail (cercle rouge) est sélectionnée, elle se transforme en un carré vert. Un chemin sera
- un portail sélectionné, si elle est une voie d'évitement en talon et doit avoir deux portails sélectionnés (l'entrée et la
- la sortie du canton) si elle est un chemin à travers.
+ 5. Il est important pour les portails d'entr&#233;e et/ou de sortie que la voie soit aussi choisie.
+ Quand une ic&#244;ne de portail (cercle rouge) est s&#233;lectionn&#233;e, elle se transforme en un carr&#233; vert. Un chemin sera
+ un portail s&#233;lectionn&#233;, si elle est une voie d'&#233;vitement en talon et doit avoir deux portails s&#233;lectionn&#233;s (l'entr&#233;e et la
+ la sortie du canton) si elle est un chemin traversant.
 <p>
- 6. Pour modifier le nom d'un chemin, d'abord le sélectionner dans la liste, puis modifiez le nom dans le champ de texte <b>Nom du Chemin</b>  et enfin, appuyez sur le bouton <b>Changer le Nom </b>.
+ 6. Pour modifier le nom d'un chemin, d'abord le s&#233;lectionner dans la liste, puis modifiez le nom dans le champ de texte <b>Nom du Chemin</b>  et enfin, appuyez sur le bouton <b>Changer le Nom</b>.
 <p>
- 7. Pour supprimer un chemin, le sélectionner dans la liste et appuyez sur le bouton <b>Supprimer le Chemin</b></ul> 
+ 7. Pour supprimer un chemin, le s&#233;lectionner dans la liste et appuyez sur le bouton <b>Supprimer le Chemin</b></ul> 
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>

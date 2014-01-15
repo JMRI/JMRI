@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2011-05-21-->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008/11/18 03:13:27 jacobsen Exp $ -->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <title>JMRI: Glossary</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,18 +26,21 @@
 JMRI: Glossaire
 </h1>
 
-Cette page est le glossaire JMRI, fournissant de brèves définitions de termes spécifiques JMRI, et dans de nombreux cas, des liens vers des renseignements supplémentaires.
+Cette page est le glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et dans de nombreux cas, des liens vers des renseignements suppl&#233;mentaires.
 
 <dl>
 
-<dt>Logique signal simple  (SSL)
-<dd> Un outil JMRI qui fournit la logique de type ABS pour piloter les signaux de votre réseau.
+<dt>Logique Simple Signal   (SSL)
+<dd> Un outil JMRI qui fournit la logique de type Block Automatique (ABS) pour piloter les signaux de votre r&#233;seau.
 (<a href="../html/tools/signaling/SimpleSignalExample.shtml">Plus</a>)
 
-<dt>Nom système
-<dd> Une façon unique de se référer à un dispositif sur le réseau.
+<dt>Nom syst&#232;me
+<dd> Une fa&#231;on unique de se r&#233;f&#233;rer &#224; un dispositif sur le r&#233;seau.
 (<a href="../html/doc/Technical/Names.shtml">Plus</a>)
 
+<dt>Mandat ou Mandat&#233;
+<dd> &#201;tat d'un train auquel un itin&#233;raire a &#233;t&#233; affect&#233;.
+<dd> 
 </dl>
 
 

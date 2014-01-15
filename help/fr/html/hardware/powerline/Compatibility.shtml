@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id: Compatibility.shtml,v 1.7 2010/01/07 07:28:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: Compatibility.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-18-->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -30,12 +30,12 @@ JMRI: Controleurs CPL (Powerline)pris en charge
 </h2>
 
 Cette page vous permet d'identifier le type de
-contrôleur que vous avez, et vous donne des informations
-nécessaires pour configurer JMRI.
+contr&#244;leur que vous avez, et vous donne des informations
+n&#233;cessaires pour configurer JMRI.
 
 <p>
 Voir aussi la page principale sur
-<a href="index.shtml">  configuration JMRI pour les contrôleurs CPL </a>.
+<a href="index.shtml">  configuration JMRI pour les contr&#244;leurs CPL </a>.
 
 <h3> Adaptateurs X10 </h3>
 
@@ -45,7 +45,7 @@ Voir aussi la page principale sur
 <!-- header row -->
 <tr>
   <th>Fabricant</th>
-  <th>Modèle</th>
+  <th>Mod&#232;le</th>
   <th>Image</th>
   <th>Aide identification</th>  <!-- Comment -->
   <th>Status JMRI</th>
@@ -60,14 +60,14 @@ Voir aussi la page principale sur
   </td> <!-- Model -->
   <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
-    Cet adaptateur peut être identfié par la connection RJ-11T 4 pins dans le bas.
+    Cet adaptateur peut &#233;tre identfi&#233; par la connection RJ-11 4 pins dans le bas.
     <br/>
-    Pour l'utiliser avec JMRI, sélectionner "Powerline Controller" dans les préférences JMRI,
-    le bon port série, et "CM11" pour l'adaptateur.
+    Pour l'utiliser avec JMRI, s&#233;lectionner "Powerline Controller" dans les pr&#233;f&#233;rences JMRI,
+    le bon port s&#233;rie, et "CM11" pour l'adaptateur.
   </td>  <!-- Comment -->
-  <td>Le support est disponible depuis la version JMRI 2.1.3</td>
+  <td>L'aide est disponible depuis la version JMRI 2.1.3</td>
     <br/>
-    Dernière Edition: 4 Février 2008</td> <!-- Type -->
+    Derni&#232;re Edition: 4 F&#233;vrier 2008</td> <!-- Type -->
 
 <tr>
   <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
@@ -76,14 +76,14 @@ Voir aussi la page principale sur
   </td> <!-- Model -->
   <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71"/></td> <!-- Image -->
   <td>
-    C'est un adaptateur de type console. Il peut aussi fournir des boutons pour des opérations sur des équipements X10 .
+    C'est un adaptateur de type console. Il peut aussi fournir des boutons pour des op&#233;rations sur des &#233;quipements X10 .
     <br/>
-     Pour l'utiliser avec JMRI, sélectionner "Powerline Controller" dans les préférences JMRI,
-    le bon port série, et "CP290" pour l'adaptateur.
+     Pour l'utiliser avec JMRI, s&#233;lectionner "Powerline Controller" dans les pr&#233;f&#233;rences JMRI,
+    le bon port s&#233;rie, et "CP290" pour l'adaptateur.
   </td>  <!-- Comment -->
   <td>Le support est disponible depuis la version JMRI 2.1.5</td>
     <br/>
-    Dernière Edition: 10 Mars 2008</td> <!-- Type -->
+    Derni&#232;re Edition: 10 Mars 2008</td> <!-- Type -->
 
 </tr>
 
@@ -92,13 +92,13 @@ Voir aussi la page principale sur
   <td>CM15A</td> <!-- Model --></a>
   <td><img src="http://graphics.x10.com/images_ahp// <!-- Type -->cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
-    C'est l'adaptateur fourni avec le professionnel ActiveHome..
-      Bien identifié par la connexion USB sur le fond et une antenne sur le côté.
+    C'est l'adaptateur fourni avec ActiveHome Professionnal.
+      Bien identifi&#233; par la connexion USB sur le fond et une antenne sur le c&#244;t&#233;.
   </td>  <!-- Comment -->
-  <td>Non Supporté (<i>encore</i>).
-     Nous espérons un prochain support, en attendant le support USB et que quelqu'un veuille bien le tester.
+  <td>Non Support&#233; (<i>encore</i>).
+     Nous esp&#233;rons un prochain support, en attendant le support USB et que quelqu'un veuille bien le tester.
     <br/>
-     Dernière Edition: 17 Janvier 2008
+     Derni&#232;re Edition: 17 Janvier 2008
 </tr>
 
   </td> <!-- Type -->
@@ -111,16 +111,16 @@ Voir aussi la page principale sur
     <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150" />
 </td> <!-- Image -->
   <td>
-    Ce dispositif repose sur un autre appareil que le X10 qui est vrai contrôleur,
-     généralement l'appareil TM751.
-    Tandis qu'il est un équipement série, il utilise les lignes  RTS/DTS au lieu des lignes de données .
-    Ceci permet à l'équipement de travailler alors que d'autres matériel série puissent travailler à travers lui.
+    Ce dispositif repose sur un autre appareil X10 qui est vrai contr&#244;leur,
+     g&#233;n&#233;ralement l'appareil TM751.
+    Tandis qu'il est un &#233;quipement s&#233;rie, il utilise les lignes RTS/DTS au lieu des lignes de donn&#233;es .
+    Ceci permet &#224; l'&#233;quipement de travailler alors que d'autres mat&#233;riels s&#233;rie travaillent &#224; travers lui.
   </td>  <!-- Comment -->
-  <td>Non supporté.
-  Nous pouvons être capable de le supporter éventuellement, 
-  mais nous travaillons sur le plus simple, première version basée sur les caractères.
+  <td>Non support&#233;.
+  Nous pouvons &#233;tre capable de le supporter &#233;ventuellement, 
+  mais nous travaillons sur le plus simple, premi&#232;re version bas&#233;e sur les caract&#232;res.
     </br>
-     Dernière Edition: 17 Jan 2008</td> <!-- Type -->
+     Derni&#232;re Edition: 17 Jan 2008</td> <!-- Type -->
 </tr>
 
 </table>
@@ -134,7 +134,7 @@ Voir aussi la page principale sur
 <!-- header row -->
 <tr>
   <th>Fabricant</th> 
-  <th>Modèle</th>
+  <th>Mod&#232;le</th>
   <th>Image</th>
   <th>Aide Identification </th>  <!-- Comment -->
   <th>Status JMRI</th>
@@ -144,25 +144,25 @@ Voir aussi la page principale sur
   <td>PowerLinc Modem 2412S</td> <!-- Model -->
   <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138"/></td> <!-- Image -->
  <td>
-    Il s'agit de la série (pas USB) d'Adaptateur INSTEON.
-     Il peut contrôler à la fois les INSTEON et les dispositifs X10..
+    Il s'agit de la s&#233;rie (non USB) d'Adaptateur INSTEON.
+     Il peut contr&#244;ler &#224; la fois les INSTEON et les dispositifs X10..
   </td>
   <td>Le support est disponible depuis la version JMRI 2.9.1</td> <!-- Type -->
     <br/>
-    Dernière Edition: 3 Jan 2010
+    Derni&#232;re Edition: 3 Jan 2010
 </tr>
 <tr>    <td><a href="http://www.smarthome.com">Smarthome.com</td></a>  <!-- Manufacturer -->
-   <td>PowerLinc Modem 2414
+   <td>PowerLinc Modem 2414U
 </td><!-- Model -->
   <td><img src="http://www.smarthome.com/images/2414ubig.jpg" width="133" height="133"/></td> <!-- Image -->
   <td>
-    Cette version peut être identifiée par la connexion USB sur le fond.
+    Cette version peut &#233;tre identifi&#233;e par la connexion USB vers le bas.
     </br></a> 
   </td>  <!-- Comment -->
-  <td>Non supporté (<i>encore</i>)
-     Nous espérons le supporter prochainement, dans l'attente du support USB et de quelqu'un désireux de le tester.
+  <td>Non support&#233; (<i>encore</i>)
+     Nous esp&#233;rons le supporter prochainement, dans l'attente du support USB et de quelqu'un d&#233;sireux de le tester.
     <br/>
-     Dernière Edition: 4 Feb 2008
+     Derni&#232;re Edition: 4 Feb 2008
     </td> <!-- Type -->
 </tr>
 

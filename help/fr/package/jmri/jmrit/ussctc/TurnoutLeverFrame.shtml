@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutLeverFrame.shtml,v 1.2 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<!--  $Id: TurnoutLeverFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Turnout Lever Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help OS Indicator">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,33 +26,33 @@
 
 <H1>Le levier d'aiguillage  </H1>
 
-<b> Ce n'est pas encore complètement mis en oeuvre </b> <p>
+<b> Ce n'est pas encore compl&#232;tement mis en oeuvre </b> <p>
 
 Un levier d'aiguillage sur un panneau USS CCT
-possède deux entrées (capteurs) pour le levier lui-même,
-un certain nombre d'autres entrées et sorties
-pour le faire fonctionner. Cet outil vous permet de définir ceux-ci, et
-crée alors la logique sous-jacente pour les faire agir
+poss&#232;de deux entr&#233;es (capteurs) pour le levier lui-m&#234;me,
+un certain nombre d'autres entr&#233;es et sorties
+pour le faire fonctionner. Cet outil vous permet de d&#233;finir ceux-ci, et
+cr&#233;e alors la logique sous-jacente pour les faire agir
 prototypiquement.
 
 <dl>
-<dt>Entrées d'aiguillage <dd>
-Aux fins d'une entrée multi-capteurs, vous pouvez vouloir un capteur interne nul
-pour la position médiane.
+<dt>Entr&#233;es d'aiguillage <dd>
+Aux fins d'une entr&#233;e multi-capteurs, vous pouvez vouloir un capteur interne nul
+pour la position m&#233;diane.
 
-<dt>Sortie d'aiguillage  <dd> L'aiguillage du réseau qui a été contrôlé.
+<dt>Sortie d'aiguillage  <dd> L'aiguillage du r&#233;seau qui a &#233;t&#233; command&#233;.
 
-<dt>lampes Normal et inversé <dd>  Deux sorties (Aiguillages) qui sont
-actives ensemble (Déviée) lorsque l'aiguillage est passé à DIRECT et DÉVIÉ
+<dt>lampes Normal et invers&#233; <dd>  Deux sorties (Aiguillages) qui sont
+actives ensemble (D&#233;vi&#233;e) lorsque l'aiguillage est pass&#233; &#224 DROIT et D&#201;VI&#201;
 respectivement.
 
-<dd> Entrée Codée<dt>  Le <a href="CodeButtonFrame.shtml">bouton codé </a>défini qui force ce levier à agir.
+<dt> Entr&#233;e Cod&#233;e<dd>  Le <a href="CodeButtonFrame.shtml">bouton cod&#233; </a>d&#233;fini qui force ce levier &#224 agir.
 
-<dt>Entrée Inhibition <dd>  Un capteur qui est utilisé et ACTIF indique
+<dt>Entr&#233;e Inhibition <dd>  Un capteur qui est utilis&#233; et ACTIF indique
 que l'aiguillage ne peut pas changer de position.
 
-<dd>Sortie verrouillée <dt>  Un capteur qui est fixé ACTIF lorsque l'aiguillage
-a été verrouillé en position.
+<dt>Sortie verrouill&#233;e <dd>  Un capteur qui est fix&#233; ACTIF lorsque l'aiguillage
+a &#233;t&#233; verrouill&#233; en position.
 
 </dl>
 

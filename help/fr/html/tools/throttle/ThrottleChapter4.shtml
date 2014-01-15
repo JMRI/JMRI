@@ -44,11 +44,11 @@
   <li>La <a href="ThrottlesListWindow.shtml">Liste des Fenêtres Régulateurs</a></li>
     <li>Le <a href="ThrottlesPreferencesPane.shtml">volet préférences Régulateurs</a></li></ul>
 
-<h1>Enregistrement d'une Présentation de Régulateur </h1>
+<h1>Enregistrement d'une Configuration de Régulateur </h1>
 
 <p> Une nouvelle fenêtre régulateur  peut être démarrée et une adresse DCC créée pour faire circuler
  un train sur , puis fermer la fenêtre régulateur lorsque c'est terminé avec
-elle. Bien sûr, cela perd la Mise en page que vous avez établie au cours de cette
+elle. Bien sûr, cela perd la configuration que vous avez établie au cours de cette
 session régulateur. Et cela est très bien si vous exécutez un test de toutes sortes sur une loco
 que vous n'avez pas l'intention de faire circuler à l'aide d'un de ces régulateurs informatiques .
 Par conséquent, la fermeture de la fenêtre du régulateur pour l'éliminer suffirait. </P>
