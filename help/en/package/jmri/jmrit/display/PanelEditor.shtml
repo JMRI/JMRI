@@ -251,11 +251,8 @@ appear where the old one was.</P>
 
 <H2>Communicating with Multiple Systems</H2>
 
-PanelPro can communicate with more than one layout control system. For
-example, the Cornwall Railroad uses C/MRI hardware for sensing the
-status of blocks and turnouts on the layout, but drives turnout
-positions through a Digitrax DCC system.
-<P>To configure the program to talk to multiple systems, select them
+PanelPro can communicate with more than one layout control system. 
+To configure the program to talk to multiple systems, select them
 in the preferences panel. (Edit->Preferences) Check the "Show Advanced
 Preferences" and under "Aux layout connection:" enter the system
 information for your second connection.</P>

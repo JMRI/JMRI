@@ -316,9 +316,6 @@
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
-        <copy todir="${target}/resources/icons/cornwall/">
-            <fileset dir="${resourcedir}/icons/cornwall" includes="cornwall_logo.gif"/>
-        </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties"/>
         </copy>
@@ -742,15 +739,6 @@
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.LocoTools.LocoTools"/>
             <param name="antargline" value="LocoToolsConfig2.xml"/>
-        </antcall>
-    </target>
-
-    <target name="cornwall"
-            depends="debug"
-            description="build and run build and run CornwallRR app">
-        <antcall target="-run-jmri-application">
-             <param name="application.classname" value="apps.cornwall.CornwallRR"/>
-             <param name="antargline" value="CornwallConfig2.xml"/>
         </antcall>
     </target>
 
@@ -1229,7 +1217,7 @@
                      excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/,Cornwall?RR.app/,DecoderPro?3.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/,DecoderPro?3.app/"/>
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
         </copy>
@@ -1246,7 +1234,6 @@
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
-                <include name="Cornwall RR.app/Contents/MacOS/StartJMRI"/>
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="DecoderPro 3.app/Contents/MacOS/StartJMRI"/>
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
@@ -1310,7 +1297,6 @@
                 <exclude name="JMRI/LocoTools"/>
                 <exclude name="JMRI/JmriDemo"/>
                 <exclude name="JMRI/InstallTest"/>
-                <exclude name="JMRI/cornwall"/>
                 <exclude name="JMRI/DecoderPro3"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1324,7 +1310,6 @@
                 <include name="JMRI/LocoTools"/>
                 <include name="JMRI/JmriDemo"/>
                 <include name="JMRI/InstallTest"/>
-                <include name="JMRI/cornwall"/>
                 <include name="JMRI/DecoderPro3"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1402,7 +1387,6 @@
         <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
         <make-startup-script script.name="SignalPro"     script.class="apps.SignalPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <make-startup-script script.name="cornwall"      script.class="apps.cornwall.CornwallRR"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
@@ -1418,7 +1402,6 @@
         <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
         <create-macosx-application-directory script.name="SignalPro"     script.class="apps.SignalPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <create-macosx-application-directory script.name="Cornwall RR"   script.class="apps.cornwall.CornwallRR"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
