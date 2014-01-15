@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LbServer.shtml,v 1.2 2009/12/26 21:00:59 jacobsen Exp $ -->
- <!--Translated by Hervé Blorec le 2011/9/22-->
+<!-- $Id: LbServer.shtml 22578 2013-01-23 04:44:56Z bob-m-dcc $ -->
+ <!--UpDated by Herv&#233; Blorec  2013-09-13-->
 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via LbServer
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -30,59 +30,61 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1> 
-      JMRI Guide matériel: Connexion de multiples ordinateurs à loconet via LbServer
+      JMRI Guide mat&#233;riel: Connexion de multiples ordinateurs &#224; LocoNet&reg; via LbServer
       </h1>
 
-Cette page décrit comment configurer plusieurs nœuds JMRI pour la connexion
-clients à un seul
+Cette page d&#233;crit comment configurer plusieurs noeuds JMRI pour la connexion
+clients &#224; un seul
 <a href="http://loconetovertcp.sourceforge.net">LbServer LocoNetOverTCP </a>,
-qui à son tour est relié au réseau ferré.
+qui &#224; son tour est reli&#233; au r&#233;seau ferr&#233;.
 <P>
 
-Ce lien, appelé LocoNetOverTCP, utilise un processus serveur non-Java séparé
- LbServer, qui communique avec des messages sous forme de chaînes  ASCII simples sur sockets TCP/IP,
-permettant à des nœuds non-Java de partager aussi le LocoBufer.
+Ce lien, appel&#233; LocoNetOverTCP, utilise un processus serveur non-Java s&#233;par&#233;
+ LbServer, qui communique avec des messages sous forme de cha&#238;nes ASCII simples sur sockets TCP/IP,
+permettant &#224; des noeuds non-Java de partager aussi le LocoBufer.
 <P>
 
 <h2>Configuration pour JMRI LocoNetOverTCP</h2>
-Un ordinateur exécute le programme LbServer qui se connecte à LocoBuffer
+Un ordinateur ex&#233;cute le programme LbServer qui se connecte &#224; LocoBuffer
 et agit comme un serveur pour tous les ordinateurs client JMRI.
 Configurez les ordinateurs clients JMRI pour se connecter au LbServer comme suit:
 <UL>
-<LI> Assurez-vous que LbServer est configuré et fonctionne. Voir la documentation LbServer pour plus de détails.
+<LI> Assurez-vous que LbServer est configur&#233; et fonctionne. Voir la documentation LbServer pour plus de d&#233;tails.
 <LI> Ouvrez le programme JMRI sur le client
-<LI> Ouvrez les préférences dans le menu Edition
-<LI> Pour la connexion réseau ferré, sélectionnez "LbServer LocoNetOverTCP"
-<LI> Dans la boîte «serveur hostname" qui apparaît, tapez le nom d'Internet
-ou l'adresse de l'ordinateur qui exécute l'LbServer.
+<LI> Ouvrez les pr&#233;f&#233;rences dans le menu Edition
+<LI> Pour la connexion r&#233;seau ferr&#233;, s&#233;lectionnez "LbServer LocoNetOverTCP"
+<LI> Dans la bo&#238;te «serveur hostname" qui appara&#238;t, tapez le nom d'Internet
+ou l'adresse de l'ordinateur qui ex&#233;cute l'LbServer.
 Une adresse Internet est quelque chose comme 127.0.1.12; un nom est quelque chose
 comme jmri.sf.net
-<li> Dans la boîte "numéro de port TCP" entrez le numéro de port qui utilise LbServer, qui par défaut est 1234.
-<li> Enregistrer les préférences et redémarrer le programme.
+<li> Dans la bo&#238;te "TCP Port Number" entrez le num&#233;ro de port que LbServer utilise, qui par d&#233;faut est 1234.
+<li> Enregistrer les pr&#233;f&#233;rences et red&#233;marrer le programme.
 </UL>
 
 <h2>Notes:</h2>
 <UL>
-<LI>Il est fortement recommandé que vous vous connectiez l'ordinateur maître
-à l'LocoNet avec un LocoBuffer ou LocoBuffer-II. Bien qu'un MS-100 pourrait
-faire essentiellement le travail pour cette application, la correction des erreurs occasionnelles résultant de la LocoNet 
- peuvent entraîner des retards notables dans l'actualisation des ordinateurs distants.
+<LI>Il est fortement recommand&#233; que vous vous connectiez l'ordinateur ma&#238;tre
+&#224; LocoNet&reg; avec un LocoBuffer ou LocoBuffer-II. Bien qu'un MS-100 pourrait
+faire essentiellement le travail pour cette application, la correction des erreurs occasionnelles r&#233;sultant de LocoNet 
+ peuvent entra&#238;ner des retards notables dans l'actualisation des ordinateurs distants.
 <LI>
-Si les ordinateurs sont tous proches de la LocoNet, par exemple agissant comme un panneau de contrôle local
-, vous n'avez pas vraiment besoin de Server LocoNet pour ce faire. Vous pouvez, à la place
-relier chacun des ordinateurs à la LocoNet via leurs propres LocoBuffer ou LocoBuffer-II
-(ou MS-100,même si ce n'est pas recommandé) et prennent part individuellement
-dans les communications LocoNet. Cela ne cause pas de charge supplémentaire de communication.
-Il en coûte un peu plus en raisons des cartes supplémentaires, et ne vous permettent pas de
-mettre un ordinateur distant à partir du réseau ferré.
-<LI> L'ordinateur exécutant LbServer peut également exécuter le logiciel JMRI, dans ce
-cas, le client et serveur se trouvent être sur le même nœud.
-<LI> Certains logiciels pare-feu détectent l'utilisation  du port 1234 par LbServer comme un cheval de Troie et bloquent l'accès au port.
-Pour contourner ce problème, vous aurez soit à permettre l'accès par votre logiciel pare-feu ou de changer le port par
-un autre numéro, comme  9999. Le nouveau numéro de port devra aussi être passé dans LbServer comme une option de ligne de commande.
+Si les ordinateurs sont tous proches de la LocoNet&reg;, par exemple agissant comme un panneau de commande local
+, vous n'avez pas vraiment besoin de Server LocoNet pour ce faire. Vous pouvez, &#224; la place
+relier chacun des ordinateurs &#224; la LocoNet via leurs propres LocoBuffer ou LocoBuffer-II
+(ou MS-100,m&#234;me si ce n'est pas recommand&#233;) et prennent part individuellement
+dans les communications LocoNet. Cela ne cause pas de charge suppl&#233;mentaire de communication.
+Il en co&#238;te un peu plus en raisons des cartes suppl&#233;mentaires, et ne vous permettent pas de
+mettre un ordinateur distant &#224; partir du r&#233;seau ferr&#233;.
+<LI> L'ordinateur ex&#233;cutant LbServer peut &#233;galement ex&#233;cuter le logiciel JMRI, dans ce
+cas, le client et serveur se trouvent &#234;tre sur le m&#234;me noeud.
+<LI> Certains logiciels pare-feu d&#233;tectent l'utilisation du port 1234 par LbServer comme un cheval de Troie et bloquent l'acc&#232;s au port.
+Pour contourner ce probl&#232;me, vous aurez soit &#224; permettre l'acc&#232;s par votre logiciel pare-feu ou de changer le port par
+un autre num&#233;ro, comme  9999. Le nouveau num&#233;ro de port devra aussi &#234;tre pass&#233; dans LbServer comme une option de ligne de commande.
 
 </UL>
-
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+ </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

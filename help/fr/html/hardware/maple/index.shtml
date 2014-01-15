@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008/12/04 14:56:02 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-17-->
 <title>JMRI: Maple Systems</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,72 +23,72 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Systèmes Maple
+JMRI: Syst&#232;mes Maple
 </h1>
 <a href="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg" align="right" height="93" width="173"></a><br>
 
 <a href="http://www.maplesystems.com/">Maple Systems</a>
- a fait plusieurs séries de
-<a href="http://www.maplesystems.com/products/silverseries/silverseries_ezw.htm">panneaux écran tactile </a>
-qui peut être très utile sur les chemins de fer modèle.
+ a fait plusieurs s&#233;ries de
+<a href="http://www.maplesystems.com/products/silverseries/silverseries_ezw.htm">panneaux &#224; &#233;cran tactile </a>
+qui peuvent &#234;tre tr&#232;s utile sur les chemins de fer mod&#232;le.
 
 <p>
 Chaque panneau est vraiment un ordinateur autonome.
-C'est configuré et chargé en utilisant un
+C'est configur&#233; et charg&#233; en utilisant un
  <a href="http://www.maplesystems.com/products/software/ezware.htm">programme de configuration </a>
-fournis par les systèmes Maple.
-Cette configuration définit les affichages, les étiquettes de bouton et de lieux, etc.
+fourni par les syst&#232;mes Maple.
+Cette configuration d&#233;finit les affichages, les &#233;tiquettes de bouton et Emplacements, etc.
 
 <p>
-JMRI interagit avec le panneau d'entrée et par les bits de sortie
-(appelés «bobines», comme dans les bobines de relais)
+JMRI interagit avec le panneau d'entr&#233;e et par les bits de sortie
+(appel&#233;s "bobines", comme dans les bobines de relais)
 dans le panneau.
-Le panneau de configuration peut définir ces réponse à divers événements.
-JMRI fournit des objets Capteur qui les rendent disponibles pour déclencher des actions
- sans JMRI.
-JMRI peut définir les objets Aiguillages qui peuvent les régler, auquel cas le
-panneau de configuration peut changer ce qui apparaît.J
+Le panneau de configuration peut d&#233;finir ceux-ci en r&#233;ponse &#224; divers &#233;v&#233;nements.
+JMRI fournit des objets Capteur qui les rendent disponibles pour d&#233;clencher des actions
+dans JMRI.
+JMRI peut d&#233;finir les objets Aiguillages qui peuvent les r&#233;gler, auquel cas le
+panneau de configuration peut changer ce qui appara&#238;t.
 
 <p>
-Ceci est encore au stade très précoce, donc les détails changent rapidement.
-Si vous souhaitez utiliser ces dispositifs, s'il vous plaît contacter les développeurs JMRI.
+Ceci est encore au stade tr&#232;s pr&#233;coce, donc les d&#233;tails changent rapidement.
+Si vous souhaitez utiliser ces dispositifs, s'il ".vous pla&#238;t contacter les d&#233;veloppeurs JMRI.
 
 <p>
-La lettre du système pour les connexions Maple est «K».
+La lettre du syst&#232;me pour les connexions Maple est "K"
 
 
 <p>
-Vous pouvez configurer le périphérique Maple Systèmes pour utiliser l'une des vitesses supportées
-(voir le volet JMRI préférences pour les connexions Maple),
+Vous pouvez configurer le p&#233;riph&#233;rique Maple Syst&#232;mes pour utiliser l'une des vitesses support&#233;es
+(voir le volet JMRI pr&#233;f&#233;rences pour les connexions Maple),
 et utiliser le "Protocole simple ASCII". Plus d'informations sur le
-protocole et la manière de configurer le périphérique Maple Systems est
+protocole et la mani&#232;re de configurer le p&#233;riph&#233;rique Maple Systems est
 sur la
-<a  href="http://www.maplesystems.com/1033/10330073.PDF"> feuille de données </a>.
+<a  href="http://www.maplesystems.com/1033/10330073.PDF"> feuille de donn&#233;es </a>.
 
 <p>
-JMRI communique avec le périphérique Maple Systems en lisant et en écrivant
- dans des empacements "discret mémoire". Lieux, autrement connu comme registres "LB".
+JMRI communique avec le p&#233;riph&#233;rique Maple Systems en lisant et en &#233;crivant
+ dans des emplacements " m&#233;moire discr&#232;te". Lieux, autrement connu comme registres "LB".
 
-<p>LB  registres 1 à 48 sont disponibles pour JMRI comme entrée «Capteurs» 1
-à 48.
+<p>Les registres LB 1 &#224; 48 sont disponibles pour JMRI comme entr&#233;e "Capteurs" 1
+&#224; 48.
 
-<p>LB  registre 101 à 148 sont disponibles pour JMRI comme sortie "Aiguillages" 1 à 48.
+<p>Les registres LB 101 &#224; 148 sont disponibles pour JMRI comme sortie "Aiguillages" 1 &#224; 48.
 
 <P>
-Le nombre nœud Maple Systems (programmé dans "Paramètre 5", la "station HMI ID #»)
-peut être de 1 à 99. Il apparait comme  le chiffre des milliers et des noms de Capteur et Aiguillages JMRI.
-Par exemple, KS3001 est le 1er capteur sur le noeud 3, et serait donc LB 1 dans ce Système d'unité Maple
-. KT3001 est le 1er aiguillage de ce nœud, et serait donc LB 101 dans cette unité.
+Le num&#233;ro des noeuds Maple Systems (programm&#233; dans "Param&#232;tre 5", la "station HMI ID #")
+peut &#234;tre de 1 &#224; 99. Il apparait comme  le chiffre des milliers des noms de Capteur et Aiguillages JMRI.
+Par exemple, KS3001 est le 1er capteur sur le noeud 3, et serait donc LB 1 dans ce Syst&#232;me d'unit&#233; Maple
+. KT3001 est le 1er aiguillage de ce noeud, et serait donc LB 101 dans cette unit&#233;.
 
 <p>
-Il est très probable que nous allons retravailler et améliorer l'adressage bientôt.
+Il est tr&#232;s probable que nous allons retravailler et am&#233;liorer l'adressage bient&#244;t.
 
 <p>
-Vous devez configurer un nœud en JMRI avec le bouton "configurer les nœuds» sur
-la fenêtre des préférences. Sur la nouvelle fenêtre qui apparaît, entrez le numéro de nœud
+Vous devez configurer un noeud dans JMRI avec le bouton "configurer les noeuds" sur
+la fen&#234;tre des pr&#233;f&#233;rences. Sur la nouvelle fen&#234;tre qui appara&#238;t, entrez le num&#233;ro de noeud
 (par exemple 1 ou 2, etc) dans le champs  "UA", et cliquez sur "Ajouter". Laisser tout le reste seul;
-Le support Maple a été créé à partir du support JMRI C/MRI, et en
-2.3.7 JMRI la migration n'est pas complète.
+Le support Maple a &#233;t&#233; cr&#233;&#233; &#224; partir du support JMRI C/MRI, et en
+2.3.7 JMRI la migration n'est pas compl&#232;te.
 
 
 <!--#include virtual="/Footer" -->

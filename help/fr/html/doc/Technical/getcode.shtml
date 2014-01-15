@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.8 2010/02/12 17:29:09 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-04-06--> 
+<!-- $Id: getcode.shtml 21690 2012-11-22 08:23:17Z jacobsen $ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-04--> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -36,90 +36,78 @@
 	    <H1>JMRI: Obtention du Code</H1>
 
 
-<h2> Mise en route </h2>
+<h2>Lancement Rapide</h2>
 
-Vous pouvez télécharger le code source le plus récent via SVN en utilisant:
+Vous pouvez t&#233;l&#233;charger le code source le plus r&#233;cent via SVN en utilisant:
 <code> <PRE>
 svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
 </PRE> </code>
 
 
-<h2>Détails</h2>
-Notre code source est distribué via SVN.
+<h2>D&#233;tails</h2>
+Notre code source est distribu&#233; en utilisant <a
+  href="http://subversion.apache.org/">Subversion</a>
 (Nous gardons aussi le
 <A href="WebSite.shtml"> site web </a>
 dans le SVN, si vous souhaitez travailler directement avec lui.)
-Si vous voulez travailler avec les
-code, cela vaut la peine de prendre quelques minutes pour installer SVN  . Nous sommes désolés, mais
-nous ne pouvons pas appuyer d'autres méthodes (envoi des fichiers. zip, etc), car ils sont
+Si vous voulez travailler avec le
+code, cela vaut la peine de prendre quelques minutes pour installer SVN. Nous sommes d&#233;sol&#233;s, mais
+nous ne pouvons pas accepterr d'autres m&#233;thodes (envoi des fichiers. zip, etc), car ils sont
 tout simplement sources de trop d'erreurs.
-
-<P>
-Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
-Pour un client en ligne de commande cvs, créez un nouveau répertoire pour le projet, changer de répertoire actif, et dire que vous existez à SVN
-<PRE>
-svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
-</PRE>
-Ce "login " en ligne
-n'est nécessaire qu'une seule fois, après quoi, il est rappelé sur votre machine locale. Vous pouvez
-être sollicité pour un mot de passe. Si oui, appuyez simplement sur le retour, sinon le mot de passe vide ne sera acceptée.
-Vous pouvez alors obtenir une copie du code de
-<PRE>
-svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
-</PRE>
-<P>
-Si vous utilisez un client graphique de base comme WinCVS, déroulez le menu "admin"
- et sélectionnez "ligne de commande" pour obtenir une place pour taper ces commandes.
-Sur d'autres ordinateurs, vous pouvez taper directement sur la ligne de commande.
 <p>
-Si vous avez une copie existante du code et que vous souhaitez mettre à jour
-pour le contenu le plus récent de SVN, la deuxième commande est la suivante:
-<PRE>
-cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / jmri-q update-dA
-</PRE>
-<P>
-Voir aussi la
-<A HREF="SVNFAQ.shtml"> page FAQ SVN  </a>.
-<P>
-Après que l'extraction soit terminée, vous trouverez des répertoires appelés
-"xml", "ressources", "jython", "help ", "lib", "java" et d'autres.
-Modification du répertoire "java". Là, vous trouverez un répertoire "src"
- qui contient le code source de JMRI lui-même, et un répertoire "tests"
- qui contient les routines de test différentes.
-<P>
-Vous pouvez regarder le code avec votre éditeur de texte favori. Pour compiler et
-l'exécuter, vous avez besoin de l'un des outils de compilation qui est décrit sur la barre à
-à gauche: Ant, JBuilder, etc (Ant peut être plus facile à installer et à utiliser)
-<P>
-Une fois que vous travaillez avec le code, vous aurez probablement créer des améliorations et 
-vous souhaitez contribuer à la vie du projet. C'est là que SVN a énormément
-d'avantages, avec les autorisations appropriées et les commandes, vous pouvez fusionner vos
-modifications dans la source commune automagiquement. Contactez-nous si vous êtes prêt à le
-faire ou voir les infos <A HREF="index.shtml#contributing"> sur la contribution </a>.
+Quelques ordinateurs sont livr&#233;s avec Subversion install&#233;, principalement divers syst&#232;mes Linux
+. Si il n'est pas install&#233; sur votre ordinateur, vous aurez besoin
+de trouver et d'installer le logiciel client n&#233;cessaire. voir les pages
+<a href="http://subversion.apache.org/packages.html"> t&#233;l&#233;chargements binaires Subversion
+ </a> pour des paquets pour plusieurs syst&#232;mes d'exploitation
+(y compris Mac OS X, Windows et diff&#233;rentes distibution Linux).</p>
 
-<h2> Détails Windows</h2>
+<p>De nombreux environnements de d&#233;veloppement (par exemple, Netbeans ou Eclipse) auront
+le support pour Subversion, soit directement, soit comme un add-on. V&#233;rifiez la
+documentation de votre IDE favori pour v&#233;rifier le support SVN.</p>
+
+<p> <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">
+Serveur Subversion sur SourceForge </a> ne n&#233;cessite aucune information utilisateur
+lorsque vous extrayez une copie du code. </p>
 
 <p>
-Obtenir et mettre à jour le code avec TortoiseCVS
-</ p>
-<p>
-Pour obtenir une vérification initiale de CVS pour votre propre usage, après l'installation
-http://www.tortoisecvs.org/. Créez un nouveau répertoire pour le projet, par exemple
-créer un dossier nommé "JMRISourceCode". Clic droit (control-clic) sur
-ce dossier et sélectionnez CVS CVS Checkout ".
-Dans le volet qui s'ouvre pour le CVSROOT entrez <: pserver: jmri.cvs.sourceforge.net: / cvsroot / jmri>
-Pour le serveur, entrez <jmri.cvs.sourceforge.net>.
-En bas à droite de l'écran est un "Récupérer la liste" Cliquez dessus et une liste s'affiche, cliquez sur le «all».
-Cliquez ensuite sur le bouton OK au bas du volet.
-Un nouveau volet s'ouvre et les fichiers seront téléchargés, sur le bas de ce volet est une case à cocher appelée "Close on Completion", la cocher.
-Quand il se ferme, le dossier que vous aurez mis dans le conteneur dossiers aura tous les éléments JMRI.
-</ p>
-<p>
-Une fois que vous avez effectué l'extraction initiale de CVS dans le dossier, pour
-les mettre à jour les sélectionner tous , puis clic droit et
-sélectionnez «cvs update ». Vous pouvez aussi simplement mettre à jour un seul dossier en le sélectionnant.
-</p>
+Si vous avez une copie existante du code et que vous vouliez la mettre &#224; jour
+, la commande est:
+<pre>
+svn update
+</pre> </p>
 
+<p> Voir aussi la <a href="SVNFAQ.shtml"> page FAQ Subversion</a>. </p>
+
+<p> Apr&#232;s que la v&#233;rification soit termin&#233;e, vous trouverez un r&#233;pertoire de haut niveau
+    appel&#233; <tt> java </tt>, avec des sous-r&#233;pertoires <tt> xml </tt>,
+   ressources <tt> </tt>, <tt> jython </tt>, <tt> aide </tt>, <tt> lib </tt>,
+   <tt> java </tt> et d'autres. </p>
+
+   <p> Changement de <tt> java </tt>. L&#224;, vous trouverez un r&#233;pertoire <tt> src </tt>
+    qui contient le code source pour JMRI lui-m&#234;me, et un r&#233;pertoire de <tt> test </tt>
+    qui contient divers tests. </p>
+
+<p> Vous pouvez consulter le code avec votre &#233;diteur de texte favori. Pour
+   compiler et ex&#233;cuter, vous avez besoin d'un des outils de compilation d&#233;crit
+   sur la barre &#224; gauche: <a href="Ant.shtml"> Ant </a>, <a
+    href = "Eclipse.shtml"> Eclipse </a>, <a
+    href = " NetBeans.shtml"> NetBeans </a>, <a
+    href = "JBuilder.shtml"> JBuilder </a>, etc (Ant peut-&#234;tre le plus facile &#224;
+   installer et &#224; utiliser, et c'est le principal exemple dans la documentation) </p>
+
+   <p> Une fois que vous travaillez avec le code, vous aurez probablement cr&#233;er quelques am&#233;liorations
+   que vous souhaitez contribuer en retour au projet. C'est l&#224; que Subversion a un &#233;norme
+   avantage, avec les autorisations et les commandes appropri&#233;s, vous pouvez fusionner vos
+   modifications dans la source commune automagiquement. Contactez-nous si vous &#234;tes pr&#234;t &#224;
+   faire ou voir la <a info sur href="index.shtml#contributing">
+   contribution </a>. </p>
+
+<h2> Acc&#232;s aux anciennes Versions  </h2>
+
+   <p> La meilleure fa&#231;on de r&#233;cup&#233;rer la source pour les versions 2.12 et ant&#233;rieures
+   est d'utiliser le <a href="getoldcode.shtml"> CVS Repository </a>. s'il vous pla&#238;t
+   Voir les instructions pour plus de d&#233;tails. </p>
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

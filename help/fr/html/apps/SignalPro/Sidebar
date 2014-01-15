@@ -2,8 +2,8 @@
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<!-- Translated  by Blorec Hervé le 2011-10-01--> 
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- UpDated  by Blorec Herv&#233; le 2013-9-02 --> 
 <dl class=toc>
 
 <dt><h3>Information SignalPro </h3></dt><DD><UL>
@@ -14,9 +14,9 @@
 <dt><h3>Autres Infos utiles</h3></dt><DD><UL>
 
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
-<LI><A HREF="../../tools/Routes.shtml">Itinéraires</a>
+<LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
 <LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
-<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">Rétroaction Aiguillage</a>
+<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction Aiguillage</a>
 </UL>
 
 </dl>

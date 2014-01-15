@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Swing.shtml,v 1.1 2010/03/11 03:28:39 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-07-06--> 
+<!--  $Id: Swing.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-08--> 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Use of Swing
-    </TITLE>
+   </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code standards recommendation Swing">
 
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8
+  <META http-equiv=Content-Type content="text/html; charset= .iso-8859-1
 ">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -33,65 +33,65 @@
 
 <H1>JMRI: utilisation de Swing</H1>
 
-Nous utilisons Java Swing pour notre développement Interface Graphique Utilisateur (GUI). Il est beaucoup plus puissant
-que l'AWT d'origine, et le prix est juste. En particulier, nous essayons d'utiliser le "format Bean" de la définition et l'obtention des membres, des rappels pour informer des changements, etc, pour le rendre plus facile pour construire des applications à partir de composants JMRI.
+Nous utilisons Java Swing pour notre d&#233;veloppement Interface Graphique Utilisateur (GUI). Il est beaucoup plus puissant
+que l'AWT d'origine, et le prix est juste. En particulier, nous essayons d'utiliser le "format Bean" de la d&#233;finition et l'obtention des membres, des rappels pour informer des changements, etc, pour le rendre plus facile pour construire des applications &#224; partir de composants JMRI.
 
 <p>
-Nous avons évolué vers un schéma particulier pour l'utilisation de Swing,
-décrit ici. Le code source JMRI contient plusieurs générations de
-l'application, aussi tout ne ressemble pas à ceci, mais nous avançons les 
+Nous avons &#233;volu&#233; vers un sch&#233;ma particulier pour l'utilisation de Swing,
+d&#233;crit ici. Le code source JMRI contient plusieurs g&#233;n&#233;rations de
+r&#233;alisations, aussi tout ne ressemble pas &#224; ceci, mais nous avan&#231;ons les 
 classes dans ce sens tant que le temps le permet.
 
 <p>
-La structure de base est pour mettre en œuvre des outils graphiques comme des objets JmriPanel.
+La structure de base est pour mettre en oeuvre des outils graphiques comme des objets JmriPanel.
 Ce sont JPanels avec assez de structure d'appoint pour que les applications JMRI
-puissent directement travailler avec eux. Par exemple, une sous-classe JmriPanel peut être 
-"instanciée" et placé dans une fenêtre bien prévue par la création d'un
+puissent directement travailler avec eux. Par exemple, une sous-classe JmriPanel peut &#234;tre 
+"instanci&#233;e" et plac&#233; dans une fen&#234;tre bien pr&#233;vue par la cr&#233;ation d'un
 Action JmriNamedPanel avec juste le nom de la classe JmriPanel,
-qui à son tour peut être fait avec différents outils automatisés.
+qui &#224; son tour peut &#234;tre fait avec diff&#233;rents outils automatis&#233;s.
 <p>
 
-Ce modèle nous permet d'écrire un panneau d'outils juste une fois, et de l'utiliser dans des lots
-de lieux différents, intégrés dans des fenêtres de plusieurs façons. Il a également réduit considérablement
-le nombre de classes qui doivent être chargés au démarrage, car il n'y a pas de classes
-* d'actionet * Frame distinctes, et les sous-classes JmriPanel n'ont pas à être chargées
-simplement parce qu'elles sont énumérées dans un menu.
+Ce mod&#232;le nous permet d'&#233;crire un panneau d'outils juste une fois, et de l'utiliser dans plein
+de lieux diff&#233;rents, int&#233;gr&#233;s dans des fen&#234;tres de plusieurs fa&#231;ons. Il a &#233;galement r&#233;duit consid&#233;rablement
+le nombre de classes qui doivent &#234;tre charg&#233;es au d&#233;marrage, car il n'y a pas de classes
+* d'Action et * de Frame distinctes, et les sous-classes JmriPanel n'ont pas &#224; &#234;tre charg&#233;es
+simplement parce qu'elles sont &#233;num&#233;r&#233;es dans un menu.
 <p>
 Le paquet
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html"> jmri.util.swing </a>
- contient le code .<p>
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html"> jmri.util.swing</a>
+ contient le code.<p>
 
 <h2>Cycle de Vie d'un JmriPanel</h2>
 <p>
 
-D'abord le 'ctor' s'exécute, puis initComponents. Cette deuxième
-partie devrait être le lieu pour les connexions à d'autres composants,
-où tous les objets de niveau inférieur ont été créés. (sous-classes pour
-des systèmes particuliers peuvent avoir par exemple des méthodes plus initComponents,
-appelé plus tard)
+D'abord le 'ctor' s'ex&#233;cute, puis initComponents. Cette deuxi&#232;me
+partie devrait &#234;tre le lieu pour les connexions &#224; d'autres composants,
+où tous les objets de niveau inf&#233;rieur ont &#233;t&#233; cr&#233;&#233;s. (sous-classes pour
+des syst&#232;mes particuliers peuvent avoir par exemple des m&#233;thodes plus initComponents,
+appel&#233; plus tard)
 <p>
-Dispose est appelée à la fin. (Notez que JPanels n'ont pas dispose (),
+Dispose est appel&#233;e &#224; la fin. (Notez que JPanels n'ont pas dispose (),
 c'est normalement une partie seulement de JFrames, mais nous la fournissons ici pour le nettoyage)
 <p>
-Les JmriPanels sont mieux créés par un nom avec JmriNamedPaneAction, qui a
-l'avantage de réduire fortement le nombre de classes qui ont besoin
-d'être chargées pour remplir un menu.
+Les JmriPanels sont mieux cr&#233;&#233;s par un nom avec JmriNamedPaneAction, qui a
+l'avantage de r&#233;duire fortement le nombre de classes qui ont besoin
+d'&#234;tre charg&#233;es pour remplir un menu.
 
 <p>
 Si elle ne peut se faire par nom, alors JmriAbstractAction est la base.
 
 <p>
-Utilisation de WindowInterface pour créer des sous - fenêtres, de manière à les mettre au bon endroit.
+Utilisation de WindowInterface pour cr&#233;er des sous - fen&#234;tres, de mani&#232;re &#224; les mettre au bon endroit.
 
 <p>
-(Voir les JavaDocs dans ce paquet, qui sont très bons)
+(Voir les JavaDocs dans ce paquet, qui sont tr&#232;s bons)
 
 <p>
 JmriJFrame est dans le mauvais endroit pour l'instant.
 
 <p>
-Des classes plus anciennes, d'autres encore devant être déplacées de jmri.util.swing,
-certaines sont des adaptateurs 1.1.8 qui devraient tout simplement disparaître.
+Des classes plus anciennes, d'autres encore devant &#234;tre d&#233;plac&#233;es de jmri.util.swing,
+certaines sont des adaptateurs 1.1.8 qui devraient tout simplement dispara&#238;tre.
 <p>
 AbstractFrameAction<br>
 BusyGlassPane<br>
@@ -109,7 +109,7 @@ WindowMenu<br>
 
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+	 </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>

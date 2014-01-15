@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastAddEdit.shtml,v 1.2 2009/12/29 05:25:24 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/09-->
+<!-- $Id: SignalMastAddEdit.shtml 19331 2011-12-09 11:32:11Z kevin-dickerson $ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-12-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Adding Signal Masts
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Signal Mast Add">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,22 +24,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Ajout Mâts de signaux
+<H1>Ajout M&#226;ts de signaux
 </H1>
 
 <A Href="SignalMastAdd.png"> <IMG SRC = "SignalMastAdd.png" ALIGN = RIGHT WIDTH = "208" height = "85" hspace = "0" vspace = "0" alt = "Simple Signal Logic panel figure "> </a>
 
 <p>
-JMRI a besoin de savoir comment un Mât de signalisation sur le réseau
-est connecté au matériel électrique. Une fois qu'il le sait ,
-il peut envoyer les bonnes commandes pour contrôler l'apparence du
- Mât de signal.
+Les M&#226;ts de signalisation sont construits sur la base de diff&#233;rents syst&#232;mes de signalisation et les m&#226;ts pris en charge dans les syst&#232;mes .
 <p>
-Le dialogue «Ajouter Mât de signal" vous donne un certain nombre de choix différents pour savoir comment le mât de signal est connecté:
-
+Dans la fen&#234;tre Ajout, vous devez d'abord s&#233;lectionner le syst&#232;me de signalisation prototypique surlequel le m&#226;t doit &#234;tre bas&#233;, suivi par le m&#226;t &#224; l'int&#233;rieur de ce syst&#232;me.
 <p>
-(Rien à modifier, donc pas de dialogue d'édition)
-
+Le m&#226;t peut alors &#234;tre construit de trois fa&#231;ons diff&#233;rentes selon le mat&#233;riel utilis&#233; .
+<ul>
+<li> T&#234;tes Signal</li >
+Les T&#234;tes Signal individuelles sont utilis&#233;es pour repr&#233;senter chaque t&#234;te de signal sur le m&#226;t . La t&#234;te de signal sera en accord avec la gestion  des mutation de l'aspect suivant l'&#233;tat du m&#226;t de signalisation .
+Si chaque t&#234;te de signal qui a &#233;t&#233; configur&#233;e sur le m&#226;t, une liste d&#233;roulante appara&#238;t pour vous pour choisir la t&#234;te de signal qui va commander la t&#234;te de ce m&#226;t.
+<li>L'aiguillage Pilot&#233; </li>
+C'est pour du mat&#233;riel sp&#233;cifique qui permet de commander tout l'aspect d'un m&#226;t de signalisation bas&#233; sur la position d'un aiguillage. Ce qui sera &#224; r&#233;gler ici d&#233;pendra du mat&#233;riel utilis&#233; .
+<li> virtuel < /li>
+Ce m&#226;t ne commande pas directement tout le mat&#233;riel relatif &#224; un m&#226;t de signalisation. Son utilisation est id&#233;al pour o&#249; un m&#226;t physique ne serait pas pr&#233;sent sur le chemin de fer, comme un heurtoir, ou &#224;
+marquer la fin d'une section de signalisation de la voie et le d&#233;but du territoire sans information.
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.8 2010/06/10 16:56:19 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-02-->
+<!-- $Id: TabbedPreferences.shtml 19355 2011-12-10 16:52:00Z bhoffman351 $ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-10-08-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Preferences Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,107 +24,107 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:Fenêtre préférences</H1>
+<H1>JMRI:Fen&#234;tre pr&#233;f&#233;rences</H1>
 
-La fenêtre de préférences vous
+La fen&#234;tre de pr&#233;f&#233;rences vous
 configure le fonctionnement de base de votre applicaton JMRI.
 <p>
-L'écran est divisé en deux sections, sur le côté gauche est une liste des groupes de préférence qui peut être réglé.
-Cliquer sur chaque préférence va ensuite remplir le côté droit, avec les différentes options qui peuvent être configurées.
+L'&#233;cran est divis&#233; en deux sections, sur le c&#244;t&#233; gauche est une liste des groupes de pr&#233;f&#233;rence qui peut &#234;tre r&#233;gl&#233;.
+Cliquer sur chaque pr&#233;f&#233;rence va ensuite remplir le c&#244;t&#233; droit, avec les diff&#233;rentes options qui peuvent &#234;tre configur&#233;es.
 <a href="../../manual/images/Preferences.png">
 <img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
 <p>
 <a href="#Connection">Connexions</a><br>
-<a href="#Defaults">Défauts</a><br>
+<a href="#Defaults">D&#233;fauts</a><br>
 <a href="#FileLocations">Emplacements Fichiers</a><br>
-<a href="#Startup">Démarrage</a><br>
+<a href="#Startup">D&#233;marrage</a><br>
 <a href="#Display">Affichage</a><br>
 <a href="#Messages">Messages</a><br>
 <a href="#Roster">Liste</a><br>
-<a href="#Throttle">Régulateur</a><br>
-<a href="#WiThrottle">Régulateur WI</a><br>
+<a href="#Throttle">R&#233;gulateur</a><br>
+<a href="#WiThrottle">R&#233;gulateur WI</a><br>
 <p>Sans aucun doute la commande la plus importante se trouve au bas de cette section:
 Le bouton "Enregistrer"!
 <p>
-Soyez sûr de cliquer sur "Enregistrer" lorsque vous quittez cette fenêtre. Vos modifications des préférences ne prennent pas effet avant que le programme soit arrêté et redémarré, de sorte que le
-programme vous invite à le faire après avoir sauvé les préférences.
+Soyez s&#251;r de cliquer sur "Enregistrer" lorsque vous quittez cette fen&#234;tre. Vos modifications des pr&#233;f&#233;rences ne prennent pas effet avant que le programme soit arr&#234;t&#233; et red&#233;marr&#233;, de sorte que le
+programme vous invite &#224; le faire apr&#232;s avoir sauv&#233; les pr&#233;f&#233;rences.
 
 <p>
 <img align="right" height="45" width="45" src="../../images/bangdesk.gif" alt="Cute image de work">
 Cette page est en construction.
-En attendant, il y a quelques informations supplémentaires sur les préférences dans certaines
+En attendant, il y a quelques informations suppl&#233;mentaires sur les pr&#233;f&#233;rences dans certaines
  <a href="../../manual/Getting_Started.shtml#Preferences"> pages de tutoriels </a>.
 
 <a name="Connection">
 <h2>Connexions</h2></a>
 
-Vous pouvez sélectionner l'une des diverses connexions JMRI mise ici. <p>
-Chaque connexion a son propre onglet unique, pour commencer, choisissez d'abord le fabricant de votre système DCC, suivi par le type de connexion que vous utilisez. Il vous sera alors présenté avec une série de paramètres les plus souvent requis qui doivent être fixés. Si vous devez modifier certains des paramètres les plus avancés, puis connexion, puis cochez la case "Connexion Paramètres supplémentaires"  et cela va vous fournir de plus amples détails.
+Vous pouvez s&#233;lectionner l'une des diverses connexions JMRI mise ici. <p>
+Chaque connexion a son propre onglet unique, pour commencer, choisissez d'abord le fabricant de votre syst&#232;me DCC, suivi par le type de connexion que vous utilisez. Il vous sera alors pr&#233;sent&#233; avec une s&#233;rie de param&#232;tres les plus souvent requis qui doivent &#234;tre fix&#233;s. Si vous devez modifier certains des param&#232;tres les plus avanc&#233;s, puis connexion, puis cochez la case "Connexion Param&#232;tres suppl&#233;mentaires"  et cela va vous fournir de plus amples d&#233;tails.
 <p>
-Pour ajouter une connexion supplémentaire cliquez sur l'onglet avec un "+", ce sera alors  un onglet connexion raffraichi. Pour supprimer une connexion, dans la liste déroulante des frabricants du système, sélectionnez (aucun sélectionnés) et ceci va enlever la configuration de cette connexion.
+Pour ajouter une connexion suppl&#233;mentaire cliquez sur l'onglet avec un "+", ce sera alors  un onglet connexion raffraichi. Pour supprimer une connexion, dans la liste d&#233;roulante des frabricants du syst&#232;me, s&#233;lectionnez (aucun s&#233;lectionn&#233;s) et ceci va enlever la configuration de cette connexion.
 <p>
-Pour plus d'informations sur comment configurer cela pour votre matériel, consultez les  <a href="../../html/hardware/index.shtml"> pages matériels </a>.
+Pour plus d'informations sur comment configurer cela pour votre mat&#233;riel, consultez les  <a href="../../html/hardware/index.shtml"> pages mat&#233;riels </a>.
 <p>
 Rappelez-vous de presser Enregistrer!
 <a name="Defaults">
-<h2>Défauts</h2></a>
+<h2>D&#233;fauts</h2></a>
 
-Si vous utilisez plusieurs connexions du même type, par exemple 
-Connexions LocoNet multiples, ce volet vous permet de sélectionner celui qui est connecté
+Si vous utilisez plusieurs connexions du m&#234;me type, par exemple 
+Connexions LocoNet multiples, ce volet vous permet de s&#233;lectionner celui qui est connect&#233;
 par exemple au programmateur de CV que vous souhaitez utiliser.
 <a name="FileLocations">
 <dt><h2>Emplacements des Fichiers</h2></a>
-Ils vous permettent de définir l'emplacement par défaut où les scripts et les fichiers utilisateurs sont chargés et enregistrés.
+Ils vous permettent de d&#233;finir l'emplacement par d&#233;faut o&#249; les scripts et les fichiers utilisateurs sont charg&#233;s et enregistr&#233;s.
 <p>
-Notez que lorsque vous changez le "Emplacements des fichiers utilisateur" cela va aussi changer l'emplacement par défaut où sont stockés les éléments suivants.
+Notez que lorsque vous changez le "Emplacements des fichiers utilisateur" cela va aussi changer l'emplacement par d&#233;faut o&#249; sont stock&#233;s les &#233;l&#233;ments suivants.
 <dl> <dd> Panneaux <br>
 Listes <br>
-Opérations <br>
-Régulateur <br>
+Exploitation <br>
+R&#233;gulateur <br>
 Ressources <br>
 Options Dispatcheur <br>
-Opérations <br>
+Exploitation <br>
 Rps <br> </dl>
 <a name="Startup">
-<h2>Démarrage</h2></a>
-Ceci traite de toutes les préférences qui sont invoquées au démarrage, comme le chargement des fichiers de panneau et de l'exécution de scripts.
+<h2>D&#233;marrage</h2></a>
+Ceci traite de toutes les pr&#233;f&#233;rences qui sont invoqu&#233;es au d&#233;marrage, comme le chargement des fichiers de panneau et de l'ex&#233;cution de scripts.
 <dl>
 Actions <dt>
 <dd>
-Cette section vous permet d'avoir le programme qui exécute automatiquement les sélections de menu différents au démarrage. Par exemple, vous pouvez avoir la Table Aiguillage qui s'ouvre automatiquement, ou ouvrir automatiquement une fenêtre pour la programmation sur la voie principale.
+Cette section vous permet d'avoir le programme qui ex&#233;cute automatiquement les s&#233;lections de menu diff&#233;rents au d&#233;marrage. Par exemple, vous pouvez avoir la Table Aiguillage qui s'ouvre automatiquement, ou ouvrir automatiquement une fen&#234;tre pour la programmation sur la voie principale.
 <P>
-Par exemple, pour ouvrir automatiquement la Table Aiguillage, cliquez sur le bouton "Ajouter une action" dans cette section des préférences avancées.
-Dans la liste qui est présentée, sélectionnez "Ouvrir Table Aiguillage".
-N'oubliez pas de sauvegarder vos préférences à jour avec le bouton au bas de l'écran!
+Par exemple, pour ouvrir automatiquement la Table Aiguillage, cliquez sur le bouton "Ajouter une action" dans cette section des pr&#233;f&#233;rences avanc&#233;es.
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir Table Aiguillage".
+N'oubliez pas de sauvegarder vos pr&#233;f&#233;rences &#224; jour avec le bouton au bas de l'&#233;cran!
 
 <dt>Boutons <dt>
 <dd>
-Cela vous permet d'ajouter des boutons supplémentaires à la fenêtre principale JMRI qui sont connectés à des choix de menu spécifique.
+Cela vous permet d'ajouter des boutons suppl&#233;mentaires &#224; la fen&#234;tre principale JMRI qui sont connect&#233;s &#224; des choix de menu sp&#233;cifique.
 <P>
 Par exemple, pour ajouter un bouton qui va ouvrir la commande d'alimentation lorsque vous cliquez dessus,
-cliquez sur le bouton "Ajouter une action" dans cette section des préférences avancées.
-Dans la liste qui est présentée, sélectionnez "Ouvrir Table Aiguillage". N'oubliez pas de sauvegarder vos préférences à jour avec le bouton au bas de l'écran!
-Dans la liste qui est présentée, sélectionnez "Ouvrir  Commande Alimentation ".
-N'oubliez pas de sauvegarder vos préférences à jour avec le bouton au bas de l'écran!
-Le bouton apparaîtra au prochain démarrage du programme
+cliquez sur le bouton "Ajouter une action" dans cette section des pr&#233;f&#233;rences avanc&#233;es.
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir Table Aiguillage". N'oubliez pas de sauvegarder vos pr&#233;f&#233;rences &#224; jour avec le bouton au bas de l'&#233;cran!
+Dans la liste qui est pr&#233;sent&#233;e, s&#233;lectionnez "Ouvrir  Commande Alimentation ".
+N'oubliez pas de sauvegarder vos pr&#233;f&#233;rences &#224; jour avec le bouton au bas de l'&#233;cran!
+Le bouton appara&#238;tra au prochain d&#233;marrage du programme
 <dt>Fichiers <dt>
 <dd>
 Cette section vous permet de charger automatiquement les fichiers de panneaux lorsque le programme
-démarre. Les sections précédentes ont déjà exécutées, de sorte que toute action
- configurée pour cela  aura eu lieu. Vous pouvez charger
-autant de fichiers de panneaux que vous voulez, chacun sera complètement chargé avant que la prochaine
-soit démarré.
+d&#233;marre. Les sections pr&#233;c&#233;dentes ont d&#233;j&#224; ex&#233;cut&#233;es, de sorte que toute action
+ configur&#233;e pour cela  aura eu lieu. Vous pouvez charger
+autant de fichiers de panneaux que vous voulez, chacun sera compl&#232;tement charg&#233; avant que la prochaine
+soit d&#233;marr&#233;.
 <p>
-Cliquez sur "Ajouter un fichier", qui va ouvrir une fenêtre de section fichier dans laquelle vous pouvez sélectionner le
-fichier désiré. Si vous souhaitez plus tard arrêter le chargement du fichier au démarrage,
-cliquez sur le bouton "Supprimer" à côté de son nom.
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fen&#234;tre de section fichier dans laquelle vous pouvez s&#233;lectionner le
+fichier d&#233;sir&#233;. Si vous souhaitez plus tard arr&#234;ter le chargement du fichier au d&#233;marrage,
+cliquez sur le bouton "Supprimer" &#224; c&#244;t&#233; de son nom.
 
 <dt>scripts
 <dd>
-Cette section vous permet d'exécuter automatiquement un fichier de script lorsque le programme démarre. Les sections précédentes ont déjà exécutées, de sorte que toute les actions qui sont configurées pour ça ont eu lieu et tous les fichiers panneaux ont été chargés.
-Vous pouvez exécuter les fichiers script que vous souhaitez, chacun sera dirigé à la fin du fichier avant le prochain démarrage.
+Cette section vous permet d'ex&#233;cuter automatiquement un fichier de script lorsque le programme d&#233;marre. Les sections pr&#233;c&#233;dentes ont d&#233;j&#224; ex&#233;cut&#233;es, de sorte que toute les actions qui sont configur&#233;es pour &#231;a ont eu lieu et tous les fichiers panneaux ont &#233;t&#233; charg&#233;s.
+Vous pouvez ex&#233;cuter les fichiers script que vous souhaitez, chacun sera dirig&#233; &#224; la fin du fichier avant le prochain d&#233;marrage.
 <p>
-Cliquez sur "Ajouter un fichier", qui va ouvrir une fenêtre de  section de fichier dans lequel vous pouvez sélectionner le fichier désiré. Si vous souhaitez plus tard pour arrêter l'exécution d'un script particulier au démarrage, cliquez sur le bouton "Supprimer" à côté de son nom.
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fen&#234;tre de  section de fichier dans lequel vous pouvez s&#233;lectionner le fichier d&#233;sir&#233;. Si vous souhaitez plus tard pour arr&#234;ter l'ex&#233;cution d'un script particulier au d&#233;marrage, cliquez sur le bouton "Supprimer" &#224; c&#244;t&#233; de son nom.
 </dl>
 
 
@@ -133,29 +133,29 @@ Cliquez sur "Ajouter un fichier", qui va ouvrir une fenêtre de  section de fich
 
 <dl>
 <dt>Interface Graphique Utilisateur (GUI)
-<dd>Ces boîtes radio vous permettent de sélectionner la façon dont le programme va être afficher.
-Les choix disponibles dépendent du type d'ordinateur que vous avez, et 
-tous les éléments suivants peuvent être disponibles:
+<dd>Ces bo&#238;tes radio vous permettent de s&#233;lectionner la fa&#231;on dont le programme va &#234;tre afficher.
+Les choix disponibles d&#233;pendent du type d'ordinateur que vous avez, et 
+tous les &#233;l&#233;ments suivants peuvent &#234;tre disponibles:
      <ul>
-     <li> Métal - le style par défaut de Java, utilisable sur tous les ordinateurs  <li>/ Theme/CDE - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires écran x Windows. Il est également disponible sur (presque) tous les types d'ordinateurs.
-     <li> Windows - uniquement disponible sur les systèmes Microsoft Windows, ce qui rend l'apparence du programme, autant que possible comme une application normale de Windows.
+     <li> M&#233;tal - le style par d&#233;faut de Java, utilisable sur tous les ordinateurs  <li>/ Theme/CDE - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires &#233;cran x Windows. Il est &#233;galement disponible sur (presque) tous les types d'ordinateurs.
+     <li> Windows - uniquement disponible sur les syst&#232;mes Microsoft Windows, ce qui rend l'apparence du programme, autant que possible comme une application normale de Windows.
 <li> Mac OS X - disponible uniquement sur MacOS, ce qui rend l'apparence du programme comme une application Macintosh    </ul>
 <dt>Locale
-<dd><a href="../../Acknowledgements.shtml">Beaucoup de gens </a> ont contribué à l'"Internationalisation"
-de JMRI. Ceux-ci ont convertit (beaucoup) de texte à l'écran pour une langue
- autres que  l'anglais. Si vous sélectionnez votre pays ou votre région et votre langue ici,
-puis enregistrez et redémarrez les préférences, JMRI va utiliser une internationalisation
-pour ce pays et la langue si elle est disponible. Les éléments qui n'ont pas été traduits
-continuera à paraître en anglais, de sorte que vous ne manquerez rien. pour
-plus d'informations sur la façon de le mettre en place, et en particulier la façon de contribuer
-à des traductions nouvelles et les améliorées, s'il vous plaît voir notre
- <a href="../../html/doc/Technical/I8N.shtml">Page d'internationalisatio </a>.
+<dd><a href="../../Acknowledgements.shtml">Beaucoup de gens </a> ont contribu&#233; &#224; l'"Internationalisation"
+de JMRI. Ceux-ci ont convertit (beaucoup) de texte &#224; l'&#233;cran dans une langue
+ autres que l'anglais. Si vous s&#233;lectionnez votre pays ou votre r&#233;gion et votre langue ici,
+puis enregistrez et red&#233;marrez les pr&#233;f&#233;rences, JMRI va utiliser une internationalisation
+pour ce pays et la langue si elle est disponible. Les &#233;l&#233;ments qui n'ont pas &#233;t&#233; traduits
+continueront &#224; para&#238;tre en anglais, de sorte que vous ne manquerez rien. pour
+plus d'informations sur la fa&#231;on de le mettre en place, et en particulier la fa&#231;on de contribuer
+&#224; des traductions nouvelles et les am&#233;lior&#233;es, s'il vous pla&#238;t voir notre
+ <a href="../../html/doc/Technical/I8N.shtml">Page d'internationalisation</a>.
 </dl>
 
 <a name="Messages">
 <h2>Messages</h2></a>
-Cela vous permet de changer la façon dont les messages d'information et d'alerte sont affichés dans JMRI. <br>
-Il vous permettra également de configurer une des réponses par défaut et la question affichée.
+Cela vous permet de changer la fa&#231;on dont les messages d'information et d'alerte sont affich&#233;s dans JMRI. <br>
+Il vous permettra &#233;galement de configurer une des r&#233;ponses par d&#233;faut et la question affich&#233;e.
 
 <a name="Roster">
 <h2>Liste</h2></a>
@@ -163,70 +163,70 @@ Il vous permettra également de configurer une des réponses par défaut et la q
 <dl>
 <dt>Programmateur
 <dd> Le programmateur DecoderPro vous permet de choisir (beaucoup ou peu) quelle part du contenu sera afficher en utilisant
-un «programmateur» pour décodeur configurable». vous
-pouvez sélectionner l'un dans le même temps que vous
-<a href="../../manual/Basic_Programming.shtml"> sélectionnez votre décodeur de locomotive </a>,
-mais ceci offre un endroit pratique pour définir un par défaut si vous n'avez pas
-à sélectionner à chaque fois que vous ouvrez un décodeur.
+un "programmateur" pour un d&#233;codeur "configurable". vous
+pouvez s&#233;lectionner l'un dans le m&#234;me temps que vous
+<a href="../../manual/Basic_Programming.shtml"> s&#233;lectionnez votre d&#233;codeur de locomotive </a>,
+mais ceci offre un endroit pratique pour d&#233;finir un par d&#233;faut si vous n'avez pas
+&#224; s&#233;lectionner &#224; chaque fois que vous ouvrez un d&#233;codeur.
 
 
 
 <a id="roster"> <a
 <dt> Liste<dd>
-Normalement, la liste est stockée dans un emplacement standard dans le cadre du  <a href="../../html/apps/DecoderPro/Files.shtml" > répertoire préférences  </a>. Cette option  permet de vous déplacer quelque part d'autre<p>
+Normalement, la liste est stock&#233;e dans un emplacement standard dans le cadre du  <a href="../../html/apps/DecoderPro/Files.shtml" > r&#233;pertoire pr&#233;f&#233;rences  </a>. Cette option  permet de vous d&#233;placer quelque part d'autre<p>
 <p>
-Le bouton "Réinit" restaure l'emplacement par défaut. Notez que
-cela change juste où le programme regarde. Si vous avez stocké la liste
-d'informations ailleurs et et voulez la voir revenir à l'emplacement par défaut, vous devez déplacer le fichier vous-mêmee.
+Le bouton "R&#233;init" restaure l'emplacement par d&#233;faut. Notez que
+cela change juste o&#249; le programme regarde. Si vous avez stock&#233; la liste
+d'informations ailleurs et et voulez la voir revenir &#224; l'emplacement par d&#233;faut, vous devez d&#233;placer le fichier vous-m&#234;mee.
 <p>
-Vous pouvez également entrer une valeur par défaut pour le champ "propriétaire" dans les fiches de la Liste DecoderPro
- ici. Ceci comble  la valeur pour les nouvelles entrées, ce qui
-peut vous faire économiser un peu de frappe. Elle n'a aucun effet sur les
-entrées existantes, même si elle change.
+Vous pouvez &#233;galement entrer une valeur par d&#233;faut pour le champ "propri&#233;taire" dans les fiches de la Liste DecoderPro
+ ici. Ceci comble  la valeur pour les nouvelles entr&#233;es, ce qui
+peut vous faire &#233;conomiser un peu de frappe. Elle n'a aucun effet sur les
+entr&#233;es existantes, m&#234;me si elle change.
 <p>
 
 
 </dl>
 
 <a name="Throttle">
-<h2>Régulateur</h2></a>
+<h2>R&#233;gulateur</h2></a>
 
-Ce panneau de préférences vous permet de choisir si lesfonctions étendues du Régulateur
- sont disponibles, et celles qui peuvent être utilisées
+Ce panneau de pr&#233;f&#233;rences vous permet de choisir si lesfonctions &#233;tendues du R&#233;gulateur
+ sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
 
-<a name="WiThrottle"><h2>Régulateur WI</h2></a>
+<a name="WiThrottle"><h2>R&#233;gulateur WI</h2></a>
 
 <dl>
 <dt>eStop
 
-<dd> S'il est sélectionné,
-l'écoute d'un paquet doit être envoyé à partir du périphérique mobile connecté.
-Si le serveur ne reçoit aucune communication dans le le temps
-choisi le régulateur JMRI affecté ralentira son train.
+<dd> S'il est s&#233;lectionn&#233;,
+&#233;coute d'un paquet qui doit &#234;tre envoy&#233; &#224; partir du p&#233;riph&#233;rique mobile connect&#233;.
+Si le serveur ne re&#231;oit aucune communication dans le le temps
+choisi le r&#233;gulateur JMRI affect&#233; ralentira son train.
 
 <p>
-Le temps choisi est approximatif, la réponse peut être quelques secondes
+Le temps choisi est approximatif, la r&#233;ponse peut &#234;tre quelques secondes
 en plus ou en moins.
-<dt> Réseau
+<dt> R&#233;seau
 
-<dd> Sélectionnez la case à cocher pour affecter un numéro de port spécifique à utiliser.
-Automatique permettra à l'ordinateur de sélectionner un numéro de port disponible.
+<dd> S&#233;lectionnez la case &#224; cocher pour affecter un num&#233;ro de port sp&#233;cifique &#224; utiliser.
+Automatique permettra &#224; l'ordinateur de s&#233;lectionner un num&#233;ro de port disponible.
 <p>
- <dt> Contrôles Admis
+ <dt> Contr&#244;les Admis
 
-<dd> Cochez les cases pour permettre à des fonctionnalités spécifiques d'être contrôlées par des dispositifs mobiles.
-Cela vous permettra de limiter ce que les utilisateurs ont la possibilité de contrôler.<ul>
-    <li>Puissance Traction  - Choisissez si les appareils mobiles connectés via
-         cette interface WiFi permet de contrôler l' Alimentation Traction
+<dd> Cochez les cases pour permettre &#224; des fonctionnalit&#233;s sp&#233;cifiques d'&#234;tre contr&#244;l&#233;es par des dispositifs mobiles.
+Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; de contr&#244;ler.<ul>
+    <li>Puissance Traction  - Choisissez si les appareils mobiles connect&#233;s via
+         cette interface WiFi permet de contr&#244;ler l' Alimentation Traction
     <li> Aiguillages  -
-     <li>Itinéraires  -
+     <li>Itin&#233;raires  -
      <li>Couplages -
 </ul>
 </dl>
 
-Le bouton "Appliquer" met les paramètres actuels en vigueur, sans
-les enregistrer de façon permanente. Pour qu'un régulateur utilisz les
-nouveaux paramètres, sa connexion doit être fermé et réouverte..
+Le bouton "Appliquer" met les param&#232;tres actuels en vigueur, sans
+les enregistrer de fa&#231;on permanente. Pour qu'un r&#233;gulateur utilisz les
+nouveaux param&#232;tres, sa connexion doit &#234;tre ferm&#233; et r&#233;ouverte..
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalMastRepeater.shtml 19331 2011-12-09 11:32:11Z kevin-dickerson $ -->
+<!-- Translated by Herv&#233; Blorec 2013-10-12 -->
+<html lang="fr">
+
+<head>
+ <TITLE>
+      JMRI: Signal Masts Repeater
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Kevin Dickerson" name=Author>
+    <META name="keywords" content="JMRI help Signal Mast Repeater">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>M&#226;t Signal R&#233;p&#233;teur</H1>
+<p>
+L'outil M&#226;t Signal R&#233;p&#233;teur vous permet de configurer un m&#226;t signal pour qu'il suive l'&#233;tat d'un autre, ou pour les deux M&#226;ts Signaux mettre &#224; jours l'&#233;tat ​​des autres.
+<br>
+Pour que cela fonctionne chaque M&#226;tSignal doit &#234;tre du m&#234;me syst&#232;me de signal et Type de m&#226;t. <br>
+Quand un M&#226;t principal est choisi dans la liste au bas de l'&#233;cran la liste d'esclaves est remplie avec les M&#226;tsSignaux correspondants du m&#234;me type.
+S'il n'y a pas M&#226;ts valides alors la possibilit&#233; de s&#233;lectionner l'esclave restera d&#233;sactiv&#233;e.
+<p>
+Dans le tableau principal, il est possible de choisir la direction dans laquelle les mises &#224; jour auront lieu, soit ma&#238;tre &#224; l'esclave, l'esclave au ma&#238;tre ou Bidirectionnel. Vous pouvez &#233;galement activer/d&#233;sactiver le r&#233;p&#233;teur avec sa suppression de cet &#233;cran.
+<p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

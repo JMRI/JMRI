@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: MultiDecoder.shtml,v 1.2 2008/03/09 20:27:27 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id: MultiDecoder.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: Multi-Decoder Tool</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -22,155 +22,155 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>JMRI: Outil Multi-Décodeurs</H1>
+<H1>JMRI: Outil Multi-D&#233;codeurs</H1>
 
-Digitrax a inventé un 
+Digitrax a invent&#233; un 
 <A HREF="#digitraxproposal">mecanisme</a>
-pour avoir plus d'un décodeur dans la locomotive, et être encore capable de lire et les écrire séparément. Il utilise CV 15 et CV 16 d'une façon particulière pour le faire.
+pour avoir plus d'un d&#233;codeur dans la locomotive, et &#234;tre encore capable de lire et les &#233;crire s&#233;par&#233;ment. Il utilise CV 15 et CV 16 d'une fa&#231;on particuli&#232;re pour le faire.
 <P>
-CV 16 est l'ID d'un décodeur particulier; si vous avez plus d'un décodeur dans une locomotive, ils doivent avoir des valeurs différentes dans CV 16.
+CV 16 est l'ID d'un d&#233;codeur particulier; si vous avez plus d'un d&#233;codeur dans une locomotive, ils doivent avoir des valeurs diff&#233;rentes dans CV 16.
 <P>
-CV 15 est utilisé pour débloquer un décodeur (et verrouiller les autres), de sorte qu'il peut être écrit. 
+CV 15 est utilis&#233; pour d&#233;bloquer un d&#233;codeur (et verrouiller les autres), de sorte qu'il peut &#234;tre &#233;crit. 
 <P>
-Seuls les décodeurs qui ont la valeur de CV 15 égal à la valeur de CV 16 répondront aux lectures et écritures. Puisque que vous êtes censé avoir à l'origine mis en place les deux décodeurs avec des valeurs différentes de CV 16, cela signifie que vous pouvez utiliser les CV 15  pour sélectionner les décodeur auquels vous souhaitez parler.
+Seuls les d&#233;codeurs qui ont la valeur de CV 15 &#233;gal &#224; la valeur de CV 16 r&#233;pondront aux lectures et &#233;critures. Puisque que vous &#234;tes cens&#233; avoir &#224; l'origine mis en place les deux d&#233;codeurs avec des valeurs diff&#233;rentes de CV 16, cela signifie que vous pouvez utiliser les CV 15  pour s&#233;lectionner les d&#233;codeur auquels vous souhaitez parler.
 <P>
 <h2>Manipulation des CV 15 et CV 16 de DecoderPro</h2>
 
-Vraiment, le DecoderPro "programmateur carreaux" ne devraient pas du tout manipuler CV 15 et CV 16 . Ils ne sont pas vraiment "des données de configuration", dans le sens que vous pouvez librement les ajuster et voir ce qu'ils font. Plutôt, CV 16 est un «ensemble une fois avant l'assemblage de la locomotive", et CV 15 est une commande opérationnelle "le décodeur peut parler maintenant.  
+Vraiment, le DecoderPro "programmateur carreaux" ne devraient pas du tout manipuler CV 15 et CV 16 . Ils ne sont pas vraiment "des donn&#233;es de configuration", dans le sens que vous pouvez librement les ajuster et voir ce qu'ils font. Plut&#244;t, CV 16 est un «ensemble une fois avant l'assemblage de la locomotive", et CV 15 est une commande op&#233;rationnelle "le d&#233;codeur peut parler maintenant.  
 <P>
-Si un utilisateur de DecoderPro a fait une écriture sur toutes les feuilles et changé l'un des CV 15 ou 16, les futures opérations de programmation seront problématiques.
+Si un utilisateur de DecoderPro a fait une &#233;criture sur toutes les feuilles et chang&#233; l'un des CV 15 ou 16, les futures op&#233;rations de programmation seront probl&#233;matiques.
 <P>
-Par conséquent, les gens qui écrivent des définitions de décodeur sont fortement encouragés à ne pas inclure CV 15 et CV 16 (quand ils sont utilisés pour verrouiller le décodeur) dans leurs définitions, ou de les inclure en tant que "constante" CV afin que le programme ne les écrive pas. L'utilisateur peut ensuite programmer les CV en utilisant le "Programmateur Simple CV".
+Par cons&#233;quent, les gens qui &#233;crivent des d&#233;finitions de d&#233;codeur sont fortement encourag&#233;s &#224; ne pas inclure CV 15 et CV 16 (quand ils sont utilis&#233;s pour verrouiller le d&#233;codeur) dans leurs d&#233;finitions, ou de les inclure en tant que "constante" CV afin que le programme ne les &#233;crive pas. L'utilisateur peut ensuite programmer les CV en utilisant le "Programmateur Simple CV".
 
-<h2>L'Outil Multi-Décodeurs</h2>
+<h2>L'Outil Multi-D&#233;codeurs</h2>
 
 <A HREF="images/MultiControl.gif">
 <IMG SRC="images/MultiControl.gif" WIDTH="121" HEIGHT="283" ALIGN="RIGHT">
 </a>
-Lorsque cette fonction a été mise en usage, un "Outil Multi-Décodeur"
-a été écrit pour JMRI (voir image à droite).
+Lorsque cette fonction a &#233;t&#233; mise en usage, un "Outil Multi-D&#233;codeur"
+a &#233;t&#233; &#233;crit pour JMRI (voir image &#224; droite).
 
 <P>
 Il a plusieurs parties.
 <P>
-Au sommet il y a 8 boutons que vous pouvez cliquer pour débloquer un 
-décodeur particulier dans la locomotive. Par exemple, si vous cliquez sur "3", le décodeur
-configuré avec "3" dans CV 16 sera déverrouillé. Si possible,
-le programme tente de vérifier que le décodeur est présent et le communique;
-l'état est indiqué dans le milieu de la fenêtre ("OK"dans l'illustration).
+Au sommet il y a 8 boutons que vous pouvez cliquer pour d&#233;bloquer un 
+d&#233;codeur particulier dans la locomotive. Par exemple, si vous cliquez sur "3", le d&#233;codeur
+configur&#233; avec "3" dans CV 16 sera d&#233;verrouill&#233;. Si possible,
+le programme tente de v&#233;rifier que le d&#233;codeur est pr&#233;sent et le communique;
+l'&#233;tat est indiqu&#233; dans le milieu de la fen&#234;tre ("OK"dans l'illustration).
 <P>
-Si vous cliquez sur le bouton "legacy", tous les décodeurs avec la fonction de verrouillage seront verrouillés. S'il en est ainsi vous pouvez écrire dans un décodeur supplémentaire sans la fonction de verrouillage. Par exemple, si vous avez un décodeur avec (par exemple "2"), et l'autre sans la fonction de verrouillage, vous pouvez toujours les configurer par:
+Si vous cliquez sur le bouton "legacy", tous les d&#233;codeurs avec la fonction de verrouillage seront verrouill&#233;s. S'il en est ainsi vous pouvez &#233;crire dans un d&#233;codeur suppl&#233;mentaire sans la fonction de verrouillage. Par exemple, si vous avez un d&#233;codeur avec (par exemple "2"), et l'autre sans la fonction de verrouillage, vous pouvez toujours les configurer par:
 <OL>
-<LI>Cliquez "2" - les deux décodeurs seront maintenant actif.
+<LI>Cliquez "2" - les deux d&#233;codeurs seront maintenant actif.
 <LI>Ecrivez les informations pour "2", qui iront dans les deux.
 <LI>Cliquez "Legacy", verrouillant le "2".
-<LI>Ecrivez les informations pour le décodeur non verrouillé, écrivant par-dessus ce qui avait été écrit.
+<LI>Ecrivez les informations pour le d&#233;codeur non verrouill&#233;, &#233;crivant par-dessus ce qui avait &#233;t&#233; &#233;crit.
 </OL>
-Oui, c'est laid, mais ça peut servir.
+Oui, c'est laid, mais &#231;a peut servir.
 
 <P>
-Au centre se trouvent des boutons pour les opérations automatisées qui peuvent vous être utiles:
+Au centre se trouvent des boutons pour les op&#233;rations automatis&#233;es qui peuvent vous &#234;tre utiles:
 <UL>
-<LI>"Search" -cherche à travers une <u>longue </u> série d'écritures et de 
-lecture pour déterminer quels décodeurs sont présents.Les boutons pour les décodeurs
-non présents seront désactivés (grisés).
-<LI>"Reset" - parfois un décodeur, même s'il est installé par lui-même dans la locomotive, peut être accidentellement verrouillé quand CV 16 et/ou CV 16 sont fixés à une valeur fausse. Ce bouton fait un tas de lectures et d'écritures pour comprendre ce qui s'est passé et déverrouiller le décodeur.
-<LI>"Init DH163 + Soundtraxx" - Si vous avez un décodeur DH163 ou similaire avec la fonction de verrouillage, plus un autre décodeur sans cette fonction, cette touche fonctionne grâce à une série d'opérations pour configurer la fonction de verrouillage Digitrax afin que vous puissiez l'utiliser. (Normalement, vous devriez prendre la locomotive en dehors de manière à être en mesure de charger la valeur Digitrax CV 16).
+<LI>"Search" -cherche &#224; travers une <u>longue </u> s&#233;rie d'&#233;critures et de 
+lecture pour d&#233;terminer quels d&#233;codeurs sont pr&#233;sents.Les boutons pour les d&#233;codeurs
+non pr&#233;sents seront d&#233;sactiv&#233;s (gris&#233;s).
+<LI>"Reset" - parfois un d&#233;codeur, m&#234;me s'il est install&#233; par lui-m&#234;me dans la locomotive, peut &#234;tre accidentellement verrouill&#233; quand CV 16 et/ou CV 16 sont fix&#233;s &#224; une valeur fausse. Ce bouton fait un tas de lectures et d'&#233;critures pour comprendre ce qui s'est pass&#233; et d&#233;verrouiller le d&#233;codeur.
+<LI>"Init DH163 + Soundtraxx" - Si vous avez un d&#233;codeur DH163 ou similaire avec la fonction de verrouillage, plus un autre d&#233;codeur sans cette fonction, cette touche fonctionne gr&#226;ce &#224; une s&#233;rie d'op&#233;rations pour configurer la fonction de verrouillage Digitrax afin que vous puissiez l'utiliser. (Normalement, vous devriez prendre la locomotive en dehors de mani&#232;re &#224; &#234;tre en mesure de charger la valeur Digitrax CV 16).
 </ul>
 
-Enfin, la partie inférieure de la page vous permet de contrôler la programmation
+Enfin, la partie inf&#233;rieure de la page vous permet de contr&#244;ler la programmation
 en mode service.(voie de programmation)
 <P>
-Bien qu'il soit possible d'utiliser cet outil en mode "Ops" (programmation voie principale), dans ce cas on n'est pas en mesure de confirmer les opérations, de sorte qu'on ne peut pas être sûr à 100% que le décodeur a bien été sélectionné.
+Bien qu'il soit possible d'utiliser cet outil en mode "Ops" (programmation voie principale), dans ce cas on n'est pas en mesure de confirmer les op&#233;rations, de sorte qu'on ne peut pas &#234;tre s&#251;r &#224; 100% que le d&#233;codeur a bien &#233;t&#233; s&#233;lectionn&#233;.
 
 <A NAME="digitraxproposal">
 <h2>Proposition Originale Digitrax</h2></a>
 
-Les utilisateurs de DCC ont parfois envie d'installer plus d'un décodeur dans une seule locomotive. Un cas classique est l'aide de décodeurs séparés pour le contrôle moteur et du son. Parce que ces décodeurs ont souvent besoin d'avoir leurs CVs configurés séparément, un mécanisme est nécessaire pour communiquer avec un seul à la fois.
+Les utilisateurs de DCC ont parfois envie d'installer plus d'un d&#233;codeur dans une seule locomotive. Un cas classique est l'aide de d&#233;codeurs s&#233;par&#233;s pour le contr&#244;le moteur et du son. Parce que ces d&#233;codeurs ont souvent besoin d'avoir leurs CVs configur&#233;s s&#233;par&#233;ment, un m&#233;canisme est n&#233;cessaire pour communiquer avec un seul &#224; la fois.
 <p>
-Ce mécanisme doit être en mesure de:
+Ce m&#233;canisme doit &#234;tre en mesure de:
 
 <ol>
-<li>Avoir en service en mode lecture et écriture à partir d'un décodeur spécifique, sans avoir à débrancher électriquement d'autres décodeurs.
+<li>Avoir en service en mode lecture et &#233;criture &#224; partir d'un d&#233;codeur sp&#233;cifique, sans avoir &#224; d&#233;brancher &#233;lectriquement d'autres d&#233;codeurs.
 
-<li> Découvrir le type de décodeur (s) présents à l'intérieur d'une locomotive, sans démontage, et en dépit de la présence d'autres décodeurs.
+<li> D&#233;couvrir le type de d&#233;codeur (s) pr&#233;sents &#224; l'int&#233;rieur d'une locomotive, sans d&#233;montage, et en d&#233;pit de la pr&#233;sence d'autres d&#233;codeurs.
 
-<li>Travailler avec les systèmes DCC existants sans modification</ol>
+<li>Travailler avec les syst&#232;mes DCC existants sans modification</ol>
 
 <h3>Proposition:</h3>
 
-CV 16 porte un numéro de 0 à 7 inclusivement. C'est ce qu'on appelle le «numéro d'identification". Ce numéro identifie un seul décodeur, donc une valeur unique doit être attribué à chaque décodeur dans une locomotive en particulier. Parce que la plupart des utilisateurs utilisent ce mécanisme avec les décodeurs qui fournissent des fonctions différentes, le codage recommandé est le suivant:
+CV 16 porte un num&#233;ro de 0 &#224; 7 inclusivement. C'est ce qu'on appelle le «num&#233;ro d'identification". Ce num&#233;ro identifie un seul d&#233;codeur, donc une valeur unique doit &#234;tre attribu&#233; &#224; chaque d&#233;codeur dans une locomotive en particulier. Parce que la plupart des utilisateurs utilisent ce m&#233;canisme avec les d&#233;codeurs qui fournissent des fonctions diff&#233;rentes, le codage recommand&#233; est le suivant:
 <pre>
-   La valeur de réinitialisation, tel que livré: 0
+   La valeur de r&#233;initialisation, tel que livr&#233;: 0
   
-   1: décodeur du Moteur 
+   1: d&#233;codeur du Moteur 
   
-   2: décodeur de son
+   2: d&#233;codeur de son
   
-   3: Fonction décodeur seule (par exemple pour les feux supplémentaires)
+   3: Fonction d&#233;codeur seule (par exemple pour les feux suppl&#233;mentaires)
 </pre>
-CV 15 est utilisé pour sélectionner le décodeur qui va répondre. Quand les valeurs de CV 15 et CV 16 sont égaux, tous les CV dans le décodeur peuvent être lu ou écrit. Quand les valeurs de CV 15 et CV 16 ne sont pas égaux, CV 15 ne peut être écrit.
+CV 15 est utilis&#233; pour s&#233;lectionner le d&#233;codeur qui va r&#233;pondre. Quand les valeurs de CV 15 et CV 16 sont &#233;gaux, tous les CV dans le d&#233;codeur peuvent &#234;tre lu ou &#233;crit. Quand les valeurs de CV 15 et CV 16 ne sont pas &#233;gaux, CV 15 ne peut &#234;tre &#233;crit.
 <P>
-Certains fabricants veulent offrir un  CV pour activer/désactiver cette fonctionnalité. Si oui, ce devrait être dans un CV réservé à l'usage des fabricants, car aucun CV NMRA n'a été réservé à cet effet.
+Certains fabricants veulent offrir un  CV pour activer/d&#233;sactiver cette fonctionnalit&#233;. Si oui, ce devrait &#234;tre dans un CV r&#233;serv&#233; &#224; l'usage des fabricants, car aucun CV NMRA n'a &#233;t&#233; r&#233;serv&#233; &#224; cet effet.
 <P>
 Notez qu'une co
-   3: Fonction décodeur seule (par exemple pour les feux supplémentaires)
+   3: Fonction d&#233;codeur seule (par exemple pour les feux suppl&#233;mentaires)
 </pre>
-CV 16 est utilisé pour sélectionner le décodeur qui va répondre. Quand les valeurs de CV 15 et CV 16 sont égaux, tous les CV dans le décodeur peuvent être lus ou écrits. Quand les valeurs de CV 15 et CV 16 ne sont pas égaux, CV 15 ne peut être écrit.
+CV 16 est utilis&#233; pour s&#233;lectionner le d&#233;codeur qui va r&#233;pondre. Quand les valeurs de CV 15 et CV 16 sont &#233;gaux, tous les CV dans le d&#233;codeur peuvent &#234;tre lus ou &#233;crits. Quand les valeurs de CV 15 et CV 16 ne sont pas &#233;gaux, CV 15 ne peut &#234;tre &#233;crit.
 <P>
-Certains fabricants veulent offrir un  CV pour activer/demander la réinitialisation du décodeur aux valeurs de CV par défauts qui ne doit pas être donnée  à moins que le CV 15 et CV 16 aient des valeurs égales. Cela empêche l'utilisateur de réinitialiser accidentellement les décodeurs multiples en même temps, et de perdre la capacité d'y répondre séparément.
+Certains fabricants veulent offrir un  CV pour activer/demander la r&#233;initialisation du d&#233;codeur aux valeurs de CV par d&#233;fauts qui ne doit pas &#234;tre donn&#233;e  &#224; moins que le CV 15 et CV 16 aient des valeurs &#233;gales. Cela emp&#234;che l'utilisateur de r&#233;initialiser accidentellement les d&#233;codeurs multiples en m&#234;me temps, et de perdre la capacit&#233; d'y r&#233;pondre s&#233;par&#233;ment.
 <P>
 .
-Pour configurer les décodeurs à l'installation:
+Pour configurer les d&#233;codeurs &#224; l'installation:
 <P>
-   Avant d'installer chaque décodeur dans la locomotive:
+   Avant d'installer chaque d&#233;codeur dans la locomotive:
 <OL>
-    <LI> Connectez - le à la voie de programmation tout seul
+    <LI> Connectez - le &#224; la voie de programmation tout seul
  
-   <LI>  Donnez 8 à CV 8 pour assurer que CV 15 et CV 16 sont tous deux nuls
+   <LI>  Donnez 8 &#224; CV 8 pour assurer que CV 15 et CV 16 sont tous deux nuls
  
-    <LI> Si vous le souhaitez, lire CV 15 pour confirmer que le décodeur peut être adressée
+    <LI> Si vous le souhaitez, lire CV 15 pour confirmer que le d&#233;codeur peut &#234;tre adress&#233;e
        (C'est une lecture de 0, donc rapide)
      
-   <LI> Donnez à votre CV 16 le numéro d'identification désiré, par exemple, 2
+   <LI> Donnez &#224; votre CV 16 le num&#233;ro d'identification d&#233;sir&#233;, par exemple, 2
  
-   <LI>  Donnez à votre CV 15 le numéro d'identification
+   <LI>  Donnez &#224; votre CV 15 le num&#233;ro d'identification
  
-    <LI> Configurer le reste du décodeur
+    <LI> Configurer le reste du d&#233;codeur
  
-    <LI> déconnectez - le et installez  -le dans la locomotive
+    <LI> d&#233;connectez - le et installez  -le dans la locomotive
  
    </OL>
-  Répétez à son tour pour chaque décodeur devant être installé
+  R&#233;p&#233;tez &#224; son tour pour chaque d&#233;codeur devant &#234;tre install&#233;
    <P>
-Notez que si l'utilisateur n'installe qu'un seul décodeur, il n'est pas nécessaire de modifier les valeurs 0 par défaut dans les CV 15 et CV 16.
+Notez que si l'utilisateur n'installe qu'un seul d&#233;codeur, il n'est pas n&#233;cessaire de modifier les valeurs 0 par d&#233;faut dans les CV 15 et CV 16.
 
 <p>
-Pour accéder à un décodeur après l'installation:
+Pour acc&#233;der &#224; un d&#233;codeur apr&#232;s l'installation:
 <ol>
-  <LI>  Donnez l'ID du décodeur souhaités dans CV 15
+  <LI>  Donnez l'ID du d&#233;codeur souhait&#233;s dans CV 15
  
-    <LI> Lire ou écrire d'autres CVs au besoin
+    <LI> Lire ou &#233;crire d'autres CVs au besoin
 </OL>
 
 
-Pour identifier le décodeur (s) présents dans une locomotive:
+Pour identifier le d&#233;codeur (s) pr&#233;sents dans une locomotive:
 <ol>
-   <li>Écrire un 0 dans CV 15
+   <li>&#201;crire un 0 dans CV 15
 <li> Tentative de lecture d'un 0 de CV 16.
 
-<li> Si pas accuser réception, il n'y a pas de décodeur avec ID 0.
-Si un accusé de réception, un décodeur avec ID 0 existe.
+<li> Si pas accuser r&#233;ception, il n'y a pas de d&#233;codeur avec ID 0.
+Si un accus&#233; de r&#233;ception, un d&#233;codeur avec ID 0 existe.
 </ ol>
-Répétez cette procédure pour ID 1 à 7 pour vérifier celles-ci.
+R&#233;p&#233;tez cette proc&#233;dure pour ID 1 &#224; 7 pour v&#233;rifier celles-ci.
 <P>
-Parce que la quantité d'ID est faible, une lecture réussie est assez rapide.
-Une lecture ratée c'est à dire lorsque le décodeur n'est pas présent,
-demandera un  un certain temps pour de nombreuses centrales de commande existantes,
-pour donner une réponse.
-Ceci peut être fait plus rapidement dans l'avenir en ayant des centrales de commande
-qui essayer de lire simplement la valeur attendue, au lieu de 0 à 255,
-en l'absence d'un accusé de réception
+Parce que la quantit&#233; d'ID est faible, une lecture r&#233;ussie est assez rapide.
+Une lecture rat&#233;e c'est &#224; dire lorsque le d&#233;codeur n'est pas pr&#233;sent,
+demandera un certain temps pour de nombreuses centrales de commande existantes,
+pour donner une r&#233;ponse.
+Ceci peut &#234;tre fait plus rapidement dans l'avenir en ayant des centrales de commande
+qui essayer de lire simplement la valeur attendue, au lieu de 0 &#224; 255,
+en l'absence d'un accus&#233; de r&#233;ception
     
 </ol>    
  .

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoBufferUSB.shtml,v 1.2 2008/05/31 05:00:29 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: LocoBufferUSB.shtml 22578 2013-01-23 04:44:56Z bob-m-dcc $ -->
+<!-- UpDated  by Blorec Hervé  2013-09-13-->
 <html lang="fr">
 <head>
  <TITLE>
@@ -27,13 +27,13 @@
     <div id="mainContent">
 
       <h1> 
-     Guide Matériel JMRI: Connecter un LocoBuffer-USB à LocoNet
+     Guide Matériel JMRI: Connecter un LocoBuffer-USB à LocoNet&reg;
       </h1>
 
-<img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140" align="right"/>
+ <img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140" alt="LocoBuffer-USB image">
 <p>
-la LocoBuffer-USB offre un moyen très fiable pour
-connecter un ordinateur à un LocoNet. Elle est produite par la société, de Dick Bronson
+Le LocoBuffer-USB offre un moyen très fiable pour
+connecter un ordinateur à un LocoNet&reg;. Elle est produite par la société, de Dick Bronson
 <A HREF="http://www.rr-cirkits.com">  RR-CirKits </a>
  basée en partie sur la conception LocoBuffer originale.
 </p>
@@ -57,7 +57,7 @@ Le LocoBuffer-USB isole complètement votre ordinateur à partir du LocoNet,
 supprimant la possibilité de courants de terre qui circule à travers le câble LocoNet.
 Il reçoit son alimentation en partie par les lignes RailSync LocoNet et le reste de votre
 ordinateur via le câble USB.
-
+<p>LocoNet&reg; est une marque déposée de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

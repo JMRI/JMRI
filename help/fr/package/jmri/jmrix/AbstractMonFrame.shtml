@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AbstractMonFrame.shtml,v 1.4 2009/04/27 19:37:30 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2012-01-25-->
+<!-- $Id: AbstractMonFrame.shtml 22622 2013-01-28 16:49:34Z mstevetodd $ -->
+<!-- UpDated  by Blorec Hervé bzh56420@yahoo.fr 2013-11-14-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Monitor Window
- </TITLE>
+</TITLE>
     <META http-equiv=Content-Type content="text/html; charset=utf-8">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help monitor">
@@ -24,46 +24,45 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Fenêtre Moniteur de Communication 
-</H1>
+<H1>Fenêtre Moniteur de Communication</H1>
     
-JMRI offre une fenêtre de communication pour surveiller et que vous puissiez voir ce qui se passe
+JMRI offre une fenêtre de communication pour surveiller pour que vous puissiez voir ce qui se passe
 sur le lien de communication entre le programme et le matériel du réseau.
 
 <p>
 Une fois que vous ouvrez une fenêtre du moniteur, il affichera automatiquement à l'
-écran tout le trafic sur le lien.
+écran tout le trafic sur le lien aussi logtemps que " Filtres Octets" est vide
 
-<h2> Contrôles </h2>
+<h2>Commandes</h2>
 
 <dl>
-<dt> Effacer Écran  </dt>
- <dd> Efface la zone de connexion au haut de l'écran
-  </Dd>
- <dt>Gel de l'Écran </dt>
-  <dd> Arrête l'acquisition de nouvelles informations, de sorte que l'information saisie cesse de défiler
-  </Dd>
-<dt>Montrer données brutes </dt>
-  <dd> Normalement, le moniteur affiche l'interprétation du programme de ce qu'il voit.
+<dt>Effacer Écran </dt>
+ <dd>Efface la zone de connexion au haut de l'écran
+ </Dd>
+ <dt>Gel de l'Écran</dt>
+  <dd>Arrête l'acquisition de nouvelles informations, de sorte que l'information saisie cesse de défiler
+ </Dd>
+<dt>Montrer données brutes</dt>
+  <dd>Normalement, le moniteur affiche l'interprétation de ce qu'il voit du programme.
   Si vous voulez voir les octets bruts, cochez cette case.
-  </Dd>
- <dt>Montrer horodatage </dt>
-  <dd> Habituellement, le programme affiche simplement les données du lien de communication.
+ </Dd>
+ <dt>Montrer horodatage</dt>
+  <dd>Habituellement, le programme affiche simplement les données du lien de communication.
   Si vous souhaitez que chaque message soit être précédé par l'heure à laquelle qu'il a été envoyé ou
   a été reçu, cochez cette case.
-  </Dd>
-<dt>Ajoutez message  </dt>
-  <dd> Si vous voulez insérer un message dans les informations capturées,
+ </Dd>
+<dt>Ajoutez message </dt>
+  <dd>Si vous voulez insérer un message dans les informations capturées,
   par exemple de faire une note sur ce que vous vous apprêtez à faire,
   vous pouvez le taper dans le champ de texte à côté du bouton "Ajouter message "
    et puis cliquez sur ce bouton. Ceci est particulièrement
   utile lorsque vous vous connectez à un fichier (voir ci-dessous)
   et que vous voulez faire une note pour plus tard sur ce qui se passe.
-  </Dd>
+ </Dd>
 </Dl>
 
 
-<h2> Journalisation dans un fichier </h2>
+<h2>Journalisation dans un fichier</h2>
 
 Parfois, il est utile de capturer ce qui se passe. Par exemple,
 vous pouvez rencontrer un bug (!!), et que vous voulez envoyer une copie de ce qui se
@@ -76,13 +75,13 @@ collé dans un email.
 Si vous voulez capturer davantage, vous pouvez avoir la fenêtre pour rédiger dans un
  fichier journal sur le disque de votre ordinateur. Pour ce faire:
 <ol>
-<li> Cliquez sur "Choisir le fichier journal". Une fenêtre de sélection de fichier
+<li>Cliquez sur "Choisir le fichier journal". Une fenêtre de sélection de fichier
 va s'ouvrir. Naviguez à l'endroit où vous souhaitez stocker le fichier,
 entrez un nom pour le nouveau fichier journal, puis cliquez sur "Enregistrer". Notez que
 si vous choisissez un fichier qui existe déjà, il sera écrasé.
-<li> Lorsque vous êtes prêt à capturer les données que vous souhaitez, cliquez sur
+<li>Lorsque vous êtes prêt à capturer les données que vous souhaitez, cliquez sur
 «Démarrer l'enregistrement" sur la fenêtre du moniteur.
-<li> Lorsque vous avez terminé, cliquez sur "Arrêter l'enregistrement" pour stocker les données
+<li>Lorsque vous avez terminé, cliquez sur "Arrêter l'enregistrement" pour stocker les données
 et fermez le fichier.
 </Ol>
 

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: SimpleProgFrame.shtml,v 1.2 2008/09/28 03:09:30 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-6--> 
+<!-- $Id: SimpleLightCtrl.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <title>JMRI: Single CV Programmer</title>
 
 <!-- Style -->
@@ -29,30 +29,30 @@
 Programmateur Simple CV 
 </h2>
 
-<a href="SImpleProgFrame.jpg"> <img  src="SImpleProgFrame.jpg"  align="right" width="132" height="180"></a> <br>
+<a href="SimpleProgFrame.jpg"><img  src="SimpleProgFrame.jpg"  align="right" width="132" height="180"></a> <br>
 
-Le programmeur simple CVvous permet de facilement lire et écrire
-Les valeurs de CV dans les décodeurs DCC.
+Le programmeur simple CV vous permet de facilement lire et &#233;crire
+Les valeurs de CV dans les d&#233;codeurs DCC.
 
 <p>
-Au sommet se trouvent deux boutons pour "Lire" et "Ecrire".
+Au sommet se trouvent deux boutons pour "Lire CV" et "Ecrire CV".
 <p>
-Avant de les utilisez, vous devrez mettre le numéro CV (adresse),
-et si vous voulez faire une écriture, la nouvelle valeur valeur.
+Avant de les utilisez, vous devrez mettre le num&#233;ro CV (adresse),
+et si vous voulez faire une &#233;criture, la nouvelle valeur valeur.
 <p>
-Voici que, sur la gauche est un lieu pour choisir le mode de programmation.
-Les modes que votre centrale de commande ne peut pas fournir sont grisés et 
-ne peuvent pas être sélectionnés.
+Sur la gauche vous pouvez choisir le mode de programmation.
+Les modes que votre centrale de commande ne peut pas fournir sont gris&#233;s et 
+ne peuvent pas &#234;tre s&#233;lectionn&#233;s.
 <p>
-Si vous sélectionnez un mode "ops",  qui ne peut pas programmer sur la voie principale,
- vous devez entrer l'adresse du décodeur à  programmer
-Selon votre système DCC, vous pourriez avoir besoin de cocher la case "Adresse Longue"
- s'il s'agit d'une adresse longue, pour certains systèmes DCC, JMRI peut comprendre cela
-à partir de l'adresse. Certains systèmes DCC ne vous permettent pas de lire sur la voie principale,
-dans ce cas le bouton "Lire" sera désactivé.
+Si vous s&#233;lectionnez un mode "ops",  qui peut pas programmer sur la voie principale,
+ vous devez entrer l'adresse du d&#233;codeur &#224 programmer
+Selon votre syst&#232;me DCC, vous pourriez avoir besoin de cocher la case "Adresse Longue"
+ s'il s'agit d'une adresse longue, pour certains syst&#232;mes DCC, JMRI peut comprendre cela
+&#224 partir de l'adresse. Certains syst&#232;mes DCC ne vous permettent pas de lire sur la voie principale,
+dans ce cas le bouton "Lire" sera d&#233;sactiv&#233;.
 <p>
-À la droite de ceci est un endroit où vous pouvez sélectionner les valeurs d'entrées soit en valeur
-Décimale (base 10) ou hexadécimale (base 16).
+À la droite de ceci est un endroit o&#249; vous pouvez s&#233;lectionner le format des valeurs d'entr&#233;es soit en valeur
+D&#233;cimale (base 10) ou hexad&#233;cimale (base 16).
 
     
 <!--#include virtual="/Footer" -->

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JavaDoc.shtml,v 1.1 2010/03/21 21:23:09 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-05-06--> 
+<!--  $Id: JavaDoc.shtml 22196 2013-01-02 01:08:15Z jacobsen $ -->
+<!-- Updated by Blorec Herv&#233; le 2013-05-06--> 
  <html lang="fr">
 <head>
     <TITLE>
@@ -10,7 +10,7 @@
     <meta name="keywords" content="JMRI technical code ">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
 ">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -26,47 +26,70 @@
 
 <H1>JMRI: Utilisation de JavaDoc et UML</H1>
 
-la bibliothèque JMRI fournit la majorité de ses Documentation de l'API via
+La biblioth&#232;que JMRI fournit la majorit&#233; de ses Documentation de l'API via
 <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> JavaDoc </a>
 et
 <a href="http://en.wikipedia.org/wiki/Unified_Modeling_Language"> UML </a>.
 
 <p>
-Nous utilisons également les <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html"> annotations </a>
+Nous utilisons &#233;galement les <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html"> annotations </a>
 Java pour documenter la structure de notre code.
 
 <p>
-Nous utilisons les <a href="http://www.umlgraph.org"> UMLGraph </a> doclet pour créer automatiquement les diagrammes UML dans
+Nous utilisons les <a href="http://www.umlgraph.org"> umLGraph </a> doclet pour cr&#233;er automatiquement les diagrammes UML dans
 nos pages JavaDoc.
 
-<h2>JavaDoc pour les Développeurs</h2>
+<h2>JavaDoc pour les D&#233;veloppeurs</h2>
 
 Le <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> tutoriel JavaDoc  </a>
 est une bonne chose, mais un peu long, introduction <a Href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> pour JavaDoc </a>.
+Un bref r&#233;sum&#233; de la mise en forme et les &#233;tiquettes peut &#234;tre trouv&#233;e dans
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
+la r&#233;f&#233;rence </a>.
 
-<h2>UML et UmlGraph pour les Développeurs</h2>
+<p>
+Traditionnellement, les packages Java dans JMRI ont utilis&#233; les fichiers
+<code> package.html </code> pour contenir un paquet de documentation de niveau n&#233;cessaire
+.
+Il est maintenant recommand&#233; <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
+que tout paquet Java</a> significatif contienne un
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
+fichier pour cela</a>.
+Seuls quelques-uns d'entre eux ont &#233;t&#233; inclus dans JMRI jusqu'ici, et
+ce n'est pas une grande priorit&#233; de remplacer les fichiers <code> package.html </code>  existants,
+mais de nouveaux packages devraient inclure une <code> package-info.java </code>
+copi&#233; &#224; partir <code> java/package-info.java </code>.
 
-UML est un langage large et profond pour décrire la structure, la conception et le comportement des systèmes informatiques. 
+<p>
+Une belle discussion sur la fa&#231;on d'utiliser le label "obsol&#232;te"
+dans la documentation est disponible dans
+ <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"Comment et Quand rendre obsol&#232;te la page API </a>.
+
+<h2>UML et UmlGraph pour les D&#233;veloppeurs</h2>
+
+UML est un langage large et profond pour d&#233;crire la structure, la conception et le comportement des syst&#232;mes informatiques. 
 JMRI utilise principalement les diagrammes de classes UML pour documenter sa structure.
 
-De nombreux tutoriels UML sont disponibles sur le web. En particulier, un bon point de départ est l'
-<a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf"> introduction à la classe diagrammes Object Mentor  </a>.
-Pour plus de détails, s'il vous plaît voir
-<a href="http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/U<h3>Diagrammes Manuel <h3>ML_tutorial/"> cours Atlas UML </a> lien cassé au 14/01/2012
+De nombreux tutoriels UML sont disponibles sur le web. En particulier, un bon point de d&#233;part est l'
+<a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf"> introduction &#224; la classe diagrammes Object Mentor  </a>.
+Pour plus de d&#233;tails, s'il vous pla&#238;t voir
+<a href="http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/UML_tutorial/class.htm"> le cours Atlas UML </a> 
 ou
-<a href="http://edn.embarcadero.com/article/31863"> introduction Embarcadero Software </a>.
+<a href="http://edn.embarcadero.com/article/31863"> introduction &#224; Embarcadero Software </a>.
 
 <h2>Processus</h2>
 
-Le norme JMRI Ant fournir trois objectifs documentation:
+Le norme JMRI de construction Ant fournit trois objectifs de documentation:
 <dl>
-<dt> <dd> javadoc -Créer des JavaDocs texte dans la doc local/. Doc Ouvrir/index.html pour l'accès.
-<dd> <dt> javadoc-uml -Créer des diagrammes UML et JavaDocs dans la doc local/. Doc Ouvrir/index.html pour l'accès.
-<dd> <dt> uploadjavadoc  -Envoyer la documentation actuelle dans la doc local/sur le site web jmri.org.
+<dt> <dd> javadoc -Cr&#233;er des JavaDocs texte dans le r&#233;pertoire local doc/. Ouvrirdoc/index.html pour l'acc&#232;s.
+<dd> <dt> javadoc-uml -Cr&#233;er des diagrammes UML et JavaDocs dans le r&#233;pertoire local doc/. Ouvrir doc/index.html pour l'acc&#232;s.
+<dd> <dt> uploadjavadoc  -Envoyer la documentation actuelle dans le r&#233;pertoire local doc/ sur le site web jmri.org.
+Ceci est fait automatiquement par le <a href="ContinuousIntegration.shtml">syst&#232;me CI </a>de sorte que vous n'avez g&#233;n&#233;ralement pas besoin de vous en occuper
 </dl>
 
-<h3>Diagrammes Manuel <h3><h3>Diagrammes Manuel <h3>
-</h3>
+
+<h3>Diagrammes Manuel <h3>
+
 
 
 <!--#include virtual="/Footer" -->

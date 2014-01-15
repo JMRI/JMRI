@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-22-->
-<!-- $Id: Reporters.shtml,v 1.5 2008/05/31 05:03:28 jacobsen Exp $ -->
+<!-- Updated by Blorec Herv&#233; le 2013-09-25-->
+<!-- $Id: Reporters.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <html lang="fr">
 <head>
   <TITLE>
  	JMRI: Reporter Documentation
   </TITLE>
-  <META http-equiv=Content-Type content="text/html;charset=utf-8"> 
+  <META http-equiv=Content-Type content="text/html;charset=iso-8859-1"> 
 
   <META content="Bob Jacobsen" name=Author>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="sensor model railroad JMRI decoderpro panelpro">
 
@@ -37,65 +37,64 @@
 
 
 
-<h1> Rapport </h1>
+<h1>Rapport</h1>
 
 <p>
-Un rapport est le moyen JMRI de représenter l'information en retournée par le réseau.
+Un rapport est le moyen pour JMRI de repr&#233;senter l'information retourn&#233;e par le r&#233;seau.
 <P>
-Un rapport peut contenir des informations arbitraires, contrairement à un capteur qui n'est qu'ACTIFf 
-ou INACTIF. Chaque rapport est associé à une source d'informations spécifiques
-sur le réseau, et fait que les informations périphériques sont disponibles pour le reste de JMRI.
+Un journal peut contenir des informations arbitraires, contrairement &#224; un capteur qui n'est qu'ACTIFf 
+ou INACTIF. Chaque rapport est associ&#233; &#224; une source d'information sp&#233;cifique
+sur le r&#233;seau, et fait que les informations p&#233;riph&#233;riques sont disponibles pour le reste de JMRI.
 <P>
-La mise en œuvre initiale est pour le transpondage LocoNet (Digitrax) ,
-où le rapport donne accès à l'information
-à partir de cartes Digitrax
+La mise en oeuvre initiale est pour le transpondage LocoNet (Digitrax) ,
+o&#249; le rappost donne acc&#232;s &#224; l'information
+&#224; partir de cartes Digitrax
 <a href="http://www.digitrax.com/prd_statdec_bdl168.php"> BDL168 </a>  avec
 RX4 href="http://www.digitrax.com/prd_statdec_rx4.php"><a transpondage capteurs </a>.
-Lorsque le BDL168 rapporte qu'un décodeur a été vu
+Lorsque le BDL168 rapporte qu'un d&#233;codeur a &#233;t&#233; vu
 dans un canton transpondeur ou n'est pas plus visible
 dans le canton, le rapport correspondant affichera des messages
-comme "1234 entrer" et "1234 sortie". Il ya aussi un rapport LocoNet
-mis en œuvre pour l'affichage des messages de
-détecteurs <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm"> Lissy </a>.
+comme "1234 entrer" et "1234 sortie". Il y a aussi un rapport LocoNet
+mis en oeuvre pour l'affichage des messages de
+d&#233;tecteurs <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm"> Lissy </a>.
 
-<h2>Tableau Rapport ></h2>
+<h2>Tableau Rapport </h2>
 Le
 Tableau Rapport <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml"></a>
-fournit un accès facile au contenu de tous les rapports que JMRI connaît.
+fournit un acc&#232;s facile au contenu de tous les rapports que JMRI conna&#238;t.
 Il ya aussi un bouton
 <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml"> "Ajouter ..."  </a>
-pour créer vos propres Rapports internes; JMRI crée automatiquement
-Objets Reporter pour les appareils sur le réseau.
+pour cr&#233;er vos propres Rapports internes; JMRI cr&#233;e automatiquement
+Objets Reporter pour les appareils sur le r&#233;seau.
 
 <h2>Affichage des Valeurs Rapport sur les Panneaux </h2>
-La valeur d'un rapport peut être affichée sur un panneau via une icône.
+La valeur d'un rapport peut &#234;tre affich&#233;e sur un panneau via une ic&#244;ne.
 Pour ce faire:
 <ul>
-<li> Sur la fenêtre Éditeur Panneau de votre panneau, trouver le "Ajouter Rapport"
-bouton.
-<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou système du
-Rapportr désiré.
-<li> Cliquez sur le bouton. L'icône Rapport sera placée sur le panneau.
-Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
-utiliser le tableau Rapport pour changer la valeur à quelque chose qui sera visible.
-<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez dans la manière habituelle.
-<li> Le menu pop-up sur l'icône vous permettra de modifier le formatage.
+<li> Sur la fen&#234;tre &#233;diteur Panneau de votre panneau, trouver le bouton "Ajouter Rapport"
+.
+<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
+Rapportr d&#233;sir&#233;.
+<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
+Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
+utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.
+<li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.
 </Ul>
 <h2>Affichage des Valeurs Rapport sur les Panneaux </h2>
-La valeur d'un rapport peut être affichée sur un panneau via une icône.
+La valeur d'un rapport peut &#234;tre affich&#233;e sur un panneau via une ic&#244;ne.
 Pour ce faire:
 <ul>
-<li> Sur la fenêtre Éditeur Panneau de votre panneau, trouver le "Ajouter Rapport"
+<li> Sur la fen&#234;tre &#233;diteur Panneau de votre panneau, trouver le bouton "Ajouter Rapport"
 bouton.
-<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou système du
-Rapportr désiré.
-<li> Cliquez sur le bouton. L'icône Rapport sera placée sur le panneau.
-Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
-utiliser le tableau Rapport pour changer la valeur à quelque chose qui sera visible.
-<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez dans la manière habituelle.
-<li> Le menu pop-up sur l'icône vous permettra de modifier le formatage.
-</Ul>	JMRI: Reporter Documentation
-        </H2>
+<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
+Rapportr d&#233;sir&#233;.
+<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
+Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
+utiliser le tableau Rapport pour changer la valeur &#224; quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez dans la mani&#232;re habituelle.
+<li> Le menu pop-up sur l'ic&#244;ne vous permettra de modifier le formatage.
+</Ul>	
 
 
 <!--#include virtual="/Footer" -->

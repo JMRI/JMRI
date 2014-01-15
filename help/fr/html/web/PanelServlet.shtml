@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: PanelServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<!-- Translated by Herv&#233; Blorec 2013-10-08 -->
+<title>JMRI: Panel Servlet</title>
+
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Panneau Servlet
+</h1>
+
+Les Servlets Panel JMRI offrent un acc&#232;s Web &#224; des informations sur les panneaux JMRI "ouvert".
+
+Ce servlet r&#233;pond &#224; des mod&#232;les d'URL suivants:<ul>:<ul>
+   <li>/panel/Panel/&lt;panel name&gt;</li>
+   <li>/panel/ControlPanel/&lt;panel name&gt;</li>
+   <li>/panel/Layout/&lt;panel name&gt;</li>
+</ul>o&#249; Panneau, ControlPanel et R&#233;seau se r&#233;f&#232;rent &#224; l'&#233;diteur JMRI utilis&#233; pour cr&#233;er chaque type de panneau.
+ <p>Le servlet renvoie un flux xml avec divers &#233;l&#233;ments n&#233;cessaires pour recr&#233;er ce panneau particulier externe.
+  <p> Actuellement, il s'agit d'une application web c&#244;t&#233; client appel&#233; "<a href="showPanelHelp.shtml"> showPanel</a>" qui utilise ces d&#233;finitions
+   "dessiner" des panneaux dans un navigateur, ce qui permet des clics sur les &#233;l&#233;ments actifs et mettre &#224; jour des modifications apport&#233;es par
+   cette application et ailleurs dans JMRI.<a href="showPanelHelp.shtml"> [Plus d'infos sur showPanel]</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

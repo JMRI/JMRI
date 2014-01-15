@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CATS.shtml,v 1.3 2009/07/23 16:04:24 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-06-03--> 
+<!--  $Id: CATS.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Updated by Blorec Herv&#233;  2013-09-03--> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -33,44 +33,44 @@
 
 <H1>Integration avec CATS</H1>
 
-Le Crandic Automated Traffic System (CATS) est une application basée sur JMRI crée
-par Rodney Black pour le contrôle et l'exploitation d'un chemin de fer miniature.
+Le Crandic Automated Traffic System (CATS) est une application bas&#233;e sur JMRI cr&#233;e
+par Rodney Black pour le contr&#244;le et l'exploitation d'un chemin de fer miniature.
 Il y a plus d'informations sur le
 <a href="http://home.comcast.net/~kb0oys/"> site web CATS </a>.
 
 <p>
-JMRI est une bibliothèque, et CATS est une grande application maintenue séparément qui utilise la bibliothèque. En tant que tel, CATS constitue un important
-scénario de référence pour les développeurs JMRI car ils peuvent  étendre et d'adapter leur code.
-CATS doit continuer à travailler pour ses utilisateurs, avec un minimum de 'extranous'
-effort pour les développeurs de CATS!
+JMRI est une biblioth&#232;que, et CATS est une grande application maintenue s&#233;par&#233;ment qui utilise la biblioth&#232;que. En tant que tel, CATS constitue un important
+sc&#233;nario de r&#233;f&#233;rence pour les d&#233;veloppeurs JMRI car ils peuvent  &#233;tendre et adapter leur code.
+CATS doit continuer &#224; travailler pour ses utilisateurs, avec un minimum d'
+effort pour les d&#233;veloppeurs de CATS!
 
 <H3>Integration pour test</h3>
 
-CATS a deux ensemble d'arbres, "CATS .*»et «developper .*", correspondant à peu près
+CATS a deux ensemble d'arbres, "cats.*" et "developper.*", correspondant &#224; peu pr&#232;s
  aux deux applications CATS.
 
 <p>
-Le développement de CATS  n'utilise pas CVS, et le code n'est généralement pas
-disponible pendant qu'il est en cours d'élaboration.
-Rodney Black communique régulièrement les disponibilités , y compris le code source, et les archives zip-file sur le
+Le d&#233;veloppement de CATS  n'utilise pas les CVS, et le code n'est g&#233;n&#233;ralement pas
+disponible pendant qu'il est en cours de d&#233;veloppement.
+Rodney Black communique r&#233;guli&#232;rement les disponibilit&#233;s , y compris le code source, et les archives file.zip sur le
 <a href="http://home.comcast.net/~kb0oys/"> site web CATS </a>.
 
 <p>
-Depuis Juillet 2009, la distribution actuelle de CATS œuvres
-avec JMRI 2.6 et actuellement teste les version  (2.7 .*)
+Depuis Juillet 2009, la distribution actuelle de CATS oeuvres
+avec JMRI 2.6 et teste actuellement les version  (2.7 .*)
 A partir de cette base, nous voulons garder les compilation CATS
-durant le développement de JMRI.
+durant le d&#233;veloppement de JMRI.
 
 
 
 <h3>Compiler CATS avec JMRI</h3>
 
 <p>
-(CATS n'a pas de tests unitaires, il n'y a donc rien à faire dans 
+CATS n'a pas de tests unitaires, il n'y a donc rien &#224; faire dans 
 l'arbre des sources "test".
 
 <p>
-Pour simplifier le travail CVS, le deux répertoires CATS sont ignorés ...
+Pour simplifier le travail CVS, le deux r&#233;pertoires CATS sont ignor&#233;s ...
 
 
 

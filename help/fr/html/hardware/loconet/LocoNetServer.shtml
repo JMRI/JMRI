@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoNetServer.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: LocoNetServer.shtml 22578 2013-01-23 04:44:56Z bob-m-dcc $ -->
+<!-- UpDated  by Blorec Hervé  2013-09-14-->
 <html lang="fr">
 <head>
  <TITLE>
@@ -30,16 +30,15 @@
       JMRI Guide Matériel: Connexion de Plusieurs Ordinateurs à Travers  le Serveur LocoNet JMRI
       </h1>
 
-Cette page décrit comment utiliser les capacités du Client/Serveur intégré de LocoNet
- pour connecter plusieurs ordinateurs à un seul équipement  LocoNet.
+Cette page décrit comment utiliser les capacités JMRI du Client/Serveur intégré de LocoNet&reg;
+ pour connecter plusieurs ordinateurs à un seul réseau équipé LocoNet.
 <P>
-En bref, un ordinateur est physiquement connecté à la LocoNet, et agit comme un "serveur"
+En bref, un ordinateur est physiquement connecté à  LocoNet&reg;, et agit comme un "serveur"
 pour les autres. Un ou plusieurs ordinateurs "clients" peuvent alors se connecter via les protocoles standard TCP/IP 
 sur le serveur.
 
 <h2>Configuration Client/Serveur LocoNet  JMRI </h2>
-Un ordinateur exécutant JMRI agit comme le serveur, qui est directement relié à la
-LocoNet, les autres ordinateurs exécutant JMRI se connectent à l'ordinateur serveur en tant que clients.
+Un ordinateur exécutant JMRI agit comme le serveur, qui est directement relié à LocoNet, les autres ordinateurs exécutant JMRI se connectent à l'ordinateur serveur en tant que clients.
 <UL>
 <LI> Configurer la connexion LocoNet comme pour toute autre utilisation.
 Sélectionnez le protocole qui correspond à votre matériel (par exemple LocoBuffer-II, etc),
@@ -52,9 +51,9 @@ jusqu'à ce que vous arrêtiez le programme, la prochaine fois que vous le lance
 programme en
 <UL>
 <LI> Ouvrant les préférences dans le menu Edition
-<LI> Cochant la case "Afficher les préférences avancées"
-<LI> Sous la rubrique «Ne action au démarrage", cliquez sur "Ajouter action"
-<LI> Une liste des possibilités sera montré. Recherchez et sélectionnez "Démarrer le serveur LocoNet".
+<LI> Cochant la case "Afficher les Préférences Avancées"
+<LI> Sous la rubrique «action au démarrage", cliquez sur "Ajouter action"
+<LI> Une liste des possibilités sera montrée. Recherchez et sélectionnez "Démarrer le serveur LocoNet".
 <LI> Enregistrant les préférences
 </UL>
 ran
@@ -81,7 +80,7 @@ comme jmri.sf.net
 fera essentiellement le travail pour cette application, la correction résultant des erreurs occasionnelles de la LocoNet 
 peuvent entraîner des retards notables dans l'actualisation des ordinateurs distants.
 <LI>
-Si les ordinateurs sont tous proches de la LocoNet, par exemple agissant comme un panneaux de contrôle local
+Si les ordinateurs sont tous proches de LocoNet, par exemple agissant comme un panneaux de contrôle local
 , vous n'avez pas vraiment besoin Server LocoNet pour ce faire. Vous pouvez, autrement
 relier chacun des ordinateurs à la LocoNet via leurs propres LocoBuffer ou LocoBuffer-II
 (ou MS-100, même si ce n'est pas recommandé) et ils participent individuellement
@@ -90,7 +89,9 @@ Il coûte un peu plus pour les cartes supplémentaires, et ne vous permettent pa
 mettre un ordinateur distant à partir du réseau.
 
 </UL>
-
+<p>LocoNet&reg; est une marque déposée de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

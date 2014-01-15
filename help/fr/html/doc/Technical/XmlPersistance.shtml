@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlPersistance.shtml,v 1.8 2010/02/15 07:52:46 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-08-06--> 
+<!-- $Id: XmlPersistance.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09--> 
 <html lang="fr">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
 <head>
@@ -11,7 +11,7 @@
     <meta name="keywords" content="JMRI technical code xml persistance">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,32 +29,31 @@
 
 <P>
 JMRI utilise XML pour la persistance des structures internes, en particulier lors du stockage
-des préférences et des fichiers de panneau.
+des pr&#233;f&#233;rences et des fichiers de panneau.
 
 <P>
-La persistance de XML se fait via un code écrit explicitement. Fondamentalement, certaines catégories
-s'enregistrent auprès d'une instance de la "ConfigureManager". La mise en œuvre de l'un de ceux que nous
- avons est celui pour le chargement et le stockage des fichiers XML: jmri.configurexml.
-ConfigXmlManager Quand il est temps pour stocker, on dit au ConfigureXmlManager de le faire.
-Il va à travers les objets enregistrés et trouve la classe responsable de la persistance
-du stockage de l'objet. Par exemple, abFoo classe aura la classe abconfigurexml.FooXml
-située. Si cette catégorie est trouvée, elle est dite pour stocker l'objet Foo, et il ajoute un contenu Xml
-dans un document JDOM pour le faire. Si ce n'est pas située, un message d'erreur est émis.
+La persistance de XML se fait via un code &#233;crit explicitement. Fondamentalement, certaines cat&#233;gories
+s'enregistrent aupr&#232;s d'une instance de la "ConfigureManager". La mise en oeuvre de l'un de ceux que nous
+avons est celui pour le chargement et le stockage des fichiers XML: jmri.configurexml.
+ConfigXmlManager. Quand il est temps d'enregistrer, on dit au ConfigureXmlManager de le faire.
+Il va au travers des objets enregistr&#233;s et trouve la classe responsable de la persistance
+du stockage de l'objet. Par exemple, abFoo class aura la classe a.b.configurexml.FooXml
+localis&#233;e. Si cette cat&#233;gorie est trouv&#233;e, elle est dite pour enregistrer l'objet Foo, et il ajoute un contenu Xml
+dans un document JDOM pour le faire. Si ce n'est pas localis&#233;, un message d'erreur est &#233;mis.
 <P>
-En charge, un fichier XML est lu par le gestionnaire. Chaque élément est examiné pour
-une attribut "class". S'il est trouvé, cette classe est chargé et remis à l'élément
-processus. Etc
+En charge, un fichier XML est lu par le gestionnaire. Chaque &#233;l&#233;ment est examin&#233; par
+un attribut "class". S'il est trouv&#233;, cette classe est charg&#233;e et &#224; remis l'&#233;l&#233;ment &#224; traiter. Etc
 <P>
-Il est tout à fait hackers, et pas très proprement tenu . Il y a une bonne quantité de
-duplication de code, mais peut-être parce qu'il vient d'un C + + de base et que
-le développeur souhaite le garder pour des modèles et classes mixin. Mais ça marche!
+C'est assez une m&#233;thode de hackers, et pas tr&#232;s proprement tenu . Il y a une bonne quantit&#233; de
+duplication de code, mais peut-&#234;tre parce qu'il vient d'un C + + de base et que
+le d&#233;veloppeur souhaite le garder pour des mod&#232;les et classes mixin. Mais il marche!
 
 
-<h3>ExEmple</h3>
+<h3>Exmple</h3>
 
-Un LightManager connaît Lights.
+Un LightManager conna&#238;t Lights.
 <p>
-Il ya beaucoup de classes concrètes implémentant l'interface Light:
+Il y a beaucoup de classes concr&#232;tes mettant en oeuvre l'interface Light:
 <p>
 <ul>
 <li>jmri.jmrix.loconet.LnLight
@@ -64,7 +63,7 @@ Il ya beaucoup de classes concrètes implémentant l'interface Light:
 Celles-ci ont leurs propres informations internes, ce qui n'est pas toujours le
 cas.
 <p>
-Il ya aussi plusieurs classes concrètes LightManager pour les traiter
+Il ya aussi plusieurs classes concr&#232;tes LightManager pour les traiter
 <p>
 <ul>
 <li>jmri.jmrix.loconet.LnLightManager
@@ -73,31 +72,28 @@ Il ya aussi plusieurs classes concrètes LightManager pour les traiter
 </ul>
 
 <p>
-Chaque type de gestionnaire est stocké et chargé par l'intermédiaire d'une classe de persistance,
-qui se trouve en consultant la classe A avec «XML » ajouté au nom, dans un
-"configurexml" subpackage directe:
+Chaque type de gestionnaire est stock&#233; et charg&#233; par l'interm&#233;diaire d'une classe de persistance,
+qui se trouve en consultant la classe A avec "XML" ajout&#233; au nom, dans un sous-paquet direct
+"configurexml" :
 <ul>
 <li>jmri.jmrix.loconet.configurexml.LnLightManagerXml
 <li>jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml
 <li>jmri.jmrix.powerline.configurexml.SerialLightManagerXml
 </ul>
 
-<p>Celles-ci ont leurs propres informations internes, ce qui n'est pas toujours le
-cas.
-
-Dans le cas des classes concrètes Light, le code de persistance du
-gestionnaires directement stocke  et charge même directement les lumières individuelles. Ceci est
-parce qu' (à ce jour) un gestionnaire donné a un seul type de Light (par exemple
-LnLightManager n'a pas à se soucier de LnLight). Dans les cas où cela
+Dans le cas des classes concr&#232;tes Light, le code de persistance du
+gestionnaire enregistre directement et charge m&#234;me directement les lumi&#232;res individuelles. Ceci est
+parce qu' (&#224; ce jour) un gestionnaire donn&#233; a un seul type de Light (par exemple
+LnLightManager n'a pas &#224; se soucier de LnLight). Dans les cas o&#249; cela
 n'est pas vrai, par exemple, SignalHeads qui ont plusieurs classes, ils
 sont classes de persistance pour les objets individuels, en plus du gestionnaire.
 
-<h3>Ajout d'informations à une Classe</h3>
+<h3>Ajout d'informations &#224; une Classe</h3>
 
-Si vous souhaitez stocker plus de renseignements sur l'état, trouver la classe persistante
-et ajouter du code pour créer et lire des attributs ou des éléments.
+Si vous souhaitez enregistrer plus de renseignements sur l'&#233;tat, trouver la classe persistante
+et ajouter du code pour cr&#233;er et lire des attributs ou des &#233;l&#233;ments.
 <p>
-Peut-être la meilleure façon de faire est de créer un fichier de panneau de l'échantillon
+Peut-&#234;tre la meilleure fa&#231;on de faire est de cr&#233;er un fichier de panneau de l'&#233;chantillon
 de l'objet que vous souhaitez stocker dedans:
 
 <p>
@@ -117,39 +113,39 @@ de l'objet que vous souhaitez stocker dedans:
 </pre>
 
 <p>
-Notez la «classe» attributs. Elle donne le nom pleinement qualifié
-de la classe qui permet de charger ou stocker cet élément particulier. Dans le
+Notez la "classe" attributs. Elle donne le nom pleinement qualifi&#233;
+de la classe qui permet de charger ou stocker cet &#233;l&#233;ment particulier. Dans le
 cas de capteurs, nous voyons qu'il y a deux gestionnaires en service: un pour C/MRI, et
-une pour les capteurs internes. Pour SignalHeads, il n'y a qu'un seul gérant,
-jmri.configurexml.AbstractSignalHeadManager persisté par jmri.configurexml.AbstractSignalHeadManager,
-mais chaque SignalHead notamment la mise en œuvre de classe a sa propre classe persistante.
+un pour les capteurs internes. Pour SignalHeads, il n'y a qu'un seul g&#233;rant,
+jmri.configurexml.AbstractSignalHeadManager persist&#233; par jmri.configurexml.AbstractSignalHeadManager,
+mais chaque SignalHead notamment la mise en oeuvre de classe a sa propre classe persistante.
 
 
 <p>
- Par exemple pour ajouter des données sur un capteur, le jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
-et les classes jmri.managers.configurexml.InternalSensorManagerXml devraient être
-modifiées.
+ Par exemple pour ajouter des donn&#233;es sur un capteur, le jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
+et les classes jmri.managers.configurexml.InternalSensorManagerXml devraient &#234;tre
+modifi&#233;es.
 
 <p>
-Notez que dans certains cas, il y a une relation d'héritage entre la persistance des classes qui peut aider. Par exemple, la classe LocoNet
+Notez que dans certains cas, il y a une relation d'h&#233;ritage entre la persistance des classes qui peut aider. Par exemple, la classe LocoNet
 <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html"> LnSensorManagerXml </a>
-hérite de
+h&#233;rite de
 <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html"> jmri.configurexml.AbstractSensorManagerConfigXML </a>, qui fait
-presque tout le travail de stockage et de chargement de capteurs.
+presque tout le travail d'enregistrement et de chargement des capteurs.
 
 <p>
-Si vous ajoutez des attributs ou des éléments nouveaux, n'oubliez pas de mettre à jour
-la définition du format, voir ci-dessous..
+Si vous ajoutez des attributs ou des &#233;l&#233;ments nouveaux, n'oubliez pas de mettre &#224; jour
+la d&#233;finition du format, voir ci-dessous..
 
 <a id="schema">
-<h2> Schéma de Gestion </h2>
+<h2> Sch&#233;ma de Gestion </h2>
 
-JMRI contrôle la sémantique de XML utilisant le <a href="XmlSchema.shtml">Schema XML  </a>.
+JMRI contr&#244;le la s&#233;mantique de XML utilisant le <a href="XmlSchema.shtml">Sch&#233;ma XML  </a>.
 
 <p>
-Par exemple, l'information mise en page est stockée dans des fichiers XML en tant qu'un élément 
-de «schéma de configuration" , dont le contenu est alors défini par un
-fichier de schéma. Ces fichiers sont conservés dans le répertoire
+Par exemple, l'information mise en page est enregistr&#233;e dans des fichiers XML en tant qu'un &#233;l&#233;ment 
+de "sch&#233;ma de configuration" , dont le contenu est alors d&#233;fini par un
+fichier de sch&#233;ma. Ces fichiers sont conserv&#233;s dans le r&#233;pertoire
 <a href="http://jmri.sf.net/xml/schema"> xml/schema </a>.
 
 <!--#include virtual="/Footer" -->

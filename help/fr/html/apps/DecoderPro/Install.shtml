@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Install.shtml,v 1.3 2009/03/12 22:39:45 matthewharris Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id: Install.shtml 22543 2013-01-19 18:57:06Z jacobsen $ -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: Downloading and Installing DecoderPro</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -17,50 +17,51 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Install.shtml 22543 2013-01-19 18:57:06Z jacobsen $ -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 
-<H1>JMRI: Téléchargement et installation DecoderPro</H1>
+<H1>JMRI: T&#233;l&#233;chargement et installation DecoderPro</H1>
 
-<P>DecoderPro est distribué dans le cadre des téléchargements libres de JMRI.
- Les étapes à suivre pour ce travail sont:
+<P>DecoderPro est distribu&#233; dans le cadre des t&#233;l&#233;chargements libres de JMRI.
+ Les &#233;tapes &#224; suivre pour ce travail sont:
 
 <dl>
 
-<dt class=left>Assurez-vous que DecoderPro peut s'exécuter sur votre ordinateur
+<dt class=left>Assurez-vous que DecoderPro peut s'ex&#233;cuter sur votre ordinateur
 </dt> <dd class=first> Le logiciel DecoderPro fonctionne sur Windows, Linux et Mac OS X.
 Il pourra probablement aussi travailler sur
-d'autres systèmes d'exploitation modernes qui ont Java d'installer; nous contacter pour
-vous aider si vous souhaitez l'essayer sur un autre système. Vous avez besoin d'avoir un
-port série disponible, soit sur l'ordinateur lui-même, ou via un
+d'autres syst&#232;mes d'exploitation modernes qui ont Java d'installer; nous contacter pour
+vous aider si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez besoin d'avoir un
+port s&#233;rie disponible, soit sur l'ordinateur lui-m&#234;me, ou via un
 <A HREF="../../hardware/USBtoSerial.shtml"> adaptateur USB</a>. 
 </dd>
 
 
-<dt class=left>Assurez-vous que JMRI fonctionne avec votre système DCC
+<dt class=left>Assurez-vous que JMRI fonctionne avec votre syst&#232;me DCC
 </dt> <dd class=first> La
-<A HREF="../../hardware/index.shtml"> page matériel </a>
-dresse la liste des systèmes DCC compatibles avec DecoderPro, avec les limitations connue.
+<A HREF="../../hardware/index.shtml"> page mat&#233;riel </a>
+dresse la liste des syst&#232;mes DCC compatibles avec DecoderPro, avec les limitations connue.
 </dd>
 
-<dt class=left>Téléchargez et installez JMRI
+<dt class=left>T&#233;l&#233;chargez et installez JMRI
 </dt> <dd class=first> La
-<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de téléchargement </a>
-sur le site Web principal JMRI fournit des liens pour télécharger les différentes versions JMRI, ainsi que des liens pour les notes, etc Nous vous recommandons fortement d'abord de télécharger et d'installer la version de production la plus récente et assurez-vous que cela fonctionne, avant d'essayer quelques-unes des versions de développement plus récentes.
+<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+sur le site Web principal JMRI fournit des liens pour t&#233;l&#233;charger les diff&#233;rentes versions JMRI, ainsi que des liens pour les notes, etc Nous vous recommandons fortement d'abord de t&#233;l&#233;charger et d'installer la version de production la plus r&#233;cente et assurez-vous que cela fonctionne, avant d'essayer quelques-unes des versions de d&#233;veloppement plus r&#233;centes.
 <p>
-Notez qu'il existe différents téléchargements pour les différents types
-d'ordinateur (Macintosh, Windows, etc), et les procédures de
-l'installation du programme diffèrent. Vous trouverez tout cela sur la
-page de téléchargement.</P>
+Notez qu'il existe diff&#233;rents t&#233;l&#233;chargements pour les diff&#233;rents types
+d'ordinateur (Macintosh, Windows, etc), et les proc&#233;dures de
+l'installation du programme diff&#232;rent. Vous trouverez tout cela sur la
+page de t&#233;l&#233;chargement.</P>
 </dd>
 
-<dt class=left>Démarrer et configurer le programme
+<dt class=left>D&#233;marrer et configurer le programme
 </dt> <dd class=first> Les instructions d'installation
 obtenues par la
-<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de téléchargement </a>
-vous auront dit comment démarrer le programme et le configurer. Lorsque c'est fait, vous devriez avoir une installation fonctionnelle DecoderPro.
+<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+vous auront dit comment d&#233;marrer le programme et le configurer. Lorsque c'est fait, vous devriez avoir une installation fonctionnelle DecoderPro.
 </dd>
 
 

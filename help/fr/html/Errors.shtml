@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Errors.shtml,v 1.2 2009/10/22 16:03:04 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-21-05-->
+<!-- $Id: Errors.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
 <title>JMRI: Error Messages and Codes</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -29,21 +29,21 @@ JMRI: Codes et Messages d'erreurs
 <dl>
 
 <dt>301
-<dd>Pas de Locomotive détectée
+<dd>Pas de Locomotive d&#233;tect&#233;e
 
 <dt>302
-<dd>Programmateur occupé.
+<dd>Programmateur occup&#233;.
 <dt>303
-<dd>Opération Requise non implémentée dans la station de commande.
+<dd>Op&#233;ration Requise non impl&#233;ment&#233;e dans la station de commande.
 
 <dt>304
-<dd>Annulé par l'utilisateur.
+<dd>Annul&#233; par l'utilisateur.
 
 <dt>305
-<dd>Confirmation d'échec
+<dd>Confirmation d'&#233;chec
 
 <dt>306
-<dd>Temps de dialogue dépassé avec la station de commande.
+<dd>Temps de dialogue d&#233;pass&#233; avec la station de commande.
 
 <dt>307
 <dd>Erreur Inconnue.

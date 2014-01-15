@@ -3,12 +3,12 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 
-<!-- $Id: MessageFrame.shtml,v 1.2 2008/06/15 16:30:04 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-26--> 
+<!-- $Id: MessageFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04--> 
 <title>JMRI: Send Throttle Message</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,13 +24,13 @@
     <div id="mainContent">
 
 <h1> 
-JMRI:Envoi de Message Au Régulateur
+JMRI:Envoi de Message Au R&#233;gulateur
 </h1>
-JMRI a une capacité limitée pour envoyer des messages à un régulateur à main.
+JMRI a une capacit&#233; limit&#233;e pour envoyer des messages &#224; un r&#233;gulateur &#224; main.
 
 
 <p>
-Ceci est la page d'aide help/en/package/jmri/jmrit/.messager.MessageFrame.
+Ceci est la page d'aide help/fr/package/jmri/jmrit/.messager.MessageFrame.
     
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoNetworking.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: LocoNetworking.shtml 22578 2013-01-23 04:44:56Z bob-m-dcc $ -->
+<!-- Updated  by Blorec Herv&#233; 2013-09-14-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet Layout
+      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -27,45 +27,61 @@
     <div id="mainContent">
 
       <h1> 
-      Guide Matériel JMRI: Méthodes pour connecter plusieurs ordinateurs à un réseau miniature LocoNet
+      Guide Mat&#233;riel JMRI: M&#233;thodes pour connecter plusieurs ordinateurs &#224; un r&#233;seau miniature LocoNet&reg;
       </h1>
 
-JMRI supporte actuellement deux manières différentes qui vous permettent de connecter plusieurs
-ordinateurs à votre réseau miniature équipé en LocoNet et utilisant un LocoBuffer unique. 
-Dans les deux méthodes, les ordinateurs communiquent en utilisant la norme
-Protocoles TCP/IP, mais il y a des différences dans les détails.
+JMRI met en oeuvre actuellement deux mani&#232;res diff&#233;rentes qui vous permettent de connecter plusieurs
+ordinateurs &#224; votre r&#233;seau miniature &#233;quip&#233; en LocoNet&reg; et utilisant un LocoBuffer unique. 
+Dans les deux m&#233;thodes, les ordinateurs communiquent en utilisant la norme
+Protocoles TCP/IP, mais il y a des diff&#233;rences dans les d&#233;tails.
 <P>
-Une méthode utilise les
-<A HREF="LocoNetServer.shtml"> capacités intégré du  Client/Serveur intégré LocoNet </a>
+Une m&#233;thode utilise les
+<A HREF="LocoNetServer.shtml"> capacit&#233;s du  Client/Serveur int&#233;gr&#233; LocoNet </a>
 de JMRI et l'autre
-permet à plusieurs nœuds JMRI pour la connexion de clients de se connecter à un seul
+permet &#224; plusieurs noeuds JMRI pour la connexion de clients de se connecter &#224; un seul
 <a href="http://loconetovertcp.sourceforge.net/Interface/index.html"> LocoNetOverTCP LbServer </a>,
-qui est extérieur à JMRI.
+qui est ext&#233;rieur &#224; JMRI.
 <P>
-La différence entre ces deux méthodes est que JMRI LocoNet Client/Serveur utilise le protocole Remote Method Invocation (RMI) 
-natif de Java, alors que le LocoNetOverTCP utilise processus serveur non-Java séparé,
+La diff&#233;rence entre ces deux m&#233;thodes est que JMRI LocoNet Client/Serveur utilise le protocole Remote Method Invocation (RMI) 
+natif de Java, alors que le LocoNetOverTCP utilise un processus serveur non-Java s&#233;par&#233;,
 LbServer, qui communique avec des messages, simples chaines ASCII sur sockets TCP/IP,
-permettant à des nœuds non-Java de partager aussi le LocoBufer un.
+permettant &#224; des noeuds non-Java de partager aussi le LocoBufer.
 <P>
-Pour la plupart des gens qui veulent simplement avoir plusieurs ordinateurs à partager une
+Pour la plupart des gens qui veulent simplement avoir plusieurs ordinateurs &#224; partager une
 connexion LocoBuffer unique,
 l'
 <A HREF="LocoNetServer.shtml"> option Client/Serveur JMRI LocoNet</a>
 est probablement le meilleur choix qui
- est facile à configurer.
-Pour d'autres qui veulent fournir un accès à distance au réseau miniature sur Internet, le
+ est facile &#224; configurer.
+Pour d'autres qui veulent fournir un acc&#232;s &#224; distance au r&#233;seau miniature sur Internet, le
 <A HREF="LbServer.shtml"> LocoNetOverTCP LbServer option </a>
-peut être plus appropriée en changeant les règles de pare-feu
-pour permettre l'accès externe sera plus simple 
+peut &#234;tre plus appropri&#233;e en changeant les r&#232;gles de pare-feu
+pour permettre l'acc&#232;s externe qui sera plus simple 
 <P>
 <UL>
-<LI> <A HREF="LocoNetServer.shtml"> Comment configurer le client LocoNet / Serveur </a>
-<LI> <A HREF="LbServer.shtml"> Comment mettre en place LocoNetOverTCP LbServer <// / / a>
+<LI> <A HREF="LocoNetServer.shtml"> Comment configurer le client LocoNet/Serveur </a>
+<LI> <A HREF="LbServer.shtml"> Comment mettre en place LocoNetOverTCP LbServer </a>
 </UL>
 
+ <h2>:Notes</h2>
+<UL>
+<LI> Il est fortement recommand&#233; de connecter l'ordinateur ma&#238;tre
+au  LocoNet avec un LocoBuffer ou LocoBuffer-II. Bien qu'un MS-100
+travaillera essentiellement pour cette application, la correction r&#233;sultant des
+erreurs occasionnelles du LocoNet peuvent entra&#238;ner des retards notables dans la mise &#224; jour des ordinateurs distants.
+<LI>
+Si les ordinateurs sont tous proches du LocoNet, par exemple, agissant comme une panneau de commande locale, vous n'avez pas vraiment besoin de tout un r&#233;seau pour ce faire. Vous pouvez &#224; la place
+connecter chacun des ordinateurs &#224; la LocoNet via leur propre LocoBuffer ou LocoBuffer-II
+(ou MS-100, mais ce n'est pas recommand&#233;) et demandez-leur de prendre part individuellement
+dans les communications LocoNet. Cela ne pose pas de charge suppl&#233;mentaire de communication.
+Il en co&#251;te un peu plus pour les adaptateurs suppl&#233;mentaires, et ne vous permet pas de
+mettre un ordinateur &#224; distance du r&#233;seau.
+</ Ul>
 
+<p> LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc.</a> </p>
       <hr class="hide">
-
+ </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

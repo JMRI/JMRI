@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-04-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <html lang="fr">
-  <meta content="text/html; charset=utf-8" http-equiv="content-type" ><title>Throttle Window Menus</title>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttle Window Menus</title>
       <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 	<meta name="Description" content="Throttle documentation for JMRI project" >
 	<meta name="Keywords" content="JMRI" >
@@ -11,7 +11,7 @@
 	<meta name="Robots" content="Index, Follow" >
 	<meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
@@ -20,95 +20,96 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Menus Fenêtre Régulateur</h1>
+<h1>Menus Fen&#234;tre R&#233;gulateur</h1>
 <h2><a name="FileMenu">Fichier menu</a></h2>
 
 <a name="FileMenu"><img src="images/ThrottlesMenu3.png" alt="" ><br >
-</a><h3><a name="FileMenu">Charger un régulateur</a></h3>
+</a><h3><a name="FileMenu">Charger un r&#233;gulateur</a></h3>
 
-Cette entrée de menu  permet de charger une mise en page de la fenêtre régulateur dans la 
-Fenêtre de régulateur actuel, elle va charger des propriétés de fenêtres intérieures et de
-Jynstruments le cas échéant <br.>
+<a name="FileMenu">Cette entr&#233;e de menu  permet de charger une configuration de la fen&#234;tre r&#233;gulateur dans la 
+Fen&#234;tre de r&#233;gulateur actuel, elle va charger des propri&#233;t&#233;s de fen&#234;tres int&#233;rieures et de
+Jynstruments le cas &#233;ch&#233;ant <br.>
 <br>
-</a><h3><a name="FileMenu">Sauver le Régulateur Actuel</a></h3>
+</a><h3><a name="FileMenu">Sauver le R&#233;gulateur Actuel</a></h3>
 
-Quand une entrée de liste est sélectionnée, cette entrée de menu est automatiquement
-activée, elle va créer en utilisant (ou mettant à jour) un fichier par défaut pour le Régulateur
-dans l'entrée de liste dans &lt; JMRI Preferences Folder&gt;/throttle/XYZ.xml
-où XYZ est l'ID Liste. <br>
+<a name="FileMenu">Cette entr&#233;e de menu permet de sauvegarder la configuration actuelle de la fen&#234;tre R&#233;gulateur, elle va sauvegarder les propri&#233;t&#233;s de fen&#234;tres int&#233;rieures et de
+Jynstruments le cas &#233;ch&#233;ant
+Quand une entr&#233;e de liste est s&#233;lectionn&#233;e, cette entr&#233;e de menu est automatiquement
+activ&#233;e, elle va cr&#233;er en utilisant (ou mettant &#224; jour) un fichier par d&#233;faut pour le R&#233;gulateur
+dans l'entr&#233;e de liste dans &lt; JMRI Preferences Folder&gt;/throttle/XYZ.xml
+o&#249; XYZ est l'ID Liste. <br>
 <br>
-Notez que lorsque l'enregistrement d'un Régulateur qui est celui par défaut pour une liste
-personnalisation d'entrée, des boutons ne seront pas sauvegardés dans ce dossier, ils doivent être
-exportées vers l'entrée Liste (dans le menu Edition, voir ci-dessous). <br>
+Notez que lorsque l'enregistrement d'un R&#233;gulateur qui est celui par d&#233;faut pour une liste
+personnalisation d'entr&#233;e, des boutons ne seront pas sauvegard&#233;s dans ce dossier, ils doivent &#234;tre
+export&#233;es vers l'entr&#233;e Liste (dans le menu Edition, voir ci-dessous). <br>
 <br>
 
-<h3><a name="FileMenu">Enregistrer Régulateur actuel comme ...</h3>
+<h3><a name="FileMenu">Enregistrer R&#233;gulateur actuel comme ...</h3>
 
-< a name="FileMenu">Permet de sauvegarder la mise en page de la Fenêtre Régulateur actuelle  en utilisant n'importe quel nom de fichier et de chemin,
-si ce nom n'est pas celui par dé.</a>faut pour une entrée Liste, puis, les personnalisations des
-Boutons de fonction seront enregistrées dans ce fichier. <br>
+<a name="FileMenu">Permet de sauvegarder la configuration de la Fen&#234;tre R&#233;gulateur actuelle  en utilisant n'importe quel nom de fichier et de chemin, si ce nom n'est pas celui par d&#233;faut pour une entr&#233;e Liste, puis, la personnalisation des
+Boutons de fonction seront enregistr&#233;es dans ce fichier. <br>
 <br>
 
 </a><h2><a name="EditMenu">Modifier le menu </a> </h2>
 
 <a name="EditMenu"> <img src="images/ThrottlesMenu1.png" alt=""> <br>
 </a>
-<h3> <a name="EditMenu">Propriétés du Cadre  </a> </h3>
+<h3> <a name="EditMenu">Propri&#233;t&#233;s du Cadre  </a> </h3>
 
 
 <a name="EditMenu"> <br>
 <img src="images/ThrottleWindowPreferences.png" alt="ThrottleWindowPreferences.png"> <br>
 <br>
-Permet d'éditer les propriétés de la fenêtre actuelle de Régulateur, en particulier le
-Titre de la fenêtre: <br>
+Permet d'&#233;diter les propri&#233;t&#233;s de la fen&#234;tre actuelle du R&#233;gulateur, en particulier le
+Titre de la fen&#234;tre: <br>
 .</a>
 </a> <ul>
-<li> <a name="EditMenu"> Adresse - Affichage automatique de l'adresse de toutes leslocomotive sélectionnées. C'est par défaut.
-   </a> </li> <li><a name="EditMenu"> texte  - Afficher le texte que vous entrez dans le champ situé en haut de cette fenêtre
-   </a> </li> <li><a name="EditMenu"> Texte Adresse - Afficher le texte que vous avez entré, suivi de l'adresse sélectionnée
-   </a> </li> <li><a name="EditMenu"> Adresse Texte - Affichage de l'adresse sélectionnée, suivie par le texte que vous avez entré </a> </li> <li> <a name = "EditMenu "> ID Roster - Affichage de la liste sélectionnée ID <a> <li>
+<li> <a name="EditMenu"> Adresse - Affichage automatique de l'adresse de toutes les locomotive s&#233;lectionn&#233;es. C'est par d&#233;faut.
+   </a> </li> <li><a name="EditMenu"> texte  - Afficher le texte que vous entrez dans le champ situ&#233; en haut de cette fen&#234;tre
+   </a> </li> <li><a name="EditMenu"> Texte puis Adresse - Afficher le texte que vous avez entr&#233;, suivi de l'adresse s&#233;lectionn&#233;e
+   </a> </li> <li><a name="EditMenu"> Adresse puis Texte - Affichage de l'adresse s&#233;lectionn&#233;e, suivie par le texte que vous avez entr&#233; </a> </li> <li> <a name = "EditMenu "> Identifiant - Affichage de l'identifiant de la locomotive dans la liste s&#233;lectionn&#233;e<a> <li>
 </ul>
 
 
 
-<a name="EditMenu"> Notez que si vous entrez du texte, il ne sera pas visible, sauf si le mode du milieu parmi les trois modes est sélectionné. <br>
+<a name="EditMenu"> Notez que si vous entrez du texte, il ne sera pas visible, sauf si le mode du milieu parmi les trois modes est s&#233;lectionn&#233;. <br>
 <br>
-</a> <h3> boutons<a  name="EditMenu"> fonction de réinitialisation </a> </h3>
+</a> <h3> boutons<a  name="EditMenu"> fonction de r&#233;initialisation </a> </h3>
 
-<a name="EditMenu"> Réinitialiser le contenu de fonction par défaut des boutons et réinitialiser leur visibilité. <br> <br>
-Si une liste est sélectionnée, le contenu par défaut du bouton sera chargé depuis l'entrée liste; encore plus, si la préférence correspondante est activée, le bouton non défini est l'entrée liste qui sera cachée.
+<a name="EditMenu"> R&#233;initialiser le contenu de fonction par d&#233;faut des boutons et r&#233;initialiser leur visibilit&#233;. <br> <br>
+Si une liste est s&#233;lectionn&#233;e, le contenu par d&#233;faut du bouton sera charg&#233; depuis l'entr&#233;e liste; encore plus, si la pr&#233;f&#233;rence correspondante est activ&#233;e, le bouton non d&#233;fini est l'entr&#233;e liste qui sera cach&#233;e.
 <br>.</a>
-</A><h3> <a  name="EditMenu"> Exportation du régulateur personnalisé actuel vers la Liste  </a> </h3>
+</A><h3> <a  name="EditMenu"> Exportation du r&#233;gulateur personnalis&#233; actuel vers la Liste  </a> </h3>
 
-Poussez   fenêtre du régulateur personnalisé vers la Liste en particulier la personnalisation de la Fonction Boutons. Voir <a href="RostersMediaPane.shtml" Roster name="EditMenu">volet Fonctions étiquettes . <br>
+Poussez la fen&#234;tre du r&#233;gulateur personnalis&#233; vers la Liste en particulier la personnalisation des Fonction Boutons. Voir <a href="RostersMediaPane.shtml" Roster name="EditMenu">volet Fonctions &#233;tiquettes . <br>
 <br>
 <br>
 </A> <h2><a name="ViewMenu">  Menu Affichage </a> </h2>
 
 <a name="ViewMenu"> <img src="images/ThrottlesMenu2.png" alt=""> <br
 <span style="font-weight: bold;"> <br>
-</Span> La première partie de la " <big>Vue </big>" menu affiche un petit menu de
-3 articles &#8212; par défaut, chacun avec une coche précédant l'article. Ceux-ci
-correspondent à 3 sous-fenêtres (Groupe d'adresses, Panneau de fonction, Panneau de contrôle
-) qui font partie de la fenêtre du régulateur. <br>
+</Span> La premi&#232;re partie de la "<big>Vue </big>" menu affiche un petit menu de
+3 articles &#8212; par d&#233;faut, chacun avec une coche pr&#233;c&#233;dant l'article. Ceux-ci
+correspondent &#224; 3 sous-fen&#234;tres (Groupe d'adresses, Panneau de fonction, Panneau de contr&#244;le
+) qui font partie de la fen&#234;tre du r&#233;gulateur. <br>
 </A><a name="ViewMenu"> <p> Comme chaque
-sous-fenêtre a  des bouton de réduction et de fermeture , si l'on ferme par
-erreur, cette option de menu vous permet de restaurer la fenêtre. </a> </p>
+sous-fen&#234;tre a des bouton de r&#233;duction et de fermeture , si l'on ferme par
+erreur, cette option de menu vous permet de restaurer la fen&#234;tre. </a> </p>
 
 <a name="ViewMenu"> 
 
-</A><p><a name="ViewMenu"> Une autre façon d'utiliser cette option, c'est quand l'utilisation des fonctions du régulateur
-pour les décodeurs qui sont <u> pas </u> associés à une machine (comme une 
-voiture voyageur allumée ou fourgon de queue ou une unité de Fred). Dans ces cas, l'écran 
-peut être sauvé en étant en mesure de désactiver (ou fermer) le
-Panneau de Contrôle. Soyez un peu créatif avec le redimensionnement de la fenêtre, et vous
-pourrez avoir plusieurs de ces fenêtres de régulateur dans la même région comme un
-un fenêtre unique complète de régulateurs complète. </a> </p>
-<a name="ViewMenu"> <h3> Voir tous les boutons de fonction -! Fonctionnalité déménagé à "Bouton Réinitialisation" entrée dans menu "Edition" </a> </h3>
+</A><p><a name="ViewMenu"> Une autre fa&#231;on d'utiliser cette option, c'est quand l'utilisation des fonctions du r&#233;gulateur
+pour les d&#233;codeurs qui ne sont <u> pas </u> associ&#233;s &#224; une machine (comme une 
+voiture voyageur allum&#233;e ou fourgon de queue ou une unit&#233; de Fred). Dans ces cas, l'&#233;cran 
+peut &#234;tre sauv&#233; en &#233;tant en mesure de d&#233;sactiver (ou fermer) le
+Panneau de Commande. Soyez un peu cr&#233;atif avec le redimensionnement de la fen&#234;tre, et vous
+pourrez avoir plusieurs de ces fen&#234;tres de r&#233;gulateur dans la m&#234;me r&#233;gion comme un
+un fen&#234;tre unique compl&#232;te de r&#233;gulateurs. </a> </p>
+<a name="ViewMenu"> <h3> Voir tous les boutons de fonction -! Fonctionnalit&#233; d&#233;m&#233;nag&#233; &#224; "Bouton R&#233;initialisation" entr&#233;e dans menu "Edition" </a> </h3>
 
-</A> <h3><a  name="ViewMenu"> Obtenez tous les composants d'accélérateur dans les limites actuelles </a> </h3>
+<a> <h3><a  name="ViewMenu"> Obtenez tous les composants de r&#233;gulateur dans les limites actuelles </a> </h3>
 
-<a name="ViewMenu"> Assurez-vous que toutes les fenêtres intérieures du Régulateur actuel sont à l'intérieur des limites de la Fenêtre du Régulateur. <br>
+<a name="ViewMenu"> Assurez-vous que toutes les fen&#234;tres int&#233;rieures du R&#233;gulateur actuel sont &#224; l'int&#233;rieur des limites de la Fen&#234;tre du R&#233;gulateur. <br>
 	
 							
 <br >

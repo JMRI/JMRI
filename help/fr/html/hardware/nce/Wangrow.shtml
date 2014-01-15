@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Wangrow.shtml,v 1.1 2008/01/13 05:05:41 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: Wangrow.shtml 21896 2012-12-19 12:12:05Z rhwood $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-18-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Wangrow System One
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Wangrow System One java model railroad JMRI install">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -28,10 +28,10 @@
     <div id="mainContent">
 
       <H2> 
-     Guide Matériel JMRI: Système Wangrow  One
+     Guide Mat&#233;riel JMRI: Syst&#232;me Wangrow One
       </H2>
 
-	<H3>Matériel Supporté </H3>
+	<H3>Mat&#233;riel Support&#233; </H3>
 
 	<UL>
 	<li>Wangrow System One
@@ -39,43 +39,43 @@
 
 	<H3>Limitations</H3>
 
-	<p>Certaines centrales de commande Wangrow  ont un« circuit de contrôle analogique en option
-. Dans ces dernieres, les broches 5, 6 et 9 sont utilisées avec un convertisseur de tension analogique,
-tension comme un régulateur. Si vous avez un de ces centrales de commandes
- un câble normal série à 9 broches ne fonctionnera pas! Vous aurez besoin de
-faire un câble personnalisé qui relie simplement les broches " Envoyer données(Dtx)", "Recevoir
-données(Rtx) »et« masse ». Consultez votre manuel Wangrow pour les détails.</p>
+	<p>Certaines centrales  Wangrow  ont un "circuit de contr&#244;le analogique en option"
+. Dans ces dernieres, les broches 5, 6 et 9 sont utilis&#233;es avec un convertisseur de tension analogique,
+tel qu'un r&#233;gulateur s&#233;par&#233;. Si vous avez un de ces centrales 
+ un c&#226;ble normal s&#233;rie &#224; 9 broches ne fonctionnera pas! Vous aurez besoin de
+faire un c&#226;ble personnalis&#233; qui relie simplement les broches " Envoyer donn&#233;es(Dtx)", "Recevoir
+donn&#233;es(Rtx)"et" masse". Consultez votre manuel Wangrow pour les d&#233;tails.</p>
 
 	<H3>Congiguration</H3>
 
 	  <ol>
-	  <li>Pour connecter votre ordinateur à un système Wangrow, vous pouvez habituellement
-connecter la centrale de commande au port série de l'ordinateur
-en utilisant un câble série à 9 broches. </p>
+	  <li>Pour connecter votre ordinateur &#224; un syst&#232;me Wangrow, vous pouvez habituellement
+connecter la centrale de commande au port s&#233;rie de l'ordinateur
+en utilisant un c&#226;ble s&#233;rie &#224; 9 broches. </p>
 
-<li> Puis allez dans le panneau des préférences d'un programme basé sur JMRI.
-Cela s'ouvre automatiquement la première fois qu'un programme est exécuté, ou vous
-pouvez le sélectionner dans le menu "Édition"</p>
+<li> Puis allez dans le panneau des pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI.
+Cela s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+pouvez le s&#233;lectionner dans le menu "&#233;dition"</p>
 
-	  <li>Sélectionnez "Wangrow" dans la boîte de sélection en haut. Vous pouvez alors sélectionner
-le port série approprié dans la seconde boîte de sélection. </p>
+	  <li>S&#233;lectionnez "Wangrow" dans la bo&#238;te de s&#233;lection en haut. Vous pouvez alors s&#233;lectionner
+le port s&#233;rie appropri&#233; dans la seconde bo&#238;te de s&#233;lection. </p>
 
-<li> La boîte de sélection des vitesse de transmission sera fixée à 9600 bauds. </p>
+<li> La bo&#238;te de s&#233;lection des vitesse de transmission sera fix&#233;e &#224; 9600 bauds. </p>
 
-<li> La série de boutons radio étiquetés «style graphique" vous permet
-de sélectionner la façon dont le programme va apparaitre. "Metal" est l'apparence native Java
+<li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet
+de s&#233;lectionner la fa&#231;on dont le programme va apparaitre. "Metal" est l'apparence native Java
 chercher disponible sur tous les types. D'autres choix peuvent varier avec votre
-type d'ordinateur. "Motif", "Windows", "MacOS" et "MacOS adaptative»
+type d'ordinateur. "Motif", "Windows", "MacOS" et "MacOS adaptative"
 apparence native sous Linux, Windows, MacOS "Classic" et Mac OS X
 respectivement.</p>
 
-	  <li>Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
-du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
-programmateur, ce n'est donc ici juste que par commodité. </p>
+	  <li>Dans la bo&#238;te de s&#233;lection en bas, vous pouvez choisir l'option par d&#233;faut
+du format de programmateur. Vous pouvez le remplacer &#224; chaque fois que vous ouvrez le
+programmateur, ce n'est donc ici juste que par commodit&#233;. </p>
 
-<li> Cliquez sur "Enregistrer". Il vous sera demandé si vous voulez quitter le programme, cliquez sur "Oui". </p>
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si vous voulez quitter le programme, cliquez sur "Oui". </p>
 
-<li> Redémarrez le programme. Vous devriez être opérationne.</p>
+<li> Red&#233;marrez le programme. Vous devriez &#234;tre op&#233;rationnel.</p>
 	  </ol>
 
 <!--#include virtual="/Footer" -->

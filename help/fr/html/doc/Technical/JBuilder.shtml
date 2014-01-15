@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.10 2010/09/04 19:15:25 zoo Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-19-->
+<!-- $Id: JBuilder.shtml 18395 2011-09-07 18:28:20Z dan_boudreau $ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-06-->
  <html lang="fr">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -15,7 +15,7 @@
 <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-<META http-equiv=Content-Type content="text/html; charset= utf-8
+<META http-equiv=Content-Type content="text/html; charset= iso-8859-1
 ">
 <link rel="stylesheet" type="text/css" href="/css/default.css"
 	media="screen">
@@ -36,68 +36,17 @@
 <H1>JMRI: Construire avec JBuilder</H1>
 
 
-JBuilder est une plate-forme viable pour le développement et le débogage du code JMRI.
-JBuilder étend le cadre open source Eclipse et peut être téléchargé
-gratuitement. Cependant beaucoup de développeurs vous recommande d'utiliser <A
+JBuilder est une plate-forme viable pour le d&#233;veloppement et le d&#233;bogage du code JMRI.
+JBuilder &#233;tend le cadre open source Eclipse et peut &#234;tre t&#233;l&#233;charg&#233;
+gratuitement. Cependant beaucoup de d&#233;veloppeurs vous recommande d'utiliser <A
 HREF="NetBeans.shtml"> NetBeans> </a>, <a HREF="XCode.shtml"> XCode </a>, <A
-HREF="Eclipse.shtml"> Eclipse </a>, ou même simplement nus <A HREF="Ant.shtml"> Ant </a>.
-<P> L'Édition Personellel Edition de JBuilder est disponible pour téléchargement gratuit
-à <A HREF="http://www.borland.com/jbuilder/personal/"> http://www.borland.com/jbuilder/personal/ </A>.
+HREF="Eclipse.shtml"> Eclipse </a>, ou m&#234;me simplement <A HREF="Ant.shtml"> Ant </a>.
+<P> A t&#233;l&#233;charger une copie d'essai gratuite de JBuilder est disponible &#224; partir de
+<A HREF="http://www.embarcadero.com/products/jbuilder">http://www.embarcadero.com/products/jbuilder</A>.
 
-<P> Après le téléchargement et l'activation de votre copie de JBuilder 2008 faire
-les étapes suivantes pour importer la base de code JMRI. </P>
-
-Allez dans le menu "Fichier" de JBuilder" puis sélectionnez "Importer". Dans une nouvelle fenêtre contextuelle, sélectionnez "CVS-> Projects" 
-de CVS, puis appuyez sur "Suivant". Une nouvelle fenêtre demandant des informations de l'emplacement du référentiel doit apparaître. 
-Entrez les informations suivantes pour l'hôte, le chemin et l'utilisateur.
-
-<P> host: <BR> jmri.cvs.sourceforge.net
-Path: /cvsroot/<BR> jmri
-User: anonymous
-
-<P> Laissez le mot de passe vierge, puis appuyez sur "Suivant". Une nouvelle fenêtre doit apparaître, sélectionnez "Use an existing module». 
-Une liste des modules JMRI doit apparaître, sélectionnez «all» et appuyez sur «Finish ». </P>
-<P> Cela devrait commencer le téléchargement de la base de code JMRI. Une fois qu'il est terminé, vous devriez être en mesure de construire 
-un nouveau fichier jmri.JAR utilisant une construction ant. Pour ce faire, sélectionnez "Run-> External Tools-> Open External Tools
-> Dialog P .."</
-<P>Sélectionnez  Ant build  et utiliser le bouton "Browse Workspace .." pour sélectionnez le fichier java-> build.xml. Maintenant, 
-appuyez sur «Apply».
-<P> Pour créer un fichier jmri.jar, sélectionnez «Targets » et sélectionnez uniquement les case à cocher "dist", puis appuyez sur "Run". 
-Après quelques minutes un nouveau fichier jmri.jar sera créé dans le dossier JBuilder-> workspace folder.
-<P> Si vous êtes intéressé par la construction et l'exécution du code dans JMRI avec l'environnement JBuilder vous devez faire ce qui suit. 
-"Sélectionnez Run--> Open Run Dialog .. "puis sélectionnez" Java Application ". Entrez DecoderPro pour le nom, puis appuyez sur Browse et 
-sélectionnez "java" pour le projet: et puis appuyez sur le bouton "Search", puis rechercher et sélectionner les DecoderPro pour
-la classe Principale.
-<P> Maintenant sous l'onglet «(x) = Arguments" , entrez les arguments du programme:
-% 1% 2% 2% 4% 4% 6% 7% 8% 9.
-<P> Et entrez les arguments VM suivants:
-<P>
--Xms10m <Br>
--Xmx300m <Br>
--noverify <Br>
--Dsun.java2d.d3d = false <Br>
--Djava.security.policy =security.policy <Br>
--Djava.library.path =.; lib; lib/windows/x86 <Br>
--Djava.rmi.server.codebase = file:java/classes/ <Br>
--Dsun.java2d.noddraw
-<p>
-Notez que si vous utilisez un système 64 bits de Windows changer le chemin de la bibliothèque pour:
-<p>
--Djava.library.path =.; lib; lib/windows/x64
-
-<P> Maintenant, changez le répertoire de travail ${workspace_loc} en sélectionnant le bouton radio "Others"  et de rechercher en utilisant 
-les bouton "Variables ..".
-
-<P> Vous devriez maintenant être totalement opérationnel. Si vous voulez déboguer les messages envoyés à la fenêtre de votre console, 
-installez une mise à jour du fichier default.lcf dans le répertoire JBuilder->workspace directory . Maintenant, amusez-vous à faire des
-modifications au code JMRI!
+<P> Apr&#232;s le t&#233;l&#233;chargement et l'activation de votre copie de JBuilder vous pouvez utiliser les directives depuis l'installation  <A HREF="Eclipse.shtml">Eclipse</a> pour configurerJBuilder
 
 
-<H2>JavaCC</H2>
-
-En Mars 2010 JMRI les développeurs ont commencé à utiliser JavaCC (Java Compiler Compiler) pour générer du code. Actuellement, 
-le compilateur place la sortie fichiers dans le répertoire "tmp" sous "java". La meilleure façon de créer et remplir le répertoire 
-"tmp" est d'utiliser la construction ant.
 
 </body>
 </html>

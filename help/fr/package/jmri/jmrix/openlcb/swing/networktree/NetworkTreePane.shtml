@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: OpenLcbCanSendFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI OpenLCB: Browse Configuration
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI OpenLCB">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> OpenLCB: Parcourir la Configuration </H1>
+    
+L'outil "Configurer Noeuds"  OpenLCB vous permet de
+voir directement les noeuds de votre r&#233;seau OpenLCB et de faire 
+quelques manipulations. Il fonctionne avec votre
+L'installation OpenLCB pour recueillir les informations que vous avez
+besoin pour ex&#233;cuter l'outil, il n'y a pas de fichiers locaux de configuration
+sur votre ordinateur.
+
+<table>
+<tr><td>La premi&#232;re fois que vous ouvrez la fen&#234;tre de l'outil, il montre un arbre
+des Noeuds OpenLCB accessibles. Pour la plupart des installations, il s'agit 
+juste justela liste de ce qui est d&#233;termin&#233; par l'interm&#233;diaire d'un adaptateur CAN.
+</td><td>
+<a href="StartWindow.png">
+     <img src = "StartWindow.png"
+          href = "113" = "71"
+          alt = "image de d&#233;part"></a>
+
+</td></tr><td>
+Vous pouvez cliquer pour ouvrir chaque noeud et en savoir plus sur lui.
+</td><td>
+<a href="OpenNodeInfo.png">
+     <img src = "OpenNodeInfo.png"
+          href = "112" = "120"
+          alt = "Apr&#232;s avoir cliquer pour ouvrir"></a>
+
+
+</td></tr><td>
+Ouverture de la rubrique "Protocoles pris en charge", par exemple, va vous montrer
+ les capacit&#233;s de ce nœud particulier.
+</td><td>
+<a href="OpenProtocol.png">
+    <img src = " OpenProtocol.png "
+         href = " 159 " = " 179 "
+         alt = " Apr&#232;s protocoles ouverts "></a>
+
+</td></tr><td>
+Si vous cliquez sur la rubrique "CDI" , pour Configuration Description Information,
+vous aurez un outil de configuration DecoderPro - comme pour le noeud. Notez que ceci
+est enti&#232;rement pris &#224; partir du noeud OpenLCB lui-m&#234;me. Il n'est pas n&#233;cessaire de trouver un
+fichier de configuration d&#233;codeur, s&#233;lectionner le type de carte &#224; droite , etc
+</td><td>
+<a href="StartConfigWindow.png">
+    <img src = " StartConfigWindow.png "
+         href = " 254 " = " 406 "
+         alt = " fen&#234;tre de configuration initiale "></a>
+</td></tr><td>
+Vous pouvez le remplir et cliquez sur "Write" pour configurer le noeud.
+Les premiers champs sont utilis&#233;s pour lui donner un nom et une description choisi par l'utilisateur,
+de sorte que vous pouvez vous rappeler de ce noeud plus tard. Vous pouvez d&#233;finir les &#233;v&#233;nements qui correspondent
+aux diff&#233;rentes entr&#233;es et sorties, et m&#234;me de donner des noms utilisateur commodes.
+C'est tout stock&#233; en permanence dans le noeud.
+</td><td>
+<a href="FilledOutConfigWindow.png">
+    <img src = " FilledOutConfigWindow.png "
+         href = " 254 " = " 406 "
+         alt = " fen&#234;tre de configuration Filled -out "></a>
+</td></tr><td>
+Apr&#232;s un red&#233;marrage, cette information est alors montree puis dans l'arbre de configuration
+pour vous aider &#224; reconna&#238;tre vos noeuds.
+</td><td>
+<a href="NodeWithID.png">
+    <img src = " NodeWithID.png "
+         href = "128" = "149"
+         alt = " fen&#234;tre de configuration Filled -out "></a>
+</td></tr>
+</table>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoBuffer.shtml,v 1.2 2008/03/09 20:27:28 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-06-15-->
+<!-- $Id: LocoBuffer.shtml 22578 2013-01-23 04:44:56Z bob-m-dcc $ -->
+<!-- Updated  by Blorec Herv&#233; 2013-09-13-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -27,95 +27,97 @@
     <div id="mainContent">
 
       <h1> 
-     Guide Matériel JMRI: Connecter un LocoBuffer à LocoNet
+     Guide Mat&#233;riel JMRI: Connecter un LocoBuffer &#224; LocoNet&reg;
       </h1>
 
 
 <p>
-John Jabour a conçu le LocoBuffer comme un moyen fiable de connexion
-d'un ordinateur à un LocoNet. Il ne s'agit plus de les fabriquer, mais
+John Jabour a con&#231;u le LocoBuffer comme un moyen fiable de connexion
+d'un ordinateur &#224; un LocoNet&reg;. Il ne s'agit plus de les fabriquer, mais
 <A HREF="http://users.pandora.be/deloof/page5.html"> Hans Deloof </a>
 a pris le relais pour les personnes qui veulent construire le leur.
 </p>
 <p>
 La
 <A HREF="LocoBufferII.shtml"> LocoBuffer II </a>
-est actuellement le moyen de connecter un ordinateur à un LocoNet le plus fiable disponible dans le commerce. Elle est produite par la société de Dick Bronson
+est actuellement le moyen de connecter un ordinateur &#224; un LocoNet le plus fiable disponible dans le commerce. Il est produit par la soci&#233;t&#233; de Dick Bronson
 <A HREF="http://www.rr-cirkits.com"> RR-CirKits </a>
-, basée en partie sur la conception LocoBuffer originale.
+, bas&#233;e en partie sur la conception LocoBuffer originale.
 </p>
 
 
-<h2>Démarrage recommandé</h2>
+<h2>D&#233;marrage recommand&#233;</h2>
 <p>
 
-La configuration recommandée pour le LocoBuffer est
+La configuration recommand&#233;e pour le LocoBuffer est
 </p>
 
 <UL>
-<LI> Le LocoBuffer doit être configuré avec J1, J4 et J5 mis sur le
+<LI> Le LocoBuffer doit &#234;tre configur&#233; avec J1, J4 et J5 mis sur le
 broches 1 et 2, J2 et J3 sur les pins 2 et 3. C'est une configuration 
-pour une connexion 19 200 bauds, avec écho .
+pour une connexion 19 200 bauds, avec &#233;cho.
 <LI>
-Démarrer DecoderPro ou tout autre programme et le configurer pour:
+D&#233;marrer DecoderPro ou tout autre programme et le configurer pour:
 <UL>
 <LI> LocoNet LocoBuffer
-<LI> Sélectionnez votre port
+<LI> S&#233;lectionnez votre port
 <LI> 19200 bauds
-<LI> Le contrôle de flux matériel 
+<LI> Le contr&#244;le de flux mat&#233;riel 
 </UL>
 </UL>
 
-<h2>Utilisations suggérées</h2>
+<h2>Utilisations sugg&#233;r&#233;es</h2>
 
- <P> Pour le fonctionnement le plus fiable, mettez en service votre réseau ferré et
+ <P> Pour le fonctionnement le plus fiable, mettez en service votre r&#233;seau ferr&#233; et
   votre ordinateur avant que vous allumiez le LocoBuffer. </p>
 
-<P> Certains ordinateurs peuvent communiquer avec succès à 57600 bps avec
-une LocoBuffer. Pour ce faire, sélectionnez "57600 bauds" lors de la configuration
+<P> Certains ordinateurs peuvent communiquer avec succ&#232;s &#224; 57600 bps avec
+une LocoBuffer. Pour ce faire, s&#233;lectionnez "57600 bauds" lors de la configuration
 et configurer votre LocoBuffer avec J4 et J5 mis sur les broches 1 et 2,
-J1, J2 et J3 sur les pins 2 et 3 (J1 est celui qui détermine
-la vitesse de transmission). Mais nous recommandons vivement que vous essayez 19200
+J1, J2 et J3 sur les pins 2 et 3 (J1 est celui qui d&#233;termine
+la vitesse de transmission). Mais nous recommandons vivement que vous essayiez 19200
 et de vous assurer qu'il fonctionne en premier. </p>
 
-<P> La puce contrôleur LocoBuffer doit contenir version 1.4.6 ou
-ultérieures du programme LocoBuffer. Notez que la version LocoBuffer
-1.4.5 a un bug qui l'empêche de travailler avec ce programme.
-Si vous avez obtenu votre puce LocoBuffer après Février 2002, ce ne devrait
-pas être un problème pour vous. </p>
+<P> La puce contr&#244;leur LocoBuffer doit contenir version 1.4.6 ou
+ult&#233;rieures du programme LocoBuffer. Notez que la version LocoBuffer
+1.4.5 a un bug qui l'emp&#234;che de travailler avec ce programme.
+Si vous avez obtenu votre puce LocoBuffer apr&#232;s F&#233;vrier 2002, ce ne devrait
+pas &#234;tre un probl&#232;me pour vous. </p>
 
 
 <A NAME="flow">
-<h2> Contrôle du flux LocoBuffer</h2></a>
+<h2> Contr&#244;le du flux LocoBuffer</h2></a>
 
-	  <p>Certaines versions de Windows, en particulier Win2000, ne peut pas gérer
+	  <p>Certaines versions de Windows, en particulier Win2000, ne peut pas g&#233;rer
  la liaison LocoBuffer correctement. Vous verrez 
-DecoderPro ou JmriDemo être incapable de communiquer avec la
-centrale de commande, même si vous pouvez voir le trafic avec la LocoNet sur le moniteur
-LocoNet . Pour résoudre ce problème, essayez d'ouvrir les préférences et 
-sélectionnez l'option "aucun contrôle de flux", cliquez sur Enregistrer, puis quittez et
-redémarrer le programme. Notez que ce problème est spécifique à
-certaines versions de Windows, et vous devriez avoir "contrôle de flux matériel
- " sélectionné en général . </p>
+DecoderPro ou JmriDemo &#234;tre incapable de communiquer avec la
+centrale de commande, m&#234;me si vous pouvez voir le trafic avec la LocoNet sur le moniteur
+LocoNet . Pour r&#233;soudre ce probl&#232;me, essayez d'ouvrir les pr&#233;f&#233;rences et 
+s&#233;lectionnez l'option "aucun contr&#244;le de flux", cliquez sur Enregistrer, puis quittez et
+red&#233;marrer le programme. Notez que ce probl&#232;me est sp&#233;cifique &#224;
+certaines versions de Windows, et vous devriez avoir "hardware flow control"
+ s&#233;lectionn&#233; en g&#233;n&#233;ral . </p>
 
-<P> Si le problème persiste, s'il vous plaît essayer de connecter ensemble les
+<P> Si le probl&#232;me persiste, s'il vous pla&#238;t essayer de connecter ensemble les
 broches 5, 6 et 8 du connecteur 25 broches de LocoBuffer. Ce sont
 les fils CTS, DSR et DCD  dans l'interface RS232 LocoBuffers,
-et en les reliant vous arriverez (peut-être) à tromper votre ordinateur en
-acceptant les signaux LocoBuffers de contrôle de flux. </p>. 
+et en les reliant vous arriverez (peut-&#234;tre) &#224; tromper votre ordinateur en
+acceptant les signaux LocoBuffers de contr&#244;le de flux. </p>. 
 
-	  <p> Ce connecteur a une rangée de 12 broches et une rangée de 13. En regardant
- la soudure du côté de la carte, la broche 1 est à la fin de la rangée
-de 13 (vers le centre de la planche), à l'extrémité la plus proche le jack
-RJ12 LocoNet. A côté de qui sont les broches 2, 3, 4 et 5 avec
-des traces sur elles. La broche 6 est à côté et non connectée.
+	  <p> Ce connecteur a une rang&#233;e de 12 broches et une rang&#233;e de 13. En regardant
+ la soudure du c&#244;t&#233; de la carte, la broche 1 est &#224; la fin de la rang&#233;e
+de 13 (vers le centre de la planche), &#224; l'extr&#233;mit&#233; la plus proche le jack
+RJ12 LocoNet. A c&#244;t&#233; de qui sont les broches 2, 3, 4 et 5 avec
+des traces sur elles. La broche 6 est &#224; c&#244;t&#233; et non connect&#233;e.
 Broche 7 (terre) a une trace, puis la broche 8 ne fonctionne pas. </P>
 
-<P> Donc la suggestion est de connecter la broche 5 (avec une trace) à la broche 6
-et 8 (sans traces). Soyez prudent à ne pas court-circuiter avec la broche 7, qui
-est déjà connectée
+<P> Donc la suggestion est de connecter la broche 5 (avec une trace) &#224; la broche 6
+et 8 (sans traces). Soyez prudent &#224; ne pas court-circuiter avec la broche 7, qui
+est d&#233;j&#224; connect&#233;e
  
-	  
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>	  
 
 <!--#include virtual="/Footer" -->
 </body>

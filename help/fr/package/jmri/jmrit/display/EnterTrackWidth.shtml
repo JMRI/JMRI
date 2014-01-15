@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EnterTrackWidth.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-11--> 
+<!-- $Id: EnterTrackWidth.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-1023--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Set Track Width Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Layout Editor Track">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,15 +24,15 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Réglage Largeur Voie </H1>
+<H1>R&#233;glage Largeur Voie </H1>
    
-La boîte de dialogue Réglage Largeur de Voie permet de changer les largeurs des deux types de voies
-utilisés dans les schémas de voies dans le TCO. La voie peut être désignée comme <i>voie principale</i> ou la <i>voie d'évitement </i> lors de la création ou de l'édition de Segments de Voie. Les parties de type de voie d'aiguillage et de croisement  sont déduits à partir du type des Tronçons de Voie connectés. Toutes les voies sont initialement <i>voie d'évitement</i> par défaut.
-La spécification  type  <i>voie principale</i> pour des segments spécifiques de la voie est une option
+La bo&#238;te de dialogue R&#233;glage Largeur de Voie permet de changer les largeurs des deux types de voies
+utilis&#233;s dans les sch&#233;mas de voies dans le TCO. La voie peut &#234;tre d&#233;sign&#233;e comme <i>voie principale</i> ou <i>voie d'&#233;vitement</i> lors de la cr&#233;ation ou de l'&#233;dition de Segments de Voie. Les parties de type de voie d'aiguillage et de croisement sont d&#233;duits &#224; partir du type des Tron&#231;ons de Voie connect&#233;s. Toutes les voies sont initialement <i>voie d'&#233;vitement</i> par d&#233;faut.
+La sp&#233;cification du type  <i>voie principale</i> pour des segments sp&#233;cifiques de la voie est une option
 que vous pouvez ou non choisir d'en profiter. </p>
 <p>
-Chaque type de voie peut être dessiné en utilisant une largeur de voie différente. La modification de la largeur d'un
- type de voie modifie les largeurs de toutes les voies de ce type dans le schéma de voie. </p>
+Chaque type de voie peut &#234;tre dessin&#233; en utilisant une largeur de voie diff&#233;rente. La modification de la largeur d'un
+ type de voie modifie les largeurs de toutes les voies de ce type dans le sch&#233;ma de voie. </p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

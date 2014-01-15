@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MultiSensorIconAdder.shtml,v 1.3 2009/06/23 22:48:35 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-17--> 
+<!-- $Id: MultiSensorIconAdder.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-11-01--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: MultiSensor Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel Editor">
 charset=iso-8859-1">
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -25,33 +25,33 @@ charset=iso-8859-1">
     <div id="mainContent">
 
 <H1>
-L'Éditeurd'Icôner Multicapteurs </H1>
+L'&#201;diteurd'Ic&#244;ne Multicapteurs </H1>
 
-<p> La façon dont les icônes sont modifiées dans l'Édteur d'IcôneMulticapteurs est la même comme elles sont
-changées dans les autres Éditeurs d'Icône. Le bouton <b>Changer l'Icône...</b> et le
-Catalogue de fonction sont identiques avec les autre Éditeurs d'Icône. Le Menu <b>Trouver des Icônes</b>
- et ses éléments sont
-également identiques. <p> Voir la <a href="IconAdder.shtml"> pages Éditeurs d'Icône</a>
-et l'image <a href="../catalog/ImageIndex.shtml">  Page Éditeur d'index</a>
-pour plus de détails sur leur utilisation.
+<p> La fa&#231;on dont les ic&#244;nes sont modifi&#233;es dans l'&#201;dteur d'Ic&#244;ne Multicapteurs est la m&#234;me que celles qui les modifie
+ dans les autres &#201;diteurs d'Ic&#244;ne. Le bouton <b>Changer l'Ic&#244;ne...</b> et le
+Catalogue de fonction sont identiques avec les autre &#201;diteurs d'Ic&#244;ne. Le Menu <b>Trouver des Ic&#244;nes</b>
+ et ses &#233;l&#233;ments sont
+&#233;galement identiques. <p> Voir la <a href="IconAdder.shtml"> pages &#201;diteurs d'Ic&#244;ne</a>
+et l'image <a href="../catalog/ImageIndex.shtml"> Page &#201;diteur d'index</a>
+pour plus de d&#233;tails sur leur utilisation.
 
 
-<H2>Contenu de l'Éditeur d'Icône Multicapteurs</H2>
+<H2>Contenu de l'&#201;diteur d'Ic&#244;ne Multicapteurs</H2>
 
 <img src="MultiSensorIcon.png" align="right">
-<p> Les icônes de l'Éditeur d'Icône Multicapteurs ne diffèrent que par l'existence de plusieurs icônes
-«active». Chacune correspond à un commutateur ou à la position d'un levier. Dans le Panneau,
-les positions s'enchaînent dans l'ordre. Une position peut être supprimée en 
-appuyant sur la touche <b>Supprimer</b> sous l'icône. D'autres positions peuvent
-être ajoutées en appuyant sur le bouton <b>Ajouter</b> une autre icône.
+<p> Les ic&#244;nes de l'&#201;diteur d'Ic&#244;ne Multicapteurs ne diff&#232;rent que par l'existence de plusieurs ic&#244;nes
+"actives". Chacune correspond &#224; un commutateur ou &#224; la position d'un levier. Dans le Panneau,
+les positions s'encha&#238;nent dans l'ordre. Une position peut &#234;tre supprim&#233;e en 
+appuyant sur la touche <b>Supprimer</b> sous l'ic&#244;ne. D'autres positions peuvent
+&#234;tre ajout&#233;es en appuyant sur le bouton <b>Ajouter</b> une autre ic&#244;ne.
 
-<p>Chaque icône  active doit avoir un capteur qui lui est associé. Pour attribuer un
-capteur à une position de l'icône, faites glisser une ligne de la Table Capteur à l'endroit
-dans l'onglet icône  à un mplacement intitulée "indefini". Lorsque la ligne du capteur est
-tombé sur l'étiquette, il affiche le nom du capteur.</p>
+<p>Chaque ic&#244;ne active doit avoir un capteur qui lui est associ&#233;. Pour attribuer un
+capteur &#224; une position de l'ic&#244;ne, faites glisser une ligne du Tableau Capteur &#224; l'endroit
+dans l'onglet ic&#244;ne &#224; un emplacement intitul&#233; "ind&#233;fini". Lorsque la ligne du capteur est
+tomb&#233; sur l'&#233;tiquette, il affiche le nom du capteur.</p>
 
-<p> Lorsque toutes les icônes actives sont affectées" aux capteurs, le bouton <b> Ajouter au Panneau</b>
- devient actif et il peut être appuyé pour installer le multicapteurs
+<p> Lorsque toutes les ic&#244;nes actives sont affect&#233;es" aux capteurs, le bouton <b> Ajouter au Panneau</b>
+ devient actif et il peut &#234;tre appuy&#233; pour installer le multicapteurs
 dans le panneau.
 
 

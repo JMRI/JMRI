@@ -1,38 +1,43 @@
 <!-- Sidebar -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2012-01-23-->
+<!-- UpDated by Blorec Herv&#233; le 2013-10-08-->
 <html lang="fr">
 
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI accès web</div>
+	    <div style="text-align: center">JMRI acc&#232;s web</div>
 	    <dl>
 
-		<dt><h3><a href="index.shtml">Utilisation de Basee</a></h3></dt>
-		<dd>JMRI a un support incorporé pour voir votre réseau depuis un navigateur web r.
+		<dt><h3><a href="index.shtml">Utilisation de base</a></h3></dt>
+		<dd>JMRI a un support int&#233;gr&#233; pour voir votre r&#233;seau depuis un navigateur web.
 		    <UL>
-		    <LI><dfn><a href="index.shtml#Start">Démarraged</a></dfn>
+		    <LI><dfn><a href="index.shtml#Start">D&#233;marrage</a></dfn>
 		    <LI><dfn><a href="index.shtml#Configure">Configuration</a></dfn>
 		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="MiniServer.shtml" Configuration Avancée</a></h3></dt>
-		<dd>Le suppotr incorporé de JMRI doit être reconfiguré pour plusieurs extensionst.
+		<dt><h3><a href="WebServer.shtml"> Configuration Avanc&#233;e</a></h3></dt>
+		<dd>D&#233;tails du support int&#233;gr&#233; de JMRI.
 		    <UL>
-		    <LI><dfn><a href="MiniServer.shtml">Miniserver</a></dfn>
+		    <LI><dfn><a href="WebServer.shtml">Serveur Web JMRI</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3>Advanced Uses</h3></dt>
-		<dd> Lescomposants web JMRI peuvent être utilisés sur votre propre serveur web .
-		    <UL>
-		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn>
+		<dt><h3>Serlets</h3></dt>
+		<dd> D&#233;tails des composants web de JMRI .
+		 <UL>
+		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
+		    <LI><dfn><a href="RosterServlet.shtml">Liste servlet</a></dfn></li>
+		    <LI><dfn><a href="PanelServlet.shtml">Panneau servlet</a></dfn></li>
+		    <LI><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
+		    <LI><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
 		    </UL>
 		</dd>
 
 	    </dl>
+   
 
 	</div> <!-- closes #side -->
 

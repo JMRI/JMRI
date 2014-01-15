@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Apps.shtml,v 1.10 2010/03/05 00:05:12 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-03--> 
+<!-- $Id: Apps.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-10-09--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Preferences Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,40 +24,40 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Fenêtre Principale</H1>
+<H1>JMRI: Fen&#234;tre Principale</H1>
 
-La fenêtre principale JMRI est celle où vous obtenez
-accès à toutes les fonctionnalités JMRI.
+La fen&#234;tre principale JMRI est celle o&#249; vous obtenez
+acc&#232;s &#224; toutes les fonctionnalit&#233;s JMRI.
 
 <p>
-Aide pour les fenêtres principales particulières:
+Aide pour les fen&#234;tres principales particuli&#232;res:
 <ol>
 <li><a href="DecoderPro/DecoderPro.shtml">DecoderPro</a>
 <li><a href="PanelPro/PanelPro.shtml">PanelPro</a>
 </ol>
 
 <p>
-Aide pour des menus spếcifiques:
+Aide pour des menus sp&#233;cifiques:
 <ul>
-<li- (<a href="TabpourbedPreferences.shtml">Préférences</a>)
+<li- (<a href="TabpourbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
 <li><a href="../jmri/jmrit/ToolsMenu.shtml">Outils</a>
 <li><a href="../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
 <li><a href="../jmri/jmrit/display/PanelMenuHelp.shtml">Panneaux</a>
-<li>(Menus spécifiques pour votre connexion à une mise en page apparaîtront ici
-<li><a href="../../package/jmri/jmrit/DebugMenu.shtml">Débogage</a>
-<li>Fenêtre - Affiche les fenêtres actuellement disponibles
+<li>(Menus sp&#233;cifiques pour votre connexion &#224; un r&#233;seau appara&#238;tront ici
+<li><a href="../../package/jmri/jmrit/DebugMenu.shtml">D&#233;bogage</a>
+<li>Fen&#234;tre - Affiche les fen&#234;tres actuellement disponibles
      <ul>
-<li> Réduire - réduit la fenêtre actuelle, elle se cache.
+<li> R&#233;duire - r&#233;duit la fen&#234;tre actuelle, elle se cache.
 </ul>
 Aide <li>
    <ul>
-   <li> Aide Fenêtre - Ouvre une page d'aide spécifique à la fenêtre courante. Pour la fenêtre principale, c'est cette page.
-   <li> Aide Générale  - Ouvre la page d'aide principale JMRI
+   <li> Aide Fen&#234;tre - Ouvre une page d'aide sp&#233;cifique &#224; la fen&#234;tre courante. Pour la fen&#234;tre principale, c'est cette page.
+   <li> Aide G&#233;n&#233;rale  - Ouvre la page d'aide principale JMRI
    <li> Licence  - Affiche la licence JMRI.
-   <li> Emplacements - Montrer où les répertoires et les préférences du programme JMRI sont situés
-   <li> Contexte - Affiche des informations sur votre configuration JMRI qui pourraient être utiles
-             quand quelqu'un essaie de vous aider à résoudre un problème.
-   <li> Téléchargement Infos de débogage - Ouvre une fenêtre de téléchargement pour info débogage .
+   <li> Emplacements - Montrer o&#249; les r&#233;pertoires et les pr&#233;f&#233;rences du programme JMRI sont situ&#233;s
+   <li> Contexte - Affiche des informations sur votre configuration JMRI qui pourraient &#234;tre utiles
+             quand quelqu'un essaie de vous aider &#224; r&#233;soudre un probl&#232;me.
+   <li> T&#233;l&#233;chargement Infos de d&#233;bogage - Ouvre une fen&#234;tre de t&#233;l&#233;chargement pour info d&#233;bogage .
       </ul>
 </ul>
 

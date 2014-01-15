@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LItinéraires.shtml,v 1.1 2009/05/02 04:09:08 pete_cressman Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-30-->
+<!-- $Id: LRoutes.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-24-->
 <html lang="fr">
 <head>
   <TITLE>
- 	JMRI: LItinéraire Documentation
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+ 	JMRI: LItin&#233;raire Documentation
+ </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
   <META content="Pete Cressman" name=Author>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -31,194 +31,190 @@
     <div id="mainContent">
 
 
-<H2>JMRI: Documentation LItinéraire </H2>
+<H2>JMRI: Documentation LItin&#233;raire</H2>
 
-<h3>Comment LItinéraire Diffère d'Itinéraires</h3>
+<h3>Comment LItin&#233;raires Diff&#232;re d'Itin&#233;raires</h3>
 
-LItinéraires étends les capacités d'Itinéraires. Lumières et TêteSignaux
-sont inclus dans la collection des Aiguillages et/ou des Capteurs dont les états peuvent être définis tous à la fois et utilisés pour la commande de l'itinéraire. Comme avec les Itinérairess, quand un LItinéraire est déclenché, un son peut être joué, ou un script peut être exécuté. LItinéraires sont capable d'exécuter toutes les tâches que peuvent faire les itinéraires. Pour plus de détails et d'exemples consulter le <a href="ItinérairesItinéraires.shtml">  documentation principale Itinéraires </a>.
+LItin&#233;raires &#233;tends les capacit&#233;s d'Itin&#233;raires. Lumi&#232;res et Têtes Signaux
+sont inclus dans la collection des Aiguillages et/ou des Capteurs dont les &#233;tats peuvent &#234;tre d&#233;finis tous &#224; la fois et utilis&#233;s pour la commande de l'itin&#233;raire. Comme avec les Itin&#233;rairess, quand un LItin&#233;raire est d&#233;clench&#233;, un son peut &#234;tre jou&#233;, ou un script peut &#234;tre ex&#233;cut&#233;. LItin&#233;raires sont capable d'ex&#233;cuter toutes les t&#226;ches que peuvent faire les itin&#233;raires. Pour plus de d&#233;tails et d'exemples consulter la <a href="Routes.shtml">  documentation principale Itin&#233;raires</a>.
 </p>
 
-<p>Alors qu'un itinéraire peut être contrôlé par un maximum de trois capteurs et/ou par un aiguillage de contrôle, un LItinéraire peut utiliser n'importe quel nombre ou une combinaison de capteurs, de branchements, de lumières et/ou de TêteSignaux pour contrôler l'"itinéraire".
+<p>Alors qu'un itin&#233;raire peut &#234;tre command&#233; par un maximum de trois capteurs et/ou par un commande d'aiguillage, un LItin&#233;raire peut utiliser n'importe quel nombre ou une combinaison de capteurs, d'aziguillage, de lumi&#232;res et/ou de Têtes Signal pour contr&#244;ler "l'itin&#233;raire".
 </p>
-<p>Les LItinéraires sont mises en œuvre comme un groupe de conditionnels dans un Logix. Cela donne une autre extension des capacités en ce que, ce Logix peut être édité dans l'éditeur de Logix, où les Conditionels peuvent être modifiés ou créés pour préformer d'autres tâches.
+<p>Les LItin&#233;raires sont mises en oeuvre comme un groupe de conditions dans un Logix. Cela donne une autre extension des capacit&#233;s en ce que, ce Logix peut &#234;tre &#233;dit&#233; dans l'&#233;diteur de Logix, o&#249; les Conditions peuvent &#234;tre modifi&#233;es ou cr&#233;&#233;es pour pr&#233;former d'autres t&#226;ches.
  
-Quand un LItinéraire est créé, ou quand il est lu à partir d'un
-fichier de configuration, le LItinéraire est «activé», il est mis en place
-pour surveiller automatiquement les changements des l'état de ses entités de commande. Lorsque
-ces entités changents de la manière spécifiée par l'utilisateur, l'LItinéraire est 'déclenché' et les
-actions sélectionnées par l'utilisateur sont prises - Et si spécifié, un son est joué ou un script est exécuté.
+Quand un LItin&#233;raire est cr&#233;&#233;, ou quand il est lu &#224; partir d'un
+fichier de configuration, le LItin&#233;raire est "activ&#233;", il est mis en place
+pour surveiller automatiquement les changements des &#233;tat de ses entit&#233;s de commande. Lorsque
+ces entit&#233;s changents de la mani&#232;re sp&#233;cifi&#233;e par l'utilisateur, l'LItin&#233;raire est 'd&#233;clench&#233;' et les
+actions s&#233;lectionn&#233;es par l'utilisateur sont prises - Et si sp&#233;cifi&#233;, un son est jou&#233; ou un script est ex&#233;cut&#233;.
 </p>
-<p> La Table LItinéraire contient une colonne 'Activé' . Pour qu'un LItinéraire soit
-déclenché par ses entités de commande,
-il doit être «activé». Pour cela, sa case à cocher dans la colonne'Activé' 
-doit être cochée. Cette case à cocher active/dempêché de se déclencherésactive la mise en œuvre du Logix qui implémente
-l'LItinéraire. </p>
+<p> Le Tableau LItin&#233;raire contient une colonne 'Activ&#233;'. Pour qu'un LItin&#233;raire soit
+d&#233;clench&#233; par ses entit&#233;s de commande,
+il doit &#234;tre "activ&#233;". Pour cela, sa case &#224; cocher dans la colonne 'Activ&#233;' 
+doit &#234;tre coch&#233;e. Cette case &#224; cocher active/d&#233;sactive la mise en oeuvre du Logix qui prends en charge
+l'LItin&#233;raire.</p>
 
 
-<h3>Comment mettre en place pour ajouter ou modifier des LItinéraires: </h3>
+<h3>Comment démarrer pour ajouter ou modifier des LItin&#233;raires:</h3>
 
-<p>D'abord assurez-vous que les tableaux pour les capteurs, les branchements, les lumières et/ou
-TêteSignal contiennent toutes les entités impliquées dans le LItinéraire à définir. Ensuite, sélectionnez <b> le Tableau LItinéraire </b>
-à partir du menu <b> Outils </b> 
-et cliquez sur <b> Ajouter ...</b> au bas de la table pour
-faire apparaître la fenêtre Ajouter/Modifier LItinéraire. </p>
+<p>D'abord assurez-vous que les tableaux pour les capteurs, les aiguillages, les lumi&#232;res et/ou
+Tête Signal contiennent toutes les entit&#233;s impliqu&#233;es dans le LItin&#233;raire &#224; d&#233;finir. Ensuite, s&#233;lectionnez <b>le Tableau LItin&#233;raire</b> 
+&#224; partir du menu <b>Outils</b>  
+et cliquez sur <b>Ajouter ...</b> au bas du tableau pour
+faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
 
-<a name="additinéraire"><H3>Pour ajouter un Nouvel LItinéraire:</H3></a>
+<a name="additin&#233;raire"><H3>Pour ajouter un Nouvel LItin&#233;raire:</H3></a>
 
 <ol>
-	<li><p>Entrez un nom système, tels que «RTX100». tout
-         nom court peut être utilisé à condition qu'il soit différent des nom système
-          des autres LItinéraires . </p>
-<p> Par convention, les noms commencent généralement par les lettres "RTX" pour un
-         LItinéraire. </p>
+	<li><p>Entrez un nom syst&#232;me, tels que "RTX100". tout
+         nom court peut &#234;tre utilis&#233; &#224; condition qu'il soit diff&#233;rent des nom syst&#232;me
+          des autres LItin&#233;raires .</p>
+<p> Par convention, les noms commencent g&#233;n&#233;ralement par les lettres "RTX" pour un
+         LItin&#233;raire.</p>
 </li>
-<p> <li> Entrez un nom utilisateur. Toute chaîne de caractères qui est différente
-         du nom utilisateur des autres LItinéraires est acceptée, mais il est
-         sage d'utiliser une chaîne qui décrit l'utilisation prévue de l'LItinéraire.</p>
+<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
+         du nom utilisateur des autres LItin&#233;raires est accept&#233;e, mais il est
+         sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'LItin&#233;raire.</p>
 	</li>
-	<li>  Notez les quatre onglets sous la barre de menu. Sélectionnez l'onglet étiqueté
-         Actions <b> (sortie) </b>. Celui-ci affiche un tableau avec tous les
-         Capteurs,les aiguillages, les lumières et/ou TêteSignaual que l'utilisateur a défini
+	<li>  Notez les quatre onglets sous la barre de menu. S&#233;lectionnez l'onglet &#233;tiquet&#233;
+         <b>Actions (sortie)</b>. Celui-ci affiche un tableau avec tous les
+         Capteurs,les Aiguillages, les Lumi&#232;res et/ou Tête Signal que l'utilisateur a d&#233;fini
          dans leurs tableaux respectifs.
 </li>
-<p> <li> Sélectionnez les Entités devant être incluses pour les actions à prendre dans l'
-         LItinéraire de la liste en cliquant sur la case dans la colonne <b> Inclure </b>. Pour chaque élément inclus,
-         utilisez la liste déroulante dans la colonne <b>Déterminer Action</b>  pour sélectionner les mesures qui devraient être prises pour l'entité. Notez les quatre onglets sous la barre de menu. Sélectionnez l'onglet étiqueté
-        <b>Actions (sortie)</b>. Celui-ci affiche un tableau avec tous les
-         Capteurs, aiguillages, lumières et/ou TêteSignl que l'utilisateur a défini
-         dans leurs tableaux respectifs. Par exemple,
-         un aiguillage inclut peut être «Réglé Direct», «Réglé Dévié» ou
+<p> <li> S&#233;lectionnez les Entit&#233;s devant &#234;tre incluses pour les actions &#224; prendre dans le
+         LItin&#233;raire de la liste en cliquant sur la case dans la colonne <b>Inclure</b>. Pour chaque &#233;l&#233;ment inclus,
+         utilisez la liste d&#233;roulante dans la colonne <b>D&#233;terminer Action</b> pour s&#233;lectionner les mesures qui devraient &#234;tre prises pour l'entit&#233;.. Par exemple,
+         un aiguillage inclut peut &#234;tre "R&#233;gl&#233; Direct", "R&#233;gl&#233; D&#233;vi&#233;" ou
          "Changements" et un capteur inclut
-         peut être "Réglé Actif", "Réglé Inactifs» ou «Changements"
-         lorsque l'LItinéraire est «Déterminé» - de même pour les feux. une
-         Têtes Signal incluse peut être réglée à l'une quelconque
-         de ses «apparences». Ne vous inquiétez pas si tout n'est pas
-         parfait. Il est facile de modifier ces informations ultérieurement.</p>
+         peut &#234;tre "R&#233;gl&#233; Actif", "R&#233;gl&#233; Inactif" ou "Changements"
+         lorsque le LItin&#233;raire est "D&#233;termin&#233;" - de m&#234;me pour les feux. une
+         Tête Signal incluse peut &#234;tre r&#233;gl&#233;e &#224; l'une quelconque
+         de ses "apparences". Ne vous inqui&#233;tez pas si tout n'est pas
+         parfait. Il est facile de modifier ces informations ult&#233;rieurement.</p>
 	</li>
 	<li>
 	<p> Notez que l'onglet 'Actions (sortie) "vous permet d'afficher
-         «Toutes» les entités ou juste le petit «inclus». C'
-         est seulement pour votre convenance pour vérifier que toutes les entités désirées
-          ont été inscrites; elle n'affecte pas l'entrée des
-         informations. </p>
+         "Toutes" les entit&#233;s ou seulement celles "incluses". C'
+         est seulement pour votre convenance pour v&#233;rifier que toutes les entit&#233;s d&#233;sir&#233;es
+          ont &#233;t&#233; inscrites; elle n'affecte pas l'entr&#233;e des
+         informations.</p>
 </li>
 <li>
-         <p> Ensuite sélectionnez l'onglet intitulé
-         <b> Déclencheurs/Commandes (entrée) </b>. Celui-ci affiche également une table avec tous les
-         Capteurs, aiguillages, lumières et/ou Tête Signal que l'utilisateur a défini
+         <p> Ensuite s&#233;lectionnez l'onglet intitul&#233;
+         <b>D&#233;clencheurs/Commandes (entr&#233;e)</b>. Celui-ci affiche &#233;galement un tableau avec tous les
+         Capteurs, Aiguillages, Lumi&#232;res et/ou Tête Signal que l'utilisateur a d&#233;fini
          dans leurs tableaux respectifs.   
-	<li><p>Sélectionnez l'entité devant être incluse pour la commande (par ex:Déclencheur) du LItinéraire de la liste en cliquant sur la case dans la colonne <b> Inclure </b>. Pour chaque élément inclus, utilisez la case dans la colonne<b> État du déclencheur </b> dans la liste déroulante pour sélectionner l'état qui doit déclencher l'entité. Par exemple, un aiguillage inclus peut être réglé pour déclencher «Sur Direct», «Sur Dévié» ou "sur le changement ». Elle permettra d'éviter le déclenchement lorsque l'aiguillage est dévié si "veto lorsque Dévié" est sélectionné ou empêcher le déclenchement lorsqu'il est direct, si " veto lorsque Direct" est sélectionné. Les sélections sont similaires pour un capteur inclus ou une Lumière. Une Tête Signal incluse a le choix de "On" pour chaqu'une de ses apparitions et des choix de "véto lorsque" pour chaque aspect.
+	<li><p>S&#233;lectionnez l'entit&#233; devant &#234;tre incluse pour la commande (par ex:D&#233;clencheur) du LItin&#233;raire de la liste en cliquant sur la case dans la colonne <b>Inclure</b>. Pour chaque &#233;l&#233;ment inclus, utilisez la case dans la colonne <b>&#201;tat du d&#233;clencheur</b> dans la liste d&#233;roulante pour s&#233;lectionner l'&#233;tat qui doit d&#233;clencher l'entit&#233;. Par exemple, un aiguillage inclus peut &#234;tre r&#233;gl&#233; pour d&#233;clencher "Sur Droit", "Sur D&#233;vi&#233;" ou "sur le Changement ". Elle permettra d'&#233;viter le d&#233;clenchement lorsque l'aiguillage est d&#233;vi&#233; si "veto lorsque D&#233;vi&#233;" est s&#233;lectionn&#233; ou emp&#234;cher le d&#233;clenchement lorsqu'il est droit, si " veto lorsque Droit" est s&#233;lectionn&#233;. Les s&#233;lections sont similaires pour un Capteur inclus ou une Lumi&#232;re. Une Têtee Signal incluse a le choix de "On" pour chaqu'une de ses apparences et des choix de "v&#233;to lorsque" pour chaque apparence.
 	</li>
-        <li>Cet onglet a également des boutons radio «Tout» et «inclus» qui opèrent d'une manière semblable à l'onglet précédent.
+        <li>Cet onglet a &#233;galement des boutons radio "Tout" et "inclus" qui op&#232;rent d'une mani&#232;re semblable &#224; l'onglet pr&#233;c&#233;dent.
 </li>
-         <p> <li> Ensuite, sélectionnez l'onglet étiqueté  <b>Alignement/Verrouillage/ etc. </b>.
-</ p> </li>
-<p> <li> Si vous voulez que le LItinéraire joue un son quand se il déclenche,
+         <p> <li> Ensuite, s&#233;lectionnez l'onglet &#233;tiquet&#233;  <b>Alignement/Verrouillage/ etc.</b> .
+</ p></li>
+<p> <li> Si vous voulez que le LItin&#233;raire joue un son quand se il d&#233;clenche,
          entrez le nom de fichier d'un fichier son dans la boite texte suivante "Jouer fichier Son"
-         . En cliquant <b> Déterminer </b> fera apparaître un dialogue de sélection de fichiers
-          pour aider à localiser le fichier. Une fois le fichier localisé, cliquez 
-         sur son nom dans la boîte de dialogue qui va le copier, complétez avec le chemin, dans
-         la zone de texte. </p>
+        . En cliquant <b>D&#233;terminer</b> fera appara&#238;tre un dialogue de s&#233;lection de fichiers
+          pour aider &#224; localiser le fichier. Une fois le fichier localis&#233;, cliquez 
+         sur son nom dans la bo&#238;te de dialogue qui va le copier, compl&#233;tez avec le chemin, dans
+         la zone de texte.</p>
 	</li>
 	<li>
-	<p> De même, si vous voulez un script à exécuter lorsque le LItinéraire déclenche, entrez son nom de fichier dans la boîte de texte intitulée «Exécuter le script». le bouton <b>Valider </b> peut être utilisé comme ci-dessus pour aider à la saisie des informations du fichier script. </p>
+	<p> De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque le LItin&#233;raire d&#233;clenche, entrez son nom de fichier dans la bo&#238;te de texte intitul&#233;e "Ex&#233;cuter le script". Le bouton <b>Valider</b>  peut &#234;tre utilis&#233; comme ci-dessus pour aider &#224; la saisie des informations du fichier script.</p>
 </li>
   <li>
-  <p> Vérification des boites à cochez <b> Définir verrouillages</b> qui verrouille les aiguillages inclus à partir de l'onglet «Actions (sortie)" lorsque les entités depuis «Déclencheur/Contrôle (entrée)« déclenchent. Lorsque ces entités ne sont plus de déterminer en état de déclenchement, les aiguillages ci-dessus sont déverrouillés.
-         Pour plus d'informations sur les verrrouillages d'aiguillage, voir<a href="../../package/jmri/jmrit/beantable/ItinéraireAddEdit.shtml#aiguillage  verrouiller feature"> aiguillage fonction de verrouillage </a>        .</p>
+  <p> V&#233;rification des boites &#224; cochez <b>D&#233;finir verrouillages</b> qui verrouille les aiguillages inclus &#224; partir de l'onglet "Actions (sortie)" lorsque les entit&#233;s depuis "D&#233;clencheurs/Commandes (entr&#233;e)" d&#233;clenchent. Lorsque ces entit&#233;s ne sont plus pour d&#233;terminer en &#233;tat de d&#233;clenchement, les aiguillages ci-dessus sont d&#233;verrouill&#233;s.
+         Pour plus d'informations sur les verrrouillages d'aiguillage, voir<a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml#fonction verrouillage aiguillage"> aiguillage fonction de verrouillage</a>        .</p>
  	</li>
  	<li>
-        <p>Le tableau de l'onglet "Alignement/Verrouillages/etc."  répertorie tous les capteurs définis dans le tableau capteur. Un capteur (ou capteurs) peut être choisi pour devenir actif lorsque les actions des entités incluses à partir de l'onglet "Actions (sortie)" sont terminées. Vous pouvez choisir d'indiquer l'«alignement» des capteurs, aiguillages, les lumières et/ou Tête Signal en groupes séparés ou pour tous ensembles. Si les actions de groupe sont achevées par des moyens autres que le déclencheur LItinéraire, le capteur indiquera toujours «alignement».
-  </p>
-  <p> <li> Enfin, sélectionnez l'onglet intitulé <b> LItinéraire basique </b> et retour au premier onglet.
-        </p>   
-        </li>
-<p> <li> Cliquez sur le bouton <b> Ajouter LItinéraire </b> situé au bas de la fenêtre. Si tout va bien, un message indiquant "LItinéraire nouveau ajouté ..." sera affiché dans la boîte de notes en bas de l'onglet. S'il y a des problèmes avec quoi que ce soit, un message d'erreur s'affichera dans la boîte de notes; vous devrez alors corriger l'erreur et cliquez sur <b>Ajouter LItinéraire </b> à nouveau </p> </li>.</ol>
-<p>Pour sortir de l'addition d'un LItinéraire, pressez le bouton<b>Cancel</b>.
+        <p>Le tableau de l'onglet "Alignement/Verrouillages/etc."  r&#233;pertorie tous les capteurs d&#233;finis dans le Tableau Capteur. Un capteur (ou capteurs) peut &#234;tre choisi pour devenir actif lorsque les actions des entit&#233;s incluses &#224; partir de l'onglet "Actions (sortie)" sont termin&#233;es. Vous pouvez choisir d'indiquer l'"alignement" des Capteurs, Aiguillages, les Lumi&#232;res et/ou Tête Signal en groupes s&#233;par&#233;s ou pour tous ensembles. Si les actions de groupe sont achev&#233;es par des moyens autres que le d&#233;clencheur LItin&#233;raire, le capteur indiquera toujours "alignement".
+ </p>
+  <p> <li> Enfin, s&#233;lectionnez l'onglet intitul&#233; <b>LItin&#233;raire Basique</b>  et retour au premier onglet.
+       </p>   
+       </li>
+<p> <li> Cliquez sur le bouton <b>Ajouter LItin&#233;raire</b>  situ&#233; au bas de la fen&#234;tre. Si tout va bien, un message indiquant "LItin&#233;raire nouveau ajout&#233; ..." sera affich&#233; dans la bo&#238;te de notes en bas de l'onglet. S'il y a des probl&#232;mes avec quoi que ce soit, un message d'erreur s'affichera dans la bo&#238;te de notes; vous devrez alors corriger l'erreur et cliquez sur <b>Ajouter LItin&#233;raire</b>  &#224; nouveau</p></li>.</ol>
+<p>Pour sortir de l'addition d'un LItin&#233;raire, pressez le bouton<b>Cancel</b>.
 
-<h3>Pour Modifier un LItinéraire:</h3>
+<h3>Pour Modifier un LItin&#233;raire existant:</h3>
 
 <ol>
  
-	<li>Modifier un LItinéraire existant peut être lancer selon les deux façons suivantes:
+	<li>Modifier un LItin&#233;raire existant peut &#234;tre lancer selon les deux fa&#231;ons suivantes:
 <ul>
-<li> Cliquez sur un bouton <b> Modifier </b> LItinéraire dans le tableau LItinéraire. </li>
-<li> Entrez le nom  système de l'LItinéraire à être édité dans la fenêtre Ajouter/Editer LItinéraire et cliquez sur le bouton <b> Modifier LItinéraire </b> situé au bas de la fenêtre Ajouter/modifier LItinéraire. Ce doit être le même que le nom système indiqué dans le tableau LItinéraire. </Li>
+<li> Cliquez sur un bouton <b>Modifier</b>  LItin&#233;raire dans le tableau LItin&#233;raire.</li>
+<li> Entrez le nom  syst&#232;me de l'LItin&#233;raire &#224; modifier dans la fen&#234;tre Ajouter/Editer LItin&#233;raire et cliquez sur le bouton <b>Modifier LItin&#233;raire</b> situ&#233; au bas de la fen&#234;tre Ajouter/Modifier LItin&#233;raire. Ce doit &#234;tre le m&#234;me que le nom syst&#232;me indiqu&#233; dans le tableau LItin&#233;raire.</Li>
 </ul>
-	Les boutons<b> Ajouter LItinéraire </b> et <b> Modifier LItinéraire </b>  dans la fenêtre Ajouter/Modifier LItinéraire vont changer en <b> Supprimer LItinéraire </b>, <b> Mise à jour LItinéraire </b> et <b> Annuler </b>. </li>
-<li> Effectuez les modifications ou les ajouts que vous devez à l'information dans
-la boîte de dialogue. Notez que le nom du système de l'LItinéraire édité ne peut pas être changé, mais le nom utilisateur peut être changé. Les autres éléments sont décrits ci-dessus <A HREF="#additinéraire"> </a>. </Li>
-<li> Après avoir modifié les informations LItinéraire, cliquez sur Mise à Jour <b>
-LItinéraire </b> pour changer le LItinéraire sélectionné. Si tout va bien, un
-message indiquant «LItinérairemis à jour...» sera affiché dans la boîte de notes en bas de la fenêtre. S'il y a un problème, un message d'erreur s'affiche dans la boîte de notes, et la mise à jour est arrêtée pour vous permettre de corriger l'erreur et cliquez sur Mise à Jour <b> LItinéraire </b> à nouveau.</li>
-<li> Cliquez <b> Annuler </b> pour quitter le mode édition sans changer le LItinéraire sélectionné. Si la fenêtre Ajouter/Modifier LItinéraire est rejetée (fermée) alors que dans le mode édition, <b> Annuler </b> est automatiquement sélectionné, et aucune modification n'est apportée à l'LItinéraire sélectionné. </Li>
+	Les boutons<b>Add LRoute</b>  et <b>Edit LRoute</b>  dans la fen&#234;tre Ajouter/Modifier LItin&#233;raire vont changer en <b>Delete LRoute</b> , <b>>Update LRoute</b>  et <b>Annuler</b> .</li>
+<li> Effectuez les modifications ou les ajouts que vous devez &#224; l'information dans
+la bo&#238;te de dialogue. Notez que le nom syst&#232;me de l'LItin&#233;raire &#233;dit&#233; ne peut pas &#234;tre chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont d&#233;crits ci-dessus <A HREF="#adddroute"></a>.</Li>
+<li> Apr&#232;s avoir modifi&#233; les informations LItin&#233;raire, cliquez sur  <b>Update LRoute</b>  pour changer le LItin&#233;raire s&#233;lectionn&#233;. Si tout va bien, un
+message indiquant "LRoute updated.." sera affich&#233; dans la bo&#238;te de notes en bas de la fen&#234;tre. S'il y a un probl&#232;me, un message d'erreur s'affiche dans la bo&#238;te de notes, et la mise &#224; jour est arr&#234;t&#233;e pour vous permettre de corriger l'erreur et cliquez sur <b>Update LRoute</b> &#224; nouveau.</li>
+<li> Cliquez <b>Cancel</b> pour quitter le mode &#233;dition sans changer le LItin&#233;raire s&#233;lectionn&#233;. Si la fen&#234;tre Ajouter/Modifier LItin&#233;raire est rejet&#233;e (ferm&#233;e) alors que dans le mode &#233;dition, <b>Cancel</b>  est automatiquement s&#233;lectionn&#233;, et aucune modification n'est apport&#233;e au LItin&#233;raire s&#233;lectionn&#233;.</Li>
 </ol>
-<p> Pour supprimer le LItinéraire, appuyez sur le bouton <b> Supprimer LItinéraire </b>.
+<p> Pour supprimer le LItin&#233;raire, appuyez sur le bouton <b>Delete LRoute</b> .
 	
 
-<h3>Pour enregistrer LItinéraires sur le Disque:</h3>
+<h3>Pour enregistrer LItin&#233;raires sur le Disque:</h3>
 
-<p>Les LItinéraires sont enregistrés dans votre fichier de configuration de mise en page, avec les aiguillages, les capteurs, les signaux, les Tête Signal, les lumières, etc. Pour stocker ces informations sur le disque, utilisez <b> Stocker Configuration...</b> dans le menu <b> fichier</b> en haut de la Table LItinéraire (ou d'autres tableaux à partir du menu Outils), ou sélectionnez  <b>Stocker Configuration ...</b> dans le menu <b>Panneau </b> . Notez que l'état activé/désactivé de chaque LItinéraire n'est pas enregistré dans le fichier de configuration. Lorsque les LItinéraires sont chargés à partir du fichier de configuration, ils sont tous activés.
+<p>Les LItin&#233;raires sont enregistr&#233;s dans votre fichier de configuration de r&#233;seau, avec les aiguillages, les capteurs, les Têtes signal, les lumi&#232;res, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker Configuration...</b> dans le menu <b>fichier</b> en haut du Tableau LItin&#233;raire (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez <b>Stocker Configuration ...</b> dans le menu <b>Panneau</b>. Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#233; de chaque LItin&#233;raire n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les LItin&#233;raires sont charg&#233;s &#224; partir du fichier de configuration, ils sont tous activ&#233;s.
 
-<a name="sensorlogic"><H3>Commander des LItinéraires depuis des Entités de Commande/Déclenchement</H3></a>
+<a name="sensorlogic"><H3>Commander des LItin&#233;raires depuis des Entit&#233;s de Commande/D&#233;clenchement</H3></a>
 
-Le fonctionnement d'un LItinéraire peut être commandé par de nombreux moyens: des capteurs reliés à des détecteurs d'occupation ou des commutateurs sur la mise en page, ou les feux dans le cas du C/MRI. Même les apparences des TêteSignaux peuvent commander l'itinéraire. Les capteurs et les aiguillages peuvent être des entités réelles ou internes.
+Le fonctionnement d'un LItin&#233;raire peut &#234;tre command&#233; par de nombreux moyens: des capteurs reli&#233;s &#224; des d&#233;tecteurs d'occupation ou des commutateurs sur le r&#233;seau, ou les feux dans le cas du C/MRI. M&#234;me les apparences des Têtes Signaux peuvent commander l'itin&#233;raire. Les capteurs et les aiguillages peuvent &#234;tre des entit&#233;s r&#233;elles ou internes.
 <P>
-Par exemple, par défaut lorsque l'un des capteurs inclus passe à l'état actif, le LItinéraire est établi.
-Cela pourrait être utilisé pour définir un LItinéraire quand un bloc est devenu occupé, ou quand un bouton a été poussé.
+Par exemple, par d&#233;faut lorsque l'un des capteurs inclus passe &#224; l'&#233;tat actif, le LItin&#233;raire est &#233;tabli.
+Cela pourrait &#234;tre utilis&#233; pour d&#233;finir un LItin&#233;raire quand un canton est devenu occup&#233;, ou quand un bouton a &#233;t&#233; pouss&#233;.
 <P>
-Chaque capteur commande a un "mode" qui lui est associé, qui peut être:
+Chaque capteur commande a un "mode" qui lui est associ&#233;, qui peut &#234;tre:
 <DL>
-<DT> "Sur Actif" </dt> <dd> La méthode par défaut, le LItinéraire est déclenché lorsque le capteur passe actif, par exemple "Dévié aiguillage 12 lorsque le capteur 12 devient actif "</dd>
-<DT> "Sur Inactif" </DT>  <DD> Le LItinéraire est déclenché lorsque le capteur passe inactif. Par exemple, en utilisant le LItinéraire ci-dessus, plus une seconde LItinéraire "aiguillage 12 Dévié lorsque le capteur 12 devient Inactif" aura aiguillage 12 suivi d'un interrupteur du TCO relié au capteur 12, comme il est retourné en arrière. </Dd></DD>
+<DT> "Sur Actif"</dt> <dd> La m&#233;thode par d&#233;faut, le LItin&#233;raire est d&#233;clench&#233; lorsque le capteur passe actif, par exemple "D&#233;vi&#233; aiguillage 12 lorsque le capteur 12 devient actif "</dd>
+<DT> "Sur Inactif"</DT>  <DD> Le LItin&#233;raire est d&#233;clench&#233; lorsque le capteur passe inactif. Par exemple, en utilisant le LItin&#233;raire ci-dessus, plus une seconde LItin&#233;raire "aiguillage 12 D&#233;vi&#233; lorsque le capteur 12 devient Inactif" aura aiguillage 12 suivi d'un interrupteur du TCO reli&#233; au capteur 12, comme il est retourn&#233; d'avant en arri&#232;re.</Dd></DD>
 
-<DT> «Sur changement» </DT>  <DD> LItinéraire est déclenché lorsque le capteur d'état change, soit d'actif à inactif ou inactif à actif. </Dd>
-<DT> "Veto lorsque Active" </dt> <dd> Si ce capteur est actif, le LItinéraire ne déclenchera pas, peu importe ce que stipule la commande d'autres entités pour le changement. Cela a plusieurs utilisations, par exemple pour empêcher de dévié t un aiguillage pendant le passage d'un train, lorsque le bloc montreoccupé </ dd>
+<DT> "Sur Changement"</DT>  <DD> LItin&#233;raire est d&#233;clench&#233; lorsque le capteur d'&#233;tat change, soit d'actif &#224; inactif ou inactif &#224; actif.</Dd>
+<DT> "Veto lorsque Active"</dt> <dd> Si ce capteur est actif, le LItin&#233;raire ne d&#233;clenchera pas, peu importe ce que stipule la commande d'autres entit&#233;s pour le changement. Cela a plusieurs utilisations, par exemple pour emp&#234;cher de d&#233;vi&#233; un aiguillage pendant le passage d'un train, lorsque le canton est montr&#233; occup&#233;</dd>
 
-<DT> "Veto Lorsque inactif" </dt> <dd> Comme veto actif, mais la logique est inversée. </Dd><DT>
+<DT> "Veto Lorsque inactif"</dt> <dd> Comme veto actif, mais la logique est invers&#233;e.</Dd><DT>
 
 </DL>
-<p>Semblable à des capteurs de commandee indiqués ci-dessus, un aiguillage de commande a un "mode" qui lui est associé, qui peut être:
+<p>Semblable &#224; des capteurs de commandeeindiqu&#233;s ci-dessus, un aiguillage de commande a un "mode" qui lui est associ&#233;, qui peut &#234;tre:
 <DL>
-<DT> "Sur Direct" </dt> <dd> La méthode par défaut, le LItinéraire est déclenché lorsque l'aiguillage passe à l'état Direct. </Dd>
-<DT> "Sur Dévié" </DT> <DD> LItinéraire est déclenché lorsque l'aiguillage passe à l'état Dévié. </dd> <DT> «Sur changement» </DT> <DD> LItinéraire est déclenché lorsque l'état de l'aiguillage change , soit de direct à dévié ou de dévié à direct. </dd> <DT> "Véto lorsque direct" </DT> <DD> Si cet aiguillage est direct, LItinéraire est empêché de se déclencher. </dd> <DT> "Véto lorsque dévié" </DT> <DD> Si cet aiguillage est dévié, LItinéraire est empêchée de déclenchement.</DD>
+<DT> "Sur Droit"</dt> <dd> La m&#233;thode par d&#233;faut, le LItin&#233;raire est d&#233;clench&#233; lorsque l'aiguillage passe &#224; l'&#233;tat Droit.</Dd>
+<DT> "Sur D&#233;vi&#233;"</DT> <DD> LItin&#233;raire est d&#233;clench&#233; lorsque l'aiguillage passe &#224; l'&#233;tat D&#233;vi&#233;.</dd> <DT> "Sur changement"</DT> <DD> LItin&#233;raire est d&#233;clench&#233; lorsque l'&#233;tat de l'aiguillage change , soit de droit &#224; d&#233;vi&#233; ou de d&#233;vi&#233; &#224; droit.</dd> <DT> "V&#233;to lorsque droit"</DT> <DD> Si cet aiguillage est droit, LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher.</dd> <DT> "V&#233;to lorsque d&#233;vi&#233;"</DT> <DD> Si cet aiguillage est d&#233;vi&#233;, LItin&#233;raire est emp&#234;ch&#233;e de se d&#233;clencher.</DD>
 </DL>
 
-<p>De même, les commandes Lumière ont des «modes» qui peuvent être:
+<p>De m&#234;me, les commandes Lumi&#232;re ont des "modes" qui peuvent &#234;tre:
 <DL>
-<DT> "Sur Allumé" </dt> <dd> La méthode par défaut, LItinéraire est déclenché quand la lumière passe à l'état allumé. </Dd> <DT> "Sur pas allumé" </dt> <dd>  LItinéraire est déclenché lorsque la lumière passe à l'état éteint </dd> <dt> "Sur le changement" </DT>  <DD> LItinéraire est déclenché lorsque l'état de la lumière change, soit à partir allumé vers éteint ou éteint vers allumé . </dd> <DT> "Véto Lorsqu'il est allumé" </DT> <DD> Si cette lumière est allumée, LItinéraire est empêché de se déclencher. </dd> <DT> "Véto lorsque Éteint" </DT> <JJ > Si cette lumière n'est pas allumée, le LItinéraire est empêché de se déclencher.</DD>
+<DT> "Sur Allum&#233;"</dt> <dd> La m&#233;thode par d&#233;faut, LItin&#233;raire est d&#233;clench&#233; quand la lumi&#232;re passe &#224; l'&#233;tat allum&#233;.</Dd> <DT> "Sur pas allum&#233;"</dt> <dd>  LItin&#233;raire est d&#233;clench&#233; lorsque la lumi&#232;re passe &#224; l'&#233;tat &#233;teint</dd> <dt> "Sur le changement"</DT>  <DD> LItin&#233;raire est d&#233;clench&#233; lorsque l'&#233;tat de la lumi&#232;re change, soit &#224; partir allum&#233; vers &#233;teint ou &#233;teint vers allum&#233; .</dd> <DT> "V&#233;to Lorsqu'il est allum&#233;"</DT> <DD> Si cette lumi&#232;re est allum&#233;e, LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher.</dd> <DT> "V&#233;to lorsque &#201;teint"</DT> <JJ > Si cette lumi&#232;re n'est pas allum&#233;e, le LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher.</DD>
 </DL>
 
-<p>La commande TêteSignal «modes» diffère quelque peu de ce qui précède.
+<p>Pour La commande Tête Signal les "modes" diff&#232;rent quelque peu de ce qui pr&#233;c&#232;de.
 elle est: <DL>
-<DT> "Sur Rouge" </DT> La <DD> LItinéraire est déclenché lorsque
- le signal passe au Rouge. </dd>
-<DT> "Sur clignotant rouge" </DT>  <DD>Le LItinéraire est déclenché lorsque la signal passe au Rouge Clignotant. </Dd>
-<DT> "Sur Jaune" </DT> La <DD> LItinéraire est déclenché quand le signal passe au Jaune. </dd>
-<DT> "Sur clignotant jaune " </DT>  <DD> Le LItinéraire est déclenché lorsque le signal passe au Jaune Clignotant. </Dd>
-<DT> "Sur Vert" </DT>  <DD>Le LItinéraire est déclenché lorsque le signal passe au Vert. </Dd>
-<DT> "Sur clignotant Vert " </DT> <DD>Le LItinéraire est déclenché lorsque le signal passe au Vert Clignotant. </Dd>
-<DT> "Sur Allumé" </DT>  <DD>Le LItinéraire est déclenché lorsque le signal passe d'Éteint à Allumé. </Dd>
-<DT> "Sur Tenu" </DT> <DD>Le LItinéraire est déclenché quand le signal est mis à Held.</DD>
-<DT><DT> "Véto Lorsque Rouge" </DT>  <DD> LItinéraire est empêché de se déclencher lorsque le signal passe au Rouge. </Dd>
-<DT> "Véto lorsque clignotant rouge" </DT><DD> LItinéraire est empêché de se déclencher lorsque le signal passe au Rouge Clignotant. < Dd>
-<DT> "Véto Quand Jaune" </DT>  <DD> LItinéraire est empêché de se déclencher lorsque le signal passe au Jaune. </Dd>
-<DT> "Véto lorsque Jaune clignotant" </DT> <DD> LItinéraire est empêché de se déclencher lorsque le signal à l'apparence Jaune Clignotant. </Dd>
-<DT> "Véto lorsque verte" </DT> <DD> LItinéraire est empêché de se déclencher lorsque le signal à l'apparence Verte. </Dd>
-<DT> "Véto lorsque Clignotant vert" </DT> <DD> LItinéraire est empêché de se déclencher lorsque le signal à l'apparition Vert Clignotant. </Dd>
-<DT> "Véto Lorsqu'il est allumé" </DT> <DD> LItinéraire est empêché de se déclencher lorsque le signal passe d'Éteint à Allumé . </Dd>
-<DT> "Véto lorsque Tenu" </DT><DD> LItinéraire est empêché de se déclencher lorsque le signal mis à Tenu. </Dd>
+<DT> "Sur Rouge"</DT> La <DD> LItin&#233;raire est d&#233;clench&#233; lorsque
+ le signal passe au Rouge.</dd>
+<DT> "Sur clignotant rouge"</DT>  <DD>Le LItin&#233;raire est d&#233;clench&#233; lorsque la signal passe au Rouge Clignotant.</Dd>
+<DT> "Sur Jaune"</DT> La <DD> LItin&#233;raire est d&#233;clench&#233; quand le signal passe au Jaune.</dd>
+<DT> "Sur clignotant jaune "</DT>  <DD> Le LItin&#233;raire est d&#233;clench&#233; lorsque le signal passe au Jaune Clignotant.</Dd>
+<DT> "Sur Vert"</DT>  <DD>Le LItin&#233;raire est d&#233;clench&#233; lorsque le signal passe au Vert.</Dd>
+<DT> "Sur clignotant Vert "</DT> <DD>Le LItin&#233;raire est d&#233;clench&#233; lorsque le signal passe au Vert Clignotant.</Dd>
+<DT> "Sur Allum&#233;"</DT>  <DD>Le LItin&#233;raire est d&#233;clench&#233; lorsque le signal passe d'&#201;teint &#224; Allum&#233;.</Dd>
+<DT> "Sur Tenu"</DT> <DD>Le LItin&#233;raire est d&#233;clench&#233; quand le signal est mis &#224; Held.</DD>
+<DT><DT> "V&#233;to Lorsque Rouge"</DT>  <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal passe au Rouge.</Dd>
+<DT> "V&#233;to lorsque clignotant rouge"</DT><DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal passe au Rouge Clignotant. < Dd>
+<DT> "V&#233;to Quand Jaune"</DT>  <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal passe au Jaune.</Dd>
+<DT> "V&#233;to lorsque Jaune clignotant"</DT> <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal &#224; l'apparence Jaune Clignotant.</Dd>
+<DT> "V&#233;to lorsque verte"</DT> <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal &#224; l'apparence Verte.</Dd>
+<DT> "V&#233;to lorsque Clignotant vert"</DT> <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal &#224; l'apparition Vert Clignotant.</Dd>
+<DT> "V&#233;to Lorsqu'il est allum&#233;"</DT> <DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal passe d'&#201;teint &#224; Allum&#233; .</Dd>
+<DT> "V&#233;to lorsque Manuel"</DT><DD> LItin&#233;raire est emp&#234;ch&#233; de se d&#233;clencher lorsque le signal mis &#224; Manuel.</Dd>
 </DL>
 
-<p>Notez qu'il y a un ici"»et/ou" implicite. Tous les "veto" des capteurs, les "veto" aiguillages, les "veto" feux et les "veto" signaux  doivent être dans leur état de non-veto  et qu'au moins l'une des entités doit déclencher le changement approprié  pour le LItinéraire à régler.
-Un seul "veto" aiguillage, "veto" capteur," veto" de lumière  ou l'apparition de "veto" signaux » permettra d'éviter à LItinéraire d'être déclenché. L'expression logique définie par  LItinéraire est que le «non-droit de veto des entités sont relier par des OR' comme une clause et les " veto" des entités sont associées par des ET comme une clause. Les deux clauses sont alors rejoints par un opérateur ET.
+<p>Notez qu'il y a un ici""et/ou" implicite. Tous les "veto" des capteurs, les "veto" aiguillages, les "veto" feux et les "veto" signaux  doivent &#234;tre dans leur &#233;tat de non-veto  et qu'au moins l'une des entit&#233;s doit d&#233;clencher le changement appropri&#233;  pour le LItin&#233;raire &#224; r&#233;gler.
+Un seul "veto" aiguillage, "veto" capteur," veto" de lumi&#232;re  ou l'apparition de "veto" signaux " permettra d'&#233;viter &#224; LItin&#233;raire d'&#234;tre d&#233;clench&#233;. L'expression logique d&#233;finie par LItin&#233;raire est que le "non-droit de veto des entit&#233;s sont relier par des OR' comme une clause et les " veto" des entit&#233;s sont associ&#233;es par des ET comme une clause. Les deux clauses sont alors rejoints par un op&#233;rateur ET.
 </p>
 
-<a name="setitinérairebehavior"><H3>Définition des Préférences  pour Correspondre à Celles des Itinéraires</H3></a>
+<a name="setroutebehavior"><H3>D&#233;finition des Pr&#233;f&#233;rences pour Correspondre &#224; Celles des Itin&#233;raires</H3></a>
   
-<p>Dans Itinéraires, les "véto" des entités sont passifs. C'est, bien que l'état du "véto"
- empêche l'Itinéraire de déclencher, quand l'Etat du "véto"  est à gauche, il ne déclenche pas l'Itinéraire. D'autre part, en général une condition Logix ont tous les état de ses variables actions de déclenchement quand ils changent. Les boutons radio sur l'onglet "LItinéraire base"<b> Itinéraire type Logix </b> </p> donne des option. Si vous voulez que le LItinéraire s'effectue de  manière passive comme le fait un Itinéraire , appuyez sur le bouton <b> Vieux</b> . Si vous voulez que le LItinéraire déclenche ses actions quand tout les "«droit de veto" sont retirés, appuyez sur le bouton <b> Nouveau </b> .
+<p>Dans Itin&#233;raires, les "v&#233;to" des entit&#233;s sont passifs. C'est, bien que l'&#233;tat du "v&#233;to"
+ emp&#234;che l'Itin&#233;raire de d&#233;clencher, quand l'Etat du "v&#233;to"  est &#224; gauche, il ne d&#233;clenche pas l'Itin&#233;raire. D'autre part, en g&#233;n&#233;ral une condition Logix &#224; tous les &#233;tat de ses variables qui d&#233;clenchent les actions quand ils changent. Les boutons radio sur l'onglet "LItin&#233;raire base"<b>Route Logix Type</b> </p> donne des option. Si vous voulez que le LItin&#233;raire s'effectue de  mani&#232;re passive comme le fait un Itin&#233;raire , appuyez sur le bouton <b>Old</b>. Si vous voulez que le LItin&#233;raire d&#233;clenche ses actions quand tout les ""droit de veto" sont retir&#233;s, appuyez sur le bouton <b>New</b>  .
 </p>  
   
 <!--#include virtual="/Footer" -->

@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id: Names.shtml,v 1.11 2011/03/08 03:45:36 ken_c Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: Names.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-18-->
 <title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -22,76 +22,75 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Noms Système Powerline
+JMRI: Noms Syst&#232;me Powerline
 </h1>
 
-Les entrées individuelles (capteurs) et sorties (aiguillages et lumières)
+Les entr&#233;es individuelles (Capteurs) et sorties (Aiguillages et lumi&#232;res)
 dans JMRI sont accessibles via des noms.
-Pour plus d'informations sur le régime général, s'il vous plaît voir la
- <a href="../../doc/Technical/Names.shtml"> page désignation </a>
-dans la documentation<a  href="../../doc/Technical/index.shtml"> technique </a>.
+Pour plus d'informations sur le sh&#233;ma g&#233;n&#233;ral, s'il vous pla&#238;t voir la
+ <a href="../../doc/Technical/Names.shtml"> page d&#233;signation</a>
+dans la <a  href="../../doc/Technical/index.shtml"> documentation technique</a>.
 
 <h2>X10</h2>
 
-Les dispositifs X10 sont traités via un «code maison» de A à P,
-et un «Code de périphériques" de 1 à 16.
+Les dispositifs X10 sont trait&#233;s via un "code Maison" de A &#224; P,
+et un "Code de P&#233;riph&#233;riques" de 1 &#224; 16.
 
-<p>Les sorties (lumières ou des aiguillages) dans chaque code maison
-sont numérotées avec leur
-code de l'appareil, par exemple PTA1 est un aiguillage JMRI
- qui parle au dispositif 1 sur le code maison A; PTB3 est un aiguillage
-pour le dispositif 3 sur code maison B; PLP16 est une Lumière JMRI
+<p>Les sorties (Lumi&#232;res ou Aiguillages) dans chaque code maison
+sont num&#233;rot&#233;es avec leur code de l'appareil, par exemple PTA1 est un Aiguillage JMRI
+ qui dialogue avec le dispositif 1 sur le code maison A; PTB3 est un Aiguillage
+pour le dispositif 3 sur code maison B; PLP16 est une Lumi&#232;re JMRI
 pour le dispositif 16 sur le code maison P.
 
 <p>
-Si une sortie est appelé comme un aiguillage (le nom commence par PT), vous obtenez seulement On et Off
+Si une sortie est appel&#233;e comme un aiguillage (le nom commence par PT), vous obtenez seulement On et Off
 pour les options de sortie.
 
 <p>
-Une sortie qui est utilisée comme une lumière (le nom commence par PL)
-prendra des intensités variables.
-Cependant, certains périphériques physiques X10 peuvent ne pas supporter de gradation
+Une sortie qui est utilis&#233;e comme une lumi&#232;re (le nom commence par PL)
+prendra des intensit&#233;s variables.
+Cependant, certains p&#233;riph&#233;riques physiques X10 peuvent ne pas supporter de graduation
 
 <p>
-Les entrées (capteurs) sont identifiés par le code maison et le numéro de périphérique
-qui a été rapporté par un autre périphérique X10 comme un capteur de mouvement ou
-pavé de commande de lumière.
-REMARQUE: en raison d'un grand nombre de faux codes due à d'autres utilisateurs X10
-Les capteurs ne sont pas générées automatiquement.
-Ils doivent être inscrits dans la table capteur par l'utilisateur.
+Les entr&#233;es (Capteurs) sont identifi&#233;es par le code maison et le num&#233;ro de p&#233;riph&#233;rique
+qui a &#233;t&#233; rapport&#233; par un autre p&#233;riph&#233;rique X10 comme un capteur de mouvement ou
+pav&#233; de commande de lumi&#232;re.
+REMARQUE: en raison d'un grand nombre de faux codes due &#224; d'autres utilisateurs X10
+Les capteurs ne sont pas g&#233;n&#233;r&#233;es automatiquement.
+Ils doivent &#234;tre inscrits dans la table capteur par l'utilisateur.
 
 <p>
 JMRI configure la carte d'utilisation du Code Maison "A" maintenant.
 Nous finirons par le faire configurable, mais pour l'instant
-cela signifie que les messages d'entrée ne seront seulement reçus
-qu'à partir de périphériques mis au code maison A, de sorte que seuls les capteurs PSA1 à PSA16
+cela signifie que les messages d'entr&#233;e ne seront seulement re&#231;us
+qu'&#224; partir de p&#233;riph&#233;riques mis au code maison A, de sorte que seuls les capteurs PSA1 &#224; PSA16
 vont fonctionner.
 
 <p>
-(Les premières versions du JMRI X10 supportées utilisaient une adresse tout-numérique
+(Les premi&#232;res versions du JMRI X10 mise en ouuvre utilisaient une adresse tout-num&#233;rique
 comme le PT12, sans lettres code de maison, ce qui n'est plus disponible,
-parce qu'il a causé beaucoup trop de confusion
+parce qu'il a caus&#233; beaucoup trop de confusion
 
 
 
 <h2>Insteon</h2>
 
-Les adaptateurs INSTEON sont étiquetés avec un numéro à quatre parties qui ressemble
-à "01.2A.B4". Ce sont juste des chaines aléatoires comme faisant partie de l'utilisateur et le programme est concerné, et
+Les adaptateurs INSTEON sont &#233;tiquet&#233;s avec un num&#233;ro en quatre parties qui ressemble
+&#224; "01.2A.B4". Ce sont juste des chaines al&#233;atoires comme faisant partie de l'utilisateur et le programme est concern&#233;, et
 nous ne faisons aucun effort pour les subdiviser. Vous devrez
 entrer ces noms exactement comme ils apparaissent sur l'appareil que vous
-souhaitez aborder. Ne pas supprimer ou ajouter des zéros, etc
+souhaitez aborder. Ne pas supprimer ou ajouter des z&#233;ros, etc
 
 <p>
-Par exemple, si l'appareil est étiqueté «01.2A.B4»,
-le nom  système de la lumière correspondant est "PL01.2A.B4".
+Par exemple, si l'appareil est &#233;tiquet&#233; "01.2A.B4",
+le nom  syst&#232;me de la lumi&#232;re correspondant est "PL01.2A.B4".
 
-<h3> plus d'information </h3>
+<h3> plus d'information</h3>
 
-Plus d'informations sur le matériel X10 peuvent être trouvées sur le
-(certes désagréable)
+Davantage d'informations sur le mat&#233;riel X10 peuvent &#234;tre trouv&#233;es sur le
+(certes d&#233;sagr&#233;able)
 <a href="http://www.x10.com"> site Web X10 </a>.
-En savoir plus sur l'information <p> <a href= "http://www.x10.com/support/technology1.htm"> X10 Technologie des Courants Porteurs (PLC)
+En savoir plus sur l'information <p> <a href= "http://www.x10.com/support/technology1.htm"> Technologie X10 des Courants Porteurs (PLC)
 Technologie. </A> </p>
 <!--#include virtual="/Footer" -->
 </body>

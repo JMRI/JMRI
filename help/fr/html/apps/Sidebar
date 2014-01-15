@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for main (root) pages -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<!-- Translated  by Blorec Hervé le 2011-10-02--> 
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-25--> 
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -9,47 +9,47 @@
 	    <dl>
 		<dt><h3><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
 		<dd>
-		    Un meilleur outil pour les décodeurs de programmation.
-DecoderPro simplifie la tâche de configuration des décodeurs DCC compliqués en offrant des écrans sur lesquels vous pouvez sélectionner les différentes options et les valeurs que vous voulez.		</dd>
+		    Un meilleur outil pour les d&#233;codeurs de programmation.
+DecoderPro simplifie la t&#226;che de configuration des d&#233;codeurs DCC compliqu&#233;s en offrant des &#233;crans sur lesquels vous pouvez s&#233;lectionner les diff&#233;rentes options et les valeurs que vous voulez.		</dd>
 
 		<dt><h3><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
 		<dd>
-		    Conception et exploitation de panneaux CRT à base de contrôle de la CTC qui reflètent l'état en temps réel de votre chemin de fer <em> et </em> vous permettent de le commader - presque comme un Dispatcheur Prototype!
+		    Conception et exploitation de panneaux CRT &#224; base de contr&#244;le de la CTC qui refl&#232;tent l'&#233;tat en temps r&#233;el de votre chemin de fer <em> et </em> vous permettent de le commader - presque comme un Dispatcheur Prototype!
 		    
 		</dd>
 
-		<dt><h3><a href="../tools/index.shtml">Outils Généraux</a></h3></dt>
+		<dt><h3><a href="../tools/index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
 		<dd>JMRI fournit de puissants outils pour travailler avec vos
 mise en page..
 		    <UL>
-		    <LI><dfn><a href="../tools/throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../tools/throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
 		    <LI><dfn><a href="../tools/consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		    <LI><dfn><a href="../tools/Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../tools/Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../tools/Lights.shtml">Lumi&#232;res</a></dfn>
+		    <LI><dfn><a href="../tools/Routes.shtml">Itin&#233;raires</a></dfn>
 		    <LI><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="../tools/fastclock/index.shtml">Horloges Rapides</a>
-		    <LI><dfn><a href="../tools/speedometer/index.shtml">Tachymètre</a> ;<BR>
+		    <LI><dfn><a href="../tools/speedometer/index.shtml">Tachym&#232;tre</a> ;<BR>
 		    <a href="../tools/speedometer/SpeedMatch.shtml">Correspondance Vitesse Machine</a></dfn>
 		    <LI><dfn><a href="../tools/scripting/index.shtml">Script</a></dfn>
-		    <LI><dfn><a href="../hardware/PDA.shtml">Accès PDA</a></dfn>
+		    <LI><dfn><a href="../hardware/PDA.shtml">Acc&#232;s PDA</a></dfn>
 		    <LI><dfn><a href="LocoTools/index.shtml">Outils LocoNet</a></dfn>
 		    </UL>
 		</dd>
 
 		<dt><h3><a href="../tools/automation">Automatisation Mise en Page</a></h3></dt>
-		<dd>JMRI peut être utilisé pour automatiser certaines parties de votre mise en page, de la simple maîtrise d'un passage à niveaux  à l'exploitation des trains circulant en arrière-plan
+		<dd>JMRI peut &#234;tre utilis&#233; pour automatiser certaines parties de votre mise en page, de la simple ma&#238;trise d'un passage &#224; niveaux  &#224; l'exploitation des trains circulant en arri&#232;re-plan
 		    <UL>
 		    <LI><dfn><a href="../tools/signaling/index.shtml">Signalisation</a></dfn>
 		    <LI><dfn><a href="../tools/scripting/index.shtml">Script</a></dfn>
 		    </UL>
 		</dd>
 		
-		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Opérations</a></h3></dt>
-		<dd>Le programme des opérations JMRI peut générer les manifeste des train et des listes de manœuvre de wagons pour votre réseau.
+		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Op&#233;rations</a></h3></dt>
+		<dd>Le programme des op&#233;rations JMRI peut g&#233;n&#233;rer les manifeste des train et des listes de manoeuvre de wagons pour votre r&#233;seau.
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3><a href="../hardware/index.shtml">Matériel Supporté</a></h3></dt>
+		<dt><h3><a href="../hardware/index.shtml">Mat&#233;riel Support&#233;</a></h3></dt>
 		<dd> 
 		<ul>
 		    <li> <A HREF="../hardware/XPressNet/index.shtml">Atlas Commander</a>
@@ -83,7 +83,7 @@ mise en page..
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3>Systèmes d'Exploitation Supportés</h3></dt>
+		<dt><h3>Syst&#232;mes d'Exploitation Support&#233;s</h3></dt>
 		<dd> 
 		<ul>
             <LI><A href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>

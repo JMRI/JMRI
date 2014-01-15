@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: NetworkFiles.shtml,v 1.3 2008/10/07 14:25:50 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!--  $Id: NetworkFiles.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
 <title>JMRI: Sharing DecoderPro Rosters Across A Network</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8851-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -24,34 +24,34 @@
 
 <!-- Page Body -->
 <H2>
-Partage Des fichiers DecoderPro à Travers Un Réseau
+Partage Des fichiers DecoderPro &#224; Travers Un R&#233;seau
 </H2>
 
 Une question commune :
 
 <blockquote>
-J'ai un ordinateur à mon plan de travail, où je programme mes machines, et un autre à l'emplacement de mon circuit. Ils ne sont pas portables, mais tous les PC de chez moi sont reliés entre eux (les clients Windows XP et Windows 2000 Server). Je voudrais pouvoir stocker le fichier et tout ce qui est nécessaire dans le serveur Windows 2000 et être en mesure d'exécuter des copies de Decoder Pro à partir des deux  Windows XP PC. Est-ce possible?
+J'ai un ordinateur &#224; mon plan de travail, o&#249; je programme mes machines, et un autre &#224; l'emplacement de mon r&#233;seau. Ils ne sont pas portables, mais tous les PC de chez moi sont reli&#233;s entre eux (les clients Windows XP et Windows 2000 Server). Je voudrais pouvoir stocker le fichier et tout ce qui est n&#233;cessaire dans le serveur Windows 2000 et &#234;tre en mesure d'ex&#233;cuter des copies de Decoder Pro &#224; partir des deux PC Windows XP. Est-ce possible?
 </blockquote>
 
 Oui!
 <P>
-Configurer les machines Windows il y a donc un répertoire partagé, et puis vous pouvez définir les "préférences avancées" de JMRI  pour mettre l'information à l'intérieur de ce fichier.
+Configurer les machines Windows ainsi il y a un r&#233;pertoire partag&#233;, et puis vous pouvez d&#233;finir les "pr&#233;f&#233;rences avanc&#233;es" de JMRI  pour mettre l'information &#224; l'int&#233;rieur de ce fichier.
 
 <OL>
-<LI>Mise en place d'un répertoire partagé.
+<LI>Mise en place d'un r&#233;pertoire partag&#233;.
 
-<LI>Sélectionnez le fichier avec lequel  vous voulez commencer (car il peut se séparer de ceux déjà présent sur des machines différentes). Sur cette machine, trouver le fichier "roster.xml"  et le répertoire "Roster" dans le répertoire des préférences..
+<LI>S&#233;lectionnez le fichier avec lequel  vous voulez commencer (car il peut se s&#233;parer de ceux d&#233;j&#224; pr&#233;sent sur des machines diff&#233;rentes). Sur cette machine, trouver le fichier "roster.xml"  et le r&#233;pertoire "Roster" dans le r&#233;pertoire des pr&#233;f&#233;rences..
 
 <P>
-Pour plus d'informations, s'il vous plaît voir les pages sur DecoderPro 
+Pour plus d'informations, s'il vous pla&#238;t voir les pages sur DecoderPro 
 the 
 <A HREF="RosterFile.shtml">Fichiers Liste</a>
 et
 <A HREF="Files.shtml#location">Emplacements des fichiers</a>.
-<P>.Copier, _Ne pas déplacer_, le fichier roster.xml et le fichier dossier dans le dossier partagé. Vous devez copier le contenu_complet_du fichier du répertoire !
+<P>.Copier, _Ne pas d&#233;placer_, le fichier roster.xml et le dossier roster dans le dossier partag&#233;. Vous devez copier le contenu _complet_ du r&#233;pertoire roster!
 
 
-<LI>Sur chaque machine qui utilise le fichier partagé, démarrer DecoderPro, sélectionnez Préférences  dans le menu Edition, puis cliquez sur "Afficher les Préférences avancées". La fenêtre sera plus grande. Appuyez sur "Set" sous la rubrique «Liste:" et suivez les instructions.
+<LI>Sur chaque machine qui utilise le fichier partag&#233;, d&#233;marrer DecoderPro, s&#233;lectionnez Pr&#233;f&#233;rences  dans le menu Edition, puis cliquez sur "Afficher les Pr&#233;f&#233;rences Avanc&#233;es". La fen&#234;tre sera plus grande. Appuyez sur "Set" sous la  "Liste:" et suivez les instructions.
 </OL>
 
 <!--#include virtual="/Footer" -->

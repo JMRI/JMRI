@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2008 -->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- translated by Herv&#233; Blorec 2013-09-17 -->
+<title>JMRI: Marklin Command Station 2</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Marklin Centrale CS 2
+</h1>
+JMRI peut se connecter &#224; une centrale Marklin CS2 en utilisant l(interface ethernet int&#233;gr&#233;e.<br>
+Il est possible pour plusieurs ordinateurs de se connecter &#224; l'aide de CS2 IP/UDP..
+<p>
+La CS2 utilise son propre protocole de BUS CAN fontionnant sur UDP, les r&#233;ponses de la CS2 sont envoy&#233;es sous forme de message de diffusion
+et par cons&#233;quent, les ordinateurs qui se connectent au CS2 doit &#234;tre dans le m&#234;me sous-r&#233;seau IP sinon les messages de r&#233;ponse ne seront pas vus.
+<p>
+Cette mise en oeuvre du protocole CAN CS2 a &#233;t&#233; d&#233;velopp&#233; et test&#233; sur la version du firmware 2.
+<b>
+Cette interface est encore en d&#233;veloppement, si vous trouvez des probl&#232;mes alors s'il vous pla&#238;t poser une question sur le groupe Yahoo</b>
+<p>
+Pour configurer la connexion:
+<ul>
+<li> Ouvrez les "Pr&#233;f&#233;rences" JMRI dans le menu "Edition"
+<li> S&#233;lectionnez "M&#228;rklin" comme le manufacuturer, puis le type de connexion qui est Commande Station 2,
+<li> Entrez l'adresse attribu&#233;e &#224; la CS2.
+<li> cliquez sur "Enregistrer".
+</ul>
+
+<p>
+La mise en oeuvre pour les Aiguillages, Capteurs, R&#233;gulateurs et Alimentation est disponible pour
+une unit&#233; CS2 JMRI connect&#233;e.
+<p>
+La prise en charge des r&#233;gulateurs inclut la possibilit&#233; de s&#233;lectionner un protocole sp&#233;cifique (Marklin, DCC & MFX)
+<p>
+
+Couplage et Programmation ne sont pas encore pris en charge.
+<p>
+Le Support &#224; la Marklin CS2 &#233;tait d'abord disponible en
+<a href="http://jmri.sf.net/releasenotes/jmri3.1.1.shtml"> JMRI 3.1.1</a>.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

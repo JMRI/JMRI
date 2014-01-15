@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Roster.shtml,v 1.3 2010/03/06 20:36:50 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id: Roster.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
 
 <title>JMRI: DecoderPro Rosters</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -26,70 +26,69 @@
 <H2>
 Listes JMRI </H2>
 
-<P>La lecture du contenu d'un décodeur prend généralement beaucoup de temps, et avec
-certaines centrales de commande, ce n"est même pas possible. La Liste JMRI
-stocke les valeurs connues des valeurs de configuration décodeur pour ne pas avoir
- à les lire à partir du décodeur. Elle peut contenir des "entrées Liste"
-pour un nombre illimité de locomotives individuelles.</p>
+<P>La lecture du contenu d'un d&#233;codeur prend g&#233;n&#233;ralement beaucoup de temps, et avec
+certaines centrales de commande, ce n'est m&#234;me pas possible. La Liste JMRI
+stocke les valeurs connues des valeurs de configuration d&#233;codeur pour ne pas avoir
+ &#224; les lire &#224; partir du d&#233;codeur. Elle peut contenir des "entr&#233;es Liste"
+pour un nombre illimit&#233; de locomotives individuelles.</p>
 
 <p>
-Chaque entrée de liste dispose d'un «identificateur» (ID), par lequel elle est connue.
-Lorsque le programme vous demande de sélectionner une entrée de liste, il affichera
-une boîte de sélection ou un menu contenant tous les IDs d'entrée de liste.
-Vous pouvez utiliser ce que vous voulez pour cela: numéro de l'itinéraire, le type, même
-"Ce vieux modèle est minable, J'ai besoin de le repeindre".</p>
+Chaque entr&#233;e de liste dispose d'un "identificateur" (ID), par lequel elle est connue.
+Lorsque le programme vous demande de s&#233;lectionner une entr&#233;e de liste, il affichera
+une bo&#238;te de s&#233;lection ou un menu contenant tous les IDs d'entr&#233;e de liste.
+Vous pouvez utiliser ce que vous voulez pour cela: num&#233;ro de l'itin&#233;raire, le type, m&#234;me
+"Ce vieux mod&#232;le est minable, J'ai besoin de le repeindre".</p>
 
 <p>
-Vous pouvez modifier le contenu d'une liste d'entrée avec les volets programmateur.</p>
+Vous pouvez modifier le contenu d'une liste d'entr&#233;e avec les volets programmateur.</p>
 
-<H3>Entrée Liste</H3>
+<H3>Entr&#233;e Liste</H3>
 
 <p>Lorsque vous ouvrez un programmeur JMRI, vous verrez un volet "
-Entrée liste" il  affiche:</p>
+Entr&#233;e liste". Il affiche:</p>
 
 <dl>
 <DT>ID
 <dd>
-L'ID de cette entrée. Vous pouvez la changer si vous voulez, 
-auquel cas elle apparaîtra dans les cases de sélection, etc, avec le nouveau
+L'ID de cette entr&#233;e. Vous pouvez la changer si vous voulez, 
+auquel cas elle appara&#238;tra dans les cases de s&#233;lection, etc, avec le nouveau
 nom d'identification.
 
 <DT> Nom de Ligne
-<DT> Numéro de Ligne
+<DT> Num&#233;ro de Ligne
 <DT> Fabriquant
-<DT> Modèle
-<DT> Propriétaire
+<DT> Mod&#232;le
+<DT> Propri&#233;taire
 <dd>
-Les utilisez  pour ce que vous voulez.
+Utilisez-les comme bon vous semble.
 
 
-<DT>Adresse DCC
+<DT>DCC Adresse
 <dd>
-C'est remplis, en fonction de la façon dont le décodeur est configuré.
-Vous ne pouvez pas le modifier ici, alors vous devez aller à un autre volet
+C'est rempli, en fonction de la fa&#231;on dont le d&#233;codeur est configur&#233;.
+Vous ne pouvez pas le modifier ici, aussi vous devez aller &#224; un autre volet
 pour changer l'adressage.
 
-<DT>Commentaire
-<dd>
-Utilisez le pour ce que vous voulez.
+<DT>Comment
+Utilisez le comme bon vous semble.
 
-<DT>  Famille Décodeur
-<DT>  Modèle Décodeur 
+<DT>  Decoder Family
+<DT>  Decoder Model 
 <dd>
-Sont remplis basés sur le décodeur qui a été sélectionné lorsque
-l'entrée a été créée. Il ne peut pas être édité après.
+Ceux-ci sont remplis bas&#233;s sur le d&#233;codeur qui a &#233;t&#233; s&#233;lectionn&#233; lorsque
+l'entr&#233;e a &#233;t&#233; cr&#233;&#233;e. Il ne peut pas &#234;tre &#233;dit&#233; apr&#232;s.
 
-<DT> Commentaire Décodeur
+<DT> Decoder Comment
 <dd>
 Vous pouvez mettre ce que vous voulez ici. Certaines personnes l'ont
-utilisé pour indiquer si une fiche NMRA a été utilisée, si le
-décodeur a été soudé dedans, etc.
+utilis&#233; pour indiquer si une fiche NMRA a &#233;t&#233; utilis&#233;e, si le
+d&#233;codeur a &#233;t&#233; soud&#233; dedans, etc.
 
-<DT>Nomfichier
+<DT>Filename
 <dd>
-Il est donné à titre indicatif; vous ne pouvez pas le changer, et vous n'avez pas 
-à vous en préoccuper. Notez que même si vous modifiez l'ID de cette entrée, le fichier 
-d'origine sera toujours utilisé.
+Il est donn&#233; &#224; titre indicatif; vous ne pouvez pas le changer, et vous n'avez pas 
+&#224; vous en pr&#233;occuper. Notez que m&#234;me si vous modifiez l'ID de cette entr&#233;e, le fichier 
+d'origine sera toujours utilis&#233;.
 
 </dl></p>
 
@@ -97,83 +96,83 @@ d'origine sera toujours utilisé.
 <h3>Menu Liste</h3>
 
 <a href="images/RosterMenu.jpg"><img src="images/RosterMenu.jpg" width="108" height="92" align="right"/></a>
-Les fenêtres de l'application JMRI principal et les fenêtres "Démarrage programmateur" ont un menu "Liste"
- disponible. Ce menu vous permet de gérer les entrées de votre liste avec les commandes:
+Les fen&#234;tres de l'application JMRI principal et les fen&#234;tres "D&#233;marrage programmateur" ont un menu "Liste"
+ disponible. Ce menu vous permet de g&#233;rer les entr&#233;es de votre liste avec les commandes:
 
 <dl>
 
 <a id="create">
-<dt>Créer ...
+<dt>Cr&#233;er ...
 <dd>
-"Créer" est utilisé pour créer une nouvelle liste d'entrée, même si vous n'avez pas actuellement de connexion à une mise en page.
-Lorsque vous sélectionnez cette option, vous avez une fenêtre dans laquelle vous pouvez sélectionner un type de décodeur.
- Choisissez le type de décodeur à droite, le format que vous voulez, et cliquez sur «Ouvrir». Vous verrez une fenêtre 
-DecoderPro-style pour modifier le contenu de la nouvelle entrée.
-N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez terminé!
+"Cr&#233;er" est utilis&#233; pour cr&#233;er une nouvelle liste d'entr&#233;e, m&#234;me si vous n'avez pas actuellement de connexion &#224; un r&#233;seau.
+Lorsque vous s&#233;lectionnez cette option, vous avez une fen&#234;tre dans laquelle vous pouvez s&#233;lectionner un type de d&#233;codeur.
+ Choisissez le type de d&#233;codeur &#224; droite, le format que vous voulez, et cliquez sur "Ouvrir". Vous verrez une fen&#234;tre de style
+DecoderPro pour modifier le contenu de la nouvelle entr&#233;e.
+N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
 <a id="edit">
-<dt>Éditer ...
+<dt>Modifier ...
 <dd>
-"Éditer" est utilisé pour mettre à jour le contenu d'une liste d'entrée, même si vous
- n'avez pas une connexion circuit (normalement, si vous avez une connexion circuit,
- vous allez utiliser les fonctions de programmation DecoderPro). Lorsque vous sélectionnez
- cette option, vous obtiendrez une fenêtre dans laquelle vous pourrez  sélectionner une entrée
+"Modifier" est utilis&#233; pour mettre &#224; jour le contenu d'une liste d'entr&#233;e, m&#234;me si vous
+ n'avez pas une connexion r&#233;seau (normalement, si vous avez une connexion circuit,
+ vous allez utiliser les fonctions de programmation DecoderPro). Lorsque vous s&#233;lectionnez
+ cette option, vous obtiendrez une fen&#234;tre dans laquelle vous pourrez  s&#233;lectionner une entr&#233;e
  liste existante, un format, et un bouton "Ouvrir". Une fois que vous cliquez sur "Ouvrir",
- vous obtiendrez une fenêtre de style DecoderPro pour visualiser et modifier le contenu de 
-l'entrée. N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez terminé!
+ vous obtiendrez une fen&#234;tre de style DecoderPro pour visualiser et modifier le contenu de 
+l'entr&#233;e. N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
 <a id="copy">
 <dt>Copier ...
 <dd>
-"Copier" est utilisé pour créer une autre entrée liste qui est identique à l'originale, sauf
+"Copier" est utilis&#233; pour cr&#233;er une autre entr&#233;e liste qui est identique &#224; l'originale, sauf
  pour son ID. Si vous avez une configuration standard que vous voulez utiliser pour de nouvelles
- locomotives, vous pouvez créer une entrée de liste avec toutes les bonnes valeurs remplies, puis
+ locomotives, vous pouvez cr&#233;er une entr&#233;e de liste avec toutes les bonnes valeurs remplies, puis
  copiez - la chaque fois que vous souhaitez programmer une nouvelle locomotive.
 
 <a id="export">
 <dt>Exporter ...
 <dd>
-Bien qu'il soit possible de trouver les fichiers XML définissant les entrées liste dans le répertoire 
-des préférences, il vaut mieux ne pas travailler directement avec eux.
-La commande "Exportation" va créer un nouveau fichier qui représente une entrée de liste,
+Bien qu'il soit possible de trouver les fichiers XML d&#233;finissant les entr&#233;es liste dans le r&#233;pertoire 
+des pr&#233;f&#233;rences, il vaut mieux ne pas travailler directement avec eux.
+La commande "Exportation" va cr&#233;er un nouveau fichier qui repr&#233;sente une entr&#233;e de liste,
 y compris toutes les observations, les valeurs de CV, etc. Vous pouvez alors la prendre pour une copie
  de DecoderPro et l'importer dans cette liste.
-Les exportations ne  modifient votre liste actuelle d'aucune façon, elle est tout simplement une copie
- pour vous d'une entrée spécifique.
+Les exportations ne  modifient votre liste actuelle d'aucune fa&#231;on, elle est tout simplement une copie
+ pour vous d'une entr&#233;e sp&#233;cifique.
 
 <p>
-Lorsque vous sélectionnez "Exporter ...",  il vous sera demander de choisir l'entrée de la liste que vous
- voulez exporter, puis vous serez invité à sélectionner un nouveau nom. Vous pouvez l'appeler comme vous
- voulez, mais il est préférable de mettre une extension ". xml" au nom 
+Lorsque vous s&#233;lectionnez "Exporter ...",  il vous sera demander de choisir l'entr&#233;e de la liste que vous
+ voulez exporter, puis vous serez invit&#233; &#224; s&#233;lectionner un nouveau nom. Vous pouvez l'appeler comme vous
+ voulez, mais il est pr&#233;f&#233;rable de mettre une extension ".xml" au nom 
 
 <a id="import">
 <dt>Importer ...
 <dd>
-La combinaison de "Exporter" puis "Importer" vous permet d'apporter une entrée de liste locomotives lorsque
- vous passez à une autre circuit, avec sa propre installation DecoderPro.
+La combinaison de "Exporter" puis "Importer" vous permet d'apporter une entr&#233;e de liste locomotives lorsque
+ vous passez &#224; un autre r&#233;seau, avec sa propre installation DecoderPro.
 
-<p> Lorsque vous sélectionnez "Importer ...", il vous sera demandé de localiser un fichier XML à importer. 
-Il aurait été créé par une commande «exportation» . Vous serez également invité à créer l'ID de l'entrée nouvelle liste.
-Cela peut être la même que ce qu'elle était avant qu'elle ait été exportée, ou vous pouvez lui donner un nouvel ID.</p>
+<p> Lorsque vous s&#233;lectionnez "Importer ...", il vous sera demand&#233; de localiser un fichier XML &#224; importer. 
+Il aurait &#233;t&#233; cr&#233;&#233; par une commande "exportation" . Vous serez &#233;galement invit&#233; &#224; cr&#233;er l'ID de l'entr&#233;e nouvelle liste.
+Cela peut &#234;tre la m&#234;me que ce qu'elle &#233;tait avant qu'elle ait &#233;t&#233; export&#233;e, ou vous pouvez lui donner un nouvel ID.</p>
 
 <a id="delete">
 <dt>Effacement ...
 <dd>
-Cela supprime complètement une entrée de liste. Une confirmation vous sera demandée et une sauvegarde est faite, en cas d'erreurs.
+Cela supprime compl&#232;tement une entr&#233;e de liste. Une confirmation vous sera demand&#233;e et une sauvegarde est faite, en cas d'erreurs.
 
 <a id="summary">
 <dt>Impression Sommaire ...
 <dd>
-Ceci affiche un résumé de la liste entière, la liste des informations primaires
- pour chaque entrée.
+Ceci affiche un r&#233;sum&#233; de la liste enti&#232;re, la liste des informations primaires
+ pour chaque entr&#233;e.
 <p>
-Pour une liste plus détaillée d'un décodeur spécifique, voir le menu "Fichier" sur les écrans programmateur.
+Pour une liste plus d&#233;taill&#233;e d'un d&#233;codeur sp&#233;cifique, voir le menu "Fichier" sur les &#233;crans programmateur.
 
 <a id="previewsummary">
-<dt>Aperçu avant impression ...
+<dt>Aper&#231;u avant impression ...
 <dd>
-Cela montre le contenu du résumé imprimé sur votre écran,
-de sorte que vous pouvez avoir un aperçu avant impression.
+Cela montre le contenu du r&#233;sum&#233; imprim&#233; sur votre &#233;cran,
+de sorte que vous pouvez avoir un aper&#231;u avant impression.
 
 
 </dl>

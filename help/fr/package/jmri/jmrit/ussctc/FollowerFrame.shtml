@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FollowerFrame.shtml,v 1.7 2010/05/03 07:48:59 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<!-- $Id: FollowerFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Followers Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Followers">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,19 +28,19 @@
  
 <img src="images/FollowerFrame.jpg" alt="Screen shot" align="right"> <br>
 
-Ceci fournit un moyen simple pour définir un aiguillage qui «suit» l'état d'un capteur d'entrée. Vous voudrez peut-être ceci, alors vous pouvez connecter un interrupteur TCO qui bascule à la fois sur un capteurr, et qui pilote un interrupteur de moteur qui est connecté comme un aiguillage JMRI, par exemple,
+Ceci fournit un moyen simple pour d&#233;finir un aiguillage qui "suit" l'&#233;tat d'un capteur d'entr&#233;e. Vous voudrez peut-être ceci, alors vous pouvez connecter un interrupteur TCO qui bascule &#224 la fois sur un capteur, et qui pilote un interrupteur de moteur qui est connect&#233; comme un aiguillage JMRI, par exemple,
 
 <p>
 Les champs et les boutons:
 <dl>
-<dd>Nom de sortie <dt>Saisissez le nom  système ou nom utilisateur de l'aiguillage que le suiveur va contrôler
-<dd> Nom de la sonde<dt> Entrez le nom  système ou nom 'utilisateur du capteur le suiveur se regarder
-<dt> Inverser <dd> Normalement, l'aiguillage est fixé dévié lorsque le capteur est ACTIF, et ensemble fermé lorsque le capteur est inactif.
-Vérification que la case "Inverser" entraîne l'aiguillage en position DÉVIÉ lorsque le capteur est INACTIF, et DIRECT lorsque le capteur est ACTIF.
-<dd>Nom veto <dt>  Si un capteur est ajouté ici, le suiveur ne contrôlera pas l'aiguillage lorsque le capteur est ACTIF.
-Ceci peut être utilisé par exemple pour verrouiller un aiguillage depuis un contrôle local.
+<dd>Nom de sortie <dt>Saisissez le nom  syst&#232;me ou nom util&#249;isateur de l'aiguillage que le suiveur va contr&#244ler
+<dd> Nom du Capteur<dt> Entrez le nom  syst&#232;me ou nom utilisateur du Capteur  suiveur qu'il surveille
+<dt> Inverser <dd> Normalement, l'aiguillage est fix&#233; d&#233;vi&#233; lorsque le capteur est ACTIF, et d&#233;fini DROIT lorsque le capteur est INACTIF.
+V&#233;rification que la case "Inverser" entra&#238;ne l'aiguillage en position D&#201;VI&#201; lorsque le capteur est INACTIF, et DROIT lorsque le capteur est ACTIF.
+<dd>Nom v&#233;to <dt>  Si un capteur est ajout&#233; ici, le suiveur ne contr&#244lera pas l'aiguillage lorsque le capteur est ACTIF.
+Ceci peut être utilis&#233; par exemple pour verrouiller un aiguillage depuis une commande locale.
 <dd>Voir <dt> Entrez un nom d'aiguillage de sortie et cliquez sur ce bouton pour voir toute configuration suiveuse existante .
-<dt> Ajouter/Mettre à jour <dd>Dossier hors champs comme désiré et appuyez sur Ajouter/Mettre à jour pour créer un nouveau suiveur  ou en modifier un existant.
+<dt> Ajouter/Mettre &#224 jour <dd>Dossier hors champs comme d&#233;sir&#233; et appuyez sur Ajouter/Mettre &#224 jour pour cr&#233;er un nouveau suiveur  ou en modifier un existant.
 </dl>
 <P>  
 Ceci est la page d'aide help/en/package/jmri/jmrit/ussctc/FollowerFrame

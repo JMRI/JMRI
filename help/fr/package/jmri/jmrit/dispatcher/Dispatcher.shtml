@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Dispatcher.shtml,v 1.7 2011/05/13 12:10:20 djduchamp Exp $ -->
-<!-- translated by Hervé Blorec le 2011/12/29-->
+<!-- $Id: Dispatcher.shtml 23269 2013-04-23 08:03:57Z kevin-dickerson $ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Dispatcher Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Dave Duchamp" name=Author>
     <META name="keywords" content="JMRI help Dispatcher">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,693 +25,673 @@
     <div id="mainContent">
 
 <H1> Dispatcheur</H1>
-<a name="contents"> <a</a> <h2> matières</h2>
+<a name="contents"> <a</a> <h2>Contenus</h2>
 
-<p> Ce document décrit le <b> Dispatcher</b>, et comment utiliser Dispatcher pour
-aider à la répartition et l'exploitation des trains sur les réseaux avec des TCO . Le
-document est divisé en sections; cliquez ci-dessous pour accéder à la section nommée.
-Les éléments soulignés sont des liens vers les sections de ce document ou vers d'autres fichiers d'aide.</P>
+<p> Ce document d&#233;crit le <b>Dispatcher</b>, et comment utiliser Dispatcher pour
+aider &#224; la r&#233;partition et l'exploitation des trains sur les r&#233;seaux avec les panneaux PanelPro . Le
+document est divis&#233; en sections; cliquez ci-dessous pour acc&#233;der &#224; la section list&#233;e.
+Les &#233;l&#233;ments soulign&#233;s sont des liens vers les sections de ce document ou vers d'autres fichiers d'aide.</P>
 <ul>
-<li> <a href="#intro"> Introduction à Dispatcher</a></li>
+<li> <a href="#intro"> Introduction &#224; Dispatcher</a></li>
 <li><a href="#glossary"> Glossaire</a></li>
-<li> <a href="#transits"> Utilisation de transits et des sections dans Dispatching Trains actifs</a></li>
-<li> <a href="#window"> La fenêtre Dispatcheur</a></li>
-<li> <a href="#atrains"> La table Trains Actifs</a></li>
-<li> <a href="#arequests"> La table Allocations Démandées</a></li>
-<li> <a href="#allocated"> La table Sections Allouées</a></li>
+<li> <a href="#transits"> Utilisation de transits et des sections dans la R&#233;partitions des Trains Actifs</a></li>
+<li> <a href="#window">  Fen&#234;tre Dispatcheur</a></li>
+<li> <a href="#atrains"> Tableau Trains Actifs</a></li>
+<li> <a href="#arequests"> Tableau Allocations D&#233;mand&#233;es</a></li>
+<li> <a href="#allocated"> Tableau Sections Allou&#233;es</a></li>
 <li> <a href="#automatic"> Trains Circulant Automatiquement</a></li>
-<li> <a href="#require">Réquisitions pour la Circulation Automatique </a></li>
+<li> <a href="#require">R&#233;quisitions pour la Circulation Automatique </a></li>
 </Ul>
 
-<a name="intro"></a><H2>Introduction aux  Dispatcheur</H2>
+<a name="intro"></a><H2>Introduction &#224; Dispatcheur</H2>
 
-<p>Le <b> Dispatcher</b> fournit des fonctions et organise l'information relative à la répartition
- des trains sur un réseau de trains miniatures. Sa fonction principale est l'allocation
-des sections de voie pour des trains différents circulant autour du réseau. Dispatcher n'est
-pas conçu pour remplacer complètement un répartiteur humain pendant une session d'exploitation
- des trains, mais il devrait rendre le travail de répartition plus facile et plus amusant.
-Le Dispatcher est prévu pour travailler aux côtés d'un panneau, construit soit avec
-l'Éditeur de TCO  ou l'Éditeur de panneau , qui fournit une rétroaction visuelle de l'état du réseau.
-Il n'y avait aucune raison de faire un Dispatcher qui ressemble rà un <i> prototype</i>. Il
-a été tout simplement conçu pour être fonctionnel pour la répartition de l'exploitation d'un réseau ferroviaire.</p>
-<p>Le Dispatcher exige qu'un réseau soit divisé en <b>Cantons</b>, et que les
-Cantons le long de la ligne principale soient organisés en
-<b><a href="../beantable/SectionTable.shtml"> Sections</a></b>. Il exige également
-que les Sections soient utilisées pour définir les itinéraires, appelé
-<b> <a href="../beantable/TransitTable.shtml"> Transits</a></b>, qui décrivent les
-chemins que les trains vont suivre lorsqu'il sont actifs sur le réseau. Les <b>Cantons</b> sont
-des portions de voie dont l'occupation peut être contrôlée individuellement. Les <b> Sections</b>
-sont des groupes d'un ou plusieurs Cantons qui sont <i>allouées</i> comme une unité par le répartiteur
-utilisant les fonctions du <b> Dispatcher</b>. Les <b>Cantons</b> sont habituellement définis pour faciliter la
-signalisation sur un réseau. La simple utilisation de Dispatcher ne requiert pas que la détection matériel du canton
- ou des signaux soient installée physiquement, ou même que le réseau physique
-soit divisé en cantons. Le Dispatcheur ne fonctionnera que si la configuration du cantonage  est définie dans un panneau
-uniquement. Toutefois, le Dispatcheur fonctionne mieux si les cantons matériels avec la détection de cantons sont présents.
-Il fonctionne encore mieux si les signaux matériels sont présents sur le réseau et que la logique
-signal utilise des capteurs de direction de la Section.</p>
-<p>Les Fonctionnalités fournies par le Répartiteur comprend: l'assistance pour démarrer et résilier le train, de l'information pour permettre une installation facile de la rencontre sur les voies de passage,
-l'automatisation de certaines fonctions du répartiteur, la mise en place d'exécution automatique des trains,
-l'asistance pour le départ des trains selon une horloge rapide, l'assistance pour lier
-les signaux à une allocation via un simple support de signalisation banalisée APB, en option le réglage automatique
-des aiguillages quand une section de voie est attribuée, et enfin la circulation automatique
-des trains ainsi que des trains en exécution manuellement. Les versions initiales
-de ces fonctions sont incluses dans la version actuelle du Dispatcher; des améliorations
+<p>Le <b>Dispatcheur</b> fournit des fonctions et organise l'information relative &#224; la r&#233;partition
+ des trains sur un r&#233;seau de trains miniatures. Sa fonction principale est l'allocation
+des sections de voie pour des trains diff&#233;rents circulant autour du r&#233;seau. Le Dispatcheur n'est
+pas con&#231;u pour remplacer compl&#232;tement un op&#233;rateur humain pendant une session d'exploitation
+ des trains, mais il devrait rendre le travail de r&#233;partition plus facile et plus amusant.
+Le Dispatcheur est pr&#233;vu pour travailler aux c&#244;t&#233;s d'un panneau, construit soit avec
+l'&#233;diteur de R&#233;seau  ou l'&#233;diteur de panneau , qui fournit une r&#233;troaction visuelle de l'&#233;tat du r&#233;seau.
+Il n'y avait aucune raison de faire un Dispatcheur qui ressemble &#224; un <i> prototype</i>. Il
+a &#233;t&#233; tout simplement con&#231;u pour &#234;tre fonctionnel pour la r&#233;partition de l'exploitation d'un r&#233;seau ferroviaire.</p>
+<p>Le Dispatcheur exige qu'un r&#233;seau soit divis&#233; en <b>Cantons</b>, et que les
+Cantons le long du ligne principale soient organis&#233;s en
+<b><a href="../beantable/SectionTable.shtml">Sections</a></b>. Il exige &#233;galement
+que les Sections soient utilis&#233;es pour d&#233;finir les itin&#233;raires, appel&#233;s
+<b><a href="../beantable/TransitTable.shtml"> Transits</a></b>, qui d&#233;crivent les
+chemins que les trains vont suivre lorsqu'il sont actifs sur le r&#233;seau. Les <b>Cantons</b> sont
+des portions de voie dont l'occupation peut &#234;tre contr&#244;l&#233;e individuellement. Les <b>Sections</b>
+sont des groupes d'un ou plusieurs Cantons qui sont <i>allou&#233;es</i> comme une unit&#233; par le r&#233;partiteur
+utilisant les fonctions du <b>Dispatcheur</b>. Les <b>Cantons</b> sont habituellement d&#233;finis pour faciliter la
+signalisation sur un r&#233;seau. La simple utilisation de Dispatcheur ne requiert pas que la d&#233;tection mat&#233;riel du canton
+ ou des signaux soient install&#233;e physiquement, ou m&#234;me que le r&#233;seau physique
+soit divis&#233; en cantons. Le Dispatcheur ne fonctionnera que si la configuration du cantonnement est d&#233;finie dans un panneau
+uniquement. Toutefois, le Dispatcheur fonctionne mieux si les cantons mat&#233;riels avec la d&#233;tection de cantons sont pr&#233;sents.
+Il fonctionne encore mieux si les signaux mat&#233;riels sont pr&#233;sents sur le r&#233;seau et que la logique
+signal utilise des capteurs de direction du Section.</p>
+<p>Les Fonctionnalit&#233;s fournies par le R&#233;partiteur comprend: l'assistance pour d&#233;marrer et r&#233;silier le train, de l'information pour permettre une installation facile du rencontre sur les voies de passage,
+l'automatisation de certaines fonctions du r&#233;partiteur, la mise en place d'ex&#233;cution automatique des trains,
+l'assistance pour le d&#233;part des trains selon une horloge rapide, l'assistance pour lier
+les signaux &#224; une allocation via un simple support de signalisation banalis&#233;e APB, en option le r&#233;glage automatique
+des aiguillages quand une section de voie est attribu&#233;e, et enfin la circulation automatique
+des trains ainsi que des trains en ex&#233;cution manuellement. Les versions initiales
+de ces fonctions sont incluses dans la version actuelle du Dispatcher; des am&#233;liorations
 suivront dans les prochaines versions de JMRI.</p>
 <p>Le Centre pour le <b>Dispatcheur</b> est un <b>Train Actif</b>, qui porte les
-informations nécessaires pour faire fonctionner un train autour du réseau. Fondamentalement, un <b>Train Actif</b>
-est créé par le répartiteur en liant un  <b>Transit</b> et un <b> Train</b>.
-Le <b> <a href="../beantable/TransitTable.shtml">Transit</a></b> fournit une
-description de l'itinéraire à suivre par le train, y compris les <b><a href="../beantable/SectionTable.shtml">Sections</a></b> qui ont besoin d'être
-allouées au long de l'itinéraire, et, lors de l'exécution automatique, toutes les
-<b> <a href="../beantable/ViewSpecialActions.shtml"> Actions</a></b> qui doivent
-être initiées dans les sections spécifiques. Le <b>Train</b> spécifie ce qui doit être exécuté
-le long de l'itinéraire spécifié par le Transit. Les Trains peuvent être des descriptions complètes de
-toutes les machines et des wagons comme prévu par les <b> Opérations</b> JMRI, ou les machines sélectionnées
-depuis le menu de la <b>Liste</b> JMRI , ou simplement un nom de train et une adresse dcc entré par le répartiteur.</p>
-<p> Lorsque vous créez un Train Actif, le Dispatcher précise également où est situé actuellement le Train Actif, et l'emplacement du Train Actif quand il est 
-résilié après qu'il ait terminé son transit sur le réseau. D'autres options sont entrées,
-comme train prioritaire et le type, la demande pour démarrer le train à une heure d'horloge rapide spécifiée
-, et une demande d'exécuter le Train Actif automatiquement.</p>
-<p>Tous les Trains  Actifs sont affichés dans un tableau dans la <b>Fenêtre du Dispatcher </b>,
-ainsi que des informations sur l'état du Train Actif. La fenêtre du Dispatcher
-contient également un tableau d'attente des <b>Demandes d'Allocation </b>, un tableau des 
-<b>Sections Allouées</b>, et des boutons qui permettent au répartiteur de facilement
-allouer des Sections, créer de nouveaux Trains Actif, et de résilier des Trains actif. 
-Les Sections Allouées sont libérées à l'aide des boutons dans la table Sections Allouées, ou automatiquement
-Si l'<b>Option</b> libération automatique est sélectionnée. La
-<b> <a href="#window"> Fenêtre Dispatcher</a></b> est expliquée en détail ci-dessous.</p>
-Remarque <p>:</b> La version actuelle du Dispatcher contient la première version d'une option d'allocation automatisée. Pour demander au Dispatcher d'essayer d'allouer automatiquement une Section pour les trains Actif, sélectionnez <b>Allouer Auto</b>.
-L'<b>Allouer Auto</b> (examinée en détail ci-dessous) fonctionne bien pour les Trains Actifs seul,
-et dans certains cas pour plusieurs Trains Actifs. Les améliorations sont prévues d'être communiquées dans l'avenir
+informations n&#233;cessaires pour faire fonctionner un train autour du r&#233;seau. Fondamentalement, un <b>Train Actif</b>
+est cr&#233;&#233; par le r&#233;partiteur en liant un <b>Transit</b> et un <b>Train</b>.
+Le <b><a href="../beantable/TransitTable.shtml">Transit</a></b> fournit une
+description de l'itin&#233;raire &#224; suivre par le train, y compris les <b><a href="../beantable/SectionTable.shtml">Sections</a></b> qui ont besoin d'&#234;tre allou&#233;es au long de l'itin&#233;raire, et, lors de l'ex&#233;cution automatique, toutes les
+<b><a href="../beantable/ViewSpecialActions.shtml"> Actions</a></b> qui doivent
+&#234;tre initi&#233;es dans les sections sp&#233;cifiques. Le <b>Train</b> sp&#233;cifie ce qui doit &#234;tre ex&#233;cut&#233;
+le long de l'itin&#233;raire sp&#233;cifi&#233; par le Transit. Les Trains peuvent &#234;tre des descriptions compl&#232;tes de
+toutes les machines et des wagons comme pr&#233;vu par les <b>Op&#233;rations</b> JMRI, ou les machines s&#233;lectionn&#233;es
+depuis le menu du <b>Liste</b> JMRI , ou simplement un nom de train et une adresse dcc entr&#233; par le r&#233;partiteur.</p>
+<p> Lorsque vous cr&#233;ez un Train Actif, le Dispatcheur pr&#233;cise &#233;galement o&#249; est situ&#233; actuellement le Train Actif, et l'emplacement du Train Actif quand il est 
+r&#233;sili&#233; apr&#232;s qu'il ait termin&#233; son transit sur le r&#233;seau. D'autres options sont entr&#233;es,
+comme train prioritaire et le type, la demande pour d&#233;marrer le train &#224; une heure d'horloge rapide sp&#233;cifi&#233;e
+, et une demande d'ex&#233;cuter le Train Actif automatiquement.</p>
+<p>Tous les Trains Actifs sont affich&#233;s dans un Tableau dans la <b>Fen&#234;tre du Dispatcher </b>,
+ainsi que des informations sur l'&#233;tat du Train Actif. La fen&#234;tre du Dispatcher
+contient &#233;galement un Tableau d'attente des <b>Demandes d'Allocation </b>, un Tableau des 
+<b>Sections Allou&#233;es</b>, et des boutons qui permettent au r&#233;partiteur de facilement
+allouer des Sections, cr&#233;er de nouveaux Trains Actif, et de r&#233;silier des Trains actif. 
+Les Sections Allou&#233;es sont lib&#233;r&#233;es &#224; l'aide des boutons dans Le Tableau Sections Allou&#233;es, ou automatiquement
+Si l'<b>Option</b> lib&#233;ration automatique est s&#233;lectionn&#233;e. La
+<b><a href="#window"> Fen&#234;tre Dispatcheur</a></b> est expliqu&#233;e en d&#233;tail ci-dessous.</p>
+Remarque <p>:</b>La version actuelle du Dispatcher contient la premi&#232;re version d'une option d'allocation automatis&#233;e. Pour demander au Dispatcheur d'essayer d'allouer automatiquement une Section pour les trains Actif, s&#233;lectionnez <b>Allouer Auto</b>.
+L'<b>Allouer Auto</b> (examin&#233;e en d&#233;tail ci-dessous) fonctionne bien pour un Train Actif seul,
+et dans certains cas pour plusieurs Trains Actifs. Les am&#233;liorations sont pr&#233;vues d'&#234;tre communiqu&#233;es dans l'avenir
 .</p>
-<p> Beaucoup de termes dans cette introduction au Dispatcher peuvent être nouveau pour les utilisateurs.
-Certains ont été créés spécifiquement pour une utilisation avec Dispatcher. S'il vous plaît passer brièvement en revue
-le <b>Glossaire des Termes </b> qui suit, et y revenir au besoin lors de la 
-lecture du reste de cette documentation. Notez que <i>"Dispatcher </i>» renvoie
-au logiciel Dispatcher, et "<i> le répartiteur</i>" renvoie à la personne
-exécutant le logiciel Dispatcher.</p>
+<p> Beaucoup de termes dans cette introduction au Dispatcheur peuvent &#234;tre nouveau pour les utilisateurs.
+Certains ont &#233;t&#233; cr&#233;&#233;s sp&#233;cifiquement pour une utilisation avec Dispatcheur. S'il vous pla&#238;t passer bri&#232;vement en revue
+le <b>Glossaire des Termes </b> qui suit, et y revenir au besoin lors du 
+lecture du reste de cette documentation. Notez que <i>"Dispatcheur</i>" renvoie
+au logiciel Dispatcheur, et "<i>le r&#233;partiteur</i>" renvoie &#224; la personne
+ex&#233;cutant le logiciel Dispatcher.</p>
 
 <a NAME="glossary"></a> <H2>Glossaire</H2>
 
-<p> <b>Canton</b> - Une portion de voie dont l'occupation peut être suivie individuellement.
-Les cantons sont définis par la subdivision de la voie dans un TCO. Les cantons correspondent normalement
-aux cantons physiques sur un réseau, chacun est câblé  pour la détection d'occupation. Cependant, si
-la voie du réseau n'est pas subdivisée en cantons, diviser un panneau TCO
-en cantons, permettra au Dispatcher d'être utilisé pour les trains exécutés manuellement. Le matériel 
-de détection d'occupation est également en option pour les trains en manuel. Le fonctionnement Automatique des
-trains nécessite des cantons matériels et la détection matérielle d'occupation  Pour toute utilisation du Dispatcheur
-, le cantonage des voies principales sur un TCO est nécessaire. Dispatcher
-fonctionne mieux si la détection de l'occupation matérielle de canton est présente, mais il peut être utilisé pour
+<p> <b>Canton</b> - Une portion de voie dont l'occupation peut &#234;tre suivie individuellement.
+Les cantons sont d&#233;finis par la subdivision du voie dans un r&#233;seau. Les cantons correspondent normalement
+aux cantons physiques sur un r&#233;seau, chacun est c&#226;bl&#233;  pour la d&#233;tection d'occupation. Cependant, si
+la voie du r&#233;seau n'est pas subdivis&#233;e en cantons, diviser un panneau editeur de r&#233;seau
+en cantons, permettra au Dispatcheur d'&#234;tre utilis&#233; pour les trains ex&#233;cut&#233;s manuellement. Le mat&#233;riel 
+de d&#233;tection d'occupation est &#233;galement en option pour les trains en manuel. Le fonctionnement Automatique des
+trains n&#233;cessite des cantons mat&#233;riels et la d&#233;tection mat&#233;rielle d'occupation. Pour toute utilisation du Dispatcheur
+, le cantonnement des voies principales sur un r&#233;seau est n&#233;cessaire. Dispatcheur
+fonctionne mieux si la d&#233;tection de l'occupation mat&#233;rielle de canton est pr&#233;sente, mais il peut &#234;tre utilis&#233; pour
 faire circuler des trains manuellement sans elle.</p>
-<p> <b>Section</b> - Un groupe d'un ou de plusieurs <b>Cantons</b> connectés qui peuvent être
-attribués à un train pour un trajet dans une direction donnée. Les Cantons sont normalement définis
-pour faciliter la signalisation. Il en résulte souvent des Cantons courts, contenant parfois 
-un seul aiguillage. Les sections permettent aux cantons être regroupés en section de voie
- qui sont raisonnables pour être allouées par un répartiteur. Plus d'informations
-contenues dans le fichier d'aide  <a href="../beantable/SectionTable.shtml"> <b>table Sections</a></b>
-, ainsi que des instructions sur la façon de créer une section.</p>
-<p><b>Transit</b> - Un groupe de deux ou plusieurs <b>Sections</b> reliées qui décrit 
-un parcours autour du TCO pour un train circulant dans une direction donnée. Les Transits
-sont nécessaires pour Dispatcher, et au moins un doit être défini avant que Dispatcher
-puisse être ouvert. Les Transits contiennent également des informations sur les actions spécifiées par l'utilisateur lors
-de la circulation automatique des Trains Actifs. Une description détaillée des transits, comment
-ils sont créés, et comment ils sont utilisés est contenue dans le fichier d'aide
-<b> <a href="../beantable/TransitTable.shtml"> Table Transit</a></b> .</p>
-<p> <b> Train</b> - Une machine (ou un couplage) habituellement rattachée à un groupe de wagons,
-qui se déplace autour du circuit comme une entité. Pour une utilisation avec Dispatcher, les trains
-peuvent être sélectionnés à partir des machines de la liste des machines JMRI, peuvent être choisis dans les trains
-créé dans les Opérations JMRI, ou les informations sur les trains peuvent être saisies manuellement par
-le répartiteur.</p>
-<p><b> Train Actif</b> - Une combinaison d'un Train et d'un Transit, avec d'autres
-informations et d'options. Le Train décrit ce qui est en voyage, et le Transit
-décrit où il va. Les détails sont remplis par d'autres informations et options
-sélectionnées lorsque le Train Actif est créé. Les Trains actifs sont au cœur de Dispatcher.
-Comment les Trains actifs sont utilisés est décrit en détail ci-dessous <a href="#transits"></a>.
-La <a  href="#atrains">Table Trains Actifs </a></b> ci-dessous fournit plus
-plus de détails. Les Trains actifs sont créés et résiliés depuis la fenêtre de Dispatcher.</P>
-<p> <b>Train  Actif Auto</b> - Un Train Actif qui est exécuté automatiquement par un
-<i> mécanicien virtuel</i> au lieu de l'être à la main par un mécanicien humain. Un Train Actif Auto
- est un type spécial de train actif qui est exploité automatiquement par
- l'ordinateur en utilisant un régulateur informatique. Le fonctionnement automatique est demandé par le
-répartiteur quand le train actif est créé. Les Trains Actifs Auto sont décrits
-en détail <a href="#automatic"> ci-dessous</a>.</p>
+<p> <b>Section</b> - Un groupe d'un ou de plusieurs <b>Cantons</b> connect&#233;s qui peuvent &#234;tre
+attribu&#233;s &#224; un train pour un trajet dans une direction donn&#233;e. Les Cantons sont normalement d&#233;finis
+pour faciliter la signalisation. Il en r&#233;sulte souvent des Cantons courts, contenant parfois 
+un seul aiguillage. Les sections permettent aux cantons &#234;tre regroup&#233;s en section de voie
+ qui sont raisonnables pour &#234;tre allou&#233;es par un r&#233;partiteur. Plus d'informations
+contenues dans le fichier d'aide  <a href="../beantable/SectionTable.shtml"> <b>Tableau Sections</a></b>
+, ainsi que des instructions sur la fa&#231;on de cr&#233;er une section.</p>
+<p><b>Transit</b> - Un groupe de deux ou plusieurs <b>Sections</b> reli&#233;es qui d&#233;crit 
+un parcours autour du r&#233;seau pour un train circulant dans une direction donn&#233;e. Les Transits
+sont n&#233;cessaires pour Dispatcheur, et au moins un doit &#234;tre d&#233;fini avant que Dispatcheur
+puisse &#234;tre ouvert. Les Transits contiennent &#233;galement des informations sur les actions sp&#233;cifi&#233;es par l'utilisateur lors
+du circulation automatique des Trains Actifs. Une description d&#233;taill&#233;e des transits, comment
+ils sont cr&#233;&#233;s, et comment ils sont utilis&#233;s est contenue dans le fichier d'aide
+<b><a href="../beantable/TransitTable.shtml"> Tableau Transit</a></b> .</p>
+<p> <b>Train</b> - Une machine (ou un couplage) habituellement rattach&#233;e &#224; un groupe de wagons,
+qui se d&#233;place autour du circuit comme une entit&#233;. Pour une utilisation avec Dispatcheur, les trains
+peuvent &#234;tre s&#233;lectionn&#233;s &#224; partir des machines du liste des machines JMRI, peuvent &#234;tre choisis dans les trains
+cr&#233;&#233; dans les Op&#233;rations JMRI, ou les informations sur les trains peuvent &#234;tre saisies manuellement par
+le r&#233;partiteur.</p>
+<p><b>Train Actif</b> - Une combinaison d'un Train et d'un Transit, avec d'autres
+informations et d'options. Le Train d&#233;crit ce qui est en voyage, et le Transit
+d&#233;crit o&#249; il va. Les d&#233;tails sont remplis par d'autres informations et options
+s&#233;lectionn&#233;es lorsque le Train Actif est cr&#233;&#233;. Les Trains actifs sont au c&#339;ur de Dispatcher.
+Comment les Trains actifs sont utilis&#233;s est d&#233;crit en d&#233;tail ci-dessous <a href="#transits"></a>.
+Le <a  href="#atrains">Tableau Trains Actifs </a></b> ci-dessous fournit plus
+ de d&#233;tails. Les Trains actifs sont cr&#233;&#233;s et r&#233;sili&#233;s depuis la fen&#234;tre de Dispatcheur.</P>
+<p> <b>Train  Actif Auto</b> - Un Train Actif qui est ex&#233;cut&#233; automatiquement par un
+<i> m&#233;canicien virtuel</i> au lieu de l'&#234;tre &#224; la main par un m&#233;canicien humain. Un Train Actif Auto
+ est un type sp&#233;cial de train actif qui est exploit&#233; automatiquement par
+ l'ordinateur en utilisant un r&#233;gulateur informatique. Le fonctionnement automatique est demand&#233; par le
+r&#233;partiteur quand le train actif est cr&#233;&#233;. Les Trains Actifs Auto sont d&#233;crits
+en d&#233;tail <a href="#automatic"> ci-dessous</a>.</p>
 <p><b>Demande d'Allocation</b> - Une demande d'allocation (attribution) d'une <b>Section</b> pour
 l'usage exclusif d'un <b>Train Actif</b>. Les Demandes d'Allocation qui ne sont pas
-immédiatement accordées sont rassemblées dans une file d'attente qui est affichée dans la fenêtre Dispatcher
-. Le remplissage d'une demande d'allocation peut être retardée pour un certain nombre de raisons,
-Par exemple, si la Section demandée n'est pas LIBRE, mais elle est affectée à un autre
-Train Actif, ou si le répartiteur  risque de provoquer une collision. Les Demandes d'Allocation sont
-accordées à la main par le répartiteur, ou automatiquement si vous utilisez la fonction <b>Allouer Auto</b> en
+imm&#233;diatement accord&#233;es sont rassembl&#233;es dans une file d'attente qui est affich&#233;e dans la fen&#234;tre Dispatcher
+. Le remplissage d'une demande d'allocation peut &#234;tre retard&#233;e pour un certain nombre de raisons,
+Par exemple, si la Section demand&#233;e n'est pas LIBRE, mais elle est affect&#233;e &#224; un autre
+Train Actif, ou si le r&#233;partiteur  risque de provoquer une collision. Les Demandes d'Allocation sont
+accord&#233;es &#224; la main par le r&#233;partiteur, ou automatiquement si vous utilisez la fonction <b>Allouer Auto</b> en
 option.</p>
-<p><b>Section Allouées</b> - Un <b>Section</b> qui est actuellement attribué à un
-<b>Train Actif</b> pour son usage exclusif. Quand une Section est alloué, s'il y a
-des Sections Alternatives à la suite de la section de remplacement allouées, le répartiteur doit
+<p><b>Section Allou&#233;es</b> - Un <b>Section</b> qui est actuellement attribu&#233;e &#224; un
+<b>Train Actif</b> pour son usage exclusif. Quand une Section est allou&#233;e, s'il y a
+des Sections Alternatives &#224; la suite du section de remplacement allou&#233;es, le r&#233;partiteur doit
 choisir la section suivante depuis les Sections alternatives contenues dans le Transit.
-Une table énumérant toutes les Sections  allouées est affichée dans la Fenêtre de Dispatcher. La
-table Sections Allouées est l'endroit où les Sections sont libérées, soit manuellement par le
-répartiteur, ou automatiquement si vous utilisez la version <b>Auto</b>.</p>
+Un Tableau &#233;num&#233;rant toutes les Sections  allou&#233;es est affich&#233;e dans la Fen&#234;tre de Dispatcher. Le
+Tableau Sections Allou&#233;es est l'endroit o&#249; les Sections sont lib&#233;r&#233;es, soit manuellement par le
+r&#233;partiteur, ou automatiquement si vous utilisez la version <b>Auto</b>.</p>
 
-<p><b>Section Alternative</b> - Une <b>Section</b> <i>Alternative</i> raccorde deux Sections dans un <b>Transit</b>. Dans les zones définies par l'utilisateur d'un transit,Les Sections de <i>substitution</i> peuvent être désignées. Par exemple, pour se déplacer entre les "2ème" et la "4ème"Sections dans un Transit, il peut y avoir plusieurs "3ème" sections, une de celles qui pourrait être utilisées pour voyager entre les sections 2 et 4. Les Sections Alternatives fournissent des voies
+<p><b>Section Alternative</b> - Une <b>Section</b> <i>Alternative</i> raccorde deux Sections dans un <b>Transit</b>. Dans les zones d&#233;finies par l'utilisateur d'un transit,Les Sections de <i>substitution</i> peuvent &#234;tre d&#233;sign&#233;es. Par exemple, pour se d&#233;placer entre les "2&#232;me" et la "4&#232;me"Sections dans un Transit, il peut y avoir plusieurs "3&#232;me" sections, une de celles qui pourrait &#234;tre utilis&#233;es pour voyager entre les sections 2 et 4. Les Sections Alternatives fournissent des voies
 directes et des gares en coulisses<p>
 
 <a<name="transits"> </a>
 <H2>Utilisation des Transits et des Sections dans Le Dispatching  des Trains Actifs</H2>
 
-<p> Quand un <b> Transit</b> est jumelé à un  <b>Train</b> pour former un  <b>Train  Actif</b>,
-le canton de départ (lieu de début du Train Actif) et la fin du canton (Lieu où le voyage  du Train Actif
-s'achève) sont spécifiés. Le Train actif est désigné par
- son nom de Train et son nom de Transit, dont chacun doit être unique parmi les
-Trains Actifs. Un Train et un Transit peuvent être  dans un seul Train Actif à la fois.
- Lorsqu'une activité est terminée, son Transit et son Train sont <i> désactivés</i>,
-et les deux peuvent être réutilisés dans différents Trains Actif.</p>
-<p> Un Train  Actif commence à partir d'un Canton en dehors du Transit, mais
-relié à un Canton au sein du Transit, ou un Train Actif commence à partir de n'importe quel Canton
-au sein d'une section dans le Transit. Quand un Train Actif démarre, il se déplace à travers un
-Transit dans un sens (FORWARD) - défini par l'ordre dans lequel les Sections sont
-incluses dans le transit. Les trains passer des numéros inférieur de séquence de Sections  vers le numéro
-supérieur des séquence de Sections. Pour faciliter la marche avant et en arrière, une option est
-disponible pour un train actifs pour s'inverser après avoir atteint la fin de son Transit,
-et de revenir à travers le Transit à la première Section du Transit. Pour faciliter
-le fonctionnement continu d'un Train Actif, et l'option est disponible pour redémarrer automatiquement le Train Actif après que le Transit soit terminé.
-<p><p> Quand un Train Actif est créé, une <b>demande d'allocation</b> est placée pour une 
-<b>Section</b> de départ. Si la Section est libre, la section sera <i>allouée</i> pour
-le Train Actif.  L'<i> Allouée</i> signifie que la section est attribuée  au Train Actif
-, et le Train Actif est autorisé par le répartiteur à aller à la
+<p> Quand un <b>Transit</b> est jumel&#233; &#224; un  <b>Train</b> pour former un <b>Train Actif</b>,
+le canton de d&#233;part (lieu de d&#233;but du Train Actif) et la fin du canton (Lieu o&#249; le voyage  du Train Actif
+s'ach&#232;ve) sont sp&#233;cifi&#233;s. Le Train actif est d&#233;sign&#233; par
+ son nom de Train et son nom de Transit, dont chacun doit &#234;tre unique parmi les
+Trains Actifs. Un Train et un Transit peuvent &#234;tre dans un seul Train Actif &#224; la fois.
+ Lorsqu'une activit&#233; est termin&#233;e, son Transit et son Train sont <i> d&#233;sactiv&#233;s</i>,
+et les deux peuvent &#234;tre r&#233;utilis&#233;s dans diff&#233;rents Trains Actif.</p>
+<p> Un Train Actif commence &#224; partir d'un Canton en dehors du Transit, mais
+reli&#233; &#224; un Canton au sein du Transit, ou un Train Actif commence &#224; partir de n'importe quel Canton
+au sein d'une section dans le Transit. Quand un Train Actif d&#233;marre, il se d&#233;place &#224; travers un
+Transit dans un sens (FORWARD) - d&#233;fini par l'ordre dans lequel les Sections sont
+incluses dans le transit. Les trains passent des num&#233;ros inf&#233;rieur de s&#233;quence de Sections  vers le num&#233;ro
+sup&#233;rieur des s&#233;quence de Sections. Pour faciliter la marche avant et en arri&#232;re, une option est
+disponible pour un train actifs pour s'inverser apr&#232;s avoir atteint la fin de son Transit,
+et de revenir &#224; travers le Transit &#224; la premi&#232;re Section du Transit. Pour faciliter
+le fonctionnement continu d'un Train Actif, et l'option est disponible pour red&#233;marrer automatiquement le Train Actif apr&#232;s que le Transit soit termin&#233;.
+<p><p> Quand un Train Actif est cr&#233;&#233;, une <b>demande d'allocation</b> est plac&#233;e pour une 
+<b>Section</b> de d&#233;part. Si la Section est libre, la section sera <i>allou&#233;e</i> pour
+le Train Actif.  L'<i> Allou&#233;e</i> signifie que la section est attribu&#233;e au Train Actif
+, et le Train Actif est autoris&#233; par le r&#233;partiteur &#224; aller &#224; la
 fin de cette section.</p>
-<p>Un train  Actif peut être géré par un mécanicien en utilisant un régulateur, ou automatiquement
+<p>Un train Actif peut &#234;tre g&#233;r&#233; par un m&#233;canicien en utilisant un r&#233;gulateur, ou automatiquement
 par l'ordinateur. Le Dispatching pour le train Actif se compose de l'<i> Allocation</i> des  sections, une par une, au Train Actif , et retenir le Train Actif dans une
 Section lorsque ses besoins  entre en conflit avec les besoins des autres Trains Actifs.
-La répartition en temps réel peut être faite par le répartiteur manuellement en cliquant les
-boutons dans la fenêtre de Dispatcher, ou le répartiteur peut demander <b> Allouer Auto</b>en cochant  <b> Allouer Auto</b> en haut de la  table Sections Allouées ou en sélectionnant
-  <b><a  href="Options.shtml"> Options</a></b> du menu de la fenêtre de Dispatcher,
-et laissez l'ordinateur faire une partie du travail de routine. Si une Section actuellement en usage est demandée
-, une demande d'allocation est placée dans la table Allocations Demandées
- dans la fenêtre Dispatcher. <b> Note: La version actuelle de Dispatcher a limité l'assistance
- à l'attribution automatisée des Sections.</b></p>
-<p>Pour les Trains Actifs Auto (Trains Actifs qui s'exécutent automatiquement), le Transit prévu pour les
-<b> <a href="../beantable/ViewSpecialActions.shtml">Actions</a></b> doit être initié
+La r&#233;partition en temps r&#233;el peut &#234;tre faite par le r&#233;partiteur manuellement en cliquant les
+boutons dans la fen&#234;tre de Dispatcher, ou le r&#233;partiteur peut demander <b>Allouer Auto</b>en cochant  <b>Allouer Auto</b> en haut du  Tableau Sections Allou&#233;es ou en s&#233;lectionnant
+  <b><a  href="Options.shtml"> Options</a></b> du menu du fen&#234;tre de Dispatcher,
+et laissez l'ordinateur faire une partie du travail de routine. Si une Section actuellement en usage est demand&#233;e
+, une demande d'allocation est plac&#233;e dans Le Tableau Allocations Demand&#233;es
+ dans la fen&#234;tre Dispatcher. <b>Note: La version actuelle de Dispatcher a limit&#233; l'assistance
+ &#224; l'attribution automatis&#233;e des Sections.</b></p>
+<p>Pour les Trains Actifs Auto (Trains Actifs qui s'ex&#233;cutent automatiquement), le Transit pr&#233;vu pour les
+<b><a href="../beantable/ViewSpecialActions.shtml">Actions</a></b> doit &#234;tre initi&#233;
 quand un train est dans une section du transit. Les Actions sont mises en place lorsque les Transits sont
-créés ou édités dans la <b> <a href="../beantable/TransitTable.shtml"> Table Transit</a></b>.</p>
+cr&#233;&#233;s ou &#233;dit&#233;s dans le <b><a href="../beantable/TransitTable.shtml"> Tableau Transit</a></b>.</p>
 
 <a name="window"></a>
-<H2> La fenêtre Dispatcher</H2>
+<H2> La fen&#234;tre Dispatcheur</H2>
 
-<p> La <b>Fenêtre Dispatcher</b>  est ouverte lorsque <b> Dispatcher ...</b> est sélectionné
-dans les <b> Outils</b> JMRI. Elle affiche une table des <b> Trains Actifs</b> et
-leur état, et une table d'attente des <b>Demandes d'Allocations</b>.Elle fournit les
-boutons qui permettent au répartiteur de facilement allouer les Sections, créer de nouveaux Trains Actifs
-,résilier les  Trains  actifs, et d'afficher une table de toutes les
-<b> <a href="AllocatedSections.shtml"> Sections allouées</a></b>. Les Sections attribuées
-sont  <i>libérées</i> en utilisant les boutons dans la table Sections Allouées. Les boutons de la fenêtre Dispatcher
-sont expliqués ci-dessous.  Les tables
-<b> <a href="#atrains"> Trains Actifs</a></b> et  Demande d'Allocation
- sont expliquées dans les sections suivantes.</p>
-<p>Une  fenêtre typique de Trains Actifs au début d'une session de train est indiquée ci-dessous.
+<p> La <b>Fen&#234;tre Dispatcheur</b>  est ouverte lorsque <b>Dispatcheur ...</b> est s&#233;lectionn&#233;
+dans les <b>Outils</b> JMRI. Elle affiche un Tableau des <b>Trains Actifs</b> et
+leur &#233;tat, et un Tableau d'attente des <b>Demandes d'Allocations</b>.Elle fournit les
+boutons qui permettent au r&#233;partiteur de facilement allouer les Sections, cr&#233;er de nouveaux Trains Actifs
+,r&#233;silier les  Trains  Actifs, et d'afficher un Tableau de toutes les
+<b><a href="AllocatedSections.shtml"> Sections allou&#233;es</a></b>. Les Sections attribu&#233;es
+sont <i>lib&#233;r&#233;es</i> en utilisant les boutons dans le Tableau Sections Allou&#233;es. Les boutons du fen&#234;tre Dispatcheur
+sont expliqu&#233;s ci-dessous.  Les Tableaux
+<b><a href="#atrains"> Trains Actifs</a></b> et  Demande d'Allocation
+ sont expliqu&#233;s dans les sections suivantes.</p>
+<p>Une  fen&#234;tre typique de Trains Actifs au d&#233;but d'une session de train est indiqu&#233;e ci-dessous.
 </P>
 <img src="DispatcherWindow.jpg" height="586" width="802">
-<p> Dans la fenêtre exemple ci-dessus, trois trains actifs ont été créés. Le Train Actif
-, GTW 6418, a été alloué une Section et est exécuté en Mode AUTOMATIQUE. Le second Train Actif, Amtrak 515 est en attente de sa première affectation,
-après son affectation initiale quand il a été créé. Amtrak 515 est en Mode EXPEDIÉ
-(régulateur  manuel). Le troisième Train Actif, Amtrak 139, est prévu pour commencer
-à 08h35 sur l'horloge rapide, et fonctionner en mode AUTOMATIQUE. Les Demandes d'Allocations
-ont été saisies pour les prochaines Sections Requises par deux des Trains Actifs. 
-Les Sections demandés sont LIBRES et INOCCUPÉES, donc le répartiteur pourra attribuer n'importe lequel
-d'entre eux en cliquant sur le  bouton <b>Allouer</b> dans la table Allocations  Demandées
-ou le bouton <b>Allouer Suivant</b> dans le tableau Trains Actifs. L' Allocation d'une Section
-à Amtrak 139 exigerait que le répartiteur substituer son heure de départ prévue.
-Les Sections actuellement affectées à ces trois trains sont affichés dans la
-table Sections Allouées .</P>
-<p> Les quatre boutons en bas de la table  Trains Actifs sont décrits ci-dessous:
+<p> Dans la fen&#234;tre exemple ci-dessus, trois trains actifs ont &#233;t&#233; cr&#233;&#233;s. Le Train Actif
+, GTW 6418, a &#233;t&#233; allou&#233; une Section et est ex&#233;cut&#233; en Mode AUTOMATIQUE. Le second Train Actif, Amtrak 515 est en ATTENTE de sa premi&#232;re affectation,
+apr&#232;s son affectation initiale quand il a &#233;t&#233; cr&#233;&#233;. Amtrak 515 est en Mode EXPEDI&#233;
+(r&#233;gulateur  manuel). Le troisi&#232;me Train Actif, Amtrak 139, est pr&#233;vu pour commencer
+&#224; 08:35 sur l'horloge rapide, et fonctionner en mode AUTOMATIQUE. Les Demandes d'Allocations
+ont &#233;t&#233; saisies pour les prochaines Sections Requises par deux des Trains Actifs. 
+Les Sections demand&#233;s sont LIBRES et INOCCUP&#233;ES, donc le r&#233;partiteur pourra attribuer n'importe lequel
+d'entre eux en cliquant sur le  bouton <b>Allouer</b> dans Le Tableau Allocations  Demand&#233;es
+ou le bouton <b>Allouer Suivant</b> dans le Tableau Trains Actifs. L' Allocation d'une Section
+&#224; Amtrak 139 exigerait que le r&#233;partiteur substituer son heure de d&#233;part pr&#233;vue.
+Les Sections actuellement affect&#233;es &#224; ces trois trains sont affich&#233;s dans la
+Tableau Sections Allou&#233;es .</P>
+<p> Les quatre boutons en bas du Tableau  Trains Actifs sont d&#233;crits ci-dessous:
 
 <ul>
-<li><p><b> Nouveau Train ...</b> - Cliquez sur ce bouton pour faire apparaître une fenêtre <b> Activer de Nouveaux
-Trains</b> qui permet au répartiteur de créer un Train Actif. La
-source de Train utilisée par cette fenêtre est définie dans la fenêtre
-<b> <a href="Options.shtml"> Options</a></b>. Plus d'informations sur la création
-nouveaux Trains Actifs peuvent être trouvées dans le fichier d'aide pour la fenêtre
+<li><p><b>Nouveau Train ...</b> - Cliquez sur ce bouton pour faire appara&#238;tre une fen&#234;tre <b>Activer de Nouveaux
+Trains</b> qui permet au r&#233;partiteur de cr&#233;er un Train Actif. La
+source de Train utilis&#233;e par cette fen&#234;tre est d&#233;finie dans la fen&#234;tre
+<b><a href="Options.shtml"> Options</a></b>. Plus d'informations sur la cr&#233;ation
+nouveaux Trains Actifs peuvent &#234;tre trouv&#233;es dans le fichier d'aide pour la fen&#234;tre
 <a href="NewTrain.shtml"><b>Activer Nouveau Train</a></b>, avec une
-procédure simple à suivre lors de la création d'un Train Actif. Les  Options de Dispatcher
-ne doivent pas être changées avec la fenêtre ouverte du  nouveaux Train à Activer .</p>
+proc&#233;dure simple &#224; suivre lors du cr&#233;ation d'un Train Actif. Les  Options de Dispatcheur
+ne doivent pas &#234;tre chang&#233;es avec la fen&#234;tre ouverte du  nouveaux Train &#224; Activer .</p>
 </Li>
-<li> <p> <b> Allouer Extra ...</b> - Cliquez sur ce bouton pour faire apparaître une fenêtre qui
-permet au répartiteur d'allouer des Sections à un Train Actif qui peuvent ne pas être
-la «prochaine» Section dans le Transit du  Train Actif. Toute section qui est LIBRE et
-qui est connectée à une section Attribuée au Train Actif peut être affectée au
- Train Actif à l'aide de cette fenêtre. Plus d'informations et une procédure simple pour
-allouer des sections supplémentaires peuvent être trouvées dans le fichier d'aide de la fenêtre
+<li> <p> <b>Allouer Extra ...</b> - Cliquez sur ce bouton pour faire appara&#238;tre une fen&#234;tre qui
+permet au r&#233;partiteur d'allouer des Sections &#224; un Train Actif qui peuvent ne pas &#234;tre
+la "prochaine" Section dans le Transit du Train Actif. Toute section qui est LIBRE et
+qui est connect&#233;e &#224; une section Attribu&#233;e au Train Actif peut &#234;tre affect&#233;e au
+ Train Actif &#224; l'aide de cette fen&#234;tre. Plus d'informations et une proc&#233;dure simple pour
+allouer des sections suppl&#233;mentaires peuvent &#234;tre trouv&#233;es dans le fichier d'aide du fen&#234;tre
 <b><a href="AllocateExtra.shtml"> Allouer extra</a></b>.
 </Li>
-<li> <p> <b> Annuler Redémarrage Automatique ...</b> - Cliquez sur ce bouton pour annuler le Redémarrage Automatique du
-Train Actif. Ce bouton permet au répartiteur  d'arrêter des trains qui
-ont été mis en place pour fonctionner en continu. S'il y a un seul Train Actif
-qui est mis en place pour fonctionner en continu, le Redémarrage Automatique est désactivé pour ce Train Actif lorsque ce bouton est pressé. S'il y a plus d'un Train Actif mis en place
-pour le Redémarrage Automatique, une petite fenêtre apparaît pour permettre au répartiteur de choisir quel
- Train Actif ne devrait pas  Redémarrer en Automatique quand il aura achever son transit à travers le réseau
-. Pour éviter d'éventuels conflits, ce bouton n'est pas actif lorsque la fenêtre
+<li> <p> <b>Annuler Red&#233;marrage Automatique ...</b> - Cliquez sur ce bouton pour annuler le Red&#233;marrage Automatique du
+Train Actif. Ce bouton permet au r&#233;partiteur d'arr&#234;ter des trains qui
+ont &#233;t&#233; mis en place pour fonctionner en continu. S'il y a un seul Train Actif
+qui est mis en place pour fonctionner en continu, le Red&#233;marrage Automatique est d&#233;sactiv&#233; pour ce Train Actif lorsque ce bouton est press&#233;. S'il y a plus d'un Train Actif mis en place
+pour le Red&#233;marrage Automatique, une petite fen&#234;tre appara&#238;t pour permettre au r&#233;partiteur de choisir quel
+ Train Actif ne devrait pas Red&#233;marrer en Automatique quand il aura achever son transit &#224; travers le r&#233;seau
+. Pour &#233;viter d'&#233;ventuels conflits, ce bouton n'est pas actif lorsque la fen&#234;tre
 <a href="NewTrain.shtml"><b>Activer Nouveau Train</a></b> est ouverte.</p>
 </Li>
-<p> <li> Terminer Train ...</b> - Cliquez sur ce bouton pour <b> <i>mettre fin</i></b> à
- <b>Train Actif</b>. S'il y a plus d'un train actif, une petite fenêtre
-apparaît pour permettre la sélection du <b>Train Actif</b> auquel que le répartiteur
-veut mettre fin. Quand un Train Actif est résilié, toutes les Sections allouées
- sont automatiquement libérées. Le Train et le Transit sont libérés pour être utilisé
+<p> <li> Terminer Train ...</b> - Cliquez sur ce bouton pour <b><i>mettre fin</i></b> &#224;
+ <b>Train Actif</b>. S'il y a plus d'un train actif, une petite fen&#234;tre
+appara&#238;t pour permettre la s&#233;lection du <b>Train Actif</b> auquel le r&#233;partiteur
+veut mettre fin. Quand un Train Actif est r&#233;sili&#233;, toutes les Sections allou&#233;es
+ sont automatiquement lib&#233;r&#233;es. Le Train et le Transit sont lib&#233;r&#233;s pour &#234;tre utilis&#233;
 dans d'autres Trains Actifs selon les besoins.</p>
-<p>Un  Train Actif est généralement terminé
-quand il a atteint son Cantons de destination, cependant, il peut être résilié à tout moment
-au cours de son transit sur le réseau. Le répartiteur est chargé de décider
-s'il est approprié de mettre fin à un Train Actif avant qu'il n'atteigne sa
+<p>Un  Train Actif est g&#233;n&#233;ralement termin&#233;
+quand il a atteint son Cantons de destination, cependant, il peut &#234;tre r&#233;sili&#233; &#224; tout moment
+au cours de son transit sur le r&#233;seau. Le r&#233;partiteur est charg&#233; de d&#233;cider
+s'il est appropri&#233; de mettre fin &#224; un Train Actif avant qu'il n'atteigne sa
 destination.</li>
 </Li></ul>
-<p>Les Options Dispatcher  permettent l'adaptation de la fonction du répartiteur. Les options sont
-accessibles via le menu de la fenêtre Options de Dispatcher. Les descriptions des articles
-disponibles dans la fenêtre Options, dans le menu Options, sont contenues
+<p>Les Options Dispatcheur  permettent l'adaptation du fonction du r&#233;partiteur. Les options sont
+accessibles via le menu du fen&#234;tre Options de Dispatcher. Les descriptions des articles
+disponibles dans la fen&#234;tre Options, dans le menu Options, sont contenues
 dans le fichier d'aide<b><a href="Options.shtml"> Options</a></b> .</p>
 
 <a name="atrains"></a>
-<H2> La table Trains Actifs </H2>
- <p>La table Train Actif depuis l'exemple de la fenêtre de Dispatcher  ci-dessus est présenté ci-dessous.</p>
+<H2> Le Tableau Trains Actifs </H2>
+ <p>Le Tableau Train Actif depuis l'exemple du fen&#234;tre de Dispatcheur ci-dessus est pr&#233;sent&#233; ci-dessous.</p>
 <img src="ActiveTrainsTable.jpg" height="118" width="802">
-<p> Chaque rangée de la table <b>Trains Actifs</b> correspond à un train Actif. Les
-colonnes sont expliquées ci-dessous.
+<p> Chaque rang&#233;e du Tableau <b>Trains Actifs</b> correspond &#224; un train Actif. Les
+colonnes sont expliqu&#233;es ci-dessous.
 <ul>
-<li> <p> <b>Transit</b> - Le nom du Transit du Train actif est affiché.
-Le nom affiché est le nom système suivi par le nom utilisateur entre parenthèses.
+<li> <p> <b>Transit</b> - Le nom du Transit du Train actif est affich&#233;.
+Le nom affich&#233; est le nom syst&#232;me suivi par le nom utilisateur entre parenth&#232;ses.
 </P></li>
-<li> <p> <b>Train</b> -. Le nom  de Train du Train Actif est affiché</p>
+<li> <p> <b>Train</b> - Le nom  de Train du Train Actif est affich&#233;</p>
 </li>
-<li><p><b> Type de Train </b> - Le type de train sélectionné quand le Train Actif mis en place est montré . Les types autorisés sont:
+<li><p><b>Type de Train </b> - Le type de train s&#233;lectionn&#233; quand le Train Actif mis en place est montr&#233;. Les types autoris&#233;s sont:
 <ul>
-<li> Aucun -. Rien n'est affiché si aucun Type de Train n'a été sélectionnée</li>
-<li> <b> LOCAL_PASSENGER</b>Passager Local
-<li> <b> LOCAL_FREIGHT</b>Marchandise Local
-<li> <b> THROUGH_PASSENGER</b>Passager Transit
-<li> <b> THROUGH_FREIGHT</b>Marchandise Transit
-<li> <b> EXPRESS_PASSENGER</b>Express Passager
-<li> <b> EXPRESS_FREIGHT</b>Express Marchandise
-<li> <b> MOW</b> - entretien de la voie
+<li> Aucun -. Rien n'est affich&#233; si aucun Type de Train n'a &#233;t&#233; s&#233;lectionn&#233;e</li>
+<li> <b>LOCAL_PASSENGER</b> Passager Local
+<li> <b>LOCAL_FREIGHT</b> Marchandise Local
+<li> <b>THROUGH_PASSENGER</b> Passager Transit
+<li> <b>THROUGH_FREIGHT</b> Marchandise Transit
+<li> <b>EXPRESS_PASSENGER</b> Express Passager
+<li> <b>EXPRESS_FREIGHT</b> Express Marchandise
+<li> <b>MOW</b> - entretien du voie
 </Ul>
-<li> <p> <b>État du Train </b> - L'état du Train Active est affiché ici. Un Train Actif
+<li> <p> <b>&#233;tat du Train </b> - L'&#233;tat du Train Active est affich&#233; ici. Un Train Actif
 peut avoir l'un des statuts suivants:
 <ul>
-<li> <b> EXÉCUTION</b> -En cours d'exécution sur le réseau, selon son mode opératoire.</li>
-<li> <b> PAUSE</b> -Attente pour un nombre de minutes d'horloge rapide spécifié par l'utilisateur
-. Le Train Actif devrait passer Soit en PAUSE soit en EXÉCUTION
-une fois que le nombre spécifié de minutes se soit écoulé. Ceci est prévu pour des arrêts automatiques en gares. (Exécution automatique des trains seulement)</li>
- <li> <b> ATTENTE</b> - Arrêté en attente d'une Section Allouée.
- Il s'agit de l'état d'activité du Train Actif quand il est créé.</li>
-<li> <b> TRAVAIL</b> - Effectuer le travail sous contrôle d'un mécanicien humain. C'
-est le statut d'un Train Actif quand un mécanicien effectue le ramassage ou la
-dépose des wagons à des industries ou dans un triage. (Exécution automatique des trains
+<li> <b>EX&#201;CUTION</b> -En cours d'ex&#233;cution sur le r&#233;seau, selon son mode op&#233;ratoire.</li>
+<li> <b>PAUSE</b> -Attente pour un nombre de minutes d'horloge rapide sp&#233;cifi&#233; par l'utilisateur
+. Le Train Actif devrait passer Soit en PAUSE soit en EX&#233;CUTION
+une fois que le nombre sp&#233;cifi&#233; de minutes se soit &#233;coul&#233;. Ceci est pr&#233;vu pour des arr&#234;ts automatiques en gares. (Ex&#233;cution automatique des trains seulement)</li>
+<li> <b>ATTENTE</b> - Arr&#234;t&#233; en attente d'une Section Allou&#233;e.
+ Il s'agit de l'&#233;tat du Train Actif quand il est cr&#233;&#233;.</li>
+<li> <b>TRAVAIL</b> - Effectuer le travail sous la commande d'un op&#233;rateur humain. C'
+est le statut d'un Train Actif quand un m&#233;canicien effectue le ramassage ou la
+d&#233;pose des wagons &#224; des industries ou dans un triage. (Ex&#233;cution automatique des trains
 seulement)</li>
- <li> <b> PRÊT</b> - Indique que le train actif a terminé son TRAVAIL, et est en
- <i> attente</i> d'un redémarrage – autorisation du répartiteur pour reprendre l'exécution.
- (Exécution automatique des trains seulement)</li>
- <li> <b> ARRÊTÉ</b> - Un train en exécution automatique a été arrêté par le
- répartiteur. Le répartiteur doit reprendre un fonctionnement automatique, le cas échéant.</Li>
- <li> <b> TERMINÉ</b> - Indique que le Train Actif a atteint sa destination
- et est prêt à être résilié par le répartiteur.</li>
+<li> <b>PR&#202;T</b> - Indique que le train actif a termin&#233; son TRAVAIL, et est en 
+<i>attente</i> d'un red&#233;marrage - autorisation du r&#233;partiteur pour reprendre l'ex&#233;cution.(Ex&#233;cution automatique des trains seulement)</li>
+<li> <b>ARR&#201;T&#201;</b> - Un train en ex&#233;cution automatique a &#233;t&#233; arr&#234;t&#233; par le r&#233;partiteur. Le r&#233;partiteur doit reprendre un fonctionnement automatique, le cas &#233;ch&#233;ant.</Li>
+<li> <b>TERMIN&#201;</b> - Indique que le Train Actif a atteint sa destination et est pr&#234;t &#224; &#234;tre r&#233;sili&#233; par le r&#233;partiteur.</li>
 </Ul></p>
-<p><b>Remarque :.</b> Certains Trains Actifs n'utilisent pas tous les états ci-dessus</p>
+<p><b>Remarque :.</b> Certains Trains Actifs n'utilisent pas tous les &#233;tats ci-dessus</p>
 </Li>
-<li><p><b>Mode</b> - Le mode de fonctionnement du train actif est affiché. Les
-modes suivants sont autorisés:
+<li><p><b>Mode</b> - Le mode de fonctionnement du train actif est affich&#233;. Les
+modes suivants sont autoris&#233;s:
 <ul>
-<li> <b> MANUEL</b> - Indique le train actif est géré par un opérateur humain à
- l'aide d'un régulateur. Le répartiteur alloue des Sections au Train Actif si
- nécessaire, le contrôle de signaux facultatifs en utilisant un TCO ou de la logique informatique, et
- arbitre les éventuels conflits entre les Trains Actifs. Si les signaux sont présents, l'
- opérateur est tenu de suivre les signaux qui sont fixés par l'ordinateur ou le
- répartiteur.</li>
- <li> <b> AUTOMATIQUE</b> - Indique que le Train Actif sera exécuté en automatique sous
-contrôle de l'ordinateur. Sous exécution automatique, l'ordinateur est attendu
-pour suivre les signaux fixés par le répartiteur ou la logique informatique. Des actions devront
-se produire, tel que décrit ci-dessus. Si le Train Actif atteint une Section où un
-travail doit être fait (par exemple, déposer ou collecter des wagons), le mode d'
-opération change à MANUEL jusqu'à l'achèvement des travaux. Lorsque le répartiteur
-reprend son fonctionnement automatique après le travail MANUEL a été terminé, le mode est
-modifié pour revenir à AUTOMATIQUE.</li>
+<li> <b>MANUEL</b> - Indique que le train actif est g&#233;r&#233; par un op&#233;rateur humain &#224; l'aide d'un r&#233;gulateur. Le r&#233;partiteur alloue des Sections au Train Actif si n&#233;cessaire, le contr&#244;le de signaux facultatifs en utilisant un panneaux CTC ou du logique informatique, et arbitre les &#233;ventuels conflits entre les Trains Actifs. Si les signaux sont pr&#233;sents, l'op&#233;rateur est tenu de suivre les signaux qui sont fix&#233;s par l'ordinateur ou le r&#233;partiteur.</li>
+<li> <b>AUTOMATIQUE</b> - Indique que le Train Actif sera ex&#233;cut&#233; en automatique sous
+commande de l'ordinateur. Sous ex&#233;cution automatique, l'ordinateur est attendu
+pour suivre les signaux fix&#233;s par le r&#233;partiteur ou la logique informatique. Des actions devront
+se produire, tel que d&#233;crit ci-dessus. Si le Train Actif atteint une Section o&#249; un
+travail doit &#234;tre fait (par exemple, d&#233;poser ou collecter des wagons), le mode d'
+op&#233;ration change &#224; MANUEL jusqu'&#224; l'ach&#232;vement des travaux. Lorsque le r&#233;partiteur
+reprend son fonctionnement automatique apr&#232;s le travail MANUEL a &#233;t&#233; termin&#233;, le mode est
+modifi&#233; pour revenir &#224; AUTOMATIQUE.</li>
 	</ul></p>
 </li>
 <li><p><b>
-Section Allouée</b> - Affiche le nom de la <b>Section</b> du
-<b>Transit</b> qui a été allouée à ce dernier Train Actif.
+Section Allou&#233;e</b> - Affiche le nom du <b>Section</b> du
+<b>Transit</b> qui a &#233;t&#233; allou&#233;e &#224; ce dernier Train Actif.
 </Li>
-<li><p><b>Section Suivante</b> - Affiche le nom de la <b>Section </b> du
-<b>Transit</b> qui devra être allouée  ensuite.
+<li><p><b>Section Suivante</b> - Affiche le nom du <b>Section </b> du
+<b>Transit</b> qui devra &#234;tre allou&#233;e  ensuite.
 </Li>
-<p> <li><b> Bouton Allocation Suivante</b> - Cliquez sur ce bouton pour demander que la
-<b>Section</b> indiqué dans la colonne <b>Allocation Suivante</b> soit allouée à ce
-Train Actif. Si la section est  LIBRE et non occupée, elle sera allouée
-immédiatement, et les sections des colonnes Section Allouée et Section Suivante
-seront mises à jour.</p>
+<p> <li><b>Bouton Allocation Suivante</b> - Cliquez sur ce bouton pour demander que la
+<b>Section</b> indiqu&#233; dans la colonne <b>Allocation Suivante</b> soit allou&#233;e &#224; ce
+Train Actif. Si la section est  LIBRE et non occup&#233;e, elle sera allou&#233;e
+imm&#233;diatement, et les sections des colonnes Section Allou&#233;e et Section Suivante
+seront mises &#224; jour.</p>
 <p> Si la section n'est pas LIBRE, une demande d'<b>Allocation</b>
-être entrée dans la table <b>Demandes d'Allocation </b>  (voir ci-dessous). Si  la Section
-est LIBRE, mais est OCCUPÉE, le répartiteur sera interrogé. Le répartiteur est
-chargé de décider si une partie OCCUPÉE doit être allouée. Si
-la Section suivante est la première Section à être affectés, et le train actif
-occupe cette section, Dispatcher sait que l'attribution OCCUPÉE à la
-Section est appropriée, de sorte que le répartiteur n'est pas interrogé.
+&#234;tre entr&#233;e dans Le Tableau <b>Demandes d'Allocation </b>  (voir ci-dessous). Si  la Section
+est LIBRE, mais est OCCUP&#233;E, le r&#233;partiteur sera interrog&#233;. Le r&#233;partiteur est
+charg&#233; de d&#233;cider si une partie OCCUP&#233;E doit &#234;tre allou&#233;e. Si
+la Section suivante est la premi&#232;re Section &#224; &#234;tre affect&#233;e, et le train actif
+occupe cette section, Dispatcheur sait que l'attribution OCCUP&#233;E &#224; la
+Section est appropri&#233;e, de sorte que le r&#233;partiteur n'est pas interrog&#233;.
 </Li>
 </Ul>
 
 <a name="arequests"> <a<a</a>
-<H2> La table Allocations Demandées</H2>
-<p> L'exemple de  table Allocations Demandées dans la fenêtre de Dispatcher ci-dessus est présenté ci-dessous.</p>
+<H2> Le Tableau Allocations Demand&#233;es</H2>
+<p> L'exemple de Tableau Allocations Demand&#233;es dans la fen&#234;tre de Dispatcher ci-dessus est pr&#233;sent&#233; ci-dessous.</p>
 <img src="RequestedAllocationsTable.jpg" height="101" width="802">
 
-<p> Cette table, intitulée<b> Allocations Demandées en attente d'Expédition</b>,
-affiche les <b>Allocations Demandées</b> en attente. Chaque ligne correspond à une
-<b>Demande d'Allocation </b>. Les colonnes sont expliquées ci-dessous.
+<p> Cette Tableau, intitul&#233;e<b>Allocations Demand&#233;es en attente d'Attribution</b>,
+affiche les <b>Allocations Demand&#233;es</b> en attente. Chaque ligne correspond &#224; une
+<b>Demande d'Allocation</b>. Les colonnes sont expliqu&#233;es ci-dessous.
 <ul>
-<li> <p> <b> Train Actif</b> - Affiche le <b>Train  Actif</b> demandant la Section.
-Les noms des Trains Actifs sont affichés soit en forme courte (ci-dessus) ou la forme longue
+<li> <p> <b>Train Actif</b> - Affiche le <b>Train  Actif</b> demandant la Section.
+Les noms des Trains Actifs sont affich&#233;s soit en forme courte (ci-dessus) ou la forme longue
 selon l'option choisie dans les
-<b> <a href="Options.shtml"> Options</a></b> de la fenêtre Dispatcher.</p>
+<b><a href="Options.shtml"> Options</a></b> du fen&#234;tre Dispatcheur.</p>
 </Li>
-<li> <p> <b> Priorité</b> - Affiche la priorité du <b>Train Actif</b> demandant
-la Section. Les grands nombres sont une priorité plus élevée. Si deux Trains Actifs 
-demandent la même Section, le Train Actif à la priorité plus élevée aura normalement
-préséance.
+<li> <p> <b>Priorit&#233;</b> - Affiche la priorit&#233; du <b>Train Actif</b> demandant
+la Section. Les grands nombres sont une priorit&#233; plus &#233;lev&#233;e. Si deux Trains Actifs 
+demandent la m&#234;me Section, le Train Actif &#224; la priorit&#233; plus &#233;lev&#233;e aura normalement
+pr&#233;s&#233;ance.
 </Ul>
-<li> <p> <b> Section Demandée</b> - Affiche le nom de la <b> Section Demandée</b>.
+<li> <p> <b>Section Demand&#233;e</b> - Affiche le nom du <b>Section Demand&#233;e</b>.
 </Li>
-<li> <p> <b> État Section</b> - Affiche l'état de l'allocation demandée 
-<b> Section</b>. La section sera soit:
+<li> <p> <b>&#233;tat Section</b> - Affiche l'&#233;tat de l'allocation demand&#233;e 
+<b>Section</b>. La section sera soit:
 <ul>
 <ul>
-	<li> <b>LIBRE</b> - disponible pour une allocation.
+	<li> <b>LIBRE</b> - Disponible pour une allocation.
 </Li>
-<li> <b> ALLOUÉE</b> - Attribution à un Train Actif différent .
+<li> <b>ALLOU&#201;E</b> - Attribution &#224; un Train Actif diff&#233;rent .
 </Ul>
 </Li>
-<li> <p> <b> Occupation</b> - Affiche l'occupation des <b>Section  Demandées</b>.
-Trois entrées sont possibles:
+<li> <p> <b>Occupation</b> - Affiche l'occupation des <b>Section Demand&#233;es</b>.
+Trois entr&#233;es sont possibles:
 <ul>
-<li> <b> INOCCUPÉE</b> - Rien n'est détecté dans aucun Canton de la section.
-(Les détecteurs d'occupation de tous les Cantons dans la Section sont INACTIFS)
+<li> <b>INOCCUP&#201;E</b> - Rien n'est d&#233;tect&#233; dans aucun Canton du section.
+(Les d&#233;tecteurs d'occupation de tous les Cantons dans la Section sont INACTIFS)
 </Li>
-<li> <b> OCCUPÉE</b> - Quelque chose est détecté dans l'un des Cantons de la
-Section. (Le capteur d'occupation d'au moins un Canton de la Section est
+<li> <b>OCCUP&#201;E</b> - Quelque chose est d&#233;tect&#233; dans l'un des Cantons du
+Section. (Le capteur d'occupation d'au moins un Canton du Section est
 ACTIF).
 </Li>
-<li> <b> INCONNU</b> - Le statut d'occupation d'au moins un des Cantons de
+<li> <b>INCONNU</b> - Le statut d'occupation d'au moins un des Cantons de
 la Section n'est pas connu. Cela indique que le capteur d'occupation d'au moins
-un Canton de la Section est ni ACTIF ni INACTIF. <b> - OU-</b> 
-L'option  Dispatcher <b>"Le réseau possède un matériel de détection canton"</b> n'est pas cochée -
-Voir <b> <a href="Options.shtml">Options Dispatcher</a></b>.
+un Canton du Section est ni ACTIF ni INACTIF. <b>- OU-</b> 
+L'option  Dispatcher <b>"Le r&#233;seau poss&#232;de un mat&#233;riel de d&#233;tection canton"</b> n'est pas coch&#233;e -
+Voir <b><a href="Options.shtml">Options Dispatcheur</a></b>.
 </Ul>
 </Li>
-<li> <p> <b> Longueur</b> - La longueur de la Section demandée à l'échelle en pieds ou en mètre en fonction du choix d'unités dans les
-<b> <a href="Options.shtml">Options Dispatcher</a></b>. La longueur est la section
-calculée à partir des longueurs de ses Cantons, inscrites dans la
-<b> <a href="../beantable/cantonkTable.shtml"> Table Canton</a></b> accessible à partir du
- sous-menu du menu Outils Tableau JMRI. La longueur de la Section est importante pour les
-trains s'arrêtant de circuler en mode AUTOMATIQUE.</p>
+<li> <p> <b>Longueur</b> - La longueur du Section demand&#233;e &#224; l'&#233;chelle en pieds ou en m&#232;tre en fonction du choix d'unit&#233;s dans les
+<b><a href="Options.shtml">Options Dispatcheur</a></b>. La longueur est la section
+calcul&#233;e &#224; partir des longueurs de ses Cantons, inscrites dans le
+<b><a href="../beantable/cantonTable.shtml"> Tableau Canton</a></b> accessible &#224; partir du
+ sous-menu du menu Outils Tableau JMRI. La longueur du Section est importante pour les
+trains qui arr&#234;tent de circuler en mode AUTOMATIQUE.</p>
 </Li>
-<li> <p> <b>Bouton Allouer</b> - Cliquez sur ce bouton pour demander l'attribution immédiate
-de la Section pour le Train Actif demandeur. Si la section est LIBRE et si l'
-Occupation la Section est soit INOCCUPÉ ou INCONNU, la Section sera attribuée
+<li> <p> <b>Bouton Allouer</b> - Cliquez sur ce bouton pour demander l'attribution imm&#233;diate
+du Section pour le Train Actif demandeur. Si la section est LIBRE et si l'
+Occupation de la Section est soit INOCCUP&#201; ou INCONNU, la Section sera attribu&#233;e
 au Train Actif demandeur. Si la section est libre, mais la section
-est occupée, le répartiteur est invité soit à remplacer l'occupation ou
+est occup&#233;e, le r&#233;partiteur est invit&#233; soit &#224; remplacer l'occupation ou
 attendre.</p>
-<p> Si la Section est ALLOUÉE à un autre Train Actif, cliquez sur le bouton
-sera ignoré. Une Section ne peut être affectée qu'à un seul Train Actif à la fois.
-Si une Section ALLOUÉE doit être réaffectée à un autre Train Actif, elle
-doit d'abord être libérée <b></b>. (Voir le fichier d'aide de la fenêtre
-<b> <a href="AllocatedSections.shtml"> Sections Allouées</a></b>
-pour les instructions sur la <i> libération</i> des Sections allouées.)</p>
-<p> Si "Utiliser la connectivité <i> ...</i>" est cochée dans la fenêtre <b>Options</b>, Dispatcher
-va vérifier que les aiguillages sont correctement définis avant de réellement allouer une Section .
-Si les aiguillages ne sont pas correctement définis, Dispatcher va tenter de définir l'aiguillage si
-<b> Détermination Auto  Aiguillages</b> est cochée dans le menu <b>Options</b> (ou contrôlé dans la fenêtre
-<b> Options</b>) . Si les aiguillages ne sont pas correctement définis, le répartiteur est
-averti et a la possibilité de passer outre la vérification de l'aiguillage et de procéder à
-l'allocation de la Section. Pour plus d'informations, voir
-<b> <a href="Options.shtml"> Options Dispatcher</a></b>.</p>
+<p> Si la Section est ALLOU&#201;E &#224; un autre Train Actif, cliquez sur le bouton
+sera ignor&#233;. Une Section ne peut &#234;tre affect&#233;e qu'&#224; un seul Train Actif &#224; la fois.
+Si une Section ALLOU&#201;E doit &#234;tre r&#233;affect&#233;e &#224; un autre Train Actif, elle
+doit d'abord &#234;tre <b>lib&#233;r&#233;e</b>. (Voir le fichier d'aide du fen&#234;tre
+<b><a href="AllocatedSections.shtml"> Sections Allou&#233;es</a></b>
+pour les instructions sur la <i> lib&#233;ration</i> des Sections allou&#233;es.)</p>
+<p> Si "Utiliser la connectivit&#233; <i> ...</i>" est coch&#233;e dans la fen&#234;tre <b>Options</b>, Dispatcheur
+va v&#233;rifier que les aiguillages sont correctement d&#233;finis avant de r&#233;ellement allouer une Section .
+Si les aiguillages ne sont pas correctement d&#233;finis, Dispatcheur va tenter de d&#233;finir l'aiguillage si
+<b>D&#233;termination Auto Aiguillages</b> est coch&#233;e dans le menu <b>Options</b> (ou contr&#244;l&#233; dans la fen&#234;tre
+<b>Options</b>). Si les aiguillages ne sont pas correctement d&#233;finis, le r&#233;partiteur est
+averti et a la possibilit&#233; de passer outre la v&#233;rification de l'aiguillage et de proc&#233;der &#224;
+l'allocation du Section. Pour plus d'informations, voir
+<b><a href="Options.shtml"> Options Dispatcheur</a></b>.</p>
 </Li>
 <li> <p> <b>Le bouton Annuler</b> - Cliquez sur ce bouton pour supprimer la Demande d'Allocation
-sans allouer la Section demandée.
+sans allouer la Section demand&#233;e.
 </li>
 </ul>
 
  <a name="allocated"></a>
 
-<H2> La Table des Sections Allouées</H2>
-<p>La table <b>Sections Allouées</b> affiche tous les Sections
-actuellement affectées aux Trains Actifs. Ce tableau sert à deux fins. Il
-montre quelles Sections  Allouées sont attribuées et à quels Trains Actifs, et il
-permet au répartiteur de <i>libérer</i> une Section allouée pour une utilisation par un
-Train actif différent.</p>
+<H2> Le Tableau des Sections Allou&#233;es</H2>
+<p>Le Tableau <b>Sections Allou&#233;es</b> affiche toutes les Sections
+actuellement affect&#233;es aux Trains Actifs. Ce Tableau sert &#224; deux fins. Il
+montre quelles Sections Allou&#233;es sont attribu&#233;es et &#224; quels Trains Actifs, et il
+permet au r&#233;partiteur de <i>lib&#233;rer</i> une Section allou&#233;e pour une utilisation par un
+Train Actif diff&#233;rent.</p>
 <img src="AllocatedSectionsTable.jpg" height="177" width="746">
-<p>Les colonnes du tableau sont les suivantes:
+<p>Les colonnes du Tableau sont les suivantes:
 <ul>
-<li><p><b> Train Actif</b> - Affiche le train Actif auquel la Section est affectée.
-Les noms des Trains Actifs sont affichés soit sous forme courte (ci-dessus) ou la forme longue
-selon l'option choisie dans la fenêtre 
-<b> <a href="Options.shtml">Options</a></b>du Dispatcher. </p>
+<li><p><b>Train Actif</b> - Affiche le train Actif auquel la Section est affect&#233;e.
+Les noms des Trains Actifs sont affich&#233;s soit sous forme courte (ci-dessus) ou la forme longue
+selon l'option choisie dans la fen&#234;tre 
+<b><a href="Options.shtml">Options</a></b>du Dispatcheur. </p>
 </Li>
-<li> <p> <b> Section Attribuée</b> - Affiche le nom de la Section Allouée au 
+<li> <p> <b>Section Attribu&#233;e</b> - Affiche le nom du Section Allou&#233;e au 
 Train Actif sur la gauche. <p>
 </Li>
-<li> <p> <b> Occupation</b> - Indique si la Section allouée est <b> OCCUPÉE</b>
-par un train, ou <b> INOCCUPÉE</b>. La colonne Occupation est actualisée chaque fois que
-l'occupation d'une Section Attribuée change. Si l'utilisateur n'a pas spécifié
-que le réseau a la détection d'occupation dans la fenêtre 
-<b> <a href="Options.shtml">Options</a></b> de Dispatcher ,l 'Occupation pour toutes les Sections
-sera affiché comme <b>INCONNUE</b>.</p>
+<li> <p> <b>Occupation</b> - Indique si la Section allou&#233;e est <b>OCCUP&#201;E</b>
+par un train, ou <b>INOCCUP&#201;E</b>. La colonne Occupation est actualis&#233;e chaque fois que
+l'occupation d'une Section Attribu&#233;e change. Si l'utilisateur n'a pas sp&#233;cifi&#233;
+que le r&#233;seau a la d&#233;tection d'occupation dans la fen&#234;tre 
+<b><a href="Options.shtml">Options</a></b> de Dispatcheur, l'Occupation pour toutes les Sections
+sera affich&#233;e comme <b>INCONNUE</b>.</p>
 </Li>
-<li> <p> <b>Statut Utilisé</b> - Indique si la Section Allouée a été utilisée
-par son train. La colonne Statuts Utilisé montre  soit <i>Entré</i>, <i>Non Entré</i>,
-ou <i>Sorti</i>. Le statut Utiliser des changements des Section Allouées comme le changement 
-d'occupation de la Section Allouée. Un Train Actif est supposé voir
-fini avec une Section attribuée si son statut d'utilisation est <i>Sorti</i>. L'option
-<b>Auto Libération</b> cherche des Sections Allouées ayant comme statut d'utilisation <i> Sorti</i>
-. Si l'utilisateur n'a pas précisé que le réseau a la détection d'occupation dans la fenêtre
- <b><a  href="Options.shtml"> Options</a></b> de Dispatcher, les statuts d'utilisation
+<li> <p> <b>Statut Utilis&#233;</b> - Indique si la Section Allou&#233;e a &#233;t&#233; utilis&#233;e
+par son train. La colonne Statuts Utilis&#233; montre soit <i>Entr&#233;</i>, <i>Non Entr&#233;</i>,
+ou <i>Sorti</i>. Le statut Utilisation des Section Allou&#233;es change comme le changement 
+d'occupation du Section Allou&#233;e. Un Train Actif est suppos&#233; avoir
+fini avec une Section attribu&#233;e si son statut d'utilisation est <i>Sorti</i>. L'option
+<b>Auto Lib&#233;ration</b> cherche des Sections Allou&#233;es ayant comme statut d'utilisation <i> Sorti</i>
+. Si l'utilisateur n'a pas pr&#233;cis&#233; que le r&#233;seau a la d&#233;tection d'occupation dans la fen&#234;tre
+ <b><a  href="Options.shtml"> Options</a></b> de Dispatcheur, les statuts d'utilisation
 ne s'afficheront pas correctement.</p>
 </Li>
-<p> <li> La dernière colonne affiche un bouton<b>Libération</b> pour chaque Section allouée.
-Si le bouton  Libération est cliqué, la Section est immédiatement <i>libérée</i>.
-Le statut de la Section devient <b>LIBRE</b>, et la Section est disponible pour être allouée 
-à un Train Actif.</p>
+<p> <li> La derni&#232;re colonne affiche un bouton<b>Lib&#233;ration</b> pour chaque Section allou&#233;e.
+Si le bouton  Lib&#233;ration est cliqu&#233;, la Section est imm&#233;diatement <i>lib&#233;r&#233;e</i>.
+Le statut du Section devient <b>LIBRE</b>, et la Section est disponible pour &#234;tre allou&#233;e 
+&#224; un Train Actif.</p>
 </Li>
 </Ul>
-<p> La case <b>Libération Auto </b> , immédiatement au-dessus de la table, des <b> Sections Allouées</b>
- est utilisée pour activer (cochée) ou désactiver (décochée) l' option libération automatisée
-. Si la <b>Libération Auto</b> est désactivée, le répartiteur est responsable de la libération des 
-<b>Sections Allouées</b> à l'aide du bouton  <b>Libération</b> de la Section Allouée
-(Voir ci-dessus). Si <b>Libération Auto</b> est activé, le programme va automatiquement libérer les
-<b>Sections Allouées</b> qui sont <b>INOCCUPÉES</b>, et montrent un <b>État d'Utilisation</b>
-<i>Sorti </i>, et sont les prochaines à être libérées. La <b>Libération Auto</b>
-libère seulement les <b> Sections Allouées</b> dans l'ordre dans lequel elles ont été allouées.
- La <b>Libération Auto</b> ne libérera pas les Sections allouées utilisant le bouton
-<a href="#window"> <b> Allocation Supplémentaire..</b></a> . Les Sections Supplémentaire Allouées 
-doivent être débloquées manuellement par le répartiteur.</p>
-<p> Souvent une Section ne doit pas être libérée si elle est encore <b> OCCUPÉE</b>. Lorsque le 
-Trains Actif est terminé, l'ensemble de ses Sections Allouées sont automatiquement  libérées, indépendamment de l'occupation.
- La <b>Libération Auto</b> ne libérera pas automatiquement  une Section 
-<b> OCCUPÉ</b>. Attention <b>: Le répartiteur est responsable pour déterminer s'il est approprié de libérer une Section OCCUPÉE</b>.</p>
+<p> La case <b>Lib&#233;ration Auto </b>, imm&#233;diatement au-dessus du Tableau, des <b>Sections Allou&#233;es</b>
+ est utilis&#233;e pour activer (coch&#233;e) ou d&#233;sactiver (d&#233;coch&#233;e) l' option lib&#233;ration automatis&#233;e
+. Si la <b>Lib&#233;ration Auto</b> est d&#233;sactiv&#233;e, le r&#233;partiteur est responsable du lib&#233;ration des 
+<b>Sections Allou&#233;es</b> &#224; l'aide du bouton  <b>Lib&#233;ration</b> du Section Allou&#233;e
+(Voir ci-dessus). Si <b>Lib&#233;ration Auto</b> est activ&#233;, le programme va automatiquement lib&#233;rer les
+<b>Sections Allou&#233;es</b> qui sont <b>INOCCUP&#201;ES</b>, et montrent un <b>&#233;tat d'Utilisation</b>
+<i>Sorti </i>, et sont les prochaines &#224; &#234;tre lib&#233;r&#233;es. La <b>Lib&#233;ration Auto</b>
+lib&#232;re seulement les <b>Sections Allou&#233;es</b> dans l'ordre dans lequel elles ont &#233;t&#233; allou&#233;es.
+ La <b>Lib&#233;ration Auto</b> ne lib&#233;rera pas les Sections allou&#233;es utilisant le bouton
+<a href="#window"> <b>Allocation Suppl&#233;mentaire..</b></a> . Les Sections Suppl&#233;mentaire Allou&#233;es 
+doivent &#234;tre d&#233;bloqu&#233;es manuellement par le r&#233;partiteur.</p>
+<p> Souvent une Section ne doit pas &#234;tre lib&#233;r&#233;e si elle est encore <b>OCCUP&#233;E</b>. Lorsque le 
+Trains Actif est termin&#233;, l'ensemble de ses Sections Allou&#233;es sont automatiquement  lib&#233;r&#233;es, ind&#233;pendamment de l'occupation.
+ La <b>Lib&#233;ration Auto</b> ne lib&#233;rera pas automatiquement  une Section 
+<b>OCCUP&#233;</b>. Attention <b>: Le r&#233;partiteur est responsable pour d&#233;terminer s'il est appropri&#233; de lib&#233;rer une Section OCCUP&#233;E</b>.</p>
 <p> 
-La case <b>Allouer Auto</b> , immédiatement au-dessus de la table <b> Sections Allouées</b>
-, est utilisée pour Activer (cochée) ou Désactiver (décochée) l'option d'attribution automatisée.
- Si <b>Allouer Auto </b> est désactivée, le répartiteur est responsable de l'allocation de
-toutes les <b>Sections</b> en utilisant le bouton  <b>Allouer</b>  de la <b>Demande d'Allocation</b>
-dans la table de Demande d'Allocation ou du bouton <b> Allouer Suivant</b> du  <b>Train Actif</b> dans la table  Trains Actifs (voir ci-dessus).</P>
-<p>L'option <b> Allouer Auto </b> fonctionne avec prudence. Il ne sera jamais allouer une Section.
-<b>OCCUPÉE</b>  Elle ne  remplacera jamais l'heure de démarrage en temps d'horloge rapide. Elle 
-tentera d'éviter les embouteillages en regardant vers l'avant pour voir si une Section demandée sera
-nécessaire pour un autre Train Actif qui est déjà commencé. Lorsque c'est possible, elle tente d'
-allouer  trois sections d'avance par rapport à la position actuelle de la tête de chaque train Actif.
+La case <b>Allouer Auto</b> , imm&#233;diatement au-dessus du Tableau <b>Sections Allou&#233;es</b>
+, est utilis&#233;e pour Activer (coch&#233;e) ou D&#233;sactiver (d&#233;coch&#233;e) l'option d'attribution automatis&#233;e.
+ Si <b>Allouer Auto </b> est d&#233;sactiv&#233;e, le r&#233;partiteur est responsable de l'allocation de
+toutes les <b>Sections</b> en utilisant le bouton  <b>Allouer</b> de la <b>Demande d'Allocation</b>
+dans le Tableau de Demande d'Allocation ou du bouton <b>Allouer Suivant</b> du <b>Train Actif</b> dans Le Tableau Trains Actifs (voir ci-dessus).</P>
+<p>L'option <b>Allouer Auto </b> fonctionne avec prudence. Il ne sera jamais allouer une Section.
+<b>OCCUP&#233;E</b>  Elle ne  remplacera jamais l'heure de d&#233;marrage en temps d'horloge rapide. Elle 
+tentera d'&#233;viter les embouteillages en regardant vers l'avant pour voir si une Section demand&#233;e sera
+n&#233;cessaire pour un autre Train Actif qui est d&#233;j&#224; commenc&#233;. Lorsque c'est possible, elle tente d'
+allouer trois sections d'avance par rapport &#224; la position actuelle du t&#234;te de chaque train Actif.
 </P>
 <p> La version actuelle d'<b>Allouer Auto </b> fonctionne bien pour les simples Trains Actifs
 et pour de multiples Trains Actifs dont les Transits ne se chevauchent pas. Il a
-une assistance limitée pour des Trains Actifs simultanés qui requièrent les mêmes Sections.
+une assistance limit&#233;e pour des Trains Actifs simultan&#233;s qui requi&#232;rent les m&#234;mes Sections.
 Les futures versions contiendront un soutien accru pour plusieurs Trains Actif.</P>
-<p> Le répartiteur peut commuter <b>Libération Auto</b> et <b> Allouer Auto</b> 
-à tout moment. Aussi le répartiteur peut l'emporter sur le processus d'attribution automatique
+<p> Le r&#233;partiteur peut commuter <b>Lib&#233;ration Auto</b> et <b>Allouer Auto</b> 
+&#224; tout moment. Aussi le r&#233;partiteur peut l'emporter sur le processus d'attribution automatique
 en allouant une section que l'option Allouer Auto refusait d'allouer.
-La désactivation d'<b> Allouer Auto</b> annule tous les plans que l'option pourrait être en train d'appliquer
-sur plusieurs Trains Actifs <b> Note:. Libération Auto et Allouer Auto nécessitent
-du matériel fiable pour que les cantons d'occupation  fonctionnent de manière fiable</b>.</p>
- <a name="automatic"></a>
+La d&#233;sactivation d'<b>Allouer Auto</b> annule tous les plans que l'option pourrait &#234;tre en train d'appliquer
+sur plusieurs Trains Actifs <b>Note:. Lib&#233;ration Auto et Allouer Auto n&#233;cessitent
+du mat&#233;riel fiable pour que les cantons d'occupation  fonctionnent de mani&#232;re fiable</b>.</p>
+<a name="automatic"></a>
 <H2>Trains Circulant Automatiquement</H2>
-<p>Dispatcher assiste les trains circulant autour du réseau automatiquement, à condition que le réseau
- réponde aux exigences minimales. Une fois qu'un Train Actif automatique (appelé
- <b>Train Actif Auto</b>) est créé, il est gérée automatiquement par un <i>
-mécanicien virtuel</i> en utilisant un régulateur informatique Le Train Actif Auto suit les 
-signaux autour du réseau, et effectue les 
-<b> <a href="../beantable/ViewSpecialActions.shtml">Actions</a></b> séparées spécifiées par l'utilisateur, depuis Dispatcher. Quand un Train Actif est créé par le répartiteur, le
-fonctionnement  automatique peut être demandé dans la fenêtre <a href="NewTrain.shtml">  <b> Activer Nouveau Train</b></a>
-, et les options spécifiques au Train Actif Auto sont fixées à ce moment-là.</p>
- <p> Le répartiteur affecte  des Sections à un <b> Train Actif Auto</b> de la même
- manière que l'allocation de Sections pour un Train Actif exécuté manuellement par un mécanicien humain.
-Du  point de vue du répartiteur , les Trains Actifs  Auto sont traités comme les Trains Actifs exécuter manuellement. Il y a deux exceptions à cela:</p>
+<p>Dispatcheur assiste les trains circulant autour du r&#233;seau automatiquement, &#224; condition que le r&#233;seau
+ r&#233;ponde aux exigences minimales. Une fois qu'un Train Actif automatique (appel&#233;
+ <b>Train Actif Auto</b>) est cr&#233;&#233;, il est g&#233;r&#233; automatiquement par un <i>
+m&#233;canicien virtuel</i> en utilisant un r&#233;gulateur informatique, Le Train Actif Auto suit les 
+signaux autour du r&#233;seau, et effectue les 
+<b><a href="../beantable/ViewSpecialActions.shtml">Actions</a></b> s&#233;par&#233;es sp&#233;cifi&#233;es par l'utilisateur, depuis Dispatcheur. Quand un Train Actif est cr&#233;&#233; par le r&#233;partiteur, le
+fonctionnement  automatique peut &#234;tre demand&#233; dans la fen&#234;tre <a href="NewTrain.shtml"> <b>Activer Nouveau Train</b></a>
+, et les options sp&#233;cifiques au Train Actif Auto sont fix&#233;es &#224; ce moment-l&#224;.</p>
+ <p> Le r&#233;partiteur affecte des Sections &#224; un <b>Train Actif Auto</b> de la m&#234;me
+ mani&#232;re que l'allocation de Sections pour un Train Actif ex&#233;cut&#233; manuellement par un m&#233;canicien humain.
+Du  point de vue du r&#233;partiteur, les Trains Actifs Auto sont trait&#233;s comme les Trains Actifs ex&#233;cuter manuellement. Il y a deux exceptions &#224; cela:</p>
 <ul>
-<p> <li> Quand un Train Actif Auto déraille ou autrement se comporte mal, le répartiteur va
-peut-être  avoir besoin de reprendre le contrôle de ce Train Actif Auto au <i>
-mécanicien virtuel </i> pour corriger le problème. Lorsque le Premier Train Actif Auto est créé,
-une fenêtre <b>Trains Auto</b> est créée à la droite de la fenêtre de Dispatcher.
-Cette fenêtre a une entrée pour chaque train Actif Auto actuellement actif sur le tracé.
-Les Fonctions dans chaque entrée permettent au répartiteur de prendre facilement le contrôle d'un 
-Train Actif Auto, pour fonctionner comme nécessaire et corriger le dysfonctionnement, et à reprendre le
-fonctionnement automatique une fois que le problème est résolu.</p>
+<p> <li> Quand un Train Actif Auto d&#233;raille ou autrement se comporte mal, le r&#233;partiteur va
+peut-&#234;tre  avoir besoin de reprendre la commande de ce Train Actif Auto au <i>
+m&#233;canicien virtuel</i> pour corriger le probl&#232;me. Lorsque le Premier Train Actif Auto est cr&#233;&#233;,
+une fen&#234;tre <b>Trains Auto</b> est cr&#233;&#233;e &#224; la droite du fen&#234;tre de Dispatcheur.
+Cette fen&#234;tre a une entr&#233;e pour chaque train Actif Auto actuellement actif sur le trac&#233;.
+Les Fonctions dans chaque entr&#233;e permettent au r&#233;partiteur de prendre facilement la commande d'un 
+Train Actif Auto, pour fonctionner comme n&#233;cessaire et corriger le dysfonctionnement, et &#224; reprendre le
+fonctionnement automatique une fois que le probl&#232;me est r&#233;solu.</p>
 </Li>
-<li> <p>Une des<b> Actions</b> de l'utilisateur spécifié est de <b> Passer en Mode Manuel</b>. Cette
-Action soutient l'exécution d'un Train Actif Auto automatiquement à un site de travail, où un
-mécanicien humain prend le relais pour les opérations de manœuvres, 
-la marche automatique est poursuivie  après avec le même Transit. Après que le mécanicien humain
- a terminé ses travaux, le mécanicien humain informe le répartiteur et le 
-fonctionnement automatique peut être repris. Le répartiteur reprend un fonctionnement automatique à
-l'aide d'un bouton dans l'entrée du Train Actif Auto dans la fenêtre Train Auto .</p> <a name="automatic"></a>
-<p><li>Quand un Train Actif Auto déraille ou autrement se comporte mal, le répartiteur aura
-peut-être besoin de prendre le contrôle de ce train Actif Auto du <i>
-Mécanicien Virtuel </i>pour corriger le problème. Lorsque le premier Train  Auto Actif est créé,
-une fenêtre <b>Trains Auto</b> est créée à la droite de la fenêtre de Dispatcher.
-Cette fenêtre a une entrée pour chaque train Actif Auto actuellement actifs sur le tracé.
-Les fonctions dans chaque entrée  permettent au répartiteur de prendre facilement le contrôle d'un Train Actif Auto, pour le faire fonctionner comme nécessaire pour corriger le dysfonctionnement, et à reprendre
-fonctionnement automatique une fois que le problème est résolu.</p>
+<li> <p>Une des<b>Actions</b> sp&#233;cifi&#233;e de l'utilisateur  est de <b>Passer en Mode Manuel</b>. Cette
+Action soutient l'ex&#233;cution d'un Train Actif Auto automatiquement pour un site de travail, o&#249; un
+m&#233;canicien humain prend le relais pour les op&#233;rations de man&#339;uvres, 
+la marche automatique est poursuivie  apr&#232;s avec le m&#234;me Transit. Apr&#232;s que le m&#233;canicien humain
+ a termin&#233; ses travaux, le m&#233;canicien humain informe le r&#233;partiteur et le 
+fonctionnement automatique peut &#234;tre repris. Le r&#233;partiteur reprend un fonctionnement automatique &#224;
+l'aide d'un bouton dans l'entr&#233;e du Train Actif Auto dans la fen&#234;tre Train Auto .</p> <a name="automatic"></a>
 </Li>
 </Ul>
-<p>Une Assistance  est prévue pour  la <b>RAMPE</b>de vitesse d'un Train Actif Auto lorsqu'il
-change sa vitesse actuelle pour une nouvelle vitesse. Cette option est contrôlée par
-un Taux de Rampe sélectionné pour chaque Train Actif Auto quand il est créé. Le meilleur
-Taux de rampe pour un Train Actif Auto dépend de la locomotive du train, du type de décodeur, et les réglages des CV du décodeur.
+<p>Un support est fourni pour la <b>RAMPE</b> de vitesse d'un Train Actif Auto lorsqu'il
+change sa vitesse actuelle pour une nouvelle vitesse. Cette option est contr&#244;l&#233;e par
+un Taux de Rampe s&#233;lectionn&#233; pour chaque Train Actif Auto quand il est cr&#233;&#233;. Le meilleur
+Taux de rampe pour un Train Actif Auto d&#233;pend de la locomotive du train, du type de d&#233;codeur, et les r&#233;glages des CV du d&#233;codeur.
 Les Taux de Rampe disponibles sont:</p>
 <ul>
-<li><p><b>RAMP_NONE</b> Aucune Rampe - La Montée en puissance est éteint. Lorsque survient un changement de vitesse, la nouvelle vitesse est immédiatement envoyée au décodeur. Certains décodeurs ont des caractéristiques qui peuvent
-changer la vitesse progressivement (cette option décodeur est nommée différemment suivant les 
-décodeurs). Si le décodeur fait le travail souhaité, sélectionnez RAMP_NONE.</P>
+<li><p><b>RAMP_NONE</b> Aucune Rampe - La rampe est coup&#233;e. Lorsque survient un changement de vitesse, la nouvelle vitesse est imm&#233;diatement envoy&#233;e au d&#233;codeur. Certains d&#233;codeurs ont des caract&#233;ristiques qui peuvent
+changer la vitesse progressivement (cette option d&#233;codeur est nomm&#233;e diff&#233;remment suivant les 
+d&#233;codeurs). Si le d&#233;codeur fait le travail souhait&#233;, s&#233;lectionnez RAMP_NONE.</P>
 </Li>
-<li><p><b>RAMP_FAST</b>  Rampe Rapide - Le passage à la vitesse se fait par de nouvelles étapes, mais rapidement. Ceci est
-probablement approprié pour la plupart des décodeurs.</p>
+<li><p><b>RAMP_FAST</b> Rampe Rapide - Le passage &#224; la vitesse se fait par de nouvelles &#233;tapes, mais rapidement. Ceci est
+probablement appropri&#233; pour la plupart des d&#233;codeurs.</p>
 </Li>
-<li><p><b>RAMP_MEDIUM</b>  Rampe Moyenne - Passage à la nouvelle vitesse avec des étapes environ deux fois plus lentes
+<li><p><b>RAMP_MEDIUM</b>  Rampe Moyenne - Passage &#224; la nouvelle vitesse avec des &#233;tapes environ deux fois plus lentes
 que RAMP_FAST.</p>
 </Li>
-<li><p><b>RAMP_MED_SLOW</b>- Rampe Moyenne Lente - Passage à la nouvelle vitesse avec des étapes environ trois fois
+<li><p><b>RAMP_MED_SLOW</b>- Rampe Moyenne Lente - Passage &#224; la nouvelle vitesse avec des &#233;tapes environ trois fois
 plus lentes que RAMP_FAST.</p>
 </Li>
-<li><p><b>RAMP_SLOW</b> Rampe Lente - Passage à la nouvelle vitesse avec des étapes environ quatre fois
-plus lentzs que RAMP_FAST. Trop lent pour presque tous les décodeurs.</P></li>
+<li><p><b>RAMP_SLOW</b> Rampe Lente - Passage &#224; la nouvelle vitesse avec des &#233;tapes environ quatre fois
+plus lentes que RAMP_FAST. Trop lent pour presque tous les d&#233;codeurs.</P></li>
 </ul>
-<p>Lorsque vous traversez le réseau, un Train Actif Auto change de vitesse en réponse
-aux signaux qu'il transmet. Si le signal suivant est foncé, rouge ou clignotant
-rouge, le train s'arrêtera dans la section actuelle (voir ci-dessous). Si le signal 
-est vert ou vert clignotant, le train va fonctionner à sa <i>vitesse maximale autorisée</i>.
-Si le signal est jaune ou jaune clignotant, le train circulera à une vitesse lente
-de 35% de la plage de vitesse permise. Si le train est prêt à s'arrêter, il sera
-ralenti à une vitesse limitée à 25% de la plage de vitesse autorisée. </p>
-<p>Quand un Train Actif Auto est créé, une vitesse maximale  <i> autorisé </i> par défaut est
-spécifiée comme une fraction de la plage de vitesse permise. Chaque nouvelle valeur de vitesse est
-par rapport à la <i> vitesse maximale autorisée </i>, et réduite si nécessaire. Cela permet aux
- différents Trains Actifs Auto de fonctionner à des vitesses maximales appropriées pour le type de
-train, indépendamment de la capacité de vitesse de sa locomotive. La <i>vitesse maximum autorisée</i> peut être modifiée pendant l'exécution en utilisant l'Action  <b>Réglage Vitesse Maximale </b>.
-Cela donne des ralentissements ou des accélérations à des emplacements spécifiés dans le
+<p>Lorsque vous traversez le r&#233;seau, un Train Actif Auto change de vitesse en r&#233;ponse
+aux signaux qu'il rencontre. Si le signal suivant est eteint, rouge ou clignotant
+rouge, le train s'arr&#234;tera dans la section actuelle (voir ci-dessous). Si le signal 
+est vert ou vert clignotant, le train va fonctionner &#224; sa <i>vitesse maximale autoris&#233;e</i>.
+Si le signal est jaune ou jaune clignotant, le train circulera &#224; une vitesse lente
+de 35% du plage de vitesse permise. Si le train est pr&#234;t &#224; s'arr&#234;ter, il sera
+ralenti &#224; une vitesse limit&#233;e &#224; 25% du plage de vitesse autoris&#233;e. </p>
+<p>Quand un Train Actif Auto est cr&#233;&#233;, une vitesse maximale  <i>autoris&#233;</i> par d&#233;faut est
+sp&#233;cifi&#233;e comme une fraction de la plage de vitesse permise. Chaque nouvelle valeur de vitesse est
+par rapport &#224; la <i>vitesse maximale autoris&#233;e</i>, et r&#233;duite si n&#233;cessaire. Cela permet aux
+ diff&#233;rents Trains Actifs Auto de fonctionner &#224; des vitesses maximales appropri&#233;es pour le type de
+train, ind&#233;pendamment de la capacit&#233; de vitesse de sa locomotive. La <i>vitesse maximum autoris&#233;e</i> peut &#234;tre modifi&#233;e pendant l'ex&#233;cution en utilisant l'Action <b>R&#233;glage Vitesse Maximale</b>.
+Cela donne des ralentissements ou des acc&#233;l&#233;rations &#224; des emplacements sp&#233;cifi&#233;s dans le
 Transit, pour exemple, lors du passage dans une ville. </p>
-<p> Puisque toutes les locomotives ne fonctionnent pas de la même manière , quand un Train Actif Auto est créé,
-un  <b>Facteur de Vitesse </b> dans la gamme de 0,5 à 1,5 est spécifié. Ce Facteur de vitesse
-multiplie toutes les valeurs de vitesse juste avant que la vitesse soit envoyé au régulateur
-(Après que la vitesse ait été testée avec la <i> vitesse maximale autorisée</i>).
-Pour faire circuler "normalement" les locomotives , un facteur de vitesse de 1,0 est approprié. Pour les
-locomotives qui fonctionnent plus lentement que la «normale», l'utilisation d'un facteur supérieur à 1,0, et pour
-les trains qui vont plus vite que la «normale», un facteur inférieur à 1,0 est meilleur. </p>
-<p> Trois méthodes différentes sont fournis actuellement pour arrêter un Train Actif Auto
- quand il doit s'arrêter. Si la Section est dotée de Capteurs d'Arrêt matériels, le train
-est arrêté quand il atteint le Capteur d'Arrêt pour son sens de déplacement. Si pas de
- Capteurs d'Arrêts disponibles pour la Section, le longueur des trains est comparée à la
-longueur de la Section afin de déterminer si le train Actif Auto est adapté à la
-Section. Si le Train Actif Auto s'adapte à la Section, et si toutes les wagons
-du train sont détectables, le Train Actif Auto est arrêté quand il sort de la
-Section précédente pour  la Section courante. Si aucune des deux méthodes s'appliquent,
-le train est arrêté quand il entre dans la Section. </p>
-<p>Arrêter en utilisant un capteur d'arrêt est la façon la plus précise pour arrêter un Train Actif Auto
- à un endroit précis. Les Capteurs d'arrêt ne doivent pas être mis en place pour chaque
-Section. L'utilisation de Capteurs d'Arrêt pour les arrêts automatiques  dans les gares et des voies de passage est
-fortement recommandée. Pour la deuxième méthode d'arrêt, toutes les longueurs des
-Cantons dans la zone de Transit doivent être présents dans la Table  Canton, et le train doit
-être entièrement  détectable - ce qui signifie habituellement que tous les wagons doivent avoir une résistance sur les roues
-d'un ou plusieurs bogies. Les longueurs attribuées aux Cantons n'ont pas besoin d'être très
-précises. Les longueurs ne devraient pas inclure les longueurs des aiguillages à l'extrémité des
-Sections, ou les longueurs des portions d'une Section normalement non traversées par
+<p> Puisque toutes les locomotives ne fonctionnent pas de la m&#234;me mani&#232;re , quand un Train Actif Auto est cr&#233;&#233;,
+un  <b>Facteur de Vitesse</b> dans la gamme de 0,5 &#224; 1,5 est sp&#233;cifi&#233;. Ce Facteur de vitesse
+multiplie toutes les valeurs de vitesse juste avant que la vitesse soit envoy&#233; au r&#233;gulateur
+(Apr&#232;s que la vitesse ait &#233;t&#233; test&#233;e avec la <i>vitesse maximale autoris&#233;e</i>).
+Pour faire circuler "normalement" les locomotives, un facteur de vitesse de 1,0 est appropri&#233;. Pour les
+locomotives qui fonctionnent plus lentement que la "normale", l'utilisation d'un facteur sup&#233;rieur &#224; 1,0, et pour
+les trains qui vont plus vite que la "normale", un facteur inf&#233;rieur &#224; 1,0 est meilleur. </p>
+<p> Trois m&#233;thodes diff&#233;rentes sont fournis actuellement pour arr&#234;ter un Train Actif Auto
+ quand il doit s'arr&#234;ter. Si la Section est dot&#233;e de Capteurs d'Arr&#234;t mat&#233;riels, le train
+est arr&#234;t&#233; quand il atteint le Capteur d'Arr&#234;t pour son sens de d&#233;placement. Si pas de
+ Capteurs d'Arr&#234;ts disponibles pour la Section, le longueur des trains est compar&#233;e &#224; la
+longueur du Section afin de d&#233;terminer si le train Actif Auto est adapt&#233; &#224; la
+Section. Si le Train Actif Auto s'adapte &#224; la Section, et si toutes les wagons
+du train sont d&#233;tectables, le Train Actif Auto est arr&#234;t&#233; quand il sort de la
+Section pr&#233;c&#233;dente pour  la Section courante. Si aucune des deux m&#233;thodes s'appliquent,
+le train est arr&#234;t&#233; quand il entre dans la Section. </p>
+<p>Arr&#234;ter en utilisant un capteur d'arr&#234;t est la fa&#231;on la plus pr&#233;cise pour arr&#234;ter un Train Actif Auto
+ &#224; un endroit pr&#233;cis. Les Capteurs d'arr&#234;t ne doivent pas &#234;tre mis en place pour chaque
+Section. L'utilisation de Capteurs d'Arr&#234;t pour les arr&#234;ts automatiques  dans les gares et des voies de passage est
+fortement recommand&#233;e. Pour la deuxi&#232;me m&#233;thode d'arr&#234;t, toutes les longueurs des
+Cantons dans la zone de Transit doivent &#234;tre pr&#233;sents dans Le Tableau Canton, et le train doit
+&#234;tre enti&#232;rement  d&#233;tectable - ce qui signifie habituellement que tous les wagons doivent avoir une r&#233;sistance sur les roues
+d'un ou plusieurs bogies. Les longueurs attribu&#233;es aux Cantons n'ont pas besoin d'&#234;tre tr&#232;s
+pr&#233;cises. Les longueurs ne devraient pas inclure les longueurs des aiguillages &#224; l'extr&#233;mit&#233; des
+Sections, ou les longueurs des portions d'une Section normalement non travers&#233;es par
 le Train Actif Auto
-
- <a name="require"> </a>
-<H2>Conditions d' Éxécution Automatique</h2>
-<p>L'exécution automatique des Trains  Actif exige un réseau et un train avec le
-matériel nécessaire et qu'un  TCO entièrement configuré soit présent
-pour fournir les informations de connectivité du réseau. Certaines exigences de pour l'exécution automatique
- sont aussi fortement recommandées pour l'exécution  manuelle
-Les exigences sont expliquées ci-dessous:
+<a name="require"> </a>
+<H2>Conditions d' &#233;x&#233;cution Automatique</h2>
+<p>L'ex&#233;cution automatique des Trains Actif exige un r&#233;seau et un train avec le
+mat&#233;riel n&#233;cessaire et qu'un panneau Editeur de R&#233;seau enti&#232;rement configur&#233; soit pr&#233;sent
+pour fournir les informations de connectivit&#233; du r&#233;seau. Certaines exigences pour l'ex&#233;cution automatique
+ sont aussi fortement recommand&#233;es pour l'ex&#233;cution manuelle
+Les exigences sont expliqu&#233;es ci-dessous:
 <ul>
-<p> <li> Le réseau  doit avoir une station de commande DCC qui acceptent les régulateurs informatiques JMRI . </p>
+<p> <li> Le r&#233;seau  doit avoir une Centrale DCC qui acceptent les r&#233;gulateurs informatiques JMRI . </p>
 </Li>
-<p> <li> Le circuit doit être divisé en Cantons et chaque Canton le long de la voie principale
-doit avoir le matériel de détection d'occupation, offrant Capteurs d'occupation à JMRI. </p>
+<p> <li> Le circuit doit &#234;tre divis&#233; en Cantons et chaque Canton le long de la voie principale
+doit avoir le mat&#233;riel de d&#233;tection d'occupation, offrant les Capteurs d'occupation &#224; JMRI. </p>
 
 </li>
-<li><p>Les aiguillages)le long de la ligne principale doivent être commutables par l'informatique. Il est recommandé que les aiguillages aient des commentaires, mais ce n'est pas obligatoire.
- L'exécution automatique des trains exige que l'informatique règle les aiguillages pour
-voyager le long du Transit quand les sections sont allouées. Le réglage automatique des aiguillages
-est disponible comme une option lors de l'exécution manuelle.</p>
+<li><p>Les aiguillages le long de la ligne principale doivent &#234;tre commutables par l'informatique. Il est recommand&#233; que les aiguillages aient des commentaires, mais ce n'est pas obligatoire.
+ L'ex&#233;cution automatique des trains exige que l'informatique r&#232;gle les aiguillages pour
+voyager le long du Transit quand les sections sont allou&#233;es. Le r&#233;glage automatique des aiguillages
+est disponible comme une option lors de l'ex&#233;cution manuelle.</p>
 </Li>
-<p> <li>,Cantons, aiguillages et les signaux doivent être configurés sur un panneau TCO
-qui décrit parfaitement la connectivité du réseau Le panneau TCO n'a pas besoin
-d'être affiché, mais il doit apparaître dans le sous-menu des Panneaux/Montrer Panneau . Si
-plusieurs panneaux TCO sont présents, Dispatcher utilise le TCO sélectionné dans la fenêtre Options de Dispatcher. Le panneau TCO
-agit comme une base de données de connectivité, la fourniture d'informations de connectivité nécessaire pour le
-Dispatcher ou <i> le mécanicien virtuel du Train Actif Auto </i>.</P>
+<p> <li>,Cantons, aiguillages et les signaux doivent &#234;tre configur&#233;s sur un panneau TCO
+qui d&#233;crit parfaitement la connectivit&#233; du r&#233;seau Le panneau TCO n'a pas besoin
+d'&#234;tre affich&#233;, mais il doit appara&#238;tre dans le sous-menu des Panneaux/Montrer Panneau . Si
+plusieurs panneaux TCO sont pr&#233;sents, Dispatcher utilise le TCO s&#233;lectionn&#233; dans la fen&#234;tre Options de Dispatcheur. Le panneau TCO
+agit comme une base de donn&#233;es de connectivit&#233;, la fourniture d'informations de connectivit&#233; n&#233;cessaire pour le
+Dispatcheur ou <i> e m&#233;canicien virtuel du Train Actif Auto</i>.</P>
 </Li>
-<li><p>Les signaux matériels sur le réseau n'ont pas besoin d'être présents, mais les signaux et la logique signal
- doivent être configurées dans le TCO. Les Trains Actif Auto suivent les
-signaux, nécessitant les signaux sur le TCO.</p>
+<li><p>Les signaux mat&#233;riels sur le r&#233;seau n'ont pas besoin d'&#234;tre pr&#233;sents, mais les signaux (soit T&#234;te Signal et Logique simple soit M&#226;t Signal et Logique simple M&#226;t Signal) doivent &#234;tre configur&#233;es dans le TCO. Les Trains Actif Auto suivent les
+signaux, n&#233;cessitant les signaux sur le TCO.</p>
 </Li>
-<p> <li>Les Sections et les Transits doivent être mis en place pour le réseau Cela est également nécessaire
-pour la circulation manuelle des Trains Actifs. Les Sections doivent être configurées de sorte que les Sections
-s'interconnecte qu'une seule fois dans chaque direction. Cela a un impact sur le chemin des Cantons mis
+<p> <li>Les Sections et les Transits doivent &#234;tre mis en place pour le r&#233;seau. Cela est &#233;galement n&#233;cessaire
+pour la circulation manuelle des Trains Actifs. Les Sections doivent &#234;tre configur&#233;es de sorte que les Sections
+s'interconnectent qu'une seule fois dans chaque direction. Cela a un impact sur le chemin des Cantons mis
 en place.</p>
 </Li>
-<p> <li> Tous les points d'entrée et de sortie des Sections dans le Transit doivent avoir des
-signaux sur le panneau TCO. Les frontières entre les Cantons dans les Sections doivent
-être signalées sur le panneau TCO. Des portions du réseau qui ne sont pas
-dans les Sections de Transits  ont seulement besoin de ces signaux qui sont nécessaires pour permettre la
-configuration de la logique signal pour les signaux dans les sections du Transit. L'utilisation des
-Outils de TCO pour configurer les signaux sur le panneau TCO est
-nécessaire (qui est de savoir comment le TCO sait appliquer  des signaux aux aiguillages, aux limites de Cantons,, etc.) L'utilisation de ces outils pour mettre en place une logique  signal est fortement
-recommandée. Lors de la vérification pour les capteurs de direction dans la logique du signal, Dispatcher
-regarde dans le protocole SSL (signal logique simple) de chaque signal (voir ci-dessous). Si
+<p> <li> Tous les points d'entr&#233;e et de sortie des Sections dans le Transit doivent avoir des
+signaux sur le panneau TCO. Si l'usage  de T&#234;te Signal/Logique Simple Signal puis Les fronti&#232;res entre les Cantons dans les Sections doivent &#234;tre signal&#233;es sur le panneau TCO. Des portions du r&#233;seau qui ne sont pas
+dans les Sections de Transits  ont seulement besoin de ces signaux qui sont n&#233;cessaires pour permettre la
+configuration de la logique signal soit Logique Simple Signal (LSS) ou Logique Simple M&#226;t (LMS) pour signaler dans les sections du Transit. L'utilisation des
+Outils de TCO pour configurer les signaux sur le panneau TCO est n&#233;cessaire (C'est comment le TCO sait appliquer des signaux aux aiguillages, aux limites de Cantons, etc.) L'utilisation de ces outils pour mettre en place une logique  signal est fortement
+recommand&#233;e. Lors de la  v&#233;rification pour les capteurs de direction dans la logique du signal, Dispatcheur
+regarde dans le protocole LSS (logique simple signal) de chaque t&#234;te signal (voir ci-dessous). Si
 la logique du signal est mise en place sans l'utilisation des outils TCO, assurez - vous que chaque
-SSL est configuré correctement</p>
+LSS ou LMS est configur&#233; correctement</p>
 </Li>
-<li> <p> Toutes les Sections doivent être configurées avec des Capteurs de direction. Quand un Train Actif Auto
- est créé, Dispatcher va vérifier que les capteurs de direction sont présents et
-sont configurés dans la logique signal des signaux dans toutes les Sections du Transit.
-Dispatcher place les capteurs dans le sens de la logique signal s'ils ne sont pas trouvés.
-<b> Remarque:</b> les Capteurs de Direction peuvent être effacés de la logique signal en utilisant un outil de
-la table Sections quand les trains ne circulent pas en automatique.</p>
+<li> <p> Toutes les Sections doivent &#234;tre configur&#233;es avec des Capteurs de direction. Quand un Train Actif Auto
+ est cr&#233;&#233;, Dispatcheur va v&#233;rifier que les capteurs de direction sont pr&#233;sents et
+sont configur&#233;s dans la logique signal des signaux dans toutes les Sections du Transit.
+Dispatcheur place les capteurs dans le sens de la logique signal s'ils ne sont pas trouv&#233;s.
+<b>Remarque:</b> les Capteurs de Direction peuvent &#234;tre effac&#233;s de la logique signal en utilisant un outil du
+Tableau Sections quand les trains ne circulent pas en automatique.</p>
 </Li>
-<p> <li> Les longueurs des Cantons sur le réseau doivent être inscrites dans la 
-table Canton pour faciliter l'arrêt des Trains Actif Auto.</P>
+<p> <li> Les longueurs des Cantons sur le r&#233;seau  physique doivent &#234;tre inscrites dans le 
+Tableau Canton pour faciliter l'arr&#234;t des Trains Actif Auto.</P>
 </Li>
-<li> <p>Les capteurs d'arrêt matériels ne sont pas requis dans les Sections, toutefois, les
-capteurs d'arrêt matériels sont fortement recommandés dans les sections où des emplacements d'arrêt précis 
-sont souhaités.</p>
+<li> <p>Les capteurs d'arr&#234;t mat&#233;riels ne sont pas requis dans les Sections, toutefois, les
+capteurs d'arr&#234;t mat&#233;riels sont fortement recommand&#233;s dans les sections o&#249; des emplacements d'arr&#234;t pr&#233;cis 
+sont souhait&#233;s.</p>
 </Li>
-<li><p>Des résistances sur les roues de tous les wagons d'un Train Actif Auto ne sont pas requises
-à moins que <b>Allouer Auto </b> et /ou  <b>Libération Automatique </b> soit
-utilisé (s'applique à la fois à la circulation  manuelle et automatique des trains).
-<b>Résistance  sur les roues de tous les wagons sont fortement recommandées</b>
-pour tous les Trains Actif Auto. Si elles ne sont pas présentes, le <i>mécanicien virtuel</i>
-n'a aucun moyen de savoir quand la dernière voiture a quitté un Canton. Sans que le train
-soit pleinement décelable sur toute sa longueur, le
-Train Actif Auto ne s'arrêtera pas à des endroits acceptables.</P>
+<li><p>Des r&#233;sistances sur les roues de tous les wagons d'un Train Actif Auto ne sont pas requises
+&#224; moins que <b>Allouer Auto </b> et /ou  <b>Lib&#233;ration Automatique </b> soit
+utilis&#233; (s'applique &#224; la fois &#224; la circulation  manuelle et automatique des trains).
+<b>R&#233;sistance  sur les roues de tous les wagons sont fortement recommand&#233;es</b>
+pour tous les Trains Actif Auto. Si elles ne sont pas pr&#233;sentes, le <i>m&#233;canicien virtuel</i>
+n'a aucun moyen de savoir quand la derni&#232;re voiture a quitt&#233; un Canton. Sans que le train
+soit pleinement d&#233;celable sur toute sa longueur, le
+Train Actif Auto ne s'arr&#234;tera pas &#224; des endroits acceptable.</P>
 </Li>
 </Ul>
-<p> Même si les exigences ci-dessus sont remplies, l'exécution automatique ne sera pas un
-succès à moins que le réseau et le matériel roulant sont en très bon état. La
-voie doit être propre, et les roues des trains en exécution automatique doivent être
-très propre, permettant la bonne détection des Canton. Les locomotives doivent fonctionner sans heurts, surtout
-à basse vitesse.Les problèmes de voies doivent avoir été résolus.
-<b> Un train devrait fonctionner sans problème en mode manuel, avant de tenter de le lancer en automatique.</b></p>
+<p> M&#234;me si les exigences ci-dessus sont remplies, l'ex&#233;cution automatique ne sera pas un
+succ&#232;s &#224; moins que le r&#233;seau et le mat&#233;riel roulant sont en tr&#232;s bon &#233;tat. La
+voie doit &#234;tre propre, et les roues des trains en ex&#233;cution automatique doivent &#234;tre
+tr&#232;s propre, permettant la bonne d&#233;tection des Canton. Les locomotives doivent fonctionner sans heurts, surtout
+&#224; basse vitesse.Les probl&#232;mes de voies doivent avoir &#233;t&#233; r&#233;solus.
+<b>Un train devrait fonctionner sans probl&#232;me en mode manuel, avant de tenter de le lancer en automatique.</b></p>
 
 
 <!--#include virtual="/Footer" -->

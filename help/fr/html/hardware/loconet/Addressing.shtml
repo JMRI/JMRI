@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Addressing.shtml,v 1.2 2011/04/12 16:18:00 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id: Addressing.shtml 22555 2013-01-19 22:15:18Z jacobsen $ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -14,7 +14,7 @@
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -33,82 +33,140 @@
 
 <h1>Adressage LocoNet</h1>
 
-Le Systèmes LocoNet adresse des capteurs en entrée et des aiguillages en  sortie en utilisant des numéros.
-Cette page explique comment ces chiffres sont définis dans JMRI, et comment ils se rapportent
-pour les numéros dans d'autres systèmes..
+Le Syst&#232;mes LocoNet adresse des capteurs en entr&#233;e et des aiguillages en  sortie en utilisant des num&#233;ros.
+Cette page explique comment ces chiffres sont d&#233;finis dans JMRI, et comment ils se rapportent
+pour les num&#233;ros dans d'autres syst&#232;mes..
 
 <h2>Adressage Aiguillage LocoNet dans JMRI</h2>
 
-A l'intérieur des paquets sur la LocoNet, les sorties aiguillages sont traitées avec des nombres de 0 à 4095.
-Les régulateurs cependant, répondent aux numéros 1 à 4096. Pour éviter la confusion pour l'utilisateur
-, JMRI utilise la même numérotation que les régulateurs: LT1 à LT4096.<P>
-Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet
-dans le texte, il utilise le même adressage, donc
-1 à 4096. Il est ensuite
-différent des octets bruts qui sont affichés, mais
-au moins c'est compatible avec ce que les utilisateurs s'attendent à voir.
-Nous convenons de  la confusion, mais il doit y avoir une certaine confusion, quelque part, étant donné
-la façon dont cela a été mis en place
+A l'int&#233;rieur des paquets sur la LocoNet, les sorties aiguillages sont adress&#233;es avec des nombres de 0 &#224; 4095.
+Les r&#233;gulateurs cependant, r&#233;pondent aux num&#233;ros 1 &#224; 4096. Pour &#233;viter la confusion pour l'utilisateur
+, JMRI utilise la m&#234;me num&#233;rotation que les r&#233;gulateurs: LT1 &#224; LT4096.<P>
+Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet dans le texte, il utilise le m&#234;me adressage, donc 1 &#224; 4096. Il est ensuite diff&#233;rent des octets bruts qui sont affich&#233;s, mais au moins c'est compatible avec ce que les utilisateurs s'attendent &#224; voir.
+Nous convenons de  la confusion, mais il doit y avoir une certaine confusion, quelque part, &#233;tant donn&#233; la fa&#231;on dont cela a &#233;t&#233; mis en place
 
+<h3> Le Tableau Aiguillage</h3>
+<p>Le Table Aiguillage JMRI montre un tableau des aiguillage que JMRI connait. Tous le      temps JMRI que voit un message LocoNet qui sp&#233;cifie un aiguillage, JMRI met &#224; jour une entr&#233;e existante dans le tableau ou cr&#233;e une nouvelle entr&#233;e si elle n'existe pas
+     . Chaque aiguillage dans le tableau peut &#234;tre affect&#233; d'un "nom utilisateur".</P>
+<p> La tableau aiguillage donne un aper&#231;u utile de l'&#233;tat actuel de tous les aiguillages connus, et permet &#224; l'utilisateur de changer l'&#233;tat de ces aiguillages.</p>
+<p> Des informations suppl&#233;mentaires sur les aiguillages et le Tableau Aiguillage peuvent &#234;tre trouv&#233;es dans la
+     <a href="../../tools/Turnouts.shtml">page principale des aiguillages</a>.</p>
 <h2>Adressage des capteurs LocoNet dans JMRI </h2>
 
-A l'intérieur des paquets sur le LocoNet, les capteurs sont traitées avec des nombres de 0 à 4095.
-La documentation Digitrax  fait référence à des nombres de 1 à 4096, cependant. Tout comme pour les 
-aiguillages, nous utilisons la documentation de numérotation pour définir les noms de capteur: LS1 à LS4096.
+A l'int&#233;rieur des paquets sur le LocoNet, les capteurs sont trait&#233;s avec des nombres de 0 &#224; 4095.
+La documentation Digitrax  fait r&#233;f&#233;rence &#224; des nombres de 1 &#224; 4096, cependant. Tout comme pour les 
+aiguillages, nous utilisons la documentation de num&#233;rotation pour d&#233;finir les noms de capteur: LS1 &#224; LS4096.
 <P>
-La façon la plus simple de trouver les
-bon numéros pour un canton donné est d'ouvrir une fenêtre, "LocoNet moniteur", et déposer une
-locomotive sur le canton qui vous êtes intéresse Vous verrez les
-Message LocoNet, avec les nombre, dans la fenêtre qui ressemble à
+La fa&#231;on la plus simple de trouver les bon num&#233;ros pour un canton donn&#233; est d'ouvrir une fen&#234;tre, "LocoNet moniteur", et d&#233;poser une
+locomotive sur le canton qui vous &#234;tes int&#233;resse Vous verrez les Message LocoNet, avec les nombre, dans la fen&#234;tre qui ressemble &#224;
 quelque chose comme ceci:
 <PRE>
     "General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi"
 </PRE></CODE>
 
-Le numéro de contact, 161 dans ce cas, est l'adresse du capteur.
-Préfixe qui est LS  pour obtenir le nom du capteur, par exemple LS161 dans ce cas.
+Le num&#233;ro de contact, 161 dans ce cas, est l'adresse du capteur. Le pr&#233;fixe est LS pour obtenir, le nom du capteur, par exemple LS161 dans ce cas.
 <P>
-Si vous voulez entrer manuellement les adresses du matériel dans le système, vous pouvez le faire en entrant le numéro de la carte, 
-suivi par le numéro de canal séparé par un":"<br>
-Ainsi pour un capteur sur la carte 11, canal 1, vous devrez entre dans le champs Adresse Matériel:<b>11:1</b>
+Si vous voulez entrer manuellement les adresses du mat&#233;riel dans le syst&#232;me, vous pouvez le faire en entrant le num&#233;ro de la carte, 
+suivi par le num&#233;ro de canal s&#233;par&#233; par un":"<br>
+Ainsi pour un capteur sur la carte 11, canal 1, vous devrez entre dans le champs Adresse Mat&#233;riel:<b>11:1</b>
 <P> 
-Si vous voulez calculer l'adresse d'une entrée BDL168, vous pouvez utiliser
+Si vous voulez calculer l'adresse d'une entr&#233;e BDL168, vous pouvez utiliser
 <CODE>
 <PRE>
-    nombre = 16 * (numéro de carte) + (numéro de canal) - 16
+    nombre = 16 * (num&#233;ro de carte) + (num&#233;ro de canal) - 16
 </PRE> </code>
-où "numéro de canal" va de 1 à 16. Par exemple, le premier circuit
-(numéro 1) sur la carte 11 a le numéro:
+o&#249; "num&#233;ro de canal" va de 1 &#224; 16. Par exemple, le premier circuit
+(num&#233;ro 1) sur la carte 11 a le num&#233;ro:
 <CODE>
-<PRE>
+
     nombre = 16 * (11) + (1) - 16 = 161
-</PRE> </code>
+</code>
 comme nous l'avons vu dans l'exemple ci-dessus.
 <P>
-Si vous voulez calculer l'adresse d'une entrée auxiliaire DS54, utilisez:
-<CODE> <PRE>
-    nombre = 2 * (numéro de l'aiguillage - 1) + 1
-</PRE> </code>
-Par exemple, l'entrée auxiliaire associée à l'aiguillage 81 a le numéro:
-<CODE> <PRE>
+Si vous voulez calculer l'adresse d'une entr&#233;e auxiliaire DS54, utilisez:
+<CODE>
+    nombre = 2 * (num&#233;ro de l'aiguillage - 1) + 1
+</code>
+Par exemple, l'entr&#233;e auxiliaire associ&#233;e &#224; l'aiguillage 81 a le num&#233;ro:
+<CODE> 
     nombre = 2 * (81 - 1) + 1 = 161
-</pre> </code>
-Si c'est l'entrée du commutateur, vous ajouter un plus à ce que:
-<CODE> <PRE>
-    nombre = 2 * (numéro d'aiguillage  - 1) + 2
-</PRE> </code>
-Par exemple, l'entrée du commutateur associés à l'aiguillage 12 a le numéro:
-<CODE> <PRE>
+ </code>
+Si c'est l'entr&#233;e du commutateur, vous ajouter un plus &#224; ce que:
+<CODE>
+    nombre = 2 * (num&#233;ro d'aiguillage  - 1) + 2
+</code>
+<p>Par exemple, l'entr&#233;e du commutateur associ&#233;s &#224; l'aiguillage 12 a le num&#233;ro:</p>
+<CODE> 
     nombre = 2 * (12 - 1) + 2 = 24.
+</code>
+
+<h3> Le Tableau capteur</h3>
+<p> Le tableau capteur JMRI montre un tableau de capteurs que JMRI econnait. Tous le temps que JMRI voit un message LocoNet qui sp&#233;cifie un capteur ,JMRI met &#224; jour une entr&#233;e existante dans le tableau ou cr&#233;e une nouvelle entr&#233;e si elle n'existe pas d&#233;j&#224;
+     . Chaque capteur dans le tableau peut &#234;tre affect&#233; d'un "nom utilisateur".</P>
+<p> Le tableau capteur fournit un aper&#231;u utile de l'&#233;tat actuel de tous les capteurs connus.</p>
+<p> Desinformations suppl&#233;mentaires sur les capteurs et le tableau des capteurs peuvent &#234;tre trouv&#233;es dans la
+     <a href="../../tools/Sensors.shtml"> page principale Capteurs</a>.</p>
+
+
   
 <h2>Addressage Transpondeur dans JMRI</h2>
 
-Le transpondeur Digitrax est géré via le mécanisme de Reporter
-dans JMRI. Reporters recueille l'information depuis le réseau et la rend
-disponibles quand elle change.
+Le transpondeur Digitrax est g&#233;r&#233; via le m&#233;canisme de Journal
+dans JMRI. Les Rapports recueillent l'information depuis le r&#233;seau et la rend
+disponibles quand elle change. JMRI se r&#233;f&#232;re &#224; des Rapports en utilisant le nom
+<i> LRx</i> o&#249; <i> x</i> est un nombre qui correspond &#224; une zone de d&#233;tection</p>
 <P>
-Les zones de transpondeur sont numérotées séquentiellement depuis 1, de sorte que
-1 à 4 sont sur la première BDL16, etc .
+Les zones de transpondeur sont num&#233;rot&#233;es s&#233;quentiellement depuis 1 &#224; 4096. Le 
+     mat&#233;riel actuel BDL16x oeuvre seulement sur les zones de transpondage impaires. la premi&#232;re
+     zone transpondage d'une carte BDL16x est rapport&#233; comme un journal num&#233;ro
+     <span style="font-family: monospace"> (1 + (conseil adresse -1) * 16)</span>.
+     La deuxi&#232;me zone de transpondage d'une carte BDL16x est rapport&#233; qcomme un journal num&#233;ro
+     <span style="font-family: monospace"> (1 + (conseil adresse -1) * 16) + 2</span>.</p>
+La num&#233;rotation Rapports  <p> est r&#233;sum&#233;e dans le tableau ci-dessous:</p>
+     <table border="2">.
+	  <tr align="center"><td>Adresse Carte</td><td>Zone</td><td>Num&#233;ro Journal</td></tr>
+        <tr align="center"><td rowspan="8">1</td><td>A</td><td>LR1</td></tr>
+        <tr align="center"><td>B</td><td>LR3</td></tr>
+        <tr align="center"><td>C</td><td>LR5</td></tr>
+        <tr align="center"><td>D</td><td>LR7</td></tr>
+        <tr align="center"><td>E</td><td>LR9</td></tr>
+        <tr align="center"><td>F</td><td>LR11</td></tr>
+        <tr align="center"><td>G</td><td>LR13</td></tr>
+        <tr align="center"><td>H</td><td>LR15</td></tr>
+        <tr align="center"><td rowspan="8">2</td><td>A</td><td>LR17</td></tr>
+        <tr align="center"><td>B</td><td>LR19</td></tr>
+        <tr align="center"><td>C</td><td>LR21</td></tr>
+        <tr align="center"><td>D</td><td>LR23</td></tr>
+        <tr align="center"><td>E</td><td>LR25</td></tr>
+        <tr align="center"><td>F</td><td>LR27</td></tr>
+        <tr align="center"><td>G</td><td>LR29</td></tr>
+        <tr align="center"><td>H</td><td>LR31</td></tr>
+        <tr align="center"><td rowspan="8">3</td><td>A</td><td>LR33</td></tr>
+        <tr align="center"><td>B</td><td>LR35</td></tr>
+        <tr align="center"><td>C</td><td>LR37</td></tr>
+        <tr align="center"><td>D</td><td>LR39</td></tr>
+        <tr align="center"><td>E</td><td>LR41</td></tr>
+        <tr align="center"><td>F</td><td>LR43</td></tr>
+        <tr align="center"><td>G</td><td>LR45</td></tr>
+        <tr align="center"><td>H</td><td>LR47</td></tr>
+        <tr align="center"><td colspan="3">...</td></tr>
+        <tr align="center"><td rowspan="4">256</td><td>A</td><td>LR4081</td></tr>
+        <tr align="center"><td>B</td><td>LR4083</td></tr>
+        <tr align="center"><td colspan="2">...</td></tr>
+        <tr align="center"><td>H</td><td>LR4095</td></tr>
+    </table>
+<h3> Le Tableau Rapports</h3>
+<p> Le Tableau Rapports JMRI montre un tableau de Rapports que JMRI connait. JMRI
+     cr&#233;e une entr&#233;e dans cette table pour chaque nouvelle zone de r&#233;p&#233;teurs pour lesquels il voit un message.
+     transpondage  Chaque journal dans le tableau peut &#234;tre affect&#233; d'un "nom utilisateur".</P>
+<p> Une fois que vous avez le mat&#233;riel transpondage install&#233; et au moins une locomotive
+     transpondage correctement, il est simple de remplir le tableau de journaaux pour chaque zone de transpondage  en mettant la locomotive transpondante  dans toutes les zones de transpondages compatibles. Il peut &#234;tre utile de remplir un "nom utilisateur"
+     dans le tableau Rapports JMRI au m&#234;me moment o&#249; la locomotive p&#233;n&#232;tre dans
+     chaque zone de transpondage</p>
+<p> Des informations suppl&#233;mentaires sur les Rapports et le Tableau Rapports peuvent &#234;tre trouv&#233; dans la
+     <a  href="../../tools/Reporters.shtml"> page principale Rapports</a>.</p>
+<p> LocoNett&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc.</a></p>
+    </div>
 
 <!--#include virtual="/Footer" -->
 </body>

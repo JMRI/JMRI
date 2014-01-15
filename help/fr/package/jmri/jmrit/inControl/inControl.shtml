@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: Oscar Moutinho $) 2011 -->
+<!-- $Id: inControl.shtml 17977 2011-11-04 22:00:00Z Oscar Moutinho $ -->
+<!-- Translated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02 -->
+<title>JMRI: inControl - Web Throttles and Frames</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>JMRI: inControl - R&#233;gulateurs Web et Fen&#234;tr    es (inControl.html application)</h1>
+<p>
+Cette application est une page web unique qui fonctionne sur les navigateurs les plus r&#233;cents dans les ordinateurs, smartphones et tablettes.
+</br><b>Il n'y a rien &#224; installer! </b>
+</p>
+<p>
+Pour commencer &#224; utiliser JMRI via un navigateur web, il vous suffit d'activer le <b>Serveur Web JMRI</b>inclus.
+Vous pouvez trouver des informations suppl&#233;mentaires<a href="/help/en/html/web/index.shtml">ici</a>.
+</p>
+<p>Il commande non seulement les locomotives et d&#233;codeurs de fonction, comme un r&#233;gulateur web, mais aussi les aiguillages, les lumi&#232;res et autres appareils &#224; travers les fen&#234;tres JMRI actives.</P>
+<p>inControl</b>est enti&#232;rement redimensionnable et ajustes automatiquement la taille et l'orientation de l'&#233;cran de l'appareil.</p>
+<p>N'importe qui peut cr&#233;er des pages web avec les iframes contenant <b>inControl.html</b>, afin de cr&#233;er des panneaux de commande plus ou moins complexes.</p>
+<h3>Exemples d'&#233;crans  ...</h3>
+<p>
+<img src="images/Panel.png?Maxheigth=300" height="300" title="A frame example">
+&nbsp;&nbsp;
+<img src="images/AnalogClock.png?Maxheigth=300" height="300" title="An analog clock frame">
+&nbsp;&nbsp;
+<img src="images/Throttle1.png?Maxheigth=300" height="300" title="A throttle">
+&nbsp;&nbsp;
+<img src="images/Throttle2.png?Maxheigth=300" height="300" title="A throttle">
+&nbsp;&nbsp;
+<img src="images/2Throttles.png?Maxheigth=300" height="300" title="2 throttles at once">
+</p>
+<H3>Param&#232;tres de cha&#238;ne de requ&#234;te</h3>
+<p>Presque tous les param&#232;tres peuvent &#234;tre transmis &#224; l'application &#224; travers la cha&#238;ne de requ&#234;te, mais ils peuvent &#234;tre modifi&#233;s dans les sections <b>R&#233;glages</b> et <b>Param&#232;tres Loco/Appareil</b>.</p>
+<p><img src="images/QueryStringHelp.png?Maxheigth=600" height="600" title="aide de cha&#238;ne de requ&#234;te usage"></p>
+<h3>R&#233;glages</h3 >
+<p>Cette section permet de modifier les param&#232;tres globaux. Ils sont constamment stock&#233;s dans le stockage local du navigateur.</P>
+<p><img src="images/Settings.png?Maxheigth=600" height="600" title="Global param&#232;tres section"></p>
+<h3>Param&#232;tres Loco/Appareil</h3>
+<p>Cette section permet de modifier les param&#232;tres du d&#233;codeur de la locomotive ou de la fonction. Ils sont constamment stock&#233;s dans le stockage local du navigateur.</P>
+<p><b>Commande Vitesse</b> peut &#234;tre d&#233;sactiv&#233;e. Ceci est appropri&#233; pour contr&#244;ler une fonction uniquement d&#233;codeur.</P>
+<p>Pour activer une touche de fonction, <b>Active</b> doit &#234;tre activ&#233;.</p>
+<p>Si une touche de fonction ne s'active pour certaines action que lors d'une transition de OFF &#224; ON, <b>Auto unpress</b> doit &#234;tre activ&#233;.</p>
+<p>Pour contr&#244;ler un d&#233;codeur standard et des fonctionseulement d&#233;codeurs simultan&#233;ment avec le m&#234;me r&#233;gulateur, <b>Adresse Alternative Appareil</b> peut &#234;tre r&#233;gl&#233; &#224; l'adresse de la fonction seulement d&#233;codeurs.</p>
+<p>Pour donner une touche de fonction pour activer man&#339;uvre, <b>Shunt</b>doit &#234;tre activ&#233;. Il modifie le comportement de la commande de vitesse afin de permettre de contr&#244;ler de -50 % &#224; +50 % de la vitesse maximale. Quand positif, la locomotive se dirige vers la direction choisie. Le <b>Bouton bascule</b> devrait &#234;tre activ&#233;.</p>
+<p><img src="images/LocoSettings.png?Maxheigth=600" height="600" title="Per loco param&#232;tres section"></p>
+<h3>Aide</h3>
+<p><img src="images/Help.png?Maxheigth=600" height="600" title="Generic Help"></p>
+<h2>Balayer pour &#234;tre en commande ( application Scan2BeInControl.html)</h2>
+<p>Il suffit de diriger le smartphone et commencer &#224; commander une locomotive ou une trame!</b></p>
+<p>Cette application &#233;num&#232;re la liste (locos) et les images d&#233;finies dans JMRI .</p>
+<p>Pour ouvrir un r&#233;gulateur web ou une image &#224; l'aide de <b>inControl</b>, les utilisateurs peuvent:
+<br />- num&#233;riser l'image en utilisant un smartphone (avec application de lecteur compatible qrCode)
+<br />- Cliquez ou touchez la Loco ou l'image ou le lien
+<p>Pour les locos, les param&#232;tres de JMRI sont fusionn&#233;e avec ceux d&#233;j&#224; stock&#233;s dans votre appareil (ordinateur, tablette ou smartphone) .
+<br />Si vous souhaitez utiliser uniquement les param&#232;tres de JMRI, vous devez supprimer la loco &#224; partir de votre appareil avant de num&#233;riser le qrCode graphique  ou utilisez le lien .</p>
+<p>Exemple d'Image, non fonctionnelle :</p>
+<p><img src="images/Scan2BeInControl.png" width="100%" title="Just point the smartphone and start using it"></p>
+<p>&nbsp;</p>
+<p>This is the package/jmri/jmrit/inControl/inControl help page</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

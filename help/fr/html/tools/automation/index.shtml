@@ -2,11 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008/02/17 17:37:02 jacobsen Exp $ -->
+<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Translated by Herv&#233; Blorec 2013-09-25 -->
 <title>JMRI: Layout Automation</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -21,33 +22,33 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>JMRI  Automatisation Réseau</h2>
+<H2>JMRI Automatisation R&#233;seau</h2>
 
-L'application JMRI fournit un grand nombre de façons d'automatiser votre réseeau,
-allant du simple remplissage de formulaires à  des scripts à part entière et des
-capacités de programmation. Il s'agit notamment de:
+L'application JMRI fournit un grand nombre de fa&#231;ons d'automatiser votre r&#233;seeau,
+allant du simple remplissage de formulaires &#224;  des scripts &#224; part enti&#232;re et des
+capacit&#233;s de programmation. Il s'agit notamment de:
 
 <DL>
 
 <DT><A  HREF="../signaling/index.shtml"> Logique Signal</A>
-<DD> JMRI fournit une logique intégrée de signalisation qui peut être utilisée pour
-conduire vos tête signal dans de nombreuses applications.
+<DD> JMRI fournit une logique int&#233;gr&#233;e de signalisation qui peut &#234;tre utilis&#233;e pour
+conduire vos t&#234;te signal dans de nombreuses applications.
 
-<DT> <A HREF="../Routes.shtml"> Itinéraires</A>
-<DD> Une forme simple de l'automatisation est de définir des itinéraires, qui vous permettent
+<DT> <A HREF="../Routes.shtml"> Itin&#233;raires</A>
+<DD> Une forme simple de l'automatisation est de d&#233;finir des itin&#233;raires, qui vous permettent
 de simplifier la commande de vos aiguillages.
 
 <DT> <A HREF="../Logix.shtml"> Logix</A>
-<DD> Utilisant JMRI Logix, vous pouvez spécifier les actions à réaliser quand
-diverses conditions se produisent sur le réseau.
+<DD> Utilisant JMRI Logix, vous pouvez sp&#233;cifier les actions &#224; r&#233;aliser quand
+diverses conditions se produisent sur le r&#233;seau.
 
-<DT> <A HREF="../scripting/index.shtml"> Écriture de Scripts</A>
-<DD> JMRI fournit un outil de script très puissant. Basé sur un véritable
-langage de programmation, il vous donne accès à toutes les fonctionnalités JMRI.
+<DT> <A HREF="../scripting/index.shtml"> &#233;criture de Scripts</A>
+<DD> JMRI fournit un outil de script tr&#232;s puissant. Bas&#233; sur un v&#233;ritable
+langage de programmation, il vous donne acc&#232;s &#224; toutes les fonctionnalit&#233;s JMRI.
 
-<DT><A  HREF="viaJava.shtml">Écrire votre propre code en Java</A>
-<DD> Les bibliothèques JMRI simplifient grandement l'écriture d'un programme pour
-que votre réseau fasse  exactement ce que vous voulez.
+<DT><A  HREF="viaJava.shtml">&#233;crire votre propre code en Java</A>
+<DD> Les biblioth&#232;ques JMRI simplifient grandement l'&#233;criture d'un programme pour
+que votre r&#233;seau fasse  exactement ce que vous voulez.
 
 </DL>
 

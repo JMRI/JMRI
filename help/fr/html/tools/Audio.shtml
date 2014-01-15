@@ -3,12 +3,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: Audio.shtml,v 1.6 2010/08/21 08:25:43 matthewharris Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-28-->
+<!-- $Id: Audio.shtml 21784 2012-12-04 14:38:39Z matthewharris $ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-20-->
 <title>JMRI: Audio</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset= utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset= iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,15 +26,15 @@
 
 <h2>JMRI: Audio</h2>
 
-Les objets audio JMRI  détiennent des informations sur les sons qui peuvent être reproduits par l'
+Les objets audio JMRI  d&#233;tiennent des informations sur les sons qui peuvent &#234;tre reproduits par l'
 ordinateur.
 
 <h3>La Table Audio </h3>
 La
 <a href="../../package/jmri/jmrit/beantable/AudioTable.shtml"> Table Audio</a>
-vous permet de voir quels objets audio ont été définis, et quelles informations
+vous permet de voir quels objets audio ont &#233;t&#233; d&#233;finis, et quelles informations
 ils contiennent actuellement. De la table, vous pouvez
-<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">créer un nouvel object audio</a>.
+<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">cr&#233;er un nouvel object audio</a>.
 <a href="../../package/jmri/jmrit/beantable/AudioTable.jpg">
 <img src="../../package/jmri/jmrit/beantable/AudioTable.jpg" height="178" width="420">
 </a>
@@ -49,73 +49,82 @@ Le cadre audio de JMRI se compose de trois types distincts d'objets:
 
 <h4>Auditeurs Audio</h4>
 
-Les Auditeurs Audio définissent l'endroit où se trouve la personne qui écoute les sons .
+Les Auditeurs Audio d&#233;finissent l'endroit o&#249; se trouve la personne qui &#233;coute les sons .
 <a href="images/EditAudioListener.png">
 <img src="images/EditAudioListener.png" height="187" width="122">
 </a>
 <p>
-La position d'écoute définie est ensuite utilisée pour calculer le
-"pan"(panoramique) réel et le gain de chaque source audio lors de la lecture.
+La position d'&#233;coute d&#233;finie est ensuite utilis&#233;e pour calculer le
+"pan"(panoramique) r&#233;el et le gain de chaque source audio lors de la lecture.
 <p>
-Les paramètres d'orientation définissent le système de coordonnées en usage.
-Les valeurs par défaut de transposition de:
+Les param&#232;tres d'orientation d&#233;finissent le syst&#232;me de coordonn&#233;es en usage.
+Les valeurs par d&#233;faut de transposition de:
 <ul>
-<li>x - Gauche à droite (-ve to +ve)
-<li>y - arrière vers l'avant (-ve to +ve)
+<li>x - Gauche &#224; droite (-ve to +ve)
+<li>y - arri&#232;re vers l'avant (-ve to +ve)
 <li>z - bas vers haut (-ve to +ve)
 </ul>
-Avec la position par défaut, les valeurs 'Y' seraient positives,
-mesurées depuis le bord avant du réseau et
-'x' les valeurs seraient négatives du bord gauche du réseau à la ligne centrale
-et positive du bord droit du réseau à la ligne centrale.
-Les valeurs positives 'z', verticales, seraient mesurées à partir du niveau "0" du réseau.
+Avec la position par d&#233;faut, les valeurs 'Y' seraient positives,
+mesur&#233;es depuis le bord avant du r&#233;seau et
+'x' les valeurs seraient n&#233;gatives du bord gauche du r&#233;seau &#224; la ligne centrale
+et positive du bord droit du r&#233;seau &#224; la ligne centrale.
+Les valeurs positives 'z', verticales, seraient mesur&#233;es &#224; partir du niveau "0" du r&#233;seau.
 <p>
-Sauf si modifé en changeant «Mètres par unité»,
-toutes les unités de distance et de vitesse sont mesurés en mètres réels .
+Sauf si modif&#233; en changeant "M&#232;tres par unit&#233;",
+toutes les unit&#233;s de distance et de vitesse sont mesur&#233;s en m&#232;tres r&#233;els .
 <p>
-Un seul Auditeur AudioAudio Listener peut exister à la fois.
+Un seul Auditeur AudioAudio Listener peut exister &#224; la fois.
 
 <h4>Tampons Audio </h4>
 
-Une mémoire tampon audio contient les données actuelles des échantillons sonores
+Une m&#233;moire tampon audio contient les donn&#233;es actuelles des &#233;chantillons sonores
 <p>
 <a href="images/AddEditAudioBuffer.png">
 <img src="images/AddEditAudioBuffer.png" height="93" width="176">
 </a>
 <p>
-Pour charger une mémoire tampon audio avec des données sonores, cliquez sur le bouton "Parcourir ..." et sélectionner le fichier  ". wav" approprié .
+Pour charger une m&#233;moire tampon audio avec des donn&#233;es sonores, cliquez sur le bouton "Parcourir ..." et s&#233;lectionner le fichier  ". wav" appropri&#233; .
 <p>
-Un objet Tampn audio peut être utilisé par de nombreuses sources audio.
+Un objet Tampon audio peut &#234;tre utilis&#233; par de nombreuses sources audio.
 
 <h4>Sources Audio </h4>
 
-Une source audio contrôle la lecture des données de l'échantillon sonore et contrôle la position.
+Une source audio contr&#244;le la lecture des donn&#233;es de l'&#233;chantillon sonore et contr&#244;le la position.
 <p>
 <a href="images/AddEditAudioSource.png">
 <img src="images/AddEditAudioSource.png" height="241" width="123">
 </a>
 <p>
-Pour faire jouer actuellement un son, une source audio doit être liée à une mémoire tampon audio existante.
- Choisir une dans la liste déroulante.
-Les tampons peuvent être partagés entre les sources audio,
-auquel cas ils seront lus indépendamment.
+Pour faire jouer actuellement un son, une source audio doit &#234;tre li&#233;e &#224; une m&#233;moire tampon audio existante.
+ Choisir une dans la liste d&#233;roulante.
+Les tampons peuvent &#234;tre partag&#233;s entre les sources audio,
+auquel cas ils seront lus ind&#233;pendamment.
 <p>
-Comme avec l'auditeur audio, une source audio doit être positionné dans l'espace 3D.
-Si nécessaire pour «déplacer» tout en jouant, réglez la vitesse en x, y et z.
+Comme avec l'auditeur audio, une source audio doit &#234;tre positionn&#233; dans l'espace 3D.
+Si n&#233;cessaire pour "d&#233;placer" tout en jouant, r&#233;glez la vitesse dans les directions x, y et z.
+Ceci d&#233;place la position de la source audio dans le sens et la vitesse
+sp&#233;cifi&#233;e par le vecteur de vitesse &#224; la vitesse d&#233;finie pendant que la source audio est lu.
 <p>
-S'il est nécessaire de tourner vers le bas le volume d'une source audio spécifique, cela peut être réalisé en changeant le réglage "gain".
-De même, le pitch (ton) peut être modifié en changeant le paramètre "Pitch".
+<em> exemple: </em> Une valeur de 2 'x' se d&#233;placera la source audio 2 unit&#233;s (en m&#232;tres)
+par seconde &#224; la lecture tout droit.
 <p>
-Le comportement normal pour le volume d'une source audio est d'être altérée par la distance entre la source et l'auditeur audio. Ce comportement peut être modifié en changeant la distance de référence et les paramètres de distance maximum. La distance de référence détermine la distance à laquelle le volume va commencer à diminuer - à des distances plus petites que la distance de référence, le volume de la source audio sera tel que défini par le réglage de gain. La distance maximale détermine la distance à laquelle le volume est égal à zéro. Le facteur de Roll Off détermine le taux de variation du gain par rapport à la distance - des valeurs plus grandes indiquent un taux plus rapide de variation.
+<em> Note: </em> La position Source Audio n'est pertinent que lorsqu'elle est li&#233;e &#224; un tampon mono
+ - ceux qui occupent des sons multicanaux (ex: st&#233;r&#233;o) ne seront pas affect&#233;s
+par des changements de position et seront jou&#233;s tel quel.
 <p>
-Enfin, le fondu d'entrée et le fondu de sortie de la source audio peuvent être défini - ces éléments sont précisés en milli-secondes. Le fondu d'entrée et le fondu de sortie d'une source audio sont réalisés en utilisant les méthodes de fondu d'entrée et le fondu de sortie de la source audio; les méthodes de lecture, arrêt et pause n'utilisent pas les temps de fondu.
+S'il est n&#233;cessaire de tourner vers le bas le volume d'une Source Audio sp&#233;cifique, cela peut &#234;tre r&#233;alis&#233; en changeant le r&#233;glage "gain".
+De m&#234;me, le pitch (ton) peut &#234;tre modifi&#233; en changeant le param&#232;tre "Pitch".
 <p>
-À moins de modifier le paramètre  "Mètres par unité" de l'écoute audio, toutes les unités de distance et de vitesse sont mesurées en valeur réelles.
+Le comportement normal pour le volume d'une source audio est d'&#234;tre alt&#233;r&#233;e par la distance entre la source et l'auditeur audio. Ce comportement peut &#234;tre modifi&#233; en changeant la distance de r&#233;f&#233;rence et les param&#232;tres de distance maximum. La distance de r&#233;f&#233;rence d&#233;termine la distance &#224; laquelle le volume va commencer &#224; diminuer - &#224; des distances plus petites que la distance de r&#233;f&#233;rence, le volume de la source audio sera tel que d&#233;fini par le r&#233;glage de gain. La distance maximale d&#233;termine la distance &#224; laquelle le volume est &#233;gal &#224; z&#233;ro. Le facteur de Roll Off d&#233;termine le taux de variation du gain par rapport &#224; la distance - des valeurs plus grandes indiquent un taux plus rapide de variation.
+<p>
+Enfin, le fondu d'entr&#233;e et le fondu de sortie de la source audio peuvent &#234;tre d&#233;fini - ces &#233;l&#233;ments sont pr&#233;cis&#233;s en milli-secondes. Le fondu d'entr&#233;e et le fondu de sortie d'une source audio sont r&#233;alis&#233;s en utilisant les m&#233;thodes de fondu d'entr&#233;e et le fondu de sortie de la source audio; les m&#233;thodes de lecture, arr&#234;t et pause n'utilisent pas les temps de fondu.
+<p>
+&#224; moins de modifier le param&#232;tre  "M&#232;tres par unit&#233;" de l'&#233;coute audio, toutes les unit&#233;s de distance et de vitesse sont mesur&#233;es en valeur r&#233;elles.
 
 <h3>Utilisation d'objets audio avec Logix </h3>
 
-Un Logix peut être défini pour contrôler des objets audio. Actuellement, il est possible de
-lire, faire une pause, arrêter, rembobiner, réaliser un fondu d'entrée et un fondu de sortie des sources audio.
+Un Logix peut &#234;tre d&#233;fini pour contr&#244;ler des objets audio. Actuellement, il est possible de
+lire, faire une pause, arr&#234;ter, rembobiner, r&#233;aliser un fondu d'entr&#233;e et un fondu de sortie des sources audio.
 
 <h3>Utilisation d'objets avec des scripts audio </h3>
 Vous pouvez manipuler directement les objets audio avec des scripts.
@@ -123,25 +132,25 @@ Il y a un
  <a href="http://jmri.org/jython/AudioExample.py">exemple de script </a>
 dans la distribution, ainsi que la documentation pour les classes  
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html"> Tampon Audio</a>,
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">Source Audio</a> et
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html"> Source Audio</a> et
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">Auditeur Audio</a>
-qui contrôlent le traitement audio.
+qui contr&#244;lent le traitement audio.
 
-<h3>Détails techniques </h3>
-Le cadre JMRI audio nécessite l'utilisation de l'une des bibliothèques suivantes <ul>
-<li><a href="http://java.sun.com/products/java-media/sound/">JavaSound</a> - pour les fonctions de base audio (limitée à la stéréo)
-<p> JavaSound est normalement disponible avec un environnement d'exécution Java de Sun Microsystems; d'autres fournisseurs, tels que OpenJDK, ne comprennent pas JavaSound.
-<li> <a href="http://www.openal.org/"> OpenAL </a> - pour toutes les fonctions complètes audio (y compris le support pour la mise à surround 7.1)
-<p> OpenAL peut être déjà inclus dans votre système.
+<h3>D&#233;tails techniques </h3>
+Le trame JMRI audio n&#233;cessite l'utilisation de l'une des biblioth&#232;ques suivantes <ul>
+<li><a href="http://java.sun.com/products/java-media/sound/">JavaSound</a> - pour les fonctions de base audio (limit&#233;e &#224; la st&#233;r&#233;o)
+<p> JavaSound est normalement disponible avec un environnement d'ex&#233;cution Java de Sun Microsystems; d'autres fournisseurs, tels que OpenJDK, ne comprennent pas JavaSound.
+<li> <a href="http://www.openal.org/"> OpenAL </a> - pour toutes les fonctions compl&#232;tes audio (y compris le support pour la mise &#224; surround 7.1)
+<p> OpenAL peut &#234;tre d&#233;j&#224; inclus dans votre syst&#232;me.
 </ul>
 <h4>Mac OS X</h4>
-Ces versions de Mac OS X qui sont appropriés pour JMRI ont déjà une version adaptée d'installée.
+Ces versions de Mac OS X qui sont appropri&#233;s pour JMRI ont d&#233;j&#224; une version adapt&#233;e d'install&#233;e.
 <h4>MS Windows</h4>
-Par défaut, il faudra installer OpenAL sur votre système. Certaines cartes sons, notamment celles fabriquées par Creative Labs et NVidia, ont normalement déjà un pilote OpenAL installé. Si OpenAL n'est pas installé,<a  href="http://connect.creativelabs.com/openal/Downloads/oalinst.zip"> il doit être téléchargé </a> à partir de Creative Labs, puis installé sur votre système.
+Par d&#233;faut, il faudra installer OpenAL sur votre syst&#232;me. Certaines cartes sons, notamment celles fabriqu&#233;es par Creative Labs et NVidia, ont normalement d&#233;j&#224; un pilote OpenAL install&#233;. Si OpenAL n'est pas install&#233;,<a  href="http://connect.creativelabs.com/openal/Downloads/oalinst.zip"> il doit &#234;tre t&#233;l&#233;charg&#233; </a> &#224; partir de Creative Labs, puis install&#233; sur votre syst&#232;me.
 <h4>Linux</h4>
-Selon le fournisseur de votre distribution Linux, OpenAL peut être déjà inclus dans le package par défaut. Sinon, le paquet «libopenal-dev" doit être installé en utilisant le gestionnaire de paquets sur votre système. Pour les distributions basées sur Debian, ce sera généralement réalisé par la commande:
+Selon le fournisseur de votre distribution Linux, OpenAL peut &#234;tre d&#233;j&#224; inclus dans le package par d&#233;faut. Sinon, le paquet "libopenal-dev" doit &#234;tre install&#233; en utilisant le gestionnaire de paquets sur votre syst&#232;me. Pour les distributions bas&#233;es sur Debian, ce sera g&#233;n&#233;ralement r&#233;alis&#233; par la commande:
 <pre> $ sudo apt-get install libopenal-dev </pre>
-<p> Pour Ubuntu 11-04, menu --> Système--> administration--> Paquet Synaptic, installer le paquet «libopenal-dev".
+<p> Pour Ubuntu 12-04, logith&#232;que --->OpenAl.
 <!--#include virtual="/Footer" -->
 </body>
 </html>

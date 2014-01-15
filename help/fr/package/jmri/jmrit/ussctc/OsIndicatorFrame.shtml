@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OsIndicatorFrame.shtml,v 1.6 2008/11/29 21:24:21 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<!-- $Id: OsIndicatorFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: OS Indicator Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help OS Indicator">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,24 +29,24 @@
 <img src="images/OsIndicatorFrame.jpg" alt="Screen shot" align="right"> <br>
 
 Cet outil rend facile le pilotage  d'un voyant d'occupation sur un
-Panneau de la CTC à partir d'un capteur d'occupation, tout en permettant
-àl'indicateur d'être forcé au le moment où la section de voie est
-déverrouillée en mode manuel.
+Panneau de la CTC &#224 partir d'un capteur d'occupation, tout en permettant
+&#224 l'indicateur d'&#234;tre forc&#233; au moment o&#249; la section de voie est
+d&#233;verrouill&#233;e en mode manuel.
 
 <p>
  Champs et les boutons:
 <dl>
-<dd> Nom de sortie <dt>Saisissez le nom système ou nom utilisateur de l'aiguillage que le suiveur va contrôler
-<dd>  Nom de la sonde <dt>Entrez le nom  système ou nom utilisateur du capteur que le suiveur surveillera
-<dd>  Nom du verrou<dt> Si un capteur est ajoutée ici, l'aiguillage de sortie sera déviée  lorsque le capteur est INACTIF	.
-Ceci peut être utilisé par exemple pour indiquer qu'une section de voie particulière a été débloquée.
- <dd>Voir <dt> Entrez un nom d'aiguillage de sortie et cliquez sur ce bouton pour voir toutes les configuration existantes suiveuses.
-<dt> Ajouter/ Mettre à jour<dd> Fichier hors champs comme désiré et appuyez sur Ajouter/Mettre à jour pour créer un nouveau suiveur ou en modifier un existant.</dl>
+<dd> Nom de sortie <dt>Saisissez le nom syst&#232;me ou nom utilisateur de l'aiguillage que le suiveur va commander
+<dd>  Nom du Capteur <dt>Entrez le nom  syst&#232;me ou nom utilisateur du capteur que le suiveur surveillera
+<dd>  Nom du verrou<dt> Si un capteur est ajout&#233; ici, l'aiguillage de sortie sera D&#201;VI&#201;  lorsque le capteur est INACTIF	.
+Ceci peut &#234;tre utilis&#233; par exemple pour indiquer qu'une section de voie particuli&#232;re a &#233;t&#233; d&#233;bloqu&#233;e.
+ <dd>Voir <dt> Entrez un nom d'aiguillage de sortie et cliquez sur ce bouton pour voir toutes les configurations suiveuses existantes .
+<dt> Ajouter/ Mettre &#224 jour<dd> Fichier hors champs comme d&#233;sir&#233; et appuyez sur Ajouter/Mettre &#224 jour pour cr&#233;er un nouveau suiveur ou en modifier un existant.</dl>
 
 <p>  
-Ceci  est la page d'aide help/en/package/jmri/jmrit/ussctc/OsIndicatorFrame help page
+Ceci est la page d'aide help/en/package/jmri/jmrit/ussctc/OsIndicatorFrame
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-Ceci  est la page d'aide help/en/package/jmri/jmrit/
+

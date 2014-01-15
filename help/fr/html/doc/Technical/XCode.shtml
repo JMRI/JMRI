@@ -1,27 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XCode.shtml,v 1.4 2010/02/08 01:42:48 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-08-06-->  
+<!-- $Id: XCode.shtml 23537 2013-05-31 06:17:10Z jacobsen $ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-09-->
 <html lang="fr">
 <head>
-    <TITLE>
+   <TITLE>
  	JMRI: Building with XCode
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code JBuilder">
+  </TITLE>
+   <META content="Bob Jacobsen" name=Author>
+   <meta name="keywords" content="JMRI technical code JBuilder">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
+   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+   <!-- are an arbitrary design pattern used by the update.pl script to -->
+   <!-- easily replace the common header/footer code for all the web pages -->
 
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+   <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+ <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+ <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+ <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+ <link rel="icon" href="/images/jmri.ico" type="image/png">
+ <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -29,68 +29,81 @@
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
+	   <!-- -------- -->
+	   <!--  Teaser  --><!-- Optional -->
+	   <!-- -------- -->
 
 <H1>JMRI: Construction avec XCode</H1>
 
 <H2>Introduction</H2>
-<p>Les versions récentes de <b> Mac OS X </b> sont livrés avec <b> Xcode</b> , un système de logiciel
-de développement élaboré pour le Macintosh d'Apple Computer.
-Xcode peut être utilisé pour travailler avec JMRI.
+<p>Les versions r&#233;centes de<b>Mac OS X</b>sont livr&#233;s avec<b>Xcode</b>, un syst&#232;me de logiciel
+de d&#233;veloppement &#233;labor&#233; pour le Macintosh d'Apple Computer.
+Xcode peut &#234;tre utilis&#233; pour travailler avec JMRI.
 
-<p> Les instructions ci-dessous supposent une extraction récente de JMRI, avec une version récente
+<p>Les instructions ci-dessous supposent une extraction r&#233;cente de JMRI, avec une version r&#233;cente
  de Xcode.
 
 
-<H2>Procédure pour démarrer JMRI avec Xcode</H2>
-<ol>
-<li><p> Démarrer <b> Xcode, </b>, rejeter n'importe quelle fenêtre qui apparaît, décochez la case et le retour à
-cette fenêtre, etc </p> </li>
-<li><p> Sélectionnez <b> Window> Organizer </b>. (Note: Xcode utilise maintenant le fenêtre Organizer
-pour Java, au lieu de la fenêtre principale Xcode utilisée dans les premières versions de Xcode.) </p> </li>
-<li><p> En bas à gauche de la fenêtre de l'organiser, dans le "<b> + </b>" apparaît, sélectionnez
-<b> «Ajouter un Dossier existant ...</b> </p> </li>
-<li><p> Accédez au dossier "<b> java </b>"dans le pack JMRI, et cliquez sur
-<b> Ouvrir </b>. </p> </li>
-<li><p> Sélectionnez "<b> java </b>" dans la fenêtre Organizer. Cliquez sur l'icône
- <b> Clean </b> en haut de la fenêtre Organizer. Lorsque cela est terminé, maintenez la touche  icône
-<b> Build </b> et sélectionnez l'icône <b>ant'compile </b>. Cela va compiler toutes les
-sources JMRI. </p> </li>
-<li><p> Sélectionner <b> Build ant 'jar'</b> va construire un fichier <b>jmri.jar</b>. Le
-jar est placé dans votre dossier de commande. </p> </li>
-<li><p> Pour afficher ou modifier un module de source existante, ouvrez le dossier <b>java  </b> 
-en haut à gauche dans la fenêtre Organizer (cliquez sur le triangle à gauche), puis ouvrez le dossier
- <b>src </b> , puis le dossier  <b>apps </b> ou <b> jmri </b> , etc pour trouver le
-fichier qui vous intéresse </p> </li>
-<li><p> Pour créer <b>ant 'panelpro'</b> entrée dans la liste de construction:
-   
-<ol type=a>	
-<li><p> Sélectionnez <b>Edit Actions ...</b>" dans la liste de construction. </p> </li>
-<li><p> Sélectionnez <b> ant 'compile' </b> dans la liste à gauche, et copiez la
-commande qui s'affiche dans le boîte sur la droite. </p> </li>
-<li><p> Dans le <b> + </b> déroulant en bas à gauche, sélectionnez <b>>New Shell
-Script </b></p> </li>
-<li><p> changement de "<b> Shell Script </b>" pour  <b>ant 'panelpro' </b>" dans la liste
-sur la gauche. </p> </li>
-<li><p> Collez le texte que vous avez copié dans le b dans la case de droite, et le changer
-"<b> compilation </b>" en "<b> panelpro </b>".</p> </li>
-<li><p> Cliquez <b> OK </b>. </p> </li>
-</ol>	the 
-latest RXTX), may not find serial ports when JMRI is run from Xcode.</p>
-   <p><b>Note: </b> Sélectionner  <b>ant 'panelpro'  </b> dans la liste Construire,compile, génére et exécute <b> PanelPro </b>, avec des messages d'erreur et d'avertissement qui
-    s'affichent dans une fenêtre Xcode. </p> </li>
-<li> Vous pouvez suivre les 8 mis en place pour exécuter facilement les commandes ant que JMRI utilise.
-</ol>
-<b> ATTENTION: </b> Cette procédure nécessite JMRI 2.9.2 ou version ultérieure. Il a été testé
-utilisant Mac OS X 10.6.2, en utilisant Xcode 3.2.1. Les versions antérieures de JMRI (sans le
-dernière RXTX), ne peut pas trouver les ports série lorsque JMRI est exécuté à partir Xcode.</p>
+<H2>Proc&#233;dure pour d&#233;marrer JMRI avec Xcode 4</H2>
 
+<ol>
+<li><p>D&#233;marrez <b>Xcode,</b> etrejeter n'importe quelle fen&#234;tre qui appara&#238;t, </p></li>
+<li>File -> New -> Nouveau Projet.
+<li> dans la nouvelle fen&#234;tre, sur la gauche, s&#233;lectionnez Autre OS X. Sur la droite, s&#233;lectionnez External Build System.
+<li>Nom du projet: JMRI. Outil de construction: /Usr/bin/ant Cliquez sur Suivant.
+<li>Acc&#233;dez &#224; votre JMRI checkout et s&#233;lectionnez le r&#233;pertoire principal check-out. "java" devrait se montrer dans la fen&#234;tre comme le niveau suivant.
+Cliquez sur "Create".
+<li>Vous devriez obtenir une fen&#234;tre de projet XCode. Dans le centre, il faut dire
+"External Build Tool Configuration". (Vous pourriez avoir &#224; cliquer partout pour y arriver).
+Changer Arguments depuis $ (ACTION) pour DecoderPro (ou PanelPro si vous le souhaitez,)
+<li>Juste en dessous, est un champ de R&#233;pertoire. Cliquez sur l'ic&#244;ne &#224; l'extr&#233;mit&#233; droite pour obtenir un
+s&#233;lecteur de fichier, puis s&#233;lectionnez &#224; nouveau votre r&#233;pertoire checked-out.
+<li>Cliquez sur le bouton d'ex&#233;cution, en haut &#224; gauche. DecoderPro devrait commencer apr&#232;s un cycle de compilation.
+</ol>
+
+
+   
+<H2>Proc&#233;dure pour configurer JMRI sur Xcode 3</h2>
+<ol>
+<li><p>D&#233;marrez <b>Xcode,</b>rejeter n'importe quelle fen&#234;tre qui appara&#238;t, d&#233;cochez revenir &#224;
+cette fen&#234;tre, etc</p></li>
+<li><p>S&#233;lectionnez <b>Window>Organiser</b>.(Note: Xcode utilise d&#233;sormais la fen&#234;tre de l'Organiser
+pour Java, au lieu de la fen&#234;tre Xcode principal utilis&#233;e dans les premi&#232;res versions de Xcode.)</p></li>
+<p><li>En bas &#224; gauche de la fen&#234;tre de l'organiser, dans la "<b>+</b>" appara&#238;t, s&#233;lectionnez
+"<b>Add Existing Folder...</b>"</p></li>
+<li><p>Acc&#233;dez au dossier "<b>java</b>" de votre extrait de JMRI, et cliquez sur
+<b>Ouvrir</b>.</p></li>
+<p><li>S&#233;lectionnez <b>java</b> dans la fen&#234;tre de l'organiser. Cliquez sur l'ic&#244;ne <b>Clean</b>
+dans la partie sup&#233;rieure de la fen&#234;tre de l'Organiser. Lorsque cela est termin&#233;, maintenez enfonc&#233;e l'ic&#244;ne 
+<b>Construire</b> et s&#233;lectionnez <b>Ant 'compile</b>. Cela va compiler toutes les
+Source JMRI.</P></li>
+<p><li> s&#233;lection de <b>Build>ant 'jar'</b>qui va construire un fichier <b>jmri.jar</b>. Le
+jar est plac&#233; dans le dossier de check-out.</p></li>
+<p><li> Pour afficher ou modifier un module source existant, ouvrez le dossier <b>java</b> 
+en haut &#224; gauche dans la fen&#234;tre de l'Organiser (cliquez sur le triangle &#224; gauche), puis ouvrez le dossier <b>src</b> , puis le dossier <b>apps</b> ou <b>jmri</b>, etc pour trouver le fichier qui vous int&#233;resse</p></li>
+<p><li> Pour cr&#233;er une entr&#233;e <b>ant 'PanelPro'</b> dans la liste de Construction:</p>
+<ol type=a>
+<li><p> S&#233;lectionnez "<b>Edit Actions ...</b>" dans la liste de Construction.</p></li>
+<li><p> Selectionnez <b>ant 'compile'</b> dans la liste &#224; gauche, et copiez la
+commande qui s'affiche dans la bo&#238;te sur la droite.</p></li>
+<li><p> Dans le <b>+</b> d&#233;roulant en bas &#224; gauche, s&#233;lectionnez "<b>New Shell
+Script</b>".</P></li>
+<li><p> Changer "<b>Shell Script</b>" pour "<b>ant 'PanelPro'</b>" dans la liste
+sur la gauche.</p></li>
+<p><li> Collez le texte que vous avez copi&#233; dans le b de la case de droite et changer
+"<b>compile</b>" pour "<b>PanelPro</b>".</p></li>
+<li><p> Cliquez<b>OK</b>.</p></li>
+</ol>
+   <p> Note:</b> la S&#233;lection de <b>ant 'PanelPro'</b> dans la liste de construction, compilera, construira et ex&#233;cutera <b>PanelPro</b>, avec messages d'erreur et d'avertissement qui s'afficheront s'affiche dans une fen&#234;tre Xcode.</p></li>
+<li><p> Vous pouvez suivre 8 pour mettre en place pour ex&#233;cuter facilement toute les commandes ant JMRI utilis&#233;es.
+</ol>
+<b>ATTENTION:</b> Cette proc&#233;dure n&#233;cessite JMRI 2.9.2 ou une version ult&#233;rieure. Il a &#233;t&#233; test&#233; en utilisant
+Mac OS X 10.6.2, et en utilisant Xcode 3.2.1. Les versions ant&#233;rieures de JMRI (sans l'
+derni&#232;re RXTX), ne peut pas trouver de ports s&#233;rie lorsque JMRI est ex&#233;cut&#233; &#224; partir d'Xcode.</p>
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+	</div><!-- closes #mainContent-->
+	</div><!-- closes #mBody-->
 </body>
 </html>
 

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: UserMessagePreferences.shtml,v 1.1 2010/01/19 18:16:02 kevin-dickerson Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/12-->
+<!-- $Id: UserMessagePreferences.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec 2013/10/13-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: User Message Preferences
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Kevin Dickerson" name=Author>
     <META name="keywords" content="User Message Preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,10 +24,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Préférences Message Utilisateur</H1>
-    
-Cela vous permet de changer la façon dont les messages d'information et d'alerte sont affichés dans JMRI.
-Il vous permettra également de configurer un réponses par défaut et la question affichée.
+<H1> Pr&#233;f&#233;rences Message Utilisateur</H1>
+Cela vous permet de changer la fa&#231;on dont les messages d'information et d'alerte sont affich&#233;s dans JMRI.
+Il vous permettra &#233;galement de configurer un r&#233;ponses par d&#233;faut et la question affich&#233;e.
 
 <!--#include virtual="/Footer" -->
 </body>

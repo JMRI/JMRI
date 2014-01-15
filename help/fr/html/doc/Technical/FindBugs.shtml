@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.7 2011/04/17 00:25:21 zoo Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-09-17-->  
+<!--  $Id: FindBugs.shtml 17998 2011-07-20 02:10:18Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-04-->  
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,16 +17,16 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.1 2009/06/03 15:07:30 jacobsen Exp $ -->
+
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.1 2009/06/03 15:07:30 jacobsen Exp $ -->
+
 </head>
 
 <!--#include virtual="/Header" -->
@@ -36,108 +36,118 @@
 
 <H1>JMRI: Analyse statique avec FindBugs</H1>
 
-FindBugs est un outil qui peut examiner le code pour trouver d'éventuels problèmes. Il fait un "analyse statique", en regardant à travers le
-code pour trouver certaines "mauvaises idées connues ":
-Les choses qui sont susceptibles de causer des problèmes occasionnels/intermittents,
+FindBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
+code pour trouver certaines "mauvaises id&#233;es connues ":
+Les choses qui sont susceptibles de causer des probl&#232;mes occasionnels/intermittents,
 mauvaise performance, etc
-Parce que ce genre de problèmes est difficile à trouver avec les tests,
-les trouver par l'inspection est souvent la seule approche réaliste.
+Parce que ces genre de probl&#232;mes sont difficile &#224; trouver avec les tests,
+les trouver par l'inspection est souvent la seule approche r&#233;aliste.
 Disposer d'un outil qui peut faire les inspections automatiquement,
-afin qu'elles puissent se faire à chaque fois que quelque chose est changé,
-protège le code d'une dégradation lente sans que quelqu'un le
-remarque jusqu'à ce qu'il soit trop tard.
+afin qu'elles puissent se faire &#224; chaque fois que quelque chose est chang&#233;,
+prot&#232;ge le code d'une d&#233;gradation lente sans que quelqu'un le
+remarque jusqu'&#224; ce qu'il soit trop tard.
 <P>
 Pour plus d'informations sur FindBugs, voir
 <A HREF="http://findbugs.sourceforge.net/"> la page d'accueil FindBugs  </A>.
 <p>
-Nous exécutons sous forme d'une routine FindBugs comme une partie de notre
-<a href="ContinuousIntegration.shtml">processus continue d'intégration</a>.
-Vous pouvez voir les résultats des plus récentes constructions en ligne
+Nous ex&#233;cutons sous forme d'une routine FindBugs comme une partie de notre
+<a href="ContinuousIntegration.shtml">processus continue d'int&#233;gration</a>.
+Vous pouvez voir les r&#233;sultats des plus r&#233;centes constructions en ligne
 <a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">ici</a>.
  
 <p>
-Si findBugs trouve une erreur positive, un bug qui n'est pas réellemnt un bug, vous pouvez l'éteindre avec une annotation tels que:
+Si findBugs trouve une erreur positive, un bug qui n'est pas r&#233;ellemnt un bug, vous pouvez l'&#233;teindre avec une annotation tels que:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK pour comparer les flottantess, car m&#233;me les plus infimes diff&#233;rences 
+devraient d&#233;clencher les mises &#224; jour")
 </code></pre>
-Le second argument "justification" est optionnel, mais hautement recommandé.
-Expliquer pourquoi vous avez ajouté cette annotation pour supprimer un message aidera
-Celui qui viendra après vous et tentera de comprendre le code.
-Il aidera également à vous assurer que vous comprenez correctement la cause du rapport
+Le second argument "justification" est optionnel, mais hautement recommand&#233;.
+Expliquer pourquoi vous avez ajout&#233; cette annotation pour supprimer un message aidera
+Celui qui viendra apr&#232;s vous et tentera de comprendre le code.
+Il aidera &#233;galement &#224; vous assurer que vous comprenez correctement la cause du rapport
 du bugg sous-jacent: Parfois ce qui semble un faux positif ne l'est pas vraiment.
 
 <p>
 si vous avez besoin de mettre plus d'un type de message dans une annotation, utilisez la syntaxe en tableau:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi deux sont nécessaire")
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi les deux sont n&#233;cessaire")
 </code></pre>
 
-Les annotations de bug  peuvent l'aider à mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compréhension
-exemple: quand une variable peut être nulle, que ça ne va plus faire de fausses erreurs positives.
+Les annotations de bug  peuvent aider &#224; mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compr&#233;hension
+exemple: quand une variable peut &#233;tre nulle, que &#231;a ne va plus faire de fausses erreurs positives.
 Pour plus d'information sur ceci, voir la
 <a href="http://findbugs.sourceforge.net/manual/annotations.html">page des annotations Findbugs </a>.
 
-Elle peut être utile pour marquer les classes avec une des annotations suivantes de telle sorte que FindBugs fasse un bon travail de raisonnement à ce sujet:
+Elle peut &#233;tre utile pour marquer les classes avec une des annotations suivantes de telle sorte que FindBugs fasse un bon travail de raisonnement &#224; ce sujet:
 <li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
-   une variable ou un paramètre peut avoir une valeur nulle ,donc toutes les utilisations devraient convenablement gérer cela.
+   une variable ou un param&#232;tre peut avoir une valeur nulle ,donc toutes les utilisations devraient convenablement g&#233;rer cela.
 <li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
-    cette méthode n'a aucun effet secondaire, il n'y a donc pas lieu de l'appeler sans vérifier de c'est la valeur de retour 
+    cette m&#233;thode n'a aucun effet secondaire, il n'y a donc pas lieu de l'appeler sans v&#233;rifier que c'est la valeur de retour 
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
-    Un objet de cette classe ne peut pas être modifié après sa création. Cela permet à la fois la une meilleure vérification de la logique, et de simplifier également l'utilisation par vos collègues, il est donc bon de marquer les classes avec cette propriété.
+    Un objet de cette classe ne peut pas &#233;tre modifi&#233; apr&#232;s sa cr&#233;ation. Cela permet &#224; la fois la une meilleure v&#233;rification de la logique, et de simplifier &#233;galement l'utilisation par vos coll&#232;gues, il est donc bon de marquer les classes avec cette propri&#233;t&#233;.
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">net.jcip.annotations.NotThreadSafe</a> - 
-   une classe qui n'est pas un lien de sécurité,ne devrait donc pas être vérifiée pour les problèmes de simultanéité. Souvent utilisé pour les classes Swing , mais il faut noter que certains composants Swing (par exemple, surveiller les fenêtres, les classes avec les auditeurs) ne sont pas pour accepter l'entrée d'autres liens.
+   une classe qui n'est pas un lien de s&#233;curit&#233;,ne devrait donc pas &#233;tre v&#233;rifi&#233;e pour les probl&#232;mes de simultan&#233;it&#233;. Souvent utilis&#233; pour les classes Swing , mais il faut noter que certains composants Swing (par exemple, les fen&#233;tres moniteur, les classes avec les auditeurs) ne doivent pas accepter l'entr&#233;e d'autres liens.
    <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
-Les classes qui ne doivent être utilisables pour de multiples liens. FindBugs le suppose généralement, mais il est bon de le mettre sur une classe qui est destinée à être un lien de sécurité comme un rappel pour les développeurs futurs.</ul>
+Les classes qui ne doivent &#233;tre utilisables pour de multiples liens. FindBugs l'assumes g&#233;n&#233;ralement, mais il est bon de le mettre sur une classe qui est destin&#233;e &#224; &#233;tre un lien de s&#233;curit&#233; comme un rappel pour les d&#233;veloppeurs futurs.</ul>
 Pour de plus ample informations au sujet de ces annotations, svp voir la 
-<a href="http://jcip.net/annotations/doc/index.html">page dans l'API Concurrence</a>.
+<a href="http://jcip.net/annotations/doc/index.html">page dans l'API Concurrency</a>.
 
 <p>
-Simon White a ajouté le support FindBugs à notre Chaine de construction basée sur Antb pendant le développement du JMRI 2.5.5. Sa note sur ceci suit...
+Simon White a ajout&#233; le support FindBugs &#224; notre Chaine de construction bas&#233;e sur Ant pendant le d&#233;veloppement du JMRI 2.5.5. Sa note sur ceci suit...
 
 <p>
-Comme demande de fonctionnalité par 1716873, j'ai ajouté une tâche Ant pour exécuter FindBugs. Ceci va produire un rapport en HTML dans le même emplacement que le  JMRI jar (c'est à dire le plus haut niveau du répertoire projet ). Notez  la nouvelle tâche exécute en premier ant dist parce FindBugs examine le dossier jmri.jar.
+Comme demande de fonctionnalit&#233; par 1716873, j'ai ajout&#233; une t&#226;che Ant pour ex&#233;cuter FindBugs. Ceci va produire un rapport en HTML dans le m&#233;me emplacement que le  JMRI jar (c'est &#224; dire le plus haut niveau du r&#233;pertoire projet ). Notez  la nouvelle t&#226;che ex&#233;cute en premier ant dist parce FindBugs examine le dossier jmri.jar.
 
-Pour exécuter la tâche:
+Pour ex&#233;cuter la t&#226;che:
 <ul>
-<li> Installer Findbugs (pour moi j'ai mis cela dans C: /FindBugs-1.3.8)
-<li> copie FindBugs-ant.jar à partir du répertoire lib FindBugs dans le répertoire
+<li> Installer Findbugs (pour moi j'ai mis cela dans C:/FindBugs-1.3.8)
+<li> copie FindBugs-ant.jar &#224; partir du r&#233;pertoire lib FindBugs dans le r&#233;pertoire
 java/lib
 
-<li> soit exécuter
+<li> soit ex&#233;cuter
  
 </code><pre>
-ant-Dfindbugs.home = C: / FindBugs-1.3.8 FindBugs (remplaçant le paramètre de votre emplacement d'installation)
+ant-Dfindbugs.home = C: / FindBugs-1.3.8 FindBugs (rempla&#231;ant le param&#232;tre de votre emplacement d'installation)
 </pre> </code>
 
 <p>
-ou modifier le build.xml et modification du paramètre commenté
-de findbugs.home à votre emplacement d'installation, puis exécutez
+ou modifier le build.xml et modifier le param&#232;tre comment&#233;
+de findbugs.home &#224; votre emplacement d'installation, puis ex&#233;cutez
 
 </code> <pre>
 ant FindBugs
 </pre> </code>
 </ul>
 
-Sur mon ancienne machine il faut environ 20 minutes, mais votre durée peut varier.
+Sur mon ancienne machine il faut environ 20 minutes, mais votre dur&#233;e peut varier.
 <p>
-Notez que dans le build.xml j'ai mis le réglage maximal de mémoire-Xmx pour le
-tâche FindBugs pour 1024m.
-Si votre système a plus de mémoire, la stimuler peut accélérer les choses.
+Notez que dans le build.xml j'ai mis le r&#233;glage maximal de m&#233;moire-Xmx pour le
+t&#226;che FindBugs pour 1024m.
+Si votre syst&#232;me a plus de m&#233;moire, la stimuler peut acc&#233;l&#233;rer les choses.
 
 <p>
-L'exécution de ceci sur JMRI 2.5.4 donné les résultats suivants:
+L'ex&#233;cution de ceci sur JMRI 2.5.4 donn&#233; les r&#233;sultats suivants:
 <p>
 <table border="1">
-<tr> <td> Avertissements Mauvaise pratique  </td> <td> 164 </td> </tr>
-<tr> <td> Avertissements Correction  < td> <td> 77 </td> </tr>
-<tr> <td> Avertissements expérimentaux  </td> <td> 7 </td> </tr>
-<tr> <td> Avertissements vulnérabilité code malveillant </td> <td> 221 </td> </tr>
-<tr> <td> Avertissements multithread exactitude  < td> <td> 90 </td> </tr>
-<tr> <td> Avertissements Performance  </td> <td> 459 </td> </tr>
-<tr> <td> Avertissements Louche </td> <td> 304 </td> </tr>
-<tr> <th> Total </th> <th> 1322 </th> </tr>
+<tr> <td> Avertissements Mauvaise pratique</td><td>164</td></tr>
+<tr> <td> Avertissements Correction<td><td>77</td></tr>
+<tr> <td> Avertissements exp&#233;rimentaux</td><td>7</td></tr>
+<tr> <td> Avertissements vuln&#233;rabilit&#233; code malveillant</td><td>221</td></tr>
+<tr> <td> Avertissements multithread exactitude<td><td>90</td></tr>
+<tr> <td> Avertissements Performance</td><td>459</td></tr>
+<tr> <td> Avertissements Louche</td><td>304</td></tr>
+<tr> <th> Total</th><th>1322</th></tr>
 
 </table>
+<p>Beaucoup de travail a &#233;t&#233; fait dans JMRI pendant le cycle de lib&#233;ration 2,12 pour
+amener le compteur de bug &#224; z&#233;ro. Le <a
+  href = "ContinuousIntegration.shtml"> serveur d'int&#233;gration continue a fait </a>
+fonctionner FindBugs deux fois par jour, ce qui permet aux d&#233;veloppeurs de voir les r&#233;sultats de
+leur codage sans avoir &#224; ex&#233;cuter findbugs eux-m&#233;mes.</p>
+
+<p>Si vous regardez le code dans le d&#233;p&#244;t Subversion JMRI,
+s'il vous pla&#238;t v&#233;rifier le serveur CI et assurez-vous que vos modifications ne vont pas
+introduire de nouvelles erreurs.</p>
 
 
 

@@ -3,7 +3,7 @@
     <hr class="hide">
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
 
-<!-- Translated  by Blorec Hervé le 2011-10-02--> 
+<!-- UpDated  by Blorec Hervé le 2013-09-08--> 
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
@@ -13,8 +13,8 @@
 		<dt>Outils de Developpement</dt>
 		<dd>
 			<ul>
-			<LI><a href="getcode.shtml">Obtenir le code via CVS</a>
-			<LI><a href="CVSFAQ.shtml">CVS FAQs</a>
+			<LI><a href="getcode.shtml">Obtenir le code via SNV</a>
+			<LI><a href="CVSFAQ.shtml">SVN FAQs</a>
 			<LI><a href="Ant.shtml">Assembler avec Ant</a>
 			<LI><a href="NetBeans.shtml">Assembler avec NetBeans</a>
 			<LI><a href="XCode.shtml">Assembler avec XCode</a>
@@ -30,7 +30,7 @@
 			<LI><a href="AppStructure.shtml">Application Structure</a>
 			<LI><a href="Names.shtml">Noms et Désignation</a>
 			<li><a href="Patterns.shtml">Modèles de Structure du code</a>
-			<li><a href="Swing.shtml">Swing Structure</a>
+			<li><a href="Swing.shtml">Structure Swing </a>
 			<li><a href="SystemStructure.shtml">Structure de Connexion Externe</a>
 			<LI><a href="Threads.shtml">Liens</a>
 			<LI><a href="XmlUsage.shtml">Utilisation de XML</a>
@@ -39,7 +39,7 @@
 			<LI><a href="/JavaDoc/doc">JavaDocs</a><ul>
 				<LI><a href="/JavaDoc/doc/index-all.html">Index des Noms</a>
 				<LI><A HREF="/JavaDoc/doc/index.html">Paquets</A>
-				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">hiérarchie des Class</A>
+				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Hiérarchie des Class</A>
 				</UL>
 			</ul>
 		</dd>

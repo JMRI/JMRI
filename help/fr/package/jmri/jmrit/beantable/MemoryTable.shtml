@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MemoryTable.shtml,v 1.4 2008/11/01 16:40:03 jacobsen Exp $ -->
-<!-- Translated by Hervé Blorec le 2012/01/06-->
+<!-- $Id: MemoryTable.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Herv&#233; Blorec  2013-10-11-->
 <html lang="fr">
 <head>
  <TITLE>
@@ -24,23 +24,23 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> La Table Mémoire </H1>
+<H1> Le Tableau M&#233;moire </H1>
 
-Vous pouvez utiliser le tableau de la mémoire pour regarder le contenu des variables de la mémoire JMRI.
+Vous pouvez utiliser le tableau de la m&#233;moire pour regarder le contenu des variables de la m&#233;moire JMRI.
 <p>
 Notez que vous pouvez trier le tableau par chacune des colonnes, cliquez simplement sur la
-tête de colonne.
+t&#234;te de colonne.
 <p>
-Pour modifier la valeur stockée dans une mémoire particulière, il suffit de cliquer sur le
-valeur de colonne dans la ligne désirée. Entrez une nouvelle valeur, puis en appuyant sur le
-touche Retour ou Entrée pour stocker la valeur.
+Pour modifier la valeur stock&#233;e dans une m&#233;moire particuli&#232;re, il suffit de cliquer sur le
+valeur de colonne dans la ligne d&#233;sir&#233;e. Entrez une nouvelle valeur, puis en appuyant sur le
+touche Retour ou Entr&#233;e pour stocker la valeur.
 <p>
-Pour créer une nouvelle variable mémoire, cliquez sur le bouton 
-"<a href="MemoryAddEdit.shtml"> Ajouter ...</a>" au bas de la fenêtre.
+Pour cr&#233;er une nouvelle variable m&#233;moire, cliquez sur le bouton 
+"<a href="MemoryAddEdit.shtml"> Ajouter ...</a>" au bas de la fen&#234;tre.
 
 <p>
-Pour plus d'informations sur les mémoires, consultez le
-<a href="../../../../html/tools/Memories.shtml">  page d'aide  mémoire</a>.
+Pour plus d'informations sur les m&#233;moires, consultez le
+<a href="../../../../html/tools/Memories.shtml">  page d'aide m&#233;moire</a>.
 
 <br>
 

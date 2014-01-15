@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.21 2010/04/03 00:32:36 djduchamp Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-17--> 
+<!-- $Id: LayoutEditor.shtml 23829 2013-07-22 13:47:55Z kevin-dickerson $ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Layout Editor Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Dave Duchamp" name=Author>
     <META name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,1143 +24,1184 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> L'Éditeur de TCO</H1>
+<H1> L'&#201;diteur de R&#233;seau</H1>
 
-<a name="contents"> <h2> Contenu</h2></a>
+<a name="contents"> <h2>Contenu</h2></a>
 
-Ce document décrit L'Éditeur de TCO et comment l'utiliser pour faire des panneaux
- PanelPro. Le document est divisé en sections; cliquez ci-dessous pour
-sauter à la section nommée. La lecture minimum pour commencer est
-<a href="#intro">  Présentation de L'Éditeur de Panneau TCO</a> et
-<a href="#start">  Débuter avec L'Éditeur de TCO</a>.
-Ensuite, vous voudrez peut-être sauter à <a href="#finish">  mettant la Touche de Finale
-à votre Panneau</a> pour en voir plus de ce qui est possible avant de lire les différents
-sections en détail.</p>
+Ce document d&#233;crit L'&#201;diteur de R&#233;seau et comment l'utiliser pour faire des panneaux
+ PanelPro. Le document est divis&#233; en sections; cliquez ci-dessous pour
+sauter &#224; la section nomm&#233;e. La lecture minimum pour commencer est
+<a href="#intro">Pr&#233;sentation du panneau &#201;diteur de R&#233;seau</a> et
+<a href="#start">D&#233;buter avec L'&#201;diteur de R&#233;seau</a>.
+Ensuite, vous voudrez peut-&#234;tre sauter &#224; <a href="#finish"> Apportant la Touche de Finale
+&#224; votre Panneau</a> pour voir plus de ce qui est possible avant de lire les diff&#233;rents
+sections en d&#233;tail.</p>
 <ul>
-<li><a href="#intro"> Introduction à L'Éditeur de Panneau TCO</a></li>
-<li><a href="#start">  Débuter avec L'Éditeur de TCO</a></li>
-<li><a href="#toolbar"> Utilisation de la barre d'outils de L'Éditeur de TCO</a></li>
-<li><a href="#filemenu">  Utilisation le menu fichier d'un Panneau</a>
-<li><a href="#option"> Utilisation du menu Options de L'Éditeur de TCO</a></li>
- <li><a href="#toolsmenu"> Utilisation du menu Outils de L'Éditeur de TCO</a></li>
-<li><a href="#zoommenu"> Utilisation du menu Zoom de de L'Éditeur de TCO</a></li>
-<li><a href="#markermenu"> Utilisation du menu Marqueur de L'Éditeur de TCO</a></li>
-<li><a href="#editing"> Éditer et Supprimer des Éléments</a></li>
+<li><a href="#intro">Introduction au panneau &#201;diteur de R&#233;seau</a></li>
+<li><a href="#start">D&#233;buter avec L'&#201;diteur de R&#233;seau</a></li>
+<li><a href="#toolbar">Utilisation de la barre d'outils de L'&#201;diteur de R&#233;seau</a></li>
+<li><a href="#filemenu">Utilisation du menu fichier d'un Panneau</a>
+<li><a href="#option">Utilisation du menu Options de L'&#201;diteur de R&#233;seau</a></li>
+ <li><a href="#toolsmenu">Utilisation du menu Outils de L'&#201;diteur de R&#233;seau</a></li>
+<li><a href="#zoommenu">Utilisation du menu Zoom de de L'&#201;diteur de R&#233;seau</a></li>
+<li><a href="#markermenu">Utilisation du menu Marqueur de L'&#201;diteur de R&#233;seau</a></li>
+<li><a href="#editing">&#201;diter et Supprimer des &#201;l&#233;ments</a></li>
 <li><a href="#turnouts">Aiguillage</a></li>
-<li><a href="#track"> Segments de Voie et Points de Connexion</a></li>
+<li><a href="#track">Segments de Voie et Points de Connexion</a></li>
 <li><a href="#xing">Croisement</a>
-<li><a href="#turn"> Pont Tournant</a>
-<li><a href="#background"> Arrière Plan​​</a>
+<li><a href="#turn">Pont Tournant</a>
+<li><a href="#background">Arri&#232;re Plan</a>
 <li><a href="#block">Cantons</a>
-<li><a href="#tracking">Cantons, Étiquettes de Mémoire, et Suivi de Train</a>
-<li><a href="#tips"> Conseils</a>
-<li><a href="#finish"> Mettre la Touche Finale à votre Panneau</a>
-</ Ul>
+<li><a href="#tracking">Cantons, &#201;tiquettes de M&#233;moire, et Suivi de Train</a>
+<li><a href="#tips">Conseils</a>
+<li><a href="#finish">Mettre la Touche Finale &#224; votre Panneau</a>
+</Ul>
 
-<a name="intro"> <H2> Introduction à L'Éditeur de Panneau TCO</H2>
+<a name="intro"> <H2>Introduction &#224; L'&#201;diteur de Panneau R&#233;seau</H2>
 
 
-<b>L'Éditeur de Panneau TCO </b> soutient la construction et l'affichage des panneaux PanelPro.
-<b>L'Éditeur de TCO </b> est similaire à <b>l'Éditeur traditionnel PanelPro Panneau </b>,
-sauf qu'il soutient un schéma de suivi établi au lieu d'icônes basées sur un diagramme de voie
-. En raison de la façon dont il fonctionne, <b>L'Éditeur de TCO </b> capte les
-connectivités complètes de votre tracé comme vous le dessiner. Plusieurs outils automatisés sont
-disponibles pour faire la mise en place plus facile de votre TCO.</P>
+<b>Le panneau &#201;diteur de R&#233;seau</b> soutient la construction et l'affichage des panneaux PanelPro.
+<b>L'&#201;diteur de R&#233;seau</b> est similaire &#224; <b>l'&#201;diteur traditionnel Panneau PanelPro</b>,
+sauf qu'il soutient un sch&#233;ma de suivi &#233;tabli au lieu d'ic&#244;nes bas&#233;es sur un diagramme de voie
+. En raison de la fa&#231;on dont il fonctionne, <b>L'&#201;diteur de R&#233;seau</b> capte les
+connectivit&#233;s compl&#232;tes de votre trac&#233; comme vous le dessiner. Plusieurs outils automatis&#233;s sont
+disponibles pour faire une mise en place plus ais&#233;e de votre R&#233;seau.</P>
 <P>
-<b>L'Éditeur de TCO</b> est implémenté en utilisant une barre d'outils en haut de votre panneau.
-Cette barre d'outils peut être activée et désactivée en utilisant l'élément <b>Mode Éditer</b> dans le menu
-<b> Options</b>de votre panneau. Lorsque vous créez une nouvelle Édtion de panneau TCO, votre
-nouveau panneau apparaît avec la barre d'outil met le Mode Éditer affiché en haut de votre
-panneau, et avec une barre de d'aide système spécifique qui s'affiche au bas du panneau.
-La barre d'aide décrit comment utiliser l'interface utilisateur de <b>l'Éditeur de TCO</b> . La
-barre d'aide devrait probablement être désactivée (en utilisant le menu Options) une fois que vous êtes
+<b>L'&#201;diteur de R&#233;seau</b> est impl&#233;ment&#233; en utilisant une barre d'outils en haut de votre panneau.
+Cette barre d'outils peut &#234;tre activ&#233;e et d&#233;sactiv&#233;e en utilisant l'&#233;l&#233;ment <b>Mode &#201;diter</b> dans le menu
+<b>Options</b>de votre panneau. Lorsque vous cr&#233;ez un nouveau panneau &#201;dtion de R&#233;seau, votre
+nouveau panneau appara&#238;t avec la barre d'outil et met le Mode &#201;diter affich&#233; en haut de votre
+panneau, et avec une barre de d'aide syst&#232;me sp&#233;cifique qui s'affiche au bas du panneau.
+La barre d'aide d&#233;crit comment utiliser l'interface utilisateur de <b>l'&#201;diteur de R&#233;seau</b> . La
+barre d'aide devrait probablement &#234;tre d&#233;sactiv&#233;e (en utilisant le menu Options) une fois que vous &#234;tes
 familiariser avec l'interface utilisateur.</P
 <P>
-<b>Éditeur de TCO></b> supporte plusieurs options que vous pouvez ou non choisir d'utiliser
-lorsque vous dessinez votre schéma de voie. Les sections de voie peuvent être désignées comme
-<i>voie principale</i> pour les différencier de la <i>voie d'évitement </i> (par défaut).
-La voie principale et la voie d'évitement peuvent être établies avec des lignes de différentes largeurs. Vous pouvez
-diviser votre tracé en <i>cantons</i>,  chaque canton ayant un capteur d'occupation
- et chacun dessiné avec des couleurs différentes pour suivre les états occupés et inoccupés
-, permettant à la voie dans un canton de changer de couleur quand un train y pénètre
-et quitte ce canton. Normalement les tronçons de voie sont dessinés en traits pleins, mais vous
-peut désigner des segments choisis en <i> pointillés</b></i> pour montrer les tunnels ou les voies traversant
-à différents niveaux. Vous pouvez aussi désigner un segment de voie 
-<i> caché</i> qui est affichée uniquement lorsque la barre d'outils est affichée. Ces options peuvent
-être mis en place pendant que vous dessinez votre TCO, ou vous pouvez les ajouter plus tard.</P>
+<b>&#201;diteur de R&#233;seau></b> offre plusieurs options que vous pouvez ou non choisir d'utiliser
+lorsque vous dessinez votre sch&#233;ma de voie. Les sections de voie peuvent &#234;tre d&#233;sign&#233;es comme
+<i>voie principale</i> pour les diff&#233;rencier de la <i>voie d'&#233;vitement </i> (par d&#233;faut).
+La voie principale et la voie d'&#233;vitement peuvent &#234;tre &#233;tablies avec des lignes de diff&#233;rentes largeurs. Vous pouvez
+diviser votre trac&#233; en <i>cantons</i>,  chaque canton ayant un capteur d'occupation
+ et chacun dessin&#233; avec des couleurs diff&#233;rentes pour suivre les &#233;tats occup&#233;s et inoccup&#233;s
+, permettant &#224; la voie dans un canton de changer de couleur quand un train y p&#233;n&#232;tre
+et quitte ce canton. Normalement les tron&#231;ons de voie sont dessin&#233;s en traits pleins, mais vous
+peut d&#233;signer des segments choisis en <i>pointill&#233;s</b></i> pour montrer les tunnels ou les voies traversant
+&#224; diff&#233;rents niveaux. Vous pouvez aussi d&#233;signer un segment de voie 
+<i>cach&#233;</i> qui est affich&#233;e uniquement lorsque la barre d'outils est affich&#233;e. Ces options peuvent
+&#234;tre mises en place pendant que vous dessinez votre R&#233;seau, ou vous pouvez les ajouter plus tard.</P>
 <p>
-JMRI supporte plusieurs panneaux, soit de type TCO ou le type Editeur de panneau . Tous les
-panneaux qui ont été créés ou chargés sont répertoriés dans le sous-menu <b> Montrer
-Panneau</b> dans le menu Panneaux. Vous pouvez réduire ou fermer une fenêtre du panneau, et apporter
-la fenêtre la plus avant en la sélectionnant dans ce menu. Plusieurs moniteurs
-sont gérés dans la mesure où le système d'exploitation le permet, et un seul panneau
-peut être étiré pour occuper plus d'un moniteur.<p>
+JMRI supporte plusieurs panneaux, soit de type &#201;diteur de R&#233;seau ou le type Editeur de panneau . Tous les
+panneaux qui ont &#233;t&#233; cr&#233;&#233;s ou charg&#233;s sont r&#233;pertori&#233;s dans le sous-menu <b>Montrer
+Panneau</b> dans le menu Panneaux. Vous pouvez r&#233;duire ou fermer une fen&#234;tre panneau, et apporter
+la fen&#234;tre la plus en avant en la s&#233;lectionnant dans ce menu. Plusieurs moniteurs
+sont g&#233;r&#233;s dans la mesure o&#249; le syst&#232;me d'exploitation le permet, et un seul panneau
+peut &#234;tre &#233;tir&#233; pour occuper plus d'un moniteur.<p>
 <p>
-Pour enregistrer votre panneau TCO, sélectionner <b>Stocker Panneau ...</b> dans le menu <b>Fichier</b>
- de votre panneau de TCOr, ou dans le menu Panneaux. Quand vous faites cela, tous les
-panneaux figurant dans le sous-menu <b> Afficher Panneau</b> sont enregistrés, ainsi que tous les
-éléments de configuration partagée (capteurs, aiguillages, les têtes de signal, etc.) Pour faciliter
-la sauvegarde fréquente de votre panneau, l'Éditeur de TCO fournit l'élément de menu, <b> Enregistrer Lieu
-et la Taille</b>, dans le menu <b> Options</b>. Une fois que vous avez dimensionnés et positionnés
-votre panneau exactement comme vous voulez qu'il vienne quand il est chargée, sélectionnez cet élément
-et enregistrez votre panneau. Vous ne devez pas être préoccupé par les changements de position et de taille de
-votre panneau au cours de sauvegarde ultérieure! La position et la taille de votre panneau
-ne changera que lorsque vous sélectionnez <b>Enregistrer Emplacement et Taille</b>. Alors enregistrez souvent votre TCO pour
-préserver votre travail.<p>
+Pour enregistrer votre panneau R&#233;seau, s&#233;lectionner <b>Sauvegarder Panneau ...</b> dans le menu <b>Fichier</b>
+ de votre panneau de R&#233;seau, ou dans le menu Panneaux. Quand vous faites cela, tous les
+panneaux figurant dans le sous-menu <b>Afficher Panneau</b> sont enregistr&#233;s, ainsi que tous les
+&#233;l&#233;ments de configuration partag&#233;s (capteurs, aiguillages, les t&#234;tes de signaux, etc.) Pour faciliter
+la sauvegarde fr&#233;quente de votre panneau, l'&#201;diteur de R&#233;seau fournit l'&#233;l&#233;ment de menu, <b>Enregistrer Lieu
+et la Taille</b>, dans le menu <b>Options</b>. Une fois que vous avez dimensionn&#233;s et positionn&#233;s
+votre panneau exactement comme vous voulez qu'il vienne quand il est charg&#233;e, s&#233;lectionnez cet &#233;l&#233;ment
+et enregistrez votre panneau. Vous ne devez pas &#234;tre pr&#233;occup&#233; par les changements de position et de taille de
+votre panneau au cours de sauvegarde ult&#233;rieurement! La position et la taille de votre panneau
+ne changera que lorsque vous s&#233;lectionnez <b>Enregistrer Emplacement et Taille</b>. Alors enregistrez souvent votre R&#233;seau pour
+pr&#233;server votre travail.<p>
 <p>
-Voici un petit tutoriel sur les bases de l'utilisation de l'Éditeur de TCO. Un tutoriel plus complet
- est disponible pour téléchargement en format pdf sur le site Web JMRI. Voir
-<a href="http://jmri.org/community/clinics/NMRA2008/index.html"> <b> Utilisation de l'Éditeur de TCO JMRI/PanelPro </b></a>
-et ses deux associés  démonstration. xml.
+Voici un petit tutoriel sur les bases de l'utilisation de l'&#201;diteur de R&#233;seau. Un tutoriel plus complet
+ est disponible en t&#233;l&#233;chargement en format pdf sur le site Web JMRI. Voir
+<a href="http://jmri.org/community/clinics/NMRA2008/index.html"> <b>Utilisation de l'&#201;diteur de R&#233;seau JMRI/PanelPro</b></a>
+et ses deux fichiers .xml de d&#233;monstration associ&#233;s.
 
-<H2><a  name="start"> Débuter avec l'Éditeur de TCO</H2>
+<H2><a  name="start">D&#233;buter avec l'&#201;diteur de R&#233;seau</H2>
 <P>
-Pour vous familiariser avec l'interface utilisateur Éditeur de TCO, essayez ce qui suit:</P>
+Pour vous familiariser avec l'interface utilisateur de l'&#201;diteur de R&#233;seau, essayez ce qui suit:</P>
 <P>
-1. Sélectionnez <b> Nouveau panneau ...</b>, puis <b>Éditeur TCO</b> dans le menu Panneaux.
-Vous devriez voir une fenêtre blanche avec
-une barre d'outils en haut, et une barre d'aide à la base.<P>
+1. S&#233;lectionnez <b>Nouveau panneau ...</b>, puis <b>&#201;diteur R&#233;seau</b> dans le menu Panneaux.
+Vous devriez voir une fen&#234;tre blanche avec
+une barre d'outils en haut, et une barre d'aide &#224; la base.<P>
 <P>
-2. Déplacez le curseur sur l'intérieur du panneau vierge. Notez que lorsque vous vous déplacez, les coordonnées
-sont affichées en haut à gauche de la barre d'outil - <i>x</i> (horizontal) et <i>y</i>
-(Vertical). (Ceci pour faciliter l'alignement des éléments quand vous les dessinez.) Déplacez le curseur sur
-les cases à cocher et les champs d'entrée dans la barre d'outils, en notant que chacun a une bulle d'aide.</P>
+2. D&#233;placez le curseur sur l'int&#233;rieur du panneau vierge. Notez que lorsque vous vous d&#233;placez, les coordonn&#233;es
+sont affich&#233;es en haut &#224; gauche de la barre d'outil - <i>x</i> (horizontale) et <i>y</i>
+(Verticale). (Ceci pour faciliter l'alignement des &#233;l&#233;ments quand vous les dessinez.) D&#233;placez le curseur sur
+les cases &#224; cocher et les champs d'entr&#233;e dans la barre d'outils, en notant que chacun a une bulle d'aide.</P>
 <P>
-3. Pour ajouter un aiguillage droit, d'abord, cochez D pour le type d'aiguillage dans la rangée supérieure de
+3. Pour ajouter un aiguillage droit, d'abord, cochez D pour le type d'aiguillage dans la rang&#233;e sup&#233;rieure de
 la barre d'outils. Puis, tout en appuyant sur la touche Maj, cliquez sur la souris (clic gauche sur
-une souris à deux boutons ) sur un point bas d'environ un tiers et à un tiers du coin supérieure
- gauche de votre panneau. Un aiguillage droit devrait apparaître. Les trois carrés rouges aux 
-extrémités de la pointe et des voies directe et déviée de l'aiguillage sont des points de connexions
- pour les <b>Tronçons de Voie</b>. Le cercle rond au centre de l'aiguillage est le point 
-où vous devriez  obtenir le menu contextuel de l'aiguillage.</P>
+une souris &#224; deux boutons ) sur un point bas d'environ un tiers et &#224; un tiers du coin sup&#233;rieure
+ gauche de votre panneau. Un aiguillage droit devrait appara&#238;tre. Les trois carr&#233;s rouges aux 
+extr&#233;mit&#233;s de la pointe et des voies directe et d&#233;vi&#233;e de l'aiguillage sont des points de connexions
+ pour les <b>Tron&#231;ons de Voie</b>. Le cercle rond au centre de l'aiguillage est le point 
+o&#249; vous devriez obtenir le menu contextuel de l'aiguillage.</P>
 <P>
 4. Pour ajouter un aiguillage gauche, d'abord, cochez G pour le type de aiguillage. (Notez que le
-D est automatiquement désactivée.) Tapez "180" dans la zone Rotation en
-en haut à droite de la barre d'outil, pour faire pivoter l'aiguillage de nouveau. Tout en appuyant la touche Shift
-, cliquez avec la souris sur un point à la même hauteur que l'autre aiguillage, mais pour
-le droit à environ deux ou trois pouces. Un aiguillage gauche devrait apparaître avec sa pointe
- à l'opposé de l'aiguillage droit.</P>
+D est automatiquement d&#233;sactiv&#233;e.) Tapez "180" dans la zone Rotation en
+en haut &#224; droite de la barre d'outil, pour faire pivoter l'aiguillage de nouveau. Tout en appuyant la touche Maj
+, cliquez avec la souris sur un point &#224; la m&#234;me hauteur que l'autre aiguillage, mais pour
+le droit &#224; environ deux ou trois pouces. Un aiguillage gauche devrait appara&#238;tre avec sa pointe
+ &#224; l'oppos&#233; de l'aiguillage droit.</P>
 <P>
 5. Pour ajouter des segments de voies pour relier les deux aiguillages, cochez le segment de voie
-sur la deuxième ligne de la barre d'outils. Tout en maintenant la touche Maj enfoncée tout le temps, appuyez
+sur la deuxi&#232;me ligne de la barre d'outils. Tout en maintenant la touche Maj enfonc&#233;e tout le temps, appuyez
 le bouton de la souris sur le point de connexion de la branche divergente d'un aiguillage, et glissez vers la
- point de connexion de la branche divergente de l'autre aiguillage , et relâchez le bouton de la souris lorsque
+ point de connexion de la branche divergente de l'autre aiguillage , et rel&#226;chez le bouton de la souris lorsque
 la forme du curseur change. Vous devriez voir un segment de voie reliant les deux aiguillages,
-et les deux points de connexion devrait changer de couleur au vert, indiquant qu'ils sont
-<i> complets</i>, c'est qu'ils ont le nombre maximal de connexions autorisées. De même 
-presser et glisser avec Shift enfoncée pour ajouter un segment de la voie reliant la  branche directe des deux aiguillages. Vous avez établi une voie d'évitement.</P>
+et les deux points de connexion devrait changer de couleur et passer au vert, indiquant qu'ils sont
+<i>complets</i>, c'est qu'ils ont le nombre maximal de connexions autoris&#233;es. De m&#234;me 
+presser et glisser avec Maj enfonc&#233;e pour ajouter un segment de la voie reliant la branche directe des deux aiguillages. Vous avez &#233;tabli une voie d'&#233;vitement.</P>
 <P>
 6. Pour ajouter un aiguillage pour un embranchement industriel, cochez G pour un aiguillage gauche, et
-saisissez 0 dans la rotation. Puis, avec Maj enfoncée, cliquez sur un point un couple de pouces
-ci-dessous et légèrement à droite de l'aiguillage sur votre gauche.</P>
+saisissez 0 dans la rotation. Puis, avec Maj enfonc&#233;e, cliquez sur un point un couple de pouces
+ci-dessous et l&#233;g&#232;rement &#224; droite de l'aiguillage sur votre gauche.</P>
 <P>
-7. Pour relier cet aiguillage avec la voie passant supérieure et former une voie ovale simple, cochez point d'ancrage sur la troisième rangée de la barre d'outils. Un <b>Point d'Ancrage</b>
-est un nœud dans un diagramme de voie qui peut accepter le raccordement de deux tronçons de voie ; il est utilisé
-pour placer des segments de voie connectés de sorte qu'ils semblent assez bien (et aussi utilisé pour diviser
-les cantons). Tout en maintenant Shift enfoncée, cliquez sur un point exactement à la gauche de l'aiguillage
-sur votre gauche supérieur, et encore sur un point juste en dessous de celui-ci, mais exactement à l'
-gauche de la faible aiguillage. Ensuite cliquez sur un point environ 1/2 pouce vers la gauche et 1/2
-pouces en dessous du point d'ancrage supérieur, et encore sur un point 1/2 pouce vers la gauche et
+7. Pour relier cet aiguillage avec la voie passante sup&#233;rieure et former une voie ovale simple, cochez Point d'Ancrage sur la troisi&#232;me rang&#233;e de la barre d'outils. Un <b>Point d'Ancrage</b>
+est un n&#339;ud dans un diagramme de voie qui peut accepter le raccordement de deux tron&#231;ons de voie; il est utilis&#233;
+pour placer des segments de voie connect&#233;s de sorte qu'ils semblent assez bien (et aussi utilis&#233; pour diviser
+les cantons). Tout en maintenant Maj enfonc&#233;e, cliquez sur un point exactement &#224; la gauche de l'aiguillage
+sup&#233;rieur, et encore sur un point juste en dessous de celui-ci, mais exactement &#224; '
+gauche de l'aiguillage inf&#233;rieur. Ensuite cliquez sur un point environ 1/2 pouce vers la gauche et 1/2
+pouces en dessous du point d'ancrage sup&#233;rieur, et encore sur un point 1/2 pouce vers la gauche et
 1/2 pouce au-dessus du point bas d'ancrage. Vous devriez maintenant avoir quatre points d'ancrage
-soulignant le côté gauche de l'ovale. Connectez ces quatre points et  la pointe de l'aiguillage avec les tronçons de voie - cochez segment de voie, puis avec Shift
-enfoncée, cliquez et faites glisser pour créer chacun des cinq segments de voie nécessaires. Notez que
-le  point d'ancrage va changer du rouge au vert quand il a deux connexions.
-De même répéter cette procédure pour tracer la partie droite de l'ovale.</P>
+soulignant le c&#244;t&#233; gauche de l'ovale. Connectez ces quatre points et la pointe de l'aiguillage avec les tron&#231;ons de voie - cochez segment de voie, puis avec Maj
+enfonc&#233;e, cliquez et faites glisser pour cr&#233;er chacun des cinq segments de voie n&#233;cessaires. Notez que
+le point d'ancrage va changer du rouge au vert quand il a deux connexions.
+De m&#234;me r&#233;p&#233;ter cette proc&#233;dure pour tracer la partie droite de l'ovale.</P>
 <P>
-8. La position des aiguillage et des point d'ancrage peut être ajustée pour que le Schéma de la voie ait une
-belle apparence en maintenant enfoncée la touche Meta (vérifier la barre d'aide pour voir quelle touche
-est la clé méta), et en faisant glisser chaque point d'ancrage ou d'aiguillage. Pour ajuster la position
-d'un aiguillage, faites glisser le point central de l'aiguillage avec la touche méta pressé.(Touche droite pour une souris à 3 touches en Linux)</P>
+8. La position des aiguillage et des point d'ancrage peut &#234;tre ajust&#233;e pour que le Sch&#233;ma de la voie ait une
+belle apparence en maintenant enfonc&#233;e la touche Meta (v&#233;rifier la barre d'aide pour voir quelle touche
+est la cl&#233; m&#233;ta), et en faisant glisser chaque point d'ancrage ou d'aiguillage. Pour ajuster la position
+d'un aiguillage, faites glisser le point central de l'aiguillage avec la touche m&#233;ta press&#233;.(Touche droite pour une souris &#224; 3 touches en Linux)</P>
 <P>
-9. Ensuite compléter l'embranchement industriel. Le point de connexion de la voie divergente de 
-l'aiguillage devrait être la seule case nécessitant une connexion (couleur rouge). Cochez Heurtoir
-dans la barre d'outils. Un< b>Heurtoir</b> est un nœuds dans un diagramme de la voie qui peut accepter
-une seule connexion. <b>< Avec Maj enfoncée, cliquez sur un point exactement à la droite de
-le point de connexion divergente de l'aiguillage. Connectez votre pare fin à la
-divergentes point de raccordement en tenant rétrograder, tout en appuyant sur la souris
-bouton sur le point de connexion divergents et faisant glisser vers le Heurtoir. Votre diagramme de voie doit ressembler à ceci:</P>
+9. Ensuite compl&#233;ter l'embranchement industriel. Le point de connexion de la voie divergente de 
+l'aiguillage inf&#233;rieur devrait &#234;tre la seule case n&#233;cessitant une connexion (couleur rouge). Cochez Heurtoir
+dans la barre d'outils. Un< b>Heurtoir</b> est un n&#339;uds dans un diagramme de la voie qui peut accepter
+une seule connexion. <b>Avec Maj enfonc&#233;e </b>, cliquez sur un point exactement &#224; la droite du
+ point de connexion divergent de l'aiguillage. Connectez votre heurtoir au point de connexion
+divergent en gardant Maj enfonc&#233;e, tout en appuyant sur la bouton droit de la souris
+ sur le point de connexion divergents et en le faisant glisser vers le Heurtoir. Votre diagramme de voie doit ressembler &#224; ceci:</P>
 <p>
 <A Href="./images/OvalLayoutEditMode.gif"> <IMG SRC = "./Images/OvalLayoutEditMode.gif"
 ALIGN = CENTER WIDTH = "563" height = "169" hspace = "0" vspace = "0"></A>
 <P>
-10. Sélectionnez <b>Mode Éditer </b> dans le menu Options pour masquer la barre d'outil (et la barre 
-d'aide ) et voir à quoi ressemblerait  votre diagramme de voie d'un dessin d'un simple ovale dans  un
-panneau final. Vous devriez voir les points de connexion et les cercles disparaitre. Notez également
-que, lorsqu'il est dans le mode Éditer, les éléments ne peuvent être repositionnés et les menus contextuels ne sont pas
+10. S&#233;lectionnez <b>Mode &#201;diter</b> dans le menu Options pour masquer la barre d'outil (et la barre 
+d'aide ) et voir &#224; quoi ressemblerait votre diagramme de voie d'un dessin d'un simple ovale dans  un
+panneau final. Vous devriez voir les points de connexion et les cercles disparaitre. Notez &#233;galement
+que, lorsqu'il est dans le mode &#201;diter, les &#233;l&#233;ments ne peuvent &#234;tre repositionn&#233;s et les menus contextuels ne sont pas
 actifs.</P>
 <P>
-Les étapes ci-dessus ont démontré les étapes de bases nécessaires pour dessiner un diagramme de voie. Vous pouvez
-effacer ce panneau de démonstration en sélectionnant <b> Supprimer ce panneau ...</b> dans le menu Fichier du Panneau, et commencer à construire un diagramme de voie de votre réseau. Lire les articles
-ci-dessous pour en apprendre davantage sur la façon d'ajouter du contenu aux éléments du diagramme de voies et comment ajouter des
-éléments icône à votre panneau.</P>
+Les &#233;tapes ci-dessus ont d&#233;montr&#233; les &#233;tapes de bases n&#233;cessaires pour dessiner un diagramme de voie. Vous pouvez
+effacer ce panneau de d&#233;monstration en s&#233;lectionnant <b>Supprimer ce panneau ...</b> dans le menu Fichier du Panneau, et commencer &#224; construire le diagramme de voie de votre r&#233;seau. Lire les articles
+ci-dessous pour en apprendre davantage sur la fa&#231;on d'ajouter du contenu aux &#233;l&#233;ments du diagramme de voies et comment ajouter des
+&#233;l&#233;ments ic&#244;ne &#224; votre panneau.</P>
 <p>
-Remarque <b>: L'outil Éditeur de TCO pour placer les têtes de signal et la configuration automatique la logique
-signal xiger que les aiguillages et les limites de bloc (voir ci-dessous) soient orientés
-verticalement ou horizontalement sur votre panneau.</b> Pour faire une utilisation maximale de ces outils, la conception de
-votre panneau avec les aiguillages orientés verticalement ou horizontalement (l'orientation n'a
-pas besoin d'être exacte, juste la plus verticale ou la plus horizontale possible).</p>
+Remarque <b>: L'outil &#201;diteur de R&#233;seau pour placer les t&#234;tes de signalisation et pour une configuration automatique de la logique
+signal exige que les aiguillages et les limites de bloc (voir ci-dessous) soient orient&#233;s
+verticalement ou horizontalement sur votre panneau.</b> Pour faire une utilisation maximale de ces outils, concevez
+votre panneau avec les aiguillages orient&#233;s verticalement ou horizontalement (l'orientation n'a
+pas besoin d'&#234;tre exacte, juste la plus verticale ou la plus horizontale possible).</p>
 
-<h2> <a name="toolbar"> Utilisation de la barre d'outils Éditeur de TCO</h2>
+<h2> <a name="toolbar"> Utilisation de la barre d'outils &#201;diteur de R&#233;seau</h2>
 
-La barre d'outil est utilisée pour ajouter des éléments à un panneau, et de fournir des informations pour les éléments
-ajoutés. L'élément à ajouter est sélectionné en utilisant l'une des cases suivantes dans la barre d'outils
+La barre d'outil est utilis&#233;e pour ajouter des &#233;l&#233;ments &#224; un panneau, et de fournir des informations pour les &#233;l&#233;ments
+ajout&#233;s. L'&#233;l&#233;ment &#224; ajouter est s&#233;lectionn&#233; en utilisant l'une des cases suivantes dans la barre d'outils
 :</p>
 <ul> <p>
-<li> <b>D</b> - sélectionne un aiguillage droit</li>
-<li> <b>G</b> - sélectionne un aiguillage gauche</li>
-<li> <b>Y</b> - sélectionne un aiguillage symétrique</li>
-<li> <b>Bret 2</b> - sélectionne une bretelle double</li>
-<li> <b>Bret D</b> - sélectionne une bretelle simple à droite</li>
-<li> <b>Bret G</b> - sélectionne une bretelle simple à gauche</li>
-<li> <b>Croix</b> - sélectionne une voie au croisement (un diamant)</li>
-	<li><b>Segment de Voie</b>-sélectionne un morceau de voie droite</li>
-<li><Heutoir></b>-sélectionne un point de connexion à l'extrémité d'une voie</li>
-<li><b>Point d'Ancrage </b>-sélectionne un point de connexion entre deux segments de voies</li>
-<li><b>Étiquette de Texte</b>-sélectionne une étiquette indiquant le contenu du champ de saisie</li>
-<li><b>Étiquette Mémoire</b>-sélectionne une étiquette indiquant le contenu de la mémoire dont le nom est
+<li> <b>D</b> - s&#233;lectionne un aiguillage droit</li>
+<li> <b>G</b> - s&#233;lectionne un aiguillage gauche</li>
+<li> <b>Y</b> - s&#233;lectionne un aiguillage sym&#233;trique</li>
+<li> <b>Bret double</b> - s&#233;lectionne une bretelle double</li>
+<li> <b>Bret Droie</b> - s&#233;lectionne une bretelle simple &#224; droite</li>
+<li> <b>Bret Gauche</b> - s&#233;lectionne une bretelle simple &#224; gauche</li>
+<li> <b>Croisement</b> - s&#233;lectionne une voie au croisement </li>
+<li><b>Segment de Voie</b>-s&#233;lectionne un morceau de voie droite</li>
+<li><b>Heutoir></b>-s&#233;lectionne un point de connexion &#224; l'extr&#233;mit&#233; d'une voie</li>
+<li><b>Point d'Ancrage</b>-s&#233;lectionne un point de connexion entre deux segments de voies</li>
+<li><b>&#201;tiquette de Texte</b>-s&#233;lectionne une &#233;tiquette indiquant le contenu du champ de saisie</li>
+<li><b>&#201;tiquette M&#233;moire</b>-s&#233;lectionne une &#233;tiquette indiquant le contenu de la m&#233;moire dont le nom est
 inscrit sur la droite</li>
-<li><b>Multi-Capteur</b>-sélectionne un multi-capteurs-Une boîte de dialogue est affichée permettant de définir
-multi-capteurs. Avant de créer le multi-capteur, un nom doit être inscrit
-pour chaque capteur pour définir le multi-capteurs complètement.</li>
-<li><b>Icône Capteur </b>-sélectionne une icône du capteur montrant le capteur dont le nom est inscrit sur
+<li><b>Multi-Capteur</b>-s&#233;lectionne un multi-capteurs-Une bo&#238;te de dialogue est affich&#233;e permettant de d&#233;finir
+multi-capteurs. Avant de cr&#233;er le multi-capteur, un nom doit &#234;tre inscrit
+pour chaque capteur pour d&#233;finir le multi-capteurs compl&#232;tement.</li>
+<li><b>Ic&#244;ne Capteur</b>-s&#233;lectionne une ic&#244;ne du capteur montrant le capteur dont le nom est inscrit sur
 la droite.</li>
-<li><b>Icône Signal </b>-sélectionne une icône tête de signal montrant la tête du signal dont le nom est
+<li><b>Ic&#244;ne Signal</b>-s&#233;lectionne une ic&#244;ne t&#234;te de signalisation montrant la t&#234;te du signal dont le nom est
 inscrit sur la droite</li>
-<li><b>Icône étiquette </b>-sélectionne une icône à usage général</li>
+<li><b>Ic&#244;ne &#233;tiquette</b>-s&#233;lectionne une ic&#244;ne &#224; usage g&#233;n&#233;ral</li>
 </Ul></p>
 <p>
-Les dix premiers articles sont utilisés pour créer un diagramme de voie, et sont nouveaux avec l'Éditeur de TCO.
-Les six autres articles sont à base d'icônes et sont similaires aux articles icône correspondante dans l'Éditeur de Panneaux
+Les dix premiers articles sont utilis&#233;s pour cr&#233;er un diagramme de voie, et sont nouveaux avec l'&#201;diteur de R&#233;seau.
+Les six autres articles sont &#224; base d'ic&#244;nes et sont similaires aux articles ic&#244;ne correspondante dans l'&#201;diteur de Panneaux
 .</P>
 <p>
-Pour ajouter tous les éléments sauf segment de voie:
+Pour ajouter tous les &#233;l&#233;ments sauf segment de voie:
 </P>
 <ol> <p>
-<li> Sélectionnez la case à cocher (les cases à cocher des autres articles seront automatiquement
-déssélectionnées).</li>
-<li> Entrez toute autre information nécessaire (voir ci-dessous).</li>
-<li> Déplacez le curseur de la souris pour le point sur le panneau où vous souhaitez que l'élément
+<li> S&#233;lectionnez la case &#224; cocher (les cases &#224; cocher des autres articles seront automatiquement
+d&#233;ss&#233;lectionn&#233;es).</li>
+<li> Entrez toute autre information n&#233;cessaire (voir ci-dessous).</li>
+<li> D&#233;placez le curseur de la souris pour le point sur le panneau o&#249; vous souhaitez que l'&#233;l&#233;ment
 apparaisse.</li>
-<li> Maintenez enfoncée la touche Maj.</li>
+<li> Maintenez enfonc&#233;e la touche Maj.</li>
 <li> Cliquez sur la souris (clic gauche).</li>
-<li> Relâchez la souris, puis relâchez la touche Maj.</li>
-</ Ol></p>
+<li> Rel&#226;chez la souris, puis rel&#226;chez la touche Maj.</li>
+</Ol></p>
 <p>
-Un segment de voie est un morceau de voie droite reliant deux points de connexion (carrés rouges
+Un segment de voie est un morceau de voie droite reliant deux points de connexion (carr&#233;s rouges
  sur un aiguillage, point d'ancrage, heurtoir, ou croisement). Avant que vous puissiez
-ajouter un segment de voie, deux points de connexion rouge doivent être visibles sur le panneau. Pour ajouter
+ajouter un segment de voie, deux points de connexion rouge doivent &#234;tre visibles sur le panneau. Pour ajouter
 un segment de voie reliant deux points de connexion rouge:
-</ P>
+</P>
 <ol> <p>
-<li> Sélectionnez la case Segment de Voie dans la barre d'outils.</li>
+<li> S&#233;lectionnez la case Segment de Voie dans la barre d'outils.</li>
 <li> Entrez toute autre information -. tous optionnels (voir ci-dessous)</li>
-<li> Maintenez enfoncée la touche Maj.</li>
-<li> Appuyez et maintenez enfoncé la souris sur l'un des points de connexion.</li>
+<li> Maintenez enfonc&#233;e la touche Maj.</li>
+<li> Appuyez et maintenez enfonc&#233; la souris sur l'un des points de connexion.</li>
 <li> Glisser la souris vers l'autre point de connexion. La forme du curseur change
-quand vous êtes là.</li>
-<li> Relâchez la souris, puis relâchez la touche Maj.</li>
-</ Ol></p>
+quand vous &#234;tes l&#224;.</li>
+<li> Rel&#226;chez la souris, puis rel&#226;chez la touche Maj.</li>
+</Ol></p>
 <p>
-Les cases à cocher et les champs de la barre d'outils autres que les quatorze énumérés ci-dessus
-sont pour la saisie des informations qui seront appliqués à des éléments créés tels qu'ils sont
-créés. Certaines informations sont nécessaires, et certains sont facultatives. Les choses en option peuvent
-être ajoutées ou modifiées ultérieurement en utilisant le menu contextuel d'un élément, mais il est parfois plus facile
-de les ajouter quand les éléments sont créés. Les éléments requis sont étroitement liées pour créer des
-éléments et ne peuvent pas être modifiés ultérieurement sans avoir à retirer et à recréer l'élément. Chaque
+Les cases &#224; cocher et les champs de la barre d'outils autres que les quatorze &#233;num&#233;r&#233;s ci-dessus
+sont pour la saisie des informations qui seront appliqu&#233;s &#224; des &#233;l&#233;ments cr&#233;&#233;s tels qu'ils sont
+cr&#233;&#233;s. Certaines informations sont n&#233;cessaires, et certaines sont facultatives. Les choses en option peuvent
+&#234;tre ajout&#233;es ou modifi&#233;es ult&#233;rieurement en utilisant le menu contextuel d'un &#233;l&#233;ment, mais il est parfois plus facile
+dus ajouter quand les &#233;l&#233;ments sont cr&#233;&#233;s. Les &#233;l&#233;ments requis sont &#233;troitement li&#233;s pour cr&#233;er des
+&#233;l&#233;ments et ne peuvent pas &#234;tre modifi&#233;s ult&#233;rieurement sans avoir &#224; retirer et &#224; recr&#233;er l'&#233;l&#233;ment. Chaque
 saisie d'information a une bulle d'aide qui explique ce qu'elle fait; survolez avec la souris
- sur un champ ou une case à cocher pour voir l'info-bulle. Les entrées des information sont
-décrites ci-dessous, à quel éléments elles s'appliquent  et si elles
+ sur un champ ou une case &#224; cocher pour voir l'info-bulle. Les entr&#233;es des information sont
+d&#233;crites ci-dessous, &#224; quel &#233;l&#233;ments elles s'appliquent  et si elles
 sont facultatives ou obligatoires.
 </P>
 <ul> <p>
-<li> <b> Aiguillage: Nom</b> (champ)-s'applique à D, G, Y, Bret 2,
-Bret D, Bret G - entrée est facultative. Si un nom est inscrit, il doit
-correspondent à un taux de participation à la Table Aiguillage.</li>
-<li> <b> Rotation</b> (champ)-s'applique à D, G, Y, Bret 2, Bret D,
-Bret G - L'entrée est facultative. S'il n'y a pas d'entrée, l'aiguillage n'est pas tourné
-quand il est créé. N'oubliez pas d'essayer de garder vos aiguillages orientés verticalement
+<li> <b>Aiguillage: Nom</b> (champ)-s'applique &#224; D, G, Y, Bret 2,
+Bret D, Bret G - entr&#233;e est facultative. Si un nom est inscrit, il doit
+correspondent &#224; un aiguillage du Tableau Aiguillage.</li>
+<li> <b>Rotation</b> (champ)-s'applique &#224; D, G, Y, Bret 2, Bret D,
+Bret G - L'entr&#233;e est facultative. S'il n'y a pas d'entr&#233;e, l'aiguillage n'est pas tourn&#233;
+quand il est cr&#233;&#233;. N'oubliez pas d'essayer de garder vos aiguillages orient&#233;s verticalement
 ou horizontalement.</li>
-<li> <b> Canton: Nom</b> (champ)-s'applique à D, G, Y, Bret 2, Bret D,
-Bret G, Segment de Voie, passage à niveau - L'entrée est facultative. Si un nom est inscrit,
-l'élément créé est attribué au canton nommé. Si un nom est inscrit et que le canton 
-n'existe pas, un nouveau canton avec ce nom est créé. Un nom de canton peut être n'importe quel
-caractères alphabétiques ou numériques qui permettent d'identifier le canton.</li>
-<li> <b> Capteur d'Occupation</b> (champ)-s'applique au canton nommé dans l'entrée ci-dessus
--L'entrée est facultative. Une entrée doit correspondre à un capteur dans la Table Capteur
-. Si le bloc nommé a déjà un capteur d'occupation, ce capteur remplace
-le capteur d'occupation précédent.</li>
-<li> <b>Pointillés</b> (case à cocher)-s'applique au Segment de Voie - Un Segment de Voie peut
-être tracée comme une ligne continue ou une ligne pointillée. Solide est le choix par défaut si pointillé
-n'est pas cochée. Pointillés est utile pour des tunnels ou des voies traversant à différentes
+<li> <b>Canton: Nom</b> (champ)-s'applique &#224; D, G, Y, Bret 2, Bret D,
+Bret G, Segment de Voie, croisement - L'entr&#233;e est facultative. Si un nom est inscrit,
+l'&#233;l&#233;ment cr&#233;&#233; est attribu&#233; au canton nomm&#233;. Si un nom est inscrit et que le canton 
+n'existe pas, un nouveau canton avec ce nom est cr&#233;&#233;. Un nom de canton peut &#234;tre n'importe quel
+caract&#232;res alphab&#233;tiques ou num&#233;riques qui permettent d'identifier le canton.</li>
+<li> <b>Capteur d'Occupation</b> (champ)-s'applique au canton nomm&#233; dans l'entr&#233;e ci-dessus
+-L'entr&#233;e est facultative. Une entr&#233;e doit correspondre &#224; un capteur dans le Tableau Capteur
+. Si le bloc nomm&#233; a d&#233;j&#224; un capteur d'occupation, ce capteur remplace
+le capteur d'occupation pr&#233;c&#233;dent.</li>
+<li> <b>Pointill&#233;s</b> (case &#224; cocher)-s'applique au Segment de Voie - Un Segment de Voie peut
+&#234;tre trac&#233; comme une ligne continue ou une ligne pointill&#233;e. Solide est le choix par d&#233;faut si pointill&#233;
+n'est pas coch&#233;e. Pointill&#233;s est utile pour des tunnels ou des voies traversant &#224; diff&#233;rentes
  niveaux.</li>
-<li> <b> Voie Principale</b> (case à cocher)-s'applique au Segment de Voie - un Segment de Voie
-peut être soit une <i>voie principale</i> ou une <i>voie d'évitement </i>. La voie d'évitement est le choix par défaut si la voie principale n'est pas cochée. Désigner une partie de votre piste comme
+<li> <b>Voie Principale</b> (case &#224; cocher)-s'applique au Segment de Voie - un Segment de Voie
+peut &#234;tre soit une <i>voie principale</i> ou une <i>voie d'&#233;vitement </i>. La voie d'&#233;vitement est le choix par d&#233;faut si la voie principale n'est pas coch&#233;e. D&#233;signer une partie de votre piste comme
 <i>voie principale </i> est facultatif.</li>
-<li> Étiquette de Texte <b></b> (champs)-s'applique à l'étiquette de texte - L'entrée est nécessaire si
-quelque chose doit être affichée dans l'étiquette de texte à nouveau.</li>
-<li> <b>Label Mémoire </b> (champ)-s'applique à l'étiquette de la mémoire - L'entrée est nécessaire.
-Si le nom saisi ne correspond pas à une variable en mémoire dans la Table Mémoire,
-une variable de mémoire sera créé, en utilisant le nom entré comme nom système JMRI
- (avec le préfixe IM si nécessaire).</li>
-<li><b>Icône Capteur</b> (champ)-s'applique à une Icône du capteur - L'entrée est nécessaire.
-Si un capteur avec le nom entré n'existe pas, il sera créé en utilisant le
-nom entré comme le nom  système JMRI (avec un préfixe approprié si nécessaire).</li>
+<li>&#201;tiquette de Texte <b></b> (champs)-s'applique &#224; l'&#233;tiquette de texte - L'entr&#233;e est n&#233;cessaire si
+quelque chose doit &#234;tre affich&#233;e dans l'&#233;tiquette de texte &#224; nouveau.</li>
+<li> <b>Label M&#233;moire</b> (champ)-s'applique &#224; l'&#233;tiquette de la m&#233;moire - L'entr&#233;e est n&#233;cessaire.
+Si le nom saisi ne correspond pas &#224; une variable en m&#233;moire dans le Tableau M&#233;moire,
+une variable de m&#233;moire sera cr&#233;&#233;, en utilisant le nom entr&#233; comme nom syst&#232;me JMRI
+ (avec le pr&#233;fixe IM si n&#233;cessaire).</li>
+<li><b>Ic&#244;ne Capteur</b> (champ)-s'applique &#224; une Ic&#244;ne du capteur - L'entr&#233;e est n&#233;cessaire.
+Si un capteur avec le nom entr&#233; n'existe pas, il sera cr&#233;&#233; en utilisant le
+nom entr&#233; comme le nom syst&#232;me JMRI (avec un pr&#233;fixe appropri&#233; si n&#233;cessaire).</li>
 
-<li> <b>Icône Signal</b> (champ)-s'applique à Icône Signal - L'entrée est nécessaire.
-Si le nom d'une tête de signal ne figure pas dans la table Tête de signal, il en résultera un message d'erreur 
- et l'icône de signal ne sera pas créée. Remarque <b>: Pour associer automatiquement des 
-têtes de signal  avec des aiguillages  et limites des cantons, vous devez utiliser les
- outils automatisés dans le menu Outils pour placer des icônes de signal.</b> Cet élément
-est prévu pour les cas où ces outils automatisés ne peuvent pas placer une
-icône de signal en cas de besoin.</li>
+<li> <b>Ic&#244;ne Signal</b> (champ)-s'applique &#224; Ic&#244;ne Signal - L'entr&#233;e est n&#233;cessaire.
+Si le nom d'une t&#234;te de signalisation ne figure pas dans le tableau t&#234;te de signalisation, il en r&#233;sultera un message d'erreur 
+ et l'ic&#244;ne de signal ne sera pas cr&#233;&#233;e. Remarque <b>: Pour associer automatiquement des 
+t&#234;tes de signalisation  avec des aiguillages  et limites des cantons, vous devez utiliser les
+ outils automatis&#233;s dans le menu Outils pour placer des ic&#244;nes de signal.</b> Cet &#233;l&#233;ment
+est pr&#233;vu pour les cas o&#249; ces outils automatis&#233;s ne peuvent pas placer une
+ic&#244;ne de signal en cas de besoin.</li>
 </Ul></p>
 <p>
-Lorsqu'il est enfoncé, le bouton <b>Changer les Icônes ...</b>  sur la barre d'outils fait apparaître un éditeur d'icônes
-pour soit les icônes du capteur soit, des icônes de signal, ou des icônes à usage général, selon
- que <b>Icône Capteur</b>, <b>Icône Signal</b>, <b>Icône Label</b> est
-coché. Si aucun de ces éléments n'est coché, la pression sur le bouton est ignorée. Pour les
-Icônes Signal, l'Éditeur de TCO par défaut pour les icônes face à gauche se trouvé à
-«Ressources/icons/smallschematics/projecteurs/". Si vous utilisez un fond  noir , vous pouvez avoir besoin de passer à des icônes blanches qui sont disponibles dans les mêmes
-domaine, puisque les icônes par défaut ont des bordures noires.</p>
+Lorsqu'il est enfonc&#233;, le bouton <b>Changer les Ic&#244;nes ...</b>  sur la barre d'outils fait appara&#238;tre un &#233;diteur d'ic&#244;nes
+pour soit les ic&#244;nes du capteur soit, des ic&#244;nes de signal, ou des ic&#244;nes &#224; usage g&#233;n&#233;ral, selon
+ que <b>Ic&#244;ne Capteur</b>, <b>Ic&#244;ne Signal</b>, <b>Ic&#244;ne Label</b> est
+coch&#233;. Si aucun de ces &#233;l&#233;ments n'est coch&#233;, la pression sur le bouton est ignor&#233;e. Pour les
+Ic&#244;nes Signal, l'&#201;diteur de R&#233;seau par d&#233;faut pour les ic&#244;nes face &#224; gauche se trouv&#233; &#224;
+"Ressources/icons/smallschematics/projecteurs/". Si vous utilisez un fond  noir, vous pouvez avoir besoin de passer &#224; des ic&#244;nes blanches qui sont disponibles dans les m&#234;mes
+domaine, puisque les ic&#244;nes par d&#233;faut ont des bordures noires.</p>
 
-<a name="filemenu"> <h2> utilisation du Menu Fichier d'un Panneau</h2></a>
+<a name="filemenu"> <h2>Utilisation d'un Menu Fichier de Panneau</h2></a>
 
-Le menu Fichier permet de stocker et de supprimer des panneaux.
+Le menu Fichier permet de sauvegarder et d'effacer  des panneaux.
 </p>
 <ul> <p>
-<li><b>Stocker Panneau  ...</b>-Lorsque cette option est sélectionnée, une boîte de dialogue Enregistrer est
-montré. Lorsque Enregistrer est sélectionné dans la boîte de dialogue Enregistrer, toute les informations de configuration du TCO
-sont écrites sur le disque, y compris des renseignements pour tous les panneaux, les deux
-Type Éditeur de Panneaux et le type Éditeur de Panneau , et tous les éléments non-spécifique à une configuration de TCO   (par exemple, les aiguillages, les capteurs, les lumières, les têtes de signal, itinéraires,
-logixs, cantons, etc) <b>Stocker Panneaux ...</b> est disponible dans le menu Fichier
-de chaque panneau, et dans le menu Panneaux. Il peut également être atteint en
-sélectionnant  <b>Stocker Configuration Et les Panneaux dans le Fichier fichiers ...</b> dans le 
-sous - menu de Stockage du menu Fichier de n'importe quelle table.</li>
-<li> <b> Supprimer ce panneau ...</b>-Cet article supprime le panneau le plus en avant. Une
+<li><b>Sauvegarder Panneau  ...</b>-Lorsque cette option est s&#233;lectionn&#233;e, une bo&#238;te de dialogue Enregistrer est
+montr&#233;. Lorsque Enregistrer est s&#233;lectionn&#233; dans la bo&#238;te de dialogue Enregistrer, toute les informations de configuration du R&#233;seau
+sont &#233;crites sur le disque, y compris des renseignements pour tous les panneaux, les deux
+&#201;diteur de R&#233;seaux et l'&#201;diteur de Panneau, et tous les &#233;l&#233;ments non-sp&#233;cifiques &#224; une configuration de R&#233;seaux (par exemple, les aiguillages, les capteurs, les lumi&#232;res, les t&#234;tes de signalisation, itin&#233;raires,
+logixs, cantons, etc) <b>Sauvegarer Panneaux ...</b> est disponible dans le menu Fichier
+de chaque panneau, et dans le menu Panneaux. Il peut &#233;galement &#234;tre atteint en
+s&#233;lectionnant  <b>Sauvegarder Configuration Et les Panneaux dans le Fichier fichiers ...</b> dans le 
+sous - menu de Sauvegarde du menu Fichier de n'importe quel tableau.</li>
+<li> <b>Supprimer ce panneau ...</b>-Cet article supprime le panneau le plus en avant. Une
 dialogue de confirmation s'affiche, permettant le choix d'annuler avant
-suppression. La suppression supprime le panneau du programme. Pour supprimer définitivement
-un panneau à partir de votre fichier de panneau, panneaux magasin <b>Stocker Panneaux ...</b> doit être sélectionné après
-suppression de ce panneau <b> Il n'y a pas d'annulation pour la suppression.</b> A moins que le panneau n'ait été enregistré sur le disque, il est allé après sa suppression.</li>
+suppression. La suppression supprime le panneau du programme. Pour supprimer d&#233;finitivement
+un panneau &#224; partir de votre fichier de panneau, <b>Sauvegarder Panneaux ...</b> doit &#234;tre s&#233;lectionn&#233; apr&#232;s
+suppression de ce panneau <b>Il n'y a pas d'annulation pour la suppression.</b> A moins que le panneau n'ait &#233;t&#233; enregistr&#233; sur le disque, il est parti apr&#232;s sa suppression.</li>
 </Ul></p>
 
 
- <a name="option"><h2>  Utilisation du Menu Options de l'Éditeur de TCO</h2>
+ <a name="option"><h2>  Utilisation du Menu Options de l'&#201;diteur de R&#233;seau</h2>
 
-Le menu Options est utilisé pour définir les options, ajouter des éléments au panneau, et effectuer des
-opérations qui ne surviennent pas très souvent lors de la création du panneau. Chaque sélection du menu Option
- est décrite ci-dessous.
+Le menu Options est utilis&#233; pour d&#233;finir les options, ajouter des &#233;l&#233;ments au panneau, et effectuer des
+op&#233;rations qui ne surviennent pas tr&#232;s souvent lors de la cr&#233;ation du panneau. Chaque s&#233;lection du menu Option
+ est d&#233;crite ci-dessous.
 </p>
 <p><ul>
-	<li> <b>Mode Éditeur</b> - Lorsque cette option est cochée, la barre d'outils est affichée
-au sommet du panneau, et le diagramme de voie affiche les points de connexion et édite
- les cercles. Décochez le Mode Éditeur pour masquer la barre d'outils et la barre d'aide si elle
-est affiché.</li>
-<li> <b> Permettre le Repositionnement</b> - Lorsque cette option est cochée, les éléments sur le panneau
-peut être repositionné en tirant sur l'élément avec la Touche méta pressée (bouton droit sur la souris en Linux). La Voie, les éléments de dessin et les articles à base d'icônes ne peuvent pas être repositionnés lorsque le mode Éditeur
-est coché. Les marqueurs sont une exception; les marqueurs peuvent être repositionnés à tout
-moments indépendamment du fait que le Mode Éditeur et/ou Permettre le Repositionnement soient cochés.
+	<li> <b>Mode &#201;dition</b> - Lorsque cette option est coch&#233;e, la barre d'outils est affich&#233;e
+au sommet du panneau, et le diagramme de voie affiche les points de connexion et &#233;dite
+ les cercles. D&#233;cochez le Mode &#201;diteur pour masquer la barre d'outils et la barre d'aide si elles
+sont affich&#233;e.</li>
+<li> <b>Permettre le Repositionnement</b> - Lorsque cette option est coch&#233;e, les &#233;l&#233;ments sur le panneau
+peuvent &#234;tre repositionn&#233;s en tirant sur l'&#233;l&#233;ment avec la Touche m&#233;ta press&#233;e (bouton droit sur la souris en Linux). La Voie, les &#233;l&#233;ments de dessin et les articles &#224; base d'ic&#244;nes ne peuvent pas &#234;tre repositionn&#233;s lorsque le mode &#201;diteur
+est coch&#233;. Les marqueurs sont une exception; les marqueurs peuvent &#234;tre repositionn&#233;s &#224; tout
+moments ind&#233;pendamment du fait que le Mode &#201;diteur et/ou Permettre le Repositionnement soient coch&#233;s.
 </Li>
-<li> <b> Autoriser Contrôle du TCO</b> - Lorsque cette option est cochée, cliquez sur
-l'élément aiguillage actif dans le TCO ou sur l'icône des éléments actifs, tels que
-icônes du capteur, et des icônes de signal, permet de basculer l'état de représentation de
-l'élément.</li>
-<li> <b> Autoriser Animation Aiguillage</b> - Lorsque cette option est cochée, les aiguillages
-sur le TCO vont changer pour montrer l'état de aiguillage. Si cet élément n'est
-pas cochée, l'aiguillage sera dessiné montrant la position Fermée à tout moment.
+<li> <b>Autoriser Contr&#244;le du R&#233;seau</b> - Lorsque cette option est coch&#233;e, cliquez sur
+l'&#233;l&#233;ment aiguillage actif dans le R&#233;seau ou sur l'ic&#244;ne des &#233;l&#233;ments actifs, tels que
+ic&#244;nes du capteur, et des ic&#244;nes de signal, permet de basculer l'&#233;tat de repr&#233;sentation de
+l'&#233;l&#233;ment.</li>
+<li> <b>Autoriser Animation Aiguillage</b> - Lorsque cette option est coch&#233;e, les aiguillages
+sur le R&#233;seau vont changer pour montrer l'&#233;tat de aiguillage. Si cet &#233;l&#233;ment n'est
+pas coch&#233;e, l'aiguillage sera dessin&#233; montrant la position Ferm&#233;e &#224; tout moment.
 </Li>
-<li> <b>Montrer Barre d'Aide en mode Éditeur</b> - Si cette option est cochée, la
-barre d'aide est affichée lorsque la barre d'outils est affichée.</li>
-<li> <b> Afficher Grille  dans le Mode Éditeur</b> - Si cette option est cochée, une grille est affichée en mode édition.</li>
-<li> <b> Aligner sur la Grille lors de l'Ajout</b> - Si cette option est cochée, quand un élément est
-ajouté dans le panneau, ses coordonnées sont accrochés sur un point de la grille. Pour des
-éléments de TCO (aiguillages, des points d'ancrage, heurtoirs, et les croisements,
-les coordonnées des points centraux sont limités aux points de grille. Pour les icônes
-et les étiquettes, les coordonnées du coin supérieur gauche sont forcés sur un point de la grille
+<li> <b>Montrer Barre d'Aide en mode &#201;diteur</b> - Si cette option est coch&#233;e, la
+barre d'aide est affich&#233;e lorsque la barre d'outils est affich&#233;e.</li>
+<li> <b>Afficher Grille  dans le Mode &#201;diteur</b> - Si cette option est coch&#233;e, une grille est affich&#233;e en mode &#233;dition.</li>
+<li> <b>Aligner sur la Grille lors de l'Ajout</b> - Si cette option est coch&#233;e, quand un &#233;l&#233;ment est
+ajout&#233; dans le panneau, ses coordonn&#233;es sont accroch&#233;s sur un point de la grille. Pour des
+&#233;l&#233;ments de R&#233;seau (aiguillages, des points d'ancrage, heurtoirs, et les croisements,
+les coordonn&#233;es des points centraux sont limit&#233;s aux points de grille. Pour les ic&#244;nes
+et les &#233;tiquettes, les coordonn&#233;es du coin sup&#233;rieur gauche sont forc&#233;s sur un point de la grille
 .</li>
-<li> <b> Aligner sur la Grille lors du Déplacement</b> - Si cette option est cochée, quand un élément est
-déplacé sur le panneau, ses coordonnées sont accrochés sur les points de la grille. Pour
-éléments du TCO (aiguillages, des points d'ancrage, heurtoirs, et les croisements),
-les coordonnées des points centraux sont limités aux points de grille. Si les points de connexion
- des aiguillages ou croisements sont déplacés, leurs coordonnées sont également
-accrochés aux points de la grille. Pour les icônes et les étiquettes, les coordonnées du coin supérieur gauche sont accrochées aux points de grille.</li>
-<li> <b> Voir Barre de Défilements</b> - Ce sous - menu vous permet
-de choisir les barres de défilement à afficher. Vous pouvez déplacer l'écran en 
-maintenant enfoncé le bouton gauche de la souris et en faisant glisser hors de la fenêtre dans le
-direction où vous voulez . Les barres de défilement sont toujours activées en mode édition.</Li>
-<li> <b> Afficher les Infobulles Icône</b> - Ce sous - menu vous permet de choisir si 
-infobulles des icônes sont affichées en mode édition et quand non en mode Édition. Lorsque la souris
-passe sur une icône, les infobulles sont activées, et le nom de l'icône est affichée
-tandis que la souris reste sur l'icône. Les dessins d'éléments de voie n'ont pas d'infobulles.</Li>
-<li> <b>Voir Cercles Aiguillage</b> - Lorsque cette option est cochée, les cercles au centre
-des aiguillages sont indiqués lorsqu'il n'est pas en mode Édition. Les cercles des aiguillage sont toujours
-montrés dans le mode Edition. Lorsqu'il n'est pas en mode d'édition, les cercles des aiguillage peuvent être utiles
-Si vous voulez basculer un aiguillage en cliquant dessus.
-<.
-<li> <b> Activer l'Anticrénelage (Lissage des lignes)</b> - Si cet élément est sélectionné,
-le panneau est affiché (rendu) avec l'anticrénelage autorisé. L'Anticrénelage
-lisse les lignes dans le panneau de dessin, mais il  prendra plus de temps pour rafraîchir
-le panneau. Cochez l'anticrénelage pour avoir un panneau plus beau. Décochez l'anticrénelage
-pour accélérer le rafraîchissement.</li>
-	<li> <b> Nouveau Titre ...</b> - La sélection de cet élément fait apparaître une petite fenêtre qui
-permet l'entrée d'un nouveau titre pour la fenêtre du panneau.</li>
-<li> <b> Ajouter Image de Fond...</b> - La sélection de cet élément affiche une boite de dialogue
+<li> <b>Aligner sur la Grille lors du D&#233;placement</b> - Si cette option est coch&#233;e, quand un &#233;l&#233;ment est
+d&#233;plac&#233; sur le panneau, ses coordonn&#233;es sont accroch&#233;s sur les points de la grille. Pour les
+&#233;l&#233;ments du R&#233;seau (aiguillages, des points d'ancrage, heurtoirs, et les croisements),
+les coordonn&#233;es des points centraux sont limit&#233;s aux points de grille. Si les points de connexion
+ des aiguillages ou croisements sont d&#233;plac&#233;s, leurs coordonn&#233;es sont &#233;galement
+accroch&#233;s aux points de la grille. Pour les ic&#244;nes et les &#233;tiquettes, les coordonn&#233;es du coin sup&#233;rieur gauche sont accroch&#233;es aux points de grille.</li>
+<li> <b>Voir Barre de D&#233;filements</b> - Ce sous - menu vous permet
+de choisir les barres de d&#233;filement &#224; afficher. Vous pouvez d&#233;placer l'&#233;cran en 
+maintenant enfonc&#233; le bouton gauche de la souris et en faisant glisser hors de la fen&#234;tre dans le
+direction o&#249; vous voulez . Les barres de d&#233;filement sont toujours activ&#233;es en mode &#233;dition.</Li>
+<li> <b>Afficher les Infobulles Ic&#244;ne</b> - Ce sous - menu vous permet de choisir si 
+infobulles des ic&#244;nes sont affich&#233;es en mode &#233;dition et quand non en mode &#201;dition. Lorsque la souris
+passe sur une ic&#244;ne, les infobulles sont activ&#233;es, et le nom de l'ic&#244;ne est affich&#233;e
+tandis que la souris reste sur l'ic&#244;ne. Les dessins d'&#233;l&#233;ments de voie n'ont pas d'infobulles.</Li>
+
+<li> <b>Activer l'Anticr&#233;nelage (Lissage des lignes)</b> - Si cet &#233;l&#233;ment est s&#233;lectionn&#233;,
+le panneau est affich&#233; (rendu) avec l'anticr&#233;nelage autoris&#233;. L'Anticr&#233;nelage
+lisse les lignes dans le panneau de dessin, mais il  prendra plus de temps pour rafra&#238;chir
+le panneau. Cochez l'anticr&#233;nelage pour avoir un panneau plus beau. D&#233;cochez l'anticr&#233;nelage
+pour acc&#233;l&#233;rer le rafra&#238;chissement.</li>
+	<li> <b>Nouveau Titre ...</b> - La s&#233;lection de cet &#233;l&#233;ment fait appara&#238;tre une petite fen&#234;tre qui
+permet l'entr&#233;e d'un nouveau titre pour la fen&#234;tre du panneau.</li>
+<li> <b>Ajouter Image de Fond...</b> - La s&#233;lection de cet &#233;l&#233;ment affiche une boite de dialogue
 qui permetd'ajouter une image de fond dans le panneau. Voir
 <a href="#background"> Fonds</a> ci-dessous pour plus d'informations.</li>
-<li> <b> Ajouter Horloge Rapide</b> - La sélection de cet élément ajoute une horloge analogique rapide
-en haut à gauche. Vous pouvez ensuite faire glisser avec la touche méta pressée pour tout
+<li> <b>Ajouter Horloge Rapide</b> - La s&#233;lection de cet &#233;l&#233;ment ajoute une horloge analogique rapide
+en haut &#224; gauche. Vous pouvez ensuite faire glisser avec la touche m&#233;ta press&#233;e pour tout
 emplacement sur le panneau.</li>
-<li> <b> Ajouter Pont Tournant</b> - La sélection de cet élément ajoute une plaque tournante pour le
-TCO au centre du panneau. Vous pouvez ensuite le faire glisser avec la touche méta
-pressée à n'importe quel endroit sur le panneau.</li>
-<li>  <b> Ajouter Étiquette Journal...</b> - La sélection de cet élément affiche une boite de dialogue qui
-permet l'entrée d'un nom de journal (nom  système ou nom utilisateur) et les coordonnées x, y
-où l'étiquette doit être placée initialement. Les coordonnées x, y s'appliquent au
- coin supérieur gauche de l'étiquette. Pour créer une étiquette Journal, entrez le
-nom et les coordonnées, puis cliquez sur <b>Ajouter Nouvelle Étiquette</b>. Après QU'une étiquette ait été ajoutée
- la fenêtre Ajouter une Étiquette Journal reste ouverte pour permettre l'entrée de plus d'étiquettes Journal.
-Pour fermer la fenêtre, cliquez sur <b>Annuler</b> ou utilisez le bouton Fermer en haut.</Li>
-<li> <b> Enregistrer l'Emplacement et la Taille</b> - Lorsque cette option est sélectionnée, la 
-taille de la fenêtre du panneau courant et son emplacement remplace la taille par défaut et l'emplacement de la
-fenêtre du panneau. Si le panneau est sauvegardé sur le disque après que cet élément ait été sélectionné, quand
-le panneau est rechargé sa fenêtre aura la taille et l'emplacement enregistrés lorsque
-cet article a été sélectionnée, à condition que le système d'exploitation informatique permette une
-fenêtre avec cette taille et l'emplacement.</li>
-<li>  <b>Parmétrage de Largeurs voies ...</b> - La sélection de cet élément affiche une boite de dialogue qui
-permet l'entrée d'une largeur pour la voie principale et d'une largeur pour la voie d'évitement. Toutes les
-voies principales et de toutes les voies secondaires dans le TCO vont utiliser les nouvelles
+<li> <b>Ajouter Pont Tournant</b> - La s&#233;lection de cet &#233;l&#233;ment ajoute une plaque tournante pour le
+R&#233;seau au centre du panneau. Vous pouvez ensuite le faire glisser avec la touche m&#233;ta
+press&#233;e &#224; n'importe quel endroit sur le panneau.</li>
+<li>  <b>Ajouter &#201;tiquette Rapport..</b> - La s&#233;lection de cet &#233;l&#233;ment affiche une boite de dialogue qui
+permet l'entr&#233;e d'un nom de Rapport (nom  syst&#232;me ou nom utilisateur) et les coordonn&#233;es x, y
+o&#249; l'&#233;tiquette doit &#234;tre plac&#233;e initialement. Les coordonn&#233;es x, y s'appliquent au
+ coin sup&#233;rieur gauche de l'&#233;tiquette. Pour cr&#233;er une &#233;tiquette Rapport, entrez le
+nom et les coordonn&#233;es, puis cliquez sur <b>Ajouter Nouvelle &#201;tiquette</b>. Apr&#232;s qu'une &#233;tiquette ait &#233;t&#233; ajout&#233;e
+ la fen&#234;tre Ajouter une &#201;tiquette rapport reste ouverte pour permettre l'entr&#233;e de plus d'&#233;tiquettes Rapport.
+Pour fermer la fen&#234;tre, cliquez sur <b>Annuler</b> ou utilisez le bouton Fermer en haut.</Li>
+<li> <b>Enregistrer l'Emplacement et la Taille</b> - Lorsque cette option est s&#233;lectionn&#233;e, la 
+taille de la fen&#234;tre du panneau courant et son emplacement remplace la taille par d&#233;faut et l'emplacement de la
+fen&#234;tre du panneau. Si le panneau est sauvegard&#233; sur le disque apr&#232;s que cet &#233;l&#233;ment ait &#233;t&#233; s&#233;lectionn&#233;, quand
+le panneau est recharg&#233; sa fen&#234;tre aura la taille et l'emplacement enregistr&#233;s lorsque
+cet article a &#233;t&#233; s&#233;lectionn&#233;e, &#224; condition que le syst&#232;me d'exploitation informatique permette une
+fen&#234;tre avec cette taille et l'emplacement.</li>
+<li>  <b>Parm&#233;trage de Largeurs voies ...</b> - La s&#233;lection de cet &#233;l&#233;ment affiche une boite de dialogue qui
+permet l'entr&#233;e d'une largeur pour la voie principale et d'une largeur pour la voie d'&#233;vitement. Toutes les
+voies principales et de toutes les voies secondaires dans le R&#233;seau vont utiliser les nouvelles
 valeurs. (Voir ci-dessous pour plus d'informations sur les types de voie.)</Li>
-<li> <b>Parmétrage Couleur de Voie par Défaut</b> - Le sous - menu de cet objet permet de sélectionner la couleur de la voie par défaut parmi un choix de treize couleurs. Si une partie de la
-voie est dans un canton, la couleur définie par le canton est utilisée au lieu de la couleur de la voie par défaut lors du dessin de cette voie. Cette couleur est aussi utilisée pour les lignes du
-le rectangle de sélection.</li>
-<li><b>Réglage de la couleur par Défaut du Texte</b> - Le sous - menu de cet objet permet de sélectionné une
-couleurs parmi treize pour être la couleur du texte par défaut.</Li>
-</Ul></p>
+<li> <b>Param&#233;trage Couleur de Voie par D&#233;faut</b> - Le sous - menu de cet objet permet de s&#233;lectionner la couleur de la voie par d&#233;faut parmi un choix de treize couleurs. Si une partie de la
+voie est dans un canton, la couleur d&#233;finie par le canton est utilis&#233;e au lieu de la couleur de la voie par d&#233;faut lors du dessin de cette voie. Cette couleur est aussi utilis&#233;e pour les lignes du
+le rectangle de s&#233;lection.</li>
+<li><b>R&#233;glage de la couleur par D&#233;faut du Texte</b> - Le sous - menu de cet objet permet de s&#233;lectionn&#233; une
+couleurs parmi treize pour &#234;tre la couleur du texte par d&#233;faut.</Li>
+<li> <b>Options Aiguillage</b> - Ce sous-menu permet de contr&#244;ler l'apparence des aiguillages sur le panneau.
+Il contient:
+<ul>
+<li> <b>Afficher les cercles des Aiguillages</b> - Lorsque cette option est coch&#233;e, les cercles au centre
+des aiguillages sont affich&#233;s lorsqu'il n'est pas en mode &#201;dition. Les cercles des Aiguillages sont toujours
+montr&#233;s dans le mode &#201;dition. Quand il n'est pas en mode &#201;dition, les cercles Aiguillage peuvent &#234;tre utiles
+Si vousvoulez  basculer les aiguillages en cliquant sur eux.</li>
+<li> <b>Couleurs Cercle Aiguillage</b> - Fixe la couleur du cercle de l'aiguillage. Par D&#233;faut il 
+utilise la couleur dela voie par d&#233;faut.</li>
+<li> <b>Taille Cercle Aiguillage </b> - D&#233;finit la taille relative du cercle de l'aiguillage</li>.
+<li> <b>Dessiner la Branche Inutilis&#233;e de l'Aiguillage</b> - Lorsqu'elle est activ&#233;e, dessine la voie non s&#233;lectionn&#233;e de chaque aiguillage.
+Lorsqu'elle est d&#233;sactiv&#233;e, cette voie n'est pas dessin&#233;e. Cela rend la position des aiguillages plus visibles lorsque
+l'angle de divergence est faible.</li>
+</ul>
+</ul></p>
 
-<a  name="toolsmenu"><h2> Utilisation du Menu Outil de l'Éditeur de TCO</h2>
 
-Le menu Outils offre des outils d'aide à la création et à l'édition de Panneaux de TCO
-. L'utilisation de ces procédures automatisées devrait réduire le temps et les efforts nécessaires
-pour créer votre panneau. Remarque: l'outil<b> Jeux Signaux</b> ne fonctionnera correctement que si les
-aiguillages et les limites des cantons sont orientés essentiellement verticalement ou horizontalement la plupart du temps.
+<a  name="toolsmenu"><h2>Utilisation du Menu Outil de l'&#201;diteur de R&#233;seau</h2>
+
+Le menu Outils offre des outils d'aide &#224; la cr&#233;ation et &#224; l'&#233;dition de Panneaux d'&#201;dition de R&#233;seau
+. L'utilisation de ces proc&#233;dures automatis&#233;es devrait r&#233;duire le temps et les efforts n&#233;cessaires
+pour cr&#233;er votre panneau. Remarque: L'outil <b>Jeux Signaux</b> ne fonctionnera correctement que si les
+aiguillages et les limites des cantons sont orient&#233;s essentiellement verticalement ou horizontalement la plupart du temps.
 </P>
 <ul> <p>
-<li> <b> Échelle/Traduire TCO ...</b> - La sélection de cet élément vous apporte une boite de dialogue qui permet la mise à l'échelle et la traduction du diagramme de la voie. (Pour plus
+<li> <b>&#201;chelle/Traduire Diagramme...</b> - La s&#233;lection de cet &#233;l&#233;ment vous apporte une boite de dialogue qui permet la mise &#224; l'&#233;chelle et la traduction du diagramme de la voie. (Pour plus
 d'informations sur ce point, voir la page d'aide pour ce dialogue.)</li>
-<li> <b> Traduire Sélection  ...</b> - Avant de sélectionner cet élément, l'utilisateur
-doit sélectionner une zone sur le panneau. Pour sélectionner une zone, appuyez sur le bouton de la souris
-(Bouton gauche) avec le curseur en haut à gauche de la zone, et glissez vers la
-en bas à droite de la zone. Avec une sélection active, la sélection de ce point ouvre une boite de
- dialogue qui permet la traduction de la zone sélectionnée. (Pour plus
+<li> <b>Translater S&#233;lection  ...</b> - Avant de s&#233;lectionner cet &#233;l&#233;ment, l'utilisateur
+doit s&#233;lectionner une zone sur le panneau. Pour s&#233;lectionner une zone, appuyez sur le bouton de la souris
+(Bouton gauche) avec le curseur en haut &#224; gauche de la zone, et glissez vers la
+en bas &#224; droite de la zone. Avec une s&#233;lection active, la s&#233;lection de ce point ouvre une boite de
+ dialogue qui permet la translation de la zone s&#233;lectionn&#233;e. (Pour plus
 informations sur ce point, voir la page d'aide pour ce dialogue.)</li>
-<li> <b> Annuler Traduire Sélection</b> - La Sélection automatique de ce point
-inverse la sélection précédente <b> Traduire Sélection ...</b>. Un seul niveau d'annulation
-est pris en charge. Si une sélection n'a pas été traduite, ce point est ignoré.</Li>
-<li> <b>Utilisation du Programme Taille par Défaut de l'aiguillage</b> - La sélection de cette option permet de définir par défaut
- les tailles de nouveaux Aiguillages par défaut pour le programme Édition de TCO par défaut, annulation de tous les
-changements de taille par défaut des aiguillage qui peuvent avoir été faits. Voir
+<li> <b>Annuler Translater S&#233;lection</b> - La S&#233;lection automatique de ce point
+inverse la s&#233;lection pr&#233;c&#233;dente <b>Translater S&#233;lection ...</b>. Un seul niveau d'annulation
+est pris en charge. Si une s&#233;lection n'a pas &#233;t&#233; translater, ce point est ignor&#233;.</Li>
+<li> <b>Utilisation de la Taille par D&#233;faut de l'aiguillage</b> - La s&#233;lection de cette option permet de d&#233;finir par d&#233;faut
+ les tailles de nouveaux Aiguillages par d&#233;faut pour le programme &#201;dition de R&#233;seau, annulation de tous les
+changements de taille par d&#233;faut des aiguillage qui peuvent avoir &#233;t&#233; faits. Voir
 <a href="#turnouts"> Aiguillages </a> pour plus d'informations sur les formats d'aiguillage. </li>
-<li> <b> Passer Aiguillages Internes non Signalés </b> - Lorsque la mise en place de signaux logiques,
-L'outil <b>Définition des Signaux ...</b> de l'Éditeur de TCO (décrits ci-dessous) suivra
-la voie à l'intérieur d'un canton jusqu'à ce qu'il trouve un signal ou un endroit où il s'attend à
-trouver un signal. Si le signal attendu est absent, un message est envoyé et la
-logique n'est pas mis en place. Si un canton a un aiguillage interne (l'aiguillage, et le
-tronçon de voie à sa pointe et sa voie directe sont au sein du canton), les
-outils attendent des signaux à cette aiguillage, même si ce n'est pas à la fin du
-canton. Cependant, parfois, l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé
-dans un canton. En suivant la voie à travers un canton, le programme va sauter
-aiguillage interne non signalé si cet élément, <b> Passer Aiguillage Interne non Signalé</b>, est vérifié. Il avertira cependant toujours de ce qu'il fait. <b>Utilisez cette option avec prudence.</b> Il n'y a pas de signal de protection contre un
- aiguillage sauté car mal réglé, ainsi un aiguillage interne non signalé 
-n'est pas défini correctement, un déraillement des trains pourraient en résulter.
-Signaux <li>Régler les Signaux à l'Aiguillage...</b> - Cet article propose une procédure automatisée
- d'attribution des signaux à un aiguillage. les aiguillages droits, gauches et symétriques sont pris en charge. Avant d'accéder à ce
-point, l'aiguillage doit être sur le panneau, et les têtes de signal nécessaires 
-doivent être dans la Tableau Tête de Signal. Lorsque cet élément est sélectionné, une boîte de dialogue est
-montré pour l'inscription du nom de l'aiguillage (système ou utilisateur), et les noms des
-trois ou quatre têtes de signal pour être placé autour de l'aiguillage. Pour chaque Tête de Signal
-, des cases à cocher sont disponibles pour la sélection si une icône doit être placé
-sur le panneau, et si la logique simple signal doit être créé pour 
-la tête de signal. Peu importe si les icônes sont placées ou une logique est créée,
-l'Éditeur de TCO va enregistrer que les Têtes de signal entrées sont affectées 
-l'aiguillage entré. Cet outil peut ne pas avoir suffisamment d'informations pour créer des
-logique quand il est invoqué pour la première fois, donc vous pouvez avoir à y revenir plus tard, après
-tous les signaux aient été assignés et, après que les cantons aient été définis pour
-des zones de voie signalées sur le panneau. Après qu'un aiguillage ait été attribué au
- dessin de l'aiguillage, cet outil peut être atteint en sélectionnant <b>Régler Signaux ...</b>
-dans le menu contextuel de cet aiguillage. (Pour plus d'informations, consultez la page d'aide pour le Réglage des
-Signaux Situé dans la boite de Dialogue Aiguillage.)</Li>
-<li> <b>Réglages des Signaux à la Frontière du Canton ...</b> - Cet article propose une procédure automatisée
- d'attribution des signaux à une frontière de canton qui n'est pas associée à un
- aiguillage ou un croisement. Avant d'accéder à cet article, les cantons doivent
-être définis pour signalés les régions de la voie sur le panneau, et les têtes de signal requise doivent être dans la
-Table Têtes de signal. Lorsque cet élément est sélectionné, une boîte de dialogue est affichée pour l'entrée des
- noms des deux cantons dont la limite est signalée, et pour l'entrée des
-noms (système ou utilisateur) d'une ou deux têtes de signal pour être affectées à la frontière du
-canton . Pour chaque tête de signal, des cases à cocher sont disponibles pour
-sélection si une icône doit être placée sur le panneau, et si une simple
-logique Signal  doit être créé pour la tête de signal. Peu importe si les icônes
-sont placées ou de la logique est créée, l'Éditeur de TCO va enregistrer que les 
-têtes de signal entrées sont affectées à la limite de canton spécifiée. Si la création d'une logique 
-est demandée et l'outil n'a pas assez d'information disponible pour la
-mis en place la logique, vous pourriez avoir à revenir plus tard, après que plusieurs signaux aient
-été attribués. Après un point d'ancrage est reconnu comme une limite de canton,
-Cet outil peut être atteint en sélectionnant 
-<b> Définir Signaux ...</b> dans le menu contextuel du point d'ancrage. (Pour plus d'informations, consultez la page d'aide pour le dialogue Définitions de Signaux aux Frontières des Cantons.) </li>
-<li> <b> Définir Signaux aux Bretelles ...</b> - Cet article propose une procédure automatisée
- d'attribution des signaux à une bretelle. Il fournit également
-le placement des têtes de signal autour d'une bretelle et la mise en place d'une logique
-pour les signaux. Avant d'accéder à cet élément, les cantons doivent être définis dans les
-régions de la voie signalées sur le panneau, et les têtes de signal requises doivent êtres
-dans la Table Tête de signal. Lorsque cet élément est sélectionné, une petite boîte de dialogue est affichée pour
-l'inscription du nom (système ou utilisateur) de la bretelle à  protéger.
-Le nom entré doit correspondre à une bretelle double, une  bretelle droite,
-ou une bretelle gauche. (Si cet outil est accessible en sélectionnant
-<b>Définir Signaux ...</b> dans le menu contextuel aiguillage, l'aiguillage est le nom
-entrée automatiquement.) Après que la bretelle ait été identifiée, une boite de dialogue
-est affichée pour l'entrée de noms (système ou utilisateur) pour quatre à huit têtes de signaux
- pour être affectés à la bretelle. Pour chaque tête de signal, des cases à cocher sont
-disponibles pour la sélection si une icône doit être placée sur le panneau, et
-si la logique du signal doit être créée pour la tête de signal. Peu importe
-si les icônes sont placées ou logique est créée, Éditeur de TCO retiendra que
-les têtes de signal entrées sont affectées à l'aiguillage déterminé. Si créer une logique 
-est demandée et que l'outil n'a pas assez d'information disponible pour la
-mise en place de la logique, vous pourriez avoir à revenir plus tard, après que plusieurs signaux aient
-été attribués. Après qu'un aiguillage de la Table aiguillage ait été attribué à une bretelle
-, cet outil peut être atteint en sélectionnant <b>Définir Signaux...</b>
-dans le menu contextuel de l'aiguillage. (Pour plus d'informations, consultez la page d'aide pour le dialogue des Têtes de
-Signaux Situées aux Bretelles.) </Li>
- <li><b>Définir Signaux au croisement ...</b> - Cet élément propose une procédure automatisée
- d'attribution des signaux à un croisement (un diamant). Il fournit également
-le placement des têtes de signal autour du croisement et la mise en place d'une logique
-pour les signaux. Avant d'accéder à cet outil, les cantons doivent être définis pour la
-zone de voie signalée sur le panneau, et les têtes de signal requises doivent être
-dans la Table Têtes de Signal. Cet outil fonctionne mieux si le croisement est aussi
-la frontière entre les deux cantons dans chaque direction signalée. Lorsque cet élément est
-sélectionné, une boîte de dialogue apparaît  pour entrer un ou deux noms de cantons pour
-identifier le croisement qui doit être signalé, et pour l'entrée de
-noms (système ou utilisateur) de deux ou quatre têtes de signal à disposées autour
-du croisement. Pour chaque tête de signal, des cases à cocher sont disponibles pour
-sélectionner si une icône doit être placé sur le panneau, et si une simple logique
-Signal doit être créée pour la tête de signal. Peu importe si les icônes
-sont placées ou la logique est créé, Éditeur de TCO va enregistrer que les
-têtes de signal entrées sont affectées au croisement spécifié. S'il est demandée de créer une logique
+<li> <b>Passer Aiguillages Internes non Signal&#233;s</b> - Lorsque la mise en place de signaux logiques,
+L'outil <b>D&#233;finition des Signaux ...</b> de l'&#201;diteur de R&#233;seau (d&#233;crits ci-dessous) suivra
+la voie &#224; l'int&#233;rieur d'un canton jusqu'&#224; ce qu'il trouve un signal ou un endroit o&#249; il s'attend &#224;
+trouver un signal. Si le signal attendu est absent, un message est envoy&#233; et la
+logique n'est pas mise en place. Si un canton a un aiguillage interne (l'aiguillage, et le
+tron&#231;on de voie &#224; sa pointe et sa voie directe sont au sein du canton), les
+outils attendent des signaux &#224; cette aiguillage, m&#234;me si ce n'est pas &#224; la fin du
+canton. Cependant, parfois, l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilis&#233;
+dans un canton. En suivant la voie &#224; travers un canton, le programme va sauter
+l'aiguillage interne non signal&#233; si cet &#233;l&#233;ment, <b>Passer Aiguillage Interne non Signal&#233;</b>, est v&#233;rifi&#233;. Il avertira cependant toujours de ce qu'il fait. <b>Utilisez cette option avec prudence.</b> Il n'y a pas de signal de protection contre un
+ aiguillage saut&#233; car mal r&#233;gl&#233;, ainsi un aiguillage interne non signal&#233; 
+n'est pas d&#233;fini correctement, un d&#233;raillement des trains pourrait en r&#233;sulter.
+ <li>R&#233;gler les Signaux &#224; l'Aiguillage...</b> - Cet article propose une proc&#233;dure automatis&#233;e
+ d'attribution des signaux &#224; un aiguillage. les aiguillages droits, gauches et sym&#233;triques sont pris en charge. Avant d'acc&#233;der &#224; ce
+point, l'aiguillage doit &#234;tre sur le panneau, et les t&#234;tes de signalisation n&#233;cessaires 
+doivent &#234;tre dans le Tableauau t&#234;te de signalisation. Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue est
+montr&#233;e pour l'inscription du nom de l'aiguillage (syst&#232;me ou utilisateur), et les noms des
+trois ou quatre t&#234;tes de signalisation pour &#234;tre plac&#233; autour de l'aiguillage. Pour chaque t&#234;te de signalisation
+, des cases &#224; cocher sont disponibles pour la s&#233;lection si une ic&#244;ne doit &#234;tre plac&#233;
+sur le panneau, et si la logique simple signal doit &#234;tre cr&#233;&#233; pour 
+la t&#234;te de signalisation. Peu importe si les ic&#244;nes sont plac&#233;es ou une logique est cr&#233;&#233;e,
+l'&#201;diteur de R&#233;seau enregistre que les t&#234;tes de signaux entr&#233;es sont attribu&#233;es &#224;
+l'aiguillage entr&#233;. Cet outil peut ne pas avoir suffisamment d'informations pour cr&#233;er des
+logique quand il est invoqu&#233; pour la premi&#232;re fois, donc vous pouvez avoir &#224; y revenir plus tard, apr&#232;s que
+tous les signaux aient &#233;t&#233; assign&#233;s et, apr&#232;s que les cantons aient &#233;t&#233; d&#233;finis pour
+des zones de voie signal&#233;es sur le panneau. Apr&#232;s qu'un aiguillage ait &#233;t&#233; attribu&#233; au
+ dessin de l'aiguillage, cet outil peut &#234;tre atteint en s&#233;lectionnant <b>R&#233;gler Signaux ...</b>
+dans le menu contextuel de cet aiguillage. (Pour plus d'informations, consultez la page d'aide pour le R&#233;glage des
+Signaux situ&#233; dans la boite de Dialogue Aiguillage.)</Li>
+<li> <b>R&#233;glages des Signaux &#224; la Fronti&#232;re du Canton ...</b> - Cet &#233;l&#233;ment propose une proc&#233;dure automatis&#233;e
+ d'attribution des signaux &#224; une fronti&#232;re de canton qui n'est pas associ&#233;e &#224; un
+ aiguillage ou un croisement. Avant d'acc&#233;der &#224; cet article, les cantons doivent
+&#234;tre d&#233;finis pour signaler les r&#233;gions de la voie sur le panneau, et les t&#234;tes de signalisation requises doivent &#234;tre dans le
+Tableau t&#234;tes de signalisation. Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue est affich&#233;e pour l'entr&#233;e des
+ noms des deux cantons dont la limite est signal&#233;e, et pour l'entr&#233;e des
+noms (syst&#232;me ou utilisateur) d'une ou deux t&#234;tes de signalisation pour &#234;tre affect&#233;es &#224; la fronti&#232;re du
+canton . Pour chaque t&#234;te de signalisation, des cases &#224; cocher sont disponibles pour
+s&#233;lection si une ic&#244;ne doit &#234;tre plac&#233;e sur le panneau, et si une 
+Logique Simple Signal doit &#234;tre cr&#233;&#233; pour la t&#234;te de signalisation. Peu importe si les ic&#244;nes
+sont plac&#233;es ou de la logique est cr&#233;&#233;e, l'&#201;diteur de R&#233;seau va enregistrer que les 
+t&#234;tes de signalisation entr&#233;es sont affect&#233;es &#224; la limite de canton sp&#233;cifi&#233;e. Si la cr&#233;ation d'une logique 
+est demand&#233;e et l'outil n'a pas assez d'information disponible pour la
+mis en place la logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plusieurs signaux aient
+&#233;t&#233; attribu&#233;s. Apr&#232;s qu'un point d'ancrage ait &#233;t&#233; reconnu comme une limite de canton,
+cet outil peut &#234;tre atteint en s&#233;lectionnant 
+<b>D&#233;finir Signaux ...</b> dans le menu contextuel du point d'ancrage. (Pour plus d'informations, consultez la page d'aide pour le dialogue D&#233;finitions de Signaux aux Fronti&#232;res des Cantons.) </li>
+<li> <b>D&#233;finir Signaux aux Bretelles ...</b> - Cet article propose une proc&#233;dure automatis&#233;e
+ d'attribution des signaux &#224; une bretelle. Il fournit &#233;galement
+le placement des t&#234;tes de signalisation autour d'une bretelle et la mise en place d'une logique
+pour les signaux. Avant d'acc&#233;der &#224; cet &#233;l&#233;ment, les cantons doivent &#234;tre d&#233;finis dans les
+r&#233;gions de la voie signal&#233;e sur le panneau, et les t&#234;tes de signalisation requises doivent &#234;tres
+dans le Tableau t&#234;te de signalisation. Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une petite bo&#238;te de dialogue est affich&#233;e pour
+l'inscription du nom (syst&#232;me ou utilisateur) de la bretelle &#224; prot&#233;ger.
+Le nom entr&#233; doit correspondre &#224; une bretelle double, une bretelle D,
+ou une bretelle G. (Si cet outil est accessible en s&#233;lectionnant
+<b>D&#233;finir Signaux ...</b> dans le menu contextuel aiguillage, le nom de l'aiguillage est 
+entr&#233;e automatiquement.) Apr&#232;s que la bretelle ait &#233;t&#233; identifi&#233;e, une boite de dialogue
+est affich&#233;e pour l'entr&#233;e de noms (syst&#232;me ou utilisateur) pour quatre &#224; huit t&#234;tes de signaux
+ pour &#234;tre affect&#233;es &#224; la bretelle. Pour chaque t&#234;te de signalisation, des cases &#224; cocher sont
+disponibles pour la s&#233;lection si une ic&#244;ne doit &#234;tre plac&#233;e sur le panneau, et
+si la logique du signal doit &#234;tre cr&#233;&#233;e pour la t&#234;te de signalisation. Peu importe
+si les ic&#244;nes sont plac&#233;es ou logique est cr&#233;&#233;e, l'&#201;diteur de R&#233;seau retiendra que
+les t&#234;tes de signalisation entr&#233;es sont affect&#233;es &#224; l'aiguillage d&#233;termin&#233;. Si cr&#233;er une logique 
+est demand&#233;e et que l'outil n'a pas assez d'information disponible pour la
+mise en place de la logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plusieurs signaux aient
+&#233;t&#233; attribu&#233;s. Apr&#232;s qu'un aiguillage du Tableau aiguillage ait &#233;t&#233; attribu&#233; &#224; une bretelle
+, cet outil peut &#234;tre atteint en s&#233;lectionnant <b>D&#233;finir Signaux...</b>
+dans le menu contextuel de l'aiguillage. (Pour plus d'informations, consultez la page d'aide pour la mise en place des T&#234;tes de
+Signaux Situ&#233;es aux Bretelles.) </Li>
+ <li><b>D&#233;finir Signaux au croisement ...</b> - Cet &#233;l&#233;ment propose une proc&#233;dure automatis&#233;e
+ d'attribution des signaux &#224; un croisement. Il fournit &#233;galement
+le placement des t&#234;tes de signalisation autour du croisement et la mise en place d'une logique
+pour les signaux. Avant d'acc&#233;der &#224; cet outil, les cantons doivent &#234;tre d&#233;finis pour la
+zone de voie signal&#233;e sur le panneau, et les t&#234;tes de signalisation requises doivent &#234;tre
+dans le Tableau t&#234;tes de signalisation. Cet outil fonctionne mieux si le croisement est aussi
+la fronti&#232;re entre les deux cantons dans chaque direction signal&#233;e. Lorsque cet &#233;l&#233;ment est
+s&#233;lectionn&#233;, une bo&#238;te de dialogue appara&#238;t  pour entrer un ou deux noms de cantons pour
+identifier le croisement qui doit &#234;tre signal&#233;, et pour l'entr&#233;e de
+noms (syst&#232;me ou utilisateur) de deux ou quatre t&#234;tes de signalisation &#224; dispos&#233;es autour
+du croisement. Pour chaque t&#234;te de signalisation, des cases &#224; cocher sont disponibles pour
+s&#233;lectionner si une ic&#244;ne doit &#234;tre plac&#233; sur le panneau, et si une simple logique
+Signal doit &#234;tre cr&#233;&#233;e pour la t&#234;te de signalisation. Peu importe si les ic&#244;nes
+sont plac&#233;es ou la logique est cr&#233;&#233;, l'&#201;diteur de R&#233;seau va enregistrer que les
+t&#234;tes de signalisation entr&#233;es sont affect&#233;es au croisement sp&#233;cifi&#233;. S'il est demand&#233;e de cr&#233;er une logique
  et que l'outil n'a pas assez d'information disponible pour la 
-mise en place de la logique, vous pourriez avoir à revenir plus tard, après que plusieurs signaux aient
-été attribués. Après que les cantons aient été attribués à des voies de croisement, 
-cet outil peut être atteint en sélectionnant <b>Définir Signaux...</b> à ce niveau de menu contextuel croisement
-. (Pour plus d'informations, consultez la page d'aide pour le dialogue Définir
-Signaux Situé au Croisement.) </Li>
-<li><b>Définir Signaux Aiguillages Pointe à Pointe ...</b> - Cet article propose une
-procédure automatisée pour l'attribution des signaux à deux aiguillages proches
-orientés pointe à pointe, avec les pointes reliés par un segment de voie unique.
-Cette disposition est utilisée, où quatre voies se rejoignent dans une petite zone, donc
-'aucun signal ne peut être placés à la pointe de l'aiguillage. Une telle configuration est utilisée
-de modéliser une une traversée - jonction double, par exemple, mais peut aussi survenir dans d'autres contextes.
-	Chacun des deux aiguillages peut être soit à droite (D), gauche (G), ou symétrique
-(Y) . Cet outil fournit le placement têtes de signal sur les voies directes et divergentes
- des deux aiguillages. Il prévoit également la mise en place d'une logique
-pour les signaux. Avant d'accéder à cet article, les cantons doivent être définis pour des
-régions de la voie signalée sur le panneau, et les têtes de signal requise doivent être
-dans la Table Têtes de signal. Lorsque cet élément est sélectionné, une boîte de dialogue est affichée pour l'entrée des 
-noms (système ou utilisateur) des deux aiguillages à être protégé, et pour l'entrée des
-noms (système ou utilisateur) des quatre à huit têtes de signal pour y être affectées. Pour
-chaque tête de signal, les cases à cocher sont disponibles pour la sélection  d'une icône tête de signal
-qui doit être placé sur le TCO, et la logique du signal si elle
-doit être créé pour la tête de signal. Peu importe si les icônes
-sont placées ou logique est créée, l'Éditeur de TCO va enregistrer que les entrées
-têtes de feux sont affectés aux aiguillages spécifiés, et que les deux aiguillages
-sont liés dans une configuration spéciale pointe à pointe. Si la création d'une logique
-est demandée et l'outil n'a pas assez d'information disponible pour
-la mise en place la logique, vous pourriez avoir à revenir plus tard, après que plusieurs signaux aient
-été attribués. La première fois qu'il est utilisé pour chaque configuration tête-bêche, cet
-outil doit être invoqué à partir du menu Outils. Après que l'Éditeur de TCO ait enregistré que
-les deux aiguillages sont liés dans configuration,spéciale tête-bêche, sélectionnez <b>Définir Signaux ...</b> dans le menu contextuel l'un ou l'autre des aiguillages apportera
- cet outil avec les deux aiguillages identifiés. (Pour plus d'informations, consultez le
-la page d'aide pour le dialogue de Définition des Signaux pour Aiguillage Tête - Bêches.) </li>
- <li> <b>Définir Signaux pour Aiguillage 3 voies...</b> - Cet article propose une
-procédure automatisée pour l'attribution des signaux à deux aiguillages utilisés pour modéliser un
-un aiguillage 3 voies dans Éditeur de TCO. Un aiguillage à 3 voies est modélisé en utilisant deux
-aiguillages, habituellement un droite et un gauche, orienté de sorte que la pointe
-du second aiguillage soit reliée à la voie directe du premier aiguillage
-par un segment de voie très courte. Cet outil fournit une procédure automatisée pour
-assigner des têtes de signal, en les plaçant sur le TCO, et en créant automatiquement
-logique de signal pour une aiguillage à 3 voies modélisées de cette manière. Cet outil peut également être
-utilisé pour placer les têtes de signal et mettre la logique pour deux aiguillages réels qui sont
-configurés comme décrit ci-dessus, où l'utilisateur ne veut pas mettre des signaux
+mise en place de la logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plusieurs signaux aient
+&#233;t&#233; attribu&#233;s. Apr&#232;s que les cantons aient &#233;t&#233; attribu&#233;s &#224; des voies de croisement, 
+cet outil peut &#234;tre atteint en s&#233;lectionnant <b>D&#233;finir Signaux...</b> &#224; ce niveau de menu contextuel croisement
+. (Pour plus d'informations, consultez la page d'aide pour D&#233;finir
+Signaux Situ&#233; au Croisement.) </Li>
+<li><b>D&#233;finir Signaux Aiguillages Pointe &#224; Pointe ...</b> - Cet article propose une
+proc&#233;dure automatis&#233;e pour l'attribution des signaux &#224; deux aiguillages proches
+orient&#233;s pointe &#224; pointe, avec les pointes reli&#233;s par un segment de voie unique.
+Cette disposition est utilis&#233;e, o&#249; quatre voies se rejoignent dans une petite zone, donc
+'aucun signal ne peut &#234;tre plac&#233;s &#224; la pointe de l'aiguillage. Une telle configuration est utilis&#233;e
+pour mod&#233;liser une travers&#233;e - jonction double, par exemple, mais peut aussi survenir dans d'autres contextes.
+	Chacun des deux aiguillages peut &#234;tre soit &#224; droite (D), gauche (G), ou sym&#233;trique
+(Y) . Cet outil fournit le placement des t&#234;tes de signalisation sur les voies directes et divergentes
+ des deux aiguillages. Il pr&#233;voit &#233;galement la mise en place d'une logique
+pour les signaux. Avant d'acc&#233;der &#224; cet article, les cantons doivent &#234;tre d&#233;finis pourles
+r&#233;gions de la voie signal&#233;e sur le panneau, et les t&#234;tes de signalisation requises doivent &#234;tre
+dans le Tableau T&#234;tes de signalisation. Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue est affich&#233;e pour l'entr&#233;e des 
+noms (syst&#232;me ou utilisateur) des deux aiguillages &#224; prot&#233;g&#233;, et pour l'entr&#233;e des
+noms (syst&#232;me ou utilisateur) des quatre &#224; huit t&#234;tes de signalisation pour y &#234;tre affect&#233;es. Pour
+chaque t&#234;te de signalisation, les cases &#224; cocher sont disponibles pour la s&#233;lection  d'une ic&#244;ne T&#234;te de signalisation
+qui doit &#234;tre plac&#233;e sur le R&#233;seau, et la logique du signal si elle
+doit &#234;tre cr&#233;&#233; pour la t&#234;te de signalisation. Peu importe si les ic&#244;nes
+sont plac&#233;es ou la logique est cr&#233;&#233;e, l'&#201;diteur de R&#233;seau va enregistrer que les entr&#233;es
+t&#234;tes de signalisation sont affect&#233;es aux aiguillages sp&#233;cifi&#233;s, et que les deux aiguillages
+sont li&#233;s dans une configuration sp&#233;ciale pointe &#224; pointe. Si la cr&#233;ation d'une logique
+est demand&#233;e et l'outil n'a pas assez d'information disponible pour
+la mise en place la logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plusieurs signaux aient
+&#233;t&#233; attribu&#233;s. La premi&#232;re fois qu'il est utilis&#233; pour chaque configuration t&#234;te-b&#234;che, cet
+outil doit &#234;tre invoqu&#233; &#224; partir du menu Outils. Apr&#232;s que l'&#201;diteur de R&#233;seau ait enregistr&#233; que
+les deux aiguillages sont li&#233;s dans configuration, sp&#233;ciale t&#234;te-b&#234;che, s&#233;lectionnez <b>D&#233;finir Signaux ...</b> dans le menu contextuel l'un ou l'autre des aiguillages apportera
+ cet outil avec les deux aiguillages identifi&#233;s. (Pour plus d'informations, consultez 
+la page d'aide pour la D&#233;finition des Signaux pour Aiguillage T&#234;te - B&#234;ches.) </li>
+
+<li> <b>D&#233;terminer les Signaux pour une Travers&#233;e Jonction</b> - Cet &#233;l&#233;ment fournit une
+proc&#233;dure automatis&#233;e pour attribuer des signaux &#224; une TJ simple ou double,
+    Il pr&#233;voit &#233;galement de placer les T&#234;tes de signal autour du croisement et
+    pour la cr&#233;ation d'une logique pour ces signaux.
+    Avant d'acc&#233;der &#224; ce point, les cantonss doivent &#234;tre d&#233;finis pour la
+zone de voie signal&#233;e sur le panneau, et les T&#234;tes de signaux n&#233;cessaires doivent &#234;tre
+dans le Tableau T&#234;te de signal . Lorsque cette option est s&#233;lectionn&#233;e, un menu d&#233;roulant appara&#238;t qui listes
+    les Travers&#233;es Jonction qui ont &#233;t&#233; d&#233;finies sur le panneau pour &#234;tre signal&#233;es , et les bo&#238;tes de dialogue d'entr&#233;e de
+noms (syst&#232;me ou utilisateur) de signaux de quatre &#224; huit t&#234;tes pour &#234;tre affect&#233;s. Pour
+chaque t&#234;te de signal, des cases &#224; cocher sont disponibles pour la s&#233;lection si une ic&#244;ne T&#234;te de signal
+ doit &#234;tre plac&#233;e sur le panneau, et que la logique de signal
+doit &#234;tre cr&#233;&#233;e pour la t&#234;te de signal. Peu importe si les ic&#244;nes
+sont plac&#233;es ou si la logique est cr&#233;&#233;e , l'&#201;diteur de circuits retiendra que les entr&#233;es
+t&#234;tes de signal sont attribu&#233;s aux aiguillages sp&#233;cifi&#233;s. Si la logique 
+est demand&#233;e et l'outil n'a pas suffisamment d'informations disponibles pour
+mettre en place la logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plus de signaux aient
+&#233;t&#233; attribu&#233;s . Apr&#232;s que les Cantons ont &#233;t&#233; attribu&#233;s &#224; une Travers&#233;e Jonction, cet outil peut &#234;tre atteint en s&#233;lectionnant <b>D&#233;terminer des signaux ...</b> dans le menu contextuel de la Travers&#233;e jonction .
+    (Pour plus d' informations, consultez la page d'aide pour l'ensemble des signaux d'une Travers&#233;e Jonction.)</Li>
+   </li>
+
+ <li> <b>D&#233;finir Signaux pour Aiguillage 3 voies...</b> - Cet article propose une
+proc&#233;dure automatis&#233;e pour l'attribution des signaux &#224; deux aiguillages utilis&#233;s pour mod&#233;liser un
+un aiguillage 3 voies dans l'&#201;diteur de R&#233;seau. Un aiguillage &#224; 3 voies est mod&#233;lis&#233; en utilisant deux
+aiguillages, habituellement un droite et un gauche, orient&#233; de sorte que la pointe
+du second aiguillage soit reli&#233;e &#224; la voie directe du premier aiguillage
+par un segment de voie tr&#232;s court. Cet outil fournit une proc&#233;dure automatis&#233;e pour
+assigner des t&#234;tes de signalisation, en les pla&#231;ant sur le R&#233;seau, et en cr&#233;ant automatiquement la
+logique de signal pour un aiguillage &#224; 3 voies mod&#233;lis&#233;s de cette mani&#232;re. Cet outil peut &#233;galement &#234;tre
+utilis&#233; pour placer les t&#234;tes de signalisation et mettre la logique pour deux aiguillages r&#233;els qui sont
+configur&#233;s comme d&#233;crit ci-dessus, o&#249; l'utilisateur ne veut pas mettre des signaux
 entre les deux aiguillages - essentiellement deux vrais aiguillages gauches ou droites
- qui simulent un aiguillage à 3 voies. Chacun des deux aiguillages peut être
-soit de droite (D) ou gauche (G). Avant d'accéder à cet article, les éléments cantons
-doivent être définis pour les régions de voie signalée sur le panneau, et les 
-têtes signal nécessaires doivent être dans la Tableau Tête de Signal. Lorsque cet élément est sélectionné, une boîte de dialogue
-est montré pour entrer les noms (système ou utilisateur) des deux aiguillages comprenant
-l'aiguillage à 3 voies à protéger, et pour entrer les noms (système ou de l'utilisateur) de
-six (ou quatre) de têtes de signaux à affecter. Pour chaque tête de signal, des cases à cocher
-sont disponibles pour la sélection si une icône tête de signal doit être placé sur la
-panneau, et si la logique du signal doit être créé pour la tête de signal.
-Peu importe si les icônes sont placés ou si la logique est créée, l'Éditeur de TCO 
-enregistrera que les têtes de signal entrés sont affectés à l'aiguillage spécifié,
-et que les deux aiguillages sont "liées" pour simuler un aiguillage à 3 voies. Si créer de
-la logique est demandée et que l'outil n'a pas assez d'information disponible pour
-mettre en place cette logique, vous pourriez avoir à revenir plus tard, après que plusieurs signaux aient été attribués
-. La première fois qu'il est utilisé pour chaque aiguillage à 3 voies, cet outil
-doit être invoqué à partir du menu Outils. Après l'Éditeur de TCO enregistre que
-les deux aiguillages sont liés pour simuler une aiguillage à 3 voies, en sélectionnant  <b>
-Définir Signaux ...</b> dans le menu contextuel soit l'aiguillage fera apparaître cet outil
-avec les deux aiguillages identifiés. (Pour plus d'informations, consultez la page d'aide pour la fenêtre
-Définir Signals pour un aiguillage 3-voies .) </li>
+ qui simulent un aiguillage &#224; 3 voies. Chacun des deux aiguillages peut &#234;tre
+soit de droite (D) ou gauche (G). Avant d'acc&#233;der &#224; cet article, les &#233;l&#233;ments cantons
+doivent &#234;tre d&#233;finis pour les zones de voie signal&#233;es sur le panneau, et les 
+t&#234;tes de signalisation n&#233;cessaires doivent &#234;tre dans le Tableau t&#234;te de signalisation. Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue
+est montr&#233; pour entrer les noms (syst&#232;me ou utilisateur) des deux aiguillages formant
+l'aiguillage &#224; 3 voies &#224; prot&#233;ger, et pour entrer les noms (syst&#232;me ou de l'utilisateur) de
+six (ou quatre) de t&#234;tes de signaux &#224; affecter. Pour chaque t&#234;te de signalisation, des cases &#224; cocher
+sont disponibles pour la s&#233;lection si une ic&#244;ne t&#234;te de signalisation doit &#234;tre plac&#233;e sur la
+panneau, et si la logique du signal doit &#234;tre cr&#233;&#233;e pour la t&#234;te de signalisation.
+Peu importe si les ic&#244;nes sont plac&#233;es ou si la logique est cr&#233;&#233;e, l'&#201;diteur de R&#233;seau 
+enregistrera que les t&#234;tes de signalisation entr&#233;s sont affect&#233;es &#224; l'aiguillage sp&#233;cifi&#233;,
+et que les deux aiguillages sont "li&#233;s" pour simuler un aiguillage &#224; 3 voies. Si cr&#233;er de
+la logique est demand&#233;e et que l'outil n'a pas assez d'information disponible pour
+mettre en place cette logique, vous pourriez avoir &#224; revenir plus tard, apr&#232;s que plusieurs signaux aient &#233;t&#233; attribu&#233;s
+. La premi&#232;re fois qu'il est utilis&#233; pour chaque aiguillage &#224; 3 voies, cet outil
+doit &#234;tre invoqu&#233; &#224; partir du menu Outils. Apr&#232;s l'&#201;diteur de R&#233;seau enregistre que
+les deux aiguillages sont li&#233;s pour simuler une aiguillage &#224; 3 voies, en s&#233;lectionnant  <b>
+D&#233;finir Signaux ...</b> dans le menu contextuel soit l'aiguillage fera appara&#238;tre cet outil
+avec les deux aiguillages identifi&#233;s. (Pour plus d'informations, consultez la page d'aide pour la fen&#234;tre
+D&#233;finir Signals pour un aiguillage 3-voies .) </li>
 
 </ul></p>
 
- <a name="zoommenu"> <h2>Utilisation du Menu Zoom de l'Éditeur de TCO</h2>
+ <a name="zoommenu"> <h2>Utilisation du Menu Zoom de l'&#201;diteur de R&#233;seau</h2>
 
 Le menu de zoom permet d'agrandir temporairement un panneau. Le menu offre une
-choix de plusieurs facteurs de grossissement, et un élément <b>Pas de zoom</b> pour revenir à la
+choix de plusieurs facteurs de grossissement, et un &#233;l&#233;ment <b>Pas de zoom</b> pour revenir &#224; la
 taille normale. Quand un facteur agrandissement
- est sélectionnée, le panneau est amplifié par ce facteur. Les barres de défilement sont
-automatiquement réglées sur des positions raisonnables. Déplacer les barres de défilement pour se concentrer sur
-différentes parties du panneau. </p>
+ est s&#233;lectionn&#233;, le panneau est amplifi&#233; par ce facteur. Les barres de d&#233;filement sont
+automatiquement r&#233;gl&#233;es sur des positions raisonnables. D&#233;placer les barres de d&#233;filement pour se concentrer sur
+diff&#233;rentes parties du panneau. </p>
 <p>
-Quand un panneau est amplifié, toutes les fonctions standard fonctionnent, sauf pour les infobulles des
-icônes. Les éléments peuvent être ajoutés, déplacés ou supprimés. Les menus contextuels sont disponibles. Aiguillages
-et Multi-capteurs se comportent comme ils le font à l'échelle normale. Si la grille est affichée dans le mode modifier
-, elle est également agrandie. Toutes les coordonnées affichées sont celles du
-Panneau sans grossissement. Un groupe spécial peut être sauvé alors qu'il est amplifié. </P>
+Quand un panneau est amplifi&#233;, toutes les fonctions standard fonctionnent, sauf pour les infobulles des
+ic&#244;nes. Les &#233;l&#233;ments peuvent &#234;tre ajout&#233;s, d&#233;plac&#233;s ou supprim&#233;s. Les menus contextuels sont disponibles. Aiguillages
+et Multi-capteurs se comportent comme ils le font &#224; l'&#233;chelle normale. Si la grille est affich&#233;e dans le mode modifier
+, elle est &#233;galement agrandie. Toutes les coordonn&#233;es affich&#233;es sont celles du
+Panneau sans grossissement. Un groupe sp&#233;cial peut &#234;tre sauv&#233; alors qu'il est amplifi&#233;. </P>
 <p>
-Quand un panneau est chargé, il vient toujours avec <b> Pas de Zoom </b> sélectionné. Puisque
-le zoom est temporaire, le facteur de zoom n'est pas conservé lorsque le panneau est sauvé. </p>
+Quand un panneau est charg&#233;, il vient toujours avec <b>Pas de Zoom</b> s&#233;lectionn&#233;. Puisque
+le zoom est temporaire, le facteur de zoom n'est pas conserv&#233; lorsque le panneau est sauv&#233;. </p>
 
- <a  name="Marqueurmenu"><h2> Utilisation du Menu Marqueur de l'Editeur de TCO</h2>
+ <a  name="Marqueurmenu"><h2> Utilisation du Menu Marqueur de l'&#201;diteur de R&#233;seau</h2>
 
-Le menu Marqueurs fournit les <b> Marqueurs </b> qui peuvent être utilisés pour garder une trace de
-la localisation des trains sur des panneaux de TCO. Les marqueurs sont de petites icônes colorées qui
-affichent une ID train, généralement le numéro de la locomotive. Lors de l'exécution des trains, un marqueur
-est créé pour chaque train, et ce marqueur est déplacé autour du panneau alors que le train
-traverse réseau. Cette fonctionnalité est particulièrement utile pour ceux qui n'ont pas
-du matériel de détection bloc, et ne peut donc pas utiliser le <b>Suivi de Train </b>
-caractéristique de l'Éditeur de TCO (voir ci-dessous <a href="#tracking"> </a>).</p>
+Le menu Marqueurs fournit les <b>Marqueurs</b> qui peuvent &#234;tre utilis&#233;s pour garder une trace de
+la localisation des trains sur des panneaux du R&#233;seau. Les marqueurs sont de petites ic&#244;nes color&#233;es qui
+affichent une ID train, g&#233;n&#233;ralement le num&#233;ro de la locomotive. Lors de l'ex&#233;cution des trains, un marqueur
+est cr&#233;&#233; pour chaque train, et ce marqueur est d&#233;plac&#233; autour du panneau alors que le train
+traverse le r&#233;seau. Cette fonctionnalit&#233; est particuli&#232;rement utile pour ceux qui n'ont pas
+du mat&#233;riel de d&#233;tection de canton, et ne peut donc pas utiliser le <b>Suivi de Train</b>
+caract&#233;ristique de l'&#201;diteur de R&#233;seau (voir ci-dessous <a href="#tracking"> </a>).</p>
 <p>
-Les marqueurs sont différents des autres articles sur les panneaux Éditeur de TCO. En ce que toutes les
-fonctions sont actives lorsque le panneau n'est pas en mode édition. Les marqueurs peuvent être créés,
-repositionnés, et retirés à tout moment. Le menu Marqueur et les menus contextuels des
-Marqueurs individuels sont toujours actifs. Des marqueurs qui sont présents sur un panneau sont
-sauvegardés sur le disque lorsque le panneau est sauvegardé sur le disque.
+Les marqueurs sont diff&#233;rents des autres articles sur les panneaux &#201;diteur de R&#233;seau. En ce que toutes les
+fonctions sont actives lorsque le panneau n'est pas en mode &#233;dition. Les marqueurs peuvent &#234;tre cr&#233;&#233;s,
+repositionn&#233;s, et retir&#233;s &#224; tout moment. Le menu Marqueur et les menus contextuels des
+Marqueurs individuels sont toujours actifs. Des marqueurs qui sont pr&#233;sents sur un panneau sont
+sauvegard&#233;s sur le disque lorsque le panneau est sauvegard&#233; sur le disque.
 </P>
 <ul> <p>
-<li> <b> Ajouter Loco ...</b> - La sélection de cet élément apporte une petite fenêtre qui
-permet à un marqueur d'être créée à partir d'une entrée ID Loco. L'icône Marquer n'est
-pas très grande, donc pas plus de 6 caractères doivent être saisis. Habituellement, le
-numéro de la locomotive est entré. Après avoir entré un ID Loco, cliquez sur OK, et 
-un nouveau marqueur blanc apparaît au centre de la fenêtre du panneau. Utilisez le
-menu contextuel marqueur pour changer sa couleur, etc Refermer cette fenêtre en cliquant sur
-l'icône de fermeture dans sa barre de titre. </li>
-<li> <b> Ajouter Loco partir de la Liste ...</b> - La sélection de cet élément apporte une petite
-fenêtre qui permet qu'un marqueur soit créé pour une locomotive dans la Liste JMRI
-. Pour utiliser cette option, la locomotive doit être dans la Liste JMRI avant que
-le panneau soit ouvert. Quand une locomotive est sélectionnée dans le menu liste, un
-marqueur pour cette locomotive apparaît immédiatement dans le centre du panneau.
-Si elle est présente dans l'entrée Liste, le "numéro de ligne» est utilisé comme l'ID Loco
-. Sinon, l'adresse DCC de la locomotive est utilisée. Utilisez le marqueur de la fenêtre du menu contextuel pour changer sa couleur, etc Pour les marqueurs créés à partir d'une entrée Liste,
-le menu contextuel du marqueur a un  élément <b>Régulateur</b>, qui peut être utilisé pour ouvrir un régulateur
-JMRI pour que cette locomotive. Refermer cette fenêtre en cliquant sur l'icône de fermeture
-dans sa barre de titre. </li><li> <b>Retirez les marqueurs </b> - La sélection de cet élément supprime <b>tous</b> les marqueurs 
- panneau TCO. Cet action ne peut pas être annulé. Remarque: Un seul
-marqueur peut être retiré en sélectionnant <b> Supprimer </b> dans son menu contextuel
+<li> <b>Ajouter Loco ...</b> - La s&#233;lection de cet &#233;l&#233;ment apporte une petite fen&#234;tre qui
+permet &#224; un marqueur d'&#234;tre cr&#233;&#233; &#224; partir d'une entr&#233;e ID Loco. L'ic&#244;ne Marqueur n'est
+pas tr&#232;s grande, donc pas plus de 6 caract&#232;res doivent &#234;tre saisis. Habituellement, le
+num&#233;ro de la locomotive est entr&#233;. Apr&#232;s avoir entr&#233; un ID Loco, cliquez sur OK, et 
+un nouveau marqueur blanc appara&#238;t au centre de la fen&#234;tre du panneau. Utilisez le
+menu contextuel marqueur pour changer sa couleur, etc. Refermer cette fen&#234;tre en cliquant sur
+l'ic&#244;ne de fermeture dans sa barre de titre. </li>
+
+<li> <b>Ajouter Loco partir de la Liste ...</b> - La s&#233;lection de cet &#233;l&#233;ment apporte une petite
+fen&#234;tre qui permet qu'un marqueur soit cr&#233;&#233; pour une locomotive dans la Liste JMRI
+. Pour utiliser cette option, la locomotive doit &#234;tre dans la Liste JMRI avant que
+le panneau soit ouvert. Quand une locomotive est s&#233;lectionn&#233;e dans le menu liste, un
+marqueur pour cette locomotive appara&#238;t imm&#233;diatement dans le centre du panneau.
+Si elle est pr&#233;sente dans l'entr&#233;e Liste, le "num&#233;ro de ligne" est utilis&#233; comme l'ID Loco
+. Sinon, l'adresse DCC de la locomotive est utilis&#233;e. Utilisez le marqueur de la fen&#234;tre du menu contextuel pour changer sa couleur, etc Pour les marqueurs cr&#233;&#233;s &#224; partir d'une entr&#233;e Liste,
+le menu contextuel du marqueur a un  &#233;l&#233;ment <b>R&#233;gulateur</b>, qui peut &#234;tre utilis&#233; pour ouvrir un r&#233;gulateur
+JMRI pour que cette locomotive. Refermer cette fen&#234;tre en cliquant sur l'ic&#244;ne de fermeture
+dans sa barre de titre. </li><li> <b>Retirez les marqueurs</b> - La s&#233;lection de cet &#233;l&#233;ment supprime <b>tous</b> les marqueurs du
+ panneau R&#233;seau. Cet action ne peut pas &#234;tre annul&#233;e. Remarque: Un seul
+marqueur peut &#234;tre retir&#233; en s&#233;lectionnant <b>Supprimer</b> dans son menu contextuel
 </ul></p>
 
 
-<a name="editing">  <h2>Éditer et Supprimer des Éléments</h2>
+<a name="editing">  <h2>&#201;diter et Supprimer des &#201;l&#233;ments</h2>
 
-Chaque élément sur un panneau comporte un menu déroulant. <b> Sauf pour les marqueurs, les menus contextuels sont seulement 
-actifs en mode édition. </b> Pour accéder au menu contextuel d'un objet à base d'icônes (,
- l'icône de signal, l'étiquette de texte, l'étiquette de la mémoire, multi - capteurs, horloge rapide,icône étiquette, un repère,
-enregistreur ou de fond): sur les systèmes Windows et Linux, faites un clic droit sur l'icône; sur les systèmes Macintosh
-, le contrôle - clic sur l'icône (maintenez la touche Ctrl enfoncée et cliquez avec le bouton de la souris
-n sur un point quelconque de l'icône).Les éléments dessinés sont similaires, sauf pour ceux que vous avez cliquez
-. Pour les aiguillages, croisements, ou des segments de voie, un Ctrl - clic ou clic - droit à
-l'intérieur du cercle au centre de l'élément. Pour les points d'ancrage ou de heurtoirs, le
-contrôle - clic ou clic - droit l'intérieur du carré indiquant le point de connexion. </p>
+Chaque &#233;l&#233;ment sur un panneau comporte un menu d&#233;roulant. <b>Sauf pour les marqueurs, les menus contextuels sont seulement 
+actifs en mode &#233;dition.</b> Pour acc&#233;der au menu contextuel d'un objet &#224; base d'ic&#244;nes (,
+ l'ic&#244;ne de signal, l'&#233;tiquette de texte, l'&#233;tiquette de la m&#233;moire, multi - capteurs, horloge rapide,ic&#244;ne &#233;tiquette, un rep&#232;re,
+enregistreur ou de fond): sur les syst&#232;mes Windows et Linux, faites un clic droit sur l'ic&#244;ne; sur les syst&#232;mes Macintosh
+, le contr&#244;le - clic sur l'ic&#244;ne (maintenez la touche Ctrl enfonc&#233;e et cliquez avec le bouton de la souris
+n sur un point quelconque de l'ic&#244;ne).Les &#233;l&#233;ments dessin&#233;s sont similaires, sauf pour ceux que vous avez cliquez
+. Pour les aiguillages, croisements, ou des segments de voie, un Ctrl - clic ou clic - droit &#224;
+l'int&#233;rieur du cercle au centre de l'&#233;l&#233;ment. Pour les points d'ancrage ou de heurtoirs, le
+contr&#244;le - clic ou clic - droit l'int&#233;rieur du carr&#233; indiquant le point de connexion. </p>
 <p>
-Pour supprimer un élément d'un panneau, sélectionnez <b> Supprimer </b> dans le menu contextuel de cet élément.
-Certains éléments afficheront une boîte de dialogue de vérification. La plupart des dialogues de vérification ont une option pour fermer les boîtes de dialogue de confirmation au cas où vous voudriez supprimer plusieurs éléments identiques. Quand un
-objet icône est "enlevé" à partir du panneau, son icône est supprimée, mais l'article lui-même
-(Tête de signal, capteur, variable en mémoire, etc) n'est pas supprimé. Si vous avez besoin de
-supprimer l'élément lui-même, le faire en utilisant la table correspondante (Table Signaux,Table Capteur
-, etc) <b> Remarque importante: Avant de supprimer un élément dans une table, assurez - vous
-que toutes les références à cet élément sont retirées des autres endroits. Aussi immédiatement
-après la suppression d'un élément, enregistrez votre panneau et redémarrer avant de faire autre chose! </b>
-S'il n'y a pas de bonne raison pour supprimer un élément, ou s'il existe une incertitude sur la suppression de toutes les références à un éléments , ne pas supprimer l'élément de sa table.
-Les éléments supplémentaires inutilisés dans une table ne dérange en rien, mais la suppression d'un élément référencé
-peut causer des ennuis. La suppression d'une icône à partir d'un panneau est sécuritaire, mais la suppression de l'élément
-que l'icône représente nécessite plus de prudence. </p>
+Pour supprimer un &#233;l&#233;ment d'un panneau, s&#233;lectionnez <b>Supprimer</b> dans le menu contextuel de cet &#233;l&#233;ment.
+Certains &#233;l&#233;ments afficheront une bo&#238;te de dialogue de v&#233;rification. La plupart des dialogues de v&#233;rification ont une option pour fermer les bo&#238;tes de dialogue de confirmation au cas o&#249; vous voudriez supprimer plusieurs &#233;l&#233;ments identiques. Quand un
+objet ic&#244;ne est "enlev&#233;" &#224; partir du panneau, son ic&#244;ne est supprim&#233;e, mais l'article lui-m&#234;me
+(t&#234;te de signalisation, capteur, variable en m&#233;moire, etc) n'est pas supprim&#233;. Si vous avez besoin de
+supprimer l'&#233;l&#233;ment lui-m&#234;me, le faire en utilisant le Tableau correspondant (Tableau Signaux,Tableau Capteur
+, etc) <b>Remarque importante: Avant de supprimer un &#233;l&#233;ment dans un tableau, assurez - vous
+que toutes les r&#233;f&#233;rences &#224; cet &#233;l&#233;ment sont retir&#233;es des autres endroits. Aussi imm&#233;diatement
+apr&#232;s la suppression d'un &#233;l&#233;ment, enregistrez votre panneau et red&#233;marrer avant de faire autre chose!</b>
+S'il n'y a pas de bonne raison pour supprimer un &#233;l&#233;ment, ou s'il existe une incertitude sur la suppression de toutes les r&#233;f&#233;rences &#224; un &#233;l&#233;ments, ne pas supprimer l'&#233;l&#233;ment de son tableau.
+Les &#233;l&#233;ments suppl&#233;mentaires inutilis&#233;s dans une table ne d&#233;range en rien, mais la suppression d'un &#233;l&#233;ment r&#233;f&#233;renc&#233;
+peut causer des ennuis. La suppression d'une ic&#244;ne &#224; partir d'un panneau est s&#233;curitaire, mais la suppression de l'&#233;l&#233;ment
+que l'ic&#244;ne repr&#233;sente n&#233;cessite plus de prudence. </p>
 <p>
-Certains menus contextuels permettent des informations relatives à l'élément à modifier directement
+Certains menus contextuels permettent des informations relatives &#224; l'&#233;l&#233;ment &#224; modifier directement
 dans le menu contextuel, par exemple, des options de taille de  police, le style et la couleur du texte
-les étiquettes et les étiquettes de texte mémoire . Le menu contextuel permet d'arrêter l'horloge rapide et son redémarrage et de changer son rapport d'accélération. Basée sur des icônes des menus contextuels montrent l'emplacement de l'icône sur le
-panneau <i> x </i> (horizontal) et<i>  y</i> (vertical) . Ces coordonnées donnent l'emplacement du coin supérieur gauche de l'icône.
-Une façon pratique de changer l'emplacement d'un élément à base d'icônes est de sélectionner
-<b> Définir X & Y </b> dans son menu contextuel. Sélectionner  <b>Définir x & y</b> fait apparaître une petite
-fenêtre qui donne un réglage précis de la position de l'icône. </p>
+les &#233;tiquettes et les &#233;tiquettes de texte m&#233;moire . Le menu contextuel permet l'arr&#234;t de l'horloge rapide et son red&#233;marrage et de changer son rapport d'acc&#233;l&#233;ration. Les ic&#244;nes bas&#233;e sur les menus contextuels montrent l'emplacement de l'ic&#244;ne sur le
+panneau <i> x </i> (horizontal) et<i>  y</i> (vertical) . Ces coordonn&#233;es donnent l'emplacement du coin sup&#233;rieur gauche de l'ic&#244;ne.
+Une fa&#231;on pratique de changer l'emplacement d'un &#233;l&#233;ment &#224; base d'ic&#244;nes est de s&#233;lectionner
+<b>D&#233;finir X & Y</b> dans son menu contextuel. S&#233;lectionner <b>D&#233;finir x & y</b> fait appara&#238;tre une petite
+fen&#234;tre qui donne un r&#233;glage pr&#233;cis de la position de l'ic&#244;ne. </p>
 <p>
-Avec les aiguillages, croisements, et les segments de voie, la sélection
-<b> Modifier ...</b> dans le menu contextuel affiche une petite fenêtre pour l'édition. Si un
-aiguillage n'a pas de connexions, un élément<b>rotation</b> apparaît dans son menu contextuel,
-permettant à l'aiguillage d'être tourné à n'importe quel angle. Plus d'informations sur les boites de dialogue édition
+Avec les aiguillages, croisements, et les segments de voie, la s&#233;lection
+<b>Modifier ...</b> dans le menu contextuel affiche une petite fen&#234;tre pour l'&#233;dition. Si un
+aiguillage n'a pas de connexions, un &#233;l&#233;ment<b>rotation</b> appara&#238;t dans son menu contextuel,
+permettant &#224; l'aiguillage d'&#234;tre tourn&#233; &#224; n'importe quel angle. Plus d'informations sur les boites de dialogue &#233;dition
  des aiguillages, croisements, et les segments de voie est contenue ci-dessous dans
-la discussion sur ces éléments, et dans la page d'aide de chaque boîte de dialogue d'édition. </p>
+la discussion sur ces &#233;l&#233;ments, et dans la page d'aide de chaque bo&#238;te de dialogue d'&#233;dition. </p>
 <p>
-Un menu contextuel icône de signal permet d'éditer des informations sur le signal lié au TCO, mais il contient aussi un article <b> Modifier Logique...</b> qui ouvre une fenêtre pour éditer une logique
-simple signal  pour la tête de signal (pour plus d'informations sur la
-Logique simple signal, consultez l'aide de cette fenêtre). La Logique simple signal soutient 
-la signalisation ABS, et se chargera de la plupart de vos besoins de logique signal . Reportez-vous à Logix pour
-une logique plus complexe nécessaire qui n'est pas manipulé par de simples logiques signal. </p
+Un menu contextuel ic&#244;ne de signal permet d'&#233;diter des informations sur le signal li&#233; au R&#233;seau, mais il contient aussi une rubrique <b>Modifier Logique...</b> qui ouvre une fen&#234;tre pour &#233;diter une logique
+simple signal  pour la t&#234;te de signalisation (pour plus d'informations sur la
+Logique simple signal, consultez l'aide de cette fen&#234;tre). La Logique simple signal soutient 
+la signalisation ABS*, et se chargera de la plupart de vos besoins de logique signal . Reportez-vous &#224; Logix pour
+une logique plus complexe n&#233;cessaire qui n'est pas manipul&#233;e par de logiques simples signal. </p
 <p>
-Avec les aiguillages, croisements, et les points d'ancrage, la plupart des outils de l'Éditeur de TCO
-pour l'attribution des têtes de signal à ces éléments, pour le placement automatique des icônes tête de signal sur le panneau, et pour la création automatisée de la logique du signal pour
-les têtes de signal affectées peut être atteint en sélectionnant le menu contextuel <b>Définir Signaux...</b>
-. <b> Définir Signaux ...</b> n'est pas affiché dans le menu contextuel jusqu'à ce qu'un
-minimum d'informations soit disponible pour les outils. Le reste des outils <b>Définir Signaux ...</b>s peut être accessible via le menu Outils. Ces outils sont brièvement
-décrit ci-dessous <a ref="#toolsmenu">  Utilisation du menu Outils de l'Éditeur de TCO </a>,
-et sont discutés en détail sur la page d'aide de la fenêtre de dialogue de l'outil. </p>
+Avec les aiguillages, croisements, et les points d'ancrage, la plupart des outils de l'&#201;diteur de R&#233;seau
+pour l'attribution des t&#234;tes de signalisation &#224; ces &#233;l&#233;ments, pour le placement automatique des ic&#244;nes t&#234;te de signalisation sur le panneau, et pour la cr&#233;ation automatis&#233;e de la logique du signal pour
+les t&#234;tes de signalisation affect&#233;es peuvent &#234;tre affich&#233;s dans le menu contextuel jusqu'&#224; ce qu'un
+minimum d'informations soit disponible pour les outils. Le reste des outils <b>D&#233;finir Signaux ...</b>speut &#234;tre accessible via le menu Outils. Ces outils sont bri&#232;vement
+d&#233;crit ci-dessous <a ref="#toolsmenu">  Utilisation du menu Outils de l'&#201;diteur de R&#233;seau </a>,
+et sont discut&#233;s en d&#233;tail sur la page d'aide de la fen&#234;tre de dialogue de l'outil. </p>
 
-<a name="turnouts"> <H2> Aiguillages </H2>
+<a name="turnouts"> <H2>Aiguillages</H2>
 
-L'Éditeur de TCO prend en charge six types différents d'appareils de voie (aiguillages): droit
- (<b> D </b>), gauche  <b>G </b>), Symétrique (<b> Y </b>), Bretelle Double
- ( <b> Bret 2  </b>), Bretelle Droite (<b> Bret D </b>).
-et Bretelle Gauche (<b> Bret G </b>). 
-Les deux autres types d'appareils de voie, parfois utilisé dans des modèles de trains miniatures, jonction double
+L'&#201;diteur de R&#233;seau prend en charge six types diff&#233;rents d'appareils de voie (aiguillages): 
+ (<b>D</b>), <b>G</b>), Sym&#233;trique (<b>Y</b>), 
+ ( <b>Bretelle Double </b>),  (<b>Bretelle Droite</b>).
+et  (<b>Bretelle Gauche</b>). 
+Les deux autres types d'appareils de voie, parfois utilis&#233; dans des mod&#232;les de trains miniatures, jonction double
 et aiguillage triple, on peut les obtenir en utilisant deux aiguillages G ou D .Une jonction double,
-par exemple, est facilement représentés par deux aiguillages G et/ou  D  avec leurs
-pointes reliée par un segment de voie courte. Une fois qu'un aiguillage a été créé, son
-type ne peut pas être changé. Changer le type d'un aiguillage nécessite de le retirer et de le
-recréant l'aiguillage. Le dessin des pièces d'un aiguillage peut être allongé, raccourcie ou
-repositionné en faisant glisser les points de connexion avec la Bouton droit de la souris, et
-l'aiguillage entier peut être repositionné en faisant glisser le cercle du centre avec la
-même touche de la souris (en Linux). </P>
+par exemple, est facilement repr&#233;sent&#233;s par deux aiguillages G et/ou  D avec leurs
+pointes reli&#233;es par un segment de voie courte. Une fois qu'un aiguillage a &#233;t&#233; cr&#233;&#233;, son
+type ne peut pas &#234;tre chang&#233;. Changer le type d'un aiguillage n&#233;cessite de retirer et de
+recr&#233;er l'aiguillage. Le dessin des pi&#232;ces d'un aiguillage peut &#234;tre allong&#233;, raccourcie ou
+repositionn&#233; en faisant glisser les points de connexion avec la Bouton droit de la souris, et
+l'aiguillage entier peut &#234;tre repositionn&#233; en faisant glisser le cercle du centre avec la
+m&#234;me touche de la souris (en Linux). </P>
 <P>
-Lorsque de nouveaux aiguillages (et croisements) sont créés, l'Éditeur de TCO utilise par défaut les
-déplacements depuis le centre du nouvel l'aiguillage pour redimensionner le nouveau dessin des aiguillage.
-L'Éditeur de TCO dispose de deux ensembles de déplacements par défaut, une pour pour les aiguillages réguliers
- (<b> D </b>, <b> G </b>, <b> Y </b>) et une pour les bretelles (
-<b>  Bret 2</b>, <b> Bret D </b>, <b> Bret  G </b>). Ces paramètres de taille par défaut
- peuvent être changés si une taille par défaut différente est nécessaire. Créez d'abord un
-nouvel aiguillage (ou sélectionnez un aiguillage existants) et redimensionner en faisant glisser ses points de connexion
-. Ensuite, sélectionnez <b> Utiliser la Taille Comme par Défaut </b> dans le menu contextuel de l'aiguillage. Ceci
-va changer les paramètres de taille par défaut de sorte que l'aiguillage suivant et ultérieures à
-ajoutée seront de la même taille que l'aiguillage redimensionné. Chaque <b>Taille Utilisez Comme par défaut </b>
-change l'un des deux ensembles de paramètres de taille par défaut. Les deux ensembles de paramètres de taille par défaut
- sont enregistrés lorsque le panneau est sauvé. Pour revenir à la taille des aiguillages par défaut de l'Éditeur de TCO, sélectionner <b>'Utilisation Taille par Défaut des Aiguillages du Programme</b> dans le menu Outils. </P>
+Lorsque de nouveaux aiguillages (et croisements) sont cr&#233;&#233;s, l'&#201;diteur de R&#233;seau utilise par d&#233;faut les
+d&#233;placements depuis le centre du nouvel aiguillage pour redimensionner le nouveau dessin des aiguillage.
+L'&#201;diteur de R&#233;seau dispose de deux ensembles de d&#233;placements par d&#233;faut, une pour pour les aiguillages r&#233;guliers
+ (<b>D</b>, <b>G</b>, <b>Y</b>) et une pour les bretelles (
+<b>Bretelle Double</b>, <b>Bretelle Droite</b>, <b>Bretelle Gauche</b>). Ces param&#232;tres de taille par d&#233;faut
+ peuvent &#234;tre chang&#233;s si une taille par d&#233;faut diff&#233;rente est n&#233;cessaire. Cr&#233;ez d'abord un
+nouvel aiguillage (ou s&#233;lectionnez un aiguillage existants) et redimensionner en faisant glisser ses points de connexion
+. Ensuite, s&#233;lectionnez <b>Utiliser la Taille Comme par D&#233;faut</b> dans le menu contextuel de l'aiguillage. Ceci
+va changer les param&#232;tres de taille par d&#233;faut de sorte que les aiguillages suivant &#224;
+ajout&#233;e seront de la m&#234;me taille que l'aiguillage redimensionn&#233;. Chaque <b>Taille Utilisez Comme par d&#233;faut</b>
+change l'un des deux ensembles de param&#232;tres de taille par d&#233;faut. Les deux ensembles de param&#232;tres de taille par d&#233;faut
+ sont enregistr&#233;s lorsque le panneau est sauv&#233;. Pour revenir &#224; la taille des aiguillages par d&#233;faut de l'&#201;diteur de R&#233;seau, s&#233;lectionner <b>'Utilisation Taille par D&#233;faut des Aiguillages du Programme</b> dans le menu Outils. </P>
 <P>
-Les dessins d'aiguillages dans un schéma de voies sont dessinés en utilisant les lignes solides pour les deux voies
-directe et déviée  jusqu'à ce que les dessins de l'aiguillage sont liées à un
-aiguillage dans la Table Aiguillage. Une fois lié à aiguillages réel, les dessins de l'aiguillage
- montrent les «états connus" des aiguillages qu'ils représentent. Après la liaison,
-vous pouvez basculer chaque aiguillage de votre TCO en cliquant sur le point central de son
-dessin (à condition que <b> Autoriser Contrôle de la Position </b> est cochée dans le
-Menu Options, et votre système DCC supporte le contrôle informatique des aiguillages). La
-capacité de basculer en cliquant peut être désactivé en cochant <b> Désactivé </b> dans
+Les dessins d'aiguillages dans un sch&#233;ma de voies sont dessin&#233;s en utilisant les lignes solides pour les deux voies
+directe et d&#233;vi&#233;e jusqu'&#224; ce que les dessins de l'aiguillage sont li&#233;es &#224; un
+aiguillage dans le Tableau Aiguillage. Une fois li&#233; &#224; aiguillages r&#233;el, les dessins de l'aiguillage
+ montrent les "&#233;tats connus" des aiguillages qu'ils repr&#233;sentent. Apr&#232;s la liaison,
+vous pouvez basculer chaque aiguillage de votre R&#233;seau en cliquant sur le point central de son
+dessin (&#224; condition que <b>Autoriser Contr&#244;le de la Position</b> soitt coch&#233;e dans le
+Menu Options, et votre syst&#232;me DCC supporte le contr&#244;le informatique des aiguillages). La
+capacit&#233; de basculer en cliquant peut &#234;tre d&#233;sactiv&#233; en cochant <b>D&#233;sactiv&#233;</b> dans le
 menu contextuel de l'aiguillage . </P>
 <P>
-Vous pouvez lier chaque dessin d'aiguillage avec une aiguillage réelle (interne ou matériel) dans
-la Table Aiguillage quand les dessins sont créés, en entrant son  
-Nom de la Table Aiguillage(nom système soit ou nom utilisateur) dans  <b>Aiguillage: Nom </b>
-(Rangée du haut de la barre d'outils) avant de cliquer pour créer cet aiguillage. Alternativement,
-vous pouvez créer d'abord vos dessins aiguillage , puis sélectionnez  <b>Modifier ...</b> dans chaque
-menu contextuel d'aiguillage à l'ouverture d'un  dialogue aiguillage <b> Modifier </b>  qui permet la saisie du
- nom de l'aiguillage. Une fois que le nom d'un aiguillage réel est entré,
-l'aiguillage réel peut être basculé en cliquant avec la souris au centre de l'aiguillage. 
-Basculer l'aiguillage peut être désactivé en cochant <b> désactivé </b> dans le menu contextuel de l'aiguillage
+Vous pouvez lier chaque dessin d'aiguillage avec une aiguillage r&#233;elle (interne ou mat&#233;riel) dans
+le Tableau Aiguillage quand les dessins sont cr&#233;&#233;s, en entrant son  
+Nom du Tableau Aiguillage (nom syst&#232;me ou nom utilisateur) dans <b>Aiguillage: Nom</b>
+(Rang&#233;e du haut de la barre d'outils) avant de cliquer pour cr&#233;er cet aiguillage. Alternativement,
+vous pouvez cr&#233;er d'abord vos dessins aiguillage, puis s&#233;lectionnez <b>Modifier ...</b> dans chaque
+menu contextuel d'aiguillage &#224; l'ouverture d'un  dialogue aiguillage <b>Modifier</b>  qui permet la saisie du
+ nom de l'aiguillage. Une fois que le nom d'un aiguillage r&#233;el est entr&#233;,
+l'aiguillage r&#233;el peut &#234;tre bascul&#233; en cliquant avec la souris au centre de l'aiguillage. 
+Basculer l'aiguillage peut &#234;tre d&#233;sactiv&#233; en cochant <b>d&#233;sactiv&#233;</b> dans le menu contextuel de l'aiguillage
 . </P>
 <P>
-En option, vous pouvez désigner dans quel <b>Canton </b> un aiguillage se trouve en 
-entrant un nom de canton dans le champs <b>canton: Nom </b> de la barre d'outil avant
-la création de chaque dessin d'aiguillage, ou en entrant un nom de canton dans la fenêtre de dialogue Édition Aiguillage 
- à un moment ultérieur. La boîte de dialogue Modifier Aiguillage permet d'accéder également à une boîte de dialogue Modifier Canton
-, où l'information du canton pour l'aiguillage peut être entré ou
-changé. (les cantons sont discutés plus en détail ci-dessous.) </P>
+En option, vous pouvez d&#233;signer dans quel <b>Canton</b> un aiguillage se trouve en 
+entrant un nom de canton dans le champs <b>canton: Nom</b> de la barre d'outil avant
+la cr&#233;ation de chaque dessin d'aiguillage, ou en entrant un nom de canton dans la fen&#234;tre de dialogue &#201;dition Aiguillage 
+ &#224; un moment ult&#233;rieur. La bo&#238;te de dialogue Modifier Aiguillage permet d'acc&#233;der &#233;galement &#224; une bo&#238;te de dialogue Modifier Canton
+, o&#249; l'information du canton pour l'aiguillage peut &#234;tre entr&#233; ou
+chang&#233;. (les cantons sont discut&#233;s plus en d&#233;tail ci-dessous.) </P>
 <p>
-Quand une voie secondaire se raccorde à une voie principale à un aiguillage D ou G, la
-Voie Principale continue normalement à travers l'aiguillage en suivant la voie directe
+Quand une voie secondaire se raccorde &#224; une voie principale &#224; un aiguillage D ou G, la
+Voie Principale continue normalement &#224; travers l'aiguillage en suivant la voie droite
  (le chemin direct). Parfois, cependant, la ligne principale suit la
-jambes divergente (le chemin déviés). Pour permettre l'entrée de cette information, la boite de dialogue Édition de l'aiguillage  contient une entrée appelée <b> État Aiguillage pour Continuation Itinéraire</b>.
-L'État de l'Aiguillage par Défaut pour Poursuivre l'Itinéraire est l'État Direct lorsqu'un dessin d'aiguillage est
-créé. Vous devriez le changer pour Dévié si la voie principale suit la voie déviée
- à travers l'aiguillage. Pour un aiguillage Triple, vous devriez toujours vérifier pour voir si
-l' État de l'aiguille pour Poursuivre son Itinéraire est correctement configuré pour refléter le chemin de la
-ligne principale. Pour tester si  l'État de l'aiguillage pour Suivre son Itinéraire est correctement réglé, vérifiez l'
-état de l'aiguillage dans la Table Aiguillage lorsque l'aiguillage  est fixé pour donner la
-voie principale. L'état de la Table Aiguillage doit correspondre à l'État de l'Aiguillage  pour Poursuivre l'Itinéraire choisit dans la boite de dialogue Éditer Aiguillage . Définir la voie principale est
-facultatif;. si vous n'avez pas défini de voie principale  ce point peut être ignoré </p>
+voie divergente (le chemin d&#233;vi&#233;). Pour permettre l'entr&#233;e de cette information, la boite de dialogue &#201;dition de l'aiguillage  contient une entr&#233;e appel&#233;e <b>&#201;tat Aiguillage pour Continuation Itin&#233;raire</b>.
+L'&#201;tat de l'Aiguillage par D&#233;faut pour Poursuivre l'Itin&#233;raire est l'&#201;tat Droit lorsqu'un dessin d'aiguillage est
+cr&#233;&#233;. Vous devriez le changer pour D&#233;vi&#233; si la voie principale suit la voie d&#233;vi&#233;e
+ &#224; travers l'aiguillage. Pour un aiguillage Triple, vous devriez toujours v&#233;rifier pour voir si
+l' &#201;tat de l'aiguille pour Poursuivre son Itin&#233;raire est correctement configur&#233; pour refl&#233;ter le chemin de la
+ligne principale. Pour tester si l'&#201;tat de l'aiguillage pour Suivre son Itin&#233;raire est correctement r&#233;gl&#233;, v&#233;rifiez l'
+&#233;tat de l'aiguillage dans le Tableau Aiguillage lorsque l'aiguillage est fix&#233; pour donner la
+voie principale. L'&#233;tat du Tableau Aiguillage doit correspondre &#224; l'&#201;tat de l'Aiguillage pour Poursuivre l'Itin&#233;raire choisit dans la boite de dialogue &#201;diter Aiguillage . D&#233;finir la voie principale est
+facultatif; si vous n'avez pas d&#233;fini de voie principale ce point peut &#234;tre ignor&#233; </p>
 <p>
-Les Bretelles diffèrent des aiguillages  de plusieurs façons importantes.
-Comme d'autres aiguillages, les bretelles  ont deux états - croisé et droit. Pour
-changer l'état d'une bretelle , cependant,cela nécessite que deux ou quatre aiguillages 
-changent simultanément . Ceci peut être accompli en utilisant un à quatre commutateurs
-. Normalement, une bretelle est affectée à une entrée simple d'aiguillage dans la 
-Table Aiguillage, mais il peut avoir y en plusieurs si ses moteurs sont contrôlés par 
-différents décodeurs stationnaires. (Vous pouvez utiliser deux Itinéraires JMRI contrôlés par le
-même aiguillage interne pour faire faire travailler les moteurs multiples ensemble. Dans ce
-cas, entrez l'aiguillage interne comme l'aiguillage lié au dessin de la bretelle.) Avec les bretelle, les voies de croisement sont toujours considérées comme des voie d'évitement , et de toute voie principale entrant dans l'aiguillage, quitte sur le
- mêmes axe que son entrée. Donc il n'y a pas de d'État d'Aiguillage pour Suivre l'Itinéraire à 
-entrée dans une boite de dialogue Édition Bretelle . </p>
+Les Bretelles diff&#232;rent des aiguillages de plusieurs fa&#231;ons importantes.
+Comme d'autres aiguillages, les bretelles ont deux &#233;tats - crois&#233; et droit. Pour
+changer l'&#233;tat d'une bretelle , cependant,cela n&#233;cessite que deux ou quatre aiguillages 
+changent simultan&#233;ment . Ceci peut &#234;tre accompli en utilisant un &#224; quatre commutateurs
+. Normalement, une bretelle est affect&#233;e &#224; une entr&#233;e simple d'aiguillage dans la 
+Table Aiguillage, mais il peut avoir y en plusieurs si ses moteurs sont contr&#244;l&#233;s par 
+diff&#233;rents d&#233;codeurs stationnaires. (Vous pouvez utiliser deux Itin&#233;raires JMRI contr&#244;l&#233;s par le
+m&#234;me aiguillage interne pour faire faire travailler les moteurs multiples ensemble. Dans ce
+cas, entrez l'aiguillage interne comme l'aiguillage li&#233; au dessin de la bretelle.) Avec les bretelle, les voies de croisement sont toujours consid&#233;r&#233;es comme des voie d'&#233;vitement , et de toute voie principale entrant dans l'aiguillage, quitte sur le
+ m&#234;mes axe que son entr&#233;e. Donc il n'y a pas de d'&#201;tat d'Aiguillage pour Suivre l'Itin&#233;raire &#224; 
+entr&#233;e dans une boite de dialogue &#201;dition Bretelle . </p>
 <p>
-Si vous définissez des cantons dans une liaison, noter que les bretelles 
-ont quatre points de connexion, dont chacun peut être connecté à un autre 
-canton. Ainsi les pièces d'une bretelle peuvent être dans un, deux, trois ou quatre cantons différents
-. La boîte de dialogue Modifier Aiguillage pour une bretelle permet l'entrée d'un maximum de
-quatre cantons, chacun lié à un des quatre points de connexion. Le premier canton
-entré doit être le <b>Canton: Nom </b> sur le terrain; ce canton est lié au point de connexion  gauche supérieure
-(si l'aiguillage n'a pas été tourné), et sert de
-canton par défaut pour la bretelle. Si pour les  <b>canton 2 </b>, <b> canton 3 </b>,
-ou  <b>canton 4 </b> les entrées sont vides, le canton par défaut est utilisé. les points de connexion des canton
- sont numérotés 1, 2, 3 et 4, partant du point de connexion en haut à gauche
+Si vous d&#233;finissez des cantons dans une liaison, noter que les bretelles 
+ont quatre points de connexion, dont chacun peut &#234;tre connect&#233; &#224; un autre 
+canton. Ainsi les pi&#232;ces d'une bretelle peuvent &#234;tre dans un, deux, trois ou quatre cantons diff&#233;rents
+. La bo&#238;te de dialogue Modifier Aiguillage pour une bretelle permet l'entr&#233;e d'un maximum de
+quatre cantons, chacun li&#233; &#224; un des quatre points de connexion. Le premier canton
+entr&#233; doit &#234;tre le <b>Canton: Nom</b> sur le terrain; ce canton est li&#233; au point de connexion gauche sup&#233;rieure
+(si l'aiguillage n'a pas &#233;t&#233; tourn&#233;), et sert de
+canton par d&#233;faut pour la bretelle. Si pour les <b>canton 2</b>, <b>canton 3</b>,
+ou <b>canton 4</b> les entr&#233;es sont vides, le canton par d&#233;faut est utilis&#233;. les points de connexion des canton
+ sont num&#233;rot&#233;s 1, 2, 3 et 4, partant du point de connexion en haut &#224; gauche
  dans le sens horaire. </p>
 
-<a name="track"> <h2> Tronçons de voie et Points de connexion</h2>
+<a name="track"> <h2> Tron&#231;ons de voie et Points de connexion</h2>
 
-Un <b>Segment de Voie </b> est un morceau de voie droite entre deux 
-points de connexion. Les points de raccordement sont dessinés comme des petits carrés rouges ou verts.
+Un <b>Segment de Voie</b> est un morceau de voie droite entre deux 
+points de connexion. Les points de raccordement sont dessin&#233;s comme des petits carr&#233;s rouges ou verts.
 Les points de connexion sont disponibles sur les aiguillages, les points d'ancrage, heurtoirs, et
 croisement. Chaque aiguillage a trois ou quatre points de connexion,
 chacun acceptant une connexion. Chaque point d'ancrage a un point de connexion qui
 peut accepter deux connexions. Un heurtoir est semblable, mais accepte une seule
 connexion. Les croisements ont quatre points de connexion, chacun acceptant une
 connexion. Le point de connexion qui peut accepter un segment de voie de raccordement est
-titrées en rouge. Quand un point de connexion a sa capacité de connexions remplie, sa couleur
- passe au vert. Lorsque tous les points de connexion sont verts, un schéma de voie est
-complet, avec toutes les connexions définies.</P>
+titr&#233;es en rouge. Quand un point de connexion a sa capacit&#233; de connexions remplie, sa couleur
+ passe au vert. Lorsque tous les points de connexion sont verts, un sch&#233;ma de voie est
+complet, avec toutes les connexions d&#233;finies.</P>
 <P>
-Les segments de voie sont normalement dessinés en traits pleins, mais vous pouvez décider qu'un
-segment de voie soit dessiné en <i>Pointillés</i> pour montrer les tunnels ou les voies traversant
-à différents niveaux. Vous pouvez demander une ligne pointillée pour un segment de voie en
-cochant <b>Pointillé</b> dans la barre d'outil avant que le segment de voie soit créé,
-ou vous pouvez changer un segment de voie en <b>Pointillés</b> dans la boite de dialogue Éditer Segment. (Des points d'ancrage peuvent être ajoutés pour obtenir que votre voie pointillée couvre la zone exacte souhaitée.) Vous pouvez aussi désigner un segment de voie
-<i> caché</i> donc il est affiché uniquement lorsque le mode édition est actif. 
-Les tronçons de voie <i> cachés</i> sont utiles pour suivre les diagrammes dessinés sur plusieurs niveau la fin d'un
-niveau se connecte au début du même niveau ou d'un autre. Pour faire un
-segment de voie caché, cochez <b> Masquer la Voie</b> dans la boîte de dialogue Éditer Segment de Voie.</P>
+Les segments de voie sont normalement dessin&#233;s en traits pleins, mais vous pouvez d&#233;cider qu'un
+segment de voie soit dessin&#233; en <i>Pointill&#233;s</i> pour montrer les tunnels ou les voies traversant
+&#224; diff&#233;rents niveaux. Vous pouvez demander une ligne pointill&#233;e pour un segment de voie en
+cochant <b>Pointill&#233;</b> dans la barre d'outil avant que le segment de voie soit cr&#233;&#233;,
+ou vous pouvez changer un segment de voie en <b>Pointill&#233;s</b> dans la boite de dialogue &#201;diter Segment. (Des points d'ancrage peuvent &#234;tre ajout&#233;s pour obtenir que votre voie pointill&#233;e couvre la zone exacte souhait&#233;e.) Vous pouvez aussi d&#233;signer un segment de voie
+<i>Cach&#233;</i> donc il est affich&#233; uniquement lorsque le mode &#233;dition est actif. 
+Les tron&#231;ons de voie <i>cach&#233;s</i> sont utiles pour suivre les diagrammes dessin&#233;s sur plusieurs niveau la fin d'un
+niveau se connecte au d&#233;but du m&#234;me niveau ou d'un autre. Pour faire un
+segment de voie cach&#233;, cochez <b>Masquer la Voie</b> dans la bo&#238;te de dialogue &#201;diter Segment de Voie.</P>
 <p>
-En option, les segments de voie sont utilisés pour désigner la <i>voie principale </i> ou la <i>voie d'évitement
-</i>. Les voies des aiguillages et des croisement sont déterminé pour la <i>ligne principale 
-</i> ou la <i>voie d'évitement</i> selon les désignations des segments de voie qui
-sont connectés. Voir la discussion sur les itinéraires continus dans la
+En option, les segments de voie sont utilis&#233;s pour d&#233;signer la <i>voie principale </i> ou la <i>voie d'&#233;vitement
+</i>. Les voies des aiguillages et des croisement sont d&#233;termin&#233; pour la <i>ligne principale 
+</i> ou la <i>voie d'&#233;vitement</i> selon les d&#233;signations des segments de voie qui
+sont connect&#233;s. Voir la discussion sur les itin&#233;raires continus dans la
 section ci-dessus sur les aiguillages pour des informations sur comment une ligne principale est suivie
-grâce à un aiguillage.</p>
+gr&#226;ce &#224; un aiguillage.</p>
 <p>
-Si <b> Voie Principale</b> est cochée dans la barre d'outils quand un
-segment de voie est créé, ce segment voie est désigné comme <i>voie principale</i>,
-sinon il est considéré comme <i>voie d'évitement </i>. Vous pouvez changer de ligne principale pour une
-une voie d'évitement, ou vice versa, dans la boite de dialogue Éditer Voie. La voie principale et la
-voie d'évitement peuvent être établies avec des lignes de différentes largeurs. La largeurs de voie pour chacune sont définies en utilisant l'élément <b>Définir Largeur ...</b>dans le menu Options.</p>
+Si <b>Voie Principale</b> est coch&#233;e dans la barre d'outils quand un
+segment de voie est cr&#233;&#233;, ce segment voie est d&#233;sign&#233; comme <i>voie principale</i>,
+sinon il est consid&#233;r&#233; comme <i>voie d'&#233;vitement </i>. Vous pouvez changer de ligne principale pour une
+une voie d'&#233;vitement, ou vice versa, dans la boite de dialogue &#201;diter Voie. La voie principale et la
+voie d'&#233;vitement peuvent &#234;tre &#233;tablies avec des lignes de diff&#233;rentes largeurs. La largeurs de voie pour chacune sont d&#233;finies en utilisant l'&#233;l&#233;ment <b>D&#233;finir Largeur ...</b>dans le menu Options.</p>
 <p>
-En option, vous pouvez désigner dans quel <b>canton</b> se trouve un segment de voie - soit par
+En option, vous pouvez d&#233;signer dans quel <b>canton</b> se trouve un segment de voie - soit par
 entrer un nom de canton dans le <b>Canton: Nom</b> de la barre d'outil avant
-la création de chaque segment de voie, ou en entrant un nom de canton dans la boite de dialogue Éditer Segment de Voie à un moment ultérieur. La boîte de dialogue Modifier Segment de Voie permet de demander également une boite de dialogue Créer/Modifier Canton , afin que l'information pour le canton du segment de voie puisse être
-entrée ou modifiée. (les cantons sont discutés plus en détail ci-dessous.)</P>
+la cr&#233;ation de chaque segment de voie, ou en entrant un nom de canton dans la boite de dialogue &#201;diter Segment de Voie &#224; un moment ult&#233;rieur. La bo&#238;te de dialogue Modifier Segment de Voie permet de demander &#233;galement une boite de dialogue Cr&#233;er/Modifier Canton , afin que l'information pour le canton du segment de voie puisse &#234;tre
+entr&#233;e ou modifi&#233;e. (les cantons sont discut&#233;s plus en d&#233;tail ci-dessous.)</P>
+
+Un <b>Connecteur</b> est utilis&#233; pour indiquer que la voie en cours se termine sur ce panneau
+et peut se poursuivre sur un autre. Le connecteur utilise les m&#234;mes &#233;tats rouge/vert d'un
+Point d'ancrage, avec un troisi&#232;me &#233;tat bleu qui signifie que le connecteur n'a pas &#233;t&#233;
+li&#233;e &#224; un segment de piste sur un panneau diff&#233;rent. Pour faire le lien, faites un clic droit sur ​​l'
+connecteur et s&#233;lectionnez "&#201;dition lien", la bo&#238;te de dialogue qui s'affiche sera remplie par
+une liste des panneaux de r&#233;seau disponibles, et les connecteurs de bord valides.
+Un connecteur de bord valide est d&#233;fini comme un qui n'est pas d&#233;j&#224; connect&#233;, est reli&#233; &#224; un segment
+de voie qui est configur&#233; avec un canton, qui n'est pas le m&#234;me que le canton reli&#233; &#224; un
+Segment de voie est r&#233;alis&#233; sous une forme (par exemple:le connecteur de bord devient une limite de canton). Et que les
+deux segments de voie vont dans la m&#234;me direction.
+<p>
 
 <a name="xing"><h2>Croisements</h2>
 
-Un croisement est une pièce particulière de la voie qui représente deux voies traversant
-au niveau du sol. Un croisement a quatre points de connexion, et deux voies, désigné 1 et 2. Quand un niveau de
-traversée est créée, la voie 1 est la voie horizontale, et la voie 2 est la 
+Un croisement est une pi&#232;ce particuli&#232;re de la voie qui repr&#233;sente deux voies traversant
+au niveau du sol. Un croisement a quatre points de connexion, et deux voies, d&#233;sign&#233; 1 et 2. Quand un croisement est cr&#233;&#233;e, la voie 1 est la voie horizontale, et la voie 2 est la 
 voie coupante. L'angle entre les deux voies, l'inclinaison de chaque voie, et le
-longueur de chaque voie peut être modifiée en faisant glisser les points de connexion avec la touche méta
-enfoncée. Le centre du croisement peut être positionné en faisant glisser le centre du
-cercle avec la touche Meta enfoncé (voir la barre d'aide pour ce qui est de la touche méta
-pour votre système d'exploitation)(Bouton - droit pour Linux).</p>
+longueur de chaque voie peut &#234;tre modifi&#233;e en faisant glisser les points de connexion avec la touche m&#233;ta
+enfonc&#233;e. Le centre du croisement peut &#234;tre positionn&#233; en faisant glisser le centre du
+cercle avec la touche Meta enfonc&#233; (voir la barre d'aide pour ce qui est de la touche m&#233;ta
+pour votre syst&#232;me d'exploitation)(Bouton - droit pour Linux).</p>
 <p>
-Optionnellement chaque voie sera soit <i>voie principale</i> ou <i>voie d'évitement</i>
-en fonction de la désignation en voie principale ou en  voie d'évitement  des segments de voie
-connectés à chaque voie. Aussi vous pouvez optionnellement assigner indépendamment chaque voie à 
-un canton différent. Si un nom de canton est entré dans <b>Canton: Nom</b>
-de la barre d'outils avant de créer un croisement, ce canton est attribué aux
- deux voies. Chaque voie peut être affectée à un autre canton dans la boite de dialogue Modifier Croisement
-. La boîte de dialogue Modifier Croisement permet également une boite de dialogue Créer/Modifier
-Canton  qui doit être demandée pour chacun des deux cantons, afin que l'information pour ces
-cantons puissent être incluses ou modifiées. Le canton (s) affecté à un croisement peut
-être différent du canton (s) de tronçons de voie reliés, dans ce cas, chaque
-croisement à un point de raccordement où les changements de canton sert de canton
-frontière. (les cantons sont discutés plus en détail ci-dessous.)</P>
+Optionnellement chaque voie sera soit <i>voie principale</i> ou <i>voie d'&#233;vitement</i>
+en fonction de la d&#233;signation en voie principale ou en voie d'&#233;vitement  des segments de voie
+connect&#233;s &#224; chaque voie. Aussi vous pouvez optionnellement assigner ind&#233;pendamment chaque voie &#224; 
+un canton diff&#233;rent. Si un nom de canton est entr&#233; dans <b>Canton: Nom</b>
+de la barre d'outils avant de cr&#233;er un croisement, ce canton est attribu&#233; aux
+ deux voies. Chaque voie peut &#234;tre affect&#233;e &#224; un autre canton dans la boite de dialogue Modifier Croisement
+. La bo&#238;te de dialogue Modifier Croisement permet &#233;galement une boite de dialogue Cr&#233;er/Modifier
+Canton  qui doit &#234;tre demand&#233;e pour chacun des deux cantons, afin que l'information pour ces
+cantons puissent &#234;tre incluses ou modifi&#233;es. Le canton (s) affect&#233; &#224; un croisement peut
+&#234;tre diff&#233;rent du canton (s) du tron&#231;on de voie reli&#233;, dans ce cas, chaque
+croisement &#224; un point de raccordement o&#249; les changements de canton sert de canton
+fronti&#232;re. (les cantons sont discut&#233;s plus en d&#233;tail ci-dessous.)</P>
 
 <a name="turn"> <h2>Pont Tournant</h2>
 
-Un pont tournant TCO est une représentation schématique d'un pont tournant sur le
-réseau.Un pont tournant est dessiné comme un cercle avec un nombre variable de connexions de voie
-, appelé <i> voies rayonnantes</i>. Chaque <i>voie rayonnantes </i> est dessinée
-comme une voie courte en talon rayonnant à partir du cercle du pont. Un segment de voie
-doit se connecter à chaque voie rayonnante. La plupart de ces segments de voies reliera
-une voie rayonnante à un heurtoir. La distance de chaque point de connexion de voie rayonnante
-à partir du cercle du pont est fixe, mais la direction de chaque voie rayonnante peut être 
-variée en faisant glisser son point de connexion autour du cercle du pont. Tout
-nombre de ponts peut être ajouté à un panneau, et chaque pont peut avoir
+Un pont tournant est une repr&#233;sentation sch&#233;matique d'un pont tournant sur le
+r&#233;seau. Un pont tournant est dessin&#233; comme un cercle avec un nombre variable de connexions de voie
+, appel&#233;es <i>voies rayonnantes</i>. Chaque <i>voie rayonnante</i> est dessin&#233;e
+comme une voie courte en talon rayonnant &#224; partir du cercle du pont. Un segment de voie
+doit se connecter &#224; chaque voie rayonnante. La plupart de ces segments de voies reliera
+une voie rayonnante &#224; un heurtoir. La distance de chaque point de connexion de voie rayonnante
+&#224; partir du cercle du pont est fixe, mais la direction de chaque voie rayonnante peut &#234;tre 
+vari&#233;e en faisant glisser son point de connexion autour du cercle du pont. Tout
+nombre de ponts peut &#234;tre ajout&#233; &#224; un panneau, et chaque pont peut avoir
 n'importe quel nombre de voies rayonnantes.</p>
 <p>
-Un pont est ajouté à un panneau en sélectionnant <b>Ajouter pont</b> dans le
-menu Option panneau. Les nouveaux ponts sont placés au centre du
-panneau, et devraient être déplacés au endroits souhaités en déplaçant son 
-point central avec la touche méta enfoncée (glisser bouton droit sur Windows et Linux). Quand un
-ponte est ajouté, il a quatre voies rayonnantes situées en haut, en bas, à gauche et
- à droite. Le Menu contextuel du pont dispose de deux éléments. Sélectionner
-<b> Modifier ...</b> fait apparaître une boîte de dialogue Modifier Pont, et en sélectionnant <b>Supprimer</b>
-supprime le pont et tous les segments voie qui lui sont connectés. Avant qu'un
-pont soit effectivement supprimé, le programme demande confirmation de cette
+Un pont est ajout&#233; &#224; un panneau en s&#233;lectionnant <b>Ajouter pont</b> dans le
+menu Option panneau. Les nouveaux ponts sont plac&#233;s au centre du
+panneau, et devraient &#234;tre d&#233;plac&#233;s au endroits souhait&#233;s en d&#233;pla&#231;ant son 
+point central avec la touche m&#233;ta enfonc&#233;e (glisser bouton droit sur Windows et Linux). Quand un
+pont est ajout&#233;, il a quatre voies rayonnantes situ&#233;es en haut, en bas, &#224; gauche et
+ &#224; droite. Le Menu contextuel du pont dispose de deux &#233;l&#233;ments. S&#233;lectionner
+<b>Modifier ...</b> fait appara&#238;tre une bo&#238;te de dialogue Modifier Pont, et en s&#233;lectionnant <b>Supprimer</b>
+supprime le pont et tous les segments voie qui lui sont connect&#233;s. Avant qu'un
+pont soit effectivement supprim&#233;, le programme demande confirmation de cette
 action.</p>
 <p>
-La boîte de dialogue Modifier Pont permet de modifier le rayon du cercle du pont, et prévoit l'ajout et la suppression de voies rayonnantes. Pour de plus amples
-informations sur la façon d'ajouter et de supprimer des voies rayonnantes, voir la page d'aide de la boite de dialogue Modifier Pont</p>
+La bo&#238;te de dialogue Modifier Pont permet de modifier le rayon du cercle du pont, et pr&#233;voit l'ajout et la suppression de voies rayonnantes. Pour de plus amples
+informations sur la fa&#231;on d'ajouter et de supprimer des voies rayonnantes, voir la page d'aide de la boite de dialogue Modifier Pont</p>
 
 <a name="background"><h2>Fonds </h2>
 
-Les images de fond ne sont pas requise pour les panneaux  TCO. Le support pour
-l'ajout d'un arrière-plan est fourni pour les panneaux qui nécessitent autre que le
-Editeur de fond par défaut à Disposition. Les images de fond peut être utilisé simplement pour le changement de
-la couleur de l'arrière-plan du TCO, ou pour des applications plus sophistiquées
-, telles que la mise en place d'un panneau de la CCT.</p>
+Les images de fond ne sont pas requises pour les panneaux  R&#233;seau. Le support pour
+l'ajout d'un arri&#232;re-plan est fourni pour les panneaux qui n&#233;cessitent autre que le fond par d&#233;faut &#224; disposition sur
+l'Editeur de fond. Les images de fond peut &#234;tre utilis&#233; simplement pour le changement de
+la couleur de l'arri&#232;re-plan du R&#233;seau, ou pour des applications plus sophistiqu&#233;es
+, telles que la mise en place d'un panneau de la CTC.</p>
 <p>
-Une image de fond peut être créée en utilisant un éditeur d'images à base de pixels pour
-créer l'image, et de l'enregistrer comme un fichier. gif format de fichier d'image. Vous pouvez créer une
-image de fond unique pour l'ensemble du panneau, ou créer des tranches verticales à
-utilisé dans un contexte multi - coupes (voir ci-dessous). Pour un fond multi - tranches,
-créer votre image tranche (s), puis ajouter les copies, l'une à droite de l'autre,
-jusqu'à ce que la superficie de l'aire désirée soit couverte.</P>
+Une image de fond peut &#234;tre cr&#233;&#233;e en utilisant un &#233;diteur d'images &#224; base de pixels pour
+cr&#233;er l'image, et de l'enregistrer comme un fichierau format d'image .gif. Vous pouvez cr&#233;er une
+image de fond unique pour l'ensemble du panneau, ou cr&#233;er des tranches verticales &#224;
+utilis&#233; dans un contexte multi - coupes (voir ci-dessous). Pour un fond multi - tranches,
+cr&#233;er votre image tranche (s), puis ajouter les copies, l'une &#224; droite de l'autre,
+jusqu'&#224; ce que la superficie de l'aire d&#233;sir&#233;e soit couverte.</P>
 <p>
-<b> Remarque importante: si vous créez votre propre fond d'images (ou d'icônes) ne les stockez pas
-eux avec les images JMRI prédéfinis où elles seront effacées lorsque vous mettrez à niveau
-JMRI. Au lieu de cela, créez un nouveau dossier appelé «ressources» dans votre  répertoire préférences JMRI
- (où votre fichier panneau est stocké), et ajouter vos images et les icônes pour
+<b>Remarque importante: si vous cr&#233;ez votre propre fond d'images (ou d'ic&#244;nes) ne les stockez pas
+avec les images JMRI pr&#233;d&#233;finis o&#249; elles seront effac&#233;es lorsque vous mettrez &#224; niveau
+JMRI. Au lieu de cela, cr&#233;ez un nouveau dossier appel&#233; "ressources" dans votre r&#233;pertoire pr&#233;f&#233;rences JMRI
+ (o&#249; votre fichier panneau est stock&#233;), et ajouter vos images et les ic&#244;nes pour
 ce dossier.</b></p>
 <p>
-Une image de fond est ajoutée à un panneau en sélectionnant l <b> Ajouter Image de fond...</b>
-dans le menu Option du panneau. La sélection <b> Ajouter Image de fond...</b> met en place un
-dialogue de sélection de fichier pour sélectionner le fichier contenant l'image de fond.
- L'Éditeur TCO fournit des images de fond multiples. La première image de fond
- est placé au  coin supérieur gauche à x = 0 et y = 0. La prochaine
-image de fond est placée en haut du panneau et à la droite de l'extrême droite
-image de fond existante. Ceci permet la mise en œuvre facile d'images de fond multi - coupes
- (voir ci-dessous). Le <i> x, y</i> emplacement du coin supérieur gauche
-de chaque image de fond est montré dans son menu contextuel. Cet emplacement peut être
-modifiée en sélectionnant Fixer <b> X & Y</b> dans le menu contextuel.</p>
+Une image de fond est ajout&#233;e &#224; un panneau en s&#233;lectionnant l <b>Ajouter Image de fond...</b>
+dans le menu Option du panneau. La s&#233;lection <b>Ajouter Image de fond...</b> met en place un
+dialogue de s&#233;lection de fichier pour s&#233;lectionner le fichier contenant l'image de fond.
+ L'&#201;diteur R&#233;seau fournit des images de fond multiples. La premi&#232;re image de fond
+ est plac&#233; au  coin sup&#233;rieur gauche &#224; x = 0 et y = 0. La prochaine
+image de fond est plac&#233;e en haut du panneau et &#224; la droite de l'image de fond existante &#224; l'extr&#234;me droite. Ceci permet la mise en &#339;uvre facile d'images de fond multi - coupes
+ (voir ci-dessous). Le <i>x, y</i> emplacement du coin sup&#233;rieur gauche
+de chaque image de fond est montr&#233; dans son menu contextuel. Cet emplacement peut &#234;tre
+modifi&#233;e en s&#233;lectionnant Fixer <b>X & Y</b> dans le menu contextuel.</p>
 <p>
-Pour les utilisateurs construisant un panneau classique américain & S, il existe deux séries d'images prédéfinies
-«Tranches» actuellement disponibles. Un ensemble est 718 pixels de haut, et le deuxième ensemble est
-900 pixels de haut. Choisissez l'ensemble qui correspond le mieux à votre écran. Ces «tranches» sont
-Situé à icônes/USS/background/. Les images de 900 pixels de haut inclus un «-9» dans
+Pour les utilisateurs construisant un panneau classique am&#233;ricain & S, il existe deux s&#233;ries d'images pr&#233;d&#233;finies
+"Tranches" actuellement disponibles. Un ensemblede 718 pixels de haut, et le deuxi&#232;me ensemble de
+900 pixels de haut. Choisissez l'ensemble qui correspond le mieux &#224; votre &#233;cran. Ces "tranches" sont
+Situ&#233; &#224; icons/USS/background/. Les images de 900 pixels de haut inclus un "-9" dans
 leurs noms. Les images bords gauche et droit ont chacun 12 pixels de large. Les principales
-«tranches» du panneau de 65 pixels de large. Ajouter d'abord l'image bord gauche, puis
-ajouter une tranche ou d'une vierge, y compris plaque d'interrupteur (s) pour chaque aiguillage sur votre
-panneau CCT, puis terminer en ajoutant l'image bord droit. Les avantages de la
-la construction de fond la CCT avec des tranches sont que 1) vous pouvez faire pratiquement tout
-Longueur de panneau CCT, et 2) les plaques seront précisément située automatiquement.</P>
+"tranches" du panneauont 65 pixels de large. Ajouter d'abord l'image bord gauche, puis
+ajouter une tranche ou une vierge, y compris plaque d'interrupteur (s) pour chaque aiguillage sur votre
+panneau CTC, puis terminer en ajoutant l'image bord droit. Les avantages de la
+la construction de fond CTC avec des tranches sont que 1) vous pouvez faire pratiquement tout
+Longueur de panneau CTC, et 2) les plaques seront pr&#233;cis&#233;ment positionn&#233;es automatiquement.</P>
 
 <a name="block"><h2>Cantons</h2>
 
-Les cantons sont des tronçons de voie dont l'occupation peut être suivi individuellement.
-Diviser la voie en cantons est facultative. Les cantons mis en place dans un schéma de voies
-correspondent normalement à des cantons physiques sur un modèle. L'Occupation du canton est indiqué
-par l'état d'un capteur <i>d'occupation</i>. Lorsque la voie d'un réseau est divisée
-en cantons, tous de les voie ne doivent pas appartenir à un canton. Par exemple la voie de triage,
-n'est normalement pas dans un canton, alors que la voie principale sera toujours divisée
+Les cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivi individuellement.
+Diviser la voie en cantons est facultative. Les cantons mis en place dans un sch&#233;ma de voies
+correspondent normalement &#224; des cantons physiques sur un r&#233;seau. L'Occupation du canton est indiqu&#233;e
+par l'&#233;tat d'un capteur <i>d'occupation</i>. Lorsque la voie d'un r&#233;seau est divis&#233;e
+en cantons, toutes les voie ne doivent pas appartenir &#224; un canton. Par exemple la voie de triage,
+n'est normalement pas dans un canton, alors que la voie principale sera toujours divis&#233;e
 en cantons. La principale utilisation des cantons est de faciliter la signalisation, mais les cantons peuvent
-être utilisés pour contrôler d'autres fonctions d'animation sur le réseau.</p>
+&#234;tre utilis&#233;s pour contr&#244;ler d'autres fonctions d'animation sur le r&#233;seau.</p>
 <p>
-Si un nom de canton est entré dans <b>Canton: Nom</b> de la barre d'outil avant
- l'ajout d'un aiguillage, croisement, ou un segment de voie, l'élément ajouté est attribué
-à ce canton, si un nom de capteur (le nom d système ou nom 'utilisateur) a été entré dans le
-<b> Capteur d'Occupation</b> dans le champs, ce capteur sera attribué à l'entrée du canton.
-Un aiguillage, le segment de voie, ou un croisement, peuvent également être affectés
-à un canton en entrant le nom de ce canton dans le dialogue d'édition accessible en
-sélectionnant <b>Modifier ...</b> dans cet élément du menu contextuel. Dans les deux cas, si un canton
-avec le nom entré n'existe pas, il est créé.</p>
+Si un nom de canton est entr&#233; dans <b>Canton: Nom</b> de la barre d'outil avant
+ l'ajout d'un aiguillage, croisement, ou un segment de voie, l'&#233;l&#233;ment ajout&#233; est attribu&#233;
+&#224; ce canton, si un nom de capteur (le nom d syst&#232;me ou nom 'utilisateur) a &#233;t&#233; entr&#233; dans le
+<b>Capteur d'Occupation</b> dans le champs, ce capteur sera attribu&#233; &#224; l'entr&#233;e du canton.
+Un aiguillage, le segment de voie, ou un croisement, peuvent &#233;galement &#234;tre affect&#233;s
+&#224; un canton en entrant le nom de ce canton dans le dialogue d'&#233;dition accessible en
+s&#233;lectionnant <b>Modifier ...</b> dans cet &#233;l&#233;ment du menu contextuel. Dans les deux cas, si un canton
+avec le nom entr&#233; n'existe pas, il est cr&#233;&#233;.</p>
 <p>
-Un nom de canton peut être n'importe quelle série de caractères alphabétiques ou numériques qui décrivent
-le canton, par exemple, "Red principal 2", "lac Siding", ou "Moose Block». Une fois qu'un
-canton est créé, son nom ne peut être changé; tenter de changer un canton de
-Nom va créer un nouveau canton ayant le nouveau nom. Après tous les éléments affectés à
-l'ancien canton seront modifiés pour le nouveau canton, le canton avec l'ancien nom sera automatiquement supprimé (voir ci-dessous).</p>
+Un nom de canton peut &#234;tre n'importe quelle s&#233;rie de caract&#232;res alphab&#233;tiques ou num&#233;riques qui d&#233;crivent
+le canton, par exemple, "Red principal 2", "lac Siding", ou "Moose Block". Une fois qu'un
+canton est cr&#233;&#233;, son nom ne peut &#234;tre chang&#233;; tenter de changer un canton de
+Nom va cr&#233;er un nouveau canton ayant le nouveau nom. Apr&#232;s tous les &#233;l&#233;ments affect&#233;s &#224;
+l'ancien canton seront modifi&#233;s pour le nouveau canton, le canton avec l'ancien nom sera automatiquement supprim&#233; (voir ci-dessous).</p>
 <p>
-L'aiguillage,  croisement, et segment de voie éditent des dialogues permettant d'accéder aux dialogue
-Créer/Modifier canton où les informations spécifiques à un canton peuvent être inscrites
-ou modifiées. Le champ <b>Capteur d'Occupation:</b> dans la boîte de dialogue Créer/Modifier canton
-indique le nom du capteur d'occupation actuellement affecté au canton, s'il y en  a un. Pour entrer ou changer le capteur d'occupation, entrez le nom (nom système ou
-nom utilisateur) d'un capteur dans la Table du Capteur dans le <b>capteur d'occupation:</b>.
-Un capteur peut être affecté en tant que capteur d'occupation d'un seul canton; tenter
-de faire autrement se traduira par un message d'erreur. Normalement, l'état d'un
-capteur d'occupation est "actif" quand un canton est occupé, si "Actif" est la valeur automatique par défaut pour les occupations
-. Cela peut être modifiée en sélectionnant «inactifs» dans
- <b>Valeur occupé:.</b> de la boîte de sélection</p>
+L'aiguillage,  croisement, et segment de voie &#233;ditent des dialogues permettant d'acc&#233;der aux dialogue
+Cr&#233;er/Modifier canton o&#249; les informations sp&#233;cifiques &#224; un canton peuvent &#234;tre inscrites
+ou modifi&#233;es. Le champ <b>Capteur d'Occupation:</b> dans la bo&#238;te de dialogue Cr&#233;er/Modifier canton
+indique le nom du capteur d'occupation actuellement affect&#233; au canton, s'il y en a un. Pour entrer ou changer le capteur d'occupation, entrez le nom (nom syst&#232;me ou
+nom utilisateur) d'un capteur dans le Tableau du Capteur dans le <b>capteur d'occupation:</b>.
+Un capteur peut &#234;tre affect&#233; en tant que capteur d'occupation d'un seul canton; tenter
+de faire autrement se traduira par un message d'erreur. Normalement, l'&#233;tat d'un
+capteur d'occupation est "actif" quand un canton est occup&#233;, si "Actif" est la valeur automatique par d&#233;faut pour les occupations
+. Cela peut &#234;tre modifi&#233;e en s&#233;lectionnant "inactifs" dans
+ <b>Valeur occup&#233;:.</b> de la bo&#238;te de s&#233;lection</p>
 <p>
-Les couleurs de voie des cantons sont utilisés au lieu de la couleur de la voie par défaut si une section de
-voie est dans un canton. Les éléments de voie dans un canton sont dessinées avec une voie différente
-des couleurs pour les états occupés et inoccupés, permettant à la voie dans un canton les
-changement de couleur quand un train entre et sort de ce canton. Pour définir les couleurs voie,
-sélectionner la couleur de la voie inoccupée dans la boîte de sélection <b>Couleur de Voie:</b> ,
-et sélectionnez la couleur de voie occupée dans la <b>Couleur de Voie Occupée:</b>
-boîte de sélection. Une autre couleur de la voie inoccupée est prévu pour des utilisations particulières.
-Par exemple,Le Dispatcher a une option pour utiliser la couleur de voie alternative inoccupée
-pour les cantons qui sont alloués, mais inoccupés. Réglez la couleur de la voie alternative inoccupée
- en utilisant la couleur de voie <b> alternative:</b>  dans la boîte de sélection. Quand la couleur voie est
-déterminée, l'Éditeur de TCO utilise la couleur de la voie occupée si un canton est occupé, puis
-si elle n'est pas occupée, va utiliser la couleur de voie alternative inoccupée si elle a été
-demandé, sinon il utilise la couleur de voie inoccupée.</p>
+Les couleurs de voie des cantons sont utilis&#233;s au lieu de la couleur de la voie par d&#233;faut si une section de
+voie est dans un canton. Les &#233;l&#233;ments de voie dans un canton sont dessin&#233;s avec des couleurs de voie diff&#233;rentes
+ pour les &#233;tats occup&#233;s et inoccup&#233;s, permettant &#224; la voie dans un canton les
+changement de couleur quand un train entre et sort de ce canton. Pour d&#233;finir les couleurs voie,
+s&#233;lectionner la couleur de la voie inoccup&#233;e dans la bo&#238;te de s&#233;lection <b>Couleur de Voie:</b> ,
+et s&#233;lectionnez la couleur de voie occup&#233;e dans la bo&#238;te de s&#233;lection <b>Couleur de Voie Occup&#233;e:</b>
+. Une autre couleur de la voie inoccup&#233;e est pr&#233;vu pour des utilisations particuli&#232;res.
+Par exemple,Le Dispatcheur a une option pour utiliser la couleur de voie alternative inoccup&#233;e
+pour les cantons qui sont allou&#233;s, mais inoccup&#233;s. R&#233;glez la couleur de la voie alternative inoccup&#233;e
+ en utilisant la couleur de voie <b>alternative:</b>  dans la bo&#238;te de s&#233;lection. Quand la couleur voie est
+d&#233;termin&#233;e, l'&#201;diteur de R&#233;seau utilise la couleur de la voie occup&#233;e si un canton est occup&#233;, puis
+si elle n'est pas occup&#233;e, va utiliser la couleur de voie alternative inoccup&#233;e si elle a &#233;t&#233;
+demand&#233;, sinon il utilise la couleur de voie inoccup&#233;e.</p>
 <p>
-Optionnellement une variable en mémoire peut être affectée à un canton en entrant son nom
-(Nom  système ou nom 'utilisateur) Nom de la <b>variable mémoire:</b>dans le champs. Ceci est utile lors de la mise en place de suivi des trains (voir ci-dessous<a href="#tracking"> 
-</a>). Assurez - vous que la variable mémoire est dans la Table Variable Mémoire avant
+Optionnellement une Variable M&#233;moire peut &#234;tre affect&#233;e &#224; un canton en entrant son nom
+(Nom  syst&#232;me ou nom utilisateur) dans le champs <b>Nom Variable M&#233;moire:</b>. Ceci est utile lors de la mise en place du suivi des trains (voir ci-dessous<a href="#tracking"> 
+</a>). Assurez - vous que la variable m&#233;moire est dans le Tableau Variable M&#233;moire avant
 de l'entrer ici.
 <p>
-Puisque les cantons sont des éléments sur le réseau physique, le même canton peut être utilisé dans
-plus d'un panneau. Par conséquent, l'information canton est sauvegardé dans portion spécifique non - panneau
- de l'information du réseau, lorsque les panneaux sont enregistrés dans un
+Puisque les cantons sont des &#233;l&#233;ments sur le r&#233;seau physique, le m&#234;me canton peut &#234;tre utilis&#233; dans
+plus d'un panneau. Par cons&#233;quent, l'information canton est sauvegard&#233; dans portion sp&#233;cifique non - panneau
+ de l'information du r&#233;seau, lorsque les panneaux sont enregistr&#233;s dans un
 fichier sur le disque. </p>
 <p>
-Les cantons sont automatiquement supprimés quand ils ne sont plus utilisés. L'Éditeur de TCO
-garde la trace du nombre d'éléments de piste (aiguillages, des segments de piste,
-et de croisement) qui sont affectés à un canton. Ce nombre est affiché dans
-l'option Créer/Modifier canton comme <b>Utilisez Compteur courant:</b>. Lorsque les panneaux sont enregistrés
-sur le disque, seuls les cantons avec une utilisation du compteur plus grande que zéro sont enregistrés.</p>
+Les cantons sont automatiquement supprim&#233;s quand ils ne sont plus utilis&#233;s. L'&#201;diteur de R&#233;seau
+garde la trace du nombre d'&#233;l&#233;ments de piste (aiguillages, des segments de piste,
+et de croisement) qui sont affect&#233;s &#224; un canton. Ce nombre est affich&#233; dans
+l'option Cr&#233;er/Modifier canton comme <b>Utilisez Compteur courant:</b>. Lorsque les panneaux sont enregistr&#233;s
+sur le disque, seuls les cantons avec une utilisation du compteur plus grande que z&#233;ro sont enregistr&#233;s.</p>
 
-<a name="tracking">  <h2>Cantons, Étiquettes Mémoire, et Suivi de Train</h2>
+<a name="tracking">  <h2>Cantons, &#201;tiquettes M&#233;moire, et Suivi de Train</h2>
 
- <b> Suivi de Train</b> est une technique d'animation qui nous permet d'afficher en
+Le <b>Suivi de Train</b> est une technique d'animation qui nous permet d'afficher en
 dynamique, quand  un train occupe un
-canton. Ainsi, pour un train, ou pour plusieurs trains circulant sur le réseau en même
-temps, nous pouvons montrer où chaque train est à un moment donné.Le <b>Suivi Train </b> utilise
-le logiciel canton JMRI. Chaque canton occupé a une <i> valeur</i>, qui est automatiquement
-passée de canton en canton quand un train se déplace de canton en canton.La <i>Valeur</i>  d'un canton
-est effacée lorsque le canton n'est plus occupé. Ainsi, la <i>valeur</i> suit le
-train autour du circuit. Le Réglage de la <i>valeur</i> pour un nom de train, passe le nom du train 
+canton. Ainsi, pour un train, ou pour plusieurs trains circulant sur le r&#233;seau en m&#234;me
+temps, nous pouvons montrer o&#249; chaque train est &#224; un moment donn&#233;.Le <b>Suivi Train</b> utilise
+le logiciel canton JMRI. Chaque canton occup&#233; a une <i> valeur</i>, qui est automatiquement
+pass&#233;e de canton en canton quand un train se d&#233;place de canton en canton.La <i>Valeur</i>  d'un canton
+est effac&#233;e lorsque le canton n'est plus occup&#233;. Ainsi, la <i>valeur</i> suit le
+train autour du circuit. Le R&#233;glage de la <i>valeur</i> pour un nom de train, passe le nom du train 
  de canton en canton.</p>
 <p>
-L'Éditeur de TCO dispose d'un outil intégré qui initialise automatiquement chaque canton,
-Création des chemins nécessaires et BeanSettings. Cette initialisation (déjà fait
-dans les scripts uniquement) est nécessaire pour permettre au logiciel de canton de suivre les trains.Puisque
-l'Éditeur de TCO capture la connectivité complète de son panneau, il a l'information
-nécessaire pour effectuer cette initialisation. L'initialisation d'un canton est
-effectuée automatiquement lorsque les cantons sont changés et quand un panneau de TCO
-est chargé. Puisque l'initialisation est automatique, les utilisateurs du TCO
-n'ont pas besoin d'être concernés par les chemins et paramètres des entités des cantons.</p>
+L'&#201;diteur de R&#233;seau dispose d'un outil int&#233;gr&#233; qui initialise automatiquement chaque canton, la Cr&#233;ation des chemins n&#233;cessaires et BeanSettings. Cette initialisation (d&#233;j&#224; fait
+dans les scripts uniquement) est n&#233;cessaire pour permettre au logiciel de canton de suivre les trains.Puisque
+l'&#201;diteur de R&#233;seau capture la connectivit&#233; compl&#232;te de son panneau, il a l'information
+n&#233;cessaire pour effectuer cette initialisation. L'initialisation d'un canton est
+effectu&#233;e automatiquement lorsque les cantons sont chang&#233;s et quand un panneau de R&#233;seau
+est charg&#233;. Puisque l'initialisation est automatique, les utilisateurs du R&#233;seau
+n'ont pas besoin d'&#234;tre concern&#233;s par les chemins et param&#232;tres des entit&#233;s des cantons.</p>
 <p>
-L'Éditeur de TCO permet à une Variable Mémoire d'être affectée à chaque canton. Lorsque la
-<b>valeur</b> d'un Canton changes,L'Éditeur de TCO automatiquement copie la nouvelle
-<i>valeur</i> du Canton dans sa Variable Mémoire (s'il en existe une).
-Ainsi, en utilisant une Étiquette Mémoire à proximité de chaque canton, le nom du train
-dans ce canton peut être affiché.</p>
+L'&#201;diteur de R&#233;seau permet &#224; une Variable M&#233;moire d'&#234;tre affect&#233;e &#224; chaque canton. Lorsque la
+<b>valeur</b> d'un Canton changes,L'&#201;diteur de R&#233;seau automatiquement copie la nouvelle
+<i>valeur</i> du Canton dans sa Variable M&#233;moire (s'il en existe une).
+Ainsi, en utilisant une &#201;tiquette M&#233;moire &#224; proximit&#233; de chaque canton, le nom du train
+dans ce canton peut &#234;tre affich&#233;.</p>
 <p>
-Cela peut paraître compliqué, mais c'est très facile à installer car Canton de JMRI
-et le logiciel Éditeur de TCO fait presque tout automatiquement. Il y a même des
+Cela peut para&#238;tre compliqu&#233;, mais c'est tr&#232;s facile &#224; installer car Canton de JMRI
+et le logiciel &#201;diteur de R&#233;seau fait presque tout automatiquement. Il y a m&#234;me des
 logiciels pour enregistrer automatiquement et restaurer les <i>valeurs</i> Canton entre les sessions.
 <p>
-Si votre panneau est bloqué et que chaque canton a un capteur matériel d'occupation , Régler le Suivi Train pour effectuer les opérations suivantes:
+Si votre panneau est bloqu&#233; et que chaque canton a un capteur mat&#233;riel d'occupation, R&#233;gler le Suivi Train pour effectuer les op&#233;rations suivantes:
 <p>
 <li>
-1. Créez une variable de mémoire dans la Table Variable Mémoire pour chaque canton.</Li>
-<li> 2. Modifier chaque canton, ajoutant son nom de variable de la mémoire ( <a href="#cantonk"> voir ci-dessus
+1. Cr&#233;ez une variable de m&#233;moire dans le Tableau Variable M&#233;moire pour chaque canton.</Li>
+<li> 2. Modifier chaque canton, ajoutant son nom de variable de la m&#233;moire ( <a href="#cantonk"> voir ci-dessus
 </a>).</Li>
-<li> 3. Placez une Étiquette Mémoire pour attribuer sa variable de mémoire  à proximité de chaque canton
+<li> 3. Placez une &#201;tiquette M&#233;moire pour attribuer sa variable de m&#233;moire &#224; proximit&#233; de chaque canton
 dans le panneau.</li>
-<li> 4. Ouvrez la Table Cantons, et entrez le nom de chaque train dans la colonne "Valeur"
- du canton qu'il occupe. <b> N'oubliez pas de cliquer quelque part en dehors de la
-zone d'entrée après avoir saisi un nom de train pour que Java lise ce qui a été
-entré.</b></li>
+<li> 4. Ouvrez le Tableau Cantons, et entrez le nom de chaque train dans la colonne "Valeur"
+ du canton qu'il occupe. <b>N'oubliez pas de cliquer quelque part en dehors de la
+zone d'entr&#233;e apr&#232;s avoir saisi un nom de train pour que Java lise ce qui a &#233;t&#233;
+entr&#233;.</b></li>
 </UL>
 <p>
-Remarque: Si le programme détecte qu'un bloc est inoccupée <i>avant</i>que la 
-<i> valeur </i> du canton soit passé
+Remarque: Si le programme d&#233;tecte qu'un canton est inoccup&#233; <i>avant</i>que la 
+<i>valeur</i> du canton soit pass&#233;
 sur le canton suivant, le nom de train sera perdu. Il est donc important d'avoir des
-roues et des voies propres, et d'avoir assez de voitures dans chaque train dans le tracé
-courant afin d'assurer que le bloc de détection ne perde pas l'information  avant que le train
-pénètre dans le bloc suivant.</p>
+roues et des voies propres, et d'avoir assez de voitures dans chaque train dans le trac&#233;
+courant afin d'assurer que le canton de d&#233;tection ne perde pas l'information avant que le train
+p&#233;n&#232;tre dans le bloc suivant.</p>
 
 <a name="tips"> <h2> Conseils </h2>
 
-En raison de la façon dont un panneau TCO est rafraîchi, le schéma  établi
-sera sur le dessus de toutes les icônes et les étiquettes. Il est possible d'avoir une étiquette ou une icône
-qui semblent être "sur le dessus d'une« section de  voie, comme cela est couramment fait dans l'éditeur de configuration.
-Pour créer une rupture dans le suivi visibls, sans rompre la connectivité, placer un
-Point d'ancrage à chaque extrémité de la rupture. Reliez ces points d'ancrage avec un
-segment de voie. Rendre le segment de voie de liaison invisible par l'édition et
-cocher <b> Masquer Voie </b>. Le segment de piste apparaîtra comme une ligne étroite 
-en mode édition, mais sera invisible lorsque le mode édition est désactivé. </ p>
+En raison de la fa&#231;on dont un panneau R&#233;seau est rafra&#238;chi, le sch&#233;ma  &#233;tabli
+sera sur le dessus de toutes les ic&#244;nes et les &#233;tiquettes. Il est possible d'avoir une &#233;tiquette ou une ic&#244;ne
+qui semblent &#234;tre "sur le dessus d'une" section de  voie, comme cela est couramment fait dans l'&#233;diteur de configuration.
+Pour cr&#233;er une rupture dans le suivi visible, sans rompre la connectivit&#233;, placer un
+Point d'ancrage &#224; chaque extr&#233;mit&#233; de la rupture. Reliez ces points d'ancrage avec un
+segment de voie. Rendre le segment de voie de liaison invisible par l'&#233;dition et
+cocher <b>Masquer Voie</b>. Le segment de voie appara&#238;tra comme une ligne &#233;troite 
+en mode &#233;dition, mais sera invisible lorsque le mode &#233;dition est d&#233;sactiv&#233;.</p>
 <p>
-Rappelez - vous que "les noms système" des éléments (aiguillages, les capteurs, les têtes de signal, etc) ne peuvent
-pas être modifiés, mais que «les noms utilisateur" peuvent être changé. S'il y a une chance que
-Vous puissiez modifier le nom utilisateur d'un article, utilisez son nom du système lors de la saisie
-du nom de l'élément. Si vous utilisez le nom d'utilisateur, puis modifier le nom d'utilisateur, tous les
-affectations utilisant l'ancien nom d'utilisateur seront inutilisables, jusqu'à ce que vous modifiez toutes les occurrences de l'ancien nom par le nouveau nom.
-Comme les panneaux Éditeur de TCO sont entièrement à base d'icône, leur schéma de voie a la 
-possibilité d'être regarder d'une manière plus prototypiques.L'	Éditeur de TCO ont plus de possibilités d'animation  et des outils automatisés pour la mise en place des signaux, le suivi des trains, etc. 
-Si vous souhaitez deux mondes, envisager à la fois la construction d'Éditeur de Panneau et de panneaux TCO pour votre réseau. Vous pouvez facilement passer de l'un à l'autre par le menu <b>Panneaux</b>. Puisque que les deux types de panneaux partagent les mêmes éléments de configuration s 
-(Aiguillages,Capteurs Variable Mémoire, Têtes de Signal, etc.), Ce qui est fait dans un panneau est réfléchi dans l'autre si les mêmes articles sont affichés. Après qu'ils aient étés chargés, les panneaux continuent à fonctionner, qu'ils soient affichés ou non. Ils ont juste besoin d'être présent dans le sous - menu <b>Affichcher Panneau</b> Ainsi, par exemple, si vous installé un Panneau TCO pour le suivi des trains comme vue plus haut, Vous pouvez suivre les trains dans un panneau compagnon Editeur de Panneau juste en ajoutant des Étiquettes Mémoires.</p>
+Rappelez - vous que "les noms syst&#232;me" des &#233;l&#233;ments (aiguillages, les capteurs, les t&#234;tes de signalisation, etc) ne peuvent
+pas &#234;tre modifi&#233;s, mais que "les noms utilisateur" peuvent &#234;tre chang&#233;. S'il y a une chance que
+Vous puissiez modifier le nom utilisateur d'un article, utilisez son nom syst&#232;me lors de la saisie
+du nom de l'&#233;l&#233;ment. Si vous utilisez le nom d'utilisateur, puis modifier le nom d'utilisateur, tous les
+affectations utilisant l'ancien nom d'utilisateur seront inutilisables, jusqu'&#224; ce que vous modifiez toutes les occurrences de l'ancien nom par le nouveau nom.
+Comme les panneaux &#201;diteur de R&#233;seau sont enti&#232;rement &#224; base d'ic&#244;ne, leur sch&#233;ma de voie a la 
+possibilit&#233; d'&#234;tre regarder d'une mani&#232;re plus prototypiques.L'	&#201;diteur de R&#233;seau ont plus de possibilit&#233;s d'animation  et des outils automatis&#233;s pour la mise en place des signaux, le suivi des trains, etc. 
+Si vous souhaitez deux mondes, envisager &#224; la fois la construction d'&#201;diteur de Panneau et de panneaux R&#233;seau pour votre r&#233;seau. Vous pouvez facilement passer de l'un &#224; l'autre par le menu <b>Panneaux</b>. Puisque que les deux types de panneaux partagent les m&#234;mes &#233;l&#233;ments de configuration  
+(Aiguillages,Capteurs Variable M&#233;moire, t&#234;tes de signalisation, etc.), Ce qui est fait dans un panneau est r&#233;fl&#233;chi dans l'autre si les m&#234;mes articles sont affich&#233;s. Apr&#232;s qu'ils aient &#233;t&#233;s charg&#233;s, les panneaux continuent &#224; fonctionner, qu'ils soient affich&#233;s ou non. Ils ont juste besoin d'&#234;tre pr&#233;sent dans le sous - menu <b>Affichcher Panneau</b> Ainsi, par exemple, si vous install&#233; un Panneau R&#233;seau pour le suivi des trains comme vue plus haut, Vous pouvez suivre les trains dans un panneau compagnon Editeur de Panneau juste en ajoutant des &#201;tiquettes M&#233;moires.</p>
 
-<a name="finish"> <h2>  Mettre la Touche Finale à votre Panneau </h2>
+<a name="finish"> <h2>  Mettre la Touche Finale &#224; votre Panneau </h2>
 
-Ci-dessous est une version améliorée du panneau simple ovale construit avec <b> Débuter avec Éditeur de TCO </b>. Les étapes générales nécessaires pour obtenir depuis le panneau de départ  ce panneau sont esquissées ci-dessous. Les étapes ne doivent pas être faites
-dans le même ordre présenté. Les choses sont présentées dans l'ordre, mais des variations sont possibles pour arriver au même point final.Cet exemple est présenté pour illustrer certaines des choses qui peuvent être faiest facilement en utilisant l'Éditeur de TCO . Vous pouvez choisir
-de faire plus ou moins sur vos panneaux TCO.</p>
+Ci-dessous est une version am&#233;lior&#233;e du panneau simple ovale construit avec <b>D&#233;buter avec &#201;diteur de R&#233;seau</b>. Les &#233;tapes g&#233;n&#233;rales n&#233;cessaires pour obtenir depuis le panneau de d&#233;part  ce panneau sont esquiss&#233;es ci-dessous. Les &#233;tapes ne doivent pas &#234;tre faites
+dans le m&#234;me ordre pr&#233;sent&#233;. Les choses sont pr&#233;sent&#233;es dans l'ordre, mais des variations sont possibles pour arriver au m&#234;me point final.Cet exemple est pr&#233;sent&#233; pour illustrer certaines des choses qui peuvent &#234;tre faites facilement en utilisant l'&#201;diteur de R&#233;seau . Vous pouvez choisir
+de faire plus ou moins sur vos panneaux R&#233;seau.</p>
 <A href="./images/OvalLayoutEditMode.gif"><IMG SRC="./images/EnhancedPanel.gif" 
 ALIGN=CENTER WIDTH="592" HEIGHT="171" HSPACE="0" VSPACE="0"></A>
 <p>
 <ul>
-	<li>Les aiguillages de la Table Aiguillage ont été assignés à chaque dessin d'aiguillage
-utilisant l'élément <b> Éditer...</b> dans le menu contextuel de chaque aiguillage .</li>
-<li> Les trois points d'ancrage ont été ajoutés, l'un sur chaque voie latérale verticale,
-et un autre sur la voie du bas pour servir de <i>limites de canton</i>.Les frontières de canton
- sont des lieux sur la voie où deux cantons se rejoigne; La voie à une frontière de canton
- est normalement coupée sur le réseau. L'ajout de points d'ancrage
-a été rendue plus facile en utilisant l'outil <b>Traduire Sélection</b> ... Dans le
-Menu Outils, pour étaler le panneau initial dans les directions vertical et horizontale.</li>
+	<li>Les aiguillages du Tableau Aiguillage ont &#233;t&#233; assign&#233;s &#224; chaque dessin d'aiguillage
+utilisant l'&#233;l&#233;ment <b>&#201;diter...</b> dans le menu contextuel de chaque aiguillage .</li>
+<li> Les trois points d'ancrage ont &#233;t&#233; ajout&#233;s, l'un sur chaque voie lat&#233;rale verticale,
+et un autre sur la voie du bas pour servir de <i>limites de canton</i>. Les fronti&#232;res de canton
+ sont des lieux sur la voie o&#249; deux cantons se rejoignent; La voie &#224; une fronti&#232;re de canton
+ est normalement coup&#233;e sur le r&#233;seau. L'ajout de points d'ancrage
+a &#233;t&#233; rendue plus facile en utilisant l'outil <b>Translater S&#233;lection</b> ... Dans le
+Menu Outils, pour &#233;taler le panneau initial dans les directions vertical et horizontale.</li>
 
-<li>La voie du TCO a été divisée en cantons par l'affectation de noms de cantons à
-tous les segments de voies et aiguillages. Quand un nom de canton est entré, si un canton
-de ce nom n'existe pas, un nouveau canton est créé automatiquement.Les aiguillages
-ont été placés dans le même canton que le segment de voie relié à la pointe( coté équipage mobile)
-, et les points des segments  direct et dévié de l'aiguillage
- ont été placés dans des cantons différents.</li>
-<li>Les noms de cantons sont été placés sur le panneau en utilisant <b>l'Étiquette Texte </b> sur la
-barre d'outils. Cela a été fait pour illustrer cet exemple , mais vous pouvez ou
+<li>La voie du R&#233;seau a &#233;t&#233; divis&#233;e en cantons par l'affectation de noms de cantons &#224;
+tous les segments de voies et aiguillages. Quand un nom de canton est entr&#233;, si un canton
+de ce nom n'existe pas, un nouveau canton est cr&#233;&#233; automatiquement. Les aiguillages
+ont &#233;t&#233; plac&#233;s dans le m&#234;me canton que le segment de voie reli&#233; &#224; la pointe( cot&#233; &#233;quipage mobile)
+, et les points des segments  direct et d&#233;vi&#233; de l'aiguillage
+ ont &#233;t&#233; plac&#233;s dans des cantons diff&#233;rents.</li>
+<li>Les noms de cantons sont &#233;t&#233; plac&#233;s sur le panneau en utilisant <b>l'&#201;tiquette Texte</b> sur la
+barre d'outils. Cela a &#233;t&#233; fait pour illustrer cet exemple , mais vous pouvez ou
 ne souhaitez pas afficher les noms de canton sur votre panneau final.</li>
-<li> A chaque canton a été attribué un capteur d'occupation de la Table Capteur.
-Les capteurs ont été ajoutés à la Table Capteur avant d'attribuer l'occupation
-capteurs. Un capteur d'occupation a été attribué à chaque canton en utilisant le bouton 
-<b> Créer/Modifier le canton</b> dans la boite de dialogue <b>Modifier Segment de Voie</b> 
+<li> A chaque canton a &#233;t&#233; attribu&#233; un capteur d'occupation du Tableau Capteur.
+Les capteurs ont &#233;t&#233; ajout&#233;s au Tableau Capteur avant d'attribuer l'occupation
+capteurs. Un capteur d'occupation a &#233;t&#233; attribu&#233; &#224; chaque canton en utilisant le bouton 
+<b>Cr&#233;er/Modifier le canton</b> dans la boite de dialogue <b>Modifier Segment de Voie</b> 
 d'un des segments de voie dans le canton.</li>
-<li>La voie sur l'ovale principal a été désigné <i>voie principale</i> en utilisant le dialogue
- <b>Éditer Segment de Voie</b> pour chaque segment de voie. Cela a donné des
-largeurs de voie différentes pour la voie principale et secondaire.</li>
-<li> Les Têtes de feux sont définies dans le tableau Signaux pour chacun des signaux
- placés sur le panneau. Les types de tête de signal à trois sorties sont utilisés pour tous.</li>
-<li>Les signaux ont été placés aux aiguillages en utilisant l'outil  <b>Fixer Signal à l'Aiguillage</b>
-dans le menu Outils. Pour chaque tête de signal <b>Ajouter Icône de Signal au TCO</b>
-a été coché, mais <b> Configurer Logique</b> ne l'était pas.</li>
-<li> Les signaux ont été placés aux frontières de canton à trois points d'ancrage en utilisant
- <b>Fixer les Signaux aux Frontières du Canton </b> dans le menu Outils. <b> Ajouter Icône Signal
- au TCO</b> a été coché, mais <b> Configurer Logique</b> ne l'était pas.</Li>
-<li>La logique  pour les signaux aux aiguillages a été mise en place en utilisant <b> Fixer Signaux à l'Aiguillage </b>. Le nom de l'aiguillage a été entré, puis <b>Obtenir Sauvegardées</b>
-a été cliquée pour récupérer les noms d'aiguillage. Ensuite <b>Installer la Logique</b> a été
-cochée pour chaque tête de signal, et <b> Ajouter Icône de Signal au TCO</b> ne l'a pas été
+<li>La voie sur l'ovale principal a &#233;t&#233; d&#233;sign&#233; <i>voie principale</i> en utilisant le dialogue
+ <b>&#201;diter Segment de Voie</b> pour chaque segment de voie. Cela a donn&#233; des
+largeurs de voie diff&#233;rentes pour la voie principale et secondaire.</li>
+<li> Les T&#234;tes de Signalisation sont d&#233;finies dans le tableau Signaux pour chacun des signaux
+ plac&#233;s sur le panneau. Les types de t&#234;te de signalisation &#224; trois sorties sont utilis&#233;s pour tous.</li>
+<li>Les signaux ont &#233;t&#233; plac&#233;s aux aiguillages en utilisant l'outil <b>Fixer Signal &#224; l'Aiguillage</b>
+dans le menu Outils. Pour chaque t&#234;te de signalisation <b>Ajouter Ic&#244;ne de Signal au R&#233;seau</b>
+a &#233;t&#233; coch&#233;, mais <b>Configurer Logique</b> ne l'&#233;tait pas.</li>
+<li> Les signaux ont &#233;t&#233; plac&#233;s aux limites de canton &#224; trois points d'ancrage en utilisant
+ <b>Fixer les Signaux aux Fronti&#232;res du Canton</b> dans le menu Outils. <b>Ajouter Ic&#244;ne Signal
+ au R&#233;seau</b> a &#233;t&#233; coch&#233;, mais <b>Configurer Logique</b> ne l'&#233;tait pas.</Li>
+<li>La logique  pour les signaux aux aiguillages a &#233;t&#233; mise en place en utilisant <b>Fixer Signaux &#224; l'Aiguillage</b>. Le nom de l'aiguillage a &#233;t&#233; entr&#233;, puis <b>Obtenir Sauvegard&#233;es</b>
+a &#233;t&#233; cliqu&#233;e pour r&#233;cup&#233;rer les noms d'aiguillage. Ensuite <b>Installer la Logique</b> a &#233;t&#233;
+coch&#233;e pour chaque t&#234;te de signalisation, et <b>Ajouter Ic&#244;ne de Signal au R&#233;seau</b> ne l'a pas &#233;t&#233;
 .</li>
-<li>La logique pour les signaux au point d'ancrage limites de canton a été mise en place à l'aide
-<b> Définir Signaux aux Frontières du Canton </b> en suivant une procédure similaire.</li>
-<li> Puisque tous les signaux sont rouge si les capteurs d'occupation sont dans un état «Inconnu»
-état, la Table Capteur a été ouverte et tous les capteurs d'occupation furent mis à
-«Inactif» (inoccupés) en cliquant sur "Inconnu" une fois. Puis l'aiguillage matériel 
- a été cliqué pour le mettre en déviation, en produisant le panneau ci-dessus
-(Avec mode Éditer désactivé dans le menu Options).</Li>
+<li>La logique pour les signaux au point d'ancrage limites de canton a &#233;t&#233; mise en place &#224; l'aide de
+<b>D&#233;finir Signaux aux Fronti&#232;res du Canton</b> en suivant une proc&#233;dure similaire.</li>
+<li> Puisque tous les signaux sont rouge si les capteurs d'occupation sont dans un &#233;tat "Inconnu"
+, le Tableau Capteur a &#233;t&#233; ouvert et tous les capteurs d'occupation furent mis &#224;
+"Inactif" (inoccup&#233;s) en cliquant sur "Inconnu" une fois. Puis l'aiguillage mat&#233;riel 
+ a &#233;t&#233; cliqu&#233; pour le mettre en d&#233;viation, en produisant le panneau ci-dessus
+(Avec mode &#201;diter d&#233;sactiv&#233; dans le menu Options).</Li>
 </ul>
 </p>
 <p>
-Vous devriez être capable de basculer votre aiguillages en cliquant dans leurs centres et de
-regarder le changement de couleur des signaux. Si vous n'avez pas encore de matériel pour votre
-détecteurs d'occupation, vous pouvez changer leur état dans le tableau de capteur pour simuler
-un train en marche sur le réseau. (Ou vous pouvez mettre en place des icônes capteur et cliquez dessus
-pour modifier leur état.) Si les étapes ci-dessus ne sont pas claires,
-consulter la description de cet élément dans la documentation ci-dessus. La page d'aide
- pour chaque outil référencé contient également des informations explicatives sur
+Vous devriez &#234;tre capable de basculer vos aiguillages en cliquant dans leurs centres et de
+regarder le changement de couleur des signaux. Si vous n'avez pas encore de mat&#233;riel pour votre
+d&#233;tecteurs d'occupation, vous pouvez changer leur &#233;tat dans le tableau de capteur pour simuler
+un train en marche sur le r&#233;seau. (Ou vous pouvez mettre en place des ic&#244;nes capteur et cliquez dessus
+pour modifier leur &#233;tat.) Si les &#233;tapes ci-dessus ne sont pas claires,
+consulter la description de cet &#233;l&#233;ment dans la documentation ci-dessus. La page d'aide
+ pour chaque outil r&#233;f&#233;renc&#233; contient &#233;galement des informations explicatives sur
 cet outil. </p>
 <p>
-Ceci est un exemple de ce qui peut être facilement fait en utilisant Éditeur TCO.
+Ceci est un exemple de ce qui peut &#234;tre facilement fait en utilisant l'&#201;diteur R&#233;seau.
 Pour ceux qui envisagent d'installer des signaux, La mise en place d'un panneau avec des
-cantons définis et signaux placés peuvent aider à décider où placer les cantons et les
-signaux  avant de les installer sur votre réseau</p>
+cantons d&#233;finis et signaux plac&#233;s peuvent aider &#224; d&#233;cider o&#249; placer les cantons et les
+signaux avant de les installer sur votre r&#233;seau</p>
 
 <!--#include virtual="/Footer" -->
 </body>

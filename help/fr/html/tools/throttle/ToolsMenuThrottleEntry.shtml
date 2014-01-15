@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Translated  by Blorec Hervé le 2011-09-29-->
+<!-- UpDated  by Blorec Herv&#233;  2013-10-05-->
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <html lang="fr">
-<meta content="text/html; charset=utf-8" http-equiv="content-type" >
+<meta content="text/html; charset=iso-8859-1" http-equiv="content-type" >
 <title>ToolsMenuThrottleEntry</title>
 <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 <meta name="Description" content="Throttle documentation for JMRI project" >
@@ -17,7 +17,7 @@
 <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
 <!-- or change them to reflect your alternative logo --><!-- Style -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
@@ -29,25 +29,25 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Entrée du Menu Outils Régulateur</h1>
+<h1>Entr&#233;e du Menu Outils R&#233;gulateur</h1>
 <img src="images/Toolsmenuentry.png" alt="" ><br >
 <br >
-<h2>Nouveau Régulateur:</h2>
-Créer une <a href="BasicThrottleWindow.shtml">nouvelle fenêtre régulateur</a> avec un régulateur disponible et vide çà l'intérieur.
-<h2>Sauver Configuration Régulateur:</h2>
-Enregistrer les régulateurs actuels,l'agencement des fenêtres, aussi bien les régulateurs internes, et les propriétés de la fenêtre de la liste des régulateurs.<br >
-<h2>Charger Configuration Régulateur:</h2>
-Charger une configuration de fenêtres de régulateurs, tel que défini ci-dessus.<br >
-Seront également chargées des mises en page des régulateurs  des versions précédentes de JMRI. (<2.7.9)
-<h2> Enregistrer en tant que Configuration: </h2>
-Enregistrer la disposition du régulateur actuel comme &lt; Préférences dossier JMRI&gt;/throttleJMRI_ThrottlePreference.xml
-<h2>Charger la  Configuration par défaut du régulateur: </h2>
-Charge &lt;JMRI dossier Préférences&lt;/throttleJMRI_ThrottlePreference.xml si elle existe. <br>
+<h2>Nouveau R&#233;gulateur:</h2>
+Cr&#233;er une <a href="BasicThrottleWindow.shtml">nouvelle fen&#234;tre r&#233;gulateur</a> avec un r&#233;gulateur disponible et vide &#224; l'int&#233;rieur.
+<h2>Sauver Configuration R&#233;gulateur:</h2>
+Enregistrer les r&#233;gulateurs actuels,l'agencement des fen&#234;tres, aussi bien les r&#233;gulateurs internes, et les propri&#233;t&#233;s de la fen&#234;tre de la liste des r&#233;gulateurs.<br >
+<h2>Charger Configuration R&#233;gulateur:</h2>
+Charger une configuration de fen&#234;tres de r&#233;gulateurs, tel que d&#233;fini ci-dessus.<br >
+Seront &#233;galement charg&#233;es des configurations des r&#233;gulateurs des versions pr&#233;c&#233;dentes de JMRI. (<2.7.9)
+<h2> Enregistrer en tant que Configuration par d&#233;faut: </h2>
+Enregistrer la disposition du r&#233;gulateur actuel comme &lt;dossier Pr&#233;f&#233;rences JMRI&gt;/throttleJMRI_ThrottlePreference.xml
+<h2>Charger la  Configuration par d&#233;faut du r&#233;gulateur: </h2>
+Charge &lt; dossier JMRI Preferences&lt;/throttleJMRI_ThrottlePreference.xml si il existe. <br>
 
 		
-<h3>Fusionner des fenêtre Régulateurs</h3>
+<h3>Fusionner des fen&#234;tre R&#233;gulateurs</h3>
 		
-<p>Les fichiers de disposition de régulateur peuvent consister en une fenêtre de régulateur unique (pour contrôler une seule locomotive ou une adresse de couplage), ou elle peut contenir des fenêtres multiples de régulateur. Dans tous les cas, lors de l'ouverture d'un dossier de mise en page de régulateur, le programme va vérifier pour voir si des fenêtres existantes de régulateurs actifs sont déjà ouvertes. Si aucune n'est trouvée, le fichier est ouvert, tout comme une ouverture de mise en page simple (expliqué ci-dessus). </P> Charge aussi la mise en page des régulateurs des versions précédentes de JMRI. (&lt;2.7.9).Charge &lt;dossier Préférences JMR &gt;/throttleJMRI_ThrottlePreference.xml si il existe.<br >
+<p>Les fichiers de configuration de r&#233;gulateur peuvent consister en une fen&#234;tre de r&#233;gulateur unique (pour contr&#244;ler une seule locomotive ou une adresse de couplage), ou elle peut contenir des multiples fen&#234;tres de r&#233;gulateur. Dans tous les cas, lors de l'ouverture d'un dossier de configuration de r&#233;gulateur, le programme va v&#233;rifier pour voir si des fen&#234;tres existantes de r&#233;gulateurs actifs sont d&#233;j&#224; ouvertes. Si aucune n'est trouv&#233;e, le fichier est ouvert, tout comme une ouverture de configuration simple (expliqu&#233; ci-dessus). </P> Charge aussi la configuration des r&#233;gulateurs des versions pr&#233;c&#233;dentes de JMRI. (&lt;2.7.9).Charge &lt;dossier Pr&#233;f&#233;rences JMR &gt;/throttleJMRI_ThrottlePreference.xml si il existe.<br >
 
 
 			
@@ -56,26 +56,26 @@ Charge &lt;JMRI dossier Préférences&lt;/throttleJMRI_ThrottlePreference.xml si
 			Figure 4-5: Boite de Dialogue Fusion
 			</p>
 			
-<p>Cependant, quand une ou plusieurs fenêtres de régulateur sont découvertes déjà ouvertes sur l'écran, le programme va ouvrir une boîte de dialogue comme le montre la figure 4-5 sur la droite.</p>
+<p>Cependant, quand une ou plusieurs fen&#234;tres de r&#233;gulateur sont d&#233;couvertes d&#233;j&#224; ouvertes sur l'&#233;cran, le programme va ouvrir une bo&#238;te de dialogue comme le montre la figure 4-5 sur la droite.</p>
 						
 			
 <ul>
-<li><strong>Fusionner</strong> &#8212; quitte les fenêtres régulateur actives actuellement ouvertes en place et ouvre le régulateur (s) contenu dans le dossier de configuration en cours d'ouverture.<br >
+<li><strong>Fusionner</strong> &#8212; quitte les fen&#234;tres r&#233;gulateur actives actuellement ouvertes en place et ouvre le r&#233;gulateur (s) contenu dans le dossier de configuration en cours d'ouverture.<br >
 
-				</li><li><strong>Remplacer</strong> &#8212;perd le bas de la fenêtre active du régulateur ouvert(s) et ouvre la fenêtre de régulateur (s) établie dans le fichier de configuration sauvegardé. <br>
-</li> <li> <strong> Annuler </strong> &#8212;annule la la demande d'«ouverture» et ferme cette fenêtre de dialogue .
+				</li><li><strong>Remplacer</strong> &#8212;perd le bas de la fen&#234;tre active du r&#233;gulateur ouvert(s) et ouvre la fen&#234;tre de r&#233;gulateur (s) &#233;tablie dans le fichier de configuration sauvegard&#233;. <br>
+</li> <li> <strong> Annuler </strong> &#8212;annule la la demande d'"ouverture" et ferme cette fen&#234;tre de dialogue .
 			</li>
 </ul>
 			
 <p style="font-style: italic;" class="important">
-			Remarque: Ne confondez pas l'action qui se produit ici avec toute tentative d'écraser vos fichiers sauvegardés de mise en page de régulateur. Les actions ci-dessus n'ont aucun effet sur la réelle mise en page des fichiers sauvegardés de régulateur eux-mêmes. La seule action «fusion» et «remplacer» qui se produit est tout simplement sur votre écran.
+			Remarque: Ne confondez pas l'action qui se produit ici avec toute tentative d'&#233;craser vos fichiers sauvegard&#233;s de configuration de r&#233;gulateur. Les actions ci-dessus n'ont aucun effet sur la configuratrion r&#233;elle des fichiers sauvegard&#233;s de r&#233;gulateur eux-m&#234;mes. La seule action "fusion" et "remplacer" qui se produit est tout simplement sur votre &#233;cran.
 			</p>
 
 
 			<br >
 
-<h2>Préférences Régulateurs:</h2>
-Ouvrez le <a href="ThrottlesPreferencesPane.shtml">Volet préférences régulateurs.</a><br >
+<h2>Pr&#233;f&#233;rences R&#233;gulateurs:</h2>
+Ouvrez le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences r&#233;gulateurs.</a><br >
 
 <!--#include virtual="/Footer" -->
 </div></body></html>

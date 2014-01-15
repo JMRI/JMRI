@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Hervé le 2011-12-18--> 
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-11-01--> 
 <html lang="fr">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: PanelMenuHelp.shtml,v 1.3 2010/02/12 17:30:00 jacobsen Exp $ -->
+<!-- $Id: PanelMenuHelp.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <title>JMRI: Panels Menu</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,46 +26,46 @@
 JMRI: Menu Panneaux
 </h1>
 
-Le menu "Panneaux" JMRi contient les éléments suivants:
+Le menu "Panneaux" JMRi contient les &#233;l&#233;ments suivants:
 
 <ul>
 <li> Nouveau Panneau ...:
-Sélectionnez cette option pour créer un nouveau panneau dans les deux
- <a href="PanelEditor.shtml">Éditeur de panneau</a>
+S&#233;lectionnez cette option pour cr&#233;er un nouveau panneau soit dans les deux'
+ <a href="PanelEditor.shtml">&#201;diteur de panneau</a>
 ou
-<a href="LayoutEditor.shtml">Éditeur de TCO </a>.
+<a href="LayoutEditor.shtml">&#201;diteur de R&#233;seau </a>.
 
  <li>Chargement de Panneau...:
-Charge un fichier stockés précédemment avec le choix ci-dessous "Stocker Panneaux ...» .
-Si le fichier contient Éditeur de Panneaux ou l'Éditeur de TCO, ils seront ajoutés à tout ce
-qui existe déjà dans le programme.
+Charge un fichier Sauvegard&#233; pr&#233;c&#233;demment avec le choix ci-dessous "Sauvegarder Panneaux ...» .
+Si le fichier contient &#201;diteur de Panneaux ou l'&#201;diteur de R&#233;seau, ils seront ajout&#233;s &#224; tout ce
+qui existe d&#233;j&#224; dans le programme.
 
-<li>Stocker Panneaux  ...:
-Stocker  la configuration actuelle du programme vers un fichier,
-incluant toutous les Éditeur de Panneau actuel  et les Éditeurs de TCO et de Configuration.
-Utilisez "Montrer Panneau " ci-dessous pour voir la liste complète.
+<li>Sauvegarder Panneaux  ...:
+Sauvegarde  la configuration actuelle du programme vers un fichier,
+incluant tous les &#201;diteur de Panneau actuel  et les &#201;diteurs de R&#233;seau et de Configuration.
+Utilisez "Montrer Panneau " ci-dessous pour voir la liste compl&#232;te.
 
 <li>Afficher l'historique :
-Affiche un historique de tous les fichiers chargés dans le programme en cours,
-et comment ils ont été stockés à partir des exécutions précédentes du programme,
-avec ce qui a été chargé dans ceux ci, et ainsi de suite.
-Seuls les dossiers d'information de JMRI 2.9.3 et versions ultérieures.
+Affiche un historique de tous les fichiers charg&#233;s dans le programme en cours,
+et comment ils ont &#233;t&#233; sauvegard&#233;s &#224; partir des ex&#233;cutions pr&#233;c&#233;dentes du programme,
+avec ce qui a &#233;t&#233; charg&#233; dans ceux ci, et ainsi de suite.
+Enregistre seulement les informations depuis JMRI 2.9.3 et versions ult&#233;rieures.
 
 <LI>Montrer Panneau :
-Affiche la liste des TCO et/ou des panneaux des Éditeurs de Panneau actuellement dans le programme,
-et vous permet d'apporter l'un à l'avant en le sélectionnant.
+Affiche la liste des TCO et/ou des panneaux des &#201;diteurs de Panneau actuellement dans le programme,
+et vous permet d'apporter l'un &#224; l'avant en le s&#233;lectionnant.
 
-<LI>Exécuter le script ...:
-Sélectionner et exécuter un
+<LI>Ex&#233;cuter le script ...:
+S&#233;lectionner et ex&#233;cuter un
  <a href="../../../../html/tools/scripting/index.shtml">fichier de script</a>.
 
 <LI>Moniteur de Lien: Ouvre une
-<a href="../automat/monitor/AutomatTableFrame.shtml">fenêtre affichant le lien courant en cours d'exécution </a>,
-qui comprend l'exécution de scripts long.
+<a href="../automat/monitor/AutomatTableFrame.shtml">fen&#234;tre affichant le lien courant en cours d'ex&#233;cution </a>,
+qui comprend l'ex&#233;cution de scripts long.
 
-<LI>Sortie de script: Ouvre la fenêtre de sortie du script. Tous les messages à partir de scripts apparaîtront ici.
+<LI>Script de Sortie : Ouvre la fen&#234;tre de Script de Sortie. Tous les messages &#224; partir de scripts appara&#238;tront ici.
 
-<LI>Entrée Script: Ouvre une fenêtre de saisie du script. Vous pouvez taper directement les commandes de script ici.
+<LI>Script d'Entr&#233;e: Ouvre une fen&#234;tre de Script d'Entr&#233;e. Vous pouvez taper directement les commandes de script ici.
 
 </ul>
 <p>
