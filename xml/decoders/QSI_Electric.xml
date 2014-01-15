@@ -3188,16 +3188,6 @@
       <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" comment="QSI" item="CV56.254.12">
         <indexedVal/>
       </ivariable>
-      <!-- CV 56.255 Play Build Information (for ops mode) -->
-      <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_0" default="0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Day" CVname="56.255_1" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_1" default="1">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Year" CVname="56.255_2" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_2" default="2">
-        <indexedVal/>
-      </ivariable>
     </variables>
     <resets>
       <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>

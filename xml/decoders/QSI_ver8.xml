@@ -1581,22 +1581,6 @@
       <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes">
         <indexedPairVal highCVname="56.254.15"/>
       </ivariable>
-      <!-- CV 56.255 Play Build Information (for ops mode) -->
-      <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Firmware Version" CVname="56.255_1" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_1" default="1">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Firmware Build Date" CVname="56.255_2" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_2" default="2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Hardware Profile" CVname="56.255_3" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_3" default="3">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Sound Set" CVname="56.255_4" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_4" default="4">
-        <indexedVal/>
-      </ivariable>
       <ivariable label="Power Conversion Stopping Distance" CVname="58.10.0" CV="58" PI="10" SI="0" include="1100,1101,1110,1112,1121,1126,2100,2101,2105,3100,3101,3106,3107,4100,4101,4102,5100,5101">
         <indexedPairVal highCVname="58.10.1"/>
       </ivariable>
