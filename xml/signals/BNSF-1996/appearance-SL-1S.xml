@@ -36,7 +36,8 @@
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Rule 9.1.6</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-s.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-s.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-x.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>

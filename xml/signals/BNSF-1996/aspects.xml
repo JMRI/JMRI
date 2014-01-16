@@ -234,6 +234,10 @@
       <dccAspect>31</dccAspect>
     </aspect>
   </aspects>
+  <imagetypes>
+    <imagetype type="aspects" />
+    <imagetype type="noflash" />
+  </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-SE-1A.xml" />
     <appearancefile href="appearance-SE-1R.xml" />

@@ -38,7 +38,8 @@
       <show>yellow</show>
       <show>flashgreen</show>
       <reference>Rule 9.1.4</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.4-a.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.4-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.4-x.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Approach</aspectname>
@@ -52,7 +53,8 @@
       <show>flashyellow</show>
       <show>dark</show>
       <reference>Rule 9.1.6</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-c.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-c.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-v.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach Medium (Diverging)</aspectname>
@@ -108,7 +110,8 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Rule 9.1.11</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.11-a.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.11-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.11-x.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Diverging Approach</aspectname>
