@@ -2745,10 +2745,10 @@ public class TrainBuilder extends TrainCommon {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
 						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
 								track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
-								track.getReservationFactor() }));
+								Setup.getLengthUnit().toLowerCase(), track.getReservationFactor() }));
 				// restore car's load
 				car.setLoadName(oldCarLoad);
-				continue;
+			continue;
 			}
 			car.setFinalDestination(track.getLocation());
 			car.setFinalDestinationTrack(track);
@@ -3419,7 +3419,7 @@ public class TrainBuilder extends TrainCommon {
 									Bundle.getMessage("buildNoDestTrackSpace"), new Object[] { car.toString(),
 											testTrack.getLocation().getName(), testTrack.getName(),
 											testTrack.getNumberOfCarsInRoute(), testTrack.getReservedInRoute(),
-											testTrack.getReservationFactor() }));
+											Setup.getLengthUnit().toLowerCase(), testTrack.getReservationFactor() }));
 							continue; // no
 						}
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildGenerateLoad"),
