@@ -2600,6 +2600,10 @@ public class TrainBuilder extends TrainCommon {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurFullNoAlternate"),
 							new Object[] { track.getLocation().getName(), track.getName() }));
 					continue;
+				} else {
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildTrackHasAlternate"), new Object[] { track.getName(),
+							track.getAlternateTrack().getName() }));
 				}
 			}
 
