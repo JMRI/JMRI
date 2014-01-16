@@ -116,6 +116,8 @@
 
 <mapID target="manual.3-4_JMRI_OPS_UsersGuide.Ops_Cars_Menu" url="manual/3-4_JMRI_OPS_UsersGuide/Ops_Cars_Menu.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_BuildlocoConsist" url="package/jmri/jmrit/operations/Operations.shtml#BuildlocoConsist"/>
+
 <mapID target="manual.3-4_DecoderPro.VSD_LocationsMgr_VSDLocations" url="manual/3-4_DecoderPro/VSD_LocationsMgr.shtml#VSDLocations"/>
 
 <mapID target="html.hardware.tchtech.index" url="html/hardware/tchtech/index.shtml"/>
@@ -176,9 +178,9 @@
 
 <mapID target="manual.JMRI_2-14_manual.Main_Tool_Ops" url="manual/JMRI_2-14_manual/Main_Tool.shtml#Ops"/>
 
-<mapID target="manual.3-4_DecoderPro.Start_DCC_Systems" url="manual/3-4_DecoderPro/Start_DCC_Systems.shtml"/>
-
 <mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
+
+<mapID target="manual.3-4_DecoderPro.Start_DCC_Systems" url="manual/3-4_DecoderPro/Start_DCC_Systems.shtml"/>
 
 <mapID target="html.tools.throttle.BasicThrottleWindow" url="html/tools/throttle/BasicThrottleWindow.shtml"/>
 
@@ -213,6 +215,8 @@
 <mapID target="html.apps.PanelPro.FAQ" url="html/apps/PanelPro/FAQ.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_Speeometer" url="manual/JMRI_2-14_manual/Main_Speeometer.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_HorsepowerPerTon" url="package/jmri/jmrit/operations/Operations.shtml#HorsepowerPerTon"/>
 
 <mapID target="package.jmri.jmrit.speedometer.SpeedometerFrame" url="package/jmri/jmrit/speedometer/SpeedometerFrame.shtml"/>
 
@@ -1398,6 +1402,8 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Main_CMRI_ConfigureNodes" url="manual/JMRI_2-12_Manual/Main_CMRI.shtml#ConfigureNodes"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ChangeTrainDepartureTimes" url="package/jmri/jmrit/operations/Operations.shtml#ChangeTrainDepartureTimes"/>
+
 <mapID target="manual.JMRI_2-14_manual.Main_Throttle_List" url="manual/JMRI_2-14_manual/Main_Throttle.shtml#List"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_wangrow" url="manual/JMRI_2-14_manual/Main_wangrow.shtml"/>
@@ -1731,6 +1737,8 @@
 <mapID target="manual.JMRI_2-14_manual.Main_Panels_ThreadMonitor" url="manual/JMRI_2-14_manual/Main_Panels.shtml#ThreadMonitor"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Main_LocoNet_ClockMonitor" url="manual/JMRI_2-12_Manual/Main_LocoNet.shtml#ClockMonitor"/>
+
+<mapID target="html.web.Operations" url="html/web/Operations.shtml"/>
 
 <mapID target="manual.3-4_JMRI_OPS_UsersGuide.Start_Preferences_Throttle" url="manual/3-4_JMRI_OPS_UsersGuide/Start_Preferences.shtml#Throttle"/>
 
@@ -6392,6 +6400,8 @@
 
 <mapID target="manual.3-2_DecoderPro3.Main_LocoNet_Sounds" url="manual/3-2_DecoderPro3/Main_LocoNet.shtml#Sounds"/>
 
+<mapID target="html.profiles" url="html/profiles.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_PromptDepartureTrack" url="package/jmri/jmrit/operations/Operations.shtml#PromptDepartureTrack"/>
 
 <mapID target="html.apps.LocoTools.index_sendpkt" url="html/apps/LocoTools/index.shtml#sendpkt"/>
@@ -6510,11 +6520,11 @@
 
 <mapID target="manual.DP3_2-14_manual.dp3_Main_Speedometer" url="manual/DP3_2-14_manual/dp3_Main_Speedometer.shtml"/>
 
-<mapID target="manual.3-2_JMRI_OPS_UsersGuide.Start_Preferences_FileLocations" url="manual/3-2_JMRI_OPS_UsersGuide/Start_Preferences.shtml#FileLocations"/>
-
 <mapID target="manual.3-0_DecoderPro3.Start_DCC_Systems_Top" url="manual/3-0_DecoderPro3/Start_DCC_Systems.shtml#Top"/>
 
 <mapID target="manual.3-0_DecoderPro.Comp_GlobalCVs_Top" url="manual/3-0_DecoderPro/Comp_GlobalCVs.shtml#Top"/>
+
+<mapID target="manual.3-2_JMRI_OPS_UsersGuide.Start_Preferences_FileLocations" url="manual/3-2_JMRI_OPS_UsersGuide/Start_Preferences.shtml#FileLocations"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_SPROG_Console" url="manual/JMRI_2-14_manual/Main_SPROG.shtml#Console"/>
 

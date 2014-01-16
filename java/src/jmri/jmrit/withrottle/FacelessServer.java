@@ -49,6 +49,7 @@ public class FacelessServer implements DeviceListener, DeviceManager {
 
     public void createServerThread(){
         FacelessThread s = new FacelessThread(this);
+        s.setName("FacelessServer"); // NOI18N
         s.start();
     }
 
