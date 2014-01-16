@@ -91,6 +91,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     public void createServerThread() {
         ServerThread s = new ServerThread(this);
+        s.setName("WiThrottleServer"); // NOI18N
         s.start();
     }
 
