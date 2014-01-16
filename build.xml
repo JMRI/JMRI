@@ -1,6 +1,6 @@
 
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2013                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2014                                      -->
 
 <!-- Revision $Revision$ -->
 
@@ -26,7 +26,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2013"/>
+    <property name="jmri.copyright.year" value="1997-2014"/>
 
     <property environment="env"/>
 
