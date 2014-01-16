@@ -69,9 +69,11 @@ ul.manifest img.actionComplete {
 ul.manifest li.car.actionCompleted img.actionComplete {
 	display: inline;
 }
-
-/* hide non-critical elements if the screen is narrow */
-@media only screen and (max-width: 480px) {
+.hideable {
+	font-size: 85%;
+	}
+/* hide non-critical elements if the screen is "narrow" */
+@media only screen and (max-width: 720px) {
   .hideable {
     display :none;
   }

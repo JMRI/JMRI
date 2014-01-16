@@ -52,6 +52,9 @@ No one mast can display all of the available aspects so check carefully which as
 Some aspect sequences can be controlled by setting appropriate speeds on blocks. A 'Sixty' speed block will cause a signal to be proceeded by an Approach Limited indication in most cases, a 'Fifty' speed block Advance Approach and a 'Medium' or 'Slow' speed block Approach Medium. A Slow speed block on a divergance will force the lower head to display Diverging Approach and Diverging Clear indications on a triple head/arm mast instead of the centre head where available, and a Restricting speed block will force a restricting or Restricting (Diverging) indication where possible.
 
 <p>
+An additional non-flashing icon set has been provided for where the flashing icons cause display problems. Choosing the non flashing representations does not affect the aspect displayed on the physical signal. Right click on the signal icon when editing the panel to select the alternate icon set for that signal.
+
+<p>
 Not all aspects described under a particular rule are fully interchangeable with one another since they contain slightly different meanings not fully described in the rules. Rule 9.1.6 (Approach medium) for example has both a family of flashing yellows and a family of double yellows. The double yellows signify that the next signal will indicate diverging while the flashing yellow generally indicates that the next signal is an approach signal. From a driver's point of view of course they mean the same, but if modelling the prototype the continuing historical differences in use are of note.
 
 <p>
