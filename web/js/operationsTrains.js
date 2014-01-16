@@ -1,3 +1,6 @@
+//oper 
+//  add optional parm "showall=yes" to show all trains, regardless of status
+var $showAll = false;  
 //request and show a list of available trains from JMRI server
 var $showTrainList = function(){
 	$.ajax({
@@ -8,27 +11,31 @@ var $showTrainList = function(){
 			if ($r.length < 0) {
 				$h += "No trains defined in JMRI Operations.";
 			} else {
-				$h += "<table><tr><th>Manifest</th><th>Time</th><th>Name</th><th>Lead Engine</th><th>Description</th><th>Route</th>" + 
-				         "<th>Departs</th><th>Terminates</th><th>Current</th><th>Status</th><th>Conductor</th><th>Id</th></tr>";
+				$h += "<table><tr><th>Manifest</th><th>Name</th><th>Description</th><th>Lead Engine</th>" 
+				         + "<th>Departs</th><th class='hideable'>Time</th><th>Status</th>"
+				         + "<th class='hideable'>Current</th><th class='hideable'>Terminates</th>"
+				         + "<th class='hideable'>Route</th><th class='hideable'>Conductor</th><th class='hideable'>Id</th>"
+				         + "</tr>";
 				$.each($r, function(i, item) {  //loop through the returned list of trains
 					$train = item.data;  //everything of interest is in the data element
-					$h += "<tr>";
-					$h += "<td><a href='/web/operationsManifest.html?trainid=" + $train.id + "'>Manifest</td>";
-					$h += "<td>" + $train.departureTime + "</td>";
-					$h += "<td>" + $train.name + "</td>";
-					$h += "<td>" + ($train.leadEngine ? $train.leadEngine : "&nbsp;") + "</td>";
-					$h += "<td>" + $train.description + "</td>";
-					$h += "<td>" + $train.route + "</td>";
-					$h += "<td>" + $train.trainDepartsName + "</td>";
-					$h += "<td>" + $train.trainTerminatesName + "</td>";
-					$h += "<td>" + $train.location + "</td>";
-					$h += "<td>" + $train.status + "</td>";
-					//TODO: use Conductor web app instead of frame when it is written
-					//$h += "<td><a href='/web/operationsConductor.html?trainid=" + $train.id + "'>Conductor</td>";
-					$h += "<td><a href='/frame/Train%20Conductor%20(" + $train.name + ").html''>Conductor</td>";
-					$h += "<td><a href='/json/train/" + $train.id + "'>" + $train.id + "</td>";
-					$h += "</tr>";
-					$count++;
+					if($showAll || $train.cars.length){  //show table of all trains, or just built ones
+						$h += "<tr>";
+						$h += "<td><a href='/web/operationsManifest.html?trainid=" + $train.id + "'>Manifest</td>";
+						$h += "<td>" + $train.name + "</td>";
+						$h += "<td>" + $train.description + "</td>";
+						$h += "<td>" + ($train.leadEngine ? $train.leadEngine : "&nbsp;") + "</td>";
+						$h += "<td>" + $train.trainDepartsName + "</td>";
+						$h += "<td class='hideable'>" + $train.departureTime + "</td>";
+						$h += "<td>" + $train.status + "</td>";
+						$h += "<td class='hideable'>" + $train.location + "</td>";
+						$h += "<td class='hideable'>" + $train.trainTerminatesName + "</td>";
+						$h += "<td class='hideable'>" + $train.route + "</td>";
+						//TODO: use Conductor web app instead of frame when it is written
+						$h += "<td class='hideable'><a href='/frame/Train%20Conductor%20(" + $train.name + ").html''>Conductor</td>";
+						$h += "<td class='hideable'><a href='/json/train/" + $train.id + "'>" + $train.id + "</td>";
+						$h += "</tr>";
+						$count++;
+					};
 				});
 				$h += "</table>";
 			}
@@ -53,10 +60,18 @@ var $getRailRoad = function(e){
 		dataType: 'json' //<--dataType
 	});
 };
+//parse the page's input parameter and return value for name passed in
+function getParameterByName(name) {
+	var match = RegExp('[?&]' + name + '=([^&]*)')
+	.exec(window.location.search);
+	return match && match[1];
+};
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 	$getRailRoad($('#railRoad'));
+	var $sa = getParameterByName('showall');
+	$showAll = (($sa == undefined || $sa == "no") ? false : true); //show all trains, or just built ones
 	$showTrainList();
 	setTimeout("$('title').html('Trains - ' + $('#railRoad').text())", 1000);
 });
