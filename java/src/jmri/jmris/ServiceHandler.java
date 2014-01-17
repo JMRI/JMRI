@@ -18,6 +18,7 @@ public class ServiceHandler {
      private AbstractTurnoutServer turnoutServer = null;
      private AbstractSensorServer sensorServer = null;
      private AbstractProgrammerServer programmerServer = null;
+     private AbstractTimeServer timeServer = null;
 
      /*
       *  set the powerServer instance
@@ -117,6 +118,26 @@ public class ServiceHandler {
      public AbstractProgrammerServer getProgrammerServer()
      {
           return programmerServer;
+     }
+
+    /*
+      *  set the timeServer instance
+      *  @param ps is an instance of an AbstractTimeServer 
+      *            derived class.
+      */
+     public void setTimeServer(AbstractTimeServer ps)
+     {
+          timeServer = ps;
+     }
+
+     /*
+      *  get the timeServer instance
+      *  @return an instance of an AbstractTimeServer 
+      *            derived class.
+      */
+     public AbstractTimeServer getTimeServer()
+     {
+          return timeServer;
      }
 
 }

@@ -91,6 +91,15 @@ public class SRCPVisitor implements SRCPParserVisitor {
     {
       // This is a Generic Loco request
     }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME"))
+    {
+      // This is a Time request
+       try {
+       ((jmri.jmris.ServiceHandler)data).getTimeServer().sendTime();
+       } catch(java.io.IOException ie) {
+       }
+
+    }
     return data;
   }
 
@@ -158,6 +167,24 @@ public class SRCPVisitor implements SRCPParserVisitor {
     {
       // This is a Generic Loco request
     }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME"))
+    {
+      // This is a Time request
+       try {
+         jmri.jmris.srcp.JmriSRCPTimeServer ts=(jmri.jmris.srcp.JmriSRCPTimeServer)(((jmri.jmris.ServiceHandler)data).getTimeServer());
+         int julDay = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       int hour = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       int minute = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
+       int second = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
+         
+         // set the time
+         ts.parseTime(julDay,hour,minute,second);
+         // and start the clock.
+         ts.startTime();
+         ts.sendTime();
+       } catch(java.io.IOException ie) {
+       }
+    }
     return data;
   }
 
@@ -174,7 +201,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
   }
   public Object visit(ASTverify node,java.lang.Object data)
   {
-    log.debug("CHECK " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
+    log.debug("VERIFY " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTreset node,java.lang.Object data)
@@ -208,10 +235,16 @@ public class SRCPVisitor implements SRCPParserVisitor {
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
         /* Initilize fast clock ratio */
+       try {
        //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
         /* the two parameters form a ration of modeltime:realtime */
-       //int modeltime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
-       //int realtime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       int modeltime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       int realtime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+         jmri.jmris.srcp.JmriSRCPTimeServer ts=(jmri.jmris.srcp.JmriSRCPTimeServer)(((jmri.jmris.ServiceHandler)data).getTimeServer());
+         ts.parseRate(modeltime,realtime);
+         ts.sendRate();
+       } catch(java.io.IOException ie) {
+       }
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM")) {
         /* Initilize service mode */
