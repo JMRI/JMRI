@@ -207,7 +207,7 @@ public class Router extends TrainCommon {
 			if (!_train.getServiceStatus().equals(""))
 				addLine(_buildReport, SEVEN, _train.getServiceStatus());
 		} else if (!trainServicesCar) {
-			testTrain = TrainManager.instance().getTrainForCar(clone, _buildReport);
+			testTrain = TrainManager.instance().getTrainForCar(clone, _train, _buildReport);
 		}
 		if (testTrain != null && _train != null && !trainServicesCar
 				&& _train.isServiceAllCarsWithFinalDestinationsEnabled()) {

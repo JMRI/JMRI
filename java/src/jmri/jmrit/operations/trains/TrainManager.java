@@ -383,13 +383,24 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * 
 	 * @param car
 	 * @return Train that can service car from its current location to the its destination.
 	 */
 	public Train getTrainForCar(Car car, PrintWriter buildReport) {
+		return getTrainForCar(car, null, buildReport);
+	}
+
+	/**
+	 * 
+	 * @param car
+	 * @param excludeTrain The only train not to try.
+	 * @param buildReport
+	 * @return Train that can service car from its current location to the its destination.
+	 */
+	public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
 		log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
 				+ car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
 				+ car.getDestinationTrackName() + ")"); // NOI18N
@@ -401,6 +412,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		List<Train> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = trains.get(i);
+			if (train == excludeTrain)
+				continue;
 			if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled())
 				continue;
 			// does this train service this car?

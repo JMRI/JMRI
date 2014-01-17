@@ -2601,9 +2601,9 @@ public class TrainBuilder extends TrainCommon {
 							new Object[] { track.getLocation().getName(), track.getName() }));
 					continue;
 				} else {
-					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("buildTrackHasAlternate"), new Object[] { track.getName(),
-							track.getAlternateTrack().getName() }));
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
+							new Object[] { track.getLocation().getName(), track.getName(),
+									track.getAlternateTrack().getName() }));
 				}
 			}
 
@@ -3101,7 +3101,8 @@ public class TrainBuilder extends TrainCommon {
 								&& testTrack.checkSchedule(car).equals(Track.OKAY)
 								&& testTrack.getTrackType().equals(Track.SPUR) && testTrack.getAlternateTrack() != null) {
 							addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-									.getMessage("buildTrackHasAlternate"), new Object[] { testTrack.getName(),
+									.getMessage("buildTrackHasAlternate"), new Object[] {
+									testTrack.getLocation().getName(), testTrack.getName(),
 									testTrack.getAlternateTrack().getName() }));
 							String altStatus = car.testDestination(car.getDestination(), testTrack.getAlternateTrack());
 							if (altStatus.equals(Track.OKAY)
