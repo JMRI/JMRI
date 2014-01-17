@@ -50,6 +50,7 @@ public class Router extends TrainCommon {
 
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 	private boolean _addtoReport = false;
+	private boolean _addtoReportVeryDetailed = false;
 
 	/** record the single instance **/
 	private static Router _instance = null;
@@ -95,6 +96,7 @@ public class Router extends TrainCommon {
 		_buildReport = buildReport;
 		_addtoReport = !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)
 				&& !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL);
+		_addtoReportVeryDetailed = Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED);
 		log.debug("Car (" + car.toString() + ") at location (" + car.getLocationName() + ", " + car.getTrackName()
 				+ ") " + "final destination (" + car.getFinalDestinationName() // NOI18N
 				+ ", " + car.getFinalDestinationTrackName() + ") car routing begins"); // NOI18N
@@ -370,14 +372,13 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (saveTrack == track)
 				continue; // don't use car's current track
-			// don't allow interchange to interchange or yard move
-//			if (_train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
-//					&& saveTrack.getLocation() == track.getLocation()
-//					&& saveTrack.getTrackType().equals(Track.INTERCHANGE))
-//				continue;
 			String status = track.accepts(testCar);
-			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
+			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+				if (_addtoReportVeryDetailed)
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
+							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), status }));
 				continue;
+			}
 			if (debugFlag)
 				log.debug("Found " + trackType + " track (" + track.getLocation().getName() + ", " + track.getName()
 						+ ") for car (" + car.toString() + ")"); // NOI18N
@@ -782,7 +783,9 @@ public class Router extends TrainCommon {
 							+ testCar.getLocationName() + ", " + testCar.getTrackName() // NOI18N
 							+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 							+ ", " + testCar.getDestinationTrackName() + ")");
-				_nextLocationTracks.add(track);
+				// note that last could equal next if this routine was used for two train routing
+				if (!_lastLocationTracks.contains(track))
+					_nextLocationTracks.add(track);
 			} else {
 				// don't add to other if already in last location list
 				if (!_lastLocationTracks.contains(track)) {
