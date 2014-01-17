@@ -1402,10 +1402,10 @@ public class Train implements java.beans.PropertyChangeListener {
 								if (!status.equals(Track.OKAY)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-												.getMessage("trainCanNotDeliverToTrack"), new Object[] { getName(),
-												car.toString(), getTerminationTrack().getName(),
-												getTerminationTrack().getLocation().getName(), rLocations.get(k) }));
-									continue;
+												.getMessage("trainCanNotDeliverToStaging"), new Object[] { getName(),
+												car.toString(), getTerminationTrack().getLocation().getName(),
+												getTerminationTrack().getName(), status }));
+								continue;
 								}
 							} else {
 								if (debugFlag)
