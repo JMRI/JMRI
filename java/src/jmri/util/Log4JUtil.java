@@ -122,7 +122,8 @@ public class Log4JUtil {
         Properties p = new Properties();
         p.load(new FileInputStream(config));
         if (System.getProperty("jmri.log.path") == null) {
-            p.put("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);
+            System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);
+            p.put("jmri.log.path", System.getProperty("jmri.log.path"));
         }
         File logDir = new File(p.getProperty("jmri.log.path"));
         // ensure the logging directory exists
