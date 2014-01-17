@@ -46,16 +46,10 @@ public class AddProfileDialog extends javax.swing.JDialog {
         initComponents();
     }
 
-    private AddProfileDialog(java.awt.Frame parent, boolean modal) {
-    }
-
     AddProfileDialog(Dialog parent, boolean modal, boolean setNextProfile) {
         super(parent, modal);
         this.setNextProfile = setNextProfile;
         initComponents();
-    }
-
-    private AddProfileDialog(Dialog parent, boolean modal) {
     }
 
     /**
