@@ -748,11 +748,6 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (track == car.getTrack())
 				continue; // don't use car's current track
-			// don't allow interchange to interchange or yard move
-//			if (_train != null && _train.isServiceAllCarsWithFinalDestinationsEnabled()
-//					&& car.getLocation() == track.getLocation()
-//					&& car.getTrack().getTrackType().equals(Track.INTERCHANGE))
-//				continue;
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue; // track doesn't accept this car
@@ -787,11 +782,7 @@ public class Router extends TrainCommon {
 							+ testCar.getLocationName() + ", " + testCar.getTrackName() // NOI18N
 							+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 							+ ", " + testCar.getDestinationTrackName() + ")");
-				if (status.equals(Track.OKAY))
-					_nextLocationTracks.add(track);
-				else
-					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotDueTo"),
-							new Object[] { train.getName(), car.toString(), track.getLocation().getName(), track.getName(), status }));
+				_nextLocationTracks.add(track);
 			} else {
 				// don't add to other if already in last location list
 				if (!_lastLocationTracks.contains(track)) {
