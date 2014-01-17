@@ -2,15 +2,14 @@
 
 package apps.LocoTools;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.AppConfigPanel;
 import apps.Apps;
-
 import java.text.MessageFormat;
-
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI program of LocoNet tools.
@@ -70,7 +69,7 @@ public class LocoTools extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("LocoTools"));
+        log.info(Log4JUtil.startupInfo("LocoTools"));
 
         setConfigFilename("LocoToolsConfig2.xml", args);
         JFrame f = new JFrame("LocoTools");

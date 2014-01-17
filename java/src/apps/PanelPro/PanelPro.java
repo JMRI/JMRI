@@ -2,15 +2,9 @@
 
 package apps.PanelPro;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.Apps;
-import jmri.util.JmriJFrame;
-
 import java.awt.event.ActionEvent;
-
 import java.text.MessageFormat;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -18,6 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.util.JmriJFrame;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI program for creating control panels.
@@ -100,7 +98,7 @@ public class PanelPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("PanelPro"));
+        log.info(Log4JUtil.startupInfo("PanelPro"));
 
         setConfigFilename("PanelProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("PanelPro");

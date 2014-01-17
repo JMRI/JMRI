@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.Locale;
@@ -86,11 +85,10 @@ import jmri.profile.ProfileManagerDialog;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.Log4JUtil;
 import jmri.util.PythonInterp;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
-import jmri.util.exceptionhandler.AwtHandler;
-import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
 import jmri.util.swing.FontComboUtil;
@@ -969,9 +967,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void splash(boolean show, boolean debug) {
-        if (!log4JSetUp) {
-            initLog4J();
-        }
+        Log4JUtil.initLog4J();
         if (debugListener == null && debug) {
             // set a global listener for debug options
             debugFired = false;
@@ -1055,51 +1051,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     static public Boolean handleRestart() {
         return AppsBase.handleRestart();
-    }
-    static boolean log4JSetUp = false;
-
-    static protected void initLog4J() {
-        if (log4JSetUp) {
-            log.debug("initLog4J already initialized!");
-            return;
-        }
-        // Initialise JMRI System Console
-        // Need to do this before initialising log4j so that the new
-        // stdout and stderr streams are set-up and usable by the ConsoleAppender
-        SystemConsole.create();
-
-        log4JSetUp = true;
-        // initialize log4j - from logging control file (lcf) only
-        // if can find it!
-        String logFile = "default.lcf";
-        try {
-            if (new File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure(logFile);
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
-            }
-        } catch (NoSuchMethodError e) {
-            log.error("Exception starting logging", e);
-        }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName());
-        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
-
-        // first log entry
-        log.info(jmriLog);
-
-        // now indicate logging locations
-        @SuppressWarnings("unchecked")
-        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
-        while (e.hasMoreElements()) {
-            org.apache.log4j.Appender a = (org.apache.log4j.Appender) e.nextElement();
-            if (a instanceof org.apache.log4j.RollingFileAppender) {
-                log.info("This log is appended to file: {}", ((org.apache.log4j.RollingFileAppender) a).getFile());
-            } else if (a instanceof org.apache.log4j.FileAppender) {
-                log.info("This log is stored in file: {}", ((org.apache.log4j.FileAppender) a).getFile());
-            }
-        }
     }
 
     /**
@@ -1189,13 +1140,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     // GUI members
     private JMenuBar menuBar;
 
-    static public String startupInfo(String program) {
-        setApplication(program);
-        nameString = (program + " version " + jmri.Version.name()
-                + " starts under Java " + System.getProperty("java.version", "<unknown>")
-                + " at " + (new Date()));
-        return nameString;
-    }
     static String nameString = "JMRI program";
 
     protected static void setApplication(String name) {

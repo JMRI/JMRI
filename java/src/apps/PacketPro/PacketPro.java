@@ -4,13 +4,12 @@
 
 package apps.PacketPro;
 
+import apps.Apps;
+import java.text.MessageFormat;
+import javax.swing.JFrame;
+import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.Apps;
-
-import java.text.MessageFormat;
-
-import javax.swing.JFrame;
 
 /**
  * Main program for the PacketProprogram based on JMRI.
@@ -57,7 +56,7 @@ public class PacketPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("PacketPro"));
+        log.info(Log4JUtil.startupInfo("PacketPro"));
 
         setConfigFilename("PacketProConfig2.xml", args);
         JFrame f = new JFrame("PacketPro");

@@ -284,8 +284,6 @@ public class FileUtil {
      * Deprecated forms are not created.
      *
      * @param file File at path to be represented
-     * @return Storage format representation
-     * @return Filename for storage in a portable manner
      * @return Filename for storage in a portable manner
      * @since 2.7.2
      */
@@ -498,7 +496,9 @@ public class FileUtil {
                 result = FileUtil.getHomePath() + "JMRI" + File.separator; // NOI18N
                 break;
         }
-        log.debug("preferencesPath defined as \"{}\" based on os.name=\"{}\"", result, SystemType.getOSName());
+        // logging here merely throws warnings since we call this method to setup logging
+        // uncomment below to print OS default to console
+        // System.out.println("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
         return result;
     }
 

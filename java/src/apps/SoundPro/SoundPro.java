@@ -2,14 +2,10 @@
 
 package apps.SoundPro;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.AppConfigPanel;
 import apps.Apps;
-
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -17,8 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import jmri.util.JmriJFrame;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for controlling audio.
@@ -118,7 +116,7 @@ public class SoundPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(apps.Apps.startupInfo("SoundPro"));
+        log.info(Log4JUtil.startupInfo("SoundPro"));
 
         setConfigFilename("SoundProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("SoundPro");

@@ -2,18 +2,31 @@
 
 package apps.gui3.demo3;
 
+import apps.GuiLafConfigPane;
+import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.util.JmriJFrame;
-
-import apps.GuiLafConfigPane;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import javax.swing.*;
-import jmri.util.FileUtil;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -39,8 +52,8 @@ public class Apps3 {
     static public void preInit() {
         // TODO Launch splash screen: splash(true)
 
-        jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo("Demo3"));
+        Log4JUtil.initLog4J();
+        log.info(Log4JUtil.startupInfo("Demo3"));
 
         // TODO setConfigFilename("Demo3Config3.xml", args)
     }

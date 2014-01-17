@@ -2,10 +2,11 @@
 
 package apps;
 
+import jmri.InstanceManager;
+import jmri.util.Log4JUtil;
+import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.web.server.WebServerManager;
 
 /**
  * A simple example of a "Faceless" (no gui) application
@@ -33,7 +34,7 @@ public class SampleMinimalProgram {
     public static void main(String args[]) {
 
         initLog4J();
-        log.info(apps.Apps.startupInfo(name));
+        log.info(Log4JUtil.startupInfo(name));
         
         new SampleMinimalProgram(args);   // start the application class itself
 
