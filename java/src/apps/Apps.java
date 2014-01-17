@@ -584,7 +584,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         editMenu.add(a);
 
         // prefs
-        prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+        prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
             Application.getApplication().setPreferencesHandler(new PreferencesHandler() {

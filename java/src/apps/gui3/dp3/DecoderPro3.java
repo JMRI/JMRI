@@ -121,7 +121,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         if ((!configOK) || (!configDeferredLoadOK)) {
             if (preferenceFileExists) {
                 //if the preference file already exists then we will launch the normal preference window
-                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
                 prefsAction.actionPerformed(null);
             }
         }

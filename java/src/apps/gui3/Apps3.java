@@ -302,7 +302,7 @@ public abstract class Apps3 extends AppsBase {
 
             @Override
             public void handlePreferences(EventObject eo) {
-                new TabbedPreferencesAction("Preferences").actionPerformed();
+                new TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences")).actionPerformed();
             }
         });
         macApp.setQuitHandler(new QuitHandler() {
