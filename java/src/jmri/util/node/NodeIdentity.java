@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerManager;
 import org.jdom.Document;
@@ -95,9 +96,9 @@ public class NodeIdentity {
     synchronized public static String identity() {
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.identity);
+            log.info("Using {} as the JMRI Node identity", instance.identity + "-" + ProfileManager.defaultManager().getActiveProfile().getUniqueId());
         }
-        return instance.identity;
+        return instance.identity + "-" + ProfileManager.defaultManager().getActiveProfile().getUniqueId();
     }
 
     /**

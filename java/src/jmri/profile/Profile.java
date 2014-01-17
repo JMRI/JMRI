@@ -172,4 +172,16 @@ public class Profile {
     public boolean isComplete() {
         return (new File(this.getPath(), Profile.CONFIG_FILENAME)).exists();
     }
+
+    /**
+     * Return the uniqueness portion of the Profile Id.
+     *
+     * This portion of the Id is automatically generated when the profile is
+     * created.
+     *
+     * @return An eight-character String of alphanumeric characters.
+     */
+    public String getUniqueId() {
+        return this.id.substring(this.id.lastIndexOf(".") + 1); // NOI18N
+    }
 }
