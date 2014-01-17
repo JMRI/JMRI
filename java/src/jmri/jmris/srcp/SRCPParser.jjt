@@ -34,21 +34,22 @@ public class SRCPParser {
 PARSER_END(SRCPParser)
 
 // The Tokenizer specification begins here:
-<IN_DESCRIPTION>
+/*<IN_DESCRIPTION>
 MORE :
 {
   <DESCRIPT: ~[]>
-}
+}*/
 
 <IN_TIME>
 TOKEN:
 {
-    < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
+    < JULDATE: (["0"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
   | < MINSEC: ["0"-"5"]["0"-"9"]>
   | < HOUR: (["0"-"2"])?["0"-"9"]>
 }
 
-<DEFAULT,IN_DESCRIPTION,IN_TIME>
+//<DEFAULT,IN_DESCRIPTION,IN_TIME>
+<DEFAULT,IN_TIME>
 TOKEN :
 {
   < EOL :(["\n","\r"]){2} >:DEFAULT
@@ -85,10 +86,11 @@ TOKEN :
 | < GM: <G><M> >
 | < SM: <S><M> >
 | < LOCK: <L><O><C><K> >
-| < TIME: <T><I><M><E>>:IN_TIME
+| < TIME: <T><I><M><E>>
 | < POWER: <P><O><W><E><R>>
 | < SESSION: <S><E><S><S><I><O><N>>
-| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
+//| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
+| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >
 | < SERVER: <S><E><R><V><E><R>>
 
 // Constants and commands used for handshake mode only.
@@ -113,8 +115,8 @@ TOKEN :
 | < INIT: <I><N><I><T> >
 | < TERM: <T><E><R><M> >
 | < WAIT: <W><A><I><T> >
-| < VERIFY: <V><E><R><I><F><Y>>
-| < RESET: <R><E><S><E><T>>
+| < VERIFY: <V><E><R><I><F><Y> >
+| < RESET: <R><E><S><E><T> >
 
 | <#A:["a","A"]>
 | <#B:["b","B"]>
@@ -301,7 +303,7 @@ SimpleNode set():{}
                 sm() address() progmode() cvno() value() | 
                 ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
-                time() | 
+                time() address() address() address() address() | 
                 power() onoff() | 
                 lock() ) ) |
 	<PROTOCOLLITTERAL> serviceversion() | 
@@ -314,7 +316,7 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() )
+  <TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() | time() )
   {return jjtThis;}
 }
 
@@ -340,7 +342,8 @@ SimpleNode check():{}
 
 SimpleNode wait_cmd():{}
 {
-  <WAIT> bus() ( fb() address() zeroone() timeout() )
+  <WAIT> bus() ( fb() address() zeroone() timeout() |
+         time() address() address() address() address())
 
   {
      log.debug("WAIT Production");
@@ -364,7 +367,7 @@ SimpleNode init():{}
 
 SimpleNode reset():{}
 {
-  <RESET> bus() <SERVER>
+  <RESET> bus() server() 
   {
      log.debug("RESET Production");
      return jjtThis;

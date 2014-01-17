@@ -199,6 +199,106 @@ public class SRCPParserTest extends TestCase {
            assertFalse(exceptionOccured);
        }
 
+       //test SERVER commands
+
+       public void testGetServer(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 SERVER\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testResetServer(){
+           boolean exceptionOccured = false;
+           String code = "RESET 0 SERVER\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testTERMServer(){
+           boolean exceptionOccured = false;
+           String code = "TERM 0 SERVER\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       // test TIME commands
+       public void testGETTime(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 TIME\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testINITTime(){
+           boolean exceptionOccured = false;
+           String code = "INIT 0 TIME 1 2\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testSETTime(){
+           boolean exceptionOccured = false;
+           String code = "SET 0 TIME 2014014 12 32 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testTERMTime(){
+           boolean exceptionOccured = false;
+           String code = "TERM 0 TIME\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+ 
+       public void testWaitTime(){
+           boolean exceptionOccured = false;
+           String code = "WAIT 0 TIME 2014020 1 30 41\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+
         // Main entry point
         static public void main(String[] args) {
                 String[] testCaseName = {SRCPParserTest.class.getName()};

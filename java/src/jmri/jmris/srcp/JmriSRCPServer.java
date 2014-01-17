@@ -129,6 +129,11 @@ public class JmriSRCPServer extends JmriServer{
                   SimpleNode e=parser.command();
                   SRCPVisitor v = new SRCPVisitor();
                   e.jjtAccept(v,sh);
+                  // for simple tasks, we're letting the visitor
+                  // generate the response.  If this happens, we
+                  // need to send the message out.
+                  if(v.getOutputString()!=null)
+                    outStream.writeBytes(v.getOutputString()+"\n\r");
               } catch (ParseException pe){
                    if(log.isDebugEnabled())
                    {

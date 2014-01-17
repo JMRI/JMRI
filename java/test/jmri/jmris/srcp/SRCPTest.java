@@ -35,6 +35,7 @@ public class SRCPTest extends TestCase {
         suite.addTest(jmri.jmris.srcp.JmriSRCPSensorServerTest.suite());
         suite.addTest(jmri.jmris.srcp.JmriSRCPPowerServerTest.suite());
         suite.addTest(jmri.jmris.srcp.JmriSRCPProgrammerServerTest.suite());
+        suite.addTest(jmri.jmris.srcp.JmriSRCPTimeServerTest.suite());
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
            // put any tests that require a UI here.

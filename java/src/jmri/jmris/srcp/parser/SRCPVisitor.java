@@ -14,6 +14,11 @@ import jmri.InstanceManager;
 
 public class SRCPVisitor implements SRCPParserVisitor {
 
+  private String outputString=null;
+
+  public String getOutputString(){
+       return outputString;
+  }
 
   public Object visit(SimpleNode node, Object data)
   {
@@ -99,6 +104,12 @@ public class SRCPVisitor implements SRCPParserVisitor {
        } catch(java.io.IOException ie) {
        }
 
+    }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SERVER"))
+    {
+       // for the GET <bus> SERVER request, we return the current server 
+       // state.  In JMRI, we always return "Running".
+       outputString="100 INFO 0 SERVER RUNNING";
     }
     return data;
   }
@@ -192,8 +203,19 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTterm node, Object data)
   {
     log.debug("TERM " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
+    if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SERVER"))
+    {
+       // for the TERM <bus> SERVER request, the protocol requries that
+       // we terminate all connections and reset the state to the initial
+       // state.  Since we may have a local GUI controlling things, we
+       // ignore the request, but send the proper return value to the
+       // requesting client.
+       outputString="200 OK";
+       return data;
+    }
     return node.childrenAccept(this,data);
   }
+
   public Object visit(ASTcheck node, Object data)
   {
     log.debug("CHECK " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
@@ -207,6 +229,15 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTreset node,java.lang.Object data)
   {
     log.debug("RESET " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
+    if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SERVER"))
+    {
+       // for the RESET <bus> SERVER request, the protocol requries that
+       // we re-initialize the server.  Since we may have a local GUI 
+       // controlling things, we ignore the request, but send a prohibited
+       // response to the requesting client.
+       outputString="413 ERROR temporarily prohibited";
+       return data;
+    }
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTinit node,java.lang.Object data)
