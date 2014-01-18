@@ -113,6 +113,66 @@ For an example of where to position it, etc, see the
 <a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 
+<h4>Qualifying Variables</h4>
+
+A "qualifier" element on a variable element allows you to enable or disable the variable
+depending on the current value of another variable.  In the following example, 
+a CV is interpreted as two different variables depending on whether the 
+decoder is set for short or long addressing.
+
+<code><pre>
+  &lt;variable label="Variable for Short Address" CV="11"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
+  &lt;variable label="Variable for Long Address" CV="11"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
+</pre></code>
+
+Other available operators include "gt", "ge", "ne", "lt" and "le".
+
+<h4>Qualifying Panes</h4>
+
+A "qualifier" element on a pane element allows you to enable or disable the pane
+depending on the current value of a variable.  The following example enables
+one of two panes depending on whether the decoder is currently set for short or
+long addressing.
+
+<code><pre>
+  &lt;pane name="Short Only"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;column&gt;&lt;row&gt;
+      &lt;label label="Short Only Pane"/&gt;
+    &lt;/row&gt;&lt;/column&gt;
+  &lt;/pane&gt;
+  &lt;pane name="Long Only"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;column&gt;&lt;row&gt;
+      &lt;label label="Long Only Pane"/&gt;
+    &lt;/row&gt;&lt;/column&gt;
+  &lt;/pane&gt;
+</pre></code>
+
+Other available operators include "gt", "ge", "ne", "lt" and "le".
+
 
 <!--#include virtual="/Footer" -->
 </div>

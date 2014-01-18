@@ -33,7 +33,7 @@ import jmri.util.FileUtil;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
- * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
+ * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
  * @version   $Revision$
@@ -934,21 +934,62 @@ abstract public class PaneProgFrame extends JmriJFrame
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem);
         p.setOpaque(true);
         // how to handle the tab depends on whether it has contents and option setting
+        int index;
         if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indexedCvList.size()!=0)) ) {
             tabPane.addTab(name, p);  // always add if not empty
+            index = tabPane.indexOfTab(name);
         } else if (getShowEmptyPanes()) {
             // here empty, but showing anyway as disabled
             tabPane.addTab(name, p);
-            int index = tabPane.indexOfTab(name);
+            index = tabPane.indexOfTab(name);
             tabPane.setEnabledAt(index, false);
             tabPane.setToolTipTextAt(index, 
                 SymbolicProgBundle.getMessage("TipTabDisabledNoCategory"));
         } else {
             // here not showing tab at all
+            index = -1;
         }
 
-        // and remember it for programming
+        // remember it for programming
         paneList.add(p);
+        
+        // if visible, set qualications
+        if (index >= 0) processModifierElements(pane, p, variableModel, tabPane, index);
+    }
+
+    /**
+     * If there are any modifier elements, process them
+     */
+    protected void processModifierElements(Element e, PaneProgPane pane, VariableTableModel model, JTabbedPane tabPane, int index) {
+        // currently only looks for one instance and one type
+        @SuppressWarnings("unchecked")
+        List<Element> le = e.getChildren("qualifier");
+        ArrayList<PaneQualifier> lq = new ArrayList<PaneQualifier>();
+        for (Element q : le) {
+
+            String variableRef = q.getChild("variableref").getText();
+            String relation = q.getChild("relation").getText();
+            String value = q.getChild("value").getText();
+    
+            // find the variable
+            VariableValue var = model.findVar(variableRef);
+            
+            if (var != null) {
+                // found, attach the qualifier object by creating it
+                if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+pane.getName());
+                PaneQualifier qual = new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
+                qual.update(var.getIntValue()); 
+                lq.add(qual);   
+            } else {
+                log.error("didn't find "+variableRef+" variable qualifying "+pane.getName(), new Exception());
+            }
+        }
+        // Now add the AND logic
+        if (lq.size()>1) {
+            // following registers itself
+            log.warn("multiple qualifiers on a single pane are not working yet - list of ArithmeticQualifiers?");
+            //new QualifierCombiner(v, lq);
+        }
     }
 
     public BusyGlassPane getBusyGlassPane() { return glassPane; }

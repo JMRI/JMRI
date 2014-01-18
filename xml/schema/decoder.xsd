@@ -723,6 +723,13 @@
           </xs:documentation></xs:annotation>
       </xs:element>
 
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        Qualifies whether this pane will appear as active in the interface, depending
+        on the value in other variables.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
