@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
@@ -15,13 +16,16 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between a JMRI memory and a network connection
  *
  * @author mstevetodd Copyright (C) 2012 (copied from AbstractSensorServer)
- * @author Randall Wood Copyright (C) 2013
+ * @author Randall Wood Copyright (C) 2013, 2014
  * @version $Revision: $
  */
 abstract public class AbstractMemoryServer {
 
+    private final HashMap<String, MemoryListener> memories;
+    private static final Logger log = LoggerFactory.getLogger(AbstractMemoryServer.class);
+
     public AbstractMemoryServer() {
-        memories = new ArrayList<String>();
+        memories = new HashMap<String, MemoryListener>();
     }
 
     /*
@@ -34,15 +38,15 @@ abstract public class AbstractMemoryServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addMemoryToList(String memoryName) {
-        if (!memories.contains(memoryName)) {
-            memories.add(memoryName);
-            InstanceManager.memoryManagerInstance().getMemory(memoryName)
-                    .addPropertyChangeListener(new MemoryListener(memoryName));
+        if (!memories.containsKey(memoryName)) {
+            memories.put(memoryName, new MemoryListener(memoryName));
+            InstanceManager.memoryManagerInstance().getMemory(memoryName).addPropertyChangeListener(memories.get(memoryName));
         }
     }
 
     synchronized protected void removeMemoryFromList(String memoryName) {
-        if (memories.contains(memoryName)) {
+        if (memories.containsKey(memoryName)) {
+            InstanceManager.memoryManagerInstance().getMemory(memoryName).removePropertyChangeListener(memories.get(memoryName));
             memories.remove(memoryName);
         }
     }
@@ -76,6 +80,13 @@ abstract public class AbstractMemoryServer {
         }
     }
 
+    public void dispose() {
+        for (Map.Entry<String, MemoryListener> memory : this.memories.entrySet()) {
+            InstanceManager.memoryManagerInstance().getMemory(memory.getKey()).removePropertyChangeListener(memory.getValue());
+        }
+        this.memories.clear();
+    }
+
     class MemoryListener implements PropertyChangeListener {
 
         MemoryListener(String memoryName) {
@@ -101,7 +112,4 @@ abstract public class AbstractMemoryServer {
         String name = null;
         Memory memory = null;
     }
-    protected ArrayList<String> memories = null;
-    String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractMemoryServer.class);
 }

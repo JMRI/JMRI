@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
@@ -19,12 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractSignalHeadServer {
 
-    protected ArrayList<String> signalHeads = null;
-    protected String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadServer.class.getName());
+    private final HashMap<String, SignalHeadListener> signalHeads;
+    private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadServer.class);
 
     public AbstractSignalHeadServer() {
-        signalHeads = new ArrayList<String>();
+        signalHeads = new HashMap<String, SignalHeadListener>();
     }
 
     /*
@@ -37,15 +37,16 @@ abstract public class AbstractSignalHeadServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addSignalHeadToList(String signalHeadName) {
-        if (!signalHeads.contains(signalHeadName)) {
-            signalHeads.add(signalHeadName);
-            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).addPropertyChangeListener(new SignalHeadListener(signalHeadName));
-            if (log.isDebugEnabled()) log.debug("Added listener to signalHead " + signalHeadName);
+        if (!signalHeads.containsKey(signalHeadName)) {
+            signalHeads.put(signalHeadName, new SignalHeadListener(signalHeadName));
+            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).addPropertyChangeListener(signalHeads.get(signalHeadName));
+            log.debug("Added listener to signalHead {}", signalHeadName);
         }
     }
 
     synchronized protected void removeSignalHeadFromList(String signalHeadName) {
-        if (signalHeads.contains(signalHeadName)) {
+        if (signalHeads.containsKey(signalHeadName)) {
+            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).removePropertyChangeListener(signalHeads.get(signalHeadName));
             signalHeads.remove(signalHeadName);
         }
     }
@@ -131,6 +132,13 @@ abstract public class AbstractSignalHeadServer {
         }
     }
 
+    public void dispose() {
+        for (Map.Entry<String, SignalHeadListener> signalHead : this.signalHeads.entrySet()) {
+            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead.getKey()).removePropertyChangeListener(signalHead.getValue());
+        }
+        this.signalHeads.clear();
+    }
+
     class SignalHeadListener implements PropertyChangeListener {
 
         String name = null;
@@ -145,16 +153,18 @@ abstract public class AbstractSignalHeadServer {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("Appearance") || e.getPropertyName().equals("Held")) {
-            	SignalHead sh = (SignalHead)e.getSource();
-            	int state = sh.getAppearance();
-            	if (sh.getHeld()) {
-            		state = SignalHead.HELD;
-            	}
+                SignalHead sh = (SignalHead) e.getSource();
+                int state = sh.getAppearance();
+                if (sh.getHeld()) {
+                    state = SignalHead.HELD;
+                }
                 try {
                     sendStatus(name, state);
                 } catch (IOException ie) {
                     // if we get an error, de-register
-                    if (log.isDebugEnabled()) log.debug("Unable to send status, removing listener from signalHead " + name);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Unable to send status, removing listener from signalHead " + name);
+                    }
                     signalHead.removePropertyChangeListener(this);
                     removeSignalHeadFromList(name);
                 }

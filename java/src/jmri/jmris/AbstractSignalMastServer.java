@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
@@ -19,12 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractSignalMastServer {
 
-    protected ArrayList<String> signalMasts = null;
-    protected String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class.getName());
+    private final HashMap<String, SignalMastListener> signalMasts;
+    static private final Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class.getName());
 
     public AbstractSignalMastServer() {
-        signalMasts = new ArrayList<String>();
+        signalMasts = new HashMap<String, SignalMastListener>();
     }
 
     /*
@@ -37,15 +37,16 @@ abstract public class AbstractSignalMastServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addSignalMastToList(String signalMastName) {
-        if (!signalMasts.contains(signalMastName)) {
-            signalMasts.add(signalMastName);
-            InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName).addPropertyChangeListener(new SignalMastListener(signalMastName));
-            if (log.isDebugEnabled()) log.debug("Added listener to signalMast " + signalMastName);
+        if (!signalMasts.containsKey(signalMastName)) {
+            signalMasts.put(signalMastName, new SignalMastListener(signalMastName));
+            InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName).addPropertyChangeListener(signalMasts.get(signalMastName));
+            log.debug("Added listener to signalMast {}", signalMastName);
         }
     }
 
     synchronized protected void removeSignalMastFromList(String signalMastName) {
-        if (signalMasts.contains(signalMastName)) {
+        if (signalMasts.containsKey(signalMastName)) {
+            InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName).removePropertyChangeListener(signalMasts.get(signalMastName));
             signalMasts.remove(signalMastName);
         }
     }
@@ -56,9 +57,9 @@ abstract public class AbstractSignalMastServer {
             addSignalMastToList(signalMastName);
             signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName);
             if (signalMast == null) {
-                log.error("SignalMast " + signalMastName + " is not available.");
+                log.error("SignalMast {} is not available.", signalMastName);
             } else {
-                if (! signalMast.getAspect().equals(signalMastState)) {
+                if (!signalMast.getAspect().equals(signalMastState)) {
                     signalMast.setAspect(signalMastState);
                 } else {
                     try {
@@ -69,10 +70,16 @@ abstract public class AbstractSignalMastServer {
                 }
             }
         } catch (Exception ex) {
-            log.error("Exception setting signalMast " + signalMastName + " aspect:", ex);
+            log.error("Exception setting signalMast {} aspect:", signalMastName, ex);
         }
     }
 
+    public void dispose() {
+        for (Map.Entry<String, SignalMastListener> signalMast : this.signalMasts.entrySet()) {
+            InstanceManager.signalHeadManagerInstance().getSignalHead(signalMast.getKey()).removePropertyChangeListener(signalMast.getValue());
+        }
+        this.signalMasts.clear();
+    }
 
     class SignalMastListener implements PropertyChangeListener {
 
@@ -88,18 +95,20 @@ abstract public class AbstractSignalMastServer {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("Aspect") || e.getPropertyName().equals("Held") || e.getPropertyName().equals("Lit")) {
-            	SignalMast sm = (SignalMast)e.getSource();
-        		String state = sm.getAspect();
-    			if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
-    	    		state = "Held";
-    			} else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
-    	    		state = "Dark";
-    			}
+                SignalMast sm = (SignalMast) e.getSource();
+                String state = sm.getAspect();
+                if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
+                    state = "Held";
+                } else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+                    state = "Dark";
+                }
                 try {
                     sendStatus(name, state);
                 } catch (IOException ie) {
                     // if we get an error, de-register
-                    if (log.isDebugEnabled()) log.debug("Unable to send status, removing listener from signalMast " + name);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Unable to send status, removing listener from signalMast " + name);
+                    }
                     signalMast.removePropertyChangeListener(this);
                     removeSignalMastFromList(name);
                 }

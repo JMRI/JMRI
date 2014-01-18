@@ -92,9 +92,19 @@ public class JsonClientHandler {
 
     public void dispose() {
         this.throttleServer.dispose();
-        this.lightServer.dispose();
-        this.timeServer.dispose();
         this.consistServer.dispose();
+        this.lightServer.dispose();
+        this.memoryServer.dispose();
+        this.operationsServer.dispose();
+        this.powerServer.dispose();
+        this.programmerServer.dispose();
+        this.reporterServer.dispose();
+        this.routeServer.dispose();
+        this.sensorServer.dispose();
+        this.signalHeadServer.dispose();
+        this.signalMastServer.dispose();
+        this.timeServer.dispose();
+        this.turnoutServer.dispose();
     }
 
     /**
