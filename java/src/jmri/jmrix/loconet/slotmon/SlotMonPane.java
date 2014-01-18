@@ -30,18 +30,21 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      */
     javax.swing.JCheckBox 	showSystemCheckBox = new javax.swing.JCheckBox();
 
-    JButton                     estopAllButton  = new JButton("estop all");
-    SlotMonDataModel	slotModel;
-    JTable				slotTable;
-    JScrollPane 		slotScroll;
-
+    JButton estopAllButton  = new JButton("Estop All");
+    
+    //Added by Jeffrey Machacek 2013
+    JButton clearAllButton = new JButton("Clear All Non-InUse Slots");
+    SlotMonDataModel slotModel;
+    JTable slotTable;
+    JScrollPane slotScroll;
+    
     public SlotMonPane() {
         super();
     }
 
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
+
         slotModel 	= new SlotMonDataModel(128,16, memo);
     	slotTable	= JTableUtil.sortableDataModel(slotModel);
     	slotScroll	= new JScrollPane(slotTable);
@@ -88,6 +91,13 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             public void mouseReleased(MouseEvent e) {}
             public void mouseClicked(MouseEvent e) {}
         });
+        
+        //Jeffrey 6/29/2013
+        clearAllButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				slotModel.clearAllSlots();
+			}
+        });
 
         // adjust model to default settings
         slotModel.showAllSlots(showAllCheckBox.isSelected());
@@ -103,6 +113,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         pane1.add(showAllCheckBox);
         pane1.add(showSystemCheckBox);
         pane1.add(estopAllButton);
+        pane1.add(clearAllButton);
 
         add(pane1);
         add(slotScroll);
