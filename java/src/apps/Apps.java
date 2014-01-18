@@ -1186,6 +1186,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
     }
-    private static final String jmriLog = "****** JMRI log *******";
+
     static Logger log = LoggerFactory.getLogger(Apps.class.getName());
 }
