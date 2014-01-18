@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -15,13 +16,16 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between the a JMRI Light and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @author Randall Wood Copyright (C) 2013
+ * @author Randall Wood Copyright (C) 2013, 2014
  * @version $Revision$
  */
 abstract public class AbstractLightServer {
 
+    private final HashMap<String, LightListener> lights;
+    static Logger log = LoggerFactory.getLogger(AbstractLightServer.class.getName());
+
     public AbstractLightServer() {
-        lights = new ArrayList<String>();
+        lights = new HashMap<String, LightListener>();
     }
 
     /*
@@ -34,15 +38,15 @@ abstract public class AbstractLightServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addLightToList(String lightName) {
-        if (!lights.contains(lightName)) {
-            lights.add(lightName);
-            InstanceManager.lightManagerInstance().getLight(lightName)
-                    .addPropertyChangeListener(new LightListener(lightName));
+        if (!lights.containsKey(lightName)) {
+            lights.put(lightName, new LightListener(lightName));
+            InstanceManager.lightManagerInstance().getLight(lightName).addPropertyChangeListener(lights.get(lightName));
         }
     }
 
     synchronized protected void removeLightFromList(String lightName) {
-        if (lights.contains(lightName)) {
+        if (lights.containsKey(lightName)) {
+            InstanceManager.lightManagerInstance().getLight(lightName).removePropertyChangeListener(lights.get(lightName));
             lights.remove(lightName);
         }
     }
@@ -91,6 +95,13 @@ abstract public class AbstractLightServer {
         }
     }
 
+    public void dispose() {
+        for (Map.Entry<String, LightListener> light : this.lights.entrySet()) {
+            InstanceManager.lightManagerInstance().getLight(light.getKey()).removePropertyChangeListener(light.getValue());
+        }
+        this.lights.clear();
+    }
+
     class LightListener implements PropertyChangeListener {
 
         LightListener(String lightName) {
@@ -117,7 +128,4 @@ abstract public class AbstractLightServer {
         Light light = null;
         String name = null;
     }
-    protected ArrayList<String> lights = null;
-    String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractLightServer.class.getName());
 }
