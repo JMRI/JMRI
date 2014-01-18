@@ -29,7 +29,7 @@ public class JsonThrottleServer {
         this.throttles = new HashMap<String, JsonThrottle>(0);
     }
 
-    public void onClose() {
+    public void dispose() {
         for (String throttleId : this.throttles.keySet()) {
             this.throttles.get(throttleId).close();
             this.throttles.remove(throttleId);

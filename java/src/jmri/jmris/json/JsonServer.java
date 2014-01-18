@@ -88,7 +88,7 @@ public class JsonServer extends JmriServer {
                 // Read the command from the client
             } catch (IOException e) {
                 // attempt to close the connection and throw the exception
-                handler.onClose();
+                handler.dispose();
                 throw e;
             } catch (NoSuchElementException nse) {
                 // we get an NSE when we are finished with this client
@@ -96,7 +96,7 @@ public class JsonServer extends JmriServer {
                 break;
             }
         }
-        handler.onClose();
+        handler.dispose();
     }
 
     @Override

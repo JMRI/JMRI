@@ -537,7 +537,7 @@ public class JsonServlet extends WebSocketServlet {
         @Override
         public void onClose(int i, String string) {
             log.debug("Closing connection because {} ({})", string, i);
-            this.handler.onClose();
+            this.handler.dispose();
             sockets.remove(this);
         }
 

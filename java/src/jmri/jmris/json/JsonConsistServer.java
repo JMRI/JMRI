@@ -81,13 +81,13 @@ public class JsonConsistServer {
         }
     }
 
-    public void onClose() {
+    public void dispose() {
         InstanceManager.removePropertyChangeListener(this.instanceManagerListener);
         if (InstanceManager.consistManagerInstance() != null) {
             InstanceManager.consistManagerInstance().removeConsistListListener(this.consistListListener);
             for (JsonConsistListener l : new ArrayList<JsonConsistListener>(this.consistListeners)) {
-                l.onClose();
                 this.consistListeners.remove(l);
+                l.dispose();
             }
         }
     }
@@ -160,7 +160,7 @@ public class JsonConsistServer {
             }
         }
 
-        private void onClose() {
+        public void dispose() {
             if (InstanceManager.consistManagerInstance() != null) {
                 InstanceManager.consistManagerInstance().getConsist(this.consistAddress).removeConsistListener(this);
             }

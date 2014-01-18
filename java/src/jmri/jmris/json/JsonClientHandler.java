@@ -90,10 +90,11 @@ public class JsonClientHandler {
         this.turnoutServer = new JsonTurnoutServer(this.connection);
     }
 
-    public void onClose() {
-        this.throttleServer.onClose();
+    public void dispose() {
+        this.throttleServer.dispose();
+        this.lightServer.dispose();
         this.timeServer.dispose();
-        this.consistServer.onClose();
+        this.consistServer.dispose();
     }
 
     /**
