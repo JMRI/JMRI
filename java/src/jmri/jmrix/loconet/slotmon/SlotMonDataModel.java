@@ -25,10 +25,11 @@ import jmri.Throttle;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
+ * @author Jeffrey Machacek 2013 
  * @version     $Revision$
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
-
+    
     static public final int SLOTCOLUMN = 0;
     static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 2;
@@ -48,7 +49,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int F6COLUMN   = 16;
     static public final int F7COLUMN   = 17;
     static public final int F8COLUMN   = 18;
-
+    
     static public final int NUMCOLUMN = 19;
     
     jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
@@ -122,7 +123,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         default: return "unknown";
         }
     }
-
+    
     public Class<?> getColumnClass(int col) {
         switch (col) {
         case SLOTCOLUMN:
@@ -152,7 +153,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return null;
         }
     }
-
+    
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case ESTOPCOLUMN:
@@ -172,12 +173,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return false;
         }
     }
-
+    
     static final Boolean True = Boolean.valueOf(true);
     static final Boolean False = Boolean.valueOf(false);
-
-    @SuppressWarnings("null")
-	public Object getValueAt(int row, int col) {
+    
+    public Object getValueAt(int row, int col) {
         LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String      t;
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
@@ -258,13 +258,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             int upper = (s.id()>>7)&0x7F;
             int lower = s.id()&0x7F;
             return StringUtil.twoHexFromInt(upper)+" "+StringUtil.twoHexFromInt(lower);
-
+            
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
     }
-
+    
     public int getPreferredWidth(int col) {
         switch (col) {
         case SLOTCOLUMN:
@@ -301,7 +301,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return new JLabel(" <unknown> ").getPreferredSize().width;
         }
     }
-
+    
     public void setValueAt(Object value, int row, int col) {
         int status = 0;
         
@@ -410,7 +410,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 memo.getLnTrafficController().sendLocoNetMessage(
                                                                  s.writeStatus(LnConstants.LOCO_IN_USE
                                                                                ));
-            }
+			}
             
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SND);
@@ -471,6 +471,27 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
     
+    //Added by Jeffrey Machacek, date: 2013 
+    //changed 8/22/2013
+    public void clearAllSlots()
+    {
+        int count = getRowCount();
+	
+        for(int row = 0; row < (count - 1); row++)
+            {
+                LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
+                
+                if(s.slotStatus() != LnConstants.LOCO_IN_USE)
+                    {
+                        memo.getLnTrafficController().sendLocoNetMessage(
+                                                                         s.writeStatus(LnConstants.LOCO_FREE
+								));
+                        fireTableRowsUpdated(row,row);
+                    }
+                count = getRowCount();
+            }
+    }
+    
     /**
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.
@@ -508,9 +529,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-                        .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+            .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
-
+    
     void setColumnToHoldEStopButton(JTable slotTable, int column) {
         TableColumnModel tcm = slotTable.getColumnModel();
         // install the button renderers & editors in this column
@@ -525,7 +546,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
-                        .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+            .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
     
     // methods to communicate with SlotManager
