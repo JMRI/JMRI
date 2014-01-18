@@ -52,9 +52,6 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
     ant
     
-    Check the version number into the top help page on the branch (one place):
-    bbedit help/en/index.html
-
     (Need to consider whether to do this in help/fr, and eventually others)
     
     Run the program and make sure help works.
