@@ -88,7 +88,7 @@ public class Profile {
         }
     }
 
-    private void save() throws IOException {
+    protected final void save() throws IOException {
         Properties p = new Properties();
         File f = new File(this.path, PROPERTIES);
         FileOutputStream os = null;
@@ -117,9 +117,10 @@ public class Profile {
         return name;
     }
 
-    public void setName(String name) throws IOException {
+    public void setName(String name) {
+        String oldName = this.name;
         this.name = name;
-        this.save();
+        ProfileManager.defaultManager().profileNameChange(this, oldName);
     }
 
     /**

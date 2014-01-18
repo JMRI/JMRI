@@ -1,5 +1,6 @@
 package jmri.profile;
 
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -628,5 +629,10 @@ public class ProfileManager extends Bean {
      */
     public static String createUniqueId() {
         return Integer.toHexString(Float.floatToIntBits((float) Math.random()));
+    }
+
+    void profileNameChange(Profile profile, String oldName) {
+        log.debug(oldName);
+        this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
     }
 }

@@ -66,7 +66,7 @@ public class NullProfile extends Profile {
     }
 
     @Override
-    public void setName(String name) throws IOException {
+    public void setName(String name) {
         this.name = name;
     }
 

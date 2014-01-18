@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
@@ -57,6 +58,15 @@ public class ProfileManagerDialog extends JDialog {
             public void propertyChange(PropertyChangeEvent evt) {
                 profiles.setSelectedValue(ProfileManager.defaultManager().getActiveProfile(), true);
                 profiles.repaint();
+            }
+        });
+        ProfileManager.defaultManager().addPropertyChangeListener(Profile.NAME, new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getSource().getClass().equals(Profile.class) && evt.getPropertyName().equals(Profile.NAME)) {
+                    profileNameChanged(((Profile) evt.getSource()));
+                }
             }
         });
     }
@@ -249,6 +259,19 @@ public class ProfileManagerDialog extends JDialog {
             ProfileManager.defaultManager().saveActiveProfile();
         }
         return ProfileManager.defaultManager().getActiveProfile();
+    }
+
+    private void profileNameChanged(Profile p) {
+        try {
+            p.save();
+            log.info("Saving profile {}", p.getId());
+        } catch (IOException ex) {
+            log.error("Unable to save renamed profile: {}", ex.getMessage());
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ProfileManagerDialog.errorRenamingProfile"),
+                    Bundle.getMessage("ProfileManagerDialog.errorRenamingProfileTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void profilesValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_profilesValueChanged
