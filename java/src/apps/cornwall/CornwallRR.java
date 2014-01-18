@@ -5,7 +5,6 @@ package apps.cornwall;
 import apps.Apps;
 import java.text.MessageFormat;
 import javax.swing.JFrame;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +57,7 @@ public class CornwallRR extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("CornwallRR"));
+        Apps.startupInfo("CornwallRR");
 
         setConfigFilename("CornwallConfig2.xml", args);
         JFrame f = new JFrame("Cornwall Railroad");

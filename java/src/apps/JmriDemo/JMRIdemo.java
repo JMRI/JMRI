@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
-import jmri.util.Log4JUtil;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +72,7 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("JMRIdemo"));
+        Apps.startupInfo("JMRIdemo");
 
         setConfigFilename("JmriDemoConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("JmriDemo");

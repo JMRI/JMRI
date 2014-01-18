@@ -7,7 +7,6 @@ import apps.Apps;
 import java.text.MessageFormat;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +68,7 @@ public class LocoTools extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("LocoTools"));
+        Apps.startupInfo("LocoTools");
 
         setConfigFilename("LocoToolsConfig2.xml", args);
         JFrame f = new JFrame("LocoTools");

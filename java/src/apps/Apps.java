@@ -151,10 +151,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                             log.error("Exception writing blocks: {}", ioe);
                         }
 
-                // continue shutdown
-                return true;
-            }
-        });
+                        // continue shutdown
+                        return true;
+                    }
+                });
 
         // Get configuration profile
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
@@ -1150,6 +1150,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IllegalAccessException ex) {
             log.warn("Unable to set application name", ex);
         }
+    }
+
+    protected static void startupInfo(String name) {
+        Apps.setApplication(name);
+        log.info(Log4JUtil.startupInfo(name));
     }
 
     private void prepareFontLists() {

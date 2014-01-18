@@ -7,7 +7,6 @@ package apps.PacketPro;
 import apps.Apps;
 import java.text.MessageFormat;
 import javax.swing.JFrame;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +55,7 @@ public class PacketPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("PacketPro"));
+        Apps.startupInfo("PacketPro");
 
         setConfigFilename("PacketProConfig2.xml", args);
         JFrame f = new JFrame("PacketPro");

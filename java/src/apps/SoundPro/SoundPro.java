@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +115,7 @@ public class SoundPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("SoundPro"));
+        Apps.startupInfo("SoundPro");
 
         setConfigFilename("SoundProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("SoundPro");

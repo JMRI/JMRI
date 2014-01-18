@@ -1,13 +1,13 @@
 // Paned.java
 package apps.gui3.dp3;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for developing the DecoderPro 3 GUI <P>
@@ -27,7 +27,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     private static String menuFile = null;
     private static String toolbarFile = null;
-    private static String applicationName = "DecoderPro 3";
+    private static final String applicationName = "DecoderPro 3";
 
     public DecoderPro3(String[] args) {
         super(applicationName, "DecoderProConfig3.xml", args);
@@ -82,6 +82,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     /**
      * Force our test size. Superclass method set to max size, filling real
      * window.
+     * @param d
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {

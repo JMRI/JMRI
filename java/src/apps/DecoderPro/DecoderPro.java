@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +124,7 @@ public class DecoderPro extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("DecoderPro"));
+        Apps.startupInfo("DecoderPro");
 
         setConfigFilename("DecoderProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("DecoderPro");

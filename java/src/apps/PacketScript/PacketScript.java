@@ -9,7 +9,6 @@ import apps.Apps;
 import java.text.MessageFormat;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import jmri.util.Log4JUtil;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +64,7 @@ public class PacketScript extends Apps {
         // show splash screen early
         splash(true);
 
-        log.info(Log4JUtil.startupInfo("PacketScript"));
+        Apps.startupInfo("PacketScript");
 
         setConfigFilename("PacketScriptConfig2.xml", args);
         JFrame f = new JFrame("PanelPro");
