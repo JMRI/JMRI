@@ -90,15 +90,21 @@ public class NodeIdentity {
      * Return the node's current identity.
      *
      * @return An identity. If this identity is not in the form
-     * <i>jmri-MACADDRESS</i>, this identity should be considered unreliable and
-     * subject to change across JMRI restarts.
+     * <i>jmri-MACADDRESS-profileId</i>, this identity should be considered
+     * unreliable and subject to change across JMRI restarts.
      */
     synchronized public static String identity() {
+        String uniqueId = "-";
+        try {
+            uniqueId += ProfileManager.defaultManager().getActiveProfile().getUniqueId();
+        } catch (NullPointerException ex) {
+            uniqueId += Integer.toHexString(Float.floatToIntBits((float) Math.random()));
+        }
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.identity + "-" + ProfileManager.defaultManager().getActiveProfile().getUniqueId());
+            log.info("Using {} as the JMRI Node identity", instance.identity + uniqueId);
         }
-        return instance.identity + "-" + ProfileManager.defaultManager().getActiveProfile().getUniqueId();
+        return instance.identity + uniqueId;
     }
 
     /**
