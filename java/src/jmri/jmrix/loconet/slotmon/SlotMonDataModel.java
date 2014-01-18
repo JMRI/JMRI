@@ -58,11 +58,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         
         // connect to SlotManager for updates
         memo.getSlotManager().addSlotListener(this);
-
+        
         // start update process
         memo.getSlotManager().update();
     }
-
+    
     /**
      * Returns the number of rows to be displayed.  This
      * can vary depending on whether only active rows
@@ -94,10 +94,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
         return n;
     }
-
-
+    
+    
     public int getColumnCount( ){ return NUMCOLUMN;}
-
+    
     public String getColumnName(int col) {
         switch (col) {
         case SLOTCOLUMN: return "Slot";
@@ -181,7 +181,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String      t;
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
-
+        
         switch (col) {
         case SLOTCOLUMN:  // slot number
             return Integer.valueOf(slotNum(row));
@@ -350,18 +350,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             boolean tempF4 = (col == F4COLUMN) ? !s.isF4() : s.isF4();
             
             int new_dirf = ((s.isForward() ? 0 : LnConstants.DIRF_DIR) |
-                        (tempF0 ? LnConstants.DIRF_F0 : 0) |
-                        (tempF1 ? LnConstants.DIRF_F1 : 0) |
-                        (tempF2 ? LnConstants.DIRF_F2 : 0) |
-                        (tempF3 ? LnConstants.DIRF_F3 : 0) |
-                        (tempF4 ? LnConstants.DIRF_F4 : 0));
+                            (tempF0 ? LnConstants.DIRF_F0 : 0) |
+                            (tempF1 ? LnConstants.DIRF_F1 : 0) |
+                            (tempF2 ? LnConstants.DIRF_F2 : 0) |
+                            (tempF3 ? LnConstants.DIRF_F3 : 0) |
+                            (tempF4 ? LnConstants.DIRF_F4 : 0));
             
             // set status to 'In Use' if other
             status = s.slotStatus();
             if (status != LnConstants.LOCO_IN_USE) {
                 memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_IN_USE
-                    ));
+                                                                 s.writeStatus(LnConstants.LOCO_IN_USE
+                                                                               ));
             }
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
@@ -377,10 +377,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
             // reset status to original value if not previously 'in use'
             if(status != LnConstants.LOCO_IN_USE)
-            {
-               memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(status)); 
-            }
+                {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                                                                     s.writeStatus(status)); 
+                }
             fireTableRowsUpdated(row,row);
         }
         else if ((col == F5COLUMN) ||
@@ -408,8 +408,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             status = s.slotStatus();
             if (status != LnConstants.LOCO_IN_USE) {
                 memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_IN_USE
-                    ));
+                                                                 s.writeStatus(LnConstants.LOCO_IN_USE
+                                                                               ));
             }
             
             LocoNetMessage msg = new LocoNetMessage(4);
@@ -427,10 +427,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             
             // reset status to original value if not previously 'in use'
             if(status != LnConstants.LOCO_IN_USE)
-            {
-               memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(status)); 
-            }
+                {
+                    memo.getLnTrafficController().sendLocoNetMessage(
+                                                                     s.writeStatus(status)); 
+                }
             
             fireTableRowsUpdated(row,row);
         }
@@ -462,15 +462,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 }
                 // send status to free
                 memo.getLnTrafficController().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_FREE
-                    ));
+                                                                 s.writeStatus(LnConstants.LOCO_FREE
+                                                                               ));
             } else {
                 log.debug("Slot not in use");
             }
             fireTableRowsUpdated(row,row);
         }
     }
-
+    
     /**
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.
@@ -480,24 +480,24 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
         slotTable.getTableHeader().setReorderingAllowed(true);
-
+        
         // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+        
         // resize columns as requested
         for (int i=0; i<slotTable.getColumnCount(); i++) {
             int width = getPreferredWidth(i);
             slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         slotTable.sizeColumnsToFit(-1);
-
+        
         // install a button renderer & editor in the "DISP" column for freeing a slot
         setColumnToHoldButton(slotTable, SlotMonDataModel.DISPCOLUMN);
-
+        
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
         setColumnToHoldEStopButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
     }
-
+    
     void setColumnToHoldButton(JTable slotTable, int column) {
         TableColumnModel tcm = slotTable.getColumnModel();
         // install the button renderers & editors in this column
@@ -517,23 +517,23 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
-            public void mousePressed(MouseEvent e) {
-                stopCellEditing();
-            }
-        };
+                public void mousePressed(MouseEvent e) {
+                    stopCellEditing();
+                }
+            };
         tcm.getColumn(column).setCellEditor(buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
         slotTable.getColumnModel().getColumn(column)
                         .setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
-
+    
     // methods to communicate with SlotManager
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
         // update model from this slot
         int slotNum = s.getSlot();
         int slotStatus2;
-
+        
         if (slotNum == LnConstants.CFG_SLOT) {
             slotStatus2 = s.ss2() & 0x78; // Bit 3-6 of SS2 contains SW36-39 of the CFG_SLOT
             if (slotStatus2 > 0)  {  
@@ -545,15 +545,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
         
         if (_allSlots) {        // this will be row until we show only active slots
-          slotNum=s.getSlot();  // and we are displaying the System slots otherwise
-          if( !_systemSlots )   // we need to subtract 1 as slot 0 will not be displayed
-            slotNum-- ;
+            slotNum=s.getSlot();  // and we are displaying the System slots otherwise
+            if( !_systemSlots )   // we need to subtract 1 as slot 0 will not be displayed
+                slotNum-- ;
         }
         // notify the JTable object that a row has changed; do that in the Swing thread!
         Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
         javax.swing.SwingUtilities.invokeLater(r);
     }
-
+    
     static class Notify implements Runnable {
         private int _row;
         javax.swing.table.AbstractTableModel _model;
@@ -570,15 +570,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
         }
     }
-
+    
     // methods for control of "all slots" vs "only active slots"
     private boolean _allSlots = true;
     public void showAllSlots(boolean val) { _allSlots = val; }
-
+    
     // methods for control of display of system slots
     private boolean _systemSlots = true;
     public void showSystemSlots(boolean val) { _systemSlots = val; }
-
+    
     /**
      * Returns slot number for a specific row.
      * <P>
@@ -603,7 +603,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
         return slotNum;
     }
-
+    
     /**
      * This is a convenience method that makes it easier for classes
      * using this model to set all in-use slots to emergency stop
@@ -624,13 +624,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
         }
     }
-
+    
     public void dispose() {
         memo.getSlotManager().removeSlotListener(this);
         // table.removeAllElements();
         // table = null;
     }
-
+    
     static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
-
+    
 }
