@@ -32,8 +32,7 @@ public class Profile {
      * @throws IOException
      */
     public Profile(File path) throws IOException {
-        this.path = path;
-        this.readProfile();
+        this(path, true);
     }
 
     /**
@@ -59,7 +58,7 @@ public class Profile {
             throw new IllegalArgumentException("A profile already exists at " + path); // NOI18N
         }
         this.name = name;
-        this.id = id + "." + Integer.toHexString(Float.floatToIntBits((float) Math.random()));
+        this.id = id + "." + ProfileManager.createUniqueId();
         this.path = path;
         if (path.mkdirs()) {
             this.save();
@@ -69,6 +68,23 @@ public class Profile {
         }
         if (!(new File(path, PROPERTIES)).canRead()) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
+        }
+    }
+
+    /**
+     * Create a Profile object given just a path to it. If isReadable is true,
+     * the Profile must exist in storage on the computer.
+     *
+     * This method exists purely to support subclasses.
+     *
+     * @param path The Profile's directory
+     * @param isReadable
+     * @throws IOException
+     */
+    protected Profile(File path, boolean isReadable) throws IOException {
+        this.path = path;
+        if (isReadable) {
+            this.readProfile();
         }
     }
 

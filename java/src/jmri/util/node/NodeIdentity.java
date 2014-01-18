@@ -98,7 +98,7 @@ public class NodeIdentity {
         try {
             uniqueId += ProfileManager.defaultManager().getActiveProfile().getUniqueId();
         } catch (NullPointerException ex) {
-            uniqueId += Integer.toHexString(Float.floatToIntBits((float) Math.random()));
+            uniqueId += ProfileManager.createUniqueId();
         }
         if (instance == null) {
             instance = new NodeIdentity();

@@ -615,4 +615,18 @@ public class ProfileManager extends Bean {
         }
         return ProfileManager.defaultManager().getActiveProfile();
     }
+
+    /**
+     * Generate a reasonably pseudorandom unique id.
+     * <p>
+     * This can be used to generate the id for a
+     * {@link jmri.profile.NullProfile}. Implementing applications should save
+     * this value so that the id of a NullProfile is consistent across
+     * application launches.
+     *
+     * @return String of alphanumeric characters.
+     */
+    public static String createUniqueId() {
+        return Integer.toHexString(Float.floatToIntBits((float) Math.random()));
+    }
 }
