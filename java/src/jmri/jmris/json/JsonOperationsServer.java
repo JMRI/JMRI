@@ -25,6 +25,7 @@ import static jmri.jmris.json.JSON.TERMINATE;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.WEIGHT;
+import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class);
 
     public JsonOperationsServer(JmriConnection connection) {
         super();
@@ -52,7 +53,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * Protocol Specific Simple Functions
      */
     /**
-     * send a JSON object to the connection. The object is built from a set of
+     * Send a JSON object to the connection. The object is built from a set of
      * attributes.
      *
      * @param contents is the ArrayList of Attributes to be sent.
@@ -93,6 +94,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Parse a string into a JSON structure and then parse the data node for
      * operations commands
+     *
      * @param statusString
      * @throws jmri.JmriException
      * @throws java.io.IOException
@@ -151,6 +153,38 @@ public class JsonOperationsServer extends AbstractOperationsServer {
             }
         } else {
             this.sendErrorStatus(Bundle.getMessage("ErrorTrainAttribute"));
+        }
+    }
+
+    @Override
+    public void sendTrainList() {
+        try {
+            try {
+                this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrains()));
+            } catch (JsonException ex) {
+                this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+            }
+        } catch (IOException ex) {
+            try {
+                this.connection.close();
+            } catch (IOException e1) {
+                log.warn("Unable to close connection.", e1);
+            }
+            log.warn("Unable to send message, closing connection.", ex);
+        }
+    }
+
+    @Override
+    public void sendLocationList() {
+        throw new UnsupportedOperationException("Overridden but unsupported method"); // NOI18N
+    }
+
+    @Override
+    public void sendFullStatus(Train train) throws IOException {
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrain(train.getId())));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
     }
 }
