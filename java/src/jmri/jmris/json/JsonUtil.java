@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -100,6 +102,7 @@ import static jmri.jmris.json.JSON.PORT;
 import static jmri.jmris.json.JSON.POSITION;
 import static jmri.jmris.json.JSON.POWER;
 import static jmri.jmris.json.JSON.RAILROAD;
+import static jmri.jmris.json.JSON.RATE;
 import static jmri.jmris.json.JSON.REPORT;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.ROAD;
@@ -115,6 +118,7 @@ import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.TERMINATES_LOCATION;
 import static jmri.jmris.json.JSON.THROWN;
+import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TOGGLE;
 import static jmri.jmris.json.JSON.TOKEN_HELD;
 import static jmri.jmris.json.JSON.TRAIN;
@@ -1057,6 +1061,33 @@ public class JsonUtil {
         } catch (NullPointerException e) {
             log.error("Unable to get signal mast [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
+        }
+    }
+
+    static public JsonNode getTime() throws JsonException {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, TIME);
+        ObjectNode data = root.putObject(DATA);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
+        data.put(RATE, InstanceManager.timebaseInstance().getRate());
+        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        return root;
+    }
+
+    static public void setTime(JsonNode data) throws JsonException {
+        try {
+            if (data.path(TIME).isTextual()) {
+                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+            }
+            if (data.path(RATE).isDouble()) {
+                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+            }
+            if (data.path(STATE).isInt()) {
+                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+            }
+        } catch (ParseException ex) {
+            log.error("Time \"{}\" not in ISO 8601 date format", data.path(TIME).asText());
+            throw new JsonException(400, Bundle.getMessage("ErrorTimeFormat"));
         }
     }
 

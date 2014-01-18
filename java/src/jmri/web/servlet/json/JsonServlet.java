@@ -54,6 +54,7 @@ import static jmri.jmris.json.JSON.SIGNAL_HEADS;
 import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.STATE;
+import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
@@ -216,6 +217,8 @@ public class JsonServlet extends WebSocketServlet {
                         reply = JsonUtil.getSignalHeads();
                     } else if (type.equals(SIGNAL_MASTS)) {
                         reply = JsonUtil.getSignalMasts();
+                    } else if (type.equals(TIME)) {
+                        reply = JsonUtil.getTime();
                     } else if (type.equals(TRAINS)) {
                         reply = JsonUtil.getTrains();
                     } else if (type.equals(TURNOUTS)) {

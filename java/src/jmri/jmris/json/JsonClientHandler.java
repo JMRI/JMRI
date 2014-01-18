@@ -42,6 +42,7 @@ import static jmri.jmris.json.JSON.SIGNAL_HEADS;
 import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.THROTTLE;
+import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
@@ -64,6 +65,7 @@ public class JsonClientHandler {
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
     private final JsonThrottleServer throttleServer;
+    private final JsonTimeServer timeServer;
     private final JsonTurnoutServer turnoutServer;
     private final JmriConnection connection;
     private final ObjectMapper mapper;
@@ -84,11 +86,13 @@ public class JsonClientHandler {
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
         this.throttleServer = new JsonThrottleServer(this.connection);
+        this.timeServer = new JsonTimeServer(this.connection);
         this.turnoutServer = new JsonTurnoutServer(this.connection);
     }
 
     public void onClose() {
         this.throttleServer.onClose();
+        this.timeServer.dispose();
         this.consistServer.onClose();
     }
 
@@ -226,6 +230,8 @@ public class JsonClientHandler {
                     this.routeServer.parseRequest(data);
                 } else if (type.equals(THROTTLE)) {
                     this.throttleServer.parseRequest(data);
+                } else if (type.equals(TIME)) {
+                    this.timeServer.parseRequest(data);
                 } else if (type.equals(TURNOUT)) {
                     this.turnoutServer.parseRequest(data);
                 } else {

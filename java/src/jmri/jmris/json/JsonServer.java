@@ -47,9 +47,7 @@ public class JsonServer extends JmriServer {
                     JsonServerManager.getJsonServer().stop();
                 } catch (Exception ex) {
                     log.warn("ERROR shutting down JSON Server: " + ex.getLocalizedMessage());
-                    if (log.isDebugEnabled()) {
-                        log.debug("Details follow: ", ex);
-                    }
+                    log.debug("Details follow: ", ex);
                 }
                 return true;
             }

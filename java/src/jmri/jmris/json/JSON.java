@@ -287,6 +287,10 @@ public final class JSON {
      */
     public static final String THROTTLE = "throttle"; // NOI18N
     /**
+     * {@value #TIME}
+     */
+    public static final String TIME = "time"; // NOI18N
+    /**
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
@@ -585,6 +589,12 @@ public final class JSON {
      */
     public static final String SIZE_LIMIT = "sizeLimit"; // NOI18N
 
+    /* Time constants */
+    /**
+     * {@value #RATE}
+     */
+    public static final String RATE = "rate"; // NOI18N
+    
     /*
      * JSON State (an unsigned integer)
      */
