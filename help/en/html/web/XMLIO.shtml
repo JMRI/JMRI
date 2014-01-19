@@ -72,7 +72,7 @@ updating a table when any change.
 <dd>More complex turnout table, with buttons to throw and close turnouts.
 <dt><a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a> 
 <dd>Useful for sending various commands to xmlio server and viewing the responses.
-<dt><a href="http://localhost:12080/web/showPanel.html">web/showPanel.html</a> and <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a> 
+<dt><a href="http://localhost:12080/panel">/panel</a> and <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a>
 <dd>Both of these tools use the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.
 </dl>
 

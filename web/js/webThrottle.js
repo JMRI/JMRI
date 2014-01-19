@@ -668,12 +668,12 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 			break;
 		case 'panel':
 			$help.push(
-				'This uses \'showPanel.html\'' +
+				'This uses \'/panel\'' +
 				'\ninside an iframe.' +
 				''
 			);
 			document.title+= ' (panel: ' + $paramPanelName + ')';
-			var panel = $('<iframe>').attr('src', 'showPanel.html?name=' + $paramPanelName).addClass('panel');
+			var panel = $('<iframe>').attr('src', '/panel?name=' + $paramPanelName).addClass('panel');
 			panel.load(function() {	// Force resize some miliseconds after loading
 				setTimeout(function() {$panelLoaded = true; $viewportHeight = 0;}, $resizeCheckInterval * 5);
 			});

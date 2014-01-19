@@ -50,7 +50,7 @@ var $XmlIO = new function() {
             this.get("list", {type: "panel"}, function panelSuccess(data, status, response) {
                 $(data).find("panel").each(function(){
                 	var $t = $(this).attr("name").split("/");
-                	panelsTbody += "<tr><td><a href='/web/showPanel.html?name=" + $(this).attr("name") + "'>" + $(this).attr("userName") + "</a></td>";
+                	panelsTbody += "<tr><td><a href='/panel?name=" + $(this).attr("name") + "'>" + $(this).attr("userName") + "</a></td>";
                 	panelsTbody += "<td>" + $t[0] + "</td>";
                 });
                 $(element).html(panelsTbody);
