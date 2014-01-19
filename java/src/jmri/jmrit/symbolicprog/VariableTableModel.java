@@ -559,7 +559,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         iv = v1;
         for (int x = 0; x < l.size(); x++) {
             Element ex = l.get(x);
-            if (DecoderFile.isIncluded(ex, productID, "","") == false) {
+            if (DecoderFile.isIncluded(ex, productID, "","","") == false) {  // add model ID, inherited include, inherited exclude
                 l.remove(x);
                 x--;
             }

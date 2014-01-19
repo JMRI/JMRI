@@ -111,29 +111,29 @@ public class DecoderFileTest extends TestCase {
         Element e;
         // test some examples
         e = new Element("Test");
-        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1","",""));
+        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1","model","",""));
 
         (e = new Element("Test")). setAttribute("include", "1,2");
-        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","",""));
-        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","",""));
-        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","",""));
+        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","model","",""));
+        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","model","",""));
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","model","",""));
         
         (e = new Element("Test")). setAttribute("include", "105,205");
-        Assert.assertTrue("105 in 105,205",DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 in 105,205",DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("include", "205,105");
-        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("include", "1050,205");
-        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("include", "50,1050");
-        Assert.assertTrue("105 not in 50,1050",!DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 not in 50,1050",!DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("include", "827004,827008,827104,827108,827106,828043,828045,828047");
-        Assert.assertTrue("827004", DecoderFile.isIncluded(e, "827004","",""));
-        Assert.assertTrue("Not 827005", !DecoderFile.isIncluded(e, "827005","",""));
-        Assert.assertTrue("827108", DecoderFile.isIncluded(e, "827108","",""));
+        Assert.assertTrue("827004", DecoderFile.isIncluded(e, "827004","model","",""));
+        Assert.assertTrue("Not 827005", !DecoderFile.isIncluded(e, "827005","model","",""));
+        Assert.assertTrue("827108", DecoderFile.isIncluded(e, "827108","model","",""));
     }
     
     public void testIncludeCheckRippleDown() {
@@ -141,84 +141,114 @@ public class DecoderFileTest extends TestCase {
 
         // with nothing in element
         e = new Element("Test");
-        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","1,2",""));
-        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","1,2",""));
-        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","1,2",""));
+        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","model","1,2",""));
+        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","model","1,2",""));
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","model","1,2",""));
         
         // with irrelevant element
         (e = new Element("Test")). setAttribute("include", "4,5");
-        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","1,2",""));
-        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","1,2",""));
-        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","1,2",""));
+        Assert.assertTrue("1 in 1,2",DecoderFile.isIncluded(e, "1","model","1,2",""));
+        Assert.assertTrue("2 in 1,2",DecoderFile.isIncluded(e, "2","model","1,2",""));
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","model","1,2",""));
         
         (e = new Element("Test")). setAttribute("include", "105,205");
-        Assert.assertTrue("105 in 105,205",DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 in 105,205",DecoderFile.isIncluded(e, "105","model","",""));
 
         e = new Element("Test");
-        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","205,105",""));
+        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","model","205,105",""));
         (e = new Element("Test")). setAttribute("include", "1205,1105");
-        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","205,105",""));
+        Assert.assertTrue("105 in 205,105",DecoderFile.isIncluded(e, "105","model","205,105",""));
 
         e = new Element("Test");
-        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","1050,205",""));
+        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","model","1050,205",""));
         (e = new Element("Test")). setAttribute("include", "222,333");
-        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","1050,205",""));
+        Assert.assertTrue("105 not in 1050,205",!DecoderFile.isIncluded(e, "105","model","1050,205",""));
 
         e = new Element("Test");
-        Assert.assertTrue("105 not in 50,1050",!DecoderFile.isIncluded(e, "105","50,1050",""));
+        Assert.assertTrue("105 not in 50,1050",!DecoderFile.isIncluded(e, "105","model","50,1050",""));
 
         e = new Element("Test");
-        Assert.assertTrue("827004", DecoderFile.isIncluded(e, "827004","827004,827008,827104,827108,827106,828043,828045,828047",""));
-        Assert.assertTrue("Not 827005", !DecoderFile.isIncluded(e, "827005","827004,827008,827104,827108,827106,828043,828045,828047",""));
-        Assert.assertTrue("827108", DecoderFile.isIncluded(e, "827108","827004,827008,827104,827108,827106,828043,828045,828047",""));
+        Assert.assertTrue("827004", DecoderFile.isIncluded(e, "827004","model","827004,827008,827104,827108,827106,828043,828045,828047",""));
+        Assert.assertTrue("Not 827005", !DecoderFile.isIncluded(e, "827005","model","827004,827008,827104,827108,827106,828043,828045,828047",""));
+        Assert.assertTrue("827108", DecoderFile.isIncluded(e, "827108","model","827004,827008,827104,827108,827106,828043,828045,828047",""));
+    }
+    
+    public void testIncludeCheckModel() {
+        Element e;
+
+        // with nothing in element
+        e = new Element("Test");
+        Assert.assertTrue("1 in model",DecoderFile.isIncluded(e, "1","model","model",""));
+        Assert.assertTrue("2 in 1,2,model",DecoderFile.isIncluded(e, "2","model","1,2,model",""));
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","model","1,2",""));
+        
+        // with irrelevant element
+        (e = new Element("Test")). setAttribute("include", "4,5");
+        Assert.assertTrue("1 in model",DecoderFile.isIncluded(e, "1","model","model",""));
+        Assert.assertTrue("2 in 1,2,model",DecoderFile.isIncluded(e, "2","model","1,2,model",""));
+        Assert.assertTrue("3 in 1,2",!DecoderFile.isIncluded(e, "3","model","1,2",""));
     }
     
     public void testExcludeCheck() {
         Element e;
         // test some examples
         e = new Element("Test");
-        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1","",""));
+        Assert.assertTrue("1 in null",DecoderFile.isIncluded(e, "1","model","",""));
 
         (e = new Element("Test")). setAttribute("exclude", "1,2");
-        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1","",""));
-        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "2","",""));
-        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","",""));
+        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1","model","",""));
+        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "2","model","",""));
+        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","model","",""));
         
         (e = new Element("Test")). setAttribute("exclude", "105,205");
-        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("exclude", "205,105");
-        Assert.assertTrue("105 in 205,105",!DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 in 205,105",!DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("exclude", "1050,205");
-        Assert.assertTrue("105 not in 1050,205",DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 not in 1050,205",DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("exclude", "50,1050");
-        Assert.assertTrue("105 not in 50,1050",DecoderFile.isIncluded(e, "105","",""));
+        Assert.assertTrue("105 not in 50,1050",DecoderFile.isIncluded(e, "105","model","",""));
 
         (e = new Element("Test")). setAttribute("exclude", "827004,827008,827104,827108,827106,828043,828045,828047");
-        Assert.assertTrue("827004", !DecoderFile.isIncluded(e, "827004","",""));
-        Assert.assertTrue("Not 827005", DecoderFile.isIncluded(e, "827005","",""));
-        Assert.assertTrue("827108", !DecoderFile.isIncluded(e, "827108","",""));
+        Assert.assertTrue("827004", !DecoderFile.isIncluded(e, "827004","model","",""));
+        Assert.assertTrue("Not 827005", DecoderFile.isIncluded(e, "827005","model","",""));
+        Assert.assertTrue("827108", !DecoderFile.isIncluded(e, "827108","model","",""));
     }
     
     public void testExcludeCheckRippleDown() {
         Element e;
         
         e = new Element("Test");
-        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1","","1,2"));
-        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "2","","1,2"));
-        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","","1,2"));
+        Assert.assertTrue("1 in model",!DecoderFile.isIncluded(e, "1","model","","model"));
+        Assert.assertTrue("2 in 1,2,model",!DecoderFile.isIncluded(e, "2","model","","1,2,model"));
+        Assert.assertTrue("3 in 1,2,model",!DecoderFile.isIncluded(e, "3","model","","1,2,model"));
 
         (e = new Element("Test")). setAttribute("exclude", "4,5");
-        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1","","1,2"));
-        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "2","","1,2"));
-        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","","1,2"));
+        Assert.assertTrue("1 in 1,2",!DecoderFile.isIncluded(e, "1","model","","1,2"));
+        Assert.assertTrue("2 in 1,2",!DecoderFile.isIncluded(e, "2","model","","1,2"));
+        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","model","","1,2"));
         
         e = new Element("Test");
-        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","","105,205"));
+        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","model","","105,205"));
         (e = new Element("Test")). setAttribute("exclude", "305,405");
-        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","","105,205"));
+        Assert.assertTrue("105 in 105,205",!DecoderFile.isIncluded(e, "105","model","","105,205"));
+    }
+
+    public void testExcludeCheckModel() {
+        Element e;
+        
+        e = new Element("Test");
+        Assert.assertTrue("1 in model",!DecoderFile.isIncluded(e, "1","model","","1,2"));
+        Assert.assertTrue("2 in 1,2,model",!DecoderFile.isIncluded(e, "2","model","","1,2"));
+        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","model","","1,2"));
+
+        (e = new Element("Test")). setAttribute("exclude", "4,5");
+        Assert.assertTrue("1 in model",!DecoderFile.isIncluded(e, "1","model","","1,2"));
+        Assert.assertTrue("2 in 1,2,model",!DecoderFile.isIncluded(e, "2","model","","1,2"));
+        Assert.assertTrue("3 in 1,2",DecoderFile.isIncluded(e, "3","model","","1,2"));
     }
 
     public void testMinOut() {
