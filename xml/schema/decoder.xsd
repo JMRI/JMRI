@@ -671,6 +671,8 @@
         </xs:sequence>
     </xs:sequence>
     <xs:attribute ref="xml:base" />
+    <xs:attribute name="include" type="xs:string"/>
+    <xs:attribute name="exclude" type="xs:string"/>
   </xs:complexType>
 
   <xs:complexType name="ResetsType">
