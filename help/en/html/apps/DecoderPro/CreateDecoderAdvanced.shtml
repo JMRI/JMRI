@@ -31,14 +31,14 @@ files for the DecoderPro Symbolic Programmer.</p>
 <h3>Identification</h3>
 Three pieces:
 <dl>
-<dt>Manufacturer:</dt<dd>Numerical value from CV8, which is then matched to a name using the 
+<dt>Manufacturer:</dt><dd>Numerical value from CV8, which is then matched to a name using the 
                     entries in the xml/decoderIndex.xml file.</dd>
-<dt>Version code:</dt<dd>Numerical value from CV7, which is then matched to model name(s) using
+<dt>Version code:</dt><dd>Numerical value from CV7, which is then matched to model name(s) using
                     the lowVersionID and highVersionID values on model elements 
                     within all decoder definitions for the specific manufacturer.
                     This is a complex process that doesn't always go well 
                     due to duplicate values, etc.</dd>
-<dt>Product code:</dt<dd>a numerical value read from a manufacturer-specific CV or CVs, 
+<dt>Product code:</dt><dd>a numerical value read from a manufacturer-specific CV or CVs, 
                     this only works for certain manufacturers.  The read process
                     is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
                     and has to be updated each time a manufacturer starts providing this number
@@ -82,7 +82,23 @@ which can then be included into multiple decoder definition files.
 This makes it easier to maintain and update those common definitions, e.g.
 to translate them into other languages.
 <p>
-By convention
+By convention, we these fragment files in subdirectories:
+<dl>
+<dt>xml/decoders/nmra<dd>The NMRA definitions for CVs, used by many decoder types
+<dt>xml/decoders/(mfg)<dd>Manufacturer-specific variables, for example xml/decoders/esu
+</dl>
+The format for an include is:
+<code><pre>
+     &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+</pre></code>
+
+The program searches for those fragment files first in the preferences directory, 
+then in the program directory.  The full path must be present, e.g.
+you need an xml directory that contains a decoders directory in your preferences directory for the
+fragment file to be found.
+<p>
+Use an existing file as an example for the top elements & format needed.
+ 
 <h3 name="update">Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
@@ -96,7 +112,7 @@ attributes that can be added to the old (not the new) definition to facilitate t
 The user selects "Update decoder definitions" from the Debug Menu, and 
 all existing roster entries what point a decoder definitions with replacementModel and/or
 replacementFamily defined will be updated to those replacements.
-
+<p>
 The model element "show" attribute can also be used to
 move new users to new definitions while leaving older definitions
 available people already using them. Its possible values are:
@@ -109,7 +125,7 @@ available people already using them. Its possible values are:
 
 <h3>Programming Capabilities</h3>
 
-Some decoders can do extra things, for example bypassing limitations on CV
+Some decoders can do extra programming operations, for example bypassing limitations on CV
 programming in the command station.  "Capability" elements are used to 
 tell DecoderPro about these.
 
@@ -156,11 +172,19 @@ For an example of where to position it, etc, see the
 
 <h3 id="conditional">Conditional Decoder Definitions</h3>
 
+To reduce the number of decoder definition files needed, each file can 
+contain definitions for multiple decoder models.  
+JMRI provides ways of adapting the definition to specific models
+both when the file is being initially expanded for use, and 
+later while the program is working on the definition.
+These are particularly useful when using a common fragment file
+that might be included by multiple decoder definition files (defining
+different-but-similar families)
+
 <h4 name="include">Include/Exclude During Expansion</h4>
 
-"include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
-<p>
-Attributes on &lt;variables&gt; acts on all the &lt;variable&gt; elements within it.
+Whether a variable element is expanded and used can be made conditional on the 
+decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
 <p>
 A variable definition will not be expanded and used:
 <ul>
@@ -173,12 +197,14 @@ Both of these conditions must be true, and it's possible to use
 both include and exclude on the same element, but it's more usual to just 
 use one.
 <p>
-Examples:
-<code><pre>
+Example:
+
+<pre>
       &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
         &lt;decVal/&gt;
       &lt;/variable&gt;
-</pre></code>
+</pre>
+
 <p>
 The variable above will only appear when expanding the decode definition
 for ModelA or product ID 400.
@@ -186,16 +212,28 @@ for ModelA or product ID 400.
 You can also put include and exclue attributes on individual choices in an enumeration-type
 variable.  This can be used to e.g. only include specific lighting options in certain
 decoder families.
+<p>
+Attributes on a &lt;variables&gt; element acts on all the &lt;variable&gt; elements within it,
+along with any include or exclude attributes on those individual variables. 
 
 <h4 name="qualify">Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
 
 A "qualifier" element on a variable element allows you to enable or disable the variable
-depending on the current value of another variable.  In the following example, 
+depending on the current value of another variable. This can be
+useful if, for example, the decoder has a "mode" CV that determines the meaning
+of other CVs.
+<p>
+If a variable is qualified as inactive, it doesn't appear in any 
+panes and is neither read nor written to the decoder when you do "All" or "Changes only" 
+read or write operations.  The value is saved to the roster and will be
+reloaded when the roster entry is reopened later.
+
+<p>In the following example, 
 a CV is interpreted as two different variables depending on whether the 
 decoder is set for short or long addressing.
 
-<code><pre>
+<pre>
   &lt;variable label="Variable for Short Address" CV="11"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
@@ -212,18 +250,32 @@ decoder is set for short or long addressing.
     &lt;/qualifier&gt;
     &lt;decVal/&gt;
   &lt;/variable&gt;
-</pre></code>
+</pre>
 
 Other available operators include "gt", "ge", "ne", "lt" and "le".
+<p>
+If multiple qualifier elements are present, all must be true for the 
+variable to be active and displayed.
 
-<h5>Qualifying Panes</h5>
+<h5 name="panes">Qualifying Panes</h5>
 
 A "qualifier" element on a pane element allows you to enable or disable the pane
-depending on the current value of a variable.  The following example enables
+depending on the current value of a variable. 
+
+<p>If a pane is qualified as inactive, its contents are no longer shown.
+This includes any labels or other decorations on the pane, in addition to the
+variables it contains.
+Depending on other options, the pane may either show as empty, or not show
+at all.  The variables within it are still active, though, and a 
+"Read all sheets" or "Write all sheets" will still write them.
+If you have overlapping variable definitions, consider carefully whether
+this is what you want. You might need to qualify the individual overlapping variables.
+
+<p>The following example enables
 one of two panes depending on whether the decoder is currently set for short or
 long addressing.
 
-<code><pre>
+<pre>
   &lt;pane name="Short Only"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
@@ -244,9 +296,12 @@ long addressing.
       &lt;label label="Long Only Pane"/&gt;
     &lt;/row&gt;&lt;/column&gt;
   &lt;/pane&gt;
-</pre></code>
+</pre>
 
 Other available operators include "gt", "ge", "ne", "lt" and "le".
+<p>
+If multiple qualifier elements are present, all must be true for the 
+pane to be active and displayed.
 
 
 <!--#include virtual="/Footer" -->
