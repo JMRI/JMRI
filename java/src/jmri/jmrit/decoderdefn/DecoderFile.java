@@ -214,22 +214,23 @@ public class DecoderFile extends XmlFile {
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
-        return isIncluded(e, _productID, _model, extraInclude, extraExclude);
+        return isIncluded(e, _productID, _model, _family, extraInclude, extraExclude);
     }
     
     /**
      * @param e XML element with possible "include" and "exclude" attributes to be checked
      * @param productID the specific ID of the decoder being loaded, to check against include/exclude conditions
      * @param modelID the model ID of the decoder being loaded, to check against include/exclude conditions
+     * @param familyID the family ID of the decoder being loaded, to check against include/exclude conditions
      * @param extraInclude additional "include" terms
      * @param extraExclude additional "exclude" terms
      */
-    public static boolean isIncluded(Element e, String productID, String modelID, String extraInclude, String extraExclude) {
+    public static boolean isIncluded(Element e, String productID, String modelID, String familyID, String extraInclude, String extraExclude) {
         String include = e.getAttributeValue("include");
         if (include != null) include = include+","+extraInclude;
         else include = extraInclude;
         // if there are any include clauses, then it has to match
-        if (!include.equals("") && !(isInList(productID, include)||isInList(modelID, include)) ) {
+        if (!include.equals("") && !(isInList(productID, include)||isInList(modelID, include)||isInList(familyID, include)) ) {
             if (log.isTraceEnabled()) log.trace("include not in list of OK values: /"+include+"/ /"+productID+"/ /"+modelID+"/");
             return false;
         }
@@ -238,7 +239,7 @@ public class DecoderFile extends XmlFile {
         if (exclude != null) exclude = exclude+","+extraExclude;
         else exclude = extraExclude;
         // if there are any include clauses, then it cannot match
-        if ( !exclude.equals("") && (isInList(productID, exclude)||isInList(modelID, exclude)) ) {
+        if ( !exclude.equals("") && (isInList(productID, exclude)||isInList(modelID, exclude)||isInList(familyID, exclude)) ) {
             if (log.isTraceEnabled()) log.trace("exclude match: /"+exclude+"/ /"+productID+"/ /"+modelID+"/");
             return false;
         }
