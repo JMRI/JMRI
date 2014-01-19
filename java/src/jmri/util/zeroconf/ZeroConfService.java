@@ -202,7 +202,9 @@ public class ZeroConfService {
     }
 
     private ServiceInfo addServiceInfo(JmDNS DNS) throws IOException {
-        this.serviceInfos.put(DNS.getInterface(), this.serviceInfo().clone());
+        if (!this.serviceInfos.containsKey(DNS.getInterface())) {
+            this.serviceInfos.put(DNS.getInterface(), this.serviceInfo().clone());
+        }
         return this.serviceInfos.get(DNS.getInterface());
     }
 
@@ -273,10 +275,15 @@ public class ZeroConfService {
         if (ZeroConfService.services().containsKey(this.key())) {
             for (JmDNS netService : ZeroConfService.netServices().values()) {
                 try {
-                    netService.unregisterService(this.serviceInfos.get(netService.getInterface()));
-                    this.serviceInfos.remove(netService.getInterface());
-                    for (ZeroConfServiceListener listener : this.listeners) {
-                        listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                    try {
+                        log.debug("Unregistering {} from {}", this.key(), netService.getInterface());
+                        netService.unregisterService(this.serviceInfos.get(netService.getInterface()));
+                        this.serviceInfos.remove(netService.getInterface());
+                        for (ZeroConfServiceListener listener : this.listeners) {
+                            listener.serviceUnpublished(new ZeroConfServiceEvent(this, netService));
+                        }
+                    } catch (NullPointerException ex) {
+                        log.debug("{} already unregistered from {}", this.key(), netService.getInterface());
                     }
                 } catch (IOException ex) {
                     log.error("Unable to stop ZeroConfService {}. {}", this.key(), ex.getLocalizedMessage());
@@ -433,10 +440,12 @@ public class ZeroConfService {
                 ZeroConfService.netServices.put(nte.getInetAddress(), nte.getDNS());
                 for (ZeroConfService service : ZeroConfService.allServices()) {
                     try {
-                        log.debug("Publishing zeroConf service for {} on {}", service.key(), nte.getInetAddress().getHostAddress());
-                        nte.getDNS().registerService(service.addServiceInfo(nte.getDNS()));
-                        for (ZeroConfServiceListener listener : service.listeners) {
-                            listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                        if (!service.serviceInfos.containsKey(nte.getDNS().getInterface())) {
+                            log.debug("Publishing zeroConf service for {} on {}", service.key(), nte.getInetAddress().getHostAddress());
+                            nte.getDNS().registerService(service.addServiceInfo(nte.getDNS()));
+                            for (ZeroConfServiceListener listener : service.listeners) {
+                                listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                            }
                         }
                     } catch (IOException ex) {
                         log.error(ex.getLocalizedMessage(), ex);
