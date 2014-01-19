@@ -51,7 +51,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction{
      * Start the server end of WiThrottle.
      * @param e The event causing the action.
      */
-    public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
     	GraphicsEnvironment.getLocalGraphicsEnvironment();
     	// create GUI, unless running in headless mode
     	if (!GraphicsEnvironment.isHeadless()) {
@@ -59,7 +59,13 @@ public class WiThrottleCreationAction extends JmriAbstractAction{
     		if (UI == null){    //  Only allow one to be created
     			UI = new UserInterface();
     		}
-    	} else {
+    		else
+    		{
+    			//Jeffrey Machacek added to re-show UI after first closing.
+    			UI.setVisible(true);
+    		}
+    	} 
+    	else {
     		new FacelessServer(); // start server thread with no UI
     	}
     }
