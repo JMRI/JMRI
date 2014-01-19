@@ -4,16 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.table.AbstractTableModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author rhwood
  */
 public class ProfileTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-    private final static Logger log = LoggerFactory.getLogger(ProfileTableModel.class);
 
     @SuppressWarnings("LeakingThisInConstructor")
     public ProfileTableModel() {
@@ -94,6 +90,7 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
         switch (columnIndex) {
             case 0:
                 ProfileManager.defaultManager().getAllProfiles().get(rowIndex).setName(aValue.toString());
+                break;
             default:
         }
     }
