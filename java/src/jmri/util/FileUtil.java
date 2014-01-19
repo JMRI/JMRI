@@ -2,12 +2,14 @@
 package jmri.util;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -673,7 +675,7 @@ public class FileUtil {
         }
         // return path if in jmri.jar or null
         resource = FileUtil.class.getClassLoader().getResource(path);
-        if (resource == null && log.isDebugEnabled()) {
+        if (resource == null) {
             log.debug("Unable to to get URL for {}", path);
         }
         return resource;
@@ -777,6 +779,44 @@ public class FileUtil {
     }
 
     /**
+     * Read a text file into a String.
+     *
+     * @param file The text file.
+     * @return The contents of the file.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static String readFile(File file) throws IOException {
+        return FileUtil.readURL(FileUtil.fileToURL(file));
+    }
+
+    /**
+     * Read a text URL into a String. Would be significantly simpler with Java
+     * 7.
+     *
+     * @param url The text URL.
+     * @return The contents of the file.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static String readURL(URL url) throws IOException {
+        try {
+            InputStreamReader in = new InputStreamReader(url.openStream());
+            BufferedReader reader = new BufferedReader(in);
+            StringBuilder builder = new StringBuilder();
+            String aux;
+            while ((aux = reader.readLine()) != null) {
+                builder.append(aux);
+            }
+            reader.close();
+            in.close();
+            return builder.toString();
+        } catch (NullPointerException ex) {
+            return null;
+        }
+    }
+
+    /**
      * Replaces most non-alphanumeric characters in name with an underscore.
      *
      * @param name The filename to be sanitized.
@@ -847,18 +887,37 @@ public class FileUtil {
                 FileUtil.copy(source, new File(dest, file.getName()));
             }
         } else {
-            FileChannel sourceChannel;
-            FileChannel destination;
-            sourceChannel = new FileInputStream(source).getChannel();
-            destination = new FileOutputStream(dest).getChannel();
-            if (destination != null && sourceChannel != null) {
-                destination.transferFrom(sourceChannel, 0, sourceChannel.size());
-            }
-            if (sourceChannel != null) {
-                sourceChannel.close();
-            }
-            if (destination != null) {
-                destination.close();
+            FileInputStream sourceIS = null;
+            FileChannel sourceChannel = null;
+            FileOutputStream destIS = null;
+            FileChannel destChannel = null;
+            try {
+                sourceIS = new FileInputStream(source);
+                sourceChannel = sourceIS.getChannel();
+                destIS = new FileOutputStream(dest);
+                destChannel = destIS.getChannel();
+                if (destChannel != null && sourceChannel != null) {
+                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                }
+            } catch (IOException ex) {
+                throw ex;
+            } finally {
+                try {
+                    if (sourceChannel != null) {
+                        sourceChannel.close();
+                    }
+                    if (destChannel != null) {
+                        destChannel.close();
+                    }
+                    if (sourceIS != null) {
+                        sourceIS.close();
+                    }
+                    if (destIS != null) {
+                        destIS.close();
+                    }
+                } catch (IOException ex) {
+                    throw ex;
+                }
             }
         }
     }
