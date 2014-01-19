@@ -30,29 +30,60 @@ files for the DecoderPro Symbolic Programmer.</p>
 
 <h3>Identification</h3>
 Three pieces:
-<ul>
-<li>Manufacturer - from CV8
-<li>Version code - from CV7
-<li>Product code - read from a manufacturer specific CV or CVs, 
-this only works for specific manufacturers.  The read process
-is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
-and has to be updated each time a manufacturer starts providing this number
-in a CV.
-</ul>
+<dl>
+<dt>Manufacturer:</dt<dd>Numerical value from CV8, which is then matched to a name using the 
+                    entries in the xml/decoderIndex.xml file.</dd>
+<dt>Version code:</dt<dd>Numerical value from CV7, which is then matched to model name(s) using
+                    the lowVersionID and highVersionID values on model elements 
+                    within all decoder definitions for the specific manufacturer.
+                    This is a complex process that doesn't always go well 
+                    due to duplicate values, etc.</dd>
+<dt>Product code:</dt<dd>a numerical value read from a manufacturer-specific CV or CVs, 
+                    this only works for certain manufacturers.  The read process
+                    is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
+                    and has to be updated each time a manufacturer starts providing this number
+                    in a CV. When the product code is present, it should
+                    break any degeneracy between overlapping CV7 values within a 
+                    decoder family.</dd>
+</dl>
+For example:
+<code><pre>
+  &lt;decoder&gt;
+    &lt;family name="My Decoder Family" mfg="NMRA"&gt;
+      &lt;model model="Model A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
+      &lt;/model&gt;
+      &lt;model model="Model B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
+      &lt;/model&gt;
+  &lt;/decoder&gt;
+</pre></code>
 
-<h3>Visibility</h3>
+If the user selects a decoder model manually, that selection sets
+all three values for use by when the decoder definition is expanded 
+for programming (see section <a href="#conditional">Conditional Decoder Definitions</a> below).
+
+<h3 name="visibility">Pane Visibility</h3>
  
-The model element has a "show" attribute. It's possible values are:
+The decoder-config (top-level) element has a showEmptyPanes attribute
+that can be used to control whether empty panes (panes with no variables) appear.
+<P>By default, or when it's set to showEmptyPanes="yes", empty panes are 
+displayed using the logic of the specific program environment (Window has
+different highlighting conventions than Linux and Mac).  This is recommended in most cases, e.g. where
+there's only one or two panes that end up empty, because it avoids uses saying "Where did the Lights
+pane go?"  They see it, see that it's empty, and no questions arise.
+<p>
+In some cases, e.g. a non-locomotive decoder for servos where none of the locomotive-decoder
+panes make sense so the decoder definition contains lots of custom panes, 
+it's a simplification to set showEmptyPanes="no" and just remove all those.
 
-<ul>
-<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
-<li>"no" - never show this model, even if it matches a possible selection.
-            Used for legacy (old) definitions that have been replaced with newer ones.
-<li>"maybe" - only show if it matches a (possible) automatic identification.
-</ul>
+<h3 name="include">Including Fragment Files</h3>
 
-
-<h3>Updates and Migration</h3>
+Common parts of decoder definitions can be placed into "fragment files", 
+which can then be included into multiple decoder definition files.
+This makes it easier to maintain and update those common definitions, e.g.
+to translate them into other languages.
+<p>
+By convention
+<h3 name="update">Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
 but we'd like to move those users to the new one eventually.  There are model-level
@@ -65,6 +96,16 @@ attributes that can be added to the old (not the new) definition to facilitate t
 The user selects "Update decoder definitions" from the Debug Menu, and 
 all existing roster entries what point a decoder definitions with replacementModel and/or
 replacementFamily defined will be updated to those replacements.
+
+The model element "show" attribute can also be used to
+move new users to new definitions while leaving older definitions
+available people already using them. Its possible values are:
+<ul>
+<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
+<li>"no" - never show this model, even if it matches a possible selection.
+            Used for legacy (old) definitions that have been replaced with newer ones.
+<li>"maybe" - only show if it matches a (possible) automatic identification.
+</ul>
 
 <h3>Programming Capabilities</h3>
 
@@ -113,7 +154,41 @@ For an example of where to position it, etc, see the
 <a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 
-<h4>Qualifying Variables</h4>
+<h3 id="conditional">Conditional Decoder Definitions</h3>
+
+<h4 name="include">Include/Exclude During Expansion</h4>
+
+"include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
+<p>
+Attributes on &lt;variables&gt; acts on all the &lt;variable&gt; elements within it.
+<p>
+A variable definition will not be expanded and used:
+<ul>
+<li>If an exclude attribute is present, neither the
+decoders product ID, model name, nor family name is found in the exclude list.
+<li>If an include attribute is present, at least one of the
+decoders product ID, model name, nor family name is found in the include list.
+</ul>
+Both of these conditions must be true, and it's possible to use 
+both include and exclude on the same element, but it's more usual to just 
+use one.
+<p>
+Examples:
+<code><pre>
+      &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
+        &lt;decVal/&gt;
+      &lt;/variable&gt;
+</pre></code>
+<p>
+The variable above will only appear when expanding the decode definition
+for ModelA or product ID 400.
+<p>
+You can also put include and exclue attributes on individual choices in an enumeration-type
+variable.  This can be used to e.g. only include specific lighting options in certain
+decoder families.
+
+<h4 name="qualify">Run-time Qualification of Variables</h4>
+<h5>Qualifying Variables</h5>
 
 A "qualifier" element on a variable element allows you to enable or disable the variable
 depending on the current value of another variable.  In the following example, 
@@ -141,7 +216,7 @@ decoder is set for short or long addressing.
 
 Other available operators include "gt", "ge", "ne", "lt" and "le".
 
-<h4>Qualifying Panes</h4>
+<h5>Qualifying Panes</h5>
 
 A "qualifier" element on a pane element allows you to enable or disable the pane
 depending on the current value of a variable.  The following example enables
