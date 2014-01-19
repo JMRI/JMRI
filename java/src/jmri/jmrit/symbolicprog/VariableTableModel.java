@@ -344,13 +344,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @return null if no valid element
      * @throws java.lang.NumberFormatException
      */
-    protected VariableValue createIndexedVariableFromElement(Element e, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID) throws NumberFormatException {
+    protected VariableValue createIndexedVariableFromElement(Element e, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
         VariableValue iv = null;
         Element child;
         if ((child = e.getChild("indexedVal")) != null) {
             iv = processIndexedVal(child, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item);
         } else if ((child = e.getChild("ienumVal")) != null) {
-            iv = processIEnumVal(child, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID);
+            iv = processIEnumVal(child, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID, modelID, familyID);
         } else if ((child = e.getChild("indexedPairVal")) != null) {
             iv = processIndexedPairVal(child, readOnly, infoOnly, writeOnly, name, comment, cvName, opsOnly, cv, mask, item);
         }
@@ -383,8 +383,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Invoked from DecoderFile
      * @param row number of row to fill
      * @param e Element of type "variable"
+     * @param productID product ID of decoder, passed in so that subparts of the variable can use it for selection
      */
-	public int setIndxRow(int row, Element e, String productID) {
+	public int setIndxRow(int row, Element e, String productID, String modelID, String familyID) {
 
         // get the values for the VariableValue ctor
         String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
@@ -439,7 +440,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // Find and process the specific content types
         VariableValue iv;
-        iv = createIndexedVariableFromElement(e, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID);
+        iv = createIndexedVariableFromElement(e, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID, modelID, familyID);
 
         if (iv == null) {
            // trouble reporting
@@ -551,7 +552,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v;
     }
 
-    protected VariableValue processIEnumVal(Element child, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID) throws NumberFormatException {
+    protected VariableValue processIEnumVal(Element child, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
         VariableValue iv;
         @SuppressWarnings("unchecked")
         List<Element> l = child.getChildren("ienumChoice");
@@ -559,7 +560,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         iv = v1;
         for (int x = 0; x < l.size(); x++) {
             Element ex = l.get(x);
-            if (DecoderFile.isIncluded(ex, productID, "","","","") == false) {  // add model ID, family ID, inherited include, inherited exclude
+            if (DecoderFile.isIncluded(ex, productID, modelID, familyID,"","") == false) {  // add inherited include, inherited exclude
                 l.remove(x);
                 x--;
             }

@@ -352,7 +352,7 @@ public class DecoderFile extends XmlFile {
                          +e.getAttribute("item")+" exception: "+ex);
             }
             // load each row
-            if (variableModel.setIndxRow(nextICvStoreIndex, e, _productID) == nextICvStoreIndex) {
+            if (variableModel.setIndxRow(nextICvStoreIndex, e, _productID, _model, _family) == nextICvStoreIndex) {
                 // if this one existed, we will not update the row count.
                 nextICvStoreIndex++;
             } else {
