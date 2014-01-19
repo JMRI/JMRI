@@ -8,13 +8,11 @@ package jmri.jmrit.withrottle;
  * @author Randall Wood Copyright (C) 2013
  * @version $Revision$
  */
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -22,10 +20,9 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
-import java.util.ResourceBundle;
-import java.util.ArrayList;
-
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -39,17 +36,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
-import jmri.util.JmriJFrame;
-import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //	listen() has to run in a separate thread.
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
@@ -91,7 +89,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     public void createServerThread() {
         ServerThread s = new ServerThread(this);
-        s.setName("WiThrottleServer"); // NOI18N
+        s.setName("WiThrottleGUIServer"); // NOI18N
         s.start();
     }
 
