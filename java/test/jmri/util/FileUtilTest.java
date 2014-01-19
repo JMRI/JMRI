@@ -243,14 +243,16 @@ public class FileUtilTest extends TestCase {
         ArrayList<String> dl = new ArrayList<String>();
         try {
             FileUtil.copy(src, dest);
-        Scanner s = new Scanner(src);
-        while (s.hasNext()) {
-            sl.add(s.next());
-        }
-        s = new Scanner(dest);
-        while (s.hasNext()) {
-            dl.add(s.next());
-        }
+            Scanner s = new Scanner(src);
+            while (s.hasNext()) {
+                sl.add(s.next());
+            }
+            s.close();
+            s = new Scanner(dest);
+            while (s.hasNext()) {
+                dl.add(s.next());
+            }
+            s.close();
         } catch (IOException ex) {
             log.error("Unable to copy");
         }
@@ -264,7 +266,7 @@ public class FileUtilTest extends TestCase {
         FileUtil.delete(file);
         Assert.assertFalse(file.exists());
     }
-    
+
     // from here down is testing infrastructure
     public FileUtilTest(String s) {
         super(s);
