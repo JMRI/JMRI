@@ -632,7 +632,6 @@ public class ProfileManager extends Bean {
     }
 
     void profileNameChange(Profile profile, String oldName) {
-        log.debug(oldName);
         this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
     }
 }

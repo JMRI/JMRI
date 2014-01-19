@@ -97,5 +97,6 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        this.fireTableDataChanged();
     }
 }

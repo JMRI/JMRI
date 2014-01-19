@@ -7,15 +7,12 @@ package jmri.profile;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
@@ -43,7 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel, ListSelectionListener {
+public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel, ListSelectionListener {
 
     private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
@@ -52,34 +49,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
      */
     public ProfilePreferencesPanel() {
         initComponents();
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.PROFILES, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                profilesTbl.repaint();
-                valueChanged(null);
-            }
-        });
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.SEARCH_PATHS, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                searchPaths.repaint();
-                valueChanged(null);
-            }
-        });
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.ACTIVE_PROFILE, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                profilesTbl.repaint();
-                valueChanged(null);
-            }
-        });
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.NEXT_PROFILE, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                profilesTbl.repaint();
-                valueChanged(null);
-            }
-        });
         this.chkStartWithActiveProfile.setSelected(ProfileManager.defaultManager().isAutoStartActiveProfile());
         this.valueChanged(null);
         int index = ProfileManager.defaultManager().getAllProfiles().indexOf(ProfileManager.defaultManager().getActiveProfile());
@@ -101,8 +70,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
         profilesPopupMenu = new JPopupMenu();
         renameMI = new JMenuItem();
         jSeparator1 = new JPopupMenu.Separator();
-        enabledMI = new JCheckBoxMenuItem();
-        jSeparator2 = new JPopupMenu.Separator();
         copyMI = new JMenuItem();
         deleteMI = new JMenuItem();
         jTabbedPane1 = new JTabbedPane();
@@ -140,11 +107,6 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
         });
         profilesPopupMenu.add(renameMI);
         profilesPopupMenu.add(jSeparator1);
-
-        enabledMI.setSelected(true);
-        enabledMI.setText(bundle.getString("ProfilePreferencesPanel.enabledMI.text")); // NOI18N
-        profilesPopupMenu.add(enabledMI);
-        profilesPopupMenu.add(jSeparator2);
 
         copyMI.setText(bundle.getString("ProfilePreferencesPanel.copyMI.text")); // NOI18N
         profilesPopupMenu.add(copyMI);
@@ -378,14 +340,28 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
 
     private void btnDeleteProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDeleteProfileActionPerformed
         Profile deletedProfile = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
-        // TODO: confirm desire to delete profile
-        if (!FileUtil.delete(deletedProfile.getPath())) {
-            // TODO: notify user that profile directory could not be deleted
-            log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+        int result = JOptionPane.showOptionDialog(this,
+                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName()), // NOI18N
+                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, // use default icon
+                new String[]{
+                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
+                    Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
+                },
+                JOptionPane.CANCEL_OPTION
+        );
+        if (result == JOptionPane.OK_OPTION) {
+            // TODO: confirm desire to delete profile
+            if (!FileUtil.delete(deletedProfile.getPath())) {
+                // TODO: notify user that profile directory could not be deleted
+                log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+            }
+            ProfileManager.defaultManager().removeProfile(deletedProfile);
+            log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
+            profilesTbl.repaint();
         }
-        ProfileManager.defaultManager().removeProfile(deletedProfile);
-        log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
-        profilesTbl.repaint();
     }//GEN-LAST:event_btnDeleteProfileActionPerformed
 
     private void btnOpenExistingProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnOpenExistingProfileActionPerformed
@@ -427,12 +403,10 @@ public class ProfilePreferencesPanel extends JPanel implements PreferencesPanel,
     private JCheckBox chkStartWithActiveProfile;
     private JMenuItem copyMI;
     private JMenuItem deleteMI;
-    private JCheckBoxMenuItem enabledMI;
     private JPanel enabledPanel;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
     private JPopupMenu.Separator jSeparator1;
-    private JPopupMenu.Separator jSeparator2;
     private JTabbedPane jTabbedPane1;
     private JPopupMenu profilesPopupMenu;
     private JTable profilesTbl;
