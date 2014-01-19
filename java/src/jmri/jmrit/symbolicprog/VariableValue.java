@@ -240,8 +240,20 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * to be sufficient for many subclasses.
      */
     public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly() || !getAvailable()) state = false;
-        _cvMap.get(getCvNum()).setToRead(state);
+        boolean newState = state;
+        
+        // if this variable is disabled, then don't read, unless 
+        // some other variable has already set that
+        if (!getAvailable() && !state) { // do want to set when state is true
+            log.debug("Variable not available, skipping setToRead(false) to leave as is");
+            return;
+        }
+
+        // if read not available, don't force read
+        if (getInfoOnly() || getWriteOnly()) newState = false;
+        
+        if (log.isDebugEnabled()) log.debug("setToRead("+state+") with overrides "+getInfoOnly()+","+getWriteOnly()+","+!getAvailable()+" sets "+newState);
+        _cvMap.get(getCvNum()).setToRead(newState);
     }
     /**
      * Simple implementation for the case of a single CV. Intended
@@ -254,12 +266,22 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * to be sufficient for many subclasses.
      */
     public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly() || !getAvailable()) {
-            state = false;
+        boolean newState = state;
+        
+        // if this variable is disabled, then don't write, unless 
+        // some other variable has already set that
+        if (!getAvailable() && !state) { // do want to set when state is true
+            log.debug("Variable not available, skipping setToRead(false) to leave as is");
+            return;
         }
-        if (log.isDebugEnabled()) log.debug("setToWrite("+state+") for "+label()+" via CvNum "+getCvNum());
-        _cvMap.get(getCvNum()).setToWrite(state);
+
+        // if read not available, don't force read
+        if (getInfoOnly() || getReadOnly()) newState = false;
+        
+        if (log.isDebugEnabled()) log.debug("setToRead("+state+") with overrides "+getInfoOnly()+","+getReadOnly()+","+!getAvailable()+" sets "+newState);
+        _cvMap.get(getCvNum()).setToWrite(newState);
     }
+
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
