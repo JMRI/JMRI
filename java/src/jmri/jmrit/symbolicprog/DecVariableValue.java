@@ -71,6 +71,10 @@ public class DecVariableValue extends VariableValue
         oldContents = _value.getText();
     }
     void exitField() {
+        if (_value == null) {
+            // There's no value Object yet, so just ignore & exit
+            return;
+        }
         // what to do for the case where _value == null?
         if(!_value.getText().equals("")){
             // there may be a lost focus event left in the queue when disposed so protect
