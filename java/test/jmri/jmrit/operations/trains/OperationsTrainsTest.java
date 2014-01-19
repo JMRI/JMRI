@@ -1146,7 +1146,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("car with FRED has destination that will now accept it", t1.isBuilt());
 		Assert.assertEquals("CP 60 can't be delivered", null, c6.getTrain());
 
-		c2.setTrack(null);
+		c2.setLocation(l1, null);
 		t1.build();
 		Assert.assertFalse("need car doesn't have a track assignment", t1.isBuilt());
 

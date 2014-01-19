@@ -386,7 +386,6 @@ public class Router extends TrainCommon {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFoundTrack"), new Object[] {
 						trackType, track.getLocation().getName(), track.getName(), car.toString() }));
 			// test to see if there's a train that can deliver the car to its final location
-			testCar.setLocation(track.getLocation());
 			testCar.setTrack(track);
 			testCar.setDestination(saveDestination);
 			testCar.setDestinationTrack(saveDestinationTrack);
@@ -417,8 +416,7 @@ public class Router extends TrainCommon {
 			// Save the "last" tracks for later use
 			_lastLocationTracks.add(track);
 			// now try to forward car to this interim location
-			testCar.setLocation(saveTrack.getLocation()); // restore car's location and track
-			testCar.setTrack(saveTrack);
+			testCar.setTrack(saveTrack); // restore car's location and track
 			testCar.setDestination(track.getLocation()); // forward test car to this interim destination and track
 			testCar.setDestinationTrack(track);
 			// determine if car can be transported from current location to this yard or interchange
@@ -549,33 +547,32 @@ public class Router extends TrainCommon {
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterMultipleTrains"), new Object[] { car
 			.getFinalDestinationName() }));
 		
-		// tracks that could be the very next destination for the car
-		for (int i = 0; i < _nextLocationTracks.size(); i++) {
-			Track t = _nextLocationTracks.get(i);
-			log.debug("Next location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
-					+ car.toString() + ")"); // NOI18N
+		if (log.isDebugEnabled()) {
+			// tracks that could be the very next destination for the car
+			for (int i = 0; i < _nextLocationTracks.size(); i++) {
+				Track t = _nextLocationTracks.get(i);
+				log.debug("Next location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
+						+ car.toString() + ")"); // NOI18N
+			}
+			// tracks that could be the next to last destination for the car
+			for (int i = 0; i < _lastLocationTracks.size(); i++) {
+				Track t = _lastLocationTracks.get(i);
+				log.debug("Last location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
+						+ car.toString() + ")"); // NOI18N
+			}
+			// tracks that are not the next or the last list
+			for (int i = 0; i < _otherLocationTracks.size(); i++) {
+				Track t = _otherLocationTracks.get(i);
+				log.debug("Other location (" + t.getLocation().getName() + ", " + t.getName()
+						+ ") may be needed to service car (" + car.toString() + ")"); // NOI18N
+			}
+			log.debug("Try to find route using 3 trains");
 		}
-		// tracks that could be the next to last destination for the car
-		for (int i = 0; i < _lastLocationTracks.size(); i++) {
-			Track t = _lastLocationTracks.get(i);
-			log.debug("Last location (" + t.getLocation().getName() + ", " + t.getName() + ") can service car ("
-					+ car.toString() + ")"); // NOI18N
-		}
-		// tracks that are not the next or the last list
-		for (int i = 0; i < _otherLocationTracks.size(); i++) {
-			Track t = _otherLocationTracks.get(i);
-			log.debug("Other location (" + t.getLocation().getName() + ", " + t.getName()
-					+ ") may be needed to service car (" + car.toString() + ")"); // NOI18N
-		}
-		log.debug("Try to find route using 3 trains");
 		for (int i = 0; i < _nextLocationTracks.size(); i++) {
 			Track nlt = _nextLocationTracks.get(i);
-			testCar.setLocation(nlt.getLocation()); // set car to this location and track
-			testCar.setTrack(nlt);
+			testCar.setTrack(nlt); // set car to this location and track
 			for (int j = 0; j < _lastLocationTracks.size(); j++) {
-				Track llt = _lastLocationTracks.get(j);
-				testCar.setDestination(llt.getLocation()); // set car to this destination and track
-				testCar.setDestinationTrack(llt);
+				testCar.setDestinationTrack(_lastLocationTracks.get(j)); // set car to this destination and track
 				// does a train service these two locations?
 				Train middleTrain = TrainManager.instance().getTrainForCar(testCar, null); // don't add to report
 				if (middleTrain != null) {
@@ -602,10 +599,8 @@ public class Router extends TrainCommon {
 			Track nlt = _nextLocationTracks.get(i);
 			for (int j = 0; j < _otherLocationTracks.size(); j++) {
 				Track mlt = _otherLocationTracks.get(j);
-				testCar.setLocation(nlt.getLocation()); // set car to this location and track
-				testCar.setTrack(nlt);
-				testCar.setDestination(mlt.getLocation()); // set car to this destination and track
-				testCar.setDestinationTrack(mlt);
+				testCar.setTrack(nlt); // set car to this location and track
+				testCar.setDestinationTrack(mlt); // set car to this destination and track
 				// does a train service these two locations?
 				Train middleTrain2 = TrainManager.instance().getTrainForCar(testCar, null); // don't add to report
 				if (middleTrain2 != null) {
@@ -615,10 +610,8 @@ public class Router extends TrainCommon {
 								+ ", " + testCar.getDestinationTrackName());
 					for (int k = 0; k < _lastLocationTracks.size(); k++) {
 						Track llt = _lastLocationTracks.get(k);
-						testCar.setLocation(mlt.getLocation()); // set car to this location and track
-						testCar.setTrack(mlt);
-						testCar.setDestination(llt.getLocation()); // set car to this destination and track
-						testCar.setDestinationTrack(llt);
+						testCar.setTrack(mlt); // set car to this location and track
+						testCar.setDestinationTrack(llt); // set car to this destination and track
 						Train middleTrain3 = TrainManager.instance().getTrainForCar(testCar, null); // don't add to
 																									// report
 						if (middleTrain3 != null) {
@@ -647,10 +640,8 @@ public class Router extends TrainCommon {
 			Track nlt = _nextLocationTracks.get(i);
 			for (int j = 0; j < _otherLocationTracks.size(); j++) {
 				Track mlt1 = _otherLocationTracks.get(j);
-				testCar.setLocation(nlt.getLocation()); // set car to this location and track
-				testCar.setTrack(nlt);
-				testCar.setDestination(mlt1.getLocation()); // set car to this destination and track
-				testCar.setDestinationTrack(mlt1);
+				testCar.setTrack(nlt); // set car to this location and track
+				testCar.setDestinationTrack(mlt1); // set car to this destination and track
 				// does a train service these two locations?
 				Train middleTrain2 = TrainManager.instance().getTrainForCar(testCar, null); // don't add to report
 				if (middleTrain2 != null) {
@@ -662,10 +653,8 @@ public class Router extends TrainCommon {
 						Track mlt2 = _otherLocationTracks.get(k);
 						if (mlt1 == mlt2)
 							continue;
-						testCar.setLocation(mlt1.getLocation()); // set car to this location and track
-						testCar.setTrack(mlt1);
-						testCar.setDestination(mlt2.getLocation()); // set car to this destination and track
-						testCar.setDestinationTrack(mlt2);
+						testCar.setTrack(mlt1); // set car to this location and track
+						testCar.setDestinationTrack(mlt2); // set car to this destination and track
 						// does a train service these two locations?
 						Train middleTrain3 = TrainManager.instance().getTrainForCar(testCar, null); // don't add to
 																									// report
@@ -677,10 +666,8 @@ public class Router extends TrainCommon {
 										+ testCar.getDestinationTrackName());
 							for (int n = 0; n < _lastLocationTracks.size(); n++) {
 								Track llt = _lastLocationTracks.get(n);
-								testCar.setLocation(mlt2.getLocation()); // set car to this location and track
-								testCar.setTrack(mlt2);
-								testCar.setDestination(llt.getLocation()); // set car to this destination and track
-								testCar.setDestinationTrack(llt);
+								testCar.setTrack(mlt2); // set car to this location and track
+								testCar.setDestinationTrack(llt); // set car to this destination and track
 								// does a train service these two locations?
 								Train middleTrain4 = TrainManager.instance().getTrainForCar(testCar, null); // don't add
 																											// to report
@@ -714,7 +701,6 @@ public class Router extends TrainCommon {
 	private boolean finshSettingRouteFor(Car car, Track track) {
 		// only set car's destination if specific train can service car
 		Car ts2 = clone(car);
-		ts2.setDestination(track.getLocation());
 		ts2.setDestinationTrack(track);
 		String specific = canSpecificTrainService(ts2);
 		if (specific.equals(NO)) {
@@ -749,12 +735,11 @@ public class Router extends TrainCommon {
 		// modify clone car length if car is part of kernel
 		if (car.getKernel() != null)
 			clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLER));
-		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
 		clone.setFinalDestination(car.getFinalDestination());
 		// don't set the clone's final destination track, that will record the cars as being inbound
 		// next two items is where the clone is different
-		clone.setDestination(car.getFinalDestination());
+		clone.setDestination(car.getFinalDestination());  // note that final destination track can be null
 		clone.setDestinationTrack(car.getFinalDestinationTrack());
 		return clone;
 	}
@@ -770,8 +755,7 @@ public class Router extends TrainCommon {
 			if (debugFlag)
 				log.debug("Found " + track.getTrackType() + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
-			// test to see if there's a train that can deliver the car to this location
-			testCar.setDestination(track.getLocation());
+			// test to see if there's a train that can deliver the car to this destination
 			testCar.setDestinationTrack(track);
 			Train train = null;
 			String specific = canSpecificTrainService(testCar);

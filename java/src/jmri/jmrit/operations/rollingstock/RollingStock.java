@@ -299,17 +299,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Set the rolling stock's location. Doesn't do any checking and does not fire a property change. Used exclusively
-	 * by the Router code. Use setLocation(Location, Track) instead.
-	 * 
-	 * @param location
-	 *            where to set the rolling stock.
-	 */
-	public void setLocation(Location location) {
-		_location = location;
-	}
-
-	/**
 	 * Get rolling stock's location name
 	 * 
 	 * @return empty string if rolling stock isn't on layout
@@ -336,13 +325,15 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Set the rolling stock's track. Doesn't do any checking and does not fire a property change. Used exclusively by
-	 * the Router code. Use setLocation(Location, Track) instead.
+	 * Set the rolling stock's location and track. Doesn't do any checking and does not fire a property change. Used
+	 * exclusively by the Router code. Use setLocation(Location, Track) instead.
 	 * 
 	 * @param track
 	 *            to place the rolling stock on.
 	 */
 	public void setTrack(Track track) {
+		if (track != null)
+			_location = track.getLocation();
 		_trackLocation = track;
 	}
 
@@ -589,6 +580,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 * @param track
 	 */
 	public void setDestinationTrack(Track track) {
+		if (track != null)
+			_destination = track.getLocation();
 		_trackDestination = track;
 	}
 
