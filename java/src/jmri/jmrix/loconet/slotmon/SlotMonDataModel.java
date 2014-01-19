@@ -180,7 +180,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     public Object getValueAt(int row, int col) {
         LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String      t;
-        if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
+        if (s == null) {
+            log.error("slot pointer was null for slot row: "+row+" col: "+col);
+            return null;
+        }
         
         switch (col) {
         case SLOTCOLUMN:  // slot number
