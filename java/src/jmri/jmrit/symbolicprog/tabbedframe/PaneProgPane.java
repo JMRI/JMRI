@@ -523,6 +523,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Set the "ToRead" parameter in all variables and CVs on this pane
+     * @param justChanges true if this is read changes, false if read all
+     * @param startProcess true if this is the start of processing, false if cleaning up at end
      */
     void setToRead(boolean justChanges, boolean startProcess) {
         if (!container.isBusy() ||  // the frame has already setToRead
@@ -576,11 +578,13 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Set the "ToWrite" parameter in all variables and CVs on this pane
+     * @param justChanges true if this is read changes, false if read all
+     * @param startProcess true if this is the start of processing, false if cleaning up at end
      */
     void setToWrite(boolean justChanges, boolean startProcess) {
         if (log.isDebugEnabled()) log.debug("start setToWrite method with "+justChanges+","+startProcess);
         if (!container.isBusy() ||  // the frame has already setToWrite
-           (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
+           (!startProcess)) {  // we want to setToWrite false if the pane's process is being stopped
            log.debug("about to start setToWrite of varList");
            for (int i = 0; i < varList.size(); i++) {
                int varNum = varList.get(i).intValue();
@@ -676,11 +680,12 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     boolean nextRead() {
         // look for possible variables
+        if (log.isDebugEnabled()) log.debug("nextRead scans "+varList.size()+" variables");
         while ((varList.size() >= 0) && (varListIndex < varList.size())){
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState( varNum );
             VariableValue var = _varModel.getVariable(varNum);
-            if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState+"  label: "+var.label());
+            if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+VariableValue.stateNameFromValue(vState)+" isToRead: "+var.isToRead()+" label: "+var.label());
             varListIndex++;
             if (var.isToRead()) {
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
@@ -692,6 +697,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no variables needing read, try CVs
+        if (log.isDebugEnabled()) log.debug("nextRead scans "+cvList.size()+" CVs");
         while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
             int cvNum = cvList.get(cvListIndex).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
@@ -714,6 +720,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
+        if (log.isDebugEnabled()) log.debug("nextRead scans "+indexedCvList.size()+" indexed CVs");
         while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
