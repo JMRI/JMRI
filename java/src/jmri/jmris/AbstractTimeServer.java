@@ -38,6 +38,7 @@ abstract public class AbstractTimeServer {
                         sendRate();
                     }
                 } catch (IOException ex) {
+                    log.warn("Unable to send message to client: {}", ex.getMessage());
                     timebase.removeMinuteChangeListener(timeListener);
                 }
             }
