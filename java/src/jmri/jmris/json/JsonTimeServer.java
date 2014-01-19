@@ -11,9 +11,6 @@ import static jmri.jmris.json.JSON.POST;
 import static jmri.jmris.json.JSON.TIME;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 
 public class JsonTimeServer extends AbstractTimeServer {
 
@@ -25,25 +22,7 @@ public class JsonTimeServer extends AbstractTimeServer {
         super();
         this.connection = connection;
         this.mapper = new ObjectMapper();
-        this.timeListener = new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                try {
-                    if (evt.getPropertyName().equals("minutes")) {
-                        sendTime();
-                    } else if (evt.getPropertyName().equals("run")) {
-                        sendStatus();
-                    } else {
-                        sendRate();
-                    }
-                } catch (IOException ex) {
-                    log.warn("Unable to send message to client: {}",
-                      ex.getMessage());
-                    timebase.removeMinuteChangeListener(timeListener);
-                }
-             }
-          };
+        listenToTimebase(true);
     }
 
     @Override
@@ -87,6 +66,4 @@ public class JsonTimeServer extends AbstractTimeServer {
     public void parseRate(String statusString) throws JmriException, IOException    {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
-
-
 }

@@ -25,24 +25,6 @@ abstract public class AbstractTimeServer {
 
     public AbstractTimeServer() {
         this.timebase = InstanceManager.timebaseInstance();
-        this.timeListener = new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                try {
-                    if (evt.getPropertyName().equals("minutes")) {
-                        sendTime();
-                    } else if (evt.getPropertyName().equals("run")) {
-                        sendStatus();
-                    } else {
-                        sendRate();
-                    }
-                } catch (IOException ex) {
-                    log.warn("Unable to send message to client: {}", ex.getMessage());
-                    timebase.removeMinuteChangeListener(timeListener);
-                }
-            }
-        };
     }
 
     /*
@@ -76,4 +58,33 @@ abstract public class AbstractTimeServer {
         }
         this.timebase = null;
     }
+
+    public void listenToTimebase(boolean listen){
+        if(listen==false && timeListener==null ) return; // nothing to do.
+        if(timeListener==null ) {
+           timeListener = new PropertyChangeListener() {
+   
+               @Override
+               public void propertyChange(PropertyChangeEvent evt) {
+                   try {
+                       if (evt.getPropertyName().equals("minutes")) {
+                           sendTime();
+                       } else if (evt.getPropertyName().equals("run")) {
+                           sendStatus();
+                       } else {
+                           sendRate();
+                       }
+                   } catch (IOException ex) {
+                       log.warn("Unable to send message to client: {}", ex.getMessage());
+                       timebase.removeMinuteChangeListener(timeListener);
+                   }
+               }
+           };
+       }
+       if(listen==true ) {
+           timebase.addMinuteChangeListener(timeListener);
+       } else {
+           timebase.removeMinuteChangeListener(timeListener);
+       }
+   }
 }
