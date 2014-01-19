@@ -28,11 +28,9 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) Check if the decoder definitions have changed since the previous release (almost always true)
     If so, remake the decoder index.
-        Delete old index from preferences
+
         ant remakedecoderindex
-        Move (mv) the new file from preferences into the SVN tree.
-        Change file to Unix line ends.  (ant might eventually do this with <fixcrlf file="path/to/file" eol="unix" />, but be careful with cross-platform SVN expectations)
-        Update the internal version number by hand, adding 2.
+
         svn diff as a check.
         Commit.
 

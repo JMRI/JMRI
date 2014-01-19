@@ -1079,9 +1079,24 @@
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
-        <antcall target="-run-jmri-application">
-             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexBuilder"/>
-        </antcall>
+        <java classname="jmri.jmrit.decoderdefn.DecoderIndexBuilder"
+              dir="${basedir}"
+              fork="yes"
+              resultproperty="decoderindex.returncode"
+              outputproperty="decoderindex.file"
+              errorproperty="decoderindex.error">
+            <classpath refid="project.class.path"/>
+        </java>
+        <echo message="created decoder index at ${decoderindex.file}"/>
+        <fail message="error rebuilding decoder index: ${decoderindex.error}">
+          <condition>
+            <not>
+              <equals arg1="${decoderindex.returncode}" arg2="0"/>
+            </not>
+          </condition>
+        </fail> 
+        <fixcrlf file="${decoderindex.file}"/>
+        <move file="${decoderindex.file}" todir="xml" />
     </target>
 
     <!-- dist target forces the jar file to be built without test classes -->

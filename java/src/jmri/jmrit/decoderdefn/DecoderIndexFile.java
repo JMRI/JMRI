@@ -219,9 +219,15 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Force creation of a new user index
+     * Force creation of a new user index without incrementing version
      */
     static public void forceCreationOfNewIndex() {
+        forceCreationOfNewIndex(false);
+    }
+    /**
+     * Force creation of a new user index
+     */
+    static public void forceCreationOfNewIndex(boolean increment) {
         log.info("update decoder index");
         // make sure we're using only the default manufacturer info
         // to keep from propagating wrong, old stuff
@@ -272,10 +278,13 @@ public class DecoderIndexFile extends XmlFile {
         jmri.util.StringUtil.sort(sbox);
 
         // create a new decoderIndex
-        // the existing version is used, so that a new master file
-        // with a larger one will force an update
         DecoderIndexFile index = new DecoderIndexFile();
-        index.fileVersion = instance().fileVersion;
+        
+        // For user operations the existing version is used, so that a new master file
+        // with a larger one will force an update
+        
+        if (increment) index.fileVersion = instance().fileVersion+2;
+        else index.fileVersion = instance().fileVersion;
 
         // write it out
         try {

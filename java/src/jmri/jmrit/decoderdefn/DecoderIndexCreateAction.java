@@ -29,9 +29,12 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
         super(s);
     }
 
+    boolean increment = false;
+    public void setIncrement(boolean increment) { this.increment = increment; }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        DecoderIndexFile.forceCreationOfNewIndex();
+        DecoderIndexFile.forceCreationOfNewIndex(increment);
     }
 
     // never invoked, because we overrode actionPerformed above
