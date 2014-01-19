@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmrit.display.Editor;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
@@ -78,13 +78,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
             response.sendRedirect("/xmlio/list?type=panel");
         } else {
             response.setContentType("text/html"); // NOI18N
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"), // NOI18N
-                    ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"), // NOI18N
-                    "JMRI Panels", // NOI18N
-                    "panel", // NOI18N
-                    ResourceBundle.getBundle("jmri.web.servlet.panel.PanelHtml").getString("HeadAdditions"))); // NOI18N
-            response.getWriter().println(ResourceBundle.getBundle("jmri.web.servlet.panel.PanelHtml").getString("BodyContent")); // NOI18N
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("TailFormat"), "html/web/showPanelHelp.shtml", "")); // NOI18N
+            String html = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage("Panel.html")));
+            // we would do a .print(String.format(html, ...)) if we needed to inject code at this point
+            response.getWriter().print(html);
         }
     }
 

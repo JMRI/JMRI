@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+
+-->
+<html>
+    <head>
+        <title>JMRI Panels</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="/css/miniServer.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print">
+        <link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen">
+        <script src="/js/jquery-latest.min.js"></script>
+        <script src="/js/jquery.json-2.3.min.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/panel.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/pulse.css">
+        <style type='text/css'>
+            div { border: 0px solid black; }
+            div#power { display:inline; float:right; }
+            div#console {
+                clear: both;
+                min-width: 60em;
+                height: 30ex;
+                overflow: auto;
+                background-color: #f0f0f0;
+                padding: 4px;
+                border: 1px solid black;
+            }
+            div#rawInput {
+                clear: both;
+                min-width: 60em;
+                padding: 4px;
+                background-color: #e0e0e0;
+                border: 1px solid black;
+                border-top: 0px
+            }
+            div.hidden { display: none;	}
+            span.alert { font-style: italic; }
+            input#command {
+                min-width: 50em;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='mainContent'>
+            <div id="workingMessage" class="modal">
+                <img src='/web/images/ajax-loader.gif'>
+                <div id="messageText"></div>
+                <a class="reload" onClick="window.location.reload()" href="#">[Reload Panel]</a>&nbsp;
+                <a class="list" href="?">[List]</a>&nbsp;<a class="home" href="/">[Home]</a>&nbsp;
+            </div>
+            <div id='panelList'><h1>Control Panels - from HTML in src path</h1></div>
+            <div id='panelArea'>&nbsp;</div>
+            <div id='logArea'></div>
+        </div>
+        <ul class="snav" id="footer-menu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/help/en/html/web/showPanelHelp.shtml">Help</a></li>
+          <li><a href="http://jmri.org">JMRI</a></li>
+        </ul>
+      </body>
+</html>
