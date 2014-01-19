@@ -24,6 +24,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
 
     public JmriSRCPTimeServer(DataOutputStream outStream) {
         super();
+        this.timeListener = null;
         output = outStream;
     }
 

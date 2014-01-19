@@ -70,8 +70,10 @@ abstract public class AbstractTimeServer {
     }
 
     public void dispose() {
-        this.timebase.removeMinuteChangeListener(timeListener);
-        this.timeListener = null;
+        if (this.timeListener != null) {
+            this.timebase.removeMinuteChangeListener(timeListener);
+            this.timeListener = null;
+        }
         this.timebase = null;
     }
 }
