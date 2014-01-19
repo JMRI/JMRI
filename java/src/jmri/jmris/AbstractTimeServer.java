@@ -20,11 +20,29 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractTimeServer {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractTimeServer.class.getName());
+    protected PropertyChangeListener timeListener = null;
     protected Timebase timebase = null;
 
     public AbstractTimeServer() {
-        if(log.isDebugEnabled()) log.debug("Creating Abstract Time Server");
         this.timebase = InstanceManager.timebaseInstance();
+        this.timeListener = new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                try {
+                    if (evt.getPropertyName().equals("minutes")) {
+                        sendTime();
+                    } else if (evt.getPropertyName().equals("run")) {
+                        sendStatus();
+                    } else {
+                        sendRate();
+                    }
+                } catch (IOException ex) {
+                    log.warn("Unable to send message to client: {}", ex.getMessage());
+                    timebase.removeMinuteChangeListener(timeListener);
+                }
+            }
+        };
     }
 
     /*
@@ -52,6 +70,8 @@ abstract public class AbstractTimeServer {
     }
 
     public void dispose() {
+        this.timebase.removeMinuteChangeListener(timeListener);
+        this.timeListener = null;
         this.timebase = null;
     }
 }
