@@ -217,6 +217,12 @@ public class DecoderFile extends XmlFile {
         return isIncluded(e, _productID, extraInclude, extraExclude);
     }
     
+    /**
+     * @param e XML element with possible "include" and "exclude" attributes to be checked
+     * @param productID the specific ID of the decoder being loaded, to check against include/exclude conditions
+     * @param extraInclude additional "include" terms
+     * @param extraExclude additional "exclude" terms
+     */
     public static boolean isIncluded(Element e, String productID, String extraInclude, String extraExclude) {
         String include = e.getAttributeValue("include");
         if (include != null) include = include+","+extraInclude;
