@@ -42,15 +42,15 @@ public abstract class Bean extends UnboundBean {
     }
 
     protected void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, oldValue);
+        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     protected void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, oldValue);
+        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, oldValue);
+        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     protected void firePropertyChange(String key, boolean oldValue, boolean value) {
