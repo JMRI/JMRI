@@ -23,6 +23,8 @@ abstract public class AbstractTimeServer {
     protected PropertyChangeListener timeListener = null;
     protected Timebase timebase = null;
 
+    protected jmri.Timebase timebase = null;
+
     public AbstractTimeServer() {
         this.timebase = InstanceManager.timebaseInstance();
         this.timeListener = new PropertyChangeListener() {
