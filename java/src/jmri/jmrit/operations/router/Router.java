@@ -35,20 +35,19 @@ public class Router extends TrainCommon {
 	private List<Track> _lastLocationTracks = new ArrayList<Track>();
 	private List<Track> _otherLocationTracks = new ArrayList<Track>();
 
-	private static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
-	private static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
-	private static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
-	private static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
-	private static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
+	protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
+	protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
+	protected static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
+	protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
+	protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
 	private String _status = "";
 	private Train _train = null;
 	PrintWriter _buildReport = null; // build report
 
-	public boolean _enable_yard_search = false; // search for yard track even if an interchange track was found
-	private static boolean debugFlag = false;
+	private static boolean debugFlag = false;	// developer debug flag
 
-	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+	private static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 	private boolean _addtoReport = false;
 	private boolean _addtoReportVeryDetailed = false;
 
@@ -146,9 +145,9 @@ public class Router extends TrainCommon {
 			_otherLocationTracks.clear();
 			// first try using 2 trains and an interchange track to route the car
 			if (setCarDestinationInterchange(car)) {
-				if (_enable_yard_search && _status.equals(STATUS_NOT_THIS_TRAIN)) {
+				if (car.getDestination() == null) {
 					log.debug("Was able to find a route via classification/interchange track, but not using train ("
-							+ _train.getName() + ") try again using yard tracks"); // NOI18N
+							+ _train.getName() + ") or car destination not set, try again using yard tracks"); // NOI18N
 					if (setCarDestinationYard(car)) {
 						log.debug("Was able to find route via yard (" + car.getDestinationName() + ", "
 								+ car.getDestinationTrackName() + ") for car (" + car.toString() + ")"); // NOI18N
