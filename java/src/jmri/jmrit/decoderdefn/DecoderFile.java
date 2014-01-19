@@ -213,46 +213,70 @@ public class DecoderFile extends XmlFile {
         }
     }
 
-    boolean isProductIDok(Element e) {
-        return isIncluded(e, _productID);
+    boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
+        return isIncluded(e, _productID, extraInclude, extraExclude);
     }
     
-    public static boolean isIncluded(Element e, String productID) {
-        if (e.getAttributeValue("include") != null) {
-            String include = e.getAttributeValue("include");
-            if (isInList(productID, include) == false) {
-                if (log.isTraceEnabled()) log.trace("include not match: /"+include+"/ /"+productID+"/");
-                return false;
-            }
+    public static boolean isIncluded(Element e, String productID, String extraInclude, String extraExclude) {
+        String include = e.getAttributeValue("include");
+        if (include != null) include = include+","+extraInclude;
+        else include = extraInclude;
+        // if there are any include clauses, then it has to match
+        if (!include.equals("") && !isInList(productID, include) ) {
+            if (log.isTraceEnabled()) log.trace("include not in list of OK values: /"+include+"/ /"+productID+"/");
+            return false;
         }
-        if (e.getAttributeValue("exclude") != null) {
-            String exclude = e.getAttributeValue("exclude");
-            if (isInList(productID, exclude) == true) {
-                if (log.isTraceEnabled()) log.trace("exclude match: "+exclude+" "+productID);
-                return false;
-            }
+
+        String exclude = e.getAttributeValue("exclude");
+        if (exclude != null) exclude = exclude+","+extraExclude;
+        else exclude = extraExclude;
+        // if there are any include clauses, then it cannot match
+        if ( !exclude.equals("") && isInList(productID, exclude) ) {
+            if (log.isTraceEnabled()) log.trace("exclude match: /"+exclude+"/ /"+productID+"/");
+            return false;
         }
+
         return true;
     }
 
-    private static boolean isInList(String include, String productID) {
-        String test = ","+productID+",";
-        return test.contains(","+include+",");
+    /**
+     * @param checkFor see if this value is present within
+     * @param okProductIDs this comma-separated list of id numbers
+     */
+    private static boolean isInList(String checkFor, String okProductIDs) {
+        String test = ","+okProductIDs+",";
+        return test.contains(","+checkFor+",");
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
     @SuppressWarnings("unchecked")
 	public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
-        // find decoder id, assuming first decoder is fine for now (e.g. one per file)
-        //Element decoderID = decoderElement.getChild("id");
+        
+        nextCvStoreIndex = 0;
+        nextICvStoreIndex = 0;
 
+        processVariablesElement(decoderElement.getChild("variables"), variableModel, "", "");
+        
+        variableModel.configDone();
+    }
+    
+    int nextCvStoreIndex = 0;
+    int nextICvStoreIndex = 0;
+    
+    @SuppressWarnings("unchecked")
+	public void processVariablesElement(Element variablesElement,
+                                  VariableTableModel variableModel, String extraInclude, String extraExclude) {
+    
+        // handle include, exclude on this element
+        extraInclude = extraInclude
+                +(variablesElement.getAttributeValue("include")!=null ? ","+variablesElement.getAttributeValue("include") : "");
+        extraExclude = extraExclude
+                +(variablesElement.getAttributeValue("exclude")!=null ? ","+variablesElement.getAttributeValue("exclude") : "");
+        log.debug("extraInclude /{}/, extraExclude /{}/", extraInclude, extraExclude);
+        
         // load variables to table
-        Iterator<Element> iter = decoderElement.getChild("variables")
-                                    .getDescendants(new ElementFilter("variable"));
-        int index = 0;
-        while (iter.hasNext()) {
-            Element e = iter.next();
+        for (Element e : (List<Element>)variablesElement.getChildren("variable")) {
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -265,20 +289,16 @@ public class DecoderFile extends XmlFile {
                     && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
                     continue;
                 // if not correct productID, skip
-                if (!isProductIDok(e)) continue;
+                if (!isProductIDok(e, extraInclude, extraExclude)) continue;
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
             }
             // load each row
-            variableModel.setRow(index++, e);
+            variableModel.setRow(nextCvStoreIndex++, e);
         }
         // load constants to table
-        iter = decoderElement.getChild("variables")
-                                    .getDescendants(new ElementFilter("constant"));
-        index = 0;
-        while (iter.hasNext()) {
-            Element e = iter.next();
+        for (Element e : (List<Element>)variablesElement.getChildren("constant")) {
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -291,7 +311,7 @@ public class DecoderFile extends XmlFile {
                     && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
                     continue;
                 // if not correct productID, skip
-                if (!isProductIDok(e)) continue;
+                if (!isProductIDok(e, extraInclude, extraExclude)) continue;
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
@@ -299,12 +319,8 @@ public class DecoderFile extends XmlFile {
             // load each row
             variableModel.setConstant(e);
         }
-        iter = decoderElement.getChild("variables")
-                                    .getDescendants(new ElementFilter("ivariable"));
-        index = 0;
-        int row = 0;
-        while (iter.hasNext()) {
-            Element e = iter.next();
+        
+        for (Element e : (List<Element>)variablesElement.getChildren("ivariable")) {
             try {
                 if (log.isDebugEnabled()) log.debug("process iVar "+e.getAttribute("CVname"));
                 // if its associated with an inconsistent number of functions,
@@ -321,21 +337,25 @@ public class DecoderFile extends XmlFile {
                     log.debug("skip due to num outputs");
                     continue;
                 }
+                // if not correct productID, skip
+                if (!isProductIDok(e, extraInclude, extraExclude)) continue;
             } catch (Exception ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                          +e.getAttribute("item")+" exception: "+ex);
             }
             // load each row
-            if (variableModel.setIndxRow(row, e, _productID) == row) {
+            if (variableModel.setIndxRow(nextICvStoreIndex, e, _productID) == nextICvStoreIndex) {
                 // if this one existed, we will not update the row count.
-                row++;
+                nextICvStoreIndex++;
             } else {
                 if (log.isDebugEnabled()) log.debug("skipping entry for "+e.getAttribute("CVname"));
             }
         }
-        log.debug("iVarList done, now row = "+row);
         
-        variableModel.configDone();
+        for (Element e : (List<Element>)variablesElement.getChildren("variables")) {
+            processVariablesElement(e, variableModel, extraInclude, extraExclude);
+        }
+                
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.

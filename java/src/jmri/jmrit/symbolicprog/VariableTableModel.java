@@ -385,10 +385,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param e Element of type "variable"
      */
 	public int setIndxRow(int row, Element e, String productID) {
-        if (DecoderFile.isIncluded(e, productID) == false) {
-            if (log.isDebugEnabled()) log.debug("include not match, return row - 1 ="+(row-1));
-            return row - 1;
-        }
 
         // get the values for the VariableValue ctor
         String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
@@ -563,7 +559,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         iv = v1;
         for (int x = 0; x < l.size(); x++) {
             Element ex = l.get(x);
-            if (DecoderFile.isIncluded(ex, productID) == false) {
+            if (DecoderFile.isIncluded(ex, productID, "","") == false) {
                 l.remove(x);
                 x--;
             }
