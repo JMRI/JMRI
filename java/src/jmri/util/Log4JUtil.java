@@ -121,7 +121,7 @@ public class Log4JUtil {
     static private void configureLogging(String config) throws IOException {
         Properties p = new Properties();
         p.load(new FileInputStream(config));
-        if (System.getProperty("jmri.log.path") == null) {
+        if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
             System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);
             p.put("jmri.log.path", System.getProperty("jmri.log.path"));
         }
