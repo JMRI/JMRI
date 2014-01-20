@@ -107,8 +107,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
     $('div#workingMessage').height($gPanel.panelheight);
 
     //insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
-	if ($gPanel.paneltype == "LayoutPanel") {
-        $('div#panelArea').before("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
+    if ($gPanel.paneltype == "LayoutPanel") {
+        $('div#panelArea').prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
                 $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
         var canvas = document.getElementById("panelCanvas");
         $gCtx = canvas.getContext("2d");
@@ -1578,7 +1578,7 @@ $(document).ready(function() {
     $getPanelList();
     //if panelname not passed in, show list of available panels
     var $panelName = getParameterByName('name');
-	if ($panelName == undefined) {
+    if ($panelName == undefined) {
         $('div#panelList').show();  //show the list of available panels if none passed in
         $('div#panelArea').hide();
         $(document).attr('title', 'JMRI Panels');

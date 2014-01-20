@@ -3,7 +3,7 @@
 body {
     font-family: sans-serif;
 }
-/* setting the transform origin was breaking the rotation
+/* setting the transform origin breaks the rotation in some cases */
 .rotatable{
     -webkit-transform-origin: 0% 0%;
     -moz-transform-origin: 0% 0%;
@@ -11,7 +11,7 @@ body {
     -o-transform-origin: 0% 0%;
     transform-origin: 0% 0%;
 }
-*/
+
 .clickable:hover {
     margin: -1px;
     border: solid 1px lightGray;
@@ -123,5 +123,11 @@ div.fastclock>img.clockhourhand {
     z-index:    1000;
     padding: 	50px;
     background: rgba( 255, 255, 255, .90 );
+}
+
+#workingMessage {
     margin: auto;
+    width: 60%;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
