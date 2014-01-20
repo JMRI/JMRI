@@ -42,7 +42,7 @@ Clicking on each preference will then populate the right hand side, with the var
 <a href="#Roster">Roster</a><br>
 <a href="#Throttle">Throttle</a><br>
 <a href="#WiThrottle">WiThrottle</a><br>
-<a href="#Profiles">Profiles</a><br>
+<a href="#Profiles">Config Profiles</a><br>
 <a href="#JSONServer">JSON Server</a><br>
 <a href="#WebServer">Web Server</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
@@ -288,7 +288,7 @@ saving them permanently.  For a connected throttle to use the
 new settings, its connection must be closed and reopened.
 
 <a name="Profiles">
-<h2>Profiles</h2></a>
+<h2>Config Profiles</h2></a>
 
 JMRI Configuration Profiles make it easy to set up your 
 JMRI applications to work with different setups.  Each profile
