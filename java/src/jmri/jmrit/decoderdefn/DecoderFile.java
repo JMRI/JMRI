@@ -17,8 +17,6 @@ import jmri.jmrit.symbolicprog.ResetTableModel;
 import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
 
-// try to limit the JDOM to this class, so that others can manipulate...
-
 /**
  * Represents and manipulates a decoder definition, both as a file and
  * in memory.  The internal storage is a JDOM tree.
@@ -202,10 +200,10 @@ public class DecoderFile extends XmlFile {
         return protocols.toArray(new LocoAddress.Protocol[protocols.size()]);
     }
     
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
     private void setSupportedProtocols(){
         protocols = new ArrayList<LocoAddress.Protocol>();
         if(_element.getChild("protocols")!=null){
-            @SuppressWarnings("unchecked")
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
             for(Element e: protocolList){
                 protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
@@ -257,7 +255,7 @@ public class DecoderFile extends XmlFile {
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
         
@@ -272,7 +270,7 @@ public class DecoderFile extends XmlFile {
     int nextCvStoreIndex = 0;
     int nextICvStoreIndex = 0;
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void processVariablesElement(Element variablesElement,
                                   VariableTableModel variableModel, String extraInclude, String extraExclude) {
     
@@ -305,6 +303,7 @@ public class DecoderFile extends XmlFile {
             // load each row
             variableModel.setRow(nextCvStoreIndex++, e);
         }
+
         // load constants to table
         for (Element e : (List<Element>)variablesElement.getChildren("constant")) {
             try {
@@ -367,7 +366,7 @@ public class DecoderFile extends XmlFile {
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
 	public void loadResetModel(Element decoderElement,
                                ResetTableModel resetModel) {
         if (decoderElement.getChild("resets") != null) {

@@ -343,6 +343,7 @@ public class ProfileManager extends Bean {
         }
     }
 
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
     private void readProfiles() throws JDOMException, IOException {
         try {
             boolean reWrite = false;
@@ -355,6 +356,7 @@ public class ProfileManager extends Bean {
             this.readingProfiles = true;
             Document doc = (new SAXBuilder()).build(catalog);
             profiles.clear();
+
             for (Element e : (List<Element>) doc.getRootElement().getChild(PROFILES).getChildren()) {
                 File pp = FileUtil.getFile(FileUtil.getExternalFilename(e.getAttributeValue(Profile.PATH)));
                 try {

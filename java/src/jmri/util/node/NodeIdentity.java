@@ -57,6 +57,7 @@ public class NodeIdentity {
         init(); // init as a method so the init can be synchronized.
     }
 
+    @SuppressWarnings("unchecked") // JDOM getChildren returns plain List, not List<Element>
     synchronized private void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
