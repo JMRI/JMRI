@@ -151,7 +151,7 @@ public class WarrantTableAction extends AbstractAction {
     synchronized public static void closeWarrantFrame(WarrantFrame frame) {
     	if (frame!=null) {
     		if  (frame.equals(_openFrame)) {
-            	_openFrame = null;;    		    			
+            	_openFrame = null;		    			
     		}
     		frame.dispose();
     	}
@@ -180,7 +180,7 @@ public class WarrantTableAction extends AbstractAction {
     	if (_tableFrame!=null && _tableFrame.mouseClickedOnBlock(block)) {
     		return;
     	}
-    	if (_trackerTable!=null && _trackerTable.mouseClickedOnBlock(block)) {
+    	if (_trackerTable!=null && TrackerTableAction.mouseClickedOnBlock(block)) {
     		return;
     	}
     	if (_openFrame!=null) {

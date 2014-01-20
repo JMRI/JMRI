@@ -358,7 +358,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
             }
             if (result) {
-            	blockBox.setText(block.getDisplayName());
+            	if (block!=null) blockBox.setText(block.getDisplayName());
             	order.setPathName((String)pathBox.getSelectedItem());
                 if (location==Location.DEST) {
                     order.setEntryName((String)portalBox.getSelectedItem());           	
