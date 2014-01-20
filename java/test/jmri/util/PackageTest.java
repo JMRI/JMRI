@@ -48,6 +48,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
+        suite.addTest(jmri.util.DateUtilTest.suite());
 
         return suite;
     }
