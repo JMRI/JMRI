@@ -30,8 +30,8 @@ configure the basic operation of your JMRI application.
 <p>
 The screen is split into two sections, on the left hand side is a list of the preference groups that can be set. 
 Clicking on each preference will then populate the right hand side, with the various options that can be configured.
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../manual/3-4_DecoderPro/images/Preferences.png">
+<img src="../../manual/3-4_DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
 <p>
 <a href="#Connection">Connections</a><br>
 <a href="#Defaults">Defaults</a><br>
@@ -42,6 +42,9 @@ Clicking on each preference will then populate the right hand side, with the var
 <a href="#Roster">Roster</a><br>
 <a href="#Throttle">Throttle</a><br>
 <a href="#WiThrottle">WiThrottle</a><br>
+<a href="#Profiles">Profiles</a><br>
+<a href="#JSONServer">JSON Server</a><br>
+<a href="#WebServer">Web Server</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
 <p>
@@ -283,6 +286,40 @@ This will let you to limit what users have the ability to control.
 The "Apply" button puts the current settings into effect, without
 saving them permanently.  For a connected throttle to use the
 new settings, its connection must be closed and reopened.
+
+<a name="Profiles">
+<h2>Profiles</h2></a>
+
+JMRI Configuration Profiles make it easy to set up your 
+JMRI applications to work with different setups.  Each profile
+specifies one set of preferences.  You can then select which one to use.
+
+<p>
+For more information, see the 
+<a href="../../html/profiles.shtml">Configuration Profiles</a> 
+page.
+
+<a name="JSONServer">
+<h2>JSON Server</h2></a>
+
+The JMRI JSON server is used by applications on other computers, 
+including tablets and phones, to connect to JMRI to operate your 
+railroad.
+<p>
+On this pane you can specify the port for the connection (usually left at default)
+and how often the server checks for whether the connection has failed via a heartbeat
+message. 
+
+<a name="WebServer">
+<h2>Web Server</h2></a>
+
+The JMRI web server lets you 
+connect to JMRI from a web browser on your computer, tablet or phone
+and work with your railroad.  
+<p>
+This tab lets you control what the web server provides.
+For more information, see the 
+<a href="../../html/web/index.shtml#Configure">web server preference pane</a> page.
 
 <!--#include virtual="/Footer" -->
 </body>
