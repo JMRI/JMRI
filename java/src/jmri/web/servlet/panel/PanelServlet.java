@@ -33,9 +33,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getXmlPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
 
@@ -47,8 +45,8 @@ public class PanelServlet extends AbstractPanelServlet {
             panel.setAttribute("name", name);
             panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
             panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
-            panel.setAttribute("panelheight", Integer.toString(frame.getContentPane().getHeight()));
-            panel.setAttribute("panelwidth", Integer.toString(frame.getContentPane().getWidth()));
+            panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
+            panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
             panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
@@ -62,9 +60,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
             // include contents
             List<Positionable> contents = editor.getContents();
-            if (log.isDebugEnabled()) {
-                log.debug("N elements: " + contents.size());
-            }
+            log.debug("N elements: {}", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -94,9 +90,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getJsonPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             PanelEditor editor = (PanelEditor) getEditor(name);
 
@@ -122,9 +116,7 @@ public class PanelServlet extends AbstractPanelServlet {
             }
 
             // include contents
-            if (log.isDebugEnabled()) {
-                log.debug("N elements: " + editor.getContents().size());
-            }
+            log.debug("N elements: {}", editor.getContents().size());
             for (Positionable sub : editor.getContents()) {
                 if (sub != null) {
                     try {
