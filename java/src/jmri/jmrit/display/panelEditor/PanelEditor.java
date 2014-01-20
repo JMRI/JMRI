@@ -1,23 +1,56 @@
 package jmri.jmrit.display.panelEditor;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.ImageIndexEditor;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.PositionablePopupUtil;
+import jmri.jmrit.display.ToolTip;
+import jmri.util.JmriJFrame;
+import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.util.JmriJFrame;
-
-import jmri.jmrit.display.*;
-import jmri.configurexml.*;
-
-import java.util.*;
-import java.util.List;
-import java.awt.*;
-import java.awt.event.*;
-
-import jmri.jmrit.display.Editor;
-import javax.swing.*;
-
-import org.jdom.Element;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -58,8 +91,6 @@ import org.jdom.Element;
 
 public class PanelEditor extends Editor implements ItemListener {
 
-    public boolean _debug;
-
     JTextField nextX = new JTextField(Bundle.getMessage("DefaultX"),4);
     JTextField nextY = new JTextField(Bundle.getMessage("DefaultY"),4);
 
@@ -86,7 +117,6 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     protected void init(String name) {
-        _debug = log.isDebugEnabled();
         Runnable r = new Runnable() {
           public void run() {
             try {
@@ -368,7 +398,7 @@ public class PanelEditor extends Editor implements ItemListener {
         getTargetFrame().setLocationRelativeTo(this);
         getTargetFrame().pack();
         getTargetFrame().setVisible(true);
-        if (_debug) log.debug("PanelEditor ctor done.");
+        log.debug("PanelEditor ctor done.");
     }  // end ctor
 
     /**
@@ -621,7 +651,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     public void mousePressed(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
-        if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
+        if (log.isDebugEnabled()) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;
@@ -637,7 +667,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 _currentSelection = selections.get(0); 
             }
             if (event.isPopupTrigger()) {
-                if (_debug) log.debug("mousePressed calls showPopUp");
+                log.debug("mousePressed calls showPopUp");
                 if (event.isMetaDown() || event.isAltDown()){
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
@@ -692,7 +722,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     public void mouseReleased(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
-        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+        if (log.isDebugEnabled()) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
         List <Positionable> selections = getSelectedItems(event);
 
@@ -838,7 +868,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     public void mouseClicked(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
-        if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+        if (log.isDebugEnabled()) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
         List <Positionable> selections = getSelectedItems(event);
 
@@ -1207,7 +1237,7 @@ public class PanelEditor extends Editor implements ItemListener {
     }
     
     protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
-        if (_debug)
+        if (log.isDebugEnabled())
             log.debug("setColorButton: color="+color+" (RGB= "+(color==null?"":color.getRGB())+
                       ") buttonColor= "+buttonColor+" (RGB= "+(buttonColor==null?"":buttonColor.getRGB())+")");
         if (buttonColor!=null) {
