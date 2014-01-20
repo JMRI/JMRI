@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
@@ -15,18 +15,22 @@
         <enumVal>
           <enumChoice choice="reserved (0)">
             <choice>reserved (0)</choice>
+
             <choice xml:lang="it">riservato (0)</choice>
           </enumChoice>
           <enumChoice choice="thrown">
             <choice>thrown</choice>
+
             <choice xml:lang="it">deviato</choice>
           </enumChoice>
           <enumChoice choice="reserved (2)">
             <choice>reserved (2)</choice>
+
             <choice xml:lang="it">riservato (2)</choice>
           </enumChoice>
           <enumChoice choice="closed">
             <choice>closed</choice>
+
             <choice xml:lang="it">chiuso</choice>
           </enumChoice>
         </enumVal>

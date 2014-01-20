@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
@@ -15,34 +15,42 @@
         <enumVal>
           <enumChoice choice="Output toggle">
             <choice>Output toggle</choice>
+
             <choice xml:lang="it">Commuta Uscita</choice>
           </enumChoice>
           <enumChoice choice="No output change">
             <choice>No output change</choice>
+
             <choice xml:lang="it">Nessun cambio stato</choice>
           </enumChoice>
           <enumChoice choice="Output thrown">
             <choice>Output thrown</choice>
+
             <choice xml:lang="it">Uscita Girata</choice>
           </enumChoice>
           <enumChoice choice="Output closed">
             <choice>Output closed</choice>
+
             <choice xml:lang="it">Uscita Chiusa</choice>
           </enumChoice>
           <enumChoice choice="Both outputs off">
             <choice>Both outputs off</choice>
+
             <choice xml:lang="it">Entrambe le Uscite Off</choice>
           </enumChoice>
           <enumChoice choice="Restore to last state">
             <choice>Restore to last state</choice>
+
             <choice xml:lang="it">Ripristina ultimo stato</choice>
           </enumChoice>
           <enumChoice choice="Execute local route">
             <choice>Execute local route</choice>
+
             <choice xml:lang="it">Esegui percorso Locale</choice>
           </enumChoice>
           <enumChoice choice="Output follows input">
             <choice>Output follows input</choice>
+
             <choice xml:lang="it">Uscita segue l'ingresso</choice>
           </enumChoice>
         </enumVal>
