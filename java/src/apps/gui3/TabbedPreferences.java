@@ -454,7 +454,7 @@ public class TabbedPreferences extends AppConfigBase {
 			Object value = UIManager.get(key);
 
 			if (value instanceof FontUIResource) {
-				f = UIManager.getFont(key).deriveFont(Font.PLAIN, size);
+				f = UIManager.getFont(key).deriveFont(((Font) value).getStyle(), size);
 				UIManager.put(key, f);
 			}
 		}
