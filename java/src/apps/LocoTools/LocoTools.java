@@ -54,7 +54,7 @@ public class LocoTools extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("LocoToolsVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("LocoToolsVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 

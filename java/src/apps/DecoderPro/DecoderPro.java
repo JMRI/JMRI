@@ -61,7 +61,7 @@ public class DecoderPro extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("DecoderProVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 
@@ -76,40 +76,40 @@ public class DecoderPro extends Apps {
 
        // Buttons
 
-        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(rb.getString("DpButtonUseProgrammingTrack"));
-        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("DpButtonProgramOnMainTrack"));
-        Action quit = new AbstractAction(rb.getString("MenuItemQuit")){
+        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
+        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
             };
 
-        JButton b1 = new JButton(rb.getString("DpButtonUseProgrammingTrack"));
+        JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
             !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
-            b1.setToolTipText(rb.getString("MsgServiceButtonDisabled"));
+            b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
-        JButton m1 = new JButton(rb.getString("DpButtonProgramOnMainTrack"));
+        JButton m1 = new JButton(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
             !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             m1.setEnabled(false);
-            m1.setToolTipText(rb.getString("MsgOpsButtonDisabled"));
+            m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
 
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
-        JButton h1 = new JButton(rb.getString("ButtonHelp"));
+        JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DecoderPro.index");
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
-        JButton q1 = new JButton(rb.getString("ButtonQuit"));
+        JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
         q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(q1);

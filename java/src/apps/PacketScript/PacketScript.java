@@ -54,7 +54,7 @@ public class PacketScript extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("PacketScriptVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("PacketScriptVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 

@@ -268,9 +268,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configOK = false;
         }
 
-        //2012/01/21 dboudreau rb needs to be reloaded after reading the configuration file so the locale is set properly.
-        rb = ResourceBundle.getBundle("apps.AppsBundle");
-
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
         // and UI L&F has been set
@@ -534,16 +531,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
 
-        fileMenu.add(new PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
-        fileMenu.add(new PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
+        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
+        fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
 
         // Use Mac OS X native Quit if using Aqua look and feel
         if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
             fileMenu.add(new JSeparator());
-            fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")) {
+            fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     handleQuit();
@@ -568,19 +565,19 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     protected void editMenu(JMenuBar menuBar, WindowInterface wi) {
 
-        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         menuBar.add(editMenu);
 
         // cut, copy, paste
         AbstractAction a;
         a = new DefaultEditorKit.CutAction();
-        a.putValue(Action.NAME, rb.getString("MenuItemCut"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCut"));
         editMenu.add(a);
         a = new DefaultEditorKit.CopyAction();
-        a.putValue(Action.NAME, rb.getString("MenuItemCopy"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemCopy"));
         editMenu.add(a);
         a = new DefaultEditorKit.PasteAction();
-        a.putValue(Action.NAME, rb.getString("MenuItemPaste"));
+        a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));
         editMenu.add(a);
 
         // prefs
@@ -603,7 +600,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new ToolsMenu(rb.getString("MenuTools")));
+        menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));
     }
 
     protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -611,7 +608,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new RosterMenu(rb.getString("MenuRoster"), RosterMenu.MAINMENU, this));
+        menuBar.add(new RosterMenu(Bundle.getMessage("MenuRoster"), RosterMenu.MAINMENU, this));
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -849,8 +846,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     @Override
     public void windowClosing(WindowEvent e) {
         if (JOptionPane.showConfirmDialog(null,
-                rb.getString("MessageLongCloseWarning"),
-                rb.getString("MessageShortCloseWarning"),
+                Bundle.getMessage("MessageLongCloseWarning"),
+                Bundle.getMessage("MessageShortCloseWarning"),
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             handleQuit();
         }
@@ -905,9 +902,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
-            justification = "Needs protected access so it can be reloaded after reading the configuration file so the locale is set properly")
-    protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
     static AppConfigBase prefs;
 
     static public AppConfigBase getPrefs() {
@@ -921,7 +915,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Deprecated
     static public String getConnection1() {
-        return MessageFormat.format(rb.getString("ConnectionCredit"),
+        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
                 new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
     }
 
@@ -932,7 +926,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Deprecated
     static public String getConnection2() {
-        return MessageFormat.format(rb.getString("ConnectionCredit"),
+        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
                 new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
     }
 
@@ -943,7 +937,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Deprecated
     static public String getConnection3() {
-        return MessageFormat.format(rb.getString("ConnectionCredit"),
+        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
                 new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
     }
 
@@ -954,7 +948,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Deprecated
     static public String getConnection4() {
-        return MessageFormat.format(rb.getString("ConnectionCredit"),
+        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
                 new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
     }
     static SplashWindow sp = null;

@@ -42,7 +42,7 @@ public class JMRIdemo extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("JmriDemoVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("JmriDemoVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 

@@ -45,7 +45,7 @@ public class PacketPro extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("PacketProVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("PacketProVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 

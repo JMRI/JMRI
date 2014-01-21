@@ -55,7 +55,7 @@ public class DispatcherPro extends Apps {
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("DispatcherProVersionCredit"),
+        return MessageFormat.format(Bundle.getMessage("DispatcherProVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 
@@ -70,7 +70,7 @@ public class DispatcherPro extends Apps {
 
         // Buttons
 
-        Action quit = new AbstractAction(rb.getString("MenuItemQuit")){
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
 					Apps.handleQuit();
                 }
@@ -79,11 +79,11 @@ public class DispatcherPro extends Apps {
 
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
-        JButton h1 = new JButton(rb.getString("ButtonHelp"));
+        JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DispatcherPro.DispatcherPro");
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
-        JButton q1 = new JButton(rb.getString("ButtonQuit"));
+        JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
         q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(q1);
