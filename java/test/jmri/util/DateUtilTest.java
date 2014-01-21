@@ -42,7 +42,7 @@ public class DateUtilTest extends TestCase {
            // this test checks to see that the julian date
            // 2456678 is returned when a calendar set to January 20,2014 is
            // proivded as input to the julianDayFromCalendar method.
-           GregorianCalendar testCal=new GregorianCalendar(2014,1,20,12,0);
+           GregorianCalendar testCal=new GregorianCalendar(2014,GregorianCalendar.JANUARY,20,12,0);
            Assert.assertEquals("Julian Day",2456678,DateUtil.julianDayFromCalendar(testCal));
        }
 
@@ -50,7 +50,7 @@ public class DateUtilTest extends TestCase {
            // this test checks to see that the julian date
            // 2440588 is returned when a calendar set to January 1,1970 is
            // proivded as input to the julianDayFromCalendar method.
-           GregorianCalendar testCal=new GregorianCalendar(1970,1,1,12,0);
+           GregorianCalendar testCal=new GregorianCalendar(1970,GregorianCalendar.JANUARY,1,12,0);
            Assert.assertEquals("Julian Day",2440588,DateUtil.julianDayFromCalendar(testCal));
        }
 

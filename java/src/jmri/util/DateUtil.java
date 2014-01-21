@@ -30,7 +30,7 @@ public class DateUtil {
         long year = 4000*(L+1)/1461001;
         L = L-1461*year/4+31;
         long month = 80*L/2447;
-        long day = L-2447*month/80-31;
+        long day = L-2447*(month)/80-31; 
         L = month/11;
         month = month+2-12*L;
         year=100*(N-49)+year+L;
@@ -46,7 +46,10 @@ public class DateUtil {
     // @return julianDate representation of the date represented by cal.
     static public long julianDayFromCalendar(java.util.GregorianCalendar cal){
         int I = cal.get(Calendar.YEAR);
-        int J = cal.get(Calendar.MONTH);
+        int J = cal.get(Calendar.MONTH)+1; // GregorianCalendar starts month
+                                           // at 0.  Calculation requres month
+                                           // starting at 1.
+ 
         int K = cal.get(Calendar.DAY_OF_MONTH);
 
         long day = K-32075+1461*(I+4800+(J-14)/12)/4+367*(J-2-(J-14)/12*12)/12-3*((I+4900+(J-14)/12)/100)/4;
