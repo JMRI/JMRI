@@ -319,6 +319,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 }
                 if (val instanceof String) {
                     String str = (String)val;
+                    _icon = false;
+                    _text = true;
                     setText(str);
                     setIcon(null);
                     if (log.isDebugEnabled()) log.debug("String str= \""+str+"\" str.trim().length()= "+str.trim().length()+
@@ -340,18 +342,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         }
                     }
                     _editor.setAttributes(getPopupUtility(), this, false);
-                    _icon = false;
-                    _text = true;
                 } else if (val instanceof javax.swing.ImageIcon) {
-                    setIcon((javax.swing.ImageIcon) val);
-                    setText(null);
                     _icon = true;
                     _text = false;
+                    setIcon((javax.swing.ImageIcon) val);
+                    setText(null);
                 } else if (val instanceof Number) {
-                    setText(val.toString());
-                    setIcon(null);
                     _icon = false;
                     _text = true;
+                    setText(val.toString());
+                    setIcon(null);
                 } else log.warn("can't display current value of "+getNameString()+
                                 ", val= "+val+" of Class "+val.getClass().getName());
 		    } else {
@@ -363,18 +363,18 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 				    super.setIcon(newicon);
 			    } else {
 			        // no match, use default
-		            setIcon(defaultIcon);
-                    setText(null);
                     _icon = true;
                     _text = false;
+		            setIcon(defaultIcon);
+                    setText(null);
 			    }
 		    }
 		} else {
             if (log.isDebugEnabled()) log.debug("object null");
-            setIcon(defaultIcon);
-            setText(null);
             _icon = true;
             _text = false;
+            setIcon(defaultIcon);
+            setText(null);
         }
         updateSize();
     }

@@ -670,6 +670,9 @@ public class PositionableLabel extends JLabel implements Positionable {
      * @return
      */    
     private NamedIcon makeTextIcon(String text) {
+        if(text==null || text.equals("")){
+            text = " ";
+        }
     	int width = getFontMetrics(getFont()).stringWidth(text);
     	int height = getFontMetrics(getFont()).getHeight();
     	int hOffset = 0;
