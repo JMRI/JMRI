@@ -98,7 +98,8 @@ public class Sound  {
             // The next line is the long term form, but it
             // caused a NPE when deployed in JMRI 2.9.5
             //audioClip = new java.applet.Applet().getAudioClip(url);
-            audioClip = new sun.applet.AppletAudioClip(url);
+            audioClip = new sun.applet.AppletAudioClip(url);      // Warning on sun.applet.AppletAudioClip as private-to-Sun cannot be suppressed
+                                                                  // May some day need to reimplement this class in terms of another sound engine
 
         } catch (MalformedURLException e) {
             log.error("Error creating sound address: "+e.getMessage());
