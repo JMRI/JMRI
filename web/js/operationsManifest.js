@@ -80,6 +80,13 @@ var $buildManifest = function($r, $s, $x){
 					"<span class='load hideable'>"+escapeHtml($c.load)+"</span> from "+
 					"<span class='trackName'>"+$c.locationTrack+ "</span></li>";
 					$pickups++;
+				} else if ($rl.id == $c.destination) { //setout
+					$hl += "  <li class='car setout'><span class='action'>Set out</span> "+
+					"<span class='roadNumber'>"+$c.road+" "+$c.number+"</span> "+
+					"<span class='description hideable'>"+$c.type+" "+$c.length+"' "+$c.color+" "+"</span> "+
+					"<span class='load hideable'>"+escapeHtml($c.load)+"</span> to "+
+					"<span class='trackName'>"+$c.destinationTrack+ "</span></li>";
+					$setouts++;
 				}
 			}
 		});
