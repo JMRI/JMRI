@@ -126,6 +126,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                 $widget['widgetType'] = this.nodeName;
                 $widget['scale'] = "1.0"; //default to no scale
                 $widget['degrees'] = 0.00; //default to no rotation
+                $widget['rotation'] = 0; // default to no rotation
                 //convert attributes to an object array
                 $(this.attributes).each(function() {
                     $widget[this.name] = this.value;
@@ -157,14 +158,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                         switch ($widget.widgetType) {
                             case "positionablelabel" :
                                 $widget['icon1'] = $(this).find('icon').attr('url');
-                                var $rotation = $(this).find('icon').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icon').attr('scale');
                                 break;
                             case "linkinglabel" :
                                 $widget['icon1'] = $(this).find('icon').attr('url');
-                                var $rotation = $(this).find('icon').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icon').attr('scale');
                                 $url = $(this).find('url').text();
                                 $widget['url'] = $url; //default to using url value as is
@@ -174,8 +175,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 break;
                             case "indicatortrackicon" :
                                 $widget['icon1'] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                                var $rotation = $(this).find('iconmap').find('ClearTrack').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
                                 break;
                             case "indicatorturnouticon" :
@@ -186,8 +187,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
                                 $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
-                                var $rotation = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
@@ -200,8 +201,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
                                 $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
                                 $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
-                                var $rotation = $(this).find('icons').find('unknown').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
@@ -214,8 +215,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 $widget['icon2'] = $(this).find('active').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
-                                var $rotation = $(this).find('unknown').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
@@ -237,8 +238,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 $widget['icon' + FLASHGREEN] = $(this).find('icons').find('flashgreen').attr('url');
                                 $widget['icon' + LUNAR] = $(this).find('icons').find('lunar').attr('url');
                                 $widget['icon' + FLASHLUNAR] = $(this).find('icons').find('lunar').attr('url');
-                                var $rotation = $(this).find('icons').find('dark').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('icons').find('dark').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('icons').find('dark').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icons').find('dark').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icons').find('dark').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
@@ -265,8 +266,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
                                 $widget['icon1'] = $(this).find('unknown').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
-                                var $rotation = $(this).find('unknown').find('rotation').text();
-                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
+                                $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
@@ -1102,7 +1103,7 @@ var $setWidgetPosition = function(e) {
         }
 
         //if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
-        if (e.is("img") && ($widget.degrees != 0 || $widget.scale != 1.0) && $(e).get(0).complete == false) {
+        if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0) && $(e).get(0).complete == false) {
             e.load(function() {
                 $setWidgetPosition($(this));
                 e.unbind('load');  //only do this once
@@ -1113,7 +1114,7 @@ var $setWidgetPosition = function(e) {
             var tx = 0.0;
             var ty = 0.0;
 
-            if ($height > 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) { //only do this if needed
+            if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1.0)) { //only do this if needed
                 var $rad = $widget.degrees * Math.PI / 180.0;
 
                 if (0 <= $widget.degrees && $widget.degrees < 90 || -360 < $widget.degrees && $widget.degrees <= -270) {
@@ -1132,7 +1133,7 @@ var $setWidgetPosition = function(e) {
             }
             //position widget to adjusted position, set z-index, then set rotation
             e.css({position: 'absolute', left: (parseInt($widget.x) + tx) + 'px', top: (parseInt($widget.y) + ty) + 'px', zIndex: $widget.level});
-            if ($widget.degrees != undefined && $widget.degrees != 0) {
+            if ($widget.degrees !== 0) {
                 var $rot = "rotate(" + $widget.degrees + "deg)";
                 e.css({"transform": $rot});
             }
