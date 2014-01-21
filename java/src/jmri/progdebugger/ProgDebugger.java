@@ -155,20 +155,23 @@ public class ProgDebugger implements Programmer  {
         final ProgListener m = p;
         _lastReadCv = CV;
 
+        int readValue = _nextRead; 
         // try to get something from hash table
         Integer saw = mValues.get(Integer.valueOf(CV));
-        if (saw!=null) _nextRead = saw.intValue();
+        if (saw!=null) readValue = saw.intValue();
 
-        log.info("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
+        log.info("read CV: "+CV+" mode: "+getMode()+" will read "+readValue);
 
+        final int returnValue = readValue;
         // return a notification via the queue to ensure end
         Runnable r = new Runnable() {
+                int retval = returnValue;
                 ProgListener l = m;
                 public void run() {
                     // log.debug("read CV reply - start sleep");
                     // try { Thread.sleep(100); } catch (Exception e) {}
                     log.debug("read CV reply");
-                    l.programmingOpReply(_nextRead, 0); }  // 0 is OK status
+                    l.programmingOpReply(retval, 0); }  // 0 is OK status
             };
         sendReturn(r);
 
