@@ -111,6 +111,14 @@ public class SRCPVisitor implements SRCPParserVisitor {
        // state.  In JMRI, we always return "Running".
        outputString="100 INFO 0 SERVER RUNNING";
     }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("DESCRIPTION"))
+    {
+       // for the GET <bus> DESCRIPTION request, what we return depends on
+       // the number of arguments passed.
+       // with no arguments, we send a list of supported groups.
+       // with one argument, we send a list of devices in the specified device group
+       // with 2 arguments, we send a description of a specific device.
+    }
     return data;
   }
 
@@ -212,7 +220,16 @@ public class SRCPVisitor implements SRCPParserVisitor {
        // requesting client.
        outputString="200 OK";
        return data;
+    } else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SESSION")){
+       // for the TERM <bus> SERVER request, the protocol requries that
+       // we terminate all connections and reset the state to the initial
+       // state.  Since we may have a local GUI controlling things, we
+       // ignore the request, but send the proper return value to the
+       // requesting client.
+       outputString="102 TERM 0 SESSION 123456";  // we need to set session IDs.
+       return data;
     }
+    
     return node.childrenAccept(this,data);
   }
 
@@ -341,7 +358,16 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTwait_cmd node, Object data)
   {
     log.debug("Received WAIT CMD " + node.jjtGetValue() );
-    return node.childrenAccept(this,data);
+    if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
+       long julday=Long.parseLong((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue());
+       int Hour=Integer.parseInt((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue());
+       int Minute=Integer.parseInt((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue());
+       int Second=Integer.parseInt((String)((SimpleNode)node.jjtGetChild(5)).jjtGetValue());
+       ((jmri.jmris.srcp.JmriSRCPTimeServer)((jmri.jmris.ServiceHandler)data).getTimeServer()).setAlarm(julday,Hour,Minute,Second);
+      
+    } else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("FB")) {
+    }
+    return data;
   }
   public Object visit(ASTbus node, Object data)
   {
@@ -443,6 +469,18 @@ public class SRCPVisitor implements SRCPParserVisitor {
   {
     log.debug("Protocol Production " +node.jjtGetValue() );
     //return node.childrenAccept(this,data);
+    return data;
+  }
+
+  public Object visit(ASTdrivemode node, Object data)
+  {
+    log.debug("Drivemode Production " +node.jjtGetValue() );
+    return data;
+  }
+
+  public Object visit(ASTfunctionmode node, Object data)
+  {
+    log.debug("Functionmode Production " +node.jjtGetValue() );
     return data;
   }
 

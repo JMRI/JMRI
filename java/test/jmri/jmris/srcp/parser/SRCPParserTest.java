@@ -175,9 +175,9 @@ public class SRCPParserTest extends TestCase {
            assertFalse(exceptionOccured);
        }
 
-       public void testSetCVValue(){
+       public void testInitGA(){
            boolean exceptionOccured = false;
-           String code = "SET 1 SM 0 CV 1 1\n\r";
+           String code = "INIT 1 GA 42 N\n\r";
            SRCPParser p = new SRCPParser(new StringReader(code));
            try {
              p.command();
@@ -186,21 +186,9 @@ public class SRCPParserTest extends TestCase {
            }
            assertFalse(exceptionOccured);
        }
-
-       public void testGetCVValue(){
-           boolean exceptionOccured = false;
-           String code = "GET 1 SM 0 CV 1\n\r";
-           SRCPParser p = new SRCPParser(new StringReader(code));
-           try {
-             p.command();
-           } catch(ParseException pe) {
-             exceptionOccured = true;
-           }
-           assertFalse(exceptionOccured);
-       }
+       
 
        //test SERVER commands
-
        public void testGetServer(){
            boolean exceptionOccured = false;
            String code = "GET 0 SERVER\n\r";
@@ -298,6 +286,116 @@ public class SRCPParserTest extends TestCase {
            assertFalse(exceptionOccured);
        }
 
+       // valid Generic Loco (GL) commands
+       public void testGetGL(){
+           boolean exceptionOccured = false;
+           String code = "GET 1 GL 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testInitGLShortAddress(){
+           boolean exceptionOccured = false;
+           String code = "INIT 1 GL 42 N 1 28 2\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+ 
+      public void testInitGLLongAddress(){
+           boolean exceptionOccured = false;
+           String code = "INIT 1 GL 1042 N 2 28 2\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+ 
+     public void testSetGL(){
+           boolean exceptionOccured = false;
+           String code = "SET 1 GL 42 0 2 28 0 1 = 0 0 0 0 0\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+ 
+    public void testTERMGL(){
+           boolean exceptionOccured = false;
+           String code = "TERM 1 GL 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+    // valid SESSION commands
+    public void testGetSESSION(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 SESSION 12345\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+    // valid DESCRITPION commands
+    public void testGetBusDescription(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 DESCRIPTION\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+    public void testGetDeviceGroupDescription(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 DESCRIPTION GA\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+    public void testGetDeviceDescription(){
+           boolean exceptionOccured = false;
+           String code = "GET 0 DESCRIPTION GA 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
 
         // Main entry point
         static public void main(String[] args) {
@@ -311,6 +409,106 @@ public class SRCPParserTest extends TestCase {
                 return suite;
 
         }
+
+       // valid Service Mode (SM) commands
+       public void testSetCVValue(){
+           boolean exceptionOccured = false;
+           String code = "SET 1 SM 0 CV 1 1\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testGetCVValue(){
+           boolean exceptionOccured = false;
+           String code = "GET 1 SM 0 CV 1\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testINITSM(){
+           boolean exceptionOccured = false;
+           String code = "INIT 1 SM NMRA\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testTERMSM(){
+           boolean exceptionOccured = false;
+           String code = "TERM 1 SM\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testVerifyCVValue(){
+           boolean exceptionOccured = false;
+           String code = "VERIFY 1 SM 0 CV 1 2\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+    // valid LOCK commands
+       public void testGetLOCK(){
+           boolean exceptionOccured = false;
+           String code = "GET 1 LOCK GA 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+  
+       public void testSetLOCK(){
+           boolean exceptionOccured = false;
+           String code = "SET 1 LOCK GA 42 60\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testTermLOCK(){
+           boolean exceptionOccured = false;
+           String code = "TERM 1 LOCK GA 42\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

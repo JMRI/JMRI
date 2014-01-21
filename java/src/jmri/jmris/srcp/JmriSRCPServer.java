@@ -15,6 +15,7 @@ import jmri.util.zeroconf.ZeroConfService;
 
 import jmri.jmris.srcp.parser.SRCPParser;
 import jmri.jmris.srcp.parser.ParseException;
+import jmri.jmris.srcp.parser.TokenMgrError;
 import jmri.jmris.srcp.parser.SRCPVisitor;
 import jmri.jmris.srcp.parser.SimpleNode;
 
@@ -46,7 +47,7 @@ public class JmriSRCPServer extends JmriServer{
 
      // Create a new server using the default port
      public JmriSRCPServer() {
-	super(12345);
+	super(4303);  // 4303 is assigned to SRCP by IANA.
      }
 
      public JmriSRCPServer(int port) {
@@ -141,6 +142,18 @@ public class JmriSRCPServer extends JmriServer{
                       pe.printStackTrace();
                    }
                    outStream.writeBytes("425 ERROR not supported\n\r");
+                   // recover by consuming tokens in the token stream
+                   // until we reach the end of the line.
+                   jmri.jmris.srcp.parser.Token t;
+                   while((t=parser.getNextToken()).kind!=
+                          jmri.jmris.srcp.parser.SRCPParserConstants.EOL);
+              } catch (TokenMgrError tme) {
+                   if(log.isDebugEnabled())
+                   {
+                      log.debug("Token Manager Exception");
+                      tme.printStackTrace();
+                   }
+                   outStream.writeBytes("410 ERROR unknown command\n\r");
               }
            } else if (SRCPSERVERMODE == INFOMODE) {
               cmd = inStream.readLine(); 

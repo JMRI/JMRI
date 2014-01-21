@@ -43,7 +43,7 @@ MORE :
 <IN_TIME>
 TOKEN:
 {
-    < JULDATE: (["0"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
+    < JULDATE: (["0"-"9"])+ >
   | < MINSEC: ["0"-"5"]["0"-"9"]>
   | < HOUR: (["0"-"2"])?["0"-"9"]>
 }
@@ -76,6 +76,7 @@ TOKEN :
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
+| < FUNCTIONMODE: ("="|"0"|"1") >
 | < DELAY: ("-")?(["0"-"9"])+>
 | < NMRA: (<N><M><R><A>) >
 
@@ -140,6 +141,7 @@ TOKEN :
 | <#V:["v","V"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
+| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
@@ -160,7 +162,7 @@ SimpleNode command():{}
   // This is a simple list of the possible commands.  
   // They are broken down further below.
   ( LOOKAHEAD(4) get() | set() | check() | wait_cmd() | init() |
-                 term() | reset() | verify()) <EOL>
+                 term() | reset() | verify() ) <EOL>
   {
     log.debug("Command Production");
     return jjtThis;
@@ -287,9 +289,9 @@ SimpleNode get():{}
                 time() | 
                 power() | 
                 server() | 
-                session () | 
+                session() address() | 
                 lock() devicegroup() address() | 
-                description() [ devicegroup() address() ] )
+                description() [ devicegroup() [address()] ] )
 
   {
      log.debug("GET Production");
@@ -299,13 +301,13 @@ SimpleNode get():{}
 
 SimpleNode set():{}
 {
-  <SET> ( ( bus() ( gl() | 
+  <SET> ( ( bus() ( gl() address() drivemode() address() address() (functionmode())* | 
                 sm() address() progmode() cvno() value() | 
                 ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
                 time() address() address() address() address() | 
                 power() onoff() | 
-                lock() ) ) |
+                lock() devicegroup() address() [value()]) ) |
 	<PROTOCOLLITTERAL> serviceversion() | 
 	<CONNECTIONMODELITTERAL> connectionmode() ) 
   {
@@ -316,7 +318,7 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() | time() )
+  <TERM> bus()  ( fb() | gl() address() | sm() | power() | server() | lock() devicegroup() address() | time() | session() [ address() ] )
   {return jjtThis;}
 }
 
@@ -376,7 +378,7 @@ SimpleNode reset():{}
 
 SimpleNode verify():{}
 {
-  <VERIFY> bus() sm()
+  <VERIFY> bus() sm() address() progmode() cvno() (value())+
   {
      log.debug("RESET Production");
      return jjtThis;
@@ -549,7 +551,7 @@ SimpleNode reg():{}
 
 SimpleNode protocol():{Token t;}
 { 
-  t=<PROTOCOL>
+  t=<PROTOCOL> (address())*
   {
     log.debug("Protocol Production "+ t.image);
     jjtThis.jjtSetValue(t.image);
@@ -557,3 +559,26 @@ SimpleNode protocol():{Token t;}
 
   }
 }
+
+SimpleNode drivemode():{Token t;}
+{  
+   t=<DRIVEMODE>
+   {
+    log.debug("Drivemode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode functionmode():{Token t;}
+{  
+   t=<FUNCTIONMODE>
+   {
+    log.debug("Functionmode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+
+

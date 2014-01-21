@@ -33,12 +33,17 @@ import jmri.jmrix.srcp.parser.SRCPClientVisitor;
  * @version $Revision$
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
-	implements SRCPInterface {
+	implements SRCPInterface,jmri.ShutDownTask {
 
     protected SRCPSystemConnectionMemo _memo = null;
 
     public SRCPTrafficController() {
         super();
+        try {
+           jmri.InstanceManager.shutDownManagerInstance().register(this);
+        } catch(java.lang.NullPointerException npe) {
+           if(log.isDebugEnabled()) log.debug("attempted to register shutdown task, but shutdown manager is null");
+        }
     }
 
     // The methods to implement the SRCPInterface
@@ -326,6 +331,28 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         }
     }
 
+
+    /**
+     * Take the necessary action.
+     * @return true if the shutdown should continue, false
+     * to abort.
+     */
+    public boolean execute(){
+       // notify the server we are exiting.
+       sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"),null);
+       // the server will send a reply of "101 INFO 0 SESSION <id>.
+       // but we aren't going to wait for the reply.
+       return true;
+    }
+
+    /**
+     * Name to be provided to the user
+     * when information about this task is presented.
+     */
+    public String name(){
+       return SRCPTrafficController.class.getName();
+    }
+
     /**
      * Internal class to remember the Reply object and destination
      * listener with a reply is received.
@@ -345,7 +372,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
             mTC.notifyReply(e, mDest);
         }
     } // SRCPRcvNotifier
-
 
     static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
 }
