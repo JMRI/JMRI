@@ -894,40 +894,93 @@
         </java>
     </target>
 
-    <target name="manifest-file"
-            description="Create a correct manifest file for this release">
-        <copy file="${javadir}/manifest.tmpl" tofile="${javadir}/manifest">
-            <filterset>
-                <filter token="VERSION" value="${release}"/>
-            </filterset>
-        </copy>
-    </target>
-
     <target name="jar"
             description="create working jar file with current contents"
-            depends="debug, rmic, manifest-file">
+            depends="debug, rmic">
+        <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
+          <classpath refid="project.class.path" />
+        </manifestclasspath>
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             manifest="${javadir}/manifest"
-             compress="true"/>  <!-- compress="true" is default -->
-        <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->
-        <!-- This appears to be due to a problem with compression in  -->
-        <!-- one of the referenced jar files, but we don't know which -->
-        <!-- <exec executable="jar" dir="${jartarget}"> -->
-        <!--    <arg line="i jmri.jar"/>                -->
-        <!-- </exec>                                    -->
+             index="true"
+             compress="true">
+          <manifest>
+            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Class-Path" value="${jar.classpath}"/>
+            <section name="jmri">
+              <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="jmri"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="apps">
+              <attribute name="Specification-Title" value="JMRI Applications Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="apps"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+          </manifest>
+        </jar>
     </target>
 
     <target name="jar-resources"
             description="package all resources as a jar file"
-            depends="debug, rmic, manifest-file">
+            depends="debug, rmic">
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
-             manifest="${javadir}/manifest"
+             index="true"
              compress="true">
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**" />
+          <manifest>
+            <attribute name="Main-Class" value="jmri.Version"/>  <!-- java -jar jmri.jar doesn't seem to start when apps.PanelPro.PanelPro is specified here -->
+            <attribute name="Class-Path" value="${jar.classpath}"/>
+            <section name="jmri">
+              <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="jmri"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="apps">
+              <attribute name="Specification-Title" value="JMRI Applications Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="apps"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="resources">
+              <attribute name="Specification-Title" value="JMRI Resources"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="resources"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="xml">
+              <attribute name="Specification-Title" value="JMRI XML Data"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="xml"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="help">
+              <attribute name="Specification-Title" value="JMRI Help Information"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="help"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+          </manifest>
         </jar>
     </target>
 
