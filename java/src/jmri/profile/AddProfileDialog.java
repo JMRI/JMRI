@@ -276,6 +276,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             } else {
                 ProfileManager.defaultManager().setActiveProfile(p);
             }
+            ProfileManager.defaultManager().saveActiveProfile(p, ProfileManager.defaultManager().isAutoStartActiveProfile());
             this.dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
