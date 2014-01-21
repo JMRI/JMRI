@@ -144,8 +144,7 @@ public class JmriSRCPServer extends JmriServer{
                    outStream.writeBytes("425 ERROR not supported\n\r");
                    // recover by consuming tokens in the token stream
                    // until we reach the end of the line.
-                   jmri.jmris.srcp.parser.Token t;
-                   while((t=parser.getNextToken()).kind!=
+                   while((parser.getNextToken()).kind!=
                           jmri.jmris.srcp.parser.SRCPParserConstants.EOL);
               } catch (TokenMgrError tme) {
                    if(log.isDebugEnabled())

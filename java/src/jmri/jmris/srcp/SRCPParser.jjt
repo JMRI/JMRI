@@ -562,7 +562,7 @@ SimpleNode protocol():{Token t;}
 
 SimpleNode drivemode():{Token t;}
 {  
-   t=<DRIVEMODE>
+   ( t=<DRIVEMODE> | t=<ZEROADDR> | t=<NONZEROADDR> )
    {
     log.debug("Drivemode Production "+ t.image);
     jjtThis.jjtSetValue(t.image);
@@ -572,7 +572,7 @@ SimpleNode drivemode():{Token t;}
 
 SimpleNode functionmode():{Token t;}
 {  
-   t=<FUNCTIONMODE>
+   ( t=<FUNCTIONMODE> | t=<ZEROADDR> | t=<NONZEROADDR> | t=<DRIVEMODE> )
    {
     log.debug("Functionmode Production "+ t.image);
     jjtThis.jjtSetValue(t.image);

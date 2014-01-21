@@ -206,18 +206,22 @@ public class SRCPTokenizerTest extends TestCase {
            assertTrue("Wrong token kind for REG",SRCPParserConstants.REG == t.kind);
         }
 
-        // error condition.
+        // This used to be an error.
+        // now should check to see that the token produced
+        // is the BADTOKEN token.
         public void testTokenizeFailure() {
            boolean errorThrown=false;
            String cmd = "this should fail";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
+           Token t;
            try {
-              stm.getNextToken();
+              t=stm.getNextToken();
+              assertTrue(t.kind==SRCPParserConstants.BADTOKEN);
            } catch(TokenMgrError tme) {
               errorThrown=true;
            }
-           assertTrue(errorThrown);
+           assertFalse(errorThrown);
        }
 
         // from here down is testing infrastructure
