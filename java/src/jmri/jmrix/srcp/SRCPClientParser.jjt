@@ -60,6 +60,7 @@ TOKEN :
 {
   < ZEROADDR: ("0")( ["0"-"9"] )* >
 | < NONZEROADDR: ["1"-"9"](["0"-"9"])* >
+| < TIMESTAMP: (["0"-"9"])+((".")(["0"-"9"])+)? >
 | < JMRITURNOUT: ["a"-"z","A"-"Z"] "T" (["0"-"9"])+ >
 | < JMRISENSOR: ["a"-"z","A"-"Z"] "S" (["0"-"9"])+ >
 | < JMRILIGHT: ["a"-"z","A"-"Z"] "L" (["0"-"9"])+ >
@@ -155,10 +156,11 @@ SimpleNode command():{}
   }
 }
 
-SimpleNode handshakeresponse():{SimpleNode s;}
+SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
 {
-  // this should match any valid response to the client
-  ( s=serviceversion() <EOL> | s=connectionmode() <EOL> | s=inforesponse() )
+  // this should match any valid response to the client in handshake
+  // mode.
+  t=timestamp() ( s=serviceversion() | s=connectionmode() | s=inforesponse() )
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -166,9 +168,19 @@ SimpleNode handshakeresponse():{SimpleNode s;}
   }
 }
 
+SimpleNode timestamp():{ Token t;}
+{
+   (t=<TIMESTAMP> | t=<NONZEROADDR> | t=<ZEROADDR> )
+  {
+    jjtThis.jjtSetValue(t.image);
+    log.debug("Timestamp Production: "+jjtThis.jjtGetValue());
+    return jjtThis;
+  }
+}
+
 SimpleNode serviceversion():{Token t; Token s;}
 {
-  ( t=<SRCP> (s=<VERSION>) )
+  ( t=<SRCP> (s=<VERSION>) <EOL> )
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
@@ -178,7 +190,7 @@ SimpleNode serviceversion():{Token t; Token s;}
 
 SimpleNode connectionmode():{Token t;}
 {
-  ( t=<COMMAND> | t=<INFO> )
+  (( t=<COMMAND> | t=<INFO> ) <EOL> )
   {
     log.debug("Connection Mode Production");
     jjtThis.jjtSetValue(t.image);
@@ -196,16 +208,20 @@ SimpleNode inforesponse():{SimpleNode t; Token s; Token r;}
   }
 }
 
-SimpleNode commandresponse():{SimpleNode s;}
+SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
 {
   // this should match any valid response to the client
   /*((<ADDR> | <ERRORCODE>) bus() ( ga() address() port() zeroone() |
-				 power() onoff() )) <EOL>*/
-  s=inforesponse() bus() ( ga() address() port() zeroone() |
-                         power() onoff() ) <EOL>
+				 power() onoff() )) <EOL>
+  <TIMESTAMP> s=inforesponse() bus() ( ga() address() port() zeroone() |
+                         power() onoff() ) <EOL>*/
+  // this should match any valid response to the client in 
+  // either command mode or info mode.
+  t=timestamp() ( s=inforesponse() ) 
   {
     log.debug("Command Mode Response Production");
-    jjtThis.jjtSetValue(s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue() );
+
     return jjtThis;
   }
 }

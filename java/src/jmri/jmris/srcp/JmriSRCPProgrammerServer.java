@@ -35,13 +35,13 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
         if(log.isDebugEnabled()) log.debug("sendStatus called for CV " +CV + 
                           " with value " + value + " and status " + status );
         if(status==ProgListener.OK)
-           output.writeBytes("100 INFO 1 SM " + CV + " CV " + value +"\n\r");
+           TimeStampedOutput.writeTimestamp(output,"100 INFO 1 SM " + CV + " CV " + value +"\n\r");
         else
-           output.writeBytes("416 ERROR no data\n\r");
+           TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
      }
 
      public void sendNotAvailableStatus() throws IOException {
-        output.writeBytes("499 ERROR unspecified error\n");
+        TimeStampedOutput.writeTimestamp(output,"499 ERROR unspecified error\n");
      }
 
      public void parseRequest(String statusString) throws jmri.JmriException,java.io.IOException {

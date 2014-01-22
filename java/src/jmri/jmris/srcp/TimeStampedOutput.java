@@ -1,0 +1,28 @@
+//TimeStampedOutput
+
+package jmri.jmris.srcp;
+
+import jmri.Timebase;
+import java.util.Date;
+
+/*
+ * The SRCP protocol requires that respose messages include a timestamp based
+ * on the fast clock.  This class is a utility class to generate timestamp
+ * and send it on to the stream with the output.
+ * <P>
+ *
+ * @author Paul Bender Copyright 2014
+ * @version $Revision$
+ */
+
+public class TimeStampedOutput {
+
+
+    static public void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
+       Date currenttime=(jmri.InstanceManager.timebaseInstance()).getTime();
+       long time=currenttime.getTime();
+       outStream.writeBytes("" + time/1000 + "." + time%1000 + " " +s);
+    }
+
+
+}

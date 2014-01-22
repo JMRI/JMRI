@@ -29,12 +29,13 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Command Response " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+ 
  public Object visit(ASThandshakeresponse node,Object data)
   {
     log.debug("Handshake Response " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
-
+ 
   public Object visit(ASTgo node,Object data)
   {
     log.debug("Go " + node.jjtGetValue() );
@@ -236,6 +237,11 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     return node.childrenAccept(this,data);
   }
 
+  public Object visit(ASTtimestamp node, Object data)
+  {
+    log.debug("Timestamp Node " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
 
 
   static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class.getName());

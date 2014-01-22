@@ -17,7 +17,7 @@ import java.beans.PropertyChangeListener;
  * interface between the JMRI (fast) clock and an SRCP network connection
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision: 23184 $
+ * @version $Revision$
  */
 public class JmriSRCPTimeServer extends AbstractTimeServer {
 
@@ -41,12 +41,12 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
         cal.setTime(timebase.getTime());
         long day = jmri.util.DateUtil.julianDayFromCalendar(cal);
-        output.writeBytes("100 INFO 0 TIME " + day +" " + sdf.format(timebase.getTime()) + "\n\r");
+        TimeStampedOutput.writeTimestamp(output,"100 INFO 0 TIME " + day +" " + sdf.format(timebase.getTime()) + "\n\r");
     }
 
     @Override
     public void sendRate() throws IOException {
-        output.writeBytes("101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r");
+        TimeStampedOutput.writeTimestamp(output,"101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r");
     }
 
     @Override
@@ -123,7 +123,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
            // and start the timeListener.
            listenToTimebase(true);
            try {
-              output.writeBytes("200 Ok\n\r");
+              TimeStampedOutput.writeTimestamp(output,"200 Ok\n\r");
            } catch(IOException ie) {
              log.warn("Unable to send message to client: {}", ie.getMessage());
            }

@@ -46,17 +46,17 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         }
 
         if (bus > list.size()) {
-            output.writeBytes("499 ERROR unspecified error\n\r");
+            TimeStampedOutput.writeTimestamp(output,"499 ERROR unspecified error\n\r");
             return;
         }
 
         if (Status == Sensor.ACTIVE) {
-            output.writeBytes("100 INFO" + bus + " FB " + address + " 1\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 1\n\r");
         } else if (Status == Sensor.INACTIVE) {
-            output.writeBytes("100 INFO" + bus + " FB " + address + " 0\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
-            output.writeBytes("416 ERROR no data\n\r");
+            TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
         }
 
     }
@@ -68,30 +68,30 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.writeBytes("412 ERROR wrong value\n\r");
+            TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
         String sensorName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
                 + "S" + address;
         int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
         if (Status == Sensor.ACTIVE) {
-            output.writeBytes("100 INFO" + bus + " FB " + address + " 1\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 1\n\r");
         } else if (Status == Sensor.INACTIVE) {
-            output.writeBytes("100 INFO" + bus + " FB " + address + " 0\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
-            output.writeBytes("416 ERROR no data\n\r");
+            TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
         }
     }
 
     @Override
     public void sendErrorStatus(String sensorName) throws IOException {
-        output.writeBytes("499 ERROR unspecified error\n\r");
+        TimeStampedOutput.writeTimestamp(output,"499 ERROR unspecified error\n\r");
     }
 
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
-        output.writeBytes("499 ERROR unspecified error\n\r");
+        TimeStampedOutput.writeTimestamp(output,"499 ERROR unspecified error\n\r");
     }
 
     /*
@@ -106,7 +106,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.writeBytes("412 ERROR wrong value\n\r");
+            TimeStampedOutput.writeTimestamp(output,"412 ERROR wrong value\n\r");
             return;
         }
         String sensorName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()

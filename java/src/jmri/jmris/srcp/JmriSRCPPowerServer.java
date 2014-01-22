@@ -34,16 +34,16 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
      public void sendStatus(int Status) throws IOException
      {
 	if(Status==PowerManager.ON){
-		output.writeBytes("100 INFO 0 POWER ON\n\r");
+		TimeStampedOutput.writeTimestamp(output,"100 INFO 0 POWER ON\n\r");
         } else if (Status==PowerManager.OFF){
-		output.writeBytes("100 INFO 0 POWER OFF\n\r");
+		TimeStampedOutput.writeTimestamp(output,"100 INFO 0 POWER OFF\n\r");
         } else {
                // power unknown
         }
      }
 
      public void sendErrorStatus() throws IOException {
- 	output.writeBytes("499 ERROR unspecified error\n\r");
+ 	TimeStampedOutput.writeTimestamp(output,"499 ERROR unspecified error\n\r");
      }
 
      public void parseStatus(String statusString) throws jmri.JmriException {
