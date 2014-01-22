@@ -206,7 +206,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertFalse("Try routing no final destination", router.setDestination(c4, null, null));
 		Assert.assertEquals("Check car's destination", "", c4.getDestinationName());
 		
-		// disable routing
+		// test disable routing
 		Setup.setCarRoutingEnabled(false);
 		c3.setFinalDestination(Bedford);
 		Assert.assertFalse("Test router disabled", router.setDestination(c3, null, null));
@@ -780,6 +780,15 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't allow use of interchange track
 		AI.setDropOption(Track.TRAINS);
+		
+		c3.setDestination(null, null);	// clear previous destination
+		c3.setFinalDestination(Bedford);	// the final destination for the car
+		c3.setFinalDestinationTrack(BS1);	// now specify the actual track
+		
+		Assert.assertTrue("Try routing two trains via interchange", router.setDestination(c3, null, null));
+		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
+		Assert.assertEquals("Check car's destination track", "Acton Interchange 2", c3.getDestinationTrackName());
+		
 		AI2.setDropOption(Track.TRAINS);
 		
 		c3.setDestination(null, null);	// clear previous destination
@@ -1141,6 +1150,28 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("car's location Acton","Acton Yard", c4.getTrackName());
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
+		
+		// Place a maximum length restriction on the train
+		Route route = ActonToBedfordTrain.getRoute();
+		RouteLocation rlActon = route.getDepartsRouteLocation();		
+		rlActon.setMaxTrainLength(c3.getTotalLength());
+		ActonToBedfordTrain.build();
+		
+		Assert.assertEquals("car's destination","Bedford MA", c3.getDestinationName());
+		Assert.assertEquals("car's destinaton track","Bedford Interchange", c3.getDestinationTrackName());
+		Assert.assertEquals("car's final destinaton",Essex, c3.getFinalDestination());
+		Assert.assertEquals("car's final destinaton track",ES2, c3.getFinalDestinationTrack());
+		
+		Assert.assertEquals("car's destination","", c4.getDestinationName());
+		Assert.assertEquals("car's destinaton track","", c4.getDestinationTrackName());
+		Assert.assertEquals("car's final destinaton",Gulf, c4.getFinalDestination());
+		Assert.assertEquals("car's final destinaton track",null, c4.getFinalDestinationTrack());
+		
+		ActonToBedfordTrain.reset();
+		
+		// restore
+		rlActon.setMaxTrainLength(Setup.getMaxTrainLength());
+
 		
 		ActonToBedfordTrain.build();
 		ActonToBedfordTrain.terminate();

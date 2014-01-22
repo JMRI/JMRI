@@ -224,6 +224,8 @@ public class Setup {
 	private static boolean switchListPage = false; // when true each train has its own page
 	private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
 	private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
+	private static boolean buildReportAlwaysPreviewEnabled = false; // when true use text editor to view build report
+	
 
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false; // when true, append engine number to train name
@@ -648,6 +650,14 @@ public class Setup {
 
 	public static boolean isBuildReportIndentEnabled() {
 		return buildReportIndentEnabled;
+	}
+
+	public static void setBuildReportAlwaysPreviewEnabled(boolean enable) {
+		buildReportAlwaysPreviewEnabled = enable;
+	}
+
+	public static boolean isBuildReportAlwaysPreviewEnabled() {
+		return buildReportAlwaysPreviewEnabled;
 	}
 
 	public static void setSwitchListFormatSameAsManifest(boolean b) {
@@ -1669,6 +1679,7 @@ public class Setup {
 		values.setAttribute(Xml.ROUTER_LEVEL, getRouterBuildReportLevel());
 		values.setAttribute(Xml.USE_EDITOR, isBuildReportEditorEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.INDENT, isBuildReportIndentEnabled() ? Xml.TRUE : Xml.FALSE);
+		values.setAttribute(Xml.ALWAYS_PREVIEW, isBuildReportAlwaysPreviewEnabled() ? Xml.TRUE : Xml.FALSE);
 		values.setAttribute(Xml.FONT_SIZE, Integer.toString(getBuildReportFontSize()));
 
 		// new format for router options
@@ -2267,6 +2278,12 @@ public class Setup {
 				if (log.isDebugEnabled())
 					log.debug("build font size: " + size);
 				setBuildReportFontSize(Integer.parseInt(size));
+			}
+			if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.ALWAYS_PREVIEW)) != null) {
+				String enable = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("build report always preview: " + enable);
+				setBuildReportAlwaysPreviewEnabled(enable.equals(Xml.TRUE));
 			}
 		}
 

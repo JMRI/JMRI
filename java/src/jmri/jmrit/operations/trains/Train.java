@@ -1513,12 +1513,12 @@ public class Train implements java.beans.PropertyChangeListener {
 							return true;
 						}
 						// check to see if train length is okay
-						if (getStatus().equals(BUILDING) && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
+						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
 							setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
-									new Object[] { getName(), getRoute().getName(), rldest.getId(),
-											rldest.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-											rldest.getName(), car.toString() }));
-						if (debugFlag)
+									new Object[] { getName(), getRoute().getName(), rLoc.getId(),
+											rLoc.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
+											rLoc.getName(), car.toString() }));
+							if (debugFlag)
 								log.debug("Car (" + car.toString() + ") exceeds maximum train length "
 										+ rldest.getMaxTrainLength() + " when departing (" // NOI18N
 										+ rldest.getName() + ")");
@@ -2516,7 +2516,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	public void printBuildReport() {
-		boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
+		boolean isPreview = (TrainManager.instance().isPrintPreviewEnabled() || Setup.isBuildReportAlwaysPreviewEnabled());
 		printBuildReport(isPreview);
 	}
 

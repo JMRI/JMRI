@@ -42,6 +42,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 	// check boxes
 	JCheckBox buildReportCheckBox = new JCheckBox(Bundle.getMessage("BuildReportEdit"));
 	JCheckBox buildReportIndentCheckBox = new JCheckBox(Bundle.getMessage("BuildReportIndent"));
+	JCheckBox buildReportAlwaysPreviewCheckBox = new JCheckBox(Bundle.getMessage("BuildReportAlwaysPreview"));
 
 	// combo boxes
 	JComboBox fontSizeComboBox = new JComboBox();
@@ -68,6 +69,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		// build report options
 		addItemWidth(pReport, buildReportCheckBox, 3, 1, 1);
 		addItemWidth(pReport, buildReportIndentCheckBox, 3, 1, 2);
+		addItemWidth(pReport, buildReportAlwaysPreviewCheckBox, 3, 1, 3);
 
 		JPanel pFontSize = new JPanel();
 		pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
@@ -107,6 +109,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		buildReportIndentCheckBox.setSelected(Setup.isBuildReportIndentEnabled());
 		buildReportIndentCheckBox.setEnabled(buildReportCheckBox.isSelected());
+		buildReportAlwaysPreviewCheckBox.setSelected(Setup.isBuildReportAlwaysPreviewEnabled());
 
 		ButtonGroup buildReportGroup = new ButtonGroup();
 		buildReportGroup.add(buildReportMin);
@@ -174,6 +177,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
+			Setup.setBuildReportAlwaysPreviewEnabled(buildReportAlwaysPreviewCheckBox.isSelected());
 
 			OperationsSetupXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())

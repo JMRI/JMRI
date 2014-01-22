@@ -149,6 +149,7 @@ public class Xml {
 	static final String LEVEL = "level"; // NOI18N
 	static final String INDENT = "indent"; // NOI18N
 	static final String ROUTER_LEVEL = "routerLevel"; // NOI18N
+	static final String ALWAYS_PREVIEW = "alwaysPreview"; // NOI18N
 	
 	static final String OWNER = "owner"; // NOI18N
 	

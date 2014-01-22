@@ -356,20 +356,12 @@ public class Router extends TrainCommon {
 		if (_addtoReport)
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFindTrack"), new Object[] {
 					trackType, car.toString(), testCar.getDestinationName(), testCar.getDestinationTrackName() }));
-		// save car's location, track, destination, and destination track
-		Track saveTrack = testCar.getTrack();
-		Location saveDestination = testCar.getDestination();
-		Track saveDestinationTrack = testCar.getDestinationTrack();
-		if (saveTrack == null) {
-			log.debug("Car's track is null! Can't route");
-			return false;
-		}
 		boolean foundRoute = false;
 		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
 		List<Track> tracks = LocationManager.instance().getTracksByMoves(trackType);
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
-			if (saveTrack == track)
+			if (car.getTrack() == track)
 				continue; // don't use car's current track
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
@@ -386,8 +378,8 @@ public class Router extends TrainCommon {
 						trackType, track.getLocation().getName(), track.getName(), car.toString() }));
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setTrack(track);
-			testCar.setDestination(saveDestination);
-			testCar.setDestinationTrack(saveDestinationTrack);
+			testCar.setDestination(car.getFinalDestination());
+			testCar.setDestinationTrack(car.getFinalDestinationTrack());
 			Train nextTrain = TrainManager.instance().getTrainForCar(testCar, _buildReport);
 			if (nextTrain == null) {
 				if (debugFlag)
@@ -415,7 +407,7 @@ public class Router extends TrainCommon {
 			// Save the "last" tracks for later use
 			_lastLocationTracks.add(track);
 			// now try to forward car to this interim location
-			testCar.setTrack(saveTrack); // restore car's location and track
+			testCar.setTrack(car.getTrack()); // restore test car's location and track
 			testCar.setDestination(track.getLocation()); // forward test car to this interim destination and track
 			testCar.setDestinationTrack(track);
 			// determine if car can be transported from current location to this yard or interchange
@@ -476,13 +468,10 @@ public class Router extends TrainCommon {
 						_status = STATUS_NOT_THIS_TRAIN;
 						continue;// found a route but it doesn't start with the specific train
 					}
-					// If staging only set the cars destination, no track assignment
 					if (track.getTrackType().equals(Track.STAGING))
 						_status = car.setDestination(track.getLocation(), null); // don't specify which track in staging
-																					// is to be used, decide later
 					else
-						_status = car.setDestination(track.getLocation(), track); // forward car to this intermediate
-																					// destination and track.
+						_status = car.setDestination(track.getLocation(), track);
 					if (debugFlag)
 						log.debug("Train (" + firstTrain.getName() + ") can service car (" + car.toString()
 								+ ") from current location (" // NOI18N
@@ -577,6 +566,7 @@ public class Router extends TrainCommon {
 				if (middleTrain != null) {
 					log.debug("Found 3 train route, setting car destination (" + testCar.getLocationName() + ", "
 							+ testCar.getTrackName() + ")");
+					foundRoute = true;
 					// show the route
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterRoute3ForCar"),
 							new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
@@ -585,13 +575,12 @@ public class Router extends TrainCommon {
 									car.getFinalDestinationTrackName() }));
 					if (finshSettingRouteFor(car, nlt))
 						return true; // done 3 train routing
-					foundRoute = true;
 					continue;	// there was an issue with the first stop in the route
 				}
 			}
 		}
 		if (foundRoute)
-			return foundRoute;
+			return foundRoute; // 3 train route, but there was an issue with the first stop in the route
 		log.debug("Using 3 trains to route car to (" + car.getFinalDestinationName() + ") was unsuccessful");
 		log.debug("Try to find route using 4 trains");
 		for (int i = 0; i < _nextLocationTracks.size(); i++) {
@@ -616,6 +605,7 @@ public class Router extends TrainCommon {
 						if (middleTrain3 != null) {
 							log.debug("Found 4 train route, setting car destination (" + nlt.getLocation().getName()
 									+ ", " + nlt.getName() + ")");
+							foundRoute = true;
 							// show the route
 							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterRoute4ForCar"),
 									new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
@@ -624,7 +614,6 @@ public class Router extends TrainCommon {
 											car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
 							if (finshSettingRouteFor(car, nlt))
 								return true; // done 4 train routing
-							foundRoute = true;
 							continue; // there was an issue with the first stop in the route
 						}
 					}
@@ -632,7 +621,7 @@ public class Router extends TrainCommon {
 			}
 		}
 		if (foundRoute)
-			return foundRoute;
+			return foundRoute;  // 4 train route, but there was an issue with the first stop in the route
 		log.debug("Using 4 trains to route car to (" + car.getFinalDestinationName() + ") was unsuccessful");
 		log.debug("Try to find route using 5 trains");
 		for (int i = 0; i < _nextLocationTracks.size(); i++) {
@@ -673,6 +662,7 @@ public class Router extends TrainCommon {
 								if (middleTrain4 != null) {
 									log.debug("Found 5 train route, setting car destination ("
 											+ nlt.getLocation().getName() + ", " + nlt.getName() + ")");
+									foundRoute = true;
 									// show the car's route
 									addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 											.getMessage("RouterRoute5ForCar"), new Object[] { car.toString(),
@@ -684,7 +674,6 @@ public class Router extends TrainCommon {
 									// only set car's destination if specific train can service car
 									if (finshSettingRouteFor(car, nlt))
 										return true; // done 5 train routing
-									foundRoute = true;
 									continue; // there was an issue with the first stop in the route
 								}
 							}
@@ -748,6 +737,9 @@ public class Router extends TrainCommon {
 			Track track = tracks.get(i);
 			if (track == car.getTrack())
 				continue; // don't use car's current track
+			// note that last could equal next if this routine was used for two train routing
+			if (_lastLocationTracks.contains(track))
+				continue;
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue; // track doesn't accept this car
@@ -781,17 +773,14 @@ public class Router extends TrainCommon {
 							+ testCar.getLocationName() + ", " + testCar.getTrackName() // NOI18N
 							+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 							+ ", " + testCar.getDestinationTrackName() + ")");
-				// note that last could equal next if this routine was used for two train routing
-				if (!_lastLocationTracks.contains(track))
-					_nextLocationTracks.add(track);
+				_nextLocationTracks.add(track);
 			} else {
 				// don't add to other if already in last location list
-				if (!_lastLocationTracks.contains(track)) {
-					if (debugFlag)
-						log.debug("Adding location (" + track.getLocation().getName() + ", " + track.getName()
-								+ ") to other locations"); // NOI18N
-					_otherLocationTracks.add(track);
-				}
+
+				if (debugFlag)
+					log.debug("Adding location (" + track.getLocation().getName() + ", " + track.getName()
+							+ ") to other locations"); // NOI18N
+				_otherLocationTracks.add(track);
 			}
 		}
 	}
