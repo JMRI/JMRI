@@ -13,7 +13,7 @@ import java.lang.Math;
  * <P>
  *
  * @author Paul Bender Copyright 2014
- * @version $Revision: 17977 $
+ * @version $Revision$
  */
 
 public class DateUtil {
