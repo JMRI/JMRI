@@ -65,7 +65,7 @@ abstract public class AbstractMemoryServer {
             if (memory == null) {
                 log.error("Memory {} is not available", memoryName);
             } else {
-                if (memory.getValue() != memoryValue) {
+                if (!(memory.getValue().equals(memoryValue))) {
                     memory.setValue(memoryValue);
                 } else {
                     try {

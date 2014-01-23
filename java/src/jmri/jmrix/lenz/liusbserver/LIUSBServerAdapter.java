@@ -258,7 +258,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * for both of the internal adapters.
      */
     @Override
-    public void recover(){
+    synchronized public void recover(){
        bcastAdapter.recover();
        commAdapter.recover();
     }

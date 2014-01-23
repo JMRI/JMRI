@@ -116,7 +116,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
     //Send new address to LIUSB
     void writeLIUSBSettings() {
-        if((String)addrBox.getSelectedItem()!="" &&
+        if(!(((String)addrBox.getSelectedItem()).equals("")) &&
            (String)addrBox.getSelectedItem()!=null) {
            /* we take care of generating an address request */
            XNetMessage msg=XNetMessage.getLIAddressRequestMsg(

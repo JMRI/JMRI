@@ -135,7 +135,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     //Send new address/baud rate to LI101
     void writeLI101Settings() {
-        if((String)addrBox.getSelectedItem()!="" &&
+        if(!(((String)addrBox.getSelectedItem()).equals("")) &&
            (String)addrBox.getSelectedItem()!=null) {
            /* First, we take care of generating an address request */
 	   XNetMessage msg=XNetMessage.getLIAddressRequestMsg(
@@ -143,7 +143,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
            //Then send to the controller
            tc.sendXNetMessage(msg,this);
         }
-        if((String)speedBox.getSelectedItem()!=""  &&
+        if(!(((String)speedBox.getSelectedItem()).equals(""))  &&
            (String)speedBox.getSelectedItem()!=null) {
              /* Now, we can send a baud rate request */
 	     XNetMessage msg=XNetMessage.getLISpeedRequestMsg(speedBox.getSelectedIndex()+1);

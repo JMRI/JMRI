@@ -366,6 +366,9 @@ public class SRCPVisitor implements SRCPParserVisitor {
        ((jmri.jmris.srcp.JmriSRCPTimeServer)((jmri.jmris.ServiceHandler)data).getTimeServer()).setAlarm(julday,Hour,Minute,Second);
       
     } else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("FB")) {
+         outputString="425 ERROR not supported";
+    } else {
+         outputString="423 ERROR unsupported operation";
     }
     return data;
   }
