@@ -71,7 +71,7 @@ public class JmriSRCPServer extends JmriServer{
         SRCPSERVERMODE=HANDSHAKEMODE; 
 
         // interface components
-        ServiceHandler sh= new ServiceHandler();
+        JmriSRCPServiceHandler sh= new JmriSRCPServiceHandler(12345); // need real client port.
         sh.setPowerServer(new JmriSRCPPowerServer(outStream));
         sh.setTurnoutServer(new JmriSRCPTurnoutServer(inStream,outStream));
         sh.setSensorServer(new JmriSRCPSensorServer(inStream,outStream));
@@ -118,7 +118,7 @@ public class JmriSRCPServer extends JmriServer{
                 } else {
                   SRCPSERVERMODE = runmode;
                   if(log.isDebugEnabled()) log.debug("Switching to runmode after GO");
-                  TimeStampedOutput.writeTimestamp(outStream,"200 OK GO 1\n\r");
+                  TimeStampedOutput.writeTimestamp(outStream,"200 OK GO "+sh.getSessionNumber() + "\n\r");
                 }
               } else {
                   TimeStampedOutput.writeTimestamp(outStream,"402 ERROR insufficient data\n\r");
