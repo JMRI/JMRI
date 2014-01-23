@@ -39,10 +39,8 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     */
     public void init() {
        	if (!_initialized) {
-       		Thread.yield();
-       		_update = false;
+       		super.init();
        		_supressDragging = true;
-       		makeBottomPanel();
        		add(makeChangeDefaultIconsPanel());
        	}
     }

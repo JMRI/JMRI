@@ -350,19 +350,6 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _blockState.setText(stateText.toString());
     }
 
-    private Sensor getSensor(String sensorName) {
-        try {
-            if (sensorName!=null && sensorName.trim().length()>0) {
-                return InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            }
-        } catch (Throwable t) { 
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                            Bundle.getMessage("sensorFail"), sensorName, t.toString()),
-                            Bundle.getMessage("noSensor"), JOptionPane.INFORMATION_MESSAGE);
-        }
-        return null;
-    }
-
     protected void closingEvent() {
         // check Sensors
         String name = _detectorSensorName.getText();

@@ -49,7 +49,6 @@ public class IconDialog extends ItemDialog {
         if (log.isDebugEnabled()) log.debug("IconDialog ctor: for "+type+" Family "+family);        
         _family = family;
         _parent = parent;
-        _iconMap = clone(iconMap);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
@@ -59,7 +58,8 @@ public class IconDialog extends ItemDialog {
         panel.add(p);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        if (_iconMap != null) {
+        if (iconMap != null) {
+            _iconMap = clone(iconMap);
             makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
             makeDoneButtonPanel(buttonPanel, "doneButton");
         } else {
@@ -70,7 +70,7 @@ public class IconDialog extends ItemDialog {
         _iconPanel = makeIconPanel(_iconMap);
         panel.add(_iconPanel);	// put icons above buttons
         panel.add(buttonPanel);
-        panel.setMaximumSize(panel.getPreferredSize());
+        //panel.setMaximumSize(panel.getPreferredSize());
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -99,10 +99,11 @@ public class IconDialog extends ItemDialog {
             ItemPalette.removeIconMap(_type, _family);
         	if (!ItemPalette.addFamily(_parent._paletteFrame, _type, _family, _iconMap)) {
                 return false;
+            } else {
+        		_parent.updateFamiliesPanel();
+        		_parent.setFamily(_family);
             }
         }
-        _parent.setFamily(_family);
-    	_parent.updateFamiliesPanel();
         return true;
     }
 
@@ -223,33 +224,6 @@ public class IconDialog extends ItemDialog {
        }
        return iconPanel;
     }
-/*
-    private void checkIconSizes() {
-        Iterator <NamedIcon> iter = _iconMap.values().iterator();
-        int lastWidth = 0;
-        int lastHeight = 0;
-        boolean first = true;
-        while (iter.hasNext()) {
-            NamedIcon icon = iter.next();
-        	if (first) {
-                lastWidth = icon.getIconWidth();
-                lastHeight = icon.getIconHeight();
-                first = false;
-                continue;
-        	}
-           int nextWidth = icon.getIconWidth();
-           int nextHeight = icon.getIconHeight();
-           if ((Math.abs(lastWidth - nextWidth) > 5 || Math.abs(lastHeight - nextHeight) > 5)) {
-               JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                                             Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("warnTitle"),
-                                             JOptionPane.WARNING_MESSAGE);
-               return;
-           }
-            lastWidth = nextWidth;
-            lastHeight = nextHeight;
-        }
-        if (log.isDebugEnabled()) log.debug("Size: width= "+lastWidth+", height= "+lastHeight); 
-    }*/
     
     protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = null;

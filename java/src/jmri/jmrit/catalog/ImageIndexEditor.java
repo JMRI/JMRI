@@ -163,7 +163,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         	if (changed) {
                 if (_shutDownTask == null) {
                 	_shutDownTask = new SwingShutDownTask("PanelPro Save default icon check", 
-                			Bundle.getMessage("SaveImageIndex"), 
+                			Bundle.getMessage("IndexChanged"), 
                 			Bundle.getMessage("SaveAndQuit"), null)
             		{
                         public boolean checkPromptNeeded() {
