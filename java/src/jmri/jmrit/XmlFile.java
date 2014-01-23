@@ -285,7 +285,7 @@ public abstract class XmlFile {
         File file = findFile(name);
         if (file == null) {
             log.info("No " + name + " file to backup");
-        } else {
+        } else if (file.canWrite()) {
             String backupName = backupFileName(file.getAbsolutePath());
             File backupFile = findFile(backupName);
             if (backupFile != null) {
@@ -312,7 +312,7 @@ public abstract class XmlFile {
     public boolean makeBackupFile(String directory, File file) {
         if (file == null) {
             log.info("No file to backup");
-        } else {
+        } else if (file.canWrite()) {
             String backupFullName = directory + File.separator + createFileNameWithDate(file.getName());
             if (log.isDebugEnabled()) {
                 log.debug("new backup file: " + backupFullName);
