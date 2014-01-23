@@ -10,17 +10,22 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceEvent;
+import jmri.util.zeroconf.ZeroConfServiceListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //	listen() has to run in a separate thread.
-public class FacelessServer implements DeviceListener, DeviceManager {
+public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener  {
 
     static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -66,24 +71,8 @@ public class FacelessServer implements DeviceListener, DeviceManager {
         }
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
+        service.addEventListener(this);
         service.publish();
-
-        if (service.isPublished()) {
-            String addressText = "";
-            //show the ip addresses found on this system in the log
-            try {
-                for (Inet4Address addr : service.serviceInfo().getInet4Addresses()) {
-                    if (addr != null && !addr.isLoopbackAddress()) {
-                        addressText += addr.getHostAddress() + " ";
-                    }
-                }
-                log.info("WiThrottle found these local addresses: " + addressText);
-            } catch (Exception except) {
-                log.error("Failed to determine this system's IP address: " + except.toString());
-            }
-        } else {
-            log.error("WiThrottle did not start ZeroConf (JmDNS)");
-        }
 
         while (isListen) { //Create DeviceServer threads
             DeviceServer device;
@@ -181,6 +170,27 @@ public class FacelessServer implements DeviceListener, DeviceManager {
 		// TODO Auto-generated method stub
 
     }
+
+	@Override
+	public void serviceQueued(ZeroConfServiceEvent se) {
+	}
+
+	@Override
+	public void servicePublished(ZeroConfServiceEvent se) {
+		try {
+			InetAddress addr = se.getAddress();
+			// most addresses are Inet6Address objects, 
+			if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+				log.info("Published ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+			}
+		} catch (NullPointerException ex) {
+			log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void serviceUnpublished(ZeroConfServiceEvent se) {
+	}
 
 }
 

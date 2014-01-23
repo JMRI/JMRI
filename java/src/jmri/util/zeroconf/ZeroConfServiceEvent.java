@@ -20,6 +20,7 @@ public class ZeroConfServiceEvent extends EventObject {
     protected ZeroConfServiceEvent(ZeroConfService service, JmDNS dns) {
         super(service);
         this.dns = dns;
+        this.service = service;
     }
     /**
      * @return the service
