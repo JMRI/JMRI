@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to display the JMRI directory locations. <P> Although this has
@@ -66,6 +68,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new File(user));
                 } catch (IOException e) {
+                    log.error("Error when opening user files location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening user files location: " + e);
                 }
             }
         });
@@ -77,6 +82,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(roster));
                 } catch (java.io.IOException e) {
+                    log.error("Error when opening roster location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening roster location: " + e);
                 }
             }
         });
@@ -88,6 +96,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(profile));
                 } catch (java.io.IOException e) {
+                    log.error("Error when opening profile location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening profile location: " + e);
                 }
             }
         });
@@ -99,6 +110,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(settings));
                 } catch (java.io.IOException e) {
+                    log.error("Error when opening settings location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening settings location: " + e);
                 }
             }
         });
@@ -110,6 +124,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(scripts));
                 } catch (java.io.IOException e) {
+                    log.error("Error when opening scripts location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening scripts location: " + e);
                 }
             }
         });
@@ -121,6 +138,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(prog));
                 } catch (java.io.IOException e) {
+                    log.error("Error when opening program location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    log.error("Error when opening program location: " + e);
                 }
             }
         });
@@ -168,6 +188,8 @@ public class XmlFileLocationAction extends AbstractAction {
             }
         }
     }
+
+    private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class.getName());
 }
 
 /* @(#)XmlFileLocationAction.java */
