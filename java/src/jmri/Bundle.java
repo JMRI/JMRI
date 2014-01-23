@@ -6,6 +6,8 @@ import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import java.util.Locale;
+import java.util.MissingResourceException;
 
 @DefaultAnnotation({NonNull.class, CheckReturnValue.class})
 
@@ -70,6 +72,23 @@ public class Bundle {
     static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
+
+    /**
+     * Provides a translated string for a given
+     * key in a given locale from the package resource bundle or
+     * parent.
+     *<p>
+     * Note that this is intentionally package-local
+     * access.
+     *
+     * @param locale The locale to be used
+     * @param key Bundle key to be translated
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key) {
+        return b.handleGetMessage(locale, key);
+    }
+
     /**
      * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
@@ -90,6 +109,27 @@ public class Bundle {
         return b.handleGetMessage(key, subs);
     }
 
+    /**
+     * Merges user data with a translated string for a given
+     * key in a given locale from the package resource bundle or
+     * parent.
+     *<p>
+     * Uses the transformation conventions of
+     * the Java MessageFormat utility.
+     *<p>
+     * Note that this is intentionally package-local
+     * access.
+     *
+     * @see java.text.MessageFormat
+     * @param locale The locale to be used
+     * @param key Bundle key to be translated
+     * @param subs One or more objects to be inserted into the message
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key, Object ... subs) {
+        return b.handleGetMessage(locale, key, subs);
+    }
+
    /**
      * This method handles the inheritance tree.
      * At lower levels, it reflects upwards on failure.  Once
@@ -97,11 +137,29 @@ public class Bundle {
      * throw a MissingResourceException in the key can't be found
      * via the local definition of retry().
      *
+     * @param key Bundle key to be translated
+     * @return Internationalized text
      * @throws MissingResourceException
      */
     public String handleGetMessage(String key) {
+        return this.handleGetMessage(Locale.getDefault(), key);
+    }
+
+   /**
+     * This method handles the inheritance tree.
+     * At lower levels, it reflects upwards on failure.  Once
+     * it reaches this root class, it will
+     * throw a MissingResourceException in the key can't be found
+     * via the local definition of retry().
+     *
+     * @param locale The locale to be used
+     * @param key Bundle key to be translated
+     * @return Internationalized text
+     * @throws MissingResourceException
+     */
+    public String handleGetMessage(Locale locale, String key) {
         if (bundleName() != null) {
-            java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle(bundleName());
+            java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle(bundleName(), locale);
             if (rb.containsKey(key)) return rb.getString(key);
             else return retry(key);
         } else {  // case of no local bundle
@@ -110,12 +168,18 @@ public class Bundle {
     }
         
     public String handleGetMessage(String key, Object[] subs) {
-        return java.text.MessageFormat.format(handleGetMessage(key), subs);
+        return this.handleGetMessage(Locale.getDefault(), key, subs);
+    }
+
+    public String handleGetMessage(Locale locale, String key, Object[] subs) {
+        return java.text.MessageFormat.format(handleGetMessage(locale, key), subs);
     }
     
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(String key) { throw new java.util.MissingResourceException("Resource not found", this.getClass().toString(), key); } // NOI18N
+    protected String retry(String key) throws MissingResourceException {
+        throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
+    }
 
     private final static Bundle b = new Bundle();
     @Nullable protected String bundleName() {return name; }

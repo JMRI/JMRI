@@ -2,6 +2,7 @@
 
 package jmri;
 
+import java.util.Locale;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -35,6 +36,14 @@ public class BundleTest extends TestCase {
         Assert.fail("No exception thrown");     
     }
 
+    public void testLocaleMessage() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    }
+
+    public void testLocaleMessageArg() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    }
     // from here down is testing infrastructure
 
     public BundleTest(String s) {
