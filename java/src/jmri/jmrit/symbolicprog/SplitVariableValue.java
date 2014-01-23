@@ -73,6 +73,7 @@ public class SplitVariableValue extends VariableValue
         CvValue cv = (_cvMap.get(getCvNum()));
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
+        log.debug("Just set FROMFILE on part 1");
         CvValue cv1 = (_cvMap.get(getSecondCvNum()));
         cv1.addPropertyChangeListener(this);
         cv1.setState(CvValue.FROMFILE);
@@ -165,6 +166,11 @@ public class SplitVariableValue extends VariableValue
                     | (~upperbitmask & cv2.getValue());
         if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" new value "+newVal+" gives first="+newCv1+" second="+newCv2);
 
+        if (cv1.getValue() == newCv1 && cv2.getValue() == newCv2) {
+            if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit updatedTextField unchanged");
+            return;
+        }
+        
         // cv updates here trigger updated property changes, which means
         // we're going to get notified sooner or later.
         cv1.setValue(newCv1);
@@ -275,6 +281,7 @@ public class SplitVariableValue extends VariableValue
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvNum())).setState(state);
+        (_cvMap.get(mSecondCV)).setState(state);
     }
 
     public boolean isChanged() {
@@ -357,7 +364,8 @@ public class SplitVariableValue extends VariableValue
             case WRITING_SECOND:  // now done with complete request
                 if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state WRITING_SECOND");
                 _progState = IDLE;
-                super.setState(STORED);
+                (_cvMap.get(getCvNum())).setState(STORED);
+                (_cvMap.get(getSecondCvNum())).setState(STORED);
                 setBusy(false);
                 return;
             default:  // unexpected!
@@ -368,7 +376,7 @@ public class SplitVariableValue extends VariableValue
         }
         else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(getCvNum());
-            if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" State changed to "+cv.getState());
+            if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" State changed to "+cv.stateToString(cv.getState()));
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {

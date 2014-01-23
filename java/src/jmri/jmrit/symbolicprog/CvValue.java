@@ -120,7 +120,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Set state value and send notification.  Also sets GUI color as needed.
      */
     public void setState(int state) {
-        if (log.isDebugEnabled()) log.debug("cv "+number()+" set state from "+_state+" to "+state);
+        if (log.isDebugEnabled()) log.debug("cv "+number()+" set state from "+stateToString(_state)+" to "+stateToString(state));
         int oldstate = _state;
         _state = state;
         switch (state) {
@@ -136,6 +136,22 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (oldstate != state) prop.firePropertyChange("State", Integer.valueOf(oldstate), Integer.valueOf(state));
     }
 
+    /** 
+     * Intended for debugging only, don't translate
+     */
+    String stateToString(int state) {
+        switch (state) {
+        case UNKNOWN : return "UNKNOWN";
+        case EDITED  : return "EDITED";
+        case READ    : return "READ";
+        case STORED  : return "STORED";
+        case FROMFILE: return "FROMFILE";
+        case SAME:     return "SAME";
+        case DIFF:     return "DIFF";
+        default:       log.error("Inconsistent state: "+_state); return "ERROR!!";
+        }
+    }
+    
     private int _state = 0;
 
     // read, write operations
