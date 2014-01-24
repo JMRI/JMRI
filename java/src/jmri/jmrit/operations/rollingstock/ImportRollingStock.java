@@ -41,6 +41,8 @@ public class ImportRollingStock extends Thread {
 					// log.debug("outLine: "+parseLine[i]);
 					outLine[j++] = parseLine[i];
 				}
+				if (j > arraySize - 1)
+					break;
 			}
 		} else {
 			outLine = line.split(",");

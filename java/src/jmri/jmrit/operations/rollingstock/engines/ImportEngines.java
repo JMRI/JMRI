@@ -120,6 +120,9 @@ public class ImportEngines extends ImportRollingStock {
 			if (log.isDebugEnabled()) {
 				log.debug("Import: " + line);
 			}
+			if (line.startsWith(Bundle.getMessage("Number"))) {
+				continue; // skip header
+			}
 			if (line.equalsIgnoreCase("comma")) { // NOI18N
 				log.info("Using comma as delimiter for import engines");
 				comma = true;
@@ -276,9 +279,9 @@ public class ImportEngines extends ImportRollingStock {
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					Location l = LocationManager.instance().getLocationByName(engineLocation);
-					Track sl = null;
-					if (l == null && !engineLocation.equals("")) {
+					Location location = LocationManager.instance().getLocationByName(engineLocation);
+					Track track = null;
+					if (location == null && !engineLocation.equals("")) {
 						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
 								.getMessage("EngineLocationDoesNotExist"), new Object[] {
 								(engineRoad + " " + engineNumber), engineLocation }), Bundle
@@ -288,14 +291,14 @@ public class ImportEngines extends ImportRollingStock {
 								.getMessage("engineLocation"), JOptionPane.YES_NO_OPTION);
 						if (results == JOptionPane.YES_OPTION) {
 							log.debug("Create location (" + engineLocation + ")");
-							l = LocationManager.instance().newLocation(engineLocation);
+							location = LocationManager.instance().newLocation(engineLocation);
 						} else {
 							break;
 						}
 					}
-					if (l != null && !engineTrack.equals("")) {
-						sl = l.getTrackByName(engineTrack, null);
-						if (sl == null) {
+					if (location != null && !engineTrack.equals("")) {
+						track = location.getTrackByName(engineTrack, null);
+						if (track == null) {
 							JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
 									.getMessage("EngineTrackDoesNotExist"), new Object[] {
 									(engineRoad + " " + engineNumber), engineTrack, engineLocation }), Bundle
@@ -305,14 +308,14 @@ public class ImportEngines extends ImportRollingStock {
 											engineLocation }), Bundle.getMessage("engineTrack"),
 									JOptionPane.YES_NO_OPTION);
 							if (results == JOptionPane.YES_OPTION) {
-								if (l.getLocationOps() == Location.NORMAL) {
+								if (location.getLocationOps() == Location.NORMAL) {
 									log.debug("Create 1000 foot yard track (" + engineTrack + ")");
-									sl = l.addTrack(engineTrack, Track.YARD);
+									track = location.addTrack(engineTrack, Track.YARD);
 								} else {
 									log.debug("Create 1000 foot staging track (" + engineTrack + ")");
-									sl = l.addTrack(engineTrack, Track.STAGING);
+									track = location.addTrack(engineTrack, Track.STAGING);
 								}
-								sl.setLength(1000);
+								track.setLength(1000);
 							} else {
 								break;
 							}
@@ -334,8 +337,8 @@ public class ImportEngines extends ImportRollingStock {
 					engine.setBuilt(engineBuilt);
 					enginesAdded++;
 
-					if (l != null && sl != null) {
-						String status = engine.setLocation(l, sl);
+					if (location != null && track != null) {
+						String status = engine.setLocation(location, track);
 						if (!status.equals(Track.OKAY)) {
 							log.debug("Can't set engine's location because of " + status);
 							JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
@@ -349,9 +352,9 @@ public class ImportEngines extends ImportRollingStock {
 										engineTrack, (engineRoad + " " + engineNumber), engine.getTypeName() }), Bundle
 										.getMessage("ServiceEngineType"), JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION) {
-									l.addTypeName(engine.getTypeName());
-									sl.addTypeName(engine.getTypeName());
-									status = engine.setLocation(l, sl);
+									location.addTypeName(engine.getTypeName());
+									track.addTypeName(engine.getTypeName());
+									status = engine.setLocation(location, track);
 								} else {
 									break;
 								}
@@ -361,8 +364,8 @@ public class ImportEngines extends ImportRollingStock {
 										.getMessage("DoYouWantIncreaseLength"), new Object[] { engineTrack }), Bundle
 										.getMessage("TrackLength"), JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION) {
-									sl.setLength(sl.getLength() + 1000);
-									status = engine.setLocation(l, sl);
+									track.setLength(track.getLength() + 1000);
+									status = engine.setLocation(location, track);
 								} else {
 									break;
 								}
@@ -373,7 +376,7 @@ public class ImportEngines extends ImportRollingStock {
 										(engineRoad + " " + engineNumber), engineLocation, engineTrack }), Bundle
 										.getMessage("OverRide"), JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION) {
-									engine.setLocation(l, sl, true); // force engine
+									engine.setLocation(location, track, true); // force engine
 								} else {
 									break;
 								}

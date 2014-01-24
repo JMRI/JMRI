@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
@@ -92,8 +93,15 @@ public class ExportEngines extends XmlFile {
 		// assume delimiter in the value field
 		String value;
 
+		// create header
+		String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del
+				+ Bundle.getMessage("Model") + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Owner")
+				+ del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") + del + "-" + del
+				+ Bundle.getMessage("Track") + del + Setup.getValueLabel();
+		fileOut.println(header);
+
+		// store engine number, road, model, length, owner, built date, location and track
 		for (int i = 0; i < engineList.size(); i++) {
-			// store engine number, road, model, length, weight, owner, built date, location and track
 			Engine engine = (Engine) engineList.get(i);
 			engineModel = engine.getModel();
 			if (engineModel.contains(del)) {

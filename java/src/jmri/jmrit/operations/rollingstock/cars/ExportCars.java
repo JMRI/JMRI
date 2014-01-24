@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Exports the car roster into a comma delimitated file (CSV).
@@ -91,9 +92,15 @@ public class ExportCars extends XmlFile {
 		String carTrackName;
 		// assume delimiter in the value field
 		String value;
+		// create header
+		String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del + Bundle.getMessage("Type") +
+				del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del + Bundle.getMessage("Color") +
+				del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") +
+				del + "-" + del + Bundle.getMessage("Track") + del + Setup.getValueLabel();
+		fileOut.println(header);
 
+		// store car number, road, type, length, weight, color, owner, built date, location and track
 		for (int i = 0; i < carList.size(); i++) {
-			// store car number, road, type, length, weight, color, owner, built date, location and track
 			Car car = (Car) carList.get(i);
 			carType = car.getTypeName();
 			if (carType.contains(del)) {
