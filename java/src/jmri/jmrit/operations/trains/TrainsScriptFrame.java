@@ -4,15 +4,16 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
 import java.util.List;
 import java.io.File;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -227,8 +228,15 @@ public class TrainsScriptFrame extends OperationsFrame {
 
 	private void runScripts(List<String> scripts) {
 		for (int i = 0; i < scripts.size(); i++) {
-			jmri.util.PythonInterp
-					.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
+			String script = jmri.util.FileUtil.getExternalFilename(scripts.get(i));
+			File file = new File(script);
+			if (file.exists()) {
+				jmri.util.PythonInterp.runScript(script);
+			} else {
+				JOptionPane.showMessageDialog(this, scripts.get(i), Bundle.getMessage("ScriptFileNotFound"),
+						JOptionPane.ERROR_MESSAGE);
+			}
+
 		}
 	}
 
