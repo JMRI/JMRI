@@ -1099,9 +1099,10 @@
    <P>In the "Add Location" window, enter the name of the location in box across from "Name".
     The location name must be unique; the program will not allow two locations with identical names.
     However, if you want more than one location to have the same name for your manifests and switch
-    lists, add a hyphen and a number to the locations name. For example, "Boston-1" and "Boston-2"
-    will print as "Boston". The program will remove the hyphen and number when printing manifests
-    and switch lists.</P>
+    lists, add a hyphen and a number to the locations name, or a hyphen and a left parenthesis. For
+    example, "Boston-1", "Boston-2" and "Boston-(example)" will print as "Boston". The program will
+    remove the hyphen and number, and hyphen and text when there's a left parenthesis when printing
+    manifests and switch lists.  Note that the "hyphen" feature also works for track names.</P>
 
    <P>Now press the "Add Location" button at the bottom of the window. The various fields that
     were disabled should now appear.</P>
@@ -2447,9 +2448,9 @@
 
    One very powerful feature of routes is the ability to specify the same location more than once.
    When the same location name is used back to back, the train's manifest will print as though the
-   train only arrived and departed once. Note that names "Danville", "Danville-1", and "Danville-2"
-   are all the same with regards to the manifest and switch list printouts, but the program deals
-   with them as though they were different locations.
+   train only arrived and departed once. Note that names "Danville", "Danville-1", and
+   "Danville-(example)" are all the same with regards to the manifest and switch list printouts, but
+   the program deals with them as though they were different locations.
 
    <P>For example, you can control if there are set outs or pick ups at any location in the
     route. Therefore if you wanted to only set out 3 cars, you could specify only set outs and 3
