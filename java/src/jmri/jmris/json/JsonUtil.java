@@ -1313,7 +1313,7 @@ public class JsonUtil {
         return root;
     }
 
-    static protected ObjectNode handleError(int code, String message) {
+    static public ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(DATA);
