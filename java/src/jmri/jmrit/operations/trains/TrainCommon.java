@@ -869,7 +869,8 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Splits a string (example-number) as long as the second part of the string is an integer.
+	 * Splits a string (example-number) as long as the second part of the string is an integer or if the first character
+	 * after the hyphen is a left parenthesis "(".
 	 * 
 	 * @param name
 	 * @return First half the string.
@@ -877,13 +878,13 @@ public class TrainCommon {
 	public static String splitString(String name) {
 		String[] fullname = name.split("-");
 		String parsedName = fullname[0].trim();
-		// is the hyphen followed by a number?
-		if (fullname.length > 1) {
+		// is the hyphen followed by a number or left parenthesis?
+		if (fullname.length > 1 && !fullname[1].startsWith("(")) {
 			try {
 				Integer.parseInt(fullname[1]);
 			} catch (NumberFormatException e) {
 				// no return full name
-				parsedName = name;
+				parsedName = name.trim();
 			}
 		}
 		return parsedName;
