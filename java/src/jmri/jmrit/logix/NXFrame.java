@@ -94,11 +94,11 @@ public class NXFrame extends WarrantRoute {
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(pp);
         _forward.setSelected(true);
-        _stageEStop.setSelected(false);
-        _haltStart.setSelected(false);
-        _speedBox.setText("0.5");
-        _rampInterval.setText("4.0");
-        _searchDepth.setText("10");
+        _stageEStop.setSelected(WarrantTableFrame._defaultEStop);
+        _haltStart.setSelected(WarrantTableFrame._defaultHaltStart);
+        _speedBox.setText(WarrantTableFrame._defaultSpeed);
+        _rampInterval.setText(WarrantTableFrame._defaultIntervalTime);
+        _searchDepth.setText(WarrantTableFrame._defaultSearchdepth);
         JPanel p = new JPanel();
         JButton button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener(new ActionListener() {
@@ -200,6 +200,7 @@ public class NXFrame extends WarrantRoute {
         	_parent.getModel().addNXWarrant(warrant);
         	_parent.getModel().fireTableDataChanged();
         	if (_haltStart.isSelected()) {
+        		WarrantTableFrame._defaultHaltStart = true;
             	class Halter implements Runnable {
             		Warrant war;
             		Halter (Warrant w) {
@@ -219,6 +220,8 @@ public class NXFrame extends WarrantRoute {
             	}
             	Halter h = new Halter(warrant);
             	new Thread(h).start();
+         	} else {
+        		WarrantTableFrame._defaultHaltStart = false;         		
          	}
         	_parent.scrollTable();
         	dispose();
@@ -228,6 +231,7 @@ public class NXFrame extends WarrantRoute {
     
     private String makeCommands(Warrant w) {
         String speed = _speedBox.getText();
+        WarrantTableFrame._defaultSpeed = speed;
         String interval = _rampInterval.getText();
     	float f = 0; 
     	int time = 4000;
@@ -248,6 +252,7 @@ public class NXFrame extends WarrantRoute {
         } catch (NumberFormatException nfe) {
         	time = 4000;            	
         }
+        WarrantTableFrame._defaultIntervalTime = interval;
     	List<BlockOrder> orders = getOrders();
     	String blockName = orders.get(0).getBlock().getDisplayName();
     	w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
@@ -288,9 +293,11 @@ public class NXFrame extends WarrantRoute {
     	blockName = block.getDisplayName();
 		w.addThrottleCommand(new ThrottleSetting(0, "NoOp", "Enter Block", blockName));        		
     	if (_stageEStop.isSelected()) {
+    		WarrantTableFrame._defaultEStop = true;
         	w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName));
         	f = 0;
     	} else {
+    		WarrantTableFrame._defaultEStop = false;
         	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(f/4), blockName));
         	f = Math.max(block.getLengthIn()-4, 0)*200;
      	}
@@ -305,6 +312,7 @@ public class NXFrame extends WarrantRoute {
         int depth = 10;
         String msg = null;
         try {
+        	WarrantTableFrame._defaultSearchdepth = _searchDepth.getText();
             depth = Integer.parseInt(_searchDepth.getText());
         } catch (NumberFormatException nfe) {
         	depth = 10;

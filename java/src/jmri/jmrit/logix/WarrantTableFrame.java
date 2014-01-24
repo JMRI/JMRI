@@ -70,6 +70,13 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	static final String retry = Bundle.getMessage("Retry");
 	static final String[] controls = {halt, resume, retry, abort};
 
+	// Session persistent defaults for NX warrants
+	static boolean _defaultEStop = false;
+	static boolean _defaultHaltStart = false;
+	static String _defaultSearchdepth = "15";
+	static String _defaultSpeed = "0.5";
+	static String _defaultIntervalTime = "4.0";
+
     JTextField  _startWarrant = new JTextField(30);
     JTextField  _endWarrant = new JTextField(30);
     private NXFrame _nxFrame;
