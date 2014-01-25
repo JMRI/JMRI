@@ -150,7 +150,7 @@ SimpleNode handshakecommand():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( LOOKAHEAD(4) go() | set() ) <EOL>
+  ( LOOKAHEAD(4) go() | handshake_set() ) <EOL>
   {
     log.debug("Handshake Command Production");
     return jjtThis;
@@ -162,27 +162,29 @@ SimpleNode command():{}
   // This is a simple list of the possible commands.  
   // They are broken down further below.
   ( LOOKAHEAD(4) get() | set() | check() | wait_cmd() | init() |
-                 term() | reset() | verify() ) <EOL>
+                 term() | reset() | verify() )  <EOL> 
   {
     log.debug("Command Production");
     return jjtThis;
   }
 }
 
-SimpleNode serviceversion():{}
+SimpleNode serviceversion():{Token t;}
 {
-  ( <SRCP> (<VERSION>) )
+  ( <SRCP> (t=<VERSION>) )
   {
     log.debug("Service Version Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode connectionmode():{}
+SimpleNode connectionmode():{Token t;}
 {
-  ( <COMMAND> | <INFO> )
+  ( t=<COMMAND> | t=<INFO> )
   {
     log.debug("Connection Mode Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -260,12 +262,13 @@ SimpleNode port():{SimpleNode s;}
   }
 }
 
-SimpleNode devicegroup():{}
+SimpleNode devicegroup():{Token t;}
 {
-  ( <FB> | <GA> | <GL> | <SM> | <TIME> | <SESSION> | <SERVER> | 
-    <LOCK> | <DESCRIPTION> )
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> |t=<SERVER> | 
+    t=<LOCK> | t=<DESCRIPTION> | t=<POWER> )
   {
     log.debug("DeviceGroup Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -290,8 +293,8 @@ SimpleNode get():{}
                 power() | 
                 server() | 
                 session() address() | 
-                lock() devicegroup() address() | 
-                description() [ devicegroup() [address()] ] )
+                lock() | 
+                description() ) 
 
   {
      log.debug("GET Production");
@@ -299,17 +302,42 @@ SimpleNode get():{}
   }
 }
 
+SimpleNode handshake_set():{}
+{
+	<SET> ( protocollitteral() serviceversion() | 
+	        connectionlitteral() <SRCP> connectionmode() ) 
+  {
+    log.debug("Handshake Mode SET Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode protocollitteral():{}
+{
+   <PROTOCOLLITTERAL> 
+   {
+       log.debug("Protocol Litteral production");
+       return jjtThis;
+   }
+}
+
+SimpleNode connectionlitteral():{}
+{
+   <CONNECTIONMODELITTERAL> 
+   {
+       log.debug("Connection Litteral production");
+       return jjtThis;
+   }
+}
 SimpleNode set():{}
 {
-  <SET> ( ( bus() ( gl() address() drivemode() address() address() (functionmode())* | 
+  <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* | 
                 sm() address() progmode() cvno() value() | 
                 ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
                 time() address() address() address() address() | 
                 power() onoff() | 
-                lock() devicegroup() address() [value()]) ) |
-	<PROTOCOLLITTERAL> serviceversion() | 
-	<CONNECTIONMODELITTERAL> connectionmode() ) 
+                lock() ) )
   {
     log.debug("SET Production");
     return jjtThis;
@@ -318,7 +346,7 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() address() | sm() | power() | server() | lock() devicegroup() address() | time() | session() [ address() ] )
+  <TERM> bus()  ( fb() | gl() address() | sm() | power() | server() | lock() | time() | session() [ address() ] )
   {return jjtThis;}
 }
 
@@ -456,16 +484,16 @@ SimpleNode session():{Token t;}
 
 SimpleNode lock():{Token t;}
 {
-  t=<LOCK> 
+  ( t=<LOCK> devicegroup() address() [address()] ) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode description():{Token t;}
+SimpleNode description():{Token t; SimpleNode s; SimpleNode r;}
 {
-  t=<DESCRIPTION> 
+  ( t=<DESCRIPTION> [ devicegroup() [address()] ] )
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;

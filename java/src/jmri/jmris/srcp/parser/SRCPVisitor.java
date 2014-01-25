@@ -27,7 +27,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
   }
   public Object visit(ASThandshakecommand node,Object data)
   {
-    log.debug("Handshake Mode Command " + node.jjtGetValue() );
+    log.debug("Handshake Mode Command " );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTcommand node,Object data)
@@ -39,8 +39,48 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTgo node,Object data)
   {
     log.debug("Go " + node.jjtGetValue() );
-    return node.childrenAccept(this,data);
+    jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler)data;
+    // The GO command should switch the server into runmode, but
+    // only if the client has set the protocol version.  (if no mode
+    // is set, the default is command mode).
+    if(handle.getClientVersion().startsWith("0.8")) {
+       handle.setRunMode();
+       outputString="200 OK GO " + ((jmri.jmris.srcp.JmriSRCPServiceHandler)data).getSessionNumber();
+    } else {
+       outputString="402 ERROR insufficient data";
+    }
+       return data;
   }
+
+  public Object visit(ASThandshake_set node,Object data)
+  {
+    log.debug("Handshake Mode SET " );
+    jmri.jmris.srcp.JmriSRCPServiceHandler handle = (jmri.jmris.srcp.JmriSRCPServiceHandler)data;
+    if(node.jjtGetChild(0).getClass()==ASTprotocollitteral.class) {
+               String version=(String)((SimpleNode)node.jjtGetChild(1)).jjtGetValue();
+               if(version.startsWith("0.8")) {
+                  handle.setClientVersion(version);
+                  outputString="201 OK PROTOCOL SRCP";
+               } else {
+                  outputString="400 ERROR unsupported protocol";
+               }
+            }
+     else if(node.jjtGetChild(0).getClass()==ASTconnectionlitteral.class){
+               String mode = (String)((SimpleNode)node.jjtGetChild(1)).jjtGetValue();
+               outputString="202 OK CONNECTIONMODEOK";
+               if(mode.equals("COMMAND"))
+                  handle.setCommandMode(true);
+               else if(mode.equals("INFO"))
+                  handle.setCommandMode(false);
+               else                  
+                  outputString="401 ERROR unsupported connection mode";
+    } else {
+         outputString="500 ERROR out of resources";
+    }
+    return data;
+  }
+
+
 
   public Object visit(ASTget node, Object data)
   {
@@ -115,9 +155,213 @@ public class SRCPVisitor implements SRCPParserVisitor {
     {
        // for the GET <bus> DESCRIPTION request, what we return depends on
        // the number of arguments passed.
-       // with no arguments, we send a list of supported groups.
-       // with one argument, we send a list of devices in the specified device group
-       // with 2 arguments, we send a description of a specific device.
+       SimpleNode descriptionnode = (SimpleNode)node.jjtGetChild(1);
+       int children=descriptionnode.jjtGetNumChildren();
+       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       if(children==0) {
+          // with no arguments, we send a list of supported groups.
+          if(bus==0) {
+             // the groups supported by bus 0 are fixed
+             outputString="100 INFO 0 DESCRIPTION SERVER SESSION TIME";
+          } else {
+             outputString="100 INFO " +bus;
+             // get the system memo coresponding to the bus.
+             // and ask it what is supported
+             try {
+                jmri.jmrix.SystemConnectionMemo memo = 
+                          (jmri.jmrix.SystemConnectionMemo)InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus-1);
+                if(memo!=null) {
+                  outputString = outputString + " DESCRIPTION";
+                  if(memo.provides(jmri.SensorManager.class))
+                     outputString=outputString + " FB";
+                  if(memo.provides(jmri.TurnoutManager.class))
+                     outputString=outputString + " GA";
+                  if(memo.provides(jmri.ThrottleManager.class))
+                     outputString=outputString + " GL";
+                  if(memo.provides(jmri.PowerManager.class))
+                     outputString=outputString + " POWER";
+                  if(memo.provides(jmri.ProgrammerManager.class))
+                     outputString=outputString + " SM";
+                } else {
+                  // no memo registered for this bus.
+                  outputString="416 ERROR no data";
+                }
+            } catch(java.lang.IndexOutOfBoundsException obe) {
+                  outputString="412 ERROR wrong value";
+            }
+          }
+       } else if(children==1) {
+          // with one argument, we respond with data only for device groups
+          // that have no addresses.
+          outputString="100 INFO " +bus;
+          // get the system memo coresponding to the bus.
+          // and ask it what is supported
+          try {
+             jmri.jmrix.SystemConnectionMemo memo = 
+                          (jmri.jmrix.SystemConnectionMemo)InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus-1);
+             if(memo!=null) {
+                String devicegroup = (String)((SimpleNode)descriptionnode.jjtGetChild(0)).jjtGetValue();
+                log.debug("devicegroup " + devicegroup);
+                if(devicegroup.equals("FB")) {
+                   if(memo.provides(jmri.SensorManager.class)) {
+                      outputString="419 ERROR list too short";
+                   } else {
+                      // respond this isn't supported
+                      outputString="422 ERROR unsupported device group";
+                   }
+                } else if(devicegroup.equals("GA")) {
+                   if(memo.provides(jmri.TurnoutManager.class)) {
+                      outputString="419 ERROR list too short";
+                   } else {
+                      // respond this isn't supported
+                      outputString="422 ERROR unsupported device group";
+                   }
+                } else if(devicegroup.equals("GL")) {
+                   if(memo.provides(jmri.ThrottleManager.class)){
+                      outputString="419 ERROR list too short";
+                   } else {
+                      // respond this isn't supported
+                      outputString="422 ERROR unsupported device group";
+                   }
+                } else if(devicegroup.equals("POWER")) {
+                   if(memo.provides(jmri.PowerManager.class)){
+                      // we are supposed to return the init string,
+                      // and the POWER group has no parameters, so
+                      // just return POWER
+                      outputString=outputString +" POWER";
+                   } else {
+                      // respond this isn't supported
+                      outputString="422 ERROR unsupported device group";
+                   }
+                } else if(devicegroup.equals("SM")) {
+                   if(memo.provides(jmri.ProgrammerManager.class)){
+                      outputString="419 ERROR list too short";
+                   } else {
+                      // respond this isn't supported
+                      outputString="422 ERROR unsupported device group";
+                   }
+                } else {
+                   // respond this isn't supported
+                   outputString="422 ERROR unsupported device group";
+                }
+             } else {
+               // no memo registered for this bus.
+               outputString="416 ERROR no data";
+             }
+          } catch(java.lang.IndexOutOfBoundsException obe) {
+              outputString="412 ERROR wrong value";
+          }
+       } else if(children==2) {
+            outputString="100 INFO " +bus;
+            // get the system memo coresponding to the bus.
+            // and ask it what is supported
+            try {
+               // with 2 arguments, we send a description of a specific device.
+                jmri.jmrix.SystemConnectionMemo memo = 
+                          (jmri.jmrix.SystemConnectionMemo)InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus-1);
+               if(memo!=null) {
+                 String devicegroup = (String)((SimpleNode)descriptionnode.jjtGetChild(0)).jjtGetValue();
+                 String address = (String)((SimpleNode)descriptionnode.jjtGetChild(1)).jjtGetValue();
+                  if(devicegroup.equals("FB")) {
+                     if(memo.provides(jmri.SensorManager.class)) {
+                        jmri.SensorManager mgr = memo.get(jmri.SensorManager.class);
+                        try{
+                            String searchName = mgr.createSystemName(address,
+                                            memo.getSystemPrefix());
+                           if(mgr.getSystemNameList().contains(searchName)){
+                              // add the initialization parameter list.
+                              // we don't expect parameters, so just return
+                              // the bus and address.
+                              outputString=outputString + " FB " +address;
+                           } else {
+                              // the device wasn't found.
+                              outputString = "412 ERROR wrong value";
+                           }
+                        } catch(jmri.JmriException je) {
+                            // the device wasn't found.
+                            outputString = "412 ERROR wrong value";
+                        }
+                     } else {
+                        // respond this isn't supported
+                       outputString="422 ERROR unsupported device group";
+                     }
+                  } else if(devicegroup.equals("GA")) {
+                     if(memo.provides(jmri.TurnoutManager.class)) {
+                        jmri.TurnoutManager mgr = memo.get(jmri.TurnoutManager.class);
+                        try {
+                           String searchName = mgr.createSystemName(address,
+                                            memo.getSystemPrefix());
+                           if(mgr.getSystemNameList().contains(searchName)){
+                              // add the initialization parameter list.
+                              // the only other required parameter is
+                              // the protocol, and we treat all of our
+                              // turnouts as NMRA-DCC turnouts, so return
+                              // the fixed "N" protocol value.
+                              // other valid options are:
+                              //    "M" (Mareklin/Motorola format)
+                              //    "S" (Selectrix Format)
+                              //    "P" (Protocol by server)
+                              outputString=outputString + " GA " +address +" N";
+                           } else {
+                              // the device wasn't found.
+                              outputString = "412 ERROR wrong value";
+                           }
+                        } catch(jmri.JmriException je) {
+                            // the device wasn't found.
+                            outputString = "412 ERROR wrong value";
+                        }
+                     } else {
+                        // respond this isn't supported
+                       outputString="422 ERROR unsupported device group";
+                     }
+                  } else if(devicegroup.equals("GL")) {
+                     if(memo.provides(jmri.ThrottleManager.class)){
+                        // outputString=outputString + " GL " +address;
+                        // this one needs some tought on how to proceed,
+                        // since the throttle manager differs from 
+                        // other JMRI managers.
+                        // for now, just say no data.
+                        outputString="416 ERROR no data";
+                     } else {
+                        // respond this isn't supported
+                       outputString="422 ERROR unsupported device group";
+                     }
+                  } else if(devicegroup.equals("POWER")) {
+                     if(memo.provides(jmri.PowerManager.class)){
+                       outputString="418 ERROR list too long";
+                     } else {
+                        // respond this isn't supported
+                       outputString="422 ERROR unsupported device group";
+                     }
+                  } else if(devicegroup.equals("SM")) {
+                     if(memo.provides(jmri.ProgrammerManager.class)){
+                        //outputString=outputString + " SM " +address;
+                        // this one needs some tought on how to proceed,
+                        // since we have both service mode and ops mode
+                        // programmers, but the service mode programmer is
+                        // not addressed on DCC systems.
+                        // for now, just say no data.
+                        outputString="416 ERROR no data";
+                     } else {
+                        // respond this isn't supported
+                       outputString="422 ERROR unsupported device group";
+                     }
+                  } else {
+                    // respond this isn't supported
+                    outputString="422 ERROR unsupported device group";
+                  }
+                } else {
+                  // no memo registered for this bus.
+                  outputString="416 ERROR no data";
+                }
+            } catch(java.lang.IndexOutOfBoundsException obe) {
+                outputString="412 ERROR wrong value";
+            }
+       } else {
+          outputString="418 ERROR list too long";
+       }
+    } else {
+       outputString="422 ERROR unsupported device group";
     }
     return data;
   }
@@ -125,7 +369,10 @@ public class SRCPVisitor implements SRCPParserVisitor {
 
   public Object visit(ASTset node, Object data)
   {
-    log.debug("Set " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
+    SimpleNode target = (SimpleNode)node.jjtGetChild(1);
+
+    log.debug("Set " + target.jjtGetValue());
+
     if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("POWER"))
     {
        try {
@@ -203,6 +450,8 @@ public class SRCPVisitor implements SRCPParserVisitor {
          ts.sendTime();
        } catch(java.io.IOException ie) {
        }
+    } else {
+       outputString="422 ERROR unsupported device group";
     }
     return data;
   }
@@ -226,7 +475,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
        // state.  Since we may have a local GUI controlling things, we
        // ignore the request, but send the proper return value to the
        // requesting client.
-       outputString="102 TERM 0 SESSION 123456";  // we need to set session IDs.
+       outputString="102 TERM 0 SESSION " + ((jmri.jmris.srcp.JmriSRCPServiceHandler)data).getSessionNumber();  // we need to set session IDs.
        return data;
     }
     
@@ -254,6 +503,8 @@ public class SRCPVisitor implements SRCPParserVisitor {
        // response to the requesting client.
        outputString="413 ERROR temporarily prohibited";
        return data;
+    } else {
+       outputString="422 ERROR unsupported device group";
     }
     return node.childrenAccept(this,data);
   }
@@ -484,6 +735,18 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTfunctionmode node, Object data)
   {
     log.debug("Functionmode Production " +node.jjtGetValue() );
+    return data;
+  }
+
+  public Object visit(ASTconnectionlitteral node, Object data)
+  {
+    log.debug("Connectionlitteral Production " +node.jjtGetValue() );
+    return data;
+  }
+
+  public Object visit(ASTprotocollitteral node, Object data)
+  {
+    log.debug("Protocol Litteral Production " +node.jjtGetValue() );
     return data;
   }
 

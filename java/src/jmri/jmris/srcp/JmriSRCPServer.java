@@ -27,12 +27,6 @@ import jmri.jmris.srcp.parser.SimpleNode;
  */
 public class JmriSRCPServer extends JmriServer{
 
-    // There are 3 possible modes (from the SRCP standards).
-    private static int HANDSHAKEMODE =1;
-    private static int COMMANDMODE = 2;
-    private static int INFOMODE = 4;
-
-     private int SRCPSERVERMODE = 1;
      private static JmriServer _instance = null;
 
      static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
@@ -65,10 +59,6 @@ public class JmriSRCPServer extends JmriServer{
      public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes
         SRCPParser parser = null;
-	String cmd; 
-	int index=0;
-        int runmode=HANDSHAKEMODE;
-        SRCPSERVERMODE=HANDSHAKEMODE; 
 
         // interface components
         JmriSRCPServiceHandler sh= new JmriSRCPServiceHandler(12345); // need real client port.
@@ -84,46 +74,27 @@ public class JmriSRCPServer extends JmriServer{
 	    while(true) {
 	   // Read the command from the client
            
-           index = 0;
-           if(SRCPSERVERMODE == HANDSHAKEMODE) 
+           if(!(sh.getRunMode())) 
            {
-              while((cmd = inStream.readLine()).equals("")); 
-              if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
-              if(cmd.startsWith("SET")){
-                 index = cmd.indexOf(" ",index)+1;
-                 if(cmd.substring(index).startsWith("PROTOCOL SRCP")) {
-                   if(cmd.contains("0.8"))
-	            TimeStampedOutput.writeTimestamp(outStream,"201 OK PROTOCOL SRCP\n\r");
-                   else
-	            TimeStampedOutput.writeTimestamp(outStream,"400 ERROR unsupported protocol\n\r");
-                                    
-                 } else if(cmd.substring(index).startsWith("CONNECTIONMODE SRCP")) {
-                        index=cmd.indexOf(" ",index)+1;
-                        index=cmd.indexOf(" ",index)+1;
-                        if(cmd.substring(index).startsWith("COMMAND")){
-                           runmode=COMMANDMODE;
-                           TimeStampedOutput.writeTimestamp(outStream,"202 OK CONNECTIONMODEOK\n\r");
-                        } else if(cmd.substring(index).startsWith("INFO")){
-                           runmode=INFOMODE;
-                           TimeStampedOutput.writeTimestamp(outStream,"202 OK CONNECTIONMODEOK\n\r");
-                        } else {
-                           TimeStampedOutput.writeTimestamp(outStream,"401 ERROR unsupported connection mode\n\r");
-                        }
-                 } else { 
-	            TimeStampedOutput.writeTimestamp(outStream,"500 ERROR out of resources\n\r");
-                 }
-              } else if (cmd.contains("GO")){
-                if(runmode==0){
-                  TimeStampedOutput.writeTimestamp(outStream,"402 ERROR insufficient data\n\r");
-                } else {
-                  SRCPSERVERMODE = runmode;
-                  if(log.isDebugEnabled()) log.debug("Switching to runmode after GO");
-                  TimeStampedOutput.writeTimestamp(outStream,"200 OK GO "+sh.getSessionNumber() + "\n\r");
-                }
-              } else {
-                  TimeStampedOutput.writeTimestamp(outStream,"402 ERROR insufficient data\n\r");
-	      }
-           } else if (SRCPSERVERMODE == COMMANDMODE ){
+              // we start in handshake mode.
+              if(parser==null) parser = new SRCPParser(inStream); 
+              try {
+                  SimpleNode e=parser.handshakecommand();
+                  SRCPVisitor v = new SRCPVisitor();
+                  e.jjtAccept(v,sh);
+                  // for simple tasks, we're letting the visitor
+                  // generate the response.  If this happens, we
+                  // need to send the message out.
+                  if(v.getOutputString()!=null)
+                    TimeStampedOutput.writeTimestamp(outStream,v.getOutputString()+"\n\r");
+              } catch (ParseException pe){
+                   if(log.isDebugEnabled())
+                   {
+                      log.debug("Parse Exception");
+                      pe.printStackTrace();
+                   }
+              } 
+           } else if (sh.isCommandMode() ){
 
               if(parser==null) parser = new SRCPParser(inStream); 
               try {
@@ -141,11 +112,27 @@ public class JmriSRCPServer extends JmriServer{
                       log.debug("Parse Exception");
                       pe.printStackTrace();
                    }
+                   jmri.jmris.srcp.parser.Token t = parser.getNextToken();
+                   if(t.kind==jmri.jmris.srcp.parser.SRCPParserConstants.EOF){
+                      // the input ended.  The parser may have prepared 
+                      // an output string to return (if the client issued
+                      // a "TERM 0 SESSION" request).
+                      //if(v.getOutputString()!=null)
+                      //   TimeStampedOutput.writeTimestamp(outStream,v.getOutputString()+"\n\r");
+                      // and we can close the connection.
+                      if(log.isDebugEnabled())
+                      {
+                         log.debug("Closing connection due to close of input stream");
+                      }
+                      outStream.close();
+                      inStream.close();
+                      return;
+                   }
                    TimeStampedOutput.writeTimestamp(outStream,"425 ERROR not supported\n\r");
                    // recover by consuming tokens in the token stream
                    // until we reach the end of the line.
-                   while((parser.getNextToken()).kind!=
-                          jmri.jmris.srcp.parser.SRCPParserConstants.EOL);
+                   while(t.kind!=jmri.jmris.srcp.parser.SRCPParserConstants.EOL)
+                          t = parser.getNextToken();
               } catch (TokenMgrError tme) {
                    if(log.isDebugEnabled())
                    {
@@ -154,8 +141,8 @@ public class JmriSRCPServer extends JmriServer{
                    }
                    TimeStampedOutput.writeTimestamp(outStream,"410 ERROR unknown command\n\r");
               }
-           } else if (SRCPSERVERMODE == INFOMODE) {
-              cmd = inStream.readLine(); 
+           } else if (!sh.isCommandMode()) {
+              String cmd = inStream.readLine(); 
               if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
              // input commands are ignored in INFOMODE. 
            } else {
