@@ -31,6 +31,8 @@ import java.awt.Rectangle;
 import java.awt.event.ItemEvent;
 import jmri.util.FileUtil;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
@@ -415,24 +417,10 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // First, get attributes. If not present, assume that
                 // all modes are usable
                 Element programming = null;
-                boolean paged = true;
-                boolean directbit= true;
-                boolean directbyte= true;
-                boolean register= true;
                 if (decoderRoot != null
                     && (programming = decoderRoot.getChild("decoder").getChild("programming"))!= null) {
                     
-                    // set the programming attributes for DCC
-                    if ( (a = programming.getAttribute("paged")) != null )
-                        if (a.getValue().equals("no")) paged = false;
-                    if ( (a = programming.getAttribute("direct")) != null ) {
-                        if (a.getValue().equals("no")) { directbit = false; directbyte = false; }
-                        else if (a.getValue().equals("bitOnly")) { directbit = true; directbyte = false; }
-                        else if (a.getValue().equals("byteOnly")) { directbit = false; directbyte = true; }
-                    }
-                    if ( (a = programming.getAttribute("register")) != null )
-                        if (a.getValue().equals("no")) register = false;
-                    
+                    // add any needed facades
                     Programmer pf = jmri.implementation.ProgrammerFacadeSelector.loadFacadeElements(programming, mProgrammer);
                     log.debug("new programmer "+pf);
                     mProgrammer = pf;
@@ -443,20 +431,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     
                 }
     
-                // is the current mode OK?
-                int currentMode = mProgrammer.getMode();
-                log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+currentMode);
-
-                // find a mode to set it to
-                if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
-                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
-                else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
-                    mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
-                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
-                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
-                else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
-                    mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
-                else log.warn("No acceptable mode found, leave as found");
+                pickProgrammerMode(programming);
                 
             } else {
                 log.error("Can't set programming mode, no programmer instance");
@@ -471,6 +446,46 @@ abstract public class PaneProgFrame extends JmriJFrame
                                             +", constrained to "+getPreferredSize());
     }
 
+    protected void pickProgrammerMode(@NonNull Element programming) {
+        boolean paged = true;
+        boolean directbit= true;
+        boolean directbyte= true;
+        boolean register= true;
+    
+        Attribute a;
+        
+        // set the programming attributes for DCC
+        if ( (a = programming.getAttribute("paged")) != null )
+            if (a.getValue().equals("no")) paged = false;
+        if ( (a = programming.getAttribute("direct")) != null ) {
+            if (a.getValue().equals("no")) { directbit = false; directbyte = false; }
+            else if (a.getValue().equals("bitOnly")) { directbit = true; directbyte = false; }
+            else if (a.getValue().equals("byteOnly")) { directbit = false; directbyte = true; }
+        }
+        if ( (a = programming.getAttribute("register")) != null )
+            if (a.getValue().equals("no")) register = false;
+ 
+        // is the current mode OK?
+        int currentMode = mProgrammer.getMode();
+        log.debug("XML specifies modes: P "+paged+" DBi "+directbit+" Dby "+directbyte+" R "+register+" now "+currentMode);
+
+        // find a mode to set it to
+        if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit) {
+            mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+            log.debug("Set to DIRECTBITMODE");
+        } else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte) {
+            mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
+            log.debug("Set to DIRECTBYTEMODE");
+        } else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged) {
+            mProgrammer.setMode(jmri.Programmer.PAGEMODE);
+            log.debug("Set to PAGEMODE");
+        } else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register) {
+            mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
+            log.debug("Set to REGISTERMODE");
+        } else log.warn("No acceptable mode found, leave as found");
+
+    }
+    
     /**
      * Data element holding the 'model' element representing the decoder type
      */
