@@ -331,14 +331,6 @@ public class InstanceManager {
         return r;
     }
 
-    /**
-     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
-     */
-    @Deprecated
-    static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
-        return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-    }
-
     static public ConditionalManager conditionalManagerInstance()  {
         if (instance().conditionalManager != null) return instance().conditionalManager;
         instance().conditionalManager = (ConditionalManager)initializer.getDefault(ConditionalManager.class);
