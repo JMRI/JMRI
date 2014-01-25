@@ -26,8 +26,10 @@ import javax.swing.text.Document;
  * @author   Howard G. Penny  Copyright (C) 2005
  * @author   Bob Jacobsen  Copyright (C) 2013
  * @version  $Revision$
+ * @deprecated // since 3.7.1
  *
  */
+@Deprecated // since 3.7.1
 public class IndexedPairVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 

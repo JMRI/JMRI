@@ -22,8 +22,10 @@ import jmri.*;
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
  * @author 		Bob Jacobsen Copyright (C) 2013, 2014
+ * @deprecated          since 3.7.1
  * @version   $Revision: 24747 $
  */
+@Deprecated // since 3.7.1
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private int _numRows = 0;                // must be zero until Vectors are initialized

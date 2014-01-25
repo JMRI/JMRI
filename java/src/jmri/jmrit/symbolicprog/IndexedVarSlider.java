@@ -15,7 +15,9 @@ import javax.swing.event.ChangeListener;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @version   $Revision$
+ * @deprecated // since 3.7.1
  */
+@Deprecated // since 3.7.1
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 
     IndexedVariableValue _iVar;

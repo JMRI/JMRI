@@ -65,19 +65,29 @@ public class CvValue extends AbstractValue implements ProgListener {
     public String cvName() { return _cvName; }
     private String _cvName = "";
 
+    @Deprecated // since 3.7.1
     public String piCv() { return _piCv; }
+    @Deprecated // since 3.7.1
     private String _piCv;
 
+    @Deprecated // since 3.7.1
     public int piVal() { return _piVal; }
+    @Deprecated // since 3.7.1
     private int _piVal;
 
+    @Deprecated // since 3.7.1
     public String siCv() { return _siCv; }
+    @Deprecated // since 3.7.1
     private String _siCv;
 
+    @Deprecated // since 3.7.1
     public int siVal() { return _siVal; }
+    @Deprecated // since 3.7.1
     private int _siVal;
 
+    @Deprecated // since 3.7.1
     public String iCv() { return _iCv; }
+    @Deprecated // since 3.7.1
     private String _iCv;
 
     private JLabel _status = null;
@@ -298,6 +308,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
+    @Deprecated // since 3.7.1
     public void readIcV(JLabel status) {
         setToRead(false);
         // get a programmer reference and write an indexed CV
@@ -331,6 +342,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
     
+    @Deprecated // since 3.7.1
     public void confirmIcV(JLabel status) {
         setToRead(false);
         // get a programmer reference and write an indexed CV
@@ -427,6 +439,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
+    @Deprecated // since 3.7.1
     public void writePI(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with PI number "+_piVal);
         // get a programmer reference and write to the primary index
@@ -457,6 +470,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
+    @Deprecated // since 3.7.1
     public void writeSI(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with SI number " +_siVal);
         // get a programmer reference and write to the secondary index
@@ -493,6 +507,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
+    @Deprecated // since 3.7.1
     public void writeIcV(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with IndexedCv number "+_iCv);
         setToWrite(false);
