@@ -333,7 +333,7 @@ public class TrackSegment
                     }
                 });
         }
-        if ((!blockName.equals("")) && (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())){
+        if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())){
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                 public void actionPerformed(ActionEvent e) {
                     AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());

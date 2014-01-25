@@ -13,6 +13,7 @@ import jmri.SignalMastLogic;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -138,7 +139,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             public void actionPerformed(ActionEvent e) {
                 if (useLayoutEditor.isSelected()){
                     try {
-                        boolean valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
+                        boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
                             destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
@@ -173,12 +174,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 boolean valid = false;
                 if (useLayoutEditor.isSelected()){
                     jFrame.pack();
-                    if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                    if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                        int response;
 
                         response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
                         if (response == 0){
-                            InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                            InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
                             JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
                         }
                     }
@@ -190,7 +191,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                             JOptionPane.showMessageDialog(null, je.toString());
                         }
                         try {
-                            valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
+                            valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
                                 destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if(!valid){
                                 JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
@@ -771,7 +772,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if((sml==null) && (useLayoutEditor.isSelected())){
             boolean valid = false;
             try {
-                valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMast, 
+                valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast, 
                     destMast, LayoutBlockConnectivityTools.MASTTOMAST);
                 if(!valid){
                     JOptionPane.showMessageDialog(null,  rb.getString("ErrorUnReachableDestination"));

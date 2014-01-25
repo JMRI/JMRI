@@ -534,7 +534,7 @@ public class LayoutSlip extends LayoutTurnout
                 });
             }
             
-            if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                 if(blockAssigned){
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                         public void actionPerformed(ActionEvent e) {

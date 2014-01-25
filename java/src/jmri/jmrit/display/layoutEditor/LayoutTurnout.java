@@ -1441,7 +1441,7 @@ public class LayoutTurnout
                     if(boundaryBetween[i]!=null)
                         blockBoundaries=true;
                 }
-                if (InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                     
                     if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
                         popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
@@ -2393,7 +2393,7 @@ public class LayoutTurnout
     protected void removeSML(SignalMast signalMast){
         if(signalMast==null)
             return;
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
+        if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }

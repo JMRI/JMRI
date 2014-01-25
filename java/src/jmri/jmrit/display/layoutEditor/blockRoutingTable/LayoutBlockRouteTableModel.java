@@ -152,7 +152,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public void dispose() {
     }
 
-    public jmri.Manager getManager() { return jmri.InstanceManager.layoutBlockManagerInstance(); }
+    public jmri.Manager getManager() { return jmri.InstanceManager.getDefault(LayoutBlockManager.class); }
 
     LayoutBlock lBlock;
     

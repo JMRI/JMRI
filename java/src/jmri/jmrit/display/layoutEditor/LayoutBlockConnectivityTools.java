@@ -80,7 +80,7 @@ public class LayoutBlockConnectivityTools{
         LayoutBlock destFacingBlock = null;
         List<LayoutBlock> destProtectBlock = null;
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         for(int i = 0; i<layout.size(); i++){
             if(log.isDebugEnabled())
                 log.debug("Layout name " + layout.get(i).getLayoutName());
@@ -136,7 +136,7 @@ public class LayoutBlockConnectivityTools{
     */
     public ArrayList<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, int pathMethod) throws jmri.JmriException{
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock facingBlock = null;
         LayoutBlock protectingBlock = null;
         LayoutBlock destFacingBlock = null;
@@ -177,7 +177,7 @@ public class LayoutBlockConnectivityTools{
     public List<NamedBean> getBeansInPath(List<LayoutBlock> blocklist, LayoutEditor panel, Class<?> T){
         ArrayList<NamedBean> beansInPath = new ArrayList<NamedBean>();
         if(blocklist.size()>=2){
-            LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+            LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
             for(int x = 1; x<blocklist.size(); x++){
                 LayoutBlock facingBlock = blocklist.get(x-1);
                 LayoutBlock protectingBlock = blocklist.get(x);
@@ -229,7 +229,7 @@ public class LayoutBlockConnectivityTools{
      
      }
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, int pathMethod) throws jmri.JmriException {
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()){
             log.info("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
@@ -333,14 +333,14 @@ public class LayoutBlockConnectivityTools{
             //In this instance it doesn't matter what the destination protecting block is so we get the first
             /*LayoutBlock destProt = null;
             if(!dest.getProtectingBlocks().isEmpty()){
-                destProt = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getProtectingBlocks().get(0));
+                destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
                 //log.info(dest.getProtectingBlocks());
             }*/
             List <LayoutBlock>destList = new ArrayList<LayoutBlock>();
             for(Block b:dest.getProtectingBlocks()){
-                destList.add(InstanceManager.layoutBlockManagerInstance().getLayoutBlock(b));
+                destList.add(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(b));
             }
-            return checkValidDest(facing, protecting, InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getFacing()), destList, pathMethod);
+            return checkValidDest(facing, protecting, InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getFacing()), destList, pathMethod);
         } catch (jmri.JmriException e){
             throw e;
         }
@@ -370,7 +370,7 @@ public class LayoutBlockConnectivityTools{
     */
     public ArrayList<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException{
         lastErrorMessage= "Unknown Error Occured";
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()){
             log.info("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
@@ -424,7 +424,7 @@ public class LayoutBlockConnectivityTools{
                 bt.addIndex(nextBlockIndex);
                 if(log.isDebugEnabled()) log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
                 //Sets the old next block to be our current block.
-                currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+                currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
 
                 offSet = new ArrayList<Integer>();
 
@@ -432,7 +432,7 @@ public class LayoutBlockConnectivityTools{
 
                 currentBlock = nextBlock;
                 nextBlock = currentLBlock.getRouteNextBlockAtIndex(nextBlockIndex);
-                LayoutBlock nextLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+                LayoutBlock nextLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
                 if(log.isDebugEnabled()){
                     log.debug("Blocks in route size " + blocksInRoute.size());
                     log.debug(nextBlock.getDisplayName() + " " + destBlock.getDisplayName());
@@ -544,7 +544,7 @@ public class LayoutBlockConnectivityTools{
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod){
         int blockindex = 0;
         Block block;
-        LayoutBlock currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(currentBlock);
+        LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
         ArrayList<Integer> blkIndexTested = new ArrayList<Integer>(5);
         if(log.isDebugEnabled())
             log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
@@ -559,7 +559,7 @@ public class LayoutBlockConnectivityTools{
             }
             if (blockindex!=-1){
                 block = currentLBlock.getRouteNextBlockAtIndex(blockindex);
-                LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(block);
+                LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(block);
                 
                 Block blocktoCheck = block;
                 if (block == currentBlock){
@@ -582,11 +582,11 @@ public class LayoutBlockConnectivityTools{
                        this would generate an error message that is expected.*/
                     MDC.put("loggingDisabled", LayoutBlockManager.class.getName());
                     switch(pathMethod){
-                        case MASTTOMAST : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
-                        case HEADTOHEAD : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
-                        case SENSORTOSENSOR : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSensor(currentBlock, blocktoCheck, null); break;
+                        case MASTTOMAST : foundBean = InstanceManager.getDefault(LayoutBlockManager.class).getFacingSignalMast(currentBlock, blocktoCheck); break;
+                        case HEADTOHEAD : foundBean = InstanceManager.getDefault(LayoutBlockManager.class).getFacingSignalHead(currentBlock, blocktoCheck); break;
+                        case SENSORTOSENSOR : foundBean = InstanceManager.getDefault(LayoutBlockManager.class).getFacingSensor(currentBlock, blocktoCheck, null); break;
                         case NONE : break;
-                        default : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingNamedBean(currentBlock, blocktoCheck, null); break;
+                        default : foundBean = InstanceManager.getDefault(LayoutBlockManager.class).getFacingNamedBean(currentBlock, blocktoCheck, null); break;
                     }
                     MDC.remove("loggingDisabled");
                     if (foundBean==null){
@@ -667,7 +667,7 @@ public class LayoutBlockConnectivityTools{
     *                   Constant values of NONE, ANY, MASTTOMAST, HEADTOHEAD
     */
     public Hashtable<NamedBean, ArrayList<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod){
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         Hashtable<NamedBean, ArrayList<NamedBean>> retPairs = new Hashtable<NamedBean, ArrayList<NamedBean>>();
         ArrayList<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
         for(FacingProtecting fp:beanList){
@@ -704,7 +704,7 @@ public class LayoutBlockConnectivityTools{
     */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException{
         if(log.isDebugEnabled()) log.debug("discover pairs from source " + source.getDisplayName());
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
         ArrayList<NamedBean> ret = new ArrayList<NamedBean>();
@@ -720,7 +720,7 @@ public class LayoutBlockConnectivityTools{
     }
     
     ArrayList<NamedBean> discoverPairDest(NamedBean source, LayoutBlock lProtecting, LayoutBlock lFacing, ArrayList<FacingProtecting> blockList, int pathMethod) throws JmriException{
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if(!lbm.isAdvancedRoutingEnabled()){
             throw new JmriException("advanced routing not enabled");
         }
@@ -757,7 +757,7 @@ public class LayoutBlockConnectivityTools{
 
 
     ArrayList<FacingProtecting> generateBlocksWithBeans(LayoutEditor editor, Class<?> T){
-        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         ArrayList<FacingProtecting> beanList = new ArrayList<FacingProtecting>();
     
         List<String> lblksSysName = lbm.getSystemNameList();

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import javax.swing.table.*;
 import java.util.ArrayList;
 import java.beans.PropertyChangeListener;
@@ -55,7 +56,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             _signalMastList = sml.getDestinationList();
         }
         
-        jmri.InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(this);
+        jmri.InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(this);
         
         setLayout(new BorderLayout());
         
@@ -111,7 +112,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         });
         
-        /*if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+        /*if(!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())
             discoverPairs.setEnabled(false);*/
         add(footer, BorderLayout.SOUTH);
     }
@@ -120,10 +121,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     JLabel sourceLabel = new JLabel();
     
     void discoverPressed(ActionEvent e){
-        if (!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+        if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
             int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
             if (response == 0){
-                jmri.InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                jmri.InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabledShort"));
             }
         }

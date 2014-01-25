@@ -117,7 +117,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      */
     @SuppressWarnings("unchecked")
 	public void loadLayoutBlocks(Element layoutblocks) {
-        LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (layoutblocks.getAttribute("blockrouting")!=null){
             if (layoutblocks.getAttribute("blockrouting").getValue().equals("yes"))
                 tm.enableAdvancedRouting(true);
@@ -200,13 +200,13 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * if they are of the same absolute type.
      */
     protected void replaceLayoutBlockManager() {
-        if (InstanceManager.layoutBlockManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(LayoutBlockManager.class).getClass().getName()
                 .equals(LayoutBlockManager.class.getName()))
             return;
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.layoutBlockManagerInstance() != null)
+        if (InstanceManager.getDefault(LayoutBlockManager.class) != null)
             InstanceManager.configureManagerInstance().deregister(
-                InstanceManager.layoutBlockManagerInstance() );
+                InstanceManager.getDefault(LayoutBlockManager.class) );
 
         // register new one with InstanceManager
         LayoutBlockManager pManager = LayoutBlockManager.instance();

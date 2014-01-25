@@ -56,7 +56,7 @@ public class ConnectivityUtil
 		layoutEditor = thePanel;
 		auxTools = new LayoutEditorAuxTools(layoutEditor);
 		leTools = layoutEditor.getLETools();
-		layoutBlockManager = InstanceManager.layoutBlockManagerInstance();
+		layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
 	}
 
     private ArrayList<Integer> companion = null;

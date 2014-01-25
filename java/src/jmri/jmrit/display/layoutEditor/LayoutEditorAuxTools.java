@@ -750,7 +750,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName());
 						}
 						
@@ -764,7 +764,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName());
 						}
 					}
@@ -785,7 +785,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + ltz.getName() + " " + ltz.getLayoutBlock().getDisplayName());
 						}
 					}
@@ -801,14 +801,14 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                             bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_AC));
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                         } else if (lc.getConnectedType()==LayoutEditor.SLIP_B){
@@ -816,7 +816,7 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                             
@@ -824,7 +824,7 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                         } else if (lc.getConnectedType()==LayoutEditor.SLIP_A){
@@ -863,7 +863,7 @@ public class LayoutEditorAuxTools
 					if ( (bs != null) && (bs.getBean() != null) ) 
 						p.addSetting(bs);
 					else {
-						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 						log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 					}
 				}
@@ -894,7 +894,7 @@ public class LayoutEditorAuxTools
 				if ( (bs != null) && (bs.getBean() != null) ) 
 					p.addSetting(bs);
 				else {
-					InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+					InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 					log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 				}
 			}
@@ -926,7 +926,7 @@ public class LayoutEditorAuxTools
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else {
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 								log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
 							}
 							prevConnection = curConnection;
@@ -959,7 +959,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
 						}
 						prevConnection = curConnection;
@@ -975,7 +975,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
 						}
 						prevConnection = curConnection;
@@ -1014,14 +1014,14 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                             bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_AC));
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                         } else if (typeCurConnection==LayoutEditor.SLIP_B){
@@ -1033,7 +1033,7 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                             
@@ -1041,7 +1041,7 @@ public class LayoutEditorAuxTools
                             if (bs.getBean() != null) 
                                 p.addSetting(bs);
                             else {
-                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                                 log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
                             }
                         } else {
@@ -1081,7 +1081,7 @@ public class LayoutEditorAuxTools
 					if ( (bs != null) && (bs.getBean() != null) ) 
 						p.addSetting(bs);
 					else {
-						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 						log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 					}
 				}
@@ -1158,7 +1158,7 @@ public class LayoutEditorAuxTools
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else {
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 								log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 							}
 							if (lt.getLayoutBlock()!=layoutBlock) {						
@@ -1179,7 +1179,7 @@ public class LayoutEditorAuxTools
 							if (bs.getBean() != null)
 								p.addSetting(bs);
 							else {
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 								log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 							}
 							if (lt.getLayoutBlock()!=layoutBlock) {						
@@ -1210,7 +1210,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 						}
 						if (lt.getLayoutBlock()!=layoutBlock) {
@@ -1229,7 +1229,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getSystemName());
 						}
 						if (lt.getLayoutBlockC()!=layoutBlock) {
@@ -1256,7 +1256,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 						}
 						if (lt.getLayoutBlockB()!=layoutBlock) {
@@ -1275,7 +1275,7 @@ public class LayoutEditorAuxTools
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
-							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
 							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
 						}
 						if (lt.getLayoutBlockD()!=layoutBlock) {
@@ -1351,14 +1351,14 @@ public class LayoutEditorAuxTools
                         if (bs.getBean() != null) 
                             p.addSetting(bs);
                         else {
-                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                             log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
                         bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutSlip.STATE_AC));
                         if (bs.getBean() != null) 
                             p.addSetting(bs);
                         else {
-                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                             log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
                         prevConnection = curConnection;
@@ -1369,7 +1369,7 @@ public class LayoutEditorAuxTools
                         if (bs.getBean() != null) 
                             p.addSetting(bs);
                         else {
-                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                             log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
                         
@@ -1377,7 +1377,7 @@ public class LayoutEditorAuxTools
                         if (bs.getBean() != null) 
                             p.addSetting(bs);
                         else {
-                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
                             log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
                         }
                         prevConnection = curConnection;

@@ -2156,7 +2156,7 @@ public class LayoutEditorTools
 									rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		LayoutBlock block = jmri.InstanceManager.layoutBlockManagerInstance().
+		LayoutBlock block = jmri.InstanceManager.getDefault(LayoutBlockManager.class).
 														getByUserName(str);
 		if (block==null) {
 			JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame,
@@ -8042,7 +8042,7 @@ public class LayoutEditorTools
 		SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
         
         if(block1BoundSignalMast==null){
-            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock1SignalMast)){
+            if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock1SignalMast)){
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast);
             }
             
@@ -8051,7 +8051,7 @@ public class LayoutEditorTools
             boundary.setEastBoundSignalMast("");
         }
         if(block2BoundSignalMast==null){
-            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock2SignalMast)){
+            if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock2SignalMast)){
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast);
             }
             
@@ -8088,7 +8088,7 @@ public class LayoutEditorTools
                 boundary.setEastBoundSignalMast(eastSignalMast.getText());
                 boundary.setWestBoundSignalMast(westSignalMast.getText());
                 //Then sort out the logic
-                if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                     SignallingGuiTools.swapSignalMastLogic(setSignalMastsAtBoundaryFrame, block1BoundSignalMast, block2BoundSignalMast);
                 }
                 needRedraw = true;
@@ -8170,7 +8170,7 @@ public class LayoutEditorTools
             }
         
         //If advanced routing is enabled and then this indicates that we are using this for discovering the signalmast logic paths.
-            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && (block1BoundSignalMast!=null || block2BoundSignalMast!=null)){
+            if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && (block1BoundSignalMast!=null || block2BoundSignalMast!=null)){
                 updateBoundaryBasedSignalMastLogic(oldBlock1SignalMast, oldBlock2SignalMast, 
                                                             block1BoundSignalMast,block2BoundSignalMast);
             }

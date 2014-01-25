@@ -490,7 +490,7 @@ public class PositionablePoint
     void removeSML(SignalMast signalMast){
         if(signalMast==null)
             return;
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
+        if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }

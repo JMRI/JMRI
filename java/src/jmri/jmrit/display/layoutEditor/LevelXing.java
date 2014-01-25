@@ -511,7 +511,7 @@ public class LevelXing
     void removeSML(SignalMast signalMast){
         if(signalMast==null)
             return;
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
+        if(jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -681,7 +681,7 @@ public class LevelXing
 
             final String[] boundaryBetween = getBlockBoundaries();
             boolean blockBoundaries = false;
-            if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                 if(blockACAssigned && !blockBDAssigned){
                     popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                         public void actionPerformed(ActionEvent e) {

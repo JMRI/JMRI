@@ -10,6 +10,7 @@ import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.InstanceManager;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -436,10 +437,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
     JLabel sourceLabel = new JLabel();
     
     void autoCreatePairs(jmri.util.JmriJFrame f) {
-        if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()){
             int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
             if (response == 0){
-                InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
             } else {
                 return;

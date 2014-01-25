@@ -28,12 +28,12 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
     public void setBlock(jmri.NamedBeanHandle<Block> m) {
         super.setBlock(m);
         if(getBlock()!=null){
-            lBlock = jmri.InstanceManager.layoutBlockManagerInstance().getLayoutBlock(getBlock());
+            lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(getBlock());
         }
     }
     
     protected void addRosterToIcon(RosterEntry roster){
-        if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() || lBlock==null){
+        if(!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock==null){
             super.addRosterToIcon(roster);
             return;
         }

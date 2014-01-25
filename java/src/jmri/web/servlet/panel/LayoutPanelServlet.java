@@ -103,7 +103,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             }
 
             // include LayoutBlocks
-            LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
+            LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
             SensorManager sm = InstanceManager.sensorManagerInstance();
             num = 0;

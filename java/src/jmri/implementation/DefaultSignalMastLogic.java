@@ -303,7 +303,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(log.isDebugEnabled())
                     log.debug(layout.get(i).getLayoutName());
                 if (facingBlock==null){
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast(), layout.get(i));
+                    facingBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(getSourceMast(), layout.get(i));
                 }
             }
         }
@@ -2049,7 +2049,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if (useLayoutEditor == boo)
                 return;
             useLayoutEditor = boo;
-            if ((boo) && (InstanceManager.layoutBlockManagerInstance().routingStablised())){
+            if ((boo) && (InstanceManager.getDefault(LayoutBlockManager.class).routingStablised())){
                 try{
                     setupLayoutEditorDetails();
                 } catch (jmri.JmriException e){
@@ -2070,7 +2070,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.debug(destination.getDisplayName() + " use layout editor details called " + useLayoutEditor);
             useLayoutEditorTurnouts=turnouts;
             useLayoutEditorBlocks=blocks;
-            if((useLayoutEditor) && (InstanceManager.layoutBlockManagerInstance().routingStablised())){
+            if((useLayoutEditor) && (InstanceManager.getDefault(LayoutBlockManager.class).routingStablised())){
                 try{
                     setupLayoutEditorDetails();
                 } catch (jmri.JmriException e){
@@ -2086,7 +2086,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.debug(useLayoutEditor + " " + disposed);
             if((!useLayoutEditor) || (disposed))
                 return;
-            LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+            LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
             if ((destinationBlock!=null) && (log.isDebugEnabled()))
                 log.debug(destination.getDisplayName() + " Set use layout editor");
             ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();

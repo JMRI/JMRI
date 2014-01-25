@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import jmri.util.FileUtil;
 
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+
 //import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -717,7 +719,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         
 		// all loaded, initialize objects as necessary
 		InstanceManager.logixManagerInstance().activateAllLogixs();
-		InstanceManager.layoutBlockManagerInstance().initializeLayoutBlockPaths();
+		InstanceManager.getDefault(LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
         return result;
     }

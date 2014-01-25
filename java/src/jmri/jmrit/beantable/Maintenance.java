@@ -39,6 +39,8 @@ import jmri.SignalHead;
 import jmri.InstanceManager;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+
 
 /**
  * A collection of static utilities to provide cross referencing information
@@ -1020,7 +1022,7 @@ public class Maintenance
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         iter1 = lbm.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix

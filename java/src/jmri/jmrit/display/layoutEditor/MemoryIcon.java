@@ -142,7 +142,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     
     public void setMemory(String pName){
         super.setMemory(pName);
-        lBlock = jmri.InstanceManager.layoutBlockManagerInstance().getBlockWithMemoryAssigned(getMemory());
+        lBlock = jmri.InstanceManager.getDefault(LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory());
     }
     
     @Override
@@ -156,7 +156,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     }
     
     protected void addRosterToIcon(RosterEntry roster){
-        if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() || lBlock==null){
+        if(!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock==null){
             super.addRosterToIcon(roster);
             return;
         }

@@ -5245,7 +5245,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 // nothing entered
                 return null;
             } else {
-                blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock();
+                blk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
                 if (blk == null) {
                     log.error("Unable to create a layout block");
                     return null;
@@ -5259,9 +5259,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             }
 		} else {
             // check if this Layout Block already exists
-            blk = InstanceManager.layoutBlockManagerInstance().getByUserName(s);
+            blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(s);
             if (blk == null) {
-                blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock(null,s);
+                blk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null,s);
                 if (blk == null) {
                     log.error("Failure to create LayoutBlock '"+s+"'.");
                     return null;
@@ -5311,7 +5311,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
      */
     public LayoutBlock getLayoutBlock(String blockID) {
 		// check if this Layout Block already exists
-		LayoutBlock blk = InstanceManager.layoutBlockManagerInstance().getByUserName(blockID);
+		LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockID);
 		if (blk==null) {
 			log.error("LayoutBlock '"+blockID+"' not found when panel loaded");
 			return null;
