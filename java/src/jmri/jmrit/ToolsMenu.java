@@ -100,7 +100,7 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
 	// disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.consistManagerInstance()==null) {
+        if (jmri.InstanceManager.getDefault(jmri.ConsistManager.class)==null) {
             consistAction.setEnabled(false);
         }
 

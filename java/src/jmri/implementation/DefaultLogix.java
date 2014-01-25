@@ -3,8 +3,7 @@ package jmri.implementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.*;
 import jmri.jmrit.beantable.LRouteTableAction;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -766,7 +765,7 @@ public class DefaultLogix extends AbstractNamedBean
 				return;
                 
             case LISTENER_TYPE_WARRANT:
-				Warrant w = InstanceManager.warrantManagerInstance().
+				Warrant w = InstanceManager.getDefault(WarrantManager.class).
 										getWarrant(listener.getDevName());
 				if (w==null) {
 					msg= "warrant";
@@ -878,7 +877,7 @@ public class DefaultLogix extends AbstractNamedBean
                     m.removePropertyChangeListener(listener);
                     return;
                 case LISTENER_TYPE_WARRANT:
-                    Warrant w = InstanceManager.warrantManagerInstance().
+                    Warrant w = InstanceManager.getDefault(WarrantManager.class).
                                             getWarrant(listener.getDevName());
                     if (w==null) {
                         msg= "warrant";

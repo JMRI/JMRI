@@ -103,15 +103,15 @@ public class JsonServlet extends WebSocketServlet {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER) && evt.getNewValue() != null) {
-                InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+                InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
             }
         }
     };
 
     public JsonServlet() {
         super();
-        if (InstanceManager.consistManagerInstance() != null) {
-            InstanceManager.consistManagerInstance().requestUpdateFromLayout();
+        if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
         }
         InstanceManager.addPropertyChangeListener(this.instanceManagerListener);
     }

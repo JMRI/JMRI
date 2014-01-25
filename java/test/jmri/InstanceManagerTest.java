@@ -146,11 +146,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.signalGroupManagerInstance() );
         Assert.assertNotNull(InstanceManager.blockManagerInstance() );
         Assert.assertNotNull(InstanceManager.oBlockManagerInstance() );
-        Assert.assertNotNull(InstanceManager.warrantManagerInstance() );
+        Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class) );
         Assert.assertNotNull(InstanceManager.sectionManagerInstance() );
         Assert.assertNotNull(InstanceManager.transitManagerInstance() );
         Assert.assertNotNull(InstanceManager.routeManagerInstance() );
-        Assert.assertNotNull(InstanceManager.layoutBlockManagerInstance() );
+        Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class) );
         Assert.assertNotNull(InstanceManager.conditionalManagerInstance() );
         Assert.assertNotNull(InstanceManager.logixManagerInstance() );
         Assert.assertNotNull(InstanceManager.timebaseInstance() );
@@ -168,18 +168,18 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // properly create defaults
     //
     public void testLayoutBlockManager() {
-        LayoutBlockManager obj = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlockManager obj = InstanceManager.getDefault(LayoutBlockManager.class);
         Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
         Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
     }
     public void testWarrantManager() {
-        WarrantManager obj = InstanceManager.warrantManagerInstance();
+        WarrantManager obj = InstanceManager.getDefault(WarrantManager.class);
         Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
         Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
     }
     public void testOBlockManager() {
         OBlockManager obj = InstanceManager.oBlockManagerInstance();

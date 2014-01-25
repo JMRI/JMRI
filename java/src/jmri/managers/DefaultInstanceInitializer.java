@@ -31,8 +31,61 @@ import jmri.jmrit.roster.RosterIconFactory;
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
     public <T> Object getDefault(Class<T> type) {
+
+        // Should do InstanceManagerAutoDefault instead
+        if (type == BlockManager.class) {
+            return new BlockManager();
+        }
+
+        if (type == CatalogTreeManager.class) {
+            return new DefaultCatalogTreeManager();
+        }
+
+        if (type == ClockControl.class) {
+            return new DefaultClockControl();
+        }
+
+        if (type == ConditionalManager.class) {
+            return new DefaultConditionalManager();
+        }
+
+        if (type == IdTagManager.class) {
+            return new DefaultIdTagManager();
+        }
+
+        if (type == LogixManager.class) {
+            return new DefaultLogixManager();
+        }
+
+        if (type == MemoryManager.class) {
+            return new DefaultMemoryManager();
+        }
+
+        if (type == RosterIconFactory.class) {
+            return RosterIconFactory.instance();
+        }
+
+        if (type == RouteManager.class) {
+            return new DefaultRouteManager();
+        }
+
+        // Should do InstanceManagerAutoDefault instead
+        if (type == SectionManager.class) {
+            return new SectionManager();
+        }
+
+        if (type == SignalGroupManager.class) {
+            // ensure signal mast manager exists first
+            InstanceManager.signalMastManagerInstance();
+            return new DefaultSignalGroupManager();
+        }
+
         if (type == SignalHeadManager.class) {
             return new AbstractSignalHeadManager();
+        }
+
+        if (type == SignalMastLogicManager.class) {
+            return new DefaultSignalMastLogicManager();
         }
 
         if (type == SignalMastManager.class) {
@@ -45,40 +98,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DefaultSignalSystemManager();
         }
 
-        if (type == SignalGroupManager.class) {
-            // ensure signal mast manager exists first
-            InstanceManager.signalMastManagerInstance();
-            return new DefaultSignalGroupManager();
-        }
-
-        if (type == BlockManager.class) {
-            return new BlockManager();
-        }
-
-        if (type == SectionManager.class) {
-            return new SectionManager();
-        }
-
-        if (type == TransitManager.class) {
-            return new TransitManager();
-        }
-
-        if (type == RouteManager.class) {
-            return new DefaultRouteManager();
-        }
-
-        if (type == LogixManager.class) {
-            return new DefaultLogixManager();
-        }
-
-        if (type == ConditionalManager.class) {
-            return new DefaultConditionalManager();
-        }
-
-        if (type == SignalMastLogicManager.class) {
-            return new DefaultSignalMastLogicManager();
-        }
-
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
             if (InstanceManager.configureManagerInstance() != null)
@@ -86,28 +105,13 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return timebase;
         }
 
-        if (type == ClockControl.class) {
-            return new DefaultClockControl();
+        // Should do InstanceManagerAutoDefault instead
+        if (type == TransitManager.class) {
+            return new TransitManager();
         }
 
-        if (type == CatalogTreeManager.class) {
-            return new DefaultCatalogTreeManager();
-        }
-
-        if (type == MemoryManager.class) {
-            return new DefaultMemoryManager();
-        }
-
-        if (type == RosterIconFactory.class) {
-            return RosterIconFactory.instance();
-        }
-
-        if (type == IdTagManager.class) {
-            return new DefaultIdTagManager();
-        }
-
-        // this is an error!
-        throw new IllegalArgumentException("Cannot create object of type "+type);
+        // Nothing found
+        return null;
     }
 
 }

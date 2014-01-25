@@ -6,8 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.implementation.*;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.*;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 
 import java.awt.FlowLayout;
@@ -4444,12 +4443,12 @@ public class LogixTableAction extends AbstractTableAction {
         if (name != null) {
             name = name.trim();
         	if (name.length()>0) {
-            	w = InstanceManager.warrantManagerInstance().getByUserName(name);
+            	w = InstanceManager.getDefault(WarrantManager.class).getByUserName(name);
             	if (w != null) {
             		return name;
             	}
         	}
-            w = InstanceManager.warrantManagerInstance().getBySystemName(name);
+            w = InstanceManager.getDefault(WarrantManager.class).getBySystemName(name);
         }
         if (w == null) {
             messageInvalidActionItemName(name, "Warrant");

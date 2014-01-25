@@ -3,8 +3,7 @@ package jmri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.beantable.LogixTableAction;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.*;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -143,7 +142,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, c);
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
-                    Warrant w = InstanceManager.warrantManagerInstance().getWarrant(_name);
+                    Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                     if(w == null){
                         log.error("invalid warrant name= \""+_name+"\" in state variable");
                         return;
@@ -241,7 +240,7 @@ public class ConditionalVariable {
                 bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
-                bean = InstanceManager.warrantManagerInstance().getWarrant(_name);
+                bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
                 bean = InstanceManager.oBlockManagerInstance().getOBlock(_name);
@@ -521,7 +520,7 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_WARRANT:
-				Warrant w = InstanceManager.warrantManagerInstance().getWarrant(getName());
+				Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(getName());
 				if (w == null) {
 					log.error("invalid Warrant name= \""+getName()+"\" in state variable");
 					return (false);

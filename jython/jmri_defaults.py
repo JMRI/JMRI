@@ -30,6 +30,7 @@ programmers  = jmri.InstanceManager.programmerManagerInstance()
 shutdown     = jmri.InstanceManager.shutDownManagerInstance()
 audio        = jmri.InstanceManager.audioManagerInstance()
 layoutblocks = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+warrants     = jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager)
 
 # shortcut some constants
 import jmri.Turnout.CLOSED         as CLOSED

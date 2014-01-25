@@ -54,7 +54,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     public ConsistToolFrame() {
         super();
 
-        ConsistMan = InstanceManager.consistManagerInstance();
+        ConsistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
 
         consistFile = new ConsistFile();
         try {

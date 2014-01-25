@@ -641,7 +641,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleWarrantTable");
         }
         public Manager getManager() {
-            manager = InstanceManager.warrantManagerInstance();
+            manager = InstanceManager.getDefault(WarrantManager.class);
             return manager;
         }
         public NamedBean addBean(String name) {

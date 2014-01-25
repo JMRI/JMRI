@@ -22,8 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
-import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.*;
 import jmri.util.PythonInterp;
 
  /**
@@ -1003,7 +1002,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1016,7 +1015,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1026,7 +1025,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_SET_ROUTE_TURNOUTS:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1039,7 +1038,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break; 
                     case Conditional.ACTION_THROTTLE_FACTOR:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1052,7 +1051,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break; 
                     case Conditional.ACTION_SET_TRAIN_ID:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1066,7 +1065,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_SET_TRAIN_NAME:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1076,7 +1075,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_AUTO_RUN_WARRANT:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1090,7 +1089,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_MANUAL_RUN_WARRANT:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
@@ -1104,7 +1103,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
                         break;
                     case Conditional.ACTION_CONTROL_TRAIN:
-                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+                        w = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}

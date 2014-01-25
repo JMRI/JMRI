@@ -38,7 +38,7 @@ public class ConsistDataModel extends AbstractTableModel {
 
     // Construct a new instance
     ConsistDataModel(int row, int column) {
-        ConsistMan = InstanceManager.consistManagerInstance();
+        ConsistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
     }
 
     void initTable(JTable ConsistTable) {

@@ -201,8 +201,8 @@ public class JsonUtil {
      */
     static public void delConsist(DccLocoAddress address) throws JsonException {
         try {
-            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-                InstanceManager.consistManagerInstance().delConsist(address);
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                InstanceManager.getDefault(jmri.ConsistManager.class).delConsist(address);
             } else {
                 throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
             }
@@ -240,11 +240,11 @@ public class JsonUtil {
      */
     static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
         try {
-            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
                 ObjectNode root = mapper.createObjectNode();
                 root.put(TYPE, CONSIST);
                 ObjectNode data = root.putObject(DATA);
-                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+                Consist consist = InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
                 data.put(ADDRESS, consist.getConsistAddress().getNumber());
                 data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
                 data.put(TYPE, consist.getConsistType());
@@ -280,8 +280,8 @@ public class JsonUtil {
      */
     static public void putConsist(DccLocoAddress address, JsonNode data) throws JsonException {
         try {
-            if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-                InstanceManager.consistManagerInstance().getConsist(address);
+            if (!InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
                 setConsist(address, data);
             }
         } catch (NullPointerException ex) {
@@ -299,7 +299,7 @@ public class JsonUtil {
     static public JsonNode getConsists() throws JsonException {
         try {
             ArrayNode root = mapper.createArrayNode();
-            for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
+            for (DccLocoAddress address : InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList()) {
                 root.add(getConsist(address));
             }
             return root;
@@ -332,8 +332,8 @@ public class JsonUtil {
      */
     static public void setConsist(DccLocoAddress address, JsonNode data) throws JsonException {
         try {
-            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                Consist consist = InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
                 if (data.path(ID).isTextual()) {
                     consist.setConsistID(data.path(ID).asText());
                 }
@@ -360,7 +360,7 @@ public class JsonUtil {
                     }
                 }
                 try {
-                    (new ConsistFile()).writeFile(InstanceManager.consistManagerInstance().getConsistList());
+                    (new ConsistFile()).writeFile(InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList());
                 } catch (IOException ex) {
                     throw new JsonException(500, ex.getLocalizedMessage());
                 }

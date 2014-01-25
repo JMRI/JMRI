@@ -162,7 +162,7 @@ public class WarrantManagerXml //extends XmlFile
     @SuppressWarnings("unchecked")
     public boolean load(Element warrants) {
 
-        WarrantManager manager = InstanceManager.warrantManagerInstance();
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
 
         List<Element> warrantList = warrants.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
@@ -313,7 +313,7 @@ public class WarrantManagerXml //extends XmlFile
     }
     
     public int loadOrder(){
-        return InstanceManager.warrantManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
     
     static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class.getName());
