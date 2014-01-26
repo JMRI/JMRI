@@ -355,7 +355,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 				log.debug("cars table edit true");
 				carsTable.getCellEditor().stopCellEditing();
 			}
-			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 			OperationsXml.save();
 			saveTableDetails(carsTable);
 			if (Setup.isCloseWindowOnSaveEnabled())
@@ -372,7 +371,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	}
 
 	public void dispose() {
-		carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 		carsModel.removeTableModelListener(this);
 		carsModel.dispose();
 		if (f != null)
