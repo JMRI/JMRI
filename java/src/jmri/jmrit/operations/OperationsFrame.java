@@ -239,24 +239,18 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			log.debug("table "+tableref+" doesn't use sorter");
 		} 
 		
-		// is the table using XTableColumnModel?  If so, there can be hidden columns.
+		// is the table using XTableColumnModel?
 		if (sorter != null && sorter.getColumnCount() != table.getColumnCount()) {
 			log.debug("Sort column count: "+sorter.getColumnCount()+" table column count: "+table.getColumnCount()+" XTableColumnModel in use");
 			XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-			int j=0;
 			for (int i = 0; i <sorter.getColumnCount(); i++) {
 				int sortStatus = sorter.getSortingStatus(i);
 				int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
 				boolean visible = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
 				p.setTableColumnPreferences(tableref, sorter.getColumnName(i), i, width, sortStatus, !visible);
-				log.debug("Column "+i+" table name: "+table.getColumnName(j)+", sorter name: "+sorter.getColumnName(i));
-				//if (!table.getColumnName(j).equals(sorter.getColumnName(i)))
-					//log.debug("Column "+i+" table name: "+table.getColumnName(j)+" sorter name: "+sorter.getColumnName(i));
-				if (visible)
-					j++;
 			}
 		} 
-
+		// standard table
 		else for (int i = 0; i <table.getColumnCount(); i++) {
 			int sortStatus = 0;
 			if (sorter != null)
@@ -315,7 +309,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			//log.debug("Column number " + i + " name " +columnName+" order "+order);
 			if (order == -1){
 				log.debug("Column name "+columnName+" not found in user preference file");
-				continue;
+				break;	// table structure has changed quit sort
 			}
 			if (i != order && order < table.getColumnCount()) {
 				table.moveColumn(i, order);

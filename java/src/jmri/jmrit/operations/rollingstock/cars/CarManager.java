@@ -32,10 +32,6 @@ import org.jdom.Element;
  */
 public class CarManager extends RollingStockManager {
 
-	// Cars frame table column widths (12), starts with Number column and ends
-	// with Edit
-	private int[] _carsTableColumnWidths = { 60, 60, 65, 35, 75, 65, 190, 190, 65, 50, 65, 70 };
-
 	 // stores Kernels
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>();
 
@@ -474,19 +470,6 @@ public class CarManager extends RollingStockManager {
 		return mias;
 	}
 
-	/**
-	 * 
-	 * @return get an array of table column widths for the trains frame
-	 */
-	public int[] getCarsFrameTableColumnWidths() {
-		return _carsTableColumnWidths.clone();
-	}
-
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2")
-	public void setCarsFrameTableColumnWidths(int[] tableColumnWidths) {
-		_carsTableColumnWidths = tableColumnWidths;
-	}
-
 	public void load(Element root) {
 		// new format using elements starting version 3.3.1
 		if (root.getChild(Xml.NEW_KERNELS) != null) {
@@ -515,28 +498,11 @@ public class CarManager extends RollingStockManager {
 			}
 		}
 
-		if (root.getChild(Xml.OPTIONS) != null) {
-			Element options = root.getChild(Xml.OPTIONS);
-			if (log.isDebugEnabled())
-				log.debug("ctor from element " + options);
-			// get Cars Table Frame attributes
-			Element e = options.getChild(Xml.CARS_OPTIONS);
-			if (e != null) {
-				org.jdom.Attribute a;
-				// backwards compatible TODO remove in 2013 after production
-				// release
-				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-					String[] widths = a.getValue().split(" ");
-					for (int i = 0; i < widths.length; i++) {
-						try {
-							_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
-						} catch (NumberFormatException ee) {
-							log.error("Number format exception when reading trains column widths");
-						}
-					}
-				}
-			}
-		}
+//		if (root.getChild(Xml.OPTIONS) != null) {
+//			Element options = root.getChild(Xml.OPTIONS);
+//			if (log.isDebugEnabled())
+//				log.debug("ctor from element " + options);
+//		}
 
 		if (root.getChild(Xml.CARS) != null) {
 			@SuppressWarnings("unchecked")

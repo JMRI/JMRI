@@ -42,6 +42,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	protected String _last = "";
 	protected boolean _locationUnknown = false;
 	protected boolean _outOfService = false;
+	protected boolean _selected = false;
 
 	protected Location _location = null;
 	protected Track _trackLocation = null;
@@ -841,6 +842,22 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public boolean isOutOfService() {
 		return _outOfService;
 	}
+	
+	public void setSelected(boolean selected) {
+		boolean old = _selected;
+		_selected = selected;
+		if (!old == selected)
+			firePropertyChange("selected", old ? "true" : "false", selected ? "true" // NOI18N
+					: "false"); // NOI18N
+	}
+
+	/**
+	 * 
+	 * @return true when rolling stock is selected
+	 */
+	public boolean isSelected() {
+		return _selected;
+	}
 
 	// normally overridden
 	public String getLoadPriority() {
@@ -972,6 +989,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			_locationUnknown = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.OUT_OF_SERVICE)) != null)
 			_outOfService = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.SELECTED)) != null)
+			_outOfService = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.DATE)) != null)
 			_last = a.getValue();
 		addPropertyChangeListeners();
@@ -1020,6 +1039,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		}
 		e.setAttribute(Xml.MOVES, Integer.toString(getMoves()));
 		e.setAttribute(Xml.DATE, getLastDate());
+		e.setAttribute(Xml.SELECTED, isSelected() ? Xml.TRUE : Xml.FALSE);
 		if (!getLastLocationId().equals(LOCATION_UNKNOWN))
 			e.setAttribute(Xml.LAST_LOCATION_ID, getLastLocationId());
 		if (!getTrainName().equals(""))
