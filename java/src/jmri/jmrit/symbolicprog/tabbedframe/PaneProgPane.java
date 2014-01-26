@@ -24,6 +24,7 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.DccAddressPanel;
 import jmri.jmrit.symbolicprog.FnMapPanel;
+import jmri.jmrit.symbolicprog.FnMapPanelESU;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.ValueEditor;
@@ -1247,12 +1248,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             }
             else if (name.equals("fnmapping")) {
-                FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
-                fnMapList.add(l); // remember for deletion
-                cs.gridwidth = GridBagConstraints.REMAINDER;
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.gridwidth = 1;
+                pickFnMapPanel(c, g, cs, modelElem);
             }
             else if (name.equals("dccaddress")) {
                 JPanel l = addDccAddressPanel(e);
@@ -1361,12 +1357,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 log.debug("end of building IndexedCvTable pane");
             }
             else if (name.equals("fnmapping")) {
-                FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
-                fnMapList.add(l); // remember for deletion
-                cs.gridheight = GridBagConstraints.REMAINDER;
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.gridheight = 1;
+                pickFnMapPanel(c, g, cs, modelElem);
             }
             else if (name.equals("dccaddress")) {
                 JPanel l = addDccAddressPanel(e);
@@ -1435,6 +1426,38 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("end of building CvTable pane");
     }
     
+    /**
+     * Pick an appropriate function map panel depending on model attribute.
+     *  <dl>
+     *  <dt>If attribute extFnsESU="yes":</dt>
+     *   <dd>Invoke FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model)</dd>
+     *  <dt>Otherwise:</dt>
+     *   <dd>Invoke FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model)</dd>
+     * </dl>
+     */
+    
+    void pickFnMapPanel(JPanel c, GridBagLayout g, GridBagConstraints cs, Element modelElem) {
+        boolean extFnsESU = false;
+        Attribute a = modelElem.getAttribute("extFnsESU");
+        try { if (a!=null) extFnsESU = (a.getValue()).equalsIgnoreCase("yes");}
+        catch (Exception ex) {log.error("error handling decoder's extFnsESU value");}        
+        if (extFnsESU) {
+            FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem);
+            fnMapListESU.add(l); // remember for deletion
+            cs.gridwidth = GridBagConstraints.REMAINDER;
+            g.setConstraints(l, cs);
+            c.add(l);
+            cs.gridwidth = 1;
+        } else {
+            FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
+            fnMapList.add(l); // remember for deletion
+            cs.gridwidth = GridBagConstraints.REMAINDER;
+            g.setConstraints(l, cs);
+            c.add(l);
+            cs.gridwidth = 1;
+        }
+}
+
     /**
      * Add the representation of a single variable.  The
      * variable is defined by a JDOM variable Element from the XML file.
@@ -1652,6 +1675,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /** list of fnMapping objects to dispose */
     ArrayList<FnMapPanel> fnMapList = new ArrayList<FnMapPanel>();
+    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<FnMapPanelESU>();
     /** list of JPanel objects to removeAll */
     ArrayList<JPanel> panelList = new ArrayList<JPanel>();
 

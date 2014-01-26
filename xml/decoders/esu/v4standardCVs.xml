@@ -107,13 +107,13 @@
       <variable label="Brake on DC, polarity same direction" CV="27" mask="XXXVXXXX" item="Advanced Group 2 Option 5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="RailCom Channel 1 Address Broadcast" CV="28" mask="XXXXXXXV" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 3" default="1">
+      <variable label="RailCom Channel 1 Address Broadcast" CV="28" mask="XXXXXXXV" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="RailCom Channel 2 Data Transmission" CV="28" mask="XXXXXXVX" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 4" default="1">
+      <variable label="RailCom Channel 2 Data Transmission" CV="28" mask="XXXXXXVX" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="RailCom Plus Auto Loco Recognition" CV="28" mask="VXXXXXXX" include="54400,54499,54800,54899,5489,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 2" default="1">
+      <variable label="RailCom Plus Auto Loco Recognition" CV="28" mask="VXXXXXXX" include="54400,54499,54800,54899,5489,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
@@ -140,7 +140,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Analog Conversion Mode</label>
       </variable>
-      <variable label="RailCom Enable" CV="29" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 1">
+      <variable label="RailCom Enable" CV="29" mask="XXXXVXXX" default="1" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
@@ -165,10 +165,10 @@
       <variable label="M4 Protocol" CV="47" mask="XXXXXXVX" default="0" include="" item="ESU V4 Extra Protocols Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 2">
+      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 3">
+      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
@@ -184,10 +184,10 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Compatibility Option 2">
+      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Compatibility Option 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Marklin Additional Addresses" CV="49" mask="VXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Miscellaneous Option 3">
+      <variable label="Marklin Additional Addresses" CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Miscellaneous Option 3">
         <enumVal>
           <enumChoice choice="No additional addresses" value="0"/>
           <enumChoice choice="Use 2 addresses" value="1"/>
@@ -264,7 +264,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Decoder Lock</label>
       </variable>
-      <variable label="Serial protocol for C-Sinus" CV="124" mask="XXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
+      <variable label="Serial protocol for C-Sinus" CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period">
@@ -297,15 +297,15 @@
       <variable label="ABC detection threshold" CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 6">
         <decVal min="4" max="32"/>
       </variable>
-      <variable label="Fan Speed Trim" CV="138" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 2">
+      <variable label="Fan Speed Trim" CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2">
         <decVal/>
         <label>Smoke Unit Minimum Steam Chuff Duration</label>
       </variable>
-      <variable label="Temperature Trim" CV="139" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 3">
+      <variable label="Temperature Trim" CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3">
         <decVal/>
         <label>Smoke Unit Maximum Steam Chuff Duration</label>
       </variable>
-      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 1">
+      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1">
         <decVal/>
         <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
       </variable>
@@ -318,7 +318,7 @@
       <variable label="Auto Uncoupling Push Time" CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2">
         <decVal/>
       </variable>
-      <variable label="Prime Mover Startup Delay if Virtual Drive Sound Enabled" CV="252" include="LPV4,LPV4DCC,LPmV4,LPmV4DCC" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
+      <variable label="Prime Mover Startup Delay if Virtual Drive Sound Enabled" CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
         <decVal/>
       </variable>
       <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1">

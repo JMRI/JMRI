@@ -51,7 +51,7 @@
   <version author="Dave Heap" version="9" lastUpdated="20140114"/>
  <decoder>
     <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
-      <model model="LokPilot V4.0" numOuts="112" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
+      <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
         <output name="97" label="not/used"/>
         <output name="98" label="not/used"/>
         <output name="99" label="not/used"/>
@@ -59,6 +59,7 @@
         <output name="101" label="not/used"/>
         <output name="102" label="not/used"/>
         <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
         <protocols>
@@ -67,7 +68,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot DCC V4.0" numOuts="112" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
+      <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
         <output name="97" label="not/used"/>
         <output name="98" label="not/used"/>
         <output name="99" label="not/used"/>
@@ -75,10 +76,11 @@
         <output name="101" label="not/used"/>
         <output name="102" label="not/used"/>
         <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC" -->
       </model>
-      <model model="LokPilot Micro V4.0" numOuts="112" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
+      <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
         <output name="97" label="not/used"/>
         <output name="98" label="not/used"/>
         <output name="99" label="not/used"/>
@@ -86,6 +88,7 @@
         <output name="101" label="not/used"/>
         <output name="102" label="not/used"/>
         <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, NEM 652, Next18" -->
         <protocols>
@@ -94,7 +97,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot Micro DCC V4.0" numOuts="112" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
+      <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
         <output name="97" label="not/used"/>
         <output name="98" label="not/used"/>
         <output name="99" label="not/used"/>
@@ -102,6 +105,7 @@
         <output name="101" label="not/used"/>
         <output name="102" label="not/used"/>
         <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, Next18" -->
       </model>

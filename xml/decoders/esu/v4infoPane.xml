@@ -1,7 +1,7 @@
-  <pane name="Read Me - IMPORTANT ">
+  <pane name="Read Me - IMPORTANT">
     <column>
       <label label=" "/>
-      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
       <label label=" "/>
       <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;"/>
       <label label=" "/>
