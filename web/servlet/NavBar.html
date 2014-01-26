@@ -1,0 +1,39 @@
+<!--
+Navigation bar fragment for JMRI Servlets
+Comments containing Java Formatter syntax (http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html)
+should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(String) for details
+-->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><!-- Railroad name %1$s --></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="context-"><a href="/">Home</a></li>
+                <li class="dropdown context-panel">
+                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown">Panels <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <!-- will populate with ajax query -->
+                        <li id="empty-panel-list" class="disabled"><a href="#">No Panels Loaded</a></li>
+                        <li class="divider context-panel-only"></li>
+                        <!-- <li class="dropdown-header context-panel-only">Nav header</li> -->
+                        <li class="context-panel-only"><a href="#" onclick="location.reload(true); return false;">Reload</a></li>
+                        <li id="panel-xml" class="context-panel-only"><a href="#">Panel XML</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown context-operations">
+                    <a href="/operations" class="dropdown-toggle" data-toggle="dropdown">Operations <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/operations/trains">Trains</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>

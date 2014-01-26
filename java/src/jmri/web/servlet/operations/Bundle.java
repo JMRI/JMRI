@@ -1,6 +1,6 @@
 // Bundle.java
 
-package jmri.web.servlet;
+package jmri.web.servlet.operations;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
@@ -24,9 +24,9 @@ import java.util.Locale;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class Bundle extends jmri.web.Bundle {
+public class Bundle extends jmri.web.servlet.Bundle {
 
-    private final static String name = "jmri.web.servlet.Bundle"; // no local resources
+    private final static String name = "jmri.web.servlet.operations.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -103,7 +103,7 @@ public class Bundle extends jmri.web.Bundle {
     static String getMessage(Locale locale, String key, Object ... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
-   
+
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }

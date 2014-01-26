@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is the Railroad Name -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+
+        <script src="/js/vendor/jquery-1.10.1.min.js"></script>
+        <script src="/js/vendor/bootstrap.min.js"></script>
+        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/vendor/jquery.activity-indicator-1.0.0.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/operations.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#activity-indicator').activity();
+            });
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="container">
+
+                <div id="activity-alert" class="alert alert-info alert-dismissable">Getting trains...</div>
+                <div id="warning-no-trains" class="alert alert-warning hidden">No trains defined to operate.</div>
+                <div id="warning-no-trains-built" class="alert alert-warning hidden">No built trains to operate.</div>
+                <div id="error-listing-trains" class="alert alert-error hidden">Error listing trains:<br></div>
+
+                <table id="trains" class="table table table-hover table-responsive hidden">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Lead Engine</th>
+                        <th>Departs</th>
+                        <th class='hideable'>Time</th>
+                        <th>Status</th>
+                        <th class='hideable'>Current</th>
+                        <th class='hideable'>Terminates</th>
+                        <th class='hideable'>Route</th>
+                    </tr>
+                    </thead>
+                    <tbody><!-- list of trains goes here --></tbody>
+                </table>
+
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <footer>
+            <div class="container">
+                <p class="text-muted">&copy; <a href="http://jmri.org">JMRI</a> Community 1997-2014</p>
+            </div>
+        </footer>
+    </body>
+</html>

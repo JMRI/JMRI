@@ -66,6 +66,7 @@ import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonServerManager;
 import jmri.jmris.json.JsonUtil;
+import jmri.web.servlet.ServletHelper;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.slf4j.Logger;
@@ -173,14 +174,12 @@ public class JsonServlet extends WebSocketServlet {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setDateHeader("Date", now.getTime()); // NOI18N
-        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
-        response.setDateHeader("Expires", now.getTime()); // NOI18N
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             response.setContentType("application/json"); // NOI18N
+            ServletHelper.getHelper().setNonCachingHeaders(response);
             String name = (rest.length > 2) ? rest[2] : null;
             JsonNode reply;
             try {
@@ -296,9 +295,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setDateHeader("Date", now.getTime()); // NOI18N
-        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
-        response.setDateHeader("Expires", now.getTime()); // NOI18N
+        ServletHelper.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
@@ -391,9 +388,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setDateHeader("Date", now.getTime()); // NOI18N
-        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
-        response.setDateHeader("Expires", now.getTime()); // NOI18N
+        ServletHelper.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
@@ -466,9 +461,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setDateHeader("Date", now.getTime()); // NOI18N
-        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
-        response.setDateHeader("Expires", now.getTime()); // NOI18N
+        ServletHelper.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
