@@ -990,7 +990,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		if ((a = e.getAttribute(Xml.OUT_OF_SERVICE)) != null)
 			_outOfService = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.SELECTED)) != null)
-			_outOfService = a.getValue().equals(Xml.TRUE);
+			_selected = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.DATE)) != null)
 			_last = a.getValue();
 		addPropertyChangeListeners();
