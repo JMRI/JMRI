@@ -32,6 +32,7 @@ import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileManagerDialog;
 import jmri.swing.AboutDialog;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
@@ -367,16 +368,11 @@ public abstract class Apps3 extends AppsBase {
             }
         }
         try {
-            // GUI should use ProfileManagerDialog.getStartingProfile here
-            if (ProfileManager.getStartingProfile() != null) {
-                // Manually setting the configFilename property since calling
-                // Apps.setConfigFilename() does not reset the system property
-                System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-                log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
-            } else {
-                log.error("Specify profile to use as command line argument.");
-                log.error("Profiles not configurable. Using fallback per-application configuration.");
-            }
+            ProfileManagerDialog.getStartingProfile(sp);
+            // Manually setting the configFilename property since calling
+            // Apps.setConfigFilename() does not reset the system property
+            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
+            log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
