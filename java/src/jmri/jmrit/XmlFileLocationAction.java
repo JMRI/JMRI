@@ -43,6 +43,8 @@ public class XmlFileLocationAction extends AbstractAction {
         final String settings = FileUtil.getPreferencesPath();
         final String scripts = FileUtil.getScriptsPath();
         final String prog = System.getProperty("user.dir");
+        final String log = System.getProperty("jmri.log.path");
+
         String configName = System.getProperty("org.jmri.Apps.configFilename");
         if (!new File(configName).isAbsolute()) {
             // must be relative, but we want it to 
@@ -145,6 +147,18 @@ public class XmlFileLocationAction extends AbstractAction {
             }
         });
 
+        b = new JButton("Open Log Files Location");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    Desktop.getDesktop().open(new java.io.File(log));
+                } catch (java.io.IOException e) {
+                }
+            }
+        });
+
         JScrollPane scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
 
@@ -160,31 +174,26 @@ public class XmlFileLocationAction extends AbstractAction {
 
         textPane.append("Settings Location: " + settings + "\n");
 
+        textPane.append("Current Config file: " + configName + "\n");
+
         textPane.append("Scripts Location: " + scripts + "\n");
 
         textPane.append("Program Location: " + prog + "\n");
 
-        textPane.append("Current Config file: " + configName + "\n");
+        textPane.append("Log Files Location: "+ log + "\n");
 
-        addLogFiles(textPane);
+        addLogFiles(textPane, log);
 
         frame.pack();
         frame.setVisible(true);
     }
 
-    void addLogFile(JTextArea pane, String filename) {
-        File file = new File(filename);
-        if (file.exists()) {
-            pane.append("Log file: " + file.getAbsolutePath() + "\n");
-        }
-    }
-
-    void addLogFiles(JTextArea pane) {
-        File dir = new File(System.getProperty("user.dir"));
+    void addLogFiles(JTextArea pane, String logDir) {
+        File dir = new File(logDir);
         String[] files = dir.list();
         for (int i = 0; i < files.length; i++) {
             if (files[i].indexOf(".log") != -1) {
-                addLogFile(pane, files[i]);
+                pane.append(logDir + files[i] + "\n");
             }
         }
     }
