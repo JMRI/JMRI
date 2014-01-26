@@ -70,9 +70,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new File(user));
                 } catch (IOException e) {
-                    log.error("Error when opening user files location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening user files location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening user files location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening user files location: " + e);
                 }
             }
         });
@@ -84,9 +84,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(roster));
                 } catch (java.io.IOException e) {
-                    log.error("Error when opening roster location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening roster location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening roster location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening roster location: " + e);
                 }
             }
         });
@@ -98,9 +98,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(profile));
                 } catch (java.io.IOException e) {
-                    log.error("Error when opening profile location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening profile location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening profile location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening profile location: " + e);
                 }
             }
         });
@@ -112,9 +112,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(settings));
                 } catch (java.io.IOException e) {
-                    log.error("Error when opening settings location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening settings location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening settings location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening settings location: " + e);
                 }
             }
         });
@@ -126,9 +126,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(scripts));
                 } catch (java.io.IOException e) {
-                    log.error("Error when opening scripts location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening scripts location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening scripts location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening scripts location: " + e);
                 }
             }
         });
@@ -140,9 +140,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(prog));
                 } catch (java.io.IOException e) {
-                    log.error("Error when opening program location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening program location: " + e);
                 } catch (UnsupportedOperationException e) {
-                    log.error("Error when opening program location: " + e);
+                    XmlFileLocationAction.log.error("Error when opening program location: " + e);
                 }
             }
         });
@@ -155,6 +155,9 @@ public class XmlFileLocationAction extends AbstractAction {
                 try {
                     Desktop.getDesktop().open(new java.io.File(log));
                 } catch (java.io.IOException e) {
+                    XmlFileLocationAction.log.error("Error when opening log files location: " + e);
+                } catch (UnsupportedOperationException e) {
+                    XmlFileLocationAction.log.error("Error when opening log files location: " + e);
                 }
             }
         });
