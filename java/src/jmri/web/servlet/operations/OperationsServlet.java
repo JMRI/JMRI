@@ -3,7 +3,6 @@ package jmri.web.servlet.operations;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +59,7 @@ public class OperationsServlet extends HttpServlet {
     }
 
     protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("listing trains");
         if (JSON.JSON.equals(request.getParameter("format"))) {
-            log.debug("json format");
             response.setContentType("application/json"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
             try {
@@ -72,21 +69,30 @@ public class OperationsServlet extends HttpServlet {
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
             }
         } else if ("tr".equals(request.getParameter("format"))) {
-            log.debug("tr format");
             response.setContentType("text/html"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
+            String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsTableRow.html")));
             for (Train train : TrainManager.instance().getTrainsByNameList()) {
                 List<Car> cars = CarManager.instance().getByTrainDestinationList(train);
                 if (showAll || !cars.isEmpty()) {
-                    html.append(this.getTableRow(train, request.getLocale()));
+                    html.append(String.format(request.getLocale(), format,
+                            train.getName(),
+                            train.getDescription(),
+                            train.getLeadEngine() != null ? train.getLeadEngine().toString() : "",
+                            train.getTrainDepartsName(),
+                            train.getDepartureTime(),
+                            train.getStatus(),
+                            train.getCurrentLocationName(),
+                            train.getTrainTerminatesName(),
+                            train.getRoute(),
+                            train.getId()
+                    ));
                 }
             }
-            log.debug(html.toString());
             response.getWriter().print(html.toString());
         } else {
-            log.debug("full page");
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
@@ -106,29 +112,6 @@ public class OperationsServlet extends HttpServlet {
 
     private void processConductor(String id, HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private String getTableRow(Train train, Locale locale) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<tr>"); // NOI18N
-        sb.append("<td><div class=\"btn-group\">"); // NOI18N
-        sb.append("<button type=\"button\" class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=\"dropdown\">"); // NOI18N
-        sb.append(train.getName()).append(" <span class=\"caret\"></span>"); // NOI18N
-        sb.append("</button>"); // NOI18N
-        sb.append("<ul class=\"dropdown-menu\" role=\"menu\">"); // NOI18N
-        sb.append("<li><a href=\"/operations/manifest/").append(train.getId()).append("\">").append(Bundle.getMessage(locale, "Manifest")).append("</a></li>"); // NOI18N
-        sb.append("<li><a href=\"/operations/conductor/").append(train.getId()).append("\">").append(Bundle.getMessage(locale, "Conductor")).append("</a></li>"); // NOI18N
-        sb.append("</ul></td>"); // NOI18N
-        sb.append("<td>").append(train.getDescription()).append("</td>"); // NOI18N
-        sb.append("<td>").append(train.getLeadEngine() != null ? train.getLeadEngine().toString() : "").append("</td>"); // NOI18N
-        sb.append("<td>").append(train.getTrainDepartsName()).append("</td>"); // NOI18N
-        sb.append("<td class='hideable'>").append(train.getDepartureTime()).append("</td>"); // NOI18N
-        sb.append("<td>").append(train.getStatus()).append("</td>");
-        sb.append("<td class='hideable'>").append(train.getCurrentLocationName()).append("</td>"); // NOI18N
-        sb.append("<td class='hideable'>").append(train.getTrainTerminatesName()).append("</td>"); // NOI18N
-        sb.append("<td class='hideable'>").append(train.getRoute()).append("</td>"); // NOI18N
-        sb.append("</tr>");
-        return sb.toString();
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
