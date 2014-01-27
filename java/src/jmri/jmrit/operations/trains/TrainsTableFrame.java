@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -26,6 +28,8 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 //import javax.swing.table.TableColumnModel;
+
+
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -45,7 +49,7 @@ import jmri.util.com.sun.TableSorter;
  * Frame for adding and editing the train roster for operations.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014
  * @version $Revision$
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -65,6 +69,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	TableSorter sorter;
 	JTable trainsTable;
 	JScrollPane trainsPane;
+	
+	// labels
+	JLabel numTrains = new JLabel();
+	JLabel textTrains = new JLabel(Bundle.getMessage("Trains").toLowerCase());
+	JLabel textSep1 = new JLabel("      ");
 
 	// radio buttons
 	JRadioButton showTime = new JRadioButton(Bundle.getMessage("Time"));
@@ -166,7 +175,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// row 2
 		JPanel addTrain = new JPanel();
 		addTrain.setBorder(BorderFactory.createTitledBorder(""));
+		addTrain.add(numTrains);
+		addTrain.add(textTrains);
+		addTrain.add(textSep1);
 		addTrain.add(addButton);
+		
+		numTrains.setText(Integer.toString(trainManager.getNumEntries()));
 
 		JPanel select = new JPanel();
 		select.setBorder(BorderFactory.createTitledBorder(""));
@@ -618,6 +632,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			updateSwitchListButton();
 		if (e.getPropertyName().equals(TrainManager.GENERATE_CSV_CHANGED_PROPERTY))
 			updateRunAndOpenButtons();
+		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
+			numTrains.setText(Integer.toString(trainManager.getNumEntries()));
+		}
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());

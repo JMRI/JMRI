@@ -152,17 +152,28 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// row 2
 		JPanel cp2 = new JPanel();
-		cp2.setBorder(BorderFactory.createTitledBorder(""));
+		cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
+		
+		JPanel cp2Add = new JPanel();
+		cp2Add.setBorder(BorderFactory.createTitledBorder(""));
+		cp2Add.add(numCars);
+		cp2Add.add(textCars);
+		cp2Add.add(textSep1);
+		cp2Add.add(addButton);
+		cp2.add(cp2Add);
+		
+		JPanel cp2Find = new JPanel();
+		cp2Find.setBorder(BorderFactory.createTitledBorder(""));
 		findButton.setToolTipText(Bundle.getMessage("findCar"));
 		findCarTextBox.setToolTipText(Bundle.getMessage("findCar"));
+		cp2Find.add(findButton);
+		cp2Find.add(findCarTextBox);
+		cp2.add(cp2Find);
 
-		cp2.add(numCars);
-		cp2.add(textCars);
-		cp2.add(textSep1);
-		cp2.add(addButton);
-		cp2.add(saveButton);
-		cp2.add(findButton);
-		cp2.add(findCarTextBox);
+		JPanel cp2Save = new JPanel();
+		cp2Save.setBorder(BorderFactory.createTitledBorder(""));
+		cp2Save.add(saveButton);
+		cp2.add(cp2Save);
 
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();

@@ -83,6 +83,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			log.debug("TrainManager returns instance " + _instance);
 		return _instance;
 	}
+	
+	/**
+	 * Get the number of items in the roster
+	 * 
+	 * @return Number of trains in the roster
+	 */
+	public int getNumEntries() {
+		return _trainHashTable.size();
+	}
 
 	/**
 	 * 
