@@ -343,23 +343,22 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                     inPackage = null;
             	}  else { //in.readLine() IS null
-                	log.debug("null readLine() from socket ");
+                	consecutiveErrors += 1;
+                	log.error("null readLine() from socket, consecutive error # {}", consecutiveErrors);
                 }
 
             } catch (IOException exa){
-                if (keepReading) {
                 	consecutiveErrors += 1;
-                	log.error("readLine from device failed, consecutive error # " + consecutiveErrors);
-                	if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
-                		keepReading = false;
-                	}
-                }
+                	log.error("readLine from device failed, consecutive error # {}", consecutiveErrors);
             } catch (IndexOutOfBoundsException exb){
                 log.warn("Bad message \""+inPackage+"\" from device: "+getName());
             }
 //            try{    //  Some layout connections cannot handle rapid inputs
 //                Thread.sleep(20);
 //            } catch (java.lang.InterruptedException ex){}
+        	if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
+        		keepReading = false;
+        	}
         } while (keepReading);	//	'til we tell it to stop
         log.debug("Ending thread run loop for device: "+getName());
         closeThrottles();
