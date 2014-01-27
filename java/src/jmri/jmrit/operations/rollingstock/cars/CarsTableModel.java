@@ -162,9 +162,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 	}
 
-	public void setSelectVisible(boolean visible) {
+	public void toggleSelectVisible() {
 		XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), visible);
+		boolean isVisible = tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
+		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !isVisible);
 	}
 
 	String _roadNumber = "";

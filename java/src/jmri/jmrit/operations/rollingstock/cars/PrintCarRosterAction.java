@@ -378,7 +378,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				cpof.setTitle(Bundle.getMessage("MenuItemPreview"));
 			else
 				cpof.setTitle(Bundle.getMessage("MenuItemPrint"));
-			sort.setText(panel.carsModel.getSortByName());
+			sort.setText(panel.carsTableModel.getSortByName());
 			cars = panel.getSortByList();
 			printSpace.setEnabled(panel.sortByLocation.isSelected());
 			printPage.setEnabled(panel.sortByLocation.isSelected());

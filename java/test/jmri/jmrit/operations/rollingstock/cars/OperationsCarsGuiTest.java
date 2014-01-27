@@ -102,7 +102,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 	
 		// default is sort by number
-		List<RollingStock> cars = ctf.carsModel.getSelectedCarList();
+		List<RollingStock> cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by number list", c1.getId(), cars.get(0).getId());
 		Assert.assertEquals("2nd car in sort by number list", c4.getId(), cars.get(1).getId());
 		Assert.assertEquals("3rd car in sort by number list", c2.getId(), cars.get(2).getId());
@@ -111,7 +111,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// now sort by built date
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByBuilt ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by built list", c5, cars.get(0));
 		Assert.assertEquals("2nd car in sort by built list", c4, cars.get(1));
 		Assert.assertEquals("3rd car in sort by built list", c2, cars.get(2));
@@ -120,7 +120,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// now sort by color
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByColor ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by color list", c4.getId(), cars.get(0).getId());
 		Assert.assertEquals("2nd car in sort by color list", c2.getId(), cars.get(1).getId());
 		Assert.assertEquals("3rd car in sort by color list", c5.getId(), cars.get(2).getId());
@@ -128,7 +128,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by color list", c3.getId(), cars.get(4).getId());
 
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByDestination ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by destination list", c2, cars.get(0));
 		Assert.assertEquals("2nd car in sort by destination list", c4, cars.get(1));
 		Assert.assertEquals("3rd car in sort by destination list", c1, cars.get(2));
@@ -140,7 +140,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// now sort by load
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLoad ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by load list", c2, cars.get(0));
 		Assert.assertEquals("2nd car in sort by load list", c4, cars.get(1));
 		Assert.assertEquals("3rd car in sort by load list", c1, cars.get(2));
@@ -149,7 +149,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// now sort by location
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLocation ) );
-        cars = ctf.carsModel.getSelectedCarList();
+        cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by location list", c2, cars.get(0));
 		Assert.assertEquals("2nd car in sort by location list", c3, cars.get(1));
 		Assert.assertEquals("3rd car in sort by location list", c5, cars.get(2));
@@ -158,7 +158,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	
 		// now sort by moves
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByMoves ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by move list", c5, cars.get(0));
 		Assert.assertEquals("2nd car in sort by move list", c4, cars.get(1));
 		Assert.assertEquals("3rd car in sort by move list", c3, cars.get(2));
@@ -167,7 +167,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// test sort by number again
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByNumber ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by number list 2", c1, cars.get(0));
 		Assert.assertEquals("2nd car in sort by number list 2", c4, cars.get(1));
 		Assert.assertEquals("3rd car in sort by number list 2", c2, cars.get(2));
@@ -176,7 +176,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// test sort by owner
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByOwner ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by owner list", c4, cars.get(0));
 		Assert.assertEquals("2nd car in sort by owner list", c3, cars.get(1));
 		Assert.assertEquals("3rd car in sort by owner list", c2, cars.get(2));
@@ -185,7 +185,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// test sort by rfid
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRfid ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by rfid list", c5, cars.get(0));
 		Assert.assertEquals("2nd car in sort by rfid list", c2, cars.get(1));
 		Assert.assertEquals("3rd car in sort by rfid list", c1, cars.get(2));
@@ -194,7 +194,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// test sort by road
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRoad ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by road list", c3, cars.get(0));
 		Assert.assertEquals("2nd car in sort by road list", c1, cars.get(1));
 		Assert.assertEquals("3rd car in sort by road list", c5, cars.get(2));
@@ -206,7 +206,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// test sort by type
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByType ) );
-		cars = ctf.carsModel.getSelectedCarList();
+		cars = ctf.carsTableModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by type list", c2, cars.get(0));
 		Assert.assertEquals("2nd car in sort by type list", c1, cars.get(1));
 		Assert.assertEquals("3rd car in sort by type list", c5, cars.get(2));
