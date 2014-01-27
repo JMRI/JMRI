@@ -271,7 +271,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
                 Thread t = new Thread(device);
                 device.addDeviceListener(this);
-                log.debug("Starting DeviceListener thread");
+                t.setName("WiThrottleUIDeviceServer"); // NOI18N
+                log.debug("Starting WiThrottleUIDeviceServer thread");
                 t.start();
             } catch (IOException e3) {
                 if (isListen) {
@@ -409,9 +410,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                 if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
                     this.portLabel.setText(addr.getHostName());
                     this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
+    				log.debug("Published IPv4 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 } else {
                     this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
                     this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
+    				log.debug("Published IPv6 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 }
             } catch (NullPointerException ex) {
                 log.error("Address is invalid: {}", ex.getLocalizedMessage());

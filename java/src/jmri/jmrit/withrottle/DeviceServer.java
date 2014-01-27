@@ -342,6 +342,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     }   //End of charAt(0) switch block
 
                     inPackage = null;
+            	}  else { //in.readLine() IS null
+                	log.debug("null readLine() from socket ");
                 }
 
             } catch (IOException exa){
