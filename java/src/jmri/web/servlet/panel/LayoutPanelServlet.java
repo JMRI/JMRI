@@ -74,6 +74,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
+                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
+                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                            }
                             parsePortableURIs(e);
                             panel.addContent(e);
                         }
