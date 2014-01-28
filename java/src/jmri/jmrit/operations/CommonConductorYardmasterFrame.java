@@ -348,9 +348,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	 * "rollingStock" with the prefix "p", "s" or "m" and the car's unique id.
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
-		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
-		for (int i = 0; i < trackIds.size(); i++) {
-			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+		for (Track track : tracks) {
 			List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
 			List<Car> carList = carManager.getByTrainDestinationList(_train);
 			// block pick ups by destination

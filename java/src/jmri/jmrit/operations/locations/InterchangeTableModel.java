@@ -38,8 +38,7 @@ public class InterchangeTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new InterchangeEditFrame();
-		String interchangeId = tracksList.get(row);
-		Track interchange = _location.getTrackById(interchangeId);
+		Track interchange = tracksList.get(row);
 		tef.initComponents(_location, interchange);
 		tef.setTitle(Bundle.getMessage("EditInterchange"));
 		focusEditFrame = true;

@@ -38,8 +38,7 @@ public class SpurTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new SpurEditFrame();
-		String spurId = tracksList.get(row);
-		Track spur = _location.getTrackById(spurId);
+		Track spur = tracksList.get(row);
 		tef.initComponents(_location, spur);
 		tef.setTitle(Bundle.getMessage("EditSpur"));
 		focusEditFrame = true;

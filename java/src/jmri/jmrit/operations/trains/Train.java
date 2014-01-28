@@ -1413,9 +1413,8 @@ public class Train implements java.beans.PropertyChangeListener {
 											+ car.getDestinationName());
 								// determine if there's a track that is willing to accept this car
 								String status = "";
-								List<String> trackIds = rldest.getLocation().getTrackIdsByIdList();
-								for (int i = 0; i < trackIds.size(); i++) {
-									Track track = rldest.getLocation().getTrackById(trackIds.get(i));
+								List<Track> tracks = rldest.getLocation().getTrackList();
+								for (Track track : tracks) {
 									if (((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher())
 											|| !track.acceptsDropTrain(this))
 										continue;

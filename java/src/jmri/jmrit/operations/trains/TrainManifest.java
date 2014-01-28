@@ -236,9 +236,8 @@ public class TrainManifest extends TrainCommon {
 	private void printTrackComments(PrintWriter fileOut, RouteLocation rl, List<Car> carList) {
 		Location location = rl.getLocation();
 		if (location != null) {
-			List<String> trackIds = location.getTrackIdsByNameList(null);
-			for (int i = 0; i < trackIds.size(); i++) {
-				Track track = location.getTrackById(trackIds.get(i));
+			List<Track> tracks = location.getTrackByNameList(null);
+			for (Track track : tracks) {
 				// any pick ups or set outs to this track?
 				boolean pickup = false;
 				boolean setout = false;

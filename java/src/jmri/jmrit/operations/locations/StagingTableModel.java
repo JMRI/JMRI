@@ -38,8 +38,7 @@ public class StagingTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new StagingEditFrame();
-		String stagingId = tracksList.get(row);
-		Track staging = _location.getTrackById(stagingId);
+		Track staging = tracksList.get(row);
 		tef.initComponents(_location, staging);
 		tef.setTitle(Bundle.getMessage("EditStaging"));
 		focusEditFrame = true;

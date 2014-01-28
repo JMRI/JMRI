@@ -200,7 +200,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { train.getRoute().getName() }));
 			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			List<String> slStage = l.getTrackIdsByMovesList(Track.STAGING);
+			List<Track> slStage = l.getTrackByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i != 0 && i != routeList.size() - 1) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocStaging"), new Object[] { rl
 						.getName() }));
@@ -310,7 +310,7 @@ public class TrainBuilder extends TrainCommon {
 
 		// does train terminate into staging?
 		terminateStageTrack = null;
-		List<String> stagingTracksTerminate = terminateLocation.getTrackIdsByMovesList(Track.STAGING);
+		List<Track> stagingTracksTerminate = terminateLocation.getTrackByMovesList(Track.STAGING);
 		if (stagingTracksTerminate.size() > 0) {
 			addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"), new Object[] {
@@ -320,7 +320,7 @@ public class TrainBuilder extends TrainCommon {
 				startTime = new Date(); // reset build time
 			} else
 				for (int i = 0; i < stagingTracksTerminate.size(); i++) {
-					terminateStageTrack = terminateLocation.getTrackById(stagingTracksTerminate.get(i));
+					terminateStageTrack = stagingTracksTerminate.get(i);
 					if (checkTerminateStagingTrack(terminateStageTrack)) {
 						addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStagingAvail"),
 								new Object[] { terminateStageTrack.getName(), terminateLocation.getName() }));
@@ -347,7 +347,7 @@ public class TrainBuilder extends TrainCommon {
 
 		// determine if train is departing staging
 		departStageTrack = null;
-		List<String> stagingTracks = departLocation.getTrackIdsByMovesList(Track.STAGING);
+		List<Track> stagingTracks = departLocation.getTrackByMovesList(Track.STAGING);
 		if (stagingTracks.size() > 0) {
 			addLine(buildReport, THREE, BLANK_LINE); // add line when in normal report mode
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"), new Object[] {
@@ -369,7 +369,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			} else
 				for (int i = 0; i < stagingTracks.size(); i++) {
-					departStageTrack = departLocation.getTrackById(stagingTracks.get(i));
+					departStageTrack = stagingTracks.get(i);
 					addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingHas"),
 							new Object[] { departStageTrack.getName(),
 									Integer.toString(departStageTrack.getNumberEngines()),
@@ -597,18 +597,19 @@ public class TrainBuilder extends TrainCommon {
 	 * @return The departure track the user selected.
 	 */
 	private Track PromptFromStagingDialog() {
-		List<String> trackIds = departLocation.getTrackIdsByNameList(null);
-		List<String> validTrackIds = new ArrayList<String>();
+		List<Track> tracksIn = departLocation.getTrackList();
+		List<Track> validTracks = new ArrayList<Track>();
 		// only show valid tracks
-		for (int i = 0; i < trackIds.size(); i++) {
-			Track track = departLocation.getTrackById(trackIds.get(i));
+		for (Track track : tracksIn) {
 			if (checkDepartureStagingTrack(track))
-				validTrackIds.add(trackIds.get(i));
+				validTracks.add(track);
 		}
-		Object[] tracks = new Object[validTrackIds.size()];
-		for (int i = 0; i < validTrackIds.size(); i++)
-			tracks[i] = departLocation.getTrackById(validTrackIds.get(i));
-		if (validTrackIds.size() > 1) {
+		if (validTracks.size() > 1) {
+			// need an object array for dialog window
+			Object[] tracks = new Object[validTracks.size()];
+			for (int i = 0; i < validTracks.size(); i++)
+				tracks[i] = validTracks.get(i);
+			
 			Track selected = (Track) JOptionPane.showInputDialog(null, MessageFormat.format(Bundle
 					.getMessage("TrainDepartingStaging"), new Object[] { train.getName(), departLocation.getName() }),
 					Bundle.getMessage("SelectDepartureTrack"), JOptionPane.QUESTION_MESSAGE, null, tracks, null);
@@ -616,8 +617,8 @@ public class TrainBuilder extends TrainCommon {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildUserSelectedDeparture"),
 						new Object[] { selected.getName(), selected.getLocation().getName() }));
 			return selected;
-		} else if (validTrackIds.size() == 1)
-			return (Track) tracks[0];
+		} else if (validTracks.size() == 1)
+			return validTracks.get(0);
 		return null; // no tracks available
 	}
 
@@ -627,18 +628,18 @@ public class TrainBuilder extends TrainCommon {
 	 * @return The arrival track selected by the user.
 	 */
 	private Track PromptToStagingDialog() {
-		List<String> trackIds = terminateLocation.getTrackIdsByNameList(null);
-		List<String> validTrackIds = new ArrayList<String>();
+		List<Track> tracksIn = terminateLocation.getTrackByNameList(null);
+		List<Track> validTracks = new ArrayList<Track>();
 		// only show valid tracks
-		for (int i = 0; i < trackIds.size(); i++) {
-			Track track = terminateLocation.getTrackById(trackIds.get(i));
+		for (Track track : tracksIn) {
 			if (checkTerminateStagingTrack(track))
-				validTrackIds.add(trackIds.get(i));
+				validTracks.add(track);
 		}
-		Object[] tracks = new Object[validTrackIds.size()];
-		for (int i = 0; i < validTrackIds.size(); i++)
-			tracks[i] = terminateLocation.getTrackById(validTrackIds.get(i));
-		if (validTrackIds.size() > 1) {
+		if (validTracks.size() > 1) {
+			Object[] tracks = new Object[validTracks.size()];
+			for (int i = 0; i < validTracks.size(); i++)
+				tracks[i] = validTracks.get(i);
+			// need an object array for dialog window
 			Track selected = (Track) JOptionPane.showInputDialog(null, MessageFormat.format(Bundle
 					.getMessage("TrainTerminatingStaging"),
 					new Object[] { train.getName(), terminateLocation.getName() }), Bundle
@@ -647,8 +648,8 @@ public class TrainBuilder extends TrainCommon {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildUserSelectedArrival"),
 						new Object[] { selected.getName(), selected.getLocation().getName() }));
 			return selected;
-		} else if (validTrackIds.size() == 1)
-			return (Track) tracks[0];
+		} else if (validTracks.size() == 1)
+			return validTracks.get(0);
 		return null; // no tracks available
 	}
 
@@ -878,13 +879,13 @@ public class TrainBuilder extends TrainCommon {
 			// find a destination track for this engine
 		} else {
 			Location destination = rld.getLocation();
-			List<String> destTracks = destination.getTrackIdsByMovesList(null);
+			List<Track> destTracks = destination.getTrackByMovesList(null);
 			if (destTracks.size() == 0) {
 				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildNoTracksAtDestination"),
 						new Object[] { rld.getName() }));
 			}
 			for (int s = 0; s < destTracks.size(); s++) {
-				Track track = destination.getTrackById(destTracks.get(s));
+				Track track = destTracks.get(s);
 				if (!checkDropTrainDirection(engine, rld, track))
 					continue;
 				String status = engine.testDestination(destination, track);
@@ -3075,12 +3076,12 @@ public class TrainBuilder extends TrainCommon {
 					}
 					// no staging at this location, now find a destination track this this car
 				} else {
-					List<String> tracks = car.getDestination().getTrackIdsByMovesList(null);
+					List<Track> tracks = car.getDestination().getTrackByMovesList(null);
 					addLine(buildReport, SEVEN, MessageFormat
 							.format(Bundle.getMessage("buildSearchForTrack"), new Object[] { tracks.size(),
 									car.getDestinationName(), car.toString(), car.getLoadName() }));
 					for (int s = 0; s < tracks.size(); s++) {
-						Track testTrack = car.getDestination().getTrackById(tracks.get(s));
+						Track testTrack = tracks.get(s);
 						// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 						// dropping to the same track isn't allowed
 						if (testTrack == car.getTrack()) {
@@ -3374,9 +3375,9 @@ public class TrainBuilder extends TrainCommon {
 				}
 				// no staging track assigned, start track search
 			} else {
-				List<String> tracks = testDestination.getTrackIdsByMovesList(null);
+				List<Track> tracks = testDestination.getTrackByMovesList(null);
 				for (int s = 0; s < tracks.size(); s++) {
-					Track testTrack = testDestination.getTrackById(tracks.get(s));
+					Track testTrack = tracks.get(s);
 					// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 					// dropping to the same track isn't allowed
 					if (testTrack == car.getTrack() && !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {

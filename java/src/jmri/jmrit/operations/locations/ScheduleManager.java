@@ -310,9 +310,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 		List<Location> locations = manager.getLocationsByNameList();
 		for (int j = 0; j < locations.size(); j++) {
 			Location location = locations.get(j);
-			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
-			for (int k = 0; k < spurs.size(); k++) {
-				Track spur = location.getTrackById(spurs.get(k));
+			List<Track> spurs = location.getTrackByNameList(Track.SPUR);
+			for (Track spur : spurs) {
 				if (spur.getScheduleId().equals(schedule.getId())) {
 					LocationTrackPair ltp = new LocationTrackPair(location, spur);
 					box.addItem(ltp);

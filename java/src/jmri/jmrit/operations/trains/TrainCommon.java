@@ -176,11 +176,10 @@ public class TrainCommon {
 	 */
 	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<Car> carList, List<RouteLocation> routeList,
 			RouteLocation rl, int r, boolean isManifest) {
-		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
 		clearUtilityCarTypes(); // list utility cars by quantity
-		for (int i = 0; i < trackIds.size(); i++) {
-			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+		for (Track track : tracks) {
 			if (trackNames.contains(splitString(track.getName())))
 				continue;
 			trackNames.add(splitString(track.getName())); // use a track name once
@@ -244,11 +243,10 @@ public class TrainCommon {
 			List<RouteLocation> routeList, RouteLocation rl, int r, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
-		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
 		clearUtilityCarTypes(); // list utility cars by quantity
-		for (int i = 0; i < trackIds.size(); i++) {
-			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+		for (Track track : tracks) {
 			if (trackNames.contains(splitString(track.getName())))
 				continue;
 			trackNames.add(splitString(track.getName())); // use a track name once

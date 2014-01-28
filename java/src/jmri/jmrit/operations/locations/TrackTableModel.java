@@ -30,7 +30,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	public static final int SORTBYID = 2;
 
 	protected Location _location;
-	protected List<String> tracksList = new ArrayList<String>();
+	protected List<Track> tracksList = new ArrayList<Track>();
 	protected int _sort = SORTBYNAME;
 	protected String _trackType = "";
 	protected boolean _showPoolColumn = false;
@@ -72,11 +72,10 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		// first, remove listeners from the individual objects
 		removePropertyChangeTracks();
 
-		tracksList = _location.getTrackIdsByNameList(_trackType);
+		tracksList = _location.getTrackByNameList(_trackType);
 		// and add them back in
-		for (int i = 0; i < tracksList.size(); i++) {
-			// log.debug("tracks ids: " + tracksList.get(i));
-			_location.getTrackById(tracksList.get(i)).addPropertyChangeListener(this);
+		for (Track track : tracksList) {
+			track.addPropertyChangeListener(this);
 		}
 		if (_location.hasPools() && !_showPoolColumn) {
 			_showPoolColumn = true;
@@ -249,8 +248,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		}
 		if (row >= tracksList.size())
 			return "ERROR row " + row; // NOI18N
-		String tracksId = tracksList.get(row);
-		Track track = _location.getTrackById(tracksId);
+		Track track = tracksList.get(row);
 		if (track == null)
 			return "ERROR track unknown " + row; // NOI18N
 		switch (col) {
@@ -285,7 +283,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		case DESTINATION_COLUMN: {
 			int length = track.getDestinationListSize();
 			if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
-				length = LocationManager.instance().getLocationsByIdList().size() - length;
+				length = LocationManager.instance().getNumberOfLocations() - length;
 			return getModifiedString(length, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
 					.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
 		}
@@ -329,8 +327,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 			tef.dispose();
 		}
 		tef = new TrackEditFrame();
-		String tracksId = tracksList.get(row);
-		Track tracks = _location.getTrackById(tracksId);
+		Track tracks = tracksList.get(row);
 		tef.initComponents(_location, tracks);
 		tef.setTitle(Bundle.getMessage("EditTrack"));
 		focusEditFrame = true;
@@ -358,7 +355,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	protected void removePropertyChangeTracks() {
 		for (int i = 0; i < tracksList.size(); i++) {
 			// if object has been deleted, it's not here; ignore it
-			Track t = _location.getTrackById(tracksList.get(i));
+			Track t = tracksList.get(i);
 			if (t != null)
 				t.removePropertyChangeListener(this);
 		}

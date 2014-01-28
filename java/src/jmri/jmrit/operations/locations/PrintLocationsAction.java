@@ -127,48 +127,45 @@ public class PrintLocationsAction extends AbstractAction {
 			usedLength += location.getUsedLength();
 			numberRS += location.getNumberRS();
 
-			List<String> yards = location.getTrackIdsByNameList(Track.YARD);
+			List<Track> yards = location.getTrackByNameList(Track.YARD);
 			if (yards.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("YardName") + NEW_LINE);
-				for (int k = 0; k < yards.size(); k++) {
-					Track yard = location.getTrackById(yards.get(k));
+				for (Track yard : yards) {
 					writer.write(getTrackString(yard));
 					numberCars += yard.getNumberCars();
 					numberEngines += yard.getNumberEngines();
 				}
 			}
 
-			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+			List<Track> spurs = location.getTrackByNameList(Track.SPUR);
 			if (spurs.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("SpurName") + NEW_LINE);
 				for (int k = 0; k < spurs.size(); k++) {
-					Track spur = location.getTrackById(spurs.get(k));
+					Track spur = spurs.get(k);
 					writer.write(getTrackString(spur));
 					numberCars += spur.getNumberCars();
 					numberEngines += spur.getNumberEngines();
 				}
 			}
 
-			List<String> interchanges = location.getTrackIdsByNameList(Track.INTERCHANGE);
+			List<Track> interchanges = location.getTrackByNameList(Track.INTERCHANGE);
 			if (interchanges.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("InterchangeName") + NEW_LINE);
-				for (int k = 0; k < interchanges.size(); k++) {
-					Track interchange = location.getTrackById(interchanges.get(k));
+				for (Track interchange : interchanges) {
 					writer.write(getTrackString(interchange));
 					numberCars += interchange.getNumberCars();
 					numberEngines += interchange.getNumberEngines();
 				}
 			}
 
-			List<String> stagings = location.getTrackIdsByNameList(Track.STAGING);
+			List<Track> stagings = location.getTrackByNameList(Track.STAGING);
 			if (stagings.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("StagingName") + NEW_LINE);
-				for (int k = 0; k < stagings.size(); k++) {
-					Track staging = location.getTrackById(stagings.get(k));
+				for (Track staging : stagings) {
 					writer.write(getTrackString(staging));
 					numberCars += staging.getNumberCars();
 					numberEngines += staging.getNumberEngines();
@@ -209,9 +206,8 @@ public class PrintLocationsAction extends AbstractAction {
 			Schedule schedule = schedules.get(i);
 			for (int j = 0; j < locations.size(); j++) {
 				Location location = locations.get(j);
-				List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
-				for (int k = 0; k < spurs.size(); k++) {
-					Track spur = location.getTrackById(spurs.get(k));
+				List<Track> spurs = location.getTrackByNameList(Track.SPUR);
+				for (Track spur : spurs) {
 					if (spur.getScheduleId().equals(schedule.getId())) {
 						// pad out schedule name
 						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + spur.getName();
@@ -272,28 +268,28 @@ public class PrintLocationsAction extends AbstractAction {
 			s = getLocationTypes(location);
 			writer.write(s);
 
-			List<String> yards = location.getTrackIdsByNameList(Track.YARD);
+			List<Track> yards = location.getTrackByNameList(Track.YARD);
 			if (yards.size() > 0) {
 				s = SPACE + Bundle.getMessage("YardName") + NEW_LINE;
 				writer.write(s);
 				printTrackInfo(location, yards);
 			}
 
-			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+			List<Track> spurs = location.getTrackByNameList(Track.SPUR);
 			if (spurs.size() > 0) {
 				s = SPACE + Bundle.getMessage("SpurName") + NEW_LINE;
 				writer.write(s);
 				printTrackInfo(location, spurs);
 			}
 
-			List<String> interchanges = location.getTrackIdsByNameList(Track.INTERCHANGE);
+			List<Track> interchanges = location.getTrackByNameList(Track.INTERCHANGE);
 			if (interchanges.size() > 0) {
 				s = SPACE + Bundle.getMessage("InterchangeName") + NEW_LINE;
 				writer.write(s);
 				printTrackInfo(location, interchanges);
 			}
 
-			List<String> stagings = location.getTrackIdsByNameList(Track.STAGING);
+			List<Track> stagings = location.getTrackByNameList(Track.STAGING);
 			if (stagings.size() > 0) {
 				s = SPACE + Bundle.getMessage("StagingName") + NEW_LINE;
 				writer.write(s);
@@ -389,9 +385,8 @@ public class PrintLocationsAction extends AbstractAction {
 		for (int j = 0; j < locations.size(); j++) {
 			Location location = locations.get(j);
 			// get a list of spur tracks at this location
-			List<String> tracks = location.getTrackIdsByNameList(trackType);
-			for (int k = 0; k < tracks.size(); k++) {
-				Track track = location.getTrackById(tracks.get(k));
+			List<Track> tracks = location.getTrackByNameList(trackType);
+			for (Track track : tracks) {
 				if (track.acceptsTypeName(carType)) {
 					trackLength = trackLength + track.getLength();
 					writer.write(SPACE
@@ -430,9 +425,8 @@ public class PrintLocationsAction extends AbstractAction {
 		return direction;
 	}
 
-	private void printTrackInfo(Location location, List<String> tracks) {
-		for (int k = 0; k < tracks.size(); k++) {
-			Track track = location.getTrackById(tracks.get(k));
+	private void printTrackInfo(Location location, List<Track> tracks) {
+		for (Track track : tracks) {
 			String name = track.getName();
 			try {
 				String s = TAB + name + getDirection(location.getTrainDirections() & track.getTrainDirections());
@@ -727,7 +721,7 @@ public class PrintLocationsAction extends AbstractAction {
 		String op = Bundle.getMessage("AcceptOnly") + " " + track.getDestinationListSize() + " "
 				+ Bundle.getMessage("Destinations") + ":";
 		if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
-			op = Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getLocationsByIdList().size() - track.getDestinationListSize()) + " "
+			op = Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getNumberOfLocations() - track.getDestinationListSize()) + " "
 					+ Bundle.getMessage("Destinations") + ":";
 		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		String[] destIds = track.getDestinationIds();

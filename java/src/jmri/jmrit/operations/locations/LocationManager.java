@@ -177,7 +177,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		return out;
 	}
 
-	private List<Location> getList() {
+	/**
+	 * Gets an unsorted list of all locations.
+	 * @return All locations.
+	 */
+	public List<Location> getList() {
 		List<Location> out = new ArrayList<Location>();
 		Enumeration<Location> en = _locationHashTable.elements();
 		while (en.hasMoreElements()) {
@@ -197,12 +201,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public List<Track> getTracks(String type) {
 		List<Location> sortList = getList();
 		List<Track> trackList = new ArrayList<Track>();
-		Location location;
-		for (int i = 0; i < sortList.size(); i++) {
-			location = sortList.get(i);
-			List<String> tracks = location.getTrackIdsByNameList(type);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = location.getTrackById(tracks.get(j));
+		for (Location location : sortList) {
+			List<Track> tracks = location.getTrackByNameList(type);
+			for (Track track : tracks) {
 				trackList.add(track);
 			}
 		}
@@ -243,9 +244,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	}
 	
 	public void resetMoves() {
-		List<Location> sortList = getList();
-		for (int i = 0; i < sortList.size(); i++) {
-			Location loc = sortList.get(i);
+		List<Location> locations = getList();
+		for (Location loc : locations) {
 			loc.resetMoves();
 		}
 	}
@@ -271,13 +271,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 
 	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-		List<Location> locs = getLocationsByIdList();
-		for (int i = 0; i < locs.size(); i++) {
-			Location loc = locs.get(i);
+		List<Location> locs = getList();
+		for (Location loc : locs) {
 			// now adjust tracks
-			List<String> tracks = loc.getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = loc.getTrackById(tracks.get(j));
+			List<Track> tracks = loc.getTrackList();
+			for (Track track : tracks) {
 				String[] loadNames = track.getLoadNames();
 				for (int k = 0; k < loadNames.length; k++) {
 					if (loadNames[k].equals(oldLoadName)) {
@@ -336,8 +334,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		root.addContent(values = new Element(Xml.LOCATIONS));
 		// add entries
 		List<Location> locationList = getLocationsByIdList();
-		for (int i = 0; i < locationList.size(); i++) {
-			Location loc = locationList.get(i);
+		for (Location loc : locationList) {
 			values.addContent(loc.store());
 		}
 	}
@@ -354,7 +351,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	/**
 	 * @return Number of locations
 	 */
-	public int numEntries() {
+	public int getNumberOfLocations() {
 		return _locationHashTable.size();
 	}
 

@@ -285,10 +285,10 @@ public class Router extends TrainCommon {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"), new Object[] {
 					clone.getDestinationTrackName(), clone.getDestinationName() }));
 			Location dest = clone.getDestination();
-			List<String> yards = dest.getTrackIdsByMovesList(Track.YARD);
+			List<Track> yards = dest.getTrackByMovesList(Track.YARD);
 			log.debug("Found " + yards.size() + " yard(s) at destination (" + clone.getDestinationName() + ")");
 			for (int i = 0; i < yards.size(); i++) {
-				Track track = dest.getTrackById(yards.get(i));
+				Track track = yards.get(i);
 				String status = car.setDestination(dest, track);
 				if (status.equals(Track.OKAY)) {
 					if (_train != null && !_train.services(car)) {

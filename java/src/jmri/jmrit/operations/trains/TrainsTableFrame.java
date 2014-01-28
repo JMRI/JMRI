@@ -550,9 +550,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	private void updateSwitchListButton() {
 		log.debug("update switch list button");
-		List<Location> locations = locationManager.getLocationsByIdList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location location = locations.get(i);
+		List<Location> locations = locationManager.getList();
+		for (Location location : locations) {
 			if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
 				printSwitchButton.setBackground(Color.RED);
 				return;
@@ -570,20 +569,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	private synchronized void addPropertyChangeLocations() {
-		List<Location> locations = locationManager.getLocationsByIdList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location location = locations.get(i);
-			if (location != null)
-				location.addPropertyChangeListener(this);
+		List<Location> locations = locationManager.getList();
+		for (Location location : locations) {
+			location.addPropertyChangeListener(this);
 		}
 	}
 
 	private synchronized void removePropertyChangeLocations() {
-		List<Location> locations = locationManager.getLocationsByIdList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location location = locations.get(i);
-			if (location != null)
-				location.removePropertyChangeListener(this);
+		List<Location> locations = locationManager.getList();
+		for (Location location : locations) {
+			location.removePropertyChangeListener(this);
 		}
 	}
 

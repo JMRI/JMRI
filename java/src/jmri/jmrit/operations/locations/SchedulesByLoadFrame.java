@@ -130,9 +130,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 			if (l.getLocationOps() == Location.NORMAL) {
 				addItemLeft(locationsPanel, new JLabel(l.getName()), 0, x++);
 				// now look for a spur with a schedule
-				List<String> spurs = l.getTrackIdsByNameList(Track.SPUR);
-				for (int j = 0; j < spurs.size(); j++) {
-					Track spur = l.getTrackById(spurs.get(j));
+				List<Track> spurs = l.getTrackByNameList(Track.SPUR);
+				for (Track spur : spurs) {
 					Schedule sch = spur.getSchedule();
 					if (sch != null) {
 						// listen for changes

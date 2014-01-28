@@ -38,8 +38,7 @@ public class YardTableModel extends TrackTableModel {
 			tef.dispose();
 		}
 		tef = new YardEditFrame();
-		String yardId = tracksList.get(row);
-		Track yard = _location.getTrackById(yardId);
+		Track yard = tracksList.get(row);
 		tef.initComponents(_location, yard);
 		tef.setTitle(Bundle.getMessage("EditYard"));
 		focusEditFrame = true;

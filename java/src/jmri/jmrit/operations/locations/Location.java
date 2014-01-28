@@ -231,6 +231,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		return false;
 	}
+	
+	public int getNumberOfTracks() {
+		return _trackHashTable.size();
+	}
 
 	/**
 	 * Sets the train directions that this location can service. EAST means that an Eastbound train can service the
@@ -635,6 +639,32 @@ public class Location implements java.beans.PropertyChangeListener {
 			out.add(arr[i]);
 		return out;
 	}
+	
+	/**
+	 * Gets a sorted by id list of track for this location.
+	 * @return Sorted list by id of tracks at this location.
+	 */
+	public List<Track> getTrackByIdList() {
+		List<Track> out = new ArrayList<Track>();
+		List<String> trackIds = getTrackIdsByIdList();
+		for (String id : trackIds) {
+			out.add(getTrackById(id));
+		}
+		return out;
+	}
+	
+	/**
+	 * Gets a unsorted list of the tracks at this location.
+	 * @return tracks at this location.
+	 */
+	public List<Track> getTrackList() {
+		List<Track> out = new ArrayList<Track>();
+		Enumeration<Track> en = _trackHashTable.elements();
+		while (en.hasMoreElements()) {
+			out.add(en.nextElement());
+		}
+		return out;
+	}
 
 	/**
 	 * Sort ids by track location name. Returns a list of ids of a given track type. If type is null returns all track
@@ -644,6 +674,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
 	 * @return list of track ids ordered by name
 	 */
+	@Deprecated
 	public List<String> getTrackIdsByNameList(String type) {
 		// first get id list
 		List<String> sortList = getTrackIdsByIdList();
@@ -674,30 +705,67 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
+	
+	/**
+	 * Sorted list by track name. Returns a list of tracks of a given track type. If type is null returns all tracks for
+	 * the location.
+	 * 
+	 * @param type
+	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
+	 * @return list of tracks ordered by name
+	 */
+	public List<Track> getTrackByNameList(String type) {
+		// first get id list
+		List<Track> sortList = getTrackByIdList();
+		// now re-sort
+		List<Track> out = new ArrayList<Track>();
+		String locName = "";
+		boolean locAdded = false;
+		Track trackOut;
+
+		for (Track track : sortList) {
+			locAdded = false;
+			locName = track.getName();
+			for (int j = 0; j < out.size(); j++) {
+				trackOut = out.get(j);
+				String outLocName = trackOut.getName();
+				if (locName.compareToIgnoreCase(outLocName) < 0
+						&& (type != null && track.getTrackType().equals(type) || type == null)) {
+					out.add(j, track);
+					locAdded = true;
+					break;
+				}
+			}
+			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
+				out.add(track);
+			}
+		}
+		return out;
+	}
 
 	/**
-	 * Sort ids by track moves. Returns a list of ids of a given track type. If type is null returns all track ids for
+	 * Sorted list by track moves. Returns a list of a given track type. If type is null, all tracks for
 	 * the location are returned. Tracks with schedules are placed at the start of the list.
 	 * 
 	 * @param type
 	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
 	 * @return list of track ids ordered by moves
 	 */
-	public List<String> getTrackIdsByMovesList(String type) {
+	public List<Track> getTrackByMovesList(String type) {
 		// first get id list
-		List<String> sortList = getTrackIdsByIdList();
+		List<Track> sortList = getTrackByIdList();
 		// now re-sort
-		List<String> moveList = new ArrayList<String>();
+		List<Track> moveList = new ArrayList<Track>();
 		boolean locAdded = false;
 		Track track;
 		Track trackOut;
 
 		for (int i = 0; i < sortList.size(); i++) {
 			locAdded = false;
-			track = getTrackById(sortList.get(i));
+			track = sortList.get(i);
 			int moves = track.getMoves();
 			for (int j = 0; j < moveList.size(); j++) {
-				trackOut = getTrackById(moveList.get(j));
+				trackOut = moveList.get(j);
 				int outLocMoves = trackOut.getMoves();
 				if (moves < outLocMoves && (type != null && track.getTrackType().equals(type) || type == null)) {
 					moveList.add(j, sortList.get(i));
@@ -710,9 +778,9 @@ public class Location implements java.beans.PropertyChangeListener {
 			}
 		}
 		// bias tracks with schedules
-		List<String> out = new ArrayList<String>();
+		List<Track> out = new ArrayList<Track>();
 		for (int i = 0; i < moveList.size(); i++) {
-			track = getTrackById(moveList.get(i));
+			track = moveList.get(i);
 			if (!track.getScheduleId().equals("")) {
 				out.add(moveList.get(i));
 				moveList.remove(i);
@@ -735,9 +803,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * Reset the move count for all tracks at this location
 	 */
 	public void resetMoves() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			track.setMoves(0);
 		}
 	}
@@ -751,9 +818,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
 		box.addItem("");
-		List<String> tracks = getTrackIdsByNameList(null);
-		for (int i = 0; i < tracks.size(); i++) {
-			box.addItem(getTrackById(tracks.get(i)));
+		List<Track> tracks = getTrackByNameList(null);
+		for (Track track : tracks) {
+			box.addItem(track);
 		}
 	}
 
@@ -773,9 +840,8 @@ public class Location implements java.beans.PropertyChangeListener {
 		updateComboBox(box);
 		if (!filter || rs == null)
 			return;
-		List<String> tracks = getTrackIdsByNameList(null);
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackByNameList(null);
+		for (Track track : tracks) {
 			String status = "";
 			if (destination) {
 				status = rs.testDestination(this, track);
@@ -880,9 +946,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return True if there are planned pickups
 	 */
 	public boolean hasPlannedPickups() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (track.getIgnoreUsedLengthPercentage() > 0)
 				return true;
 		}
@@ -895,9 +960,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return True if there are load restrictions
 	 */
 	public boolean hasLoadRestrications() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (!track.getLoadOption().equals(Track.ALL_LOADS))
 				return true;
 		}
@@ -910,9 +974,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return True if there are load ship restrictions
 	 */
 	public boolean hasShipLoadRestrications() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (!track.getShipLoadOption().equals(Track.ALL_LOADS))
 				return true;
 		}
@@ -925,9 +988,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return True if there are road restrictions
 	 */
 	public boolean hasRoadRestrications() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (!track.getRoadOption().equals(Track.ALL_ROADS))
 				return true;
 		}
@@ -940,9 +1002,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @return True if there are road restrictions
 	 */
 	public boolean hasDestinationRestrications() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (!track.getDestinationOption().equals(Track.ALL_DESTINATIONS))
 				return true;
 		}
@@ -950,9 +1011,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 
 	public void dispose() {
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			Track track = getTrackById(tracks.get(i));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			deleteTrack(track);
 		}
 		CarTypes.instance().removePropertyChangeListener(this);
@@ -1140,10 +1200,8 @@ public class Location implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.COMMENT, getComment());
 		e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListComment());
 
-		List<String> tracks = getTrackIdsByIdList();
-		for (int i = 0; i < tracks.size(); i++) {
-			String id = tracks.get(i);
-			Track track = getTrackById(id);
+		List<Track> tracks = getTrackByIdList();
+		for (Track track : tracks) {
 			e.addContent(track.store());
 		}
 
@@ -1155,9 +1213,8 @@ public class Location implements java.beans.PropertyChangeListener {
 			if (newType != null)
 				addTypeName(newType);
 			// now adjust tracks
-			List<String> tracks = getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = getTrackById(tracks.get(j));
+			List<Track> tracks = getTrackList();
+			for (Track track : tracks) {
 				if (track.acceptsTypeName(oldType)) {
 					track.deleteTypeName(oldType);
 					if (newType != null)
@@ -1185,9 +1242,8 @@ public class Location implements java.beans.PropertyChangeListener {
 
 	private void replaceRoad(String oldRoad, String newRoad) {
 		// now adjust any track locations
-		List<String> tracks = getTrackIdsByNameList(null);
-		for (int j = 0; j < tracks.size(); j++) {
-			Track track = getTrackById(tracks.get(j));
+		List<Track> tracks = getTrackList();
+		for (Track track : tracks) {
 			if (track.containsRoadName(oldRoad)) {
 				track.deleteRoadName(oldRoad);
 				if (newRoad != null)

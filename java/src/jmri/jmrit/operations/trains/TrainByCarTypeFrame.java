@@ -151,9 +151,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 				addItemWidth(pLocations, locText, 2, 1, y++);
 				continue;
 			}
-			List<String> tracks = location.getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = location.getTrackById(tracks.get(j));
+			List<Track> tracks = location.getTrackByNameList(null);
+			for (Track track : tracks) {
 				// show the car's track if there's a track destination restriction
 				if (car != null && car.getTrack() != null && !car.getTrack().acceptsDestination(location)
 						&& car.getTrack() != track) {
@@ -336,13 +335,12 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	 * Add property listeners for locations and tracks
 	 */
 	private void addLocationAndTrackPropertyChange() {
-		List<Location> locations = locationManager.getLocationsByIdList();
+		List<Location> locations = locationManager.getList();
 		for (int i = 0; i < locations.size(); i++) {
 			Location loc = locations.get(i);
 			loc.addPropertyChangeListener(this);
-			List<String> tracks = loc.getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = loc.getTrackById(tracks.get(j));
+			List<Track> tracks = loc.getTrackList();
+			for (Track track : tracks) {
 				track.addPropertyChangeListener(this);
 				Schedule schedule = track.getSchedule();
 				if (schedule != null)
@@ -355,21 +353,15 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	 * Remove property listeners for locations and tracks
 	 */
 	private void removeLocationAndTrackPropertyChange() {
-		List<Location> locations = locationManager.getLocationsByIdList();
-		for (int i = 0; i < locations.size(); i++) {
-			Location loc = locations.get(i);
-			if (loc != null) {
-				loc.removePropertyChangeListener(this);
-				List<String> tracks = loc.getTrackIdsByNameList(null);
-				for (int j = 0; j < tracks.size(); j++) {
-					Track track = loc.getTrackById(tracks.get(j));
-					if (track != null) {
-						track.removePropertyChangeListener(this);
-						Schedule schedule = track.getSchedule();
-						if (schedule != null)
-							schedule.removePropertyChangeListener(this);
-					}
-				}
+		List<Location> locations = locationManager.getList();
+		for (Location loc : locations) {
+			loc.removePropertyChangeListener(this);
+			List<Track> tracks = loc.getTrackList();
+			for (Track track : tracks) {
+				track.removePropertyChangeListener(this);
+				Schedule schedule = track.getSchedule();
+				if (schedule != null)
+					schedule.removePropertyChangeListener(this);
 			}
 		}
 	}

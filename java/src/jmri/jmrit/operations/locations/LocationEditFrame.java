@@ -583,9 +583,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		for (int i = 0; i < checkBoxes.size(); i++) {
 			checkBoxes.get(i).setSelected(false);
 			// check each track to determine which car types are serviced by this location
-			List<String> tracks = _location.getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = _location.getTrackById(tracks.get(j));
+			List<Track> tracks = _location.getTrackList();
+			for (Track track : tracks) {
 				if (track.acceptsTypeName(checkBoxes.get(i).getText()))
 					checkBoxes.get(i).setSelected(true);
 			}

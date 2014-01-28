@@ -1336,13 +1336,13 @@ public class OperationsTrainsTest extends TestCase {
 
 		l1.addTrack("North End 1", Track.STAGING);
 		l1.addTrack("North End 2", Track.STAGING);
-		List<String> templist1 = l1.getTrackIdsByNameList("");
+		List<Track> templist1 = l1.getTrackByNameList(null);
 		for (int i = 0; i < templist1.size(); i++) {
 			if (i == 0) {
-				Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i));
+				Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i).getName());
 			}
 			if (i == 1) {
-				Assert.assertEquals("RL 1 Staging 2 Name", "North End 2", templist1.get(i));
+				Assert.assertEquals("RL 1 Staging 2 Name", "North End 2", templist1.get(i).getName());
 			}
 		}
 
@@ -1403,13 +1403,13 @@ public class OperationsTrainsTest extends TestCase {
 
 		l3.addTrack("South End 1", Track.STAGING);
 		l3.addTrack("South End 2", Track.STAGING);
-		List<String> templist3 = l3.getTrackIdsByNameList("");
+		List<Track> templist3 = l3.getTrackByNameList(null);
 		for (int i = 0; i < templist3.size(); i++) {
 			if (i == 0) {
-				Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i));
+				Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i).getName());
 			}
 			if (i == 1) {
-				Assert.assertEquals("RL 3 Staging 2 Name", "South End 2", templist3.get(i));
+				Assert.assertEquals("RL 3 Staging 2 Name", "South End 2", templist3.get(i).getName());
 			}
 		}
 
@@ -3802,7 +3802,7 @@ public class OperationsTrainsTest extends TestCase {
 		ct.addName("XCaboose");
 
 		// confirm no locations
-		Assert.assertEquals("number of locations", 0, lmanager.numEntries());
+		Assert.assertEquals("number of locations", 0, lmanager.getNumberOfLocations());
 		// Create locations used
 		Location loc1;
 		loc1 = lmanager.newLocation("Old Westford");

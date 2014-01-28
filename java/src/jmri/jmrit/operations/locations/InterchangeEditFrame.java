@@ -55,7 +55,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 				pDestinationOption.setVisible(true);
 				destinationOption.setText(Bundle.getMessage("Exclude")
 						+ " "
-						+ (LocationManager.instance().getLocationsByIdList().size() - _track
+						+ (LocationManager.instance().getNumberOfLocations() - _track
 								.getDestinationListSize()) + " " + Bundle.getMessage("Destinations"));
 			} else {
 				destinationOption.setText(Bundle.getMessage("AcceptAll"));

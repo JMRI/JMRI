@@ -352,9 +352,8 @@ public class CarManager extends RollingStockManager {
 	}
 
 	/**
-	 * Get a list of Cars assigned to a train sorted by destination. Passenger
-	 * cars will be placed at the end of the list. Caboose or car with FRED will
-	 * be the last car(s) in the list
+	 * Get a list of Cars assigned to a train sorted by destination track names. Passenger cars will be placed at the
+	 * end of the list. Caboose or car with FRED will be the last car(s) in the list
 	 * 
 	 * @param train
 	 * @return Ordered list of Cars assigned to the train
@@ -363,41 +362,34 @@ public class CarManager extends RollingStockManager {
 		List<RollingStock> inTrain = getByTrainList(train);
 		// now sort by track destination
 		List<Car> out = new ArrayList<Car>();
-
-		int lastCarsIndex = 0; // incremented each time a car is added to the
-								// end of the train
+		int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
 		for (int i = 0; i < inTrain.size(); i++) {
 			Car car = (Car) inTrain.get(i);
-			String carDestination = car.getDestinationTrackName();
-			for (int j = 0; j < out.size(); j++) {
-				String carOutDest = out.get(j).getDestinationTrackName();
-				if (carDestination.compareToIgnoreCase(carOutDest) < 0 && !car.isCaboose() && !car.hasFred()
-						&& !car.isPassenger()) {
-					out.add(j, (Car) inTrain.get(i));
-					break;
+			if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
+				String carDestination = car.getDestinationTrackName();
+				for (int j = 0; j < out.size(); j++) {
+					if (carDestination.compareToIgnoreCase(out.get(j).getDestinationTrackName()) < 0) {
+						out.add(j, car);
+						break;
+					}
 				}
-			}
-			if (!out.contains(inTrain.get(i))) {
-				if (car.isCaboose() || car.hasFred()) {
-					out.add((Car) inTrain.get(i)); // place at end of list
-					lastCarsIndex++;
-				} else if (car.isPassenger()) {
-					// block passenger cars
-					int index = 0;
-					for (int k = 0; k < lastCarsIndex; k++) {
-						Car carTest = out.get(out.size() - 1 - k);
-						log.debug("Car (" + carTest.toString() + ") has blocking number: " + carTest.getBlocking());
-						if (carTest.isPassenger() && !carTest.isCaboose() && !carTest.hasFred()
-								&& carTest.getBlocking() < car.getBlocking())
-							break;
-						index++;
-					}		
-					out.add(out.size() - index, (Car) inTrain.get(i));
-					lastCarsIndex++;
-				} else {
-					out.add(out.size() - lastCarsIndex, (Car) inTrain.get(i));
+				if (!out.contains(car))
+					out.add(out.size() - lastCarsIndex, car);
+			} else if (car.isCaboose() || car.hasFred()) {
+				out.add(car); // place at end of list
+				lastCarsIndex++;
+			} else if (car.isPassenger()) {
+				// block passenger cars at end of list
+				int index;
+				for (index = 0; index < lastCarsIndex; index++) {
+					Car carTest = out.get(out.size() - 1 - index);
+					log.debug("Car (" + carTest.toString() + ") has blocking number: " + carTest.getBlocking());
+					if (carTest.isPassenger() && !carTest.isCaboose() && !carTest.hasFred()
+							&& carTest.getBlocking() < car.getBlocking())
+						break;
 				}
-
+				out.add(out.size() - index, car);
+				lastCarsIndex++;
 			}
 		}
 		return out;
