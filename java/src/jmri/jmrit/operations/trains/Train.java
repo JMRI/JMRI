@@ -150,13 +150,23 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
 
 	// Train status
-	public static final String BUILD_FAILED = Bundle.getMessage("BuildFailed");
+	public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
 	public static final String BUILDING = Bundle.getMessage("Building");
+	public static final String BUILD_FAILED = Bundle.getMessage("BuildFailed");
 	public static final String BUILT = Bundle.getMessage("Built");
 	public static final String PARTIAL_BUILT = Bundle.getMessage("Partial");
-	public static final String TERMINATED = Bundle.getMessage("Terminated");
-	public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
 	public static final String TRAIN_IN_ROUTE = Bundle.getMessage("TrainInRoute");
+	public static final String TERMINATED = Bundle.getMessage("Terminated");
+	
+	// Train status codes
+	public static final int CODE_TRAIN_RESET = 0;
+	public static final int CODE_BUILDING = 0x01;
+	public static final int CODE_BUILD_FAILED = 0x02;
+	public static final int CODE_BUILT = 0x10;
+	public static final int CODE_PARTIAL_BUILT = CODE_BUILT + 0x04;
+	public static final int CODE_TRAIN_IN_ROUTE = CODE_BUILT + 0x08;
+	public static final int CODE_TERMINATED = 0x80;
+	public static final int CODE_UNKNOWN = 0xFFFF;
 
 	// train requirements
 	public static final int NONE = 0; // default
@@ -700,6 +710,24 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public String getStatus() {
 		return _status;
+	}
+	
+	public int getStatusCode() {
+		if (getStatus().startsWith(TRAIN_RESET))
+			return CODE_TRAIN_RESET;
+		if (getStatus().startsWith(BUILDING))
+			return CODE_BUILDING;
+		if (getStatus().startsWith(PARTIAL_BUILT))
+			return CODE_PARTIAL_BUILT;
+		if (getStatus().startsWith(BUILT))
+			return CODE_BUILT;
+		if (getStatus().startsWith(PARTIAL_BUILT))
+			return CODE_PARTIAL_BUILT;
+		if (getStatus().startsWith(TRAIN_IN_ROUTE))
+			return CODE_TRAIN_IN_ROUTE;
+		if (getStatus().startsWith(TERMINATED))
+			return CODE_TERMINATED;
+		return CODE_UNKNOWN;
 	}
 
 	/**
