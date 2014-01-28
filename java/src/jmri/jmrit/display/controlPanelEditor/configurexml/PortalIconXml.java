@@ -52,6 +52,7 @@ public class PortalIconXml extends PositionableLabelXml {
             element.setAttribute("fromBlockName", portal.getFromBlockName());        	
         }
         element.setAttribute("arrowSwitch", ""+(p.getArrowSwitch()?"yes":"no"));
+        element.setAttribute("arrowHide", ""+(p.getArrowHide()?"yes":"no"));
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
@@ -124,6 +125,10 @@ public class PortalIconXml extends PositionableLabelXml {
         if ((a = element.getAttribute("arrowSwitch"))!=null && a.getValue().equals("no"))
             value = false;
         l.setArrowOrientatuon(value);
+        value = false;
+        if ((a = element.getAttribute("arrowHide"))!=null && a.getValue().equals("yes"))
+            value = true;
+        l.setHideArrows(value);
      }
 
     static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());

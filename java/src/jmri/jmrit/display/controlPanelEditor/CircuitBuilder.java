@@ -1467,6 +1467,8 @@ public class CircuitBuilder  {
         } else if (_editDirectionFrame!=null) {
             if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
             	_editDirectionFrame.setPortalIcon((PortalIcon)selection);
+            } else {
+            	_editDirectionFrame.setPortalIcon(null);            	
             }
         	_editDirectionFrame.toFront();
         }

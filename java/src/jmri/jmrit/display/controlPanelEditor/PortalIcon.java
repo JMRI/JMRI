@@ -38,6 +38,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     private Portal _portal;
     private String _status;
     private boolean _regular = true;	// true when TO_ARROW shows entry into ToBlock
+    private boolean _hide = false;	// true when arrow should NOT show entry into ToBlock
 
     public PortalIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -74,6 +75,9 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     public Positionable finishClone(Positionable p) {
     	PortalIcon pos = (PortalIcon)p;
         pos._iconMap = cloneMap(_iconMap, pos);
+        pos._regular = _regular;
+        pos._hide = _hide;
+        pos._status = _status;
         return super.finishClone(p);
     }
     
@@ -94,9 +98,19 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setArrowOrientatuon regular="+set+" from "+_regular);
     	_regular = set;
     }
+    /**
+     * Called from EditPortalDirection frame in CircuitBuilder
+     */
+    public void setHideArrows(boolean set) {
+        if (log.isDebugEnabled()) log.debug(_portal.getName()+"/ setHideArrows hide="+set+" from "+_hide);
+    	_hide = set;
+    }
     
     public boolean getArrowSwitch() {
     	return _regular;
+    }
+    public boolean getArrowHide() {
+    	return _hide;
     }
 
     public Portal getPortal() {
@@ -141,10 +155,18 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     public void displayState(int state) {
     	switch (state) {
     		case 0x02:
-    	    	setStatus(TO_ARROW);
+    			if (_hide) {
+    				setStatus(HIDDEN);
+    			} else {
+        	    	setStatus(TO_ARROW);    				
+    			}
     			break;
     		case 0x04:
-    	    	setStatus(TO_ARROW);
+    			if (_hide) {
+    				setStatus(HIDDEN);
+    			} else {
+        	    	setStatus(FROM_ARROW);    				
+    			}
     			break;
     		case 0x10:
     	    	setStatus(VISIBLE);
@@ -161,16 +183,20 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         Object source = e.getSource();
         if (source instanceof Portal && "Direction".equals(e.getPropertyName())) {
-        	switch (((Integer)e.getNewValue()).intValue()) {
-        	case Portal.UNKNOWN:
+            if (_hide) {
         		setStatus(HIDDEN);
-        		break;
-    		case Portal.ENTER_TO_BLOCK:
-    			setStatus(TO_ARROW);
-    			break;
-    		case Portal.ENTER_FROM_BLOCK:
-    			setStatus(FROM_ARROW);
-    			break;
+        		return;
+            }
+        	switch (((Integer)e.getNewValue()).intValue()) {
+        		case Portal.UNKNOWN:
+        			setStatus(HIDDEN);
+        			break;
+        		case Portal.ENTER_TO_BLOCK:
+        			setStatus(TO_ARROW);
+        			break;
+        		case Portal.ENTER_FROM_BLOCK:
+        			setStatus(FROM_ARROW);
+        			break;
     		}      	
         }
     }

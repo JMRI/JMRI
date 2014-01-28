@@ -166,13 +166,18 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         	_icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));    			
         	_icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));    		
         	_icon.setArrowOrientatuon(true);
+    		_icon.setHideArrows(false);
     	} else if (PortalIcon.FROM_ARROW.equals(e.getActionCommand())) {
         	_icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));    			
         	_icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));    		
         	_icon.setArrowOrientatuon(false);
+    		_icon.setHideArrows(false);
     	} else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {
-        	_icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));    		
-        	_icon.setArrowOrientatuon(true);
+//        	_icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));    		
+//        	_icon.setArrowOrientatuon(true);
+    		_icon.setHideArrows(true);
+        	_icon.setStatus(PortalIcon.HIDDEN);
+        	return;
     	}
     	_icon.setStatus(PortalIcon.TO_ARROW);
     }
@@ -184,11 +189,15 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         }
     	_icon = icon;
         if (_icon!=null) {
-        	OBlock toBlock = _icon.getPortal().getToBlock();
-        	if (_homeBlock.equals(toBlock)) {
-        		_icon.setStatus(PortalIcon.TO_ARROW);        	
+        	if (_icon.getArrowHide()) {
+        		_icon.setStatus(PortalIcon.HIDDEN);        	        		
         	} else {
-        		_icon.setStatus(PortalIcon.FROM_ARROW);        	        		
+            	OBlock toBlock = _icon.getPortal().getToBlock();
+            	if (_homeBlock.equals(toBlock)) {
+            		_icon.setStatus(PortalIcon.TO_ARROW);        	
+            	} else {
+            		_icon.setStatus(PortalIcon.FROM_ARROW);        	        		
+            	}        		
         	}
         	_toButton.setIcon(_icon.getIcon(PortalIcon.TO_ARROW));
         	_fromButton.setIcon(_icon.getIcon(PortalIcon.FROM_ARROW));
