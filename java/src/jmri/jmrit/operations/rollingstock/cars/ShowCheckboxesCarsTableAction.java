@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a CarsSetFrame object.
+ * Swing action to show checkboxes in the cars window.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014

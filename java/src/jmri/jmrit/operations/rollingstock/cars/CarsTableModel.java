@@ -167,6 +167,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		boolean isVisible = tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !isVisible);
 	}
+	
+	public void resetCheckboxes() {
+		for ( RollingStock car : sysList ) {
+			car.setSelected(false);		
+		}
+	}
 
 	String _roadNumber = "";
 	int _index = 0;
