@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
@@ -144,5 +145,10 @@ public class PanelServlet extends AbstractPanelServlet {
             log.error("IOException", e);
             return "ERROR " + e.getLocalizedMessage();
         }
+    }
+
+    @Override
+    protected JComponent getPanel(String name) {
+        return ((PanelEditor) getEditor(name)).getTargetPanel();
     }
 }
