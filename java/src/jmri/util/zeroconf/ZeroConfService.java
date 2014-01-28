@@ -242,18 +242,31 @@ public class ZeroConfService {
                 ServiceInfo info;
                 try {
                     // JmDNS requires a 1-to-1 mapping of serviceInfo to InetAddress
-                    try {
-                        info = this.serviceInfo();
-                        netService.registerService(info);
-                    } catch (IllegalStateException ex) {
-                        info = this.addServiceInfo(netService);
-                        // TODO: need to catch cloned serviceInfo
-                        netService.registerService(info);
+                    if (!this.serviceInfos.containsKey(netService.getInterface())) {
+                        try {
+                            info = this.serviceInfo();
+                            netService.registerService(info);
+                        } catch (IllegalStateException ex) {
+                            // thrown if the reference serviceInfo object is in use
+                            try {
+                                log.debug("Initial attempt to register {} on {} failed.", this.key(), netService.getInterface().getHostAddress());
+                                info = this.addServiceInfo(netService);
+                                log.debug("Attempting to register {} on {}.", this.key(), netService.getInterface().getHostAddress());
+                                netService.registerService(info);
+                            } catch (IllegalStateException ex1) {
+                                // thrown if service gets registered on interface by
+                                // the networkListener before this loop on interfaces
+                                // completes, so we only ensure a later notification
+                                // is not posted continuing to next interface in list
+                                log.debug("{} is already registered on {}.", this.key(), netService.getInterface().getHostAddress());
+                                continue;
+                            }
+                        }
                     }
                     event = new ZeroConfServiceEvent(this, netService);
                 } catch (IOException ex) {
                     log.error("Unable to publish service for {}: {}", key(), ex.getMessage());
-                    break;
+                    continue;
                 }
                 for (ZeroConfServiceListener listener : this.listeners) {
                     listener.servicePublished(event);
