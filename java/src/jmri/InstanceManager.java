@@ -284,9 +284,22 @@ public class InstanceManager {
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
 
+
     /* ****************************************************************************
      *                   Old Style Accessors - Migrated and Deprecated
+     *
+     *                     Check Jython scripts before removing
      * ****************************************************************************/
+
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
+        return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+    }
+
+
 
     /**
      * @deprecated Since 3.7.1, use @{link #getDefault} directly.
