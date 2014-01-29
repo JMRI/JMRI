@@ -460,32 +460,35 @@ public class CarLoads {
 			// check to see if car type still exists
 			if (!CarTypes.instance().containsName(carType))
 				continue;
-			Element load = new Element(Xml.LOAD);
-			load.setAttribute(Xml.TYPE, carType);
 			List<CarLoad> loads = getSortedList(carType);
-			StringBuffer buf = new StringBuffer();
-			for (int j = 0; j < loads.size(); j++) {
-				buf.append(loads.get(j).getName());
-				Element carLoad = new Element(Xml.CAR_LOAD);
-				carLoad.setAttribute(Xml.NAME, loads.get(j).getName());
-				if (!loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW)) {
-					carLoad.setAttribute(Xml.PRIORITY, loads.get(j).getPriority());
-					buf.append("P");  // NOI18N must store
-				}
-				if (!loads.get(j).getPickupComment().equals("")) {
-					carLoad.setAttribute(Xml.PICKUP_COMMENT, loads.get(j).getPickupComment());
-					buf.append("PC");  // NOI18N must store
-				}
-				if (!loads.get(j).getDropComment().equals("")) {
-					carLoad.setAttribute(Xml.DROP_COMMENT, loads.get(j).getDropComment());
-					buf.append("DC");  // NOI18N must store
-				}
-				carLoad.setAttribute(Xml.LOAD_TYPE, loads.get(j).getLoadType());
-				load.addContent(carLoad);
-			}
+			Element xmlLoad = new Element(Xml.LOAD);
+			xmlLoad.setAttribute(Xml.TYPE, carType);
 			// only store loads that aren't the defaults
-			if (!buf.toString().equals(getDefaultLoadName() + getDefaultEmptyName()))
-				values.addContent(load);
+			boolean mustStore = false;
+			for (CarLoad load : loads) {
+				Element xmlCarLoad = new Element(Xml.CAR_LOAD);
+				xmlCarLoad.setAttribute(Xml.NAME, load.getName());
+				if (!load.getPriority().equals(CarLoad.PRIORITY_LOW)) {
+					xmlCarLoad.setAttribute(Xml.PRIORITY, load.getPriority());
+					mustStore = true; // must store
+				}
+				if (!load.getPickupComment().equals("")) {
+					xmlCarLoad.setAttribute(Xml.PICKUP_COMMENT, load.getPickupComment());
+					mustStore = true; // must store
+				}
+				if (!load.getDropComment().equals("")) {
+					xmlCarLoad.setAttribute(Xml.DROP_COMMENT, load.getDropComment());
+					mustStore = true; // must store
+				}
+				// don't store the defaults / low priority / no comment
+				if (!mustStore
+						&& (load.getName().equals(getDefaultEmptyName()) || load.getName().equals(getDefaultLoadName())))
+					continue;
+				xmlCarLoad.setAttribute(Xml.LOAD_TYPE, load.getLoadType());
+				xmlLoad.addContent(xmlCarLoad);
+			}
+			if (loads.size() > 2 || mustStore)
+				values.addContent(xmlLoad);
 		}
 		root.addContent(values);
 	}

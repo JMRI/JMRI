@@ -365,6 +365,9 @@ public class CarManager extends RollingStockManager {
 		int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
 		for (int i = 0; i < inTrain.size(); i++) {
 			Car car = (Car) inTrain.get(i);
+			if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+				continue; // not the lead car, skip for now.
+			}
 			if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
 				String carDestination = car.getDestinationTrackName();
 				for (int j = 0; j < out.size(); j++) {
@@ -375,6 +378,14 @@ public class CarManager extends RollingStockManager {
 				}
 				if (!out.contains(car))
 					out.add(out.size() - lastCarsIndex, car);
+				// group the cars in the kernel together
+				if (car.getKernel() != null && car.getKernel().isLead(car)) {
+					int index = out.indexOf(car);
+					for (Car kcar : car.getKernel().getCars()) {
+						if (car != kcar)
+							out.add(++index, kcar);
+					}
+				}
 			} else if (car.isCaboose() || car.hasFred()) {
 				out.add(car); // place at end of list
 				lastCarsIndex++;
@@ -534,7 +545,7 @@ public class CarManager extends RollingStockManager {
 		root.addContent(kernels);
 		root.addContent(values = new Element(Xml.CARS));
 		// add entries
-		List<RollingStock> carList = getList();
+		List<RollingStock> carList = getByIdList();
 		for (int i = 0; i < carList.size(); i++) {
 			Car car = (Car) carList.get(i);
 			values.addContent(car.store());
