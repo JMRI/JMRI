@@ -19,12 +19,15 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
                 <li class="dropdown context-panel">
                     <a href="/panel" class="dropdown-toggle" data-toggle="dropdown">Panels <b class="caret"></b></a>
                     <ul id="navbar-panels" class="dropdown-menu">
+                        <li id="navbar-panel-thumbnails"><a href="/panel">Show Panels</a></li>
+                        <li class="divider"></li>
+                        <!-- <li class="dropdown-header context-panel-only">Nav header</li> -->
+                        <li class="context-panel-only"><a href="#" onclick="location.reload(true);
+                                return false;">Reload</a></li>
+                        <li id="panel-xml" class="context-panel-only"><a href="#">Panel XML</a></li>
+                        <li class="divider context-panel-only"></li>
                         <!-- will populate with ajax query -->
                         <li id="empty-panel-list" class="disabled"><a href="#">No Panels Loaded</a></li>
-                        <li class="divider context-panel-only"></li>
-                        <!-- <li class="dropdown-header context-panel-only">Nav header</li> -->
-                        <li class="context-panel-only"><a href="#" onclick="location.reload(true); return false;">Reload</a></li>
-                        <li id="panel-xml" class="context-panel-only"><a href="#">Panel XML</a></li>
                     </ul>
                 </li>
                 <li class="dropdown context-operations">
@@ -33,6 +36,17 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li><a href="/operations/trains">Trains</a></li>
                     </ul>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle navbar-right" data-toggle="dropdown">Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/help/en/index.html">Introduction</a></li>
+                        <li><a href="/help/en/webtoc.shtml">Help Contents</a></li>
+                        <li><a href="/help/en/webindex.shtml">Index</a></li>
+                    </ul>
+                </li>
+
             </ul>
         </div><!--/.navbar-collapse -->
     </div>

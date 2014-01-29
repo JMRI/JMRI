@@ -101,7 +101,8 @@ public class OperationsServlet extends HttpServlet {
                             ServletHelper.getHelper().getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "TrainsTitle")
                     ),
-                    ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath())
+                    ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
+                    ServletHelper.getHelper().getRailroadName(false)
             ));
         }
     }

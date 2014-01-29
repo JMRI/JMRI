@@ -53,12 +53,9 @@ body {
     /* text-align: center; */
     line-height: 20px;
 }
-div#panelArea {
-    border-right: solid 1px #888;
-    border-bottom: solid 1px #888;
-    -webkit-box-shadow: 5px 5px 5px #ccc;
-    -moz-box-shadow: 5px 5px 5px #ccc;
-    box-shadow: 5px 5px 5px #ccc;
+
+#panel-area {
+    border: solid 1px #888;
     margin: auto;
     position: relative;
 }

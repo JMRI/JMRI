@@ -50,7 +50,7 @@
             // Getters and Setters
             jmri.getLight = function(name) {
                 if (!jmri.setLight(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "lights/" + name, function(json) {
+                    $.getJSON(jmri.url + "light/" + name, function(json) {
                         jmri.light(json.data.name, json.data.state, json.data);
                     });
                 }
@@ -60,11 +60,67 @@
             };
             jmri.getMemory = function(name) {
                 if (!jmri.socket.send("memory", {name: name})) {
-                    $.getJSON(jmri.url + "memories/" + name, function(json) {
+                    $.getJSON(jmri.url + "memory/" + name, function(json) {
                         jmri.memory(json.data.name, json.data.value, json.data);
                     });
                 }
             };
+            jmri.getObject = function(type, name) {
+                switch (type) {
+                    case "light":
+                        jmri.getLight(name);
+                        break;
+                    case "memory":
+                        jmri.getMemory(name);
+                        break;
+                    case "rosterEntry":
+                        jmri.getRosterEntry(name);
+                        break;
+                    case "route":
+                        jmri.getRoute(name);
+                        break;
+                    case "sensor":
+                        jmri.getSensor(name);
+                        break;
+                    case "signalHead":
+                        jmri.getSignalHead(name);
+                        break;
+                    case "signalMast":
+                        jmri.getSignalMast(name);
+                        break;
+                    case "turnout":
+                        jmri.getTurnout(name);
+                        break;
+                }
+            },
+            jmri.setObject = function(type, name, state) {
+                switch (type) {
+                    case "light":
+                        jmri.setLight(name, state);
+                        break;
+                    case "memory":
+                        jmri.setMemory(name, state);
+                        break;
+                    case "rosterEntry":
+                        jmri.setRosterEntry(name, state);
+                        break;
+                    case "route":
+                        jmri.setRoute(name, state);
+                        break;
+                    case "sensor":
+                        jmri.setSensor(name, state);
+                        break;
+                    case "signalHead":
+                        jmri.setSignalHead(name, state);
+                        break;
+                    case "signalMast":
+                        jmri.setSignalMast(name, state);
+                        break;
+                    case "turnout":
+                        jmri.setTurnout(name, state);
+                        break;
+                }
+            },
             jmri.getPower = function() {
                 if (!jmri.setPower(jmri.UNKNOWN)) {
                     $.getJSON(jmri.url + "power", function(json) {
@@ -84,7 +140,7 @@
             };
             jmri.getRoute = function(name) {
                 if (!jmri.setSensor(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "routes/" + name, function(json) {
+                    $.getJSON(jmri.url + "route/" + name, function(json) {
                         jmri.sensor(json.data.name, json.data.state, json.data);
                     });
                 }
@@ -94,7 +150,7 @@
             };
             jmri.getSensor = function(name) {
                 if (!jmri.setSensor(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "sensors/" + name, function(json) {
+                    $.getJSON(jmri.url + "sensor/" + name, function(json) {
                         jmri.sensor(json.data.name, json.data.state, json.data);
                     });
                 }
@@ -104,7 +160,7 @@
             };
             jmri.getSignalHead = function(name) {
                 if (!jmri.setSignalHead(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "signalHeads/" + name, function(json) {
+                    $.getJSON(jmri.url + "signalHead/" + name, function(json) {
                         jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
@@ -114,13 +170,13 @@
             };
             jmri.getSignalMast = function(name) {
                 if (!jmri.setSignalMast(name, "")) {
-                    $.getJSON(jmri.url + "signalMasts/" + name, function(json) {
+                    $.getJSON(jmri.url + "signalMast/" + name, function(json) {
                         jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setSignalMast = function(name, state) {
-                return jmri.socket.send("signalHead", {name: name, state: state});
+                return jmri.socket.send("signalMast", {name: name, state: state});
             };
             jmri.getTime = function(name) {
                 if (!jmri.socket.send("time", {})) {
@@ -131,7 +187,7 @@
             };
             jmri.getTurnout = function(name) {
                 if (!jmri.setTurnout(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "turnouts/" + name, function(json) {
+                    $.getJSON(jmri.url + "turnout/" + name, function(json) {
                         jmri.turnout(json.data.name, json.data.state, json.data);
                     });
                 }

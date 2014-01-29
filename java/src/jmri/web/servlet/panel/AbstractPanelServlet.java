@@ -17,11 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
+import jmri.jmris.json.JSON;
+import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
+import jmri.web.servlet.ServletHelper;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.slf4j.Logger;
@@ -72,8 +75,10 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     response.getOutputStream().write(baos.toByteArray());
                     response.getOutputStream().close();
                 }
+            } else if ("html".equals(request.getParameter("format")) || null == request.getParameter("format")) {
+                this.listPanels(request, response);
             } else {
-                boolean useXML = (!"json".equals(request.getParameter("format")));
+                boolean useXML = (!JSON.JSON.equals(request.getParameter("format")));
                 response.setContentType(XML_CONTENT_TYPE);
                 String panel = getPanelText(panelName, useXML);
                 if (panel == null) {
@@ -90,15 +95,25 @@ abstract class AbstractPanelServlet extends HttpServlet {
     }
 
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if ("json".equals(request.getParameter("format"))) {
-            response.sendRedirect("/json/panels");
-        } else if ("xml".equals(request.getParameter("format"))) {
+        if (JSON.JSON.equals(request.getParameter("format"))) {
+            response.setContentType("application/json"); // NOI18N
+            ServletHelper.getHelper().setNonCachingHeaders(response);
+            response.getWriter().print(JsonUtil.getPanels(JSON.XML));
+        } else if (JSON.XML.equals(request.getParameter("format"))) {
             response.sendRedirect("/xmlio/list?type=panel");
+
         } else {
             response.setContentType("text/html"); // NOI18N
-            String html = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage("Panel.html")));
-            // we would do a .print(String.format(html, ...)) if we needed to inject code at this point
-            response.getWriter().print(html);
+            response.getWriter().print(String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Panel.html"))),
+                    String.format(request.getLocale(),
+                            Bundle.getMessage(request.getLocale(), "HtmlTitle"),
+                            ServletHelper.getHelper().getRailroadName(false),
+                            Bundle.getMessage(request.getLocale(), "PanelsTitle")
+                    ),
+                    ServletHelper.getHelper().getNavBar(request.getLocale(), "/panel"),
+                    ServletHelper.getHelper().getRailroadName(false)
+            ));
         }
     }
 

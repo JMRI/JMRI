@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.jmris.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import org.jdom.Document;
@@ -37,7 +38,6 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             Element panel = new Element("panel");
 
             JFrame frame = editor.getTargetFrame();
-            log.info("Target Frame [" + frame.getTitle() + "]");
 
             panel.setAttribute("name", name);
             panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
@@ -65,6 +65,15 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                         if (e != null) {
                             if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
                                 e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                            }
+                            try {
+                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                            } catch (NullPointerException ex) {
+                                if (sub.getNamedBean() == null) {
+                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                                } else {
+                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                                }
                             }
                             parsePortableURIs(e);
                             panel.addContent(e);

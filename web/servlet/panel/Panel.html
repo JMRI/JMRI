@@ -1,68 +1,64 @@
 <!DOCTYPE html>
-<!--
-
--->
-<html>
+<!-- %3$s is the railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s"> <!--<![endif]-->
     <head>
-        <title>JMRI Panels</title>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is title from Servlet -->
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="/css/miniServer.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print">
-        <link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen">
-        <script src="/js/jquery-latest.min.js"></script>
-        <script src="/js/jquery.json-2.3.min.js"></script>
-        <script src="/js/jquery.websocket.js"></script>
-        <script src="/js/jquery.jmri.js"></script>
-        <script src="/js/panel.js"></script>
-        <link rel="stylesheet" type="text/css" href="/css/pulse.css">
-        <style type='text/css'>
-            div { border: 0px solid black; }
-            div#power { display:inline; float:right; }
-            div#console {
-                clear: both;
-                min-width: 60em;
-                height: 30ex;
-                overflow: auto;
-                background-color: #f0f0f0;
-                padding: 4px;
-                border: 1px solid black;
-            }
-            div#rawInput {
-                clear: both;
-                min-width: 60em;
-                padding: 4px;
-                background-color: #e0e0e0;
-                border: 1px solid black;
-                border-top: 0px
-            }
-            div.hidden { display: none;	}
-            span.alert { font-style: italic; }
-            input#command {
-                min-width: 50em;
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
             }
         </style>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/panel.css">
+
+        <script src="/js/vendor/jquery-1.10.1.min.js"></script>
+        <script src="/js/vendor/bootstrap.min.js"></script>
+        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/vendor/jquery.activity-indicator-1.0.0.min.js"></script>
+        <script src="/js/vendor/json2.js"></script>
+        <script src="/js/vendor/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/panel.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#activity-indicator').activity();
+            });
+        </script>
     </head>
     <body>
-        <div id='mainContent'>
-            <div id="workingMessage" class="modal">
-                <img src='/web/images/ajax-loader.gif'>
-                <div id="messageText"></div>
-                <ul class="snav">
-                    <li><a href="/panel">Panels</a></li>
-                    <li><a class="reload" onClick="window.location.reload()" href="#">Reload</a></li>
-                </ul>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="container">
+
+                <div id="activity-alert" class="alert alert-info alert-dismissable">Getting panels...</div>
+                <div id="warning-no-panels" class="alert alert-warning hidden">No open panels available.</div>
+                <div id="error-listing-panels" class="alert alert-error hidden">Error listing panels:<br></div>
+
+                <div id="panel-list"></div>
+                <div id="panel-area" class="center-block"></div>
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <footer>
+            <div class="container">
+                <p class="text-muted">&copy; <a href="http://jmri.org">JMRI</a> Community 1997-2014</p>
             </div>
-            <div id='panelList'><h1>Control Panels - from HTML in src path</h1></div>
-            <div id='panelArea'></div>
-            <div id='logArea'></div>
-        </div>
-        <ul class="snav" id="footer-menu">
-            <li><a href="/">Home</a></li>
-            <li><a href="/panel">Panels</a></li>
-            <li><a class="reload" onClick="window.location.reload()" href="#">Reload</a></li>
-            <li><a href="/help/en/html/web/PanelServlet.shtml">Help</a></li>
-            <li><a href="http://jmri.org">JMRI</a></li>
-        </ul>
+        </footer>
     </body>
 </html>
