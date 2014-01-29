@@ -550,7 +550,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _occupationPending = false;
         _warrant = null;
         _pathName = null;
-        setValue(null);
         setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         return null;
     }
@@ -565,9 +564,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     public void setError(boolean set) {
         if (set) {
-            setState(getState() | TRACK_ERROR);  // set OoS bit
+            setState(getState() | TRACK_ERROR);  // set err bit
         } else {
-            setState(getState() & ~TRACK_ERROR);  // unset OoS bit
+            setState(getState() & ~TRACK_ERROR);  // unset err bit
         }
     }
 
@@ -774,8 +773,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
+        setValue(null);
         if (_warrant!=null) {
-            setValue(null);
             _warrant.goingInactive(this);
         }
     }
