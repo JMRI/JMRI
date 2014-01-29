@@ -141,7 +141,9 @@
             };
             // Heartbeat
             jmri.heartbeat = function() {
+                jmri.socket.send("ping");
             };
+            jmri.heartbeatInterval = null;
             // WebSocket
             jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
                 // stop the heartbeat when the socket closes
@@ -161,9 +163,7 @@
                     },
                     // handle the initial handshake response from the server
                     hello: function(e) {
-                        jmri.heartbeat = setInterval(function() {
-                            jmri.socket.send("ping");
-                        }, e.data.heartbeat);
+                        jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
                         jmri.version(e.data.JMRI);
                         jmri.railroad(e.data.railroad);
                     },
