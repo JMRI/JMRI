@@ -17,16 +17,24 @@ public class ServletHelper {
 
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + WebServerManager.getWebServerPreferences().getRailRoadName() + "<!--";
+            return "-->" + WebServerManager.getWebServerPreferences().getRailRoadName() + "<!--"; // NOI18N
         }
         return WebServerManager.getWebServerPreferences().getRailRoadName();
     }
 
     public String getNavBar(Locale locale, String context) throws IOException {
         // Should return a built NavBar with li class for current context set to "active"
-        return String.format(locale,
-                "-->" + FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "NavBar.html"))) + "<!--",
+        String navBar = String.format(locale,
+                "-->" + FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "NavBar.html"))) + "<!--", // NOI18N
                 this.getRailroadName(true));
+        context = "context" + context.replace("/", "-"); // NOI18N
+        // replace class "context-<this-context>-only" with class "show"
+        navBar = navBar.replace(context + "-only", "show"); // NOI18N
+        // replace class "context-<some-other-context>-only" with class "hidden"
+        navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
+        // replace class "context-<this-context>" with class "active"
+        navBar = navBar.replace(context, "active"); // NOI18N
+        return navBar;
     }
 
     public static ServletHelper getHelper() {
