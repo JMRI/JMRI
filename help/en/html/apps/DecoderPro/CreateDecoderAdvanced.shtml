@@ -27,6 +27,34 @@
 the decoder definiton
 files for the DecoderPro Symbolic Programmer.</p>
 
+<h3>Formatting on the page</h3>
+You can do limited formatting on the display using HTML formatting tags.
+
+<p>
+You can embed HTML in pane text, but it must be enclosed in &lt;html&gt;...&lt;/html&gt; tags. 
+
+<P>This is made a bit tricky because of overlap between "tags as 
+part of XML structure of decoder file" and "HTML tags included in the decoder file".
+All of the HTML tags need to be quoted, with their &lt; and &gt; characters
+replaced by the &amp;lt; and &amp;gt; strings and any embedded double quotes
+being replaced by &amp;quot;.
+<p>
+For example:
+<pre>
+   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&amp;gt;
+</pre>
+After the XML is read, the contents of that label will be displayed from the text in the "label" attribute, which is:
+<pre>
+   &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
+</pre>
+and will appear on the screen as
+<p>
+&nbsp;&nbsp;&nbsp;<strong>JMRI 3.7.2 or later is required to use this definition.</strong>
+<p>
+For more examples see HEAD/tree/trunk/jmri/xml/decoders/esu/v4infoPane.xml
+<p>
+This provides only HTML5 support, so if something isn't displaying as you expect, 
+see if an approach using simpler HTML will work.
 
 <h3>Identification</h3>
 Three pieces:
