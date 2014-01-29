@@ -507,7 +507,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				_car.setRoadName(road);
 				_car.setNumber(number);
 			}
-			saveCar();
+			saveCar(true);
 			/*
 			 * all JMRI window position and size are now saved // save frame size and position
 			 * carManager.setEditFrame(this);
@@ -538,7 +538,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (ae.getSource() == addButton) {
 			if (!checkCar(null))
 				return;
-			saveCar();
+			saveCar(false);
 			// save car file
 			writeFiles();
 		}
@@ -634,7 +634,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 
-	private void saveCar() {
+	private void saveCar(boolean isSave) {
 		if (roadComboBox.getSelectedItem() == null
 				|| roadComboBox.getSelectedItem().toString().equals(""))
 			return;
@@ -654,7 +654,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setWeightTons(weightTonsTextField.getText());
 
 		// ask if all cars of this type should be passenger
-		if (_car.isPassenger() ^ passengerCheckBox.isSelected()) {
+		if (isSave && _car.isPassenger() ^ passengerCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 					passengerCheckBox.isSelected() ? Bundle.getMessage("carModifyTypePassenger") : Bundle
 							.getMessage("carRemoveTypePassenger"), new Object[] { _car.getTypeName() }), MessageFormat
@@ -681,7 +681,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		} catch (Exception e) {
 
 		}
-		if (passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
+		if (isSave && passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
 			if (JOptionPane.showConfirmDialog(
 					this,
 					MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
@@ -701,7 +701,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		_car.setBlocking(blocking);
 		// ask if all cars of this type should be caboose
-		if (_car.isCaboose() ^ cabooseCheckBox.isSelected()) {
+		if (isSave && _car.isCaboose() ^ cabooseCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 					cabooseCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeCaboose")
 							: Bundle.getMessage("carRemoveTypeCaboose"), new Object[] { _car
@@ -719,7 +719,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		_car.setCaboose(cabooseCheckBox.isSelected());
 		// ask if all cars of this type should be utility
-		if (_car.isUtility() ^ utilityCheckBox.isSelected()) {
+		if (isSave && _car.isUtility() ^ utilityCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 					utilityCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeUtility")
 							: Bundle.getMessage("carRemoveTypeUtility"), new Object[] { _car
@@ -737,7 +737,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		_car.setUtility(utilityCheckBox.isSelected());
 		// ask if all cars of this type should be hazardous
-		if (_car.isHazardous() ^ hazardousCheckBox.isSelected()) {
+		if (isSave && _car.isHazardous() ^ hazardousCheckBox.isSelected()) {
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 					hazardousCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeHazardous")
 							: Bundle.getMessage("carRemoveTypeHazardous"), new Object[] { _car
