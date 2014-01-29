@@ -223,8 +223,8 @@ public class Car extends RollingStock {
 
 	/**
 	 * This car's service order when placed at a track that considers car order. There are two track orders, FIFO and
-	 * LIFO. Car's with the lowest numbers are serviced first when placed at a track in FIFO mode. Car's with the
-	 * highest numbers are serviced first when place at a track in LIFO mode.
+	 * LIFO. Car's with the lowest numbers are serviced first when placed on a track in FIFO mode. Car's with the
+	 * highest numbers are serviced first when placed on a track in LIFO mode.
 	 * 
 	 * @param number
 	 *            The assigned service order for this car.
@@ -519,13 +519,13 @@ public class Car extends RollingStock {
 	public String setDestination(Location destination, Track track, boolean force) {
 		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
-		Track oldDestTrack = getDestinationTrack();
+		Track destinationTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track, force);
 		// return if not Okay
 		if (!status.equals(Track.OKAY))
 			return status;
 		// now check to see if the track has a schedule
-		if (track != null && oldDestTrack != track && !loading) {
+		if (track != null && destinationTrack != track && !loading) {
 			status = track.scheduleNext(this);
 			if (!status.equals(Track.OKAY))
 				return status;
@@ -534,10 +534,12 @@ public class Car extends RollingStock {
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
 		// set service order for LIFO and FIFO tracks
-		if (oldDestTrack != null)
-			setOrder(oldDestTrack.getMoves());
+		if (destinationTrack != null && !destinationTrack.getServiceOrder().equals(Track.NORMAL))
+			setOrder(destinationTrack.getMoves());
+		else
+			setOrder(0);
 		// update load when car reaches a spur
-		loadNext(oldDestTrack);
+		loadNext(destinationTrack);
 		return status;
 	}
 
@@ -770,11 +772,12 @@ public class Car extends RollingStock {
 			if (getReturnWhenEmptyDestTrack() != null)
 				e.setAttribute(Xml.RWE_DEST_TRACK_ID, getReturnWhenEmptyDestTrack().getId());
 		}
-
-		e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
-		
-		if (getBlocking() != 0)
+		if (getOrder() != 0) {
+			e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
+		}
+		if (getBlocking() != 0) {
 			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
+		}
 
 		return e;
 	}
