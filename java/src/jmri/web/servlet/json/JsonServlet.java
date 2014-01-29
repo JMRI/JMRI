@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -171,7 +170,6 @@ public class JsonServlet extends WebSocketServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
 
@@ -291,7 +289,6 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
@@ -384,7 +381,6 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
@@ -457,7 +453,6 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
