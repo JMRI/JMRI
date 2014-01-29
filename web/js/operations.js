@@ -3,7 +3,7 @@
  */
 
 //request and show a list of available trains from JMRI server
-var $getTrains = function(showAll) {
+var getTrains = function(showAll) {
     $.ajax({
         url: "/operations/trains?format=tr" + ((showAll) ? "&show=all" : ""), //request proper url for train list
         data: {},
@@ -35,5 +35,5 @@ $(document).ready(function() {
     // /operations/manifest/id > getManifest for Id
     // /operations/conductor/id > getConductor for Id
     // all other > getTrains
-    $getTrains((getParameterByName('show') === "all") ? true : false);
+    getTrains((getParameterByName('show') === "all") ? true : false);
 });
