@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2014
  * @version $Revision: 21286 $
  */
 public class JsonProgrammerServer extends AbstractProgrammerServer {
@@ -50,9 +51,7 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
      */
     @Override
     public void sendStatus(int CV, int value, int status) throws IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("sendStatus called for CV " + CV + " with value " + value + " and status " + status);
-        }
+        log.debug("sendStatus called for CV {} with value {} and status {}", CV, value, status);
         if (status == ProgListener.OK) {
             ObjectNode root = this.mapper.createObjectNode();
             root.put(TYPE, PROGRAMMER);
