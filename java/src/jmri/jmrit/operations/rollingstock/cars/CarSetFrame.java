@@ -308,11 +308,12 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (!ignoreKernelCheckBox.isSelected() && kernelComboBox.getSelectedItem() != null) {
 			if (kernelComboBox.getSelectedItem().equals("")) {
 				car.setKernel(null);
-			} else {
+			} else if (!car.getKernelName().equals(kernelComboBox.getSelectedItem())) {
 				car.setKernel(carManager.getKernelByName((String) kernelComboBox.getSelectedItem()));
-				// if car has FRED make lead
-				if (car.hasFred())
+				// if car has FRED or is caboose make lead
+				if (car.hasFred() || car.isCaboose())
 					car.getKernel().setLead(car);
+				car.setBlocking(car.getKernel().getSize());
 			}
 		}		
 		// save car's track

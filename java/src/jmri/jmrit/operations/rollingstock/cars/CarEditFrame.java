@@ -679,7 +679,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (blocking < 0 || blocking > 100)
 				blocking = 0;
 		} catch (Exception e) {
-
+			log.warn ("Blocking must be a number between 0 and 100");
 		}
 		if (isSave && passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
 			if (JOptionPane.showConfirmDialog(
@@ -761,11 +761,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (kernelComboBox.getSelectedItem() != null) {
 			if (kernelComboBox.getSelectedItem().equals("")) {
 				_car.setKernel(null);
-			} else {
+			} else if (!_car.getKernelName().equals(kernelComboBox.getSelectedItem())) {
 				_car.setKernel(carManager.getKernelByName((String) kernelComboBox.getSelectedItem()));
-				// if car has FRED make lead
-				if (_car.hasFred())
+				// if car has FRED or caboose make lead
+				if (_car.hasFred() || _car.isCaboose())
 					_car.getKernel().setLead(_car);
+				_car.setBlocking(_car.getKernel().getSize());
 			}
 		}
 		if (loadComboBox.getSelectedItem() != null && !_car.getLoadName().equals(loadComboBox.getSelectedItem())) {

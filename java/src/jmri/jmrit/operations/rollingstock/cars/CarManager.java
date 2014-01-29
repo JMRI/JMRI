@@ -378,14 +378,6 @@ public class CarManager extends RollingStockManager {
 				}
 				if (!out.contains(car))
 					out.add(out.size() - lastCarsIndex, car);
-				// group the cars in the kernel together
-				if (car.getKernel() != null && car.getKernel().isLead(car)) {
-					int index = out.indexOf(car);
-					for (Car kcar : car.getKernel().getCars()) {
-						if (car != kcar)
-							out.add(++index, kcar);
-					}
-				}
 			} else if (car.isCaboose() || car.hasFred()) {
 				out.add(car); // place at end of list
 				lastCarsIndex++;
@@ -401,6 +393,27 @@ public class CarManager extends RollingStockManager {
 				}
 				out.add(out.size() - index, car);
 				lastCarsIndex++;
+			}
+			// group the cars in the kernel together
+			if (car.getKernel() != null && car.getKernel().isLead(car)) {
+				int index = out.indexOf(car);
+				int numberOfCars = 1; // already added the lead car to the list
+				for (Car kcar : car.getKernel().getCars()) {
+					if (car != kcar) {
+						// Block cars in kernel
+						for (int j = 0; j < numberOfCars; j++) {
+							if (kcar.getBlocking() < out.get(index + j).getBlocking()) {
+								out.add(index + j, kcar);
+								break;
+							}
+						}
+						if (!out.contains(kcar))
+							out.add(index + numberOfCars, kcar);
+						numberOfCars++;
+						if (car.hasFred() || car.isCaboose() || car.isPassenger())
+							lastCarsIndex++; // place entire kernel at the end of list
+					}
+				}
 			}
 		}
 		return out;
