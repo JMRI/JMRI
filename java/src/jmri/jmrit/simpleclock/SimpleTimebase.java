@@ -1,6 +1,10 @@
 // Timebase.java
 package jmri.jmrit.simpleclock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Arrays;
 import java.util.Date;
 import jmri.ClockControl;
 import jmri.Memory;
@@ -50,8 +54,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
             }
             clockSensor.addPropertyChangeListener(
-                    new java.beans.PropertyChangeListener() {
-                        public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    new PropertyChangeListener() {
+                        public void propertyChange(PropertyChangeEvent e) {
                             clockSensorChanged();
                         }
                     });
@@ -192,7 +196,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     public void userSetRate(double factor) {
-	// this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl  
+        // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl  
         // implementation
         if (factor < 0.1 || factor > 100) {
             log.error("rate of " + factor + " is out of reasonable range, set to 1");
@@ -252,7 +256,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 masterName = "";
                 hardwareTimeSource = null;
             } else {
-		// Note if there are multiple hardware clocks, this should be changed to correctly
+                // Note if there are multiple hardware clocks, this should be changed to correctly
                 // identify which hardware clock has been chosen-currently assumes only one
                 hardwareTimeSource = jmri.InstanceManager.clockControlInstance();
                 masterName = hardwareTimeSource.getHardwareClockName();
@@ -423,7 +427,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return (!notInitialized);
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
@@ -453,7 +457,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * <P>
      * Not yet implemented.
      */
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
@@ -462,7 +466,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      * <P>
      * Not yet implemented.
      */
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
@@ -504,7 +508,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     java.text.SimpleDateFormat timeStorageFormat = null;
 
     javax.swing.Timer timer = null;
-    java.beans.PropertyChangeSupport pcMinutes = new java.beans.PropertyChangeSupport(this);
+    PropertyChangeSupport pcMinutes = new PropertyChangeSupport(this);
 
     /**
      * Start the minute alarm ticking, if it isnt already.
@@ -574,17 +578,24 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     /**
      * Request a call-back when the minutes place of the time changes.
      */
-    public void addMinuteChangeListener(java.beans.PropertyChangeListener l) {
-        pcMinutes.addPropertyChangeListener(l);
-        startAlarm();
+    public void addMinuteChangeListener(PropertyChangeListener l) {
+        if (!Arrays.asList(this.getMinuteChangeListeners()).contains(l)) {
+            pcMinutes.addPropertyChangeListener(l);
+            startAlarm();
+        }
     }
 
     /**
      * Remove a request for call-back when the minutes place of the time
      * changes.
      */
-    public void removeMinuteChangeListener(java.beans.PropertyChangeListener l) {
+    public void removeMinuteChangeListener(PropertyChangeListener l) {
         pcMinutes.removePropertyChangeListener(l);
+    }
+
+    @Override
+    public PropertyChangeListener[] getMinuteChangeListeners() {
+        return pcMinutes.getPropertyChangeListeners();
     }
 
     public void setState(int s) throws jmri.JmriException {

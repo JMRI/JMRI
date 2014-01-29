@@ -2,6 +2,7 @@
 
 package jmri;
 
+import java.beans.PropertyChangeListener;
 import java.util.Date;
 
 /**
@@ -133,22 +134,27 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(PropertyChangeListener l);
     
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(PropertyChangeListener l);
     
     /**
      * Request a call-back when the minutes place of the time changes.
      */
-    public void addMinuteChangeListener(java.beans.PropertyChangeListener l);
+    public void addMinuteChangeListener(PropertyChangeListener l);
     
     /**
      * Remove a request for call-back when the minutes place of the time changes.
      */
-    public void removeMinuteChangeListener(java.beans.PropertyChangeListener l);
+    public void removeMinuteChangeListener(PropertyChangeListener l);
+    
+    /**
+     * Get the list of minute change listeners.
+     */
+    public PropertyChangeListener[] getMinuteChangeListeners();
     
     /**
      * Remove references to and from this object, so that it can
