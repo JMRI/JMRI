@@ -620,22 +620,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	}
 
 	private void addPropertyChangeCars() {
-		List<RollingStock> list = manager.getList();
-		for (int i = 0; i < list.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			RollingStock car = list.get(i);
-			if (car != null)
-				car.addPropertyChangeListener(this);
+		for (RollingStock car : manager.getList()) {
+			car.addPropertyChangeListener(this);
 		}
 	}
 
 	private void removePropertyChangeCars() {
-		List<RollingStock> list = manager.getList();
-		for (int i = 0; i < list.size(); i++) {
-			// if object has been deleted, it's not here; ignore it
-			RollingStock car = list.get(i);
-			if (car != null)
-				car.removePropertyChangeListener(this);
+		for (RollingStock car : manager.getList()) {
+			car.removePropertyChangeListener(this);
 		}
 	}
 

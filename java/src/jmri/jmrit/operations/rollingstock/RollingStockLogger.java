@@ -13,7 +13,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -206,10 +205,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			log.debug("Rolling Stock Logger adding car listerners");
 			carLog = true;
 			List<RollingStock> cars = CarManager.instance().getList();
-			for (int i = 0; i < cars.size(); i++) {
-				Car car = (Car) cars.get(i);
-				if (car != null)
-					car.addPropertyChangeListener(this);
+			for (RollingStock car : cars) {
+				car.addPropertyChangeListener(this);
 			}
 			// listen for new rolling stock being added
 			CarManager.instance().addPropertyChangeListener(this);
@@ -221,10 +218,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			engLog = true;
 			log.debug("Rolling Stock Logger adding engine listerners");
 			List<RollingStock> engines = EngineManager.instance().getList();
-			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = (Engine) engines.get(i);
-				if (engine != null)
-					engine.addPropertyChangeListener(this);
+			for (RollingStock engine : engines) {
+				engine.addPropertyChangeListener(this);
 			}
 			// listen for new rolling stock being added
 			EngineManager.instance().addPropertyChangeListener(this);
@@ -235,10 +230,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (carLog) {
 			log.debug("Rolling Stock Logger removing car listerners");
 			List<RollingStock> cars = CarManager.instance().getList();
-			for (int i = 0; i < cars.size(); i++) {
-				Car car = (Car) cars.get(i);
-				if (car != null)
-					car.removePropertyChangeListener(this);
+			for (RollingStock car : cars) {
+				car.removePropertyChangeListener(this);
 			}
 			CarManager.instance().removePropertyChangeListener(this);
 		}
@@ -249,10 +242,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (engLog) {
 			log.debug("Rolling Stock Logger removing engine listerners");
 			List<RollingStock> engines = EngineManager.instance().getList();
-			for (int i = 0; i < engines.size(); i++) {
-				Engine engine = (Engine) engines.get(i);
-				if (engine != null)
-					engine.removePropertyChangeListener(this);
+			for (RollingStock engine : engines) {
+				engine.removePropertyChangeListener(this);
 			}
 			EngineManager.instance().removePropertyChangeListener(this);
 		}
