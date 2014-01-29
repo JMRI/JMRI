@@ -42,14 +42,14 @@ $(document).ready(function() {
             }
         }
     });
-	$('input#clearConsole').click(function() {
-		$('div#console').empty(); //clear the console
-		return false;
-	});
-	$('input#disconnect').click(function() {
-		jmri.socket.send("goodbye", {});
-		return false;
-	});
+    $('input#clearConsole').click(function() {
+        $('div#console').empty(); //clear the console
+        return false;
+    });
+    $('input#disconnect').click(function() {
+        jmri.socket.send("goodbye", {});
+        return false;
+    });
     $('input#sendCmd').click(function() {
         jmri.socket._send($('input#command').val());
         return false;
