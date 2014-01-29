@@ -22,7 +22,6 @@ public class JsonTimeServer extends AbstractTimeServer {
         super();
         this.connection = connection;
         this.mapper = new ObjectMapper();
-        listenToTimebase(true);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class JsonTimeServer extends AbstractTimeServer {
             JsonUtil.setTime(data);
         }
         this.sendTime();
-        this.timebase.addMinuteChangeListener(timeListener);
+        listenToTimebase(true);
     }
 
     @Override
