@@ -93,6 +93,22 @@ public class JmriSRCPServer extends JmriServer{
                       log.debug("Parse Exception");
                       pe.printStackTrace();
                    }
+                   jmri.jmris.srcp.parser.Token t = parser.getNextToken();
+                   if(t.kind==jmri.jmris.srcp.parser.SRCPParserConstants.EOF){
+                      // the input ended.  
+                      if(log.isDebugEnabled())
+                      {
+                         log.debug("Closing connection due to close of input stream");
+                      }
+                      outStream.close();
+                      inStream.close();
+                      return;
+                   }
+                   TimeStampedOutput.writeTimestamp(outStream,"425 ERROR not supported\n\r");
+                   // recover by consuming tokens in the token stream
+                   // until we reach the end of the line.
+                   while(t.kind!=jmri.jmris.srcp.parser.SRCPParserConstants.EOL)
+                          t = parser.getNextToken();
               } 
            } else if (sh.isCommandMode() ){
 
@@ -142,9 +158,20 @@ public class JmriSRCPServer extends JmriServer{
                    TimeStampedOutput.writeTimestamp(outStream,"410 ERROR unknown command\n\r");
               }
            } else if (!sh.isCommandMode()) {
-              String cmd = inStream.readLine(); 
-              if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
-             // input commands are ignored in INFOMODE. 
+              BufferedReader d = new BufferedReader(new InputStreamReader(inStream));
+              try {
+                 String cmd = d.readLine(); 
+                 if(cmd!=null) { 
+                 if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
+                 // input commands are ignored in INFOMODE.
+                 } else {
+                   // close the input stream.
+                   d.close();
+                   inStream.close();
+                 }
+              } catch ( java.io.IOException ioe ){
+                 // we don't care if there is an error on input.
+              }
            } else {
 	      TimeStampedOutput.writeTimestamp(outStream,"500 ERROR out of resources\n\r");
               outStream.close();

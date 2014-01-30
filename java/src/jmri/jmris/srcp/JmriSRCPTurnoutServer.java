@@ -25,6 +25,15 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         output = outStream;
     }
 
+    @Override
+    synchronized protected void addTurnoutToList(String turnoutName) {
+        if (!turnouts.containsKey(turnoutName)) {
+            turnouts.put(turnoutName, new TurnoutListener(turnoutName));
+            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).addPropertyChangeListener(turnouts.get(turnoutName));
+        }
+    }
+
+
 
     /*
      * Protocol Specific Abstract Functions
@@ -72,7 +81,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
      */
     public void initTurnout(int bus, int address, String protocol) throws jmri.JmriException, java.io.IOException {
 
-        log.debug("parse Status called with bus {} address {} and protocol {}", bus, address, protocol);
+        log.debug("init Turnout called with bus {} address {} and protocol {}", bus, address, protocol);
         java.util.List<Object> list = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
         Object memo;
         try {

@@ -40,29 +40,31 @@ MORE :
   <DESCRIPT: ~[]>
 }*/
 
-<IN_TIME>
-TOKEN:
-{
-    < JULDATE: (["0"-"9"])+ >
-  | < MINSEC: ["0"-"5"]["0"-"9"]>
-  | < HOUR: (["0"-"2"])?["0"-"9"]>
-}
+//<IN_TIME>
+//TOKEN:
+//{
+//    < JULDATE: (["0"-"9"])+ >
+//  | < MINSEC: ["0"-"5"]["0"-"9"]>
+//  | < HOUR: (["0"-"2"])?["0"-"9"]>
+//}
 
 //<DEFAULT,IN_DESCRIPTION,IN_TIME>
 <DEFAULT,IN_TIME>
 TOKEN :
 {
-  < EOL :(["\n","\r"]){2} >:DEFAULT
+  //< EOL :(["\n","\r"]){1,2} >:DEFAULT
+  < EOL : "\n" >:DEFAULT
 }
 
 <DEFAULT>
 SKIP:
 {
-     <RETURN: "\r">
-   | <NEWLINE: "\n">
+    <RETURN: "\r">
+   | <CONTINUE: "\\\n">
+   | <TAB: "\t">
    | <SPACE: " ">
 }
- 
+
 <DEFAULT>
 TOKEN :
 {
@@ -150,7 +152,7 @@ SimpleNode handshakecommand():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( LOOKAHEAD(4) go() | handshake_set() ) <EOL>
+  ( LOOKAHEAD(2) go() | handshake_set() ) <EOL>
   {
     log.debug("Handshake Command Production");
     return jjtThis;
