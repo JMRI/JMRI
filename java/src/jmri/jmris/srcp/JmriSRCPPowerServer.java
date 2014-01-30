@@ -39,6 +39,7 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
 		TimeStampedOutput.writeTimestamp(output,"100 INFO 0 POWER OFF\n\r");
         } else {
                // power unknown
+	       TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
         }
      }
 

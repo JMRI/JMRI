@@ -56,7 +56,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
-            TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
+            TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
         }
 
     }
@@ -80,7 +80,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
-            TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
+            TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
         }
     }
 

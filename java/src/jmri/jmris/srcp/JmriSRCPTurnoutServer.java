@@ -63,7 +63,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " GA " + address + " 1 0\n\r");
         } else {
             //  unknown state
-            TimeStampedOutput.writeTimestamp(output,"416 ERROR no data\n\r");
+            TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
         }
     }
 
