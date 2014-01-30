@@ -21,8 +21,38 @@ function getPanels() {
             }
         }
     });
+};
+
+/*
+ * Get list of in-use network services and hide or show elements as appropriate
+ */
+function getNetworkServices() {
+    $.ajax({
+        url: "/json/networkServices",
+        data: {},
+        success: function(data) {
+            // show all hidden when service is available elements 
+            $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
+            $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
+            $(".hidden-jmri_jmri-simple").addClass("show").removeClass("hidden");
+            $(".hidden-jmri_srcp").addClass("show").removeClass("hidden");
+            $(".hidden-jmri_withrottle").addClass("show").removeClass("hidden");
+            // hide all visible when service is available elements 
+            $(".visible-jmri_jmri-json").addClass("hidden").removeClass("show");
+            $(".visible-jmri_jmri-locormi").addClass("hidden").removeClass("show");
+            $(".visible-jmri_jmri-simple").addClass("hidden").removeClass("show");
+            $(".visible-jmri_srcp").addClass("hidden").removeClass("show");
+            $(".visible-jmri_withrottle").addClass("hidden").removeClass("show");
+            if (data.length !== 0) {
+                $.each(data, function(index, value) {
+                    var service = value.type.split(".")[0];
+                    $(".visible-jmri" + service).addClass("show").removeClass("hidden");
+                    $(".hidden-jmri" + service).addClass("hidden").removeClass("show");
+                });
+            }
+        }
+    });
 }
-;
 
 /*
  * Find a parameter in the URL
@@ -64,6 +94,7 @@ function equalHeight(selector) {
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 // perform tasks that all BootStrap-based servlets need
 $(document).ready(function() {
+    getNetworkServices(); // hide or show and network service specific elements
     getPanels(); // complete the panels menu
 });
 
