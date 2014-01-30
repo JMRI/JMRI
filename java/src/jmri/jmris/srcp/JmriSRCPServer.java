@@ -158,7 +158,8 @@ public class JmriSRCPServer extends JmriServer{
                    TimeStampedOutput.writeTimestamp(outStream,"410 ERROR unknown command\n\r");
               }
            } else if (!sh.isCommandMode()) {
-              BufferedReader d = new BufferedReader(new InputStreamReader(inStream));
+              BufferedReader d = new BufferedReader(new InputStreamReader(inStream,
+                                  java.nio.charset.Charset.forName("UTF-8")));
               try {
                  String cmd = d.readLine(); 
                  if(cmd!=null) { 

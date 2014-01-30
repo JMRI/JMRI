@@ -18,6 +18,7 @@ public class SRCPVisitorTest extends TestCase {
         public void testCTor(){
            // test the constructor.
            SRCPVisitor v = new SRCPVisitor();
+           assertNotNull(v);
         }
  
         public void testGetServer() {

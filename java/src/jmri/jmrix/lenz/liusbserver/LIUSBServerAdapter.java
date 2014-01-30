@@ -144,7 +144,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   XNetReply r;
                   BufferedReader bufferedin = 
                      new BufferedReader(
-                        new InputStreamReader(commAdapter.getInputStream()));
+                        new InputStreamReader(commAdapter.getInputStream(),
+                                  java.nio.charset.Charset.forName("UTF-8")));
                   for(;;){
                      try{
                         synchronized(commAdapter) {
@@ -182,7 +183,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   XNetReply r;
                   BufferedReader bufferedin = 
                      new BufferedReader(
-                        new InputStreamReader(bcastAdapter.getInputStream()));
+                        new InputStreamReader(bcastAdapter.getInputStream(),
+                                   java.nio.charset.Charset.forName("UTF-8")));
                   for(;;){
                      try{
                         synchronized(bcastAdapter) {
