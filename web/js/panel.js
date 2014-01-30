@@ -1549,6 +1549,9 @@ $(document).ready(function() {
             panelName = path[path.length - 2] + "/" + path[path.length - 1];
         }
     }
+    // setup the functional menu items
+    $("#navbar-panel-reload > a").attr("href", location.href);
+    $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
     // show panel thumbnails if no panel name
     if (panelName === null || typeof (panelName) === undefined) {
         listPanels();
