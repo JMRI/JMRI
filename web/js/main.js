@@ -45,6 +45,22 @@ function setTitle(value) {
     return title;
 }
 
+/*
+ * Set every element matching the selector to the height of the tallest element
+ */
+function equalHeight(selector) {
+    tallest = 0;
+    selector.each(function() {
+        thisHeight = $(this).height();
+        if (thisHeight > tallest) {
+            tallest = thisHeight;
+        }
+    });
+    selector.each(function() {
+        $(this).height(tallest);
+    });
+}
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 // perform tasks that all BootStrap-based servlets need
 $(document).ready(function() {

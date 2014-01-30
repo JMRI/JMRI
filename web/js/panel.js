@@ -1,13 +1,13 @@
 /**********************************************************************************************
  *  panel Servlet - Draw JMRI panels on browser screen
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
- *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
+ *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.   
  *    There are 3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
- *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
+ *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
@@ -105,6 +105,7 @@ function processPanelXML($returnedData, $success, $xhr) {
     });
     $("#panel-area").width($gPanel.panelwidth);
     $("#panel-area").height($gPanel.panelheight);
+    setTitle($gPanel["name"]);
 
     //insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
     if ($gPanel.paneltype === "LayoutPanel") {
@@ -134,10 +135,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                 //default various css attributes to not-set, then set in later code as needed
                 var $hoverText = "";
 
-                //add and normalize the various type-unique values, from the various spots they are stored
-                //  icons named based on states returned from xmlio server,
+                // add and normalize the various type-unique values, from the various spots they are stored
+                // icon names based on states returned from JSON server,
                 $widget['state'] = UNKNOWN; //initial state is unknown
-                $widget['element'] = ""; //default to no xmlio type (avoid undefined)
+                $widget['element'] = ""; //default to no JSON type (avoid undefined)
                 if (typeof $widget["id"] !== "undefined") {
                     $widget["systemName"] = $widget["id"];
                     $widget["id"] = "widget-" + $widget["id"];
@@ -187,7 +188,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "indicatorturnouticon" :
                                 $widget['name'] = $(this).find('turnout').text();
                                 ; //normalize name
-                                $widget['element'] = 'turnout'; //what xmlio server calls this
+                                $widget['element'] = 'turnout'; // JSON object type
                                 $widget['icon1'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
@@ -202,7 +203,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "turnouticon" :
                                 $widget['name'] = $widget.turnout; //normalize name
-                                $widget['element'] = "turnout"; //what xmlio server calls this
+                                $widget['element'] = "turnout"; // JSON object type
                                 $widget['icon1'] = $(this).find('icons').find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
                                 $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
@@ -217,7 +218,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "sensoricon" :
                                 $widget['name'] = $widget.sensor; //normalize name
-                                $widget['element'] = "sensor"; //what xmlio server calls this
+                                $widget['element'] = "sensor"; // JSON object type
                                 $widget['icon1'] = $(this).find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('active').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
@@ -232,7 +233,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "signalheadicon" :
                                 $widget['name'] = $widget.signalhead; //normalize name
-                                $widget['element'] = "signalHead"; //what xmlio server calls this
+                                $widget['element'] = "signalHead"; // JSON object type
                                 $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
                                 $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
                                 $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
@@ -256,7 +257,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "signalmasticon" :
                                 $widget['name'] = $widget.signalmast; //normalize name
-                                $widget['element'] = "signalMast"; //what xmlio server calls this
+                                $widget['element'] = "signalMast"; // JSON object type
                                 var icons = $(this).find('icons').children(); //get array of icons
                                 icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
                                     $widget['icon' + item.nodeName] = $(item).attr('url');
@@ -272,7 +273,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "multisensoricon" :
                                 //create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
                                 //  set up siblings array so each widget can also set state of the others
-                                $widget['element'] = "sensor"; //what xmlio server calls this
+                                $widget['element'] = "sensor"; // JSON object type
                                 $widget['icon1'] = $(this).find('unknown').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
@@ -321,7 +322,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         switch ($widget.widgetType) {
                             case "sensoricon" :
                                 $widget['name'] = $widget.sensor; //normalize name
-                                $widget['element'] = "sensor"; //what xmlio server calls this
+                                $widget['element'] = "sensor"; // JSON object type
                                 //set each state's text
                                 $widget['text1'] = $(this).find('unknownText').attr('text');
                                 $widget['text2'] = $(this).find('activeText').attr('text');
@@ -335,8 +336,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget.name != undefined && $widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.element + " clickable ";
                                 }
-                                 jmri.getSensor($widget["systemName"]);
-                               break;
+                                jmri.getSensor($widget["systemName"]);
+                                break;
                             case "locoicon" :
                             case "trainicon" :
                                 //also set the background icon for this one (additional css in .html file)
@@ -362,14 +363,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
-                                $widget['element'] = "memory"; //what xmlio server calls this
+                                $widget['element'] = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
                                 jmri.getMemory($widget["systemName"]);
                                 break;
                             case "memoryInputIcon" :
                             case "memoryComboIcon" :
                                 $widget['name'] = $widget.memory; //normalize name
-                                $widget['element'] = "memory"; //what xmlio server calls this
+                                $widget['element'] = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
                                 $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
                                 jmri.getMemory($widget["systemName"]);
@@ -409,7 +410,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                $widget['element'] = "turnout"; //what xmlio server calls this
+                                $widget['element'] = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
                                 if ($widget.name != undefined) { //make it clickable (unless no turnout assigned)
@@ -509,13 +510,14 @@ function processPanelXML($returnedData, $success, $xhr) {
 //		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
 //	}, 3000);
 
-};
+}
+;
 
 //perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
     var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
-    sendElementChange($widget.element, $widget.name, $newState);  //send new value to xmlio server
+    sendElementChange($widget.element, $widget.name, $newState);  //send new value to JMRI
     if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
         sendElementChange($widget.element, $widget.secondturnoutname, $newState);  //also send 2nd turnout
     }
@@ -556,7 +558,7 @@ function $handleMultiClick(e) {
     for (i in $widget.siblings) {  //loop through siblings and send changes as needed
         if (i == next) {
             if ($gWidgets[$widget.siblings[i]].state != ACTIVE) {
-                sendElementChange('sensor', $gWidgets[$widget.siblings[i]].name, ACTIVE);  //set next sensor to active and send command to xmlio server
+                sendElementChange('sensor', $gWidgets[$widget.siblings[i]].name, ACTIVE);  //set next sensor to active and send command to JMRI server
             }
         } else {
             if ($gWidgets[$widget.siblings[i]].state != INACTIVE) {
@@ -1389,7 +1391,7 @@ var requestPanelXML = function(panelName) {
         type: "GET",
         url: "/panel/" + panelName + "?format=xml", //request proper url
         success: function(data, textStatus, jqXHR) {
-            
+
             processPanelXML(data, textStatus, jqXHR);
         },
         error: function() {
@@ -1488,6 +1490,53 @@ var $drawAllIconWidgets = function() {
     });
 };
 
+function listPanels() {
+    $.ajax({
+        url: "/panel/?format=json",
+        data: {},
+        success: function(data, textStatus, jqXHR) {
+            if (data.length !== 0) {
+                $("#panel-list").empty();
+                $("#activity-alert").addClass("hidden").removeClass("show");
+                $("#panel-list").addClass("show").removeClass("hidden");
+                $.each(data, function(index, value) {
+                    $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.userName + "</div></a></div></div>");
+                    // col-lg-# % index + 1
+                    if (3 % (index + 1)) {
+                        $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
+                    }
+                    // col-md-# % index + 1
+                    if (4 % (index + 1)) {
+                        $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
+                    }
+                    // col-sm-# % index + 1
+                    if (6 % (index + 1)) {
+                        $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
+                    }
+                });
+                resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
+            }
+        }
+    });
+}
+
+function resizeThumbnails() {
+    tallest = 0;
+    $(".thumbnail-image").each(function() {
+        thisHeight = $("img", this).height();
+        if (thisHeight > tallest) {
+            tallest = thisHeight;
+        }
+    });
+    $(".thumbnail-image").each(function() {
+        $(this).height(tallest);
+    });
+}
+
+$(window).resize(function() {
+    resizeThumbnails();
+});
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
     // get panel name if passed as a parameter
@@ -1502,6 +1551,7 @@ $(document).ready(function() {
     }
     // show panel thumbnails if no panel name
     if (panelName === null || typeof (panelName) === undefined) {
+        listPanels();
         $("#panel-list").addClass("show").removeClass("hidden");
         $("#panel-area").addClass("hidden").removeClass("show");
     } else {
@@ -1550,7 +1600,7 @@ $(document).ready(function() {
             UPEVENT = 'mouseup';
         }
 
-        //include name of panel in page title
+        // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
         //add a widget to retrieve current fastclock rate
