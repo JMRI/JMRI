@@ -1360,38 +1360,13 @@ var $getNextState = function($widget) {
     return $nextState;
 };
 
-//request and show a list of available panels from the server, and store in persistent var for later checks
-var $getPanelList = function() {
-    $.ajax({
-        url: '/xmlio/list', //request proper url
-        data: {type: "panel"},
-        success: function($r, $s, $x) {
-            var $h = "<h1>JMRI Panels</h1>";
-            $h += "<table><tr><th>View Panel</th><th>Type</th></tr>";
-            $($r).find("panel").each(function() {
-                var $t = $(this).attr("name").split("/");
-                var $panelType = $t[0];
-                var $panelName = $(this).attr("userName");
-                $gPanelList[$panelName] = $panelType; //store the type for each panel
-                $h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $panelName + "</a></td>";
-                $h += "<td>" + $panelType + "</td>";
-            });
-            $h += "</table>";
-            $("#panel-list").html($h); //put table on page
-        },
-        dataType: 'xml' //<--dataType
-    });
-};
-
 //request the panel xml from the server, and setup callback to process the response
 var requestPanelXML = function(panelName) {
     $("activity-alert").addClass("show").removeClass("hidden");
-
     $.ajax({
         type: "GET",
         url: "/panel/" + panelName + "?format=xml", //request proper url
         success: function(data, textStatus, jqXHR) {
-
             processPanelXML(data, textStatus, jqXHR);
         },
         error: function() {
@@ -1501,16 +1476,16 @@ function listPanels() {
                 $("#panel-list").addClass("show").removeClass("hidden");
                 $.each(data, function(index, value) {
                     $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.userName + "</div></a></div></div>");
-                    // col-lg-# % index + 1
-                    if (3 % (index + 1)) {
+                    // (12 / col-lg-#) % index + 1
+                    if (4 % (index + 1)) {
                         $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
                     }
-                    // col-md-# % index + 1
-                    if (4 % (index + 1)) {
+                    // (12 / col-md-#) % index + 1
+                    if (3 % (index + 1)) {
                         $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
                     }
-                    // col-sm-# % index + 1
-                    if (6 % (index + 1)) {
+                    // (12 / col-sm-#) % index + 1
+                    if (2 % (index + 1)) {
                         $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
                     }
                 });
