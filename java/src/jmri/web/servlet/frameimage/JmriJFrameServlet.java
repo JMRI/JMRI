@@ -1,5 +1,8 @@
 package jmri.web.servlet.frameimage;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.URL;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
@@ -315,36 +320,57 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String format = request.getParameter("format");
+        ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html");
+        if ("json".equals(format)) {
+            response.setContentType("application/json"); // NOI18N
+        } else {
+            response.setContentType("text/html");
+        }
         response.setHeader("Connection", "Keep-Alive");
         response.setDateHeader("Date", now.getTime());
         response.setDateHeader("Last-Modified", now.getTime());
         response.setDateHeader("Expires", now.getTime());
 
-        response.getWriter().append(rb.getString("FrameDocType"));
-        response.getWriter().append(rb.getString("ListFront"));
-        response.getWriter().write(rb.getString("TableHeader"));
-        // list frames, (open JMRI windows)
-        for (JmriJFrame frame : JmriJFrame.getFrameList()) {
-            String title = frame.getTitle();
-            //don't add to list if blank or disallowed
-            if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
-                String link = "/frame/" + StringUtil.escapeString(title) + ".html";
-                //format a table row for each valid window (frame)
-                response.getWriter().append("<tr><td><a href='" + link + "'>");
-                response.getWriter().append(title);
-                response.getWriter().append("</a></td>");
-                response.getWriter().append("<td><a href='");
-                response.getWriter().append(link);
-                response.getWriter().append("'><img src='");
-                response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png");
-                response.getWriter().append("'></a></td></tr>\n");
+        if ("json".equals(format)) {
+            ArrayNode root = mapper.createArrayNode();
+            for (JmriJFrame frame : JmriJFrame.getFrameList()) {
+                String title = frame.getTitle();
+                if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
+                    ObjectNode node = mapper.createObjectNode();
+                    node.put(NAME, title);
+                    node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html");
+                    node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png");
+                    root.add(node);
+                }
             }
+            response.getWriter().write(mapper.writeValueAsString(root));
+        } else {
+            response.getWriter().append(rb.getString("FrameDocType"));
+            response.getWriter().append(rb.getString("ListFront"));
+            response.getWriter().write(rb.getString("TableHeader"));
+            // list frames, (open JMRI windows)
+            for (JmriJFrame frame : JmriJFrame.getFrameList()) {
+                String title = frame.getTitle();
+                //don't add to list if blank or disallowed
+                if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
+                    String link = "/frame/" + StringUtil.escapeString(title) + ".html";
+                    //format a table row for each valid window (frame)
+                    response.getWriter().append("<tr><td><a href='" + link + "'>");
+                    response.getWriter().append(title);
+                    response.getWriter().append("</a></td>");
+                    response.getWriter().append("<td><a href='");
+                    response.getWriter().append(link);
+                    response.getWriter().append("'><img src='");
+                    response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png");
+                    response.getWriter().append("'></a></td></tr>\n");
+                }
+            }
+            response.getWriter().append("</table>");
+            response.getWriter().append(rb.getString("ListFooter"));
         }
-        response.getWriter().append("</table>");
-        response.getWriter().append(rb.getString("ListFooter"));
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
