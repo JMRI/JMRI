@@ -29,7 +29,7 @@ public class Car extends RollingStock {
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
-	protected int _order = 0; // track service ordering
+//	protected int _order = 0; // track service ordering
 	protected int _blocking = 0;
 
 	protected Location _rweDestination = null; // return when empty destination
@@ -221,24 +221,24 @@ public class Car extends RollingStock {
 		return _wait;
 	}
 
-	/**
-	 * This car's service order when placed at a track that considers car order. There are two track orders, FIFO and
-	 * LIFO. Car's with the lowest numbers are serviced first when placed on a track in FIFO mode. Car's with the
-	 * highest numbers are serviced first when placed on a track in LIFO mode.
-	 * 
-	 * @param number
-	 *            The assigned service order for this car.
-	 */
-	public void setOrder(int number) {
-		int old = _order;
-		_order = number;
-		if (old != number)
-			firePropertyChange("car order changed", old, number); // NOI18N
-	}
-
-	public int getOrder() {
-		return _order;
-	}
+//	/**
+//	 * This car's service order when placed at a track that considers car order. There are two track orders, FIFO and
+//	 * LIFO. Car's with the lowest numbers are serviced first when placed on a track in FIFO mode. Car's with the
+//	 * highest numbers are serviced first when placed on a track in LIFO mode.
+//	 * 
+//	 * @param number
+//	 *            The assigned service order for this car.
+//	 */
+//	public void setOrder(int number) {
+//		int old = _order;
+//		_order = number;
+//		if (old != number)
+//			firePropertyChange("car order changed", old, number); // NOI18N
+//	}
+//
+//	public int getOrder() {
+//		return _order;
+//	}
 	
 	public void setBlocking(int number) {
 		int old = _blocking;
@@ -534,10 +534,10 @@ public class Car extends RollingStock {
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
 		// set service order for LIFO and FIFO tracks
-		if (destinationTrack != null && !destinationTrack.getServiceOrder().equals(Track.NORMAL))
-			setOrder(destinationTrack.getMoves());
-		else
-			setOrder(0);
+//		if (destinationTrack != null && !destinationTrack.getServiceOrder().equals(Track.NORMAL))
+//			setOrder(destinationTrack.getMoves());
+//		else
+//			setOrder(0);
 		// update load when car reaches a spur
 		loadNext(destinationTrack);
 		return status;
@@ -699,9 +699,9 @@ public class Car extends RollingStock {
 		if (_rweDestination != null && (a = e.getAttribute(Xml.RWE_DEST_TRACK_ID)) != null) {
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
-		if ((a = e.getAttribute(Xml.ORDER)) != null) {
-			_order = Integer.parseInt(a.getValue());
-		}
+//		if ((a = e.getAttribute(Xml.ORDER)) != null) {
+//			_order = Integer.parseInt(a.getValue());
+//		}
 		if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
 			_blocking = Integer.parseInt(a.getValue());
 		}
@@ -772,9 +772,9 @@ public class Car extends RollingStock {
 			if (getReturnWhenEmptyDestTrack() != null)
 				e.setAttribute(Xml.RWE_DEST_TRACK_ID, getReturnWhenEmptyDestTrack().getId());
 		}
-		if (getOrder() != 0) {
-			e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
-		}
+//		if (getOrder() != 0) {
+//			e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
+//		}
 		if (getBlocking() != 0) {
 			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
 		}

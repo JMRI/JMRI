@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class RollingStockManager {
 
-	// RollingStock by id
+	// RollingStock
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); 
 
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
@@ -292,7 +292,7 @@ public class RollingStockManager {
 	/**
 	 * Sort by rolling stock type names
 	 * 
-	 * @return list of RollingStock ids ordered by RollingStock type
+	 * @return list of RollingStock ordered by RollingStock type
 	 */
 	public List<RollingStock> getByTypeList() {
 		return getByList(getByRoadNameList(), BY_TYPE);
