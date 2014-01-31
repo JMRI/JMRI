@@ -993,7 +993,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // found, attach the qualifier object by creating it
                 if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+pane.getName());
                 PaneQualifier qual = new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
-                qual.update(var.getIntValue()); 
+                qual.update(); 
                 lq.add(qual);   
             } else {
                 log.error("didn't find "+variableRef+" variable qualifying "+pane.getName(), new Exception());

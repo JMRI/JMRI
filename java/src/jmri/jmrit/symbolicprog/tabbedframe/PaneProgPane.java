@@ -1199,20 +1199,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 c.add(j);
                 cs.gridwidth = 1;
             }
-            else if (name.equals("label")) { // its  a label
-                JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
-                l.setAlignmentX(1.0f);
-                cs.fill = GridBagConstraints.BOTH;
-                cs.gridwidth = GridBagConstraints.REMAINDER;
-                if (log.isDebugEnabled()) {
-                    log.debug("Add label: "+l.getText()+" cs: "
-                              +cs.gridwidth+" "+cs.fill+" "
-                              +cs.gridx+" "+cs.gridy);
-                }
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.fill = GridBagConstraints.NONE;
-                cs.gridwidth = 1;
+            else if (name.equals("label")) {
+                makeLabel(e, c, g, cs);
             }
             else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
@@ -1276,6 +1264,28 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
+    /**
+     * Create label from Element
+     */
+    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        cs.gridwidth = GridBagConstraints.REMAINDER;
+        if (log.isDebugEnabled()) {
+            log.debug("Add label: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        
+        // handle qualification if any
+        
+    }
+    
     /**
      * Create a single row from the JDOM column Element
      */

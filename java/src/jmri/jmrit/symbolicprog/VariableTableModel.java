@@ -311,7 +311,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // currently only looks for one instance and one type
         @SuppressWarnings("unchecked")
         List<Element> le = e.getChildren("qualifier");
-        ArrayList<ValueQualifier> lq = new ArrayList<ValueQualifier>();
+        ArrayList<Qualifier> lq = new ArrayList<Qualifier>();
         for (Element q : le) {
 
             String variableRef = q.getChild("variableref").getText();
@@ -325,7 +325,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 // found, attach the qualifier object by creating it
                 if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+v.label());
                 ValueQualifier qual = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
-                qual.update(rowVector.get(index).getIntValue()); 
+                qual.update(); 
                 lq.add(qual);   
             } else {
                 log.error("didn't find "+variableRef+" variable qualifying "+v.label(), new Exception());

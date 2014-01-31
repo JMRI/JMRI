@@ -13,12 +13,16 @@ package jmri.jmrit.symbolicprog;
 public abstract class AbstractQualifier implements Qualifier, java.beans.PropertyChangeListener {
 
     public AbstractQualifier(VariableValue watchedVal) {
+        this.watchedVal = watchedVal;
+
         // set up listener
         watchedVal.addPropertyChangeListener(this);
         
         // subclass ctors are required to qualify on initial value of variable   
-        // to get initial qualification state right.     
+        // to get initial qualification state right after listener was added.   
     }
+    
+    VariableValue watchedVal;
     
     /**
      * Process property change from the variable being watched
@@ -56,7 +60,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     
     abstract protected boolean availableStateFromValue(int value);
     abstract protected boolean currentAvailableState();
-    abstract protected boolean currentDesiredState();
+    abstract public boolean currentDesiredState();
     
     /**
      * Drive the available or not state of the qualified object.
@@ -65,7 +69,4 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      */
     abstract protected void setWatchedAvailable(boolean enable);
     
-    public void update(int value) {
-        setWatchedAvailable(availableStateFromValue(value));
-    }
 }

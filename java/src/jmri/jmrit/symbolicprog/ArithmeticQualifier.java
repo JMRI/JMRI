@@ -39,10 +39,9 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
 
         this.test = Test.decode(relation);
         this.value = value;
-        this.watchedVal = watchedVal;
     }
 
-    protected boolean currentDesiredState() {
+    public boolean currentDesiredState() {
         return availableStateFromObject(watchedVal.getValueObject());
     }
 
@@ -69,6 +68,9 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         return false;       // shouldn't happen?
     }
     
+    public void update() {
+        setWatchedAvailable(availableStateFromValue(watchedVal.getIntValue()));
+    }
+    
     int value;
-    VariableValue watchedVal;
 }
