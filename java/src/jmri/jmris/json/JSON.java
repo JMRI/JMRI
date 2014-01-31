@@ -185,6 +185,10 @@ public final class JSON {
      */
     public static final String ROSTER = "roster"; // NOI18N
     /**
+     * {@value #ROSTER_GROUP}
+     */
+    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
+    /**
      * {@value #ROUTES}
      */
     public static final String ROUTES = "routes"; // NOI18N
@@ -448,6 +452,10 @@ public final class JSON {
      * {@value #LOCKABLE}
      */
     public static final String LOCKABLE = "lockable"; // NOI18N
+    /**
+     * {@value #GROUP}
+     */
+    public static final String GROUP = "group"; // NOI18N
 
     /* JSON route (operations) tokens */
     /**

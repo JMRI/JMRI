@@ -60,6 +60,7 @@ import static jmri.jmris.json.JSON.F;
 import static jmri.jmris.json.JSON.FORMER_NODES;
 import static jmri.jmris.json.JSON.FORWARD;
 import static jmri.jmris.json.JSON.FUNCTION_KEYS;
+import static jmri.jmris.json.JSON.GROUP;
 import static jmri.jmris.json.JSON.HEARTBEAT;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.ID;
@@ -765,14 +766,40 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getRoster() {
+    static public JsonNode getRoster(JsonNode data) {
+        String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
+        if (Roster.ALLENTRIES.equals(group)) {
+            group = null;
+        }
+        String roadName = (!data.path(ROAD).isMissingNode()) ? data.path(ROAD).asText() : null;
+        String roadNumber = (!data.path(NUMBER).isMissingNode()) ? data.path(NUMBER).asText() : null;
+        String dccAddress = (!data.path(ADDRESS).isMissingNode()) ? data.path(ADDRESS).asText() : null;
+        String mfg = (!data.path(MFG).isMissingNode()) ? data.path(MFG).asText() : null;
+        String decoderMfgId = null;
+        String decoderVersionId = null;
+        String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode root = mapper.createArrayNode();
-        for (RosterEntry re : Roster.instance().matchingList(null, null, null, null, null, null, null)) {
+        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgId, decoderVersionId, id, group)) {
             root.add(getRosterEntry(re.getId()));
         }
         return root;
     }
 
+    static public JsonNode getRosterGroups() {
+        ArrayNode root = mapper.createArrayNode();
+        ObjectNode allEntries = mapper.createObjectNode();
+        allEntries.put(NAME, Roster.ALLENTRIES);
+        allEntries.put(LENGTH, Roster.instance().numEntries());
+        root.add(allEntries);
+        for (String name : Roster.instance().getRosterGroupList()) {
+            ObjectNode group = mapper.createObjectNode();
+            group.put(NAME, name);
+            group.put(LENGTH, Roster.instance().numGroupEntries(name));
+            root.add(group);
+        }
+        return root;
+    }
+    
     static public JsonNode getRoute(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);

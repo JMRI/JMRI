@@ -33,6 +33,7 @@ import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
+import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -191,7 +192,9 @@ public class JsonClientHandler {
                 } else if (list.equals(REPORTERS)) {
                     reply = JsonUtil.getReporters();
                 } else if (list.equals(ROSTER)) {
-                    reply = JsonUtil.getRoster();
+                    reply = JsonUtil.getRoster(data);
+                } else if (list.equals(ROSTER_GROUPS)) {
+                    reply = JsonUtil.getRosterGroups();
                 } else if (list.equals(ROUTES)) {
                     reply = JsonUtil.getRoutes();
                 } else if (list.equals(SENSORS)) {

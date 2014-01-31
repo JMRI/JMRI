@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -44,6 +46,7 @@ import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
 import static jmri.jmris.json.JSON.ROSTER;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
+import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -179,6 +182,10 @@ public class JsonServlet extends WebSocketServlet {
             response.setContentType("application/json"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
             String name = (rest.length > 2) ? rest[2] : null;
+            ObjectNode parameters = this.mapper.createObjectNode();
+            for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+                parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], "UTF-8"));
+            }
             JsonNode reply;
             try {
                 if (name == null) {
@@ -205,7 +212,9 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(REPORTERS)) {
                         reply = JsonUtil.getReporters();
                     } else if (type.equals(ROSTER)) {
-                        reply = JsonUtil.getRoster();
+                        reply = JsonUtil.getRoster(parameters);
+                    } else if (type.equals(ROSTER_GROUPS)) {
+                        reply = JsonUtil.getRosterGroups();
                     } else if (type.equals(ROUTES)) {
                         reply = JsonUtil.getRoutes();
                     } else if (type.equals(SENSORS)) {
