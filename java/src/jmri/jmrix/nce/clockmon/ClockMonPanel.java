@@ -1775,6 +1775,21 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         super.dispose();
     }
     
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+        private static final long serialVersionUID = 7866417679219605358L;
+
+        public Default() {
+            super("Open NCE Clock Monitor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                ClockMonPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
+
     static Logger log = LoggerFactory.getLogger(ClockMonPanel.class.getName());
     
 }

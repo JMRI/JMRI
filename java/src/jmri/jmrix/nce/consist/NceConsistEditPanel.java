@@ -2119,6 +2119,20 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		+ " " + cre.getLoco6DccAddress()
 		+ " " + shortHandConvertDTD(cre.getLoco6Direction());
 	}
+    
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+
+		public Default() {
+            super("Open NCE Consist Editor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NceConsistEditPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
 
 	static Logger log = LoggerFactory
 	.getLogger(NceConsistEditPanel.class.getName());

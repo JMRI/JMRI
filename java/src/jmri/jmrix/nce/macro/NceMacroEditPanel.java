@@ -1198,6 +1198,19 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		accyTextField10.setToolTipText(rb.getString("toolTip10"));
     }
     
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+
+		public Default() {
+            super("Open NCE Macro Editor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NceMacroEditPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
    
     static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());	
 }

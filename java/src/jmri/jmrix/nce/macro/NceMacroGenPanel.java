@@ -206,6 +206,19 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     	gc.weighty = 100.0;
     	add(c, gc);
     }
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+
+		public Default() {
+            super("Open NCE Send Macro Window", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NceMacroGenPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
 }
 
 

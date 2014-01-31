@@ -1843,6 +1843,22 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		
 	}
 
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+        private static final long serialVersionUID = 1846279950671843214L;
+
+
+        public Default() {
+            super("Open NCE Cabs Monitor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NceShowCabPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
+
     static Logger log = LoggerFactory.getLogger(NceShowCabPanel.class.getName());
 }
 

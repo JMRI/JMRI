@@ -202,6 +202,20 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		return replyLen;
 	}
 
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+
+
+		public Default() {
+            super("Open NCE Send Binary Command", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NcePacketGenPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
+        }
+    }
+
 	static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
 }
 
