@@ -51,9 +51,9 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         }
 
         if (Status == Sensor.ACTIVE) {
-            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 1\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " FB " + address + " 1\n\r");
         } else if (Status == Sensor.INACTIVE) {
-            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
             TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
@@ -75,9 +75,9 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
                 + "S" + address;
         int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
         if (Status == Sensor.ACTIVE) {
-            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 1\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " FB " + address + " 1\n\r");
         } else if (Status == Sensor.INACTIVE) {
-            TimeStampedOutput.writeTimestamp(output,"100 INFO" + bus + " FB " + address + " 0\n\r");
+            TimeStampedOutput.writeTimestamp(output,"100 INFO " + bus + " FB " + address + " 0\n\r");
         } else {
             //  unknown state
             TimeStampedOutput.writeTimestamp(output,"411 ERROR unknown value\n\r");
