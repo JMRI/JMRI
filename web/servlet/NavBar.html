@@ -15,7 +15,7 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="context-"><a href="/">Home</a></li>
+                <li class="context-home"><a href="/">Home</a></li>
                 <li class="dropdown context-panel">
                     <a href="/panel" class="dropdown-toggle" data-toggle="dropdown">Panels <b class="caret"></b></a>
                     <ul id="navbar-panels" class="dropdown-menu">
@@ -28,6 +28,10 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <!-- will populate with ajax query -->
                         <li id="empty-panel-list" class="disabled"><a href="#">No Panels Loaded</a></li>
                     </ul>
+                </li>
+                <li class="dropdown context-roster">
+                    <a href="/roster" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
+                    <ul id="navbar-roster-groups" class="dropdown-menu"></ul>
                 </li>
                 <li class="dropdown context-operations">
                     <a href="/operations" class="dropdown-toggle" data-toggle="dropdown">Operations <b class="caret"></b></a>

@@ -21,7 +21,22 @@ function getPanels() {
             }
         }
     });
-};
+}
+
+function getRosterGroups() {
+    $.ajax({
+        url: "/json/rosterGroups",
+        data: {},
+        success: function(data) {
+            $(".navbar-roster-group-item").remove();
+            if (data.length !== 0) {
+                $.each(data, function(index, value) {
+                    $("#navbar-roster-groups").append("<li class=\"navbar-roster-group-item\"><a href=\"/roster?group=" + value.name + "\"><span class=\"badge pull-right\">" + value.length + "</span>" + value.name + "</a></li>");
+                });
+            }
+        }
+    });
+}
 
 /*
  * Get list of in-use network services and hide or show elements as appropriate
@@ -96,5 +111,6 @@ function equalHeight(selector) {
 $(document).ready(function() {
     getNetworkServices(); // hide or show and network service specific elements
     getPanels(); // complete the panels menu
+    getRosterGroups(); // list roster groups in menu
 });
 
