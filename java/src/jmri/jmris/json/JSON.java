@@ -429,6 +429,14 @@ public final class JSON {
      */
     public static final String MFG = "mfg"; // NOI18N
     /**
+     * {@value #DECODER_MODEL}
+     */
+    public static final String DECODER_MODEL = "decoderModel"; // NOI18N
+    /**
+     * {@value #DECODER_FAMILY}
+     */
+    public static final String DECODER_FAMILY = "decoderFamily"; // NOI18N
+    /**
      * {@value #MAX_SPD_PCT}
      */
     public static final String MAX_SPD_PCT = "maxSpeedPct"; // NOI18N

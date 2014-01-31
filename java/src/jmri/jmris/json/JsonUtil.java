@@ -45,6 +45,8 @@ import static jmri.jmris.json.JSON.COMMENT;
 import static jmri.jmris.json.JSON.CONSIST;
 import static jmri.jmris.json.JSON.CONTROL_PANEL;
 import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.DECODER_FAMILY;
+import static jmri.jmris.json.JSON.DECODER_MODEL;
 import static jmri.jmris.json.JSON.DEPARTURE_LOCATION;
 import static jmri.jmris.json.JSON.DEPARTURE_TIME;
 import static jmri.jmris.json.JSON.DESCRIPTION;
@@ -748,6 +750,8 @@ public class JsonUtil {
         entry.put(ROAD, re.getRoadName());
         entry.put(NUMBER, re.getRoadNumber());
         entry.put(MFG, re.getMfg());
+        entry.put(DECODER_MODEL, re.getDecoderModel());
+        entry.put(DECODER_FAMILY, re.getDecoderFamily());
         entry.put(MODEL, re.getModel());
         entry.put(COMMENT, re.getComment());
         entry.put(MAX_SPD_PCT, Integer.valueOf(re.getMaxSpeedPCT()).toString());
@@ -775,11 +779,11 @@ public class JsonUtil {
         String roadNumber = (!data.path(NUMBER).isMissingNode()) ? data.path(NUMBER).asText() : null;
         String dccAddress = (!data.path(ADDRESS).isMissingNode()) ? data.path(ADDRESS).asText() : null;
         String mfg = (!data.path(MFG).isMissingNode()) ? data.path(MFG).asText() : null;
-        String decoderMfgId = null;
-        String decoderVersionId = null;
+        String decoderModel = (!data.path(DECODER_MODEL).isMissingNode()) ? data.path(DECODER_MODEL).asText() : null;
+        String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode root = mapper.createArrayNode();
-        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgId, decoderVersionId, id, group)) {
+        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
             root.add(getRosterEntry(re.getId()));
         }
         return root;
