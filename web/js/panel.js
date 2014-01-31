@@ -1489,7 +1489,7 @@ function listPanels() {
                         $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
                     }
                 });
-                resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
+                // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
             }
         }
     });
