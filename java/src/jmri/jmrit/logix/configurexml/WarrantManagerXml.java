@@ -60,7 +60,7 @@ public class WarrantManagerXml //extends XmlFile
                 elem.addContent(c);
             }
             
-            List <BlockOrder> orders = warrant.getOrders();
+            List <BlockOrder> orders = warrant.getBlockOrders();
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }
@@ -189,7 +189,6 @@ public class WarrantManagerXml //extends XmlFile
             for (int k=0; k<orders.size(); k++) {
                 BlockOrder bo = loadBlockOrder(orders.get(k));
                 if (bo==null) {
-                    warrant.clearAll();
                     break;
                 }
                 warrant.addBlockOrder(bo);
@@ -256,18 +255,14 @@ public class WarrantManagerXml //extends XmlFile
         if (blocks.size()>0) {
             // sensor
             String name = blocks.get(0).getAttribute("systemName").getValue();
-            block = InstanceManager.oBlockManagerInstance().provideOBlock(name);
-            if (log.isDebugEnabled()) log.debug("Load Block "+name+".");
+            block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
             if (block==null) {
-                block = InstanceManager.oBlockManagerInstance().createNewOBlock(name, null);
-                if (log.isDebugEnabled()) log.debug("create OBlock: ("+name+")");
-                if (block==null) {
-                    log.error("Block \""+name+"\" is null in BlockOrder.");
-                    return null;
-                }
+                log.error("Unknown Block \""+name+"\" is null in BlockOrder.");
+                return null;
             }
+            if (log.isDebugEnabled()) log.debug("Load Block "+name+".");
         } else {
-            log.error("Null block in BlockOrder");
+            log.error("Null BlockOrder element");
             return null;
         }
         Attribute attr = elem.getAttribute("pathName");

@@ -58,7 +58,7 @@ public class WarrantTableAction extends AbstractAction {
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static WarrantTableAction _instance;
-    private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
+    private static HashMap <String, Warrant> _warrantMap = new HashMap <String, Warrant> ();
     private static WarrantTableFrame _tableFrame;
     private static TrackerTableAction _trackerTable;
     private static JTextArea _textArea;
@@ -120,7 +120,7 @@ public class WarrantTableAction extends AbstractAction {
         return _warrantMenu;
     }
 
-    synchronized public static void updateWarrantMenu() {
+    synchronized protected static void updateWarrantMenu() {
         _warrantMenu.removeAll();
         _warrantMenu.add(getInstance());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
@@ -148,7 +148,7 @@ public class WarrantTableAction extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
     }
 
-    synchronized public static void closeWarrantFrame(WarrantFrame frame) {
+    synchronized protected static void closeWarrantFrame(WarrantFrame frame) {
     	if (frame!=null) {
     		if  (frame.equals(_openFrame)) {
             	_openFrame = null;		    			
@@ -156,25 +156,30 @@ public class WarrantTableAction extends AbstractAction {
     		frame.dispose();
     	}
     }
-    synchronized public static void newWarrantFrame(WarrantFrame frame) {
+    synchronized protected static void newWarrantFrame(WarrantFrame frame) {
     	closeWarrantFrame(_openFrame);
     	_openFrame = frame;
     }
 
-    synchronized public static void openWarrantFrame(String key) {
-    	_openFrame = _frameMap.get(key);
-        if (_openFrame==null) {
-        	_openFrame = new WarrantFrame(key);
-            _frameMap.put(key, _openFrame);
+    synchronized protected static void openWarrantFrame(String key) {
+    	if (_openFrame!=null) {
+    		_openFrame.dispose();
+    	}
+        Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(key);
+        if (w!=null) {
+        	_warrantMap.put(key, w);
+        	_openFrame = new WarrantFrame(w);
         }
-        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
-        _openFrame.setVisible(true);
-        _openFrame.toFront();
+        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_warrantMap.size());
+        if (_openFrame!=null) {
+            _openFrame.setVisible(true);
+            _openFrame.toFront();        	
+        }
     }
 
-    synchronized public static WarrantFrame getWarrantFrame(String key) {
+/*    synchronized public static WarrantFrame getWarrantFrame(String key) {
         return _frameMap.get(key);
-    }
+    }*/
     
     synchronized static public void mouseClickedOnBlock(OBlock block) {
     	if (_tableFrame!=null && _tableFrame.mouseClickedOnBlock(block)) {
@@ -475,25 +480,39 @@ public class WarrantTableAction extends AbstractAction {
             pack();
         }
 
-        void concatenate(Warrant startW, Warrant endW) {
+        protected void concatenate(Warrant startW, Warrant endW) {
             _startW = startW;
             _endW = endW;
         }
-        void doConcatenate(Warrant w) {
+        /**
+         * Does 3 cases: create new warrant, copy a warrant, concatenate two warrants
+         * warrant w is unregistered
+         * */
+        private void doConcatenate(Warrant w) {
             if (_startW!=null) {
-                List <BlockOrder> orders = _startW.getOrders();
+                List <BlockOrder> orders = _startW.getBlockOrders();
                 int limit = orders.size()-1;
                 for (int i=0; i<limit; i++) {
                     w.addBlockOrder(new BlockOrder(orders.get(i)));
                 }
+                w.setViaOrder(_startW.getViaOrder());
+                w.setAvoidOrder(_startW.getAvoidOrder());
                 BlockOrder bo = new BlockOrder(orders.get(limit));
                 if (_endW!=null) {
-                    orders = _endW.getOrders();
+                    orders = _endW.getBlockOrders();
                     bo.setExitName(orders.get(0).getExitName());
                     w.addBlockOrder(bo);
                     for (int i=1; i<orders.size(); i++) {
                         w.addBlockOrder(new BlockOrder(orders.get(i)));
-                    }                	
+                    }
+                    BlockOrder boo = _endW.getViaOrder();
+                    if (boo!=null) {
+                        w.setViaOrder(boo);                    	
+                    }
+                    boo = _endW.getAvoidOrder();
+                    if (boo!=null) {
+                        w.setAvoidOrder(boo); 
+                    }                    	
                 } else {
                     w.addBlockOrder(bo);		// copy only               	
                 }
@@ -507,15 +526,15 @@ public class WarrantTableAction extends AbstractAction {
                         w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
                     }                	
                 }
-                _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
+                _warrantMap.put(w.getDisplayName(), w);
+            	new WarrantFrame(w, false);
             } else {
             	new WarrantFrame(w, true);
             }
-            dispose();
-       	
+            dispose();      	
         }
 
-        void makeWarrant() {
+        private void makeWarrant() {
             String sysName = _sysNameBox.getText().trim();
             String userName = _userNameBox.getText().trim();
             sysName = sysName.toUpperCase();

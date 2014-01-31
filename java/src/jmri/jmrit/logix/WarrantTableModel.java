@@ -215,7 +215,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             case WARRANT_COLUMN:
                 return w.getDisplayName();
             case ROUTE_COLUMN:
-                BlockOrder bo = w.getBlockOrderAt(0);
+                BlockOrder bo = w.getfirstOrder();
                 if (bo!=null) {
                     return Bundle.getMessage("Origin", bo.getBlock().getDisplayName());
                 }
@@ -263,10 +263,10 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
             case CONTROL_COLUMN:
                 String msg = w.getRunningMessage();
-                WarrantFrame frame = WarrantTableAction.getWarrantFrame(w.getDisplayName());
+/*                WarrantFrame frame = WarrantTableAction.getWarrantFrame(w.getDisplayName());
                 if (frame !=null) {
                     frame._statusBox.setText(msg);
-                }
+                }*/
                 return msg;
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
@@ -358,7 +358,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                         msg = Bundle.getMessage("NoCommands", w.getDisplayName());
                         break;
                     }
-                    if (w.getOrders().size() == 0) {
+                    if (w.getBlockOrders().size() == 0) {
                         msg = Bundle.getMessage("EmptyRoute");
                         break;
                     }
@@ -369,7 +369,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 break;
             case MANUAL_RUN_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
-                    if (w.getOrders().size() == 0) {
+                    if (w.getBlockOrders().size() == 0) {
                         msg = Bundle.getMessage("EmptyRoute");
                         break;
                     }

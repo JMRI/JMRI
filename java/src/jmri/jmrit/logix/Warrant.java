@@ -31,7 +31,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;
-    private ArrayList <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
+    private List <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
     private String _trainName;      // User train name for icon
     private String _trainId;        // Roster Id
     private DccLocoAddress _dccAddress;
@@ -86,7 +86,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         super(sName.toUpperCase(), uName);
         _idxCurrentOrder = 0;
         _idxLastOrder = 0;
-        _orders = _savedOrders;
+        _orders = new ArrayList <BlockOrder>();
         _runBlind = false;
         _debug = log.isDebugEnabled();
     }
@@ -107,22 +107,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void setState(int state) {
     }
 
-    public void clearAll() {
-        _savedOrders = new ArrayList <BlockOrder>();
-        _viaOrder = null;
-        _avoidOrder = null;
-        _throttleCommands = new ArrayList <ThrottleSetting>();
-        _trainName = null;
-        _trainId = null;
-        _dccAddress = null;
-        _orders = _savedOrders;
-        _runBlind = false;
-    }
     /**
-    * Return permanently saved BlockOrders
+    * Return copy of permanently saved BlockOrders
     */
-    public List <BlockOrder> getOrders() {
-        return _savedOrders;
+    public List <BlockOrder> getBlockOrders() {
+    	ArrayList <BlockOrder> list = new ArrayList <BlockOrder>();
+        for (int i=0; i<_savedOrders.size(); i++) {
+        	list.add(new BlockOrder(_savedOrders.get(i)));
+        }
+        return list;
     }
     /**
     * Add permanently saved BlockOrder
@@ -130,7 +123,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void addBlockOrder(BlockOrder order) {
         _savedOrders.add(order);
     }
-    public void addBlockOrders(List<BlockOrder> orders) {
+    public void setBlockOrders(List<BlockOrder> orders) {
+    	_savedOrders.clear();
         for (int i=0; i<orders.size(); i++) {
         	_savedOrders.add(new BlockOrder(orders.get(i)));
         }
@@ -140,16 +134,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * Return permanently saved Origin
     */
     public BlockOrder getfirstOrder() {
-        if (_orders.size()==0) { return null; }
-        return new BlockOrder(_orders.get(0)); 
+        if (_savedOrders.size()==0) { return null; }
+        return new BlockOrder(_savedOrders.get(0)); 
     }
 
     /**
     * Return permanently saved Destination
     */
     public BlockOrder getLastOrder() {
-        if (_orders.size()==0) { return null; }
-        return new BlockOrder(_orders.get(_savedOrders.size()-1)); 
+        if (_savedOrders.size()==0) { return null; }
+        return new BlockOrder(_savedOrders.get(_savedOrders.size()-1)); 
     }
 
     /**
@@ -170,7 +164,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected String getRoutePathInBlock(OBlock block) {
     	List <BlockOrder> orders = _orders;
     	if (orders==null) {
-    		orders = _savedOrders;
+    		orders = getBlockOrders();
     	}
         for (int i=0; i<orders.size(); i++){
             if (orders.get(i).getBlock().equals(block)) {
@@ -247,7 +241,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     public List <ThrottleSetting> getThrottleCommands() {
-        return _throttleCommands;
+    	ArrayList <ThrottleSetting> list = new ArrayList <ThrottleSetting>();
+        for (int i=0; i<_throttleCommands.size(); i++) {
+        	list.add(new ThrottleSetting(_throttleCommands.get(i)));
+        }
+        return list;
+    }
+    public void setThrottleCommands(List<ThrottleSetting> list) {
+        _throttleCommands = list;
     }
     public void addThrottleCommand(ThrottleSetting ts) {
         _throttleCommands.add(ts);
@@ -382,7 +383,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     	}
         switch (_runMode) {
             case Warrant.MODE_NONE:
-                if (getOrders().size()==0) {
+                if (getBlockOrders().size()==0) {
                     return Bundle.getMessage("BlankWarrant");
                 }
                 if (getDccAddress()==null){
@@ -508,7 +509,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _runMode = mode;
             _idxCurrentOrder = 0;
 //            _idxLastOrder = 0;		can indicate an abort running message for lost routes
-            _orders = _savedOrders;
+            _orders = getBlockOrders();
         } else if (_runMode!=MODE_NONE) {
         	String modeDesc = null;
         	switch (_runMode) {
@@ -726,7 +727,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private String checkInService(List <BlockOrder> orders) {
         String msg = null;
         if (orders==null) {
-            _orders = _savedOrders;
+            _orders = getBlockOrders();
         } else {
             _orders = orders;
         }
@@ -752,11 +753,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_totalAllocated) {
             return null;
         }
-/*        if (orders==null) {
-            _orders = _savedOrders;
+        if (orders==null) {
+            _orders = getBlockOrders();
         } else {
             _orders = orders;
-        }*/
+        }
         _allocated = false;
         _totalAllocated = true;
         String msg = checkInService(orders);
@@ -887,18 +888,23 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         return msg;
     }
+    /**
+     * Called from Warrant Table list.  This could be bogus
+     * @return
+     */
     public String checkForContinuation() {
-    	Warrant w = getfirstOrder().getBlock().getWarrant();
+    	OBlock block = _orders.get(0).getBlock();
+    	Warrant w = block.getWarrant();
     	if (this.equals(w)) {
     		return null;
     	}
-    	// another warrant has the starting block, but it could be a continuation of this train
-    	if (w.getLastOrder().getBlock().equals(getfirstOrder().getBlock())     			
+    	// another warrant has the starting block, but that warrant could be a continuation of this train
+    	if (w.getLastOrder().getBlock().equals(block)     			
     			&& _dccAddress.equals(w.getDccAddress()) ) {
         	return null;
     	}
     	return Bundle.getMessage("OriginBlockNotSet",Bundle.getMessage("AllocatedToWarrant", 
-    				getDisplayName(), getfirstOrder().getBlock().getDisplayName()));
+    				getDisplayName(), block.getDisplayName()));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
