@@ -14,7 +14,7 @@ function listFrames() {
                 $("#frame-list").empty();
                 $("#frame-list").addClass("show").removeClass("hidden");
                 $.each(data, function(index, value) {
-                    $("#frame-list").append("<li class=\"list-group-item\"><a href=\"" + value.URL + "\"><img src=\"" + value.png + "\" style=\"width: 100%;\"><div class=\"caption\">" + value.name + "</div></a></li>");
+                    $("#frame-list").append("<li class=\"list-group-item\"><a href=\"" + value.URL + "\"><img src=\"" + value.png + "\" style=\"max-width: 100%;\"><div class=\"caption\">" + value.name + "</div></a></li>");
                 });
             }
         }
