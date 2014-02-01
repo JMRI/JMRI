@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- Schema for JMRI programmer definitions       -->
+
+<!-- $Id$ -->
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+    <!-- need variable -->
+    
+    <!-- not yet in proper Venetian blind form -->
+    <!-- needs to share the pane type with programmer definition -->
+    
+    <!-- need documentation, etc -->
+
+    <!-- need attribute restrictions -->
+    <!-- need attribute defaults -->
+    
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
+            "
+        >
+
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
+
+<xs:annotation>
+    <xs:documentation>
+      Types used in defining DecoderPro panes in both decoder and programmer XML files.
+    </xs:documentation>
+    <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane</jmri:usingclass>
+        <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame</jmri:usingclass>
+    </xs:appinfo>
+</xs:annotation>
+
+  <xs:complexType name="PaneType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="nameFmt" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="PaneRowType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaneColumnType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LabelType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="label" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="DisplayType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="item" type="xs:string"/>
+    <xs:attribute name="label" type="xs:string"/>
+    <xs:attribute name="format">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="default" />
+                <xs:enumeration value="vslider" />
+                <xs:enumeration value="hslider" />
+                <xs:enumeration value="hslider-percent" />
+                <xs:enumeration value="radiobuttons" />
+                <xs:enumeration value="checkbox" />
+                <xs:enumeration value="onradiobutton" />
+                <xs:enumeration value="offradiobutton" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="layout" type="xs:string"/>
+    <xs:attribute name="tooltip" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="pane" type="PaneType">
+    <xs:annotation><xs:documentation>
+      Can appear as top-level element in xml/programmer/parts files.
+    </xs:documentation></xs:annotation>
+  </xs:element>
+
+</xs:schema>
