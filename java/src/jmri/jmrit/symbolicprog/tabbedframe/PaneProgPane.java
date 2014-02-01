@@ -122,6 +122,9 @@ public class PaneProgPane extends javax.swing.JPanel
         // laid-out JPanel
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
+        // Add tooltip if present
+        setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
+        
         // find out whether to display "label" (false) or "item" (true)
         boolean showItem = false;
         Attribute nameFmt = pane.getAttribute("nameFmt");

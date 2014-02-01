@@ -33,7 +33,7 @@ public abstract class QualifierAdder {
     // e.g. return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
     abstract protected Qualifier createQualifier(VariableValue var, String relation, String value);
     
-    protected void processModifierElements(Element e, VariableTableModel model) {
+    public void processModifierElements(Element e, VariableTableModel model) {
         // currently only looks for one instance and one type
         @SuppressWarnings("unchecked")
         List<Element> le = e.getChildren("qualifier");

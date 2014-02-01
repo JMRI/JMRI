@@ -953,6 +953,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indexedCvList.size()!=0)) ) {
             tabPane.addTab(name, p);  // always add if not empty
             index = tabPane.indexOfTab(name);
+            tabPane.setToolTipTextAt(index, p.getToolTipText());
         } else if (getShowEmptyPanes()) {
             // here empty, but showing anyway as disabled
             tabPane.addTab(name, p);
@@ -975,36 +976,14 @@ abstract public class PaneProgFrame extends JmriJFrame
     /**
      * If there are any modifier elements, process them
      */
-    protected void processModifierElements(Element e, PaneProgPane pane, VariableTableModel model, JTabbedPane tabPane, int index) {
-        // currently only looks for one instance and one type
-        @SuppressWarnings("unchecked")
-        List<Element> le = e.getChildren("qualifier");
-        ArrayList<PaneQualifier> lq = new ArrayList<PaneQualifier>();
-        for (Element q : le) {
-
-            String variableRef = q.getChild("variableref").getText();
-            String relation = q.getChild("relation").getText();
-            String value = q.getChild("value").getText();
-    
-            // find the variable
-            VariableValue var = model.findVar(variableRef);
-            
-            if (var != null) {
-                // found, attach the qualifier object by creating it
-                if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+pane.getName());
-                PaneQualifier qual = new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
-                qual.update(); 
-                lq.add(qual);   
-            } else {
-                log.error("didn't find "+variableRef+" variable qualifying "+pane.getName(), new Exception());
+    protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
             }
-        }
-        // Now add the AND logic
-        if (lq.size()>1) {
-            // following registers itself
-            log.warn("multiple qualifiers on a single pane are not working yet - list of ArithmeticQualifiers?");
-            //new QualifierCombiner(v, lq);
-        }
+        };
+        
+        qa.processModifierElements(e, model);
     }
 
     public BusyGlassPane getBusyGlassPane() { return glassPane; }
