@@ -39,6 +39,7 @@
         >
 
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/panetype.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
     <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
 
@@ -147,43 +148,6 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-
-  <xs:element name="pane" type="PaneType">
-    <xs:annotation>
-      <xs:documentation>
-      Provides a base element that can be used in "pane" fragment files, those
-      little files that are XIncluded into primary decoder files.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-
-              <xs:element name="enumVal" >
-                <xs:annotation><xs:documentation>
-                A fixed set of choices is defined, each corresponding to a specific value
-                </xs:documentation></xs:annotation>
-                <xs:complexType>
-                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                    <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
-                    <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element name="enumChoice" >
-                      <xs:complexType>
-                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                          <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
-                          <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
-                          <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
-                        </xs:sequence>
-                        <xs:attribute name="choice" type="xs:string" use="required"/>
-                        <xs:attribute name="value" type="xs:int" />
-                        <xs:attribute name="comment" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute ref="xml:base" />
-                  <xs:attribute name="comment" type="xs:string"/>
-                </xs:complexType>
-              </xs:element>
-
 
   <xs:complexType name="FamilyType">
     <xs:sequence>
@@ -424,6 +388,7 @@
                         </xs:element>
                       </xs:sequence>
                       <xs:attribute ref="xml:base" />
+                      <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="decVal" >
@@ -711,132 +676,5 @@
     <xs:attribute ref="xml:base" />
   </xs:complexType>
 
-  <xs:complexType name="PaneType">
-    <xs:sequence>
-      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
-          <xs:annotation><xs:documentation>
-          DocBook element(s) providing copyright information in standard form.
-          For use in subfiles.
-          </xs:documentation></xs:annotation>
-      </xs:element>
-        
-      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
-          <xs:annotation><xs:documentation>
-          DocBook element(s) describing the authors in standard form.
-          For use in subfiles.
-          </xs:documentation></xs:annotation>
-      </xs:element>
-        
-      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
-          <xs:annotation><xs:documentation>
-          DocBook element(s) describing the revision history in standard form.
-          For use in subfiles.
-          </xs:documentation></xs:annotation>
-      </xs:element>
-
-      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-        <xs:annotation><xs:documentation>
-        Qualifies whether this pane will appear as active in the interface, depending
-        on the value in other variables.
-        </xs:documentation></xs:annotation>
-      </xs:element>
-
-      <xs:choice>
-        <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:choice>
-      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="nameFmt" type="xs:string"/>
-    <xs:attribute ref="xml:base" />
-  </xs:complexType>
-
-  <xs:complexType name="PaneRowType">
-    <xs:sequence minOccurs="1" maxOccurs="unbounded">
-      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="PaneColumnType">
-    <xs:sequence minOccurs="1" maxOccurs="unbounded">
-      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="LabelType">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="label" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="DisplayType">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
-      </xs:element>
-      <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="item" type="xs:string"/>
-    <xs:attribute name="label" type="xs:string"/>
-    <xs:attribute name="format">
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="default" />
-                <xs:enumeration value="vslider" />
-                <xs:enumeration value="hslider" />
-                <xs:enumeration value="hslider-percent" />
-                <xs:enumeration value="radiobuttons" />
-                <xs:enumeration value="checkbox" />
-                <xs:enumeration value="onradiobutton" />
-                <xs:enumeration value="offradiobutton" />
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:attribute>
-    <xs:attribute name="layout" type="xs:string"/>
-    <xs:attribute name="tooltip" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="QualifierType">
-    <xs:sequence minOccurs="1" maxOccurs="1">
-      <xs:element name="variableref" />
-      <xs:element name="relation">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="ge"/>
-            <xs:enumeration value="gt"/>
-            <xs:enumeration value="lt"/>
-            <xs:enumeration value="le"/>
-            <xs:enumeration value="eq"/>
-            <xs:enumeration value="ne"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="value">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:int" />
-          </xs:simpleContent>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
 
 </xs:schema>

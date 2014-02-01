@@ -52,15 +52,89 @@
 
   <xs:complexType name="PaneType">
     <xs:sequence>
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+    
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+    
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+      
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        Qualifies whether the content of this pane element will appear in the interface, depending
+        on the value in other pre-defined variables.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
+      
       <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
+      
     </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="nameFmt" type="xs:string"/>
+    <xs:attribute name="tooltip" type="xs:string"/>
+    <xs:attribute name="nameFmt" type="labelItemType" default="label">
+      <xs:annotation><xs:documentation>
+      Specifies whether the text displayed in the interface should
+      come from the "item" or "label" of the underlying variable.
+      </xs:documentation></xs:annotation>
+    </xs:attribute>
   </xs:complexType>
+  
+  <xs:simpleType name="labelItemType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "label" or "item".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="item"/>
+      <xs:enumeration value="label"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="QualifierType">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="variableref" />
+      <xs:element name="relation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="ge"/>
+            <xs:enumeration value="gt"/>
+            <xs:enumeration value="lt"/>
+            <xs:enumeration value="le"/>
+            <xs:enumeration value="eq"/>
+            <xs:enumeration value="ne"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="value">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int" />
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="PaneRowType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
@@ -73,6 +147,7 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="PaneColumnType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
@@ -85,14 +160,22 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="LabelType">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        Qualifies whether this label will appear in the interface, depending
+        on the value in other pre-defined variables.
+        </xs:documentation></xs:annotation>
+      </xs:element>
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="label" type="xs:string"/>
   </xs:complexType>
+  
   <xs:complexType name="DisplayType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
