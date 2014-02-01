@@ -58,8 +58,6 @@ Le R&#233;gulateur est un cas unique, la syntaxe l&#233;g&#232;rement diff&#233;
 </ul>
 Il y a plusieurs exemples de pages qui montrent comment cela peut &#234;tre utilis&#233;:
 <dl>
-<dt> <a href="http://localhost:12080/index.html"> index.html </a>
-<dd> (page d'accueil du serveur Web JMRI par d&#233;faut) Cette page contient plusieurs requ&#234;tes xmlio en lecture seulr  pour peupler la page de titre, un cadre et des listes de panneaux.
 <dt> <a href="http://localhost:12080/web/request.html"> web/request.html</a>
 <dd> Rend une seule requ&#234;te XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
 <dt> <a href="http://localhost:12080/web/monitor.html"> web/monitor.html</a>
@@ -73,8 +71,8 @@ la mise &#224; jour d'une table lors de tout changement.
 <dd> Table Aiguillage plus complexes, avec des boutons pour mettre un aiguillage d&#233;vi&#233; ou droit.
 <dt> <a href="http://localhost:12080/web/JMRI_XMLIO_test.html"> web/JMRI_XMLIO_test.html </a>
 <dd> Utile pour envoyer plusieurs commandes au serveur xmlio et voir les r&#233;ponses.
-<dt> <a href="http://localhost:12080/panel">/panel</a> et <a href = "http://localhost:12080/web/JMRIMobile. html "> web / JMRIMobile.html </a>
-<dd> Ces deux outils utilisent le serveur xmlio pour r&#233;cup&#233;rer des donn&#233;es &#224; partir de JMRI, l'envoi et le suivi des changements des modificationsdes &#233;l&#233;ments.
+<dt> <a href = "http://localhost:12080/web/JMRIMobile. html "> web / JMRIMobile.html </a>
+<dd> Utile le serveur xmlio pour r&#233;cup&#233;rer des donn&#233;es &#224; partir de JMRI, l'envoi et le suivi des changements des modificationsdes &#233;l&#233;ments.
 </Dl>
 
 <p>

@@ -40,6 +40,9 @@
     </revision>
   </revhistory>
 
+    <name>Lenz Function Map</name>
+    <name xml:lang="it">Mappatura Funzioni Lenz</name>
+
     <column>
       <row>
         <column>
@@ -202,6 +205,5 @@
         </column>
       </row>
     </column>
-    <name>Lenz Function Map</name>
-    <name xml:lang="it">Mappatura Funzioni Lenz</name>
+
 </pane>

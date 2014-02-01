@@ -57,8 +57,6 @@ Throttle is a unique case, slightly different syntax, supports read and change, 
 </ul>
 There are several sample pages that show how this can be used:
 <dl>
-<dt><a href="http://localhost:12080/index.html">index.html</a>
-<dd>(default JMRI Web Server home page)  This page makes several read-only xmlio requests to populate page title, frame and panel lists.
 <dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
 <dd>Makes a single XML request for all available sensors, and shows their status in a table.
 <dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
@@ -72,8 +70,8 @@ updating a table when any change.
 <dd>More complex turnout table, with buttons to throw and close turnouts.
 <dt><a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a> 
 <dd>Useful for sending various commands to xmlio server and viewing the responses.
-<dt><a href="http://localhost:12080/panel">/panel</a> and <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a>
-<dd>Both of these tools use the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.
+<dt><a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a>
+<dd>This tool uses the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.
 </dl>
 
 <p>

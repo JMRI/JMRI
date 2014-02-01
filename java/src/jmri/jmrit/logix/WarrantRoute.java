@@ -72,14 +72,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 	}
 	
 	public abstract void selectedRoute(ArrayList <BlockOrder> orders);
-	/**
-	 * Extensions must implement and include code for the following
-	 * PropertyChangeEvent property 
-        if (property.equals("DnDrop")) {
-        	doAction(e.getSource());
-        }
-	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-	 */
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
 	
 	protected void doSize(JComponent comp, int max, int min) {
@@ -124,7 +116,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             		}
             	}
             }
-            clearRoute();
         }
     }
     
@@ -304,35 +295,41 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         protected void setOrderExitPortal()  {
         	order.setExitName((String)portalBox.getSelectedItem());       	
         }
+
         protected void setOrder(BlockOrder o) {
-        	order = o;
-            if (order!=null) {
-            	OBlock block = order.getBlock();
+        	if (o!=null) {
+        		// setting blockBox text triggers doAction, so allow that to finish
+        		order = new BlockOrder(o);
+            	OBlock block = o.getBlock();
             	blockBox.setText(block.getDisplayName());
-            	setPathBox(block);
-                pathBox.setSelectedItem(order.getPathName());
-                setPortalBox(order);
+             	setPathBox(block);
                 if (location==Location.DEST) {
-                    portalBox.setSelectedItem(order.getEntryName());           	
+                	setPathName(o.getEntryName());           	
                 } else if (location==Location.ORIGIN){
-                    portalBox.setSelectedItem(order.getExitName());           	
+                	setPathName(o.getExitName());           	
                 }
-            }
-        }
+                setPortalBox(o);
+                if (location==Location.DEST) {
+                	setPortalName(o.getEntryPortal().getName());           	
+                } else if (location==Location.ORIGIN){
+                	setPortalName(o.getExitPortal().getName());           	
+                }
+        	}
+         }
         protected BlockOrder getOrder() {
         	return order;
         }
-        protected void setPortalName(String name) {
+        private void setPortalName(String name) {
             portalBox.setSelectedItem(name);
         }
-        protected void setPathName(String name) {
+        private void setPathName(String name) {
             pathBox.setSelectedItem(name);
         }
         protected String getBlockName() {
         	return blockBox.getText();
         }
         
-        boolean setBlock() {
+        private boolean setBlock() {
             return setBlock(getEndPointBlock(blockBox));
         }
         private boolean setBlock(OBlock block) {
@@ -731,6 +728,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected void clearRoute() {
         _orders = new ArrayList <BlockOrder>();
         _routeModel.fireTableDataChanged();
+        clearFrames();
+    }
+    private void clearFrames() {
+    	
         if (_debugFrame!=null) {
             _debugFrame.dispose();
             _debugFrame = null;
@@ -786,7 +787,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     public void dispose() {
-    	clearRoute();    	
+        clearFrames();
         super.dispose();
     }
 

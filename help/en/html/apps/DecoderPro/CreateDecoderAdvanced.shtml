@@ -331,6 +331,29 @@ Other available operators include "gt", "ge", "ne", "lt" and "le".
 If multiple qualifier elements are present, all must be true for the 
 pane to be active and displayed.
 
+<h5 name="labels">Qualifying Labels on Panes</h5>
+
+A "qualifier" element on a label element allows you to enable or disable the 
+display of the label on a specific pane.
+
+<p>The following example displays a warning label if a version-number
+variable has a too-low value:
+<pre>
+    &lt;label label="Version number too low!"&gt;
+      &lt;qualifier&gt;
+        &lt;variableref&gt;Version Number&lt;/variableref&gt;
+        &lt;relation&gt;lt&lt;/relation&gt;
+        &lt;value&gt;3&lt;/value&gt;
+      &lt;/qualifier&gt;
+    &lt;/label&gt;
+</pre>
+
+Once you've read the Version Number (variable or CV) from the decoder,
+this label will display iff that version number is too low.  Note
+that initially, before the values are read from the decoder, this 
+display will depend on the default value from the file, which might
+be misleading to the user.
+
 
 <!--#include virtual="/Footer" -->
 </div>

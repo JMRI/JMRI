@@ -830,6 +830,7 @@
     </resets>
   </decoder>
   <pane name="ANE">
+    <name>ANE</name>
     <column>
       <display item="FOF is Light on" format="checkbox"/>
       <display item="FOF is Strobe" format="checkbox"/>
@@ -910,6 +911,5 @@
       </label>
       <display item="FL Bit Location"/>
     </column>
-    <name>ANE</name>
   </pane>
 </decoder-config>

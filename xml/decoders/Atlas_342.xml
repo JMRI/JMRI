@@ -529,6 +529,7 @@
     </resets>
   </decoder>
   <pane name="Atlas">
+    <name>Atlas</name>
     <column>
       <display item="Directional Headlights"/>
       <label label=" ">
@@ -563,6 +564,5 @@
       <display item="Motor Drive Selection"/>
       <display item="Decoder Software Version"/>
     </column>
-    <name>Atlas</name>
   </pane>
 </decoder-config>

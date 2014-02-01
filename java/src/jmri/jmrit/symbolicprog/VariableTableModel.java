@@ -307,35 +307,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * If there are any modifier elements, process them
      * by e.g. setting attributes on the VariableValue
      */
-    protected void processModifierElements(Element e, VariableValue v) {
-        // currently only looks for one instance and one type
-        @SuppressWarnings("unchecked")
-        List<Element> le = e.getChildren("qualifier");
-        ArrayList<ValueQualifier> lq = new ArrayList<ValueQualifier>();
-        for (Element q : le) {
-
-            String variableRef = q.getChild("variableref").getText();
-            String relation = q.getChild("relation").getText();
-            String value = q.getChild("value").getText();
-    
-            // find the variable
-            int index = findVarIndex(variableRef);
-            
-            if (index >= 0) {
-                // found, attach the qualifier object by creating it
-                if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+v.label());
-                ValueQualifier qual = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
-                qual.update(rowVector.get(index).getIntValue()); 
-                lq.add(qual);   
-            } else {
-                log.error("didn't find "+variableRef+" variable qualifying "+v.label(), new Exception());
+    protected void processModifierElements(final Element e, final VariableValue v) {
+        QualifierAdder qa = new QualifierAdder() {        
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
-        }
-        // Now add the AND logic
-        if (lq.size()>1) {
-            // following registers itself
-            new QualifierCombiner(v, lq);
-        }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                v.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, this);
     }
 
     /**

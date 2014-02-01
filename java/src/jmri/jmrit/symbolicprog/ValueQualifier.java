@@ -20,7 +20,7 @@ public class ValueQualifier extends ArithmeticQualifier {
 
     VariableValue qualifiedVal;
 
-    protected void setWatchedAvailable(boolean enable) {
+    public void setWatchedAvailable(boolean enable) {
         qualifiedVal.setAvailable(enable);
     }
 

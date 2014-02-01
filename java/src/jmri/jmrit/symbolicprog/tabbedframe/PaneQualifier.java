@@ -7,7 +7,8 @@ import jmri.jmrit.symbolicprog.*;
 import javax.swing.JTabbedPane;
 
 /**
- * Qualify a variable on greater than or equal a number
+ * Qualify a JMRI DecoderPro pane on a numerical relation
+ * by enabling/disabling the tab
  *
  * @author			Bob Jacobsen   Copyright (C) 2010, 2014
  * @version			$Revision$
@@ -29,7 +30,7 @@ public class PaneQualifier extends ArithmeticQualifier {
         setWatchedAvailable(currentDesiredState());
     }
 
-    protected void setWatchedAvailable(boolean enable) {
+    public void setWatchedAvailable(boolean enable) {
         tabs.setEnabledAt(index, enable);
     }
 

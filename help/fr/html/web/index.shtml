@@ -73,15 +73,6 @@ vous devriez voir un site web "Mon Chemin de Fer JMRI" dans l'onglet "Bonjour". 
 pour obtenirla page d'accueil du serveur Web JMRI.
 
 <p>
-Sinon, entrez l'URL de d&#233;marrage, qui devra &#234;tre quelqur chise comme "http://10.0.1.7:12080"
-(Ou si vous naviguez sur le m&#234;me ordinateur en ce moment,
-<a href="http://localhost:12080/index.html"> cliquez ici</a>.
-Le port par d&#233;faut est 12080, mais cela peut &#234;tre chang&#233; dans les
-Pr&#233;f&#233;rences du Serveur Web
-Vous devriez voir un &#233;cran de bienvenue, comme  page d'accueil pour le serveur Web JMRI.
-Cette page (par d&#233;faut) contient un certain nombre d'exemples et de liens utiles.
-
-<p>
 Ensuite, faisons en sorte que vous pouvez acc&#233;der aux fonctions JMRI.
 Dans le menu Outils, s&#233;lectionnez JMRI "Commande  Alimentation", qui devrait ouvrir une nouvelle fen&#234;tre.
 Puis cliquez sur
@@ -167,9 +158,8 @@ affich&#233; avec l'URL appropri&#233;.
 Les fichiers dans votre r&#233;pertoire des pr&#233;f&#233;rences JMRI peuvent &#234;tre
 accessible via un URL qui commence par "prefs":
 <code> <pre>
-<a href="http://localhost:12080/prefs/index.html"> http://localhost:12080/prefs/index.html </a>
+<a href="http://localhost:12080/prefs"> http://localhost:12080/prefs </a>
 </pre> </code>
-(Le fichier index.html est dans votre r&#233;pertoire de pr&#233;f&#233;rences)
 <p>
 Les fichiers dans certains r&#233;pertoires dans le r&#233;pertoire du programme JMRI peuvent &#234;tre
 accessible via un URL qui commence par "dist":

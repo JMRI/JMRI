@@ -5,15 +5,14 @@
 package jmri.web.server;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,11 +63,6 @@ public class WebServerManager {
 
     public WebServer getServer() {
         if (server == null) {
-            try {
-                this.rebuildIndex();
-            } catch (Exception ex) {
-                log.warn("Error rebuilding index.", ex);
-            }
             server = new WebServer();
         }
         return server;
@@ -76,33 +70,6 @@ public class WebServerManager {
 
     public static WebServer getWebServer() {
         return getInstance().getServer();
-    }
-
-    protected void rebuildIndex() throws IOException {
-        this.rebuildIndex(false);
-    }
-
-    protected void rebuildIndex(boolean force) throws IOException {
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.Html");
-        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "networkServices" + File.separator + "index.html")); // NOI18N
-        if (force || this.getPreferences().isRebuildIndex() || !indexFile.exists()) {
-            FileWriter writer = new FileWriter(indexFile);
-            writer.write(rb.getString("HTML5DocType"));
-            writer.write(String.format(rb.getString("HeadFormat"),
-                    rb.getString("HTML5DocType"),
-                    this.getPreferences().getRailRoadName(),
-                    "index", // NOI18N
-                    rb.getString("IndexHeadExtras")));
-            writer.write(rb.getString("Index"));
-            writer.write(String.format(rb.getString("TailFormat"),
-                    "html/web/index.shtml", // NOI18N
-                    rb.getString("GeneralMenuItems")));
-            writer.close();
-            if (this.getPreferences().isRebuildIndex()) {
-                this.getPreferences().setRebuildIndex(false);
-                this.getPreferences().setIsDirty(true);
-            }
-        }
     }
 
     /*
@@ -144,8 +111,6 @@ public class WebServerManager {
                     WSRoot.setAttribute(WebServerPreferences.ClickDelay, ((Attribute) attr).getValue());
                 } else if (((Attribute) attr).getName().equals("getRefreshDelay")) { // NOI18N
                     WSRoot.setAttribute(WebServerPreferences.RefreshDelay, ((Attribute) attr).getValue());
-                } else if (((Attribute) attr).getName().equals("isRebuildIndex")) { // NOI18N
-                    WSRoot.setAttribute(WebServerPreferences.RebuildIndex, ((Attribute) attr).getValue());
                 } else {
                     // double cast because clone() is Protected on Object
                     WSRoot.setAttribute((Attribute) ((Attribute) attr).clone());
@@ -169,7 +134,9 @@ public class WebServerManager {
 
             xmlFile.writeXML(WSFile, WSDoc);
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            log.error("Error converting miniServer preferences to Web Server preferences.", ex);
+        } catch (JDOMException ex) {
             log.error("Error converting miniServer preferences to Web Server preferences.", ex);
         }
     }

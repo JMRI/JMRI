@@ -185,7 +185,7 @@ public class NXFrame extends WarrantRoute {
                 }
             }
         }
-        warrant.addBlockOrders(getOrders());
+        warrant.setBlockOrders(getOrders());
         if (msg==null) {
         	msg = makeCommands(warrant);           	
         }

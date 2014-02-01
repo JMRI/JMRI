@@ -131,7 +131,4 @@
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="ZTC">
-    <name>ZTC</name>
-  </pane>
 </decoder-config>

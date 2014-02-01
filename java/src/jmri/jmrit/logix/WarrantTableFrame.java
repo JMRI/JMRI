@@ -325,7 +325,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
             Warrant warrant = model.getWarrantAt(row);
             JComboBox comboBox = (JComboBox)getComponent();
             comboBox.removeAllItems();
-            List <BlockOrder> orders = warrant.getOrders();
+            List <BlockOrder> orders = warrant.getBlockOrders();
             for (int i=0; i<orders.size(); i++) {
             	BlockOrder order = orders.get(i);
                 comboBox.addItem(order.getBlock().getDisplayName()+": - "+order.getPath().getName());

@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -1092,6 +1093,43 @@ public class TrainCommon {
 		String date = calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
 				+ h + ":" + m + " " + AM_PM;
 		return date;
+	}
+	
+	/**
+	 * Returns a double in minutes representing the string date. Date string has to be in the order: Month / day / year hour:minute
+	 * AM_PM
+	 * 
+	 * @param date
+	 * @return double in minutes
+	 */
+	public double convertStringDateToDouble(String date) {
+		double dateToDouble = 0;
+		try {
+//			log.debug("Convert date: " + date);
+			String[] breakdownDate = date.split("/");
+//			log.debug("Month: " + breakdownDate[0]);
+			// convert month to minutes
+			dateToDouble += 60*24*31*Integer.parseInt(breakdownDate[0]);
+//			log.debug("Day: " + breakdownDate[1]);
+			dateToDouble += 60*24*Integer.parseInt(breakdownDate[1]);
+			String[] breakDownYear = breakdownDate[2].split(" ");
+//			log.debug("Year: " + breakDownYear[0]);
+			dateToDouble += 60*24*365*Integer.parseInt(breakDownYear[0]);
+			String[] breakDownTime = breakDownYear[1].split(":");
+//			log.debug("Hour: " + breakDownTime[0]);
+			dateToDouble += 60*Integer.parseInt(breakDownTime[0]);
+//			log.debug("Minute: " + breakDownTime[1]);
+			dateToDouble += Integer.parseInt(breakDownTime[1]);
+			if (breakDownYear.length > 2) {
+				log.debug("AM_PM: " + breakDownYear[2]);
+				if (breakDownYear[2].equals(Bundle.getMessage("PM")))
+					dateToDouble += 60*12;
+			}
+		} catch (NumberFormatException e) {
+			log.error("Not able to convert date: " + date + " to double");
+		}
+//		log.debug("Double: "+dateToDouble);
+		return dateToDouble;
 	}
 
 	protected static String tabString(String s, int fieldSize) {

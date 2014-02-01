@@ -2949,26 +2949,32 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack().getServiceOrder().equals(Track.NORMAL))
 			return car;
 		log.debug("Get " + car.getTrack().getServiceOrder() + " car (" + car.toString() + ") from "
-				+ car.getTrack().getTrackType() + " (" + car.getTrackName() + "), order: " // NOI18N
-				+ car.getOrder());
+				+ car.getTrack().getTrackType() + " (" + car.getTrackName() + "), last moved date: " // NOI18N
+				+ car.getLastDate());
 		Car bestCar = car;
 		for (int i = carIndex + 1; i < carList.size(); i++) {
 			Car testCar = carList.get(i);
 			if (testCar.getTrack() == car.getTrack()) {
-				log.debug(car.getTrack().getTrackType() + " car (" + testCar.toString() + ") has order: "
-						+ testCar.getOrder()); // NOI18N
-				if (car.getTrack().getServiceOrder().equals(Track.FIFO) && bestCar.getOrder() > testCar.getOrder()
-						&& bestCar.getLoadPriority().equals(testCar.getLoadPriority()))
+				log.debug(car.getTrack().getTrackType() + " car (" + testCar.toString() + ") last moved date: "
+						+ testCar.getLastDate()); // NOI18N
+				if (car.getTrack().getServiceOrder().equals(Track.FIFO)
+						&& convertStringDateToDouble(bestCar.getLastDate()) > convertStringDateToDouble(testCar
+								.getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
 					bestCar = testCar;
-				if (car.getTrack().getServiceOrder().equals(Track.LIFO) && bestCar.getOrder() < testCar.getOrder()
-						&& bestCar.getLoadPriority().equals(testCar.getLoadPriority()))
+					log.debug("New best car: "+bestCar.toString());
+				}
+				if (car.getTrack().getServiceOrder().equals(Track.LIFO)
+						&& convertStringDateToDouble(bestCar.getLastDate()) < convertStringDateToDouble(testCar
+								.getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
 					bestCar = testCar;
+					log.debug("New best car: "+bestCar.toString());
+				}
 			}
 		}
 		if (car != bestCar)
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModeCarPriority"),
 					new Object[] { car.getTrack().getTrackType(), car.getTrackName(), car.getTrack().getServiceOrder(),
-							bestCar.toString(), car.toString() }));
+							bestCar.toString(), bestCar.getLastDate(), car.toString(), car.getLastDate() }));
 		return bestCar;
 	}
 

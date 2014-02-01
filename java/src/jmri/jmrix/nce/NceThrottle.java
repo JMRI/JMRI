@@ -87,6 +87,8 @@ public class NceThrottle extends AbstractThrottle{
      */
     protected void sendFunctionGroup1() {
     	// The NCE USB doesn't support the NMRA packet format
+		// Always need speed command before function group command to reset consist pointer
+		setSpeedSetting(this.speedSetting);
 		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
@@ -120,6 +122,8 @@ public class NceThrottle extends AbstractThrottle{
 	 */
 	protected void sendFunctionGroup2() {
 		// The NCE USB doesn't support the NMRA packet format
+		// Always need speed command before function group command to reset consist pointer
+		setSpeedSetting(this.speedSetting);
 		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
@@ -152,6 +156,8 @@ public class NceThrottle extends AbstractThrottle{
 	 */
     protected void sendFunctionGroup3() {
 		// The NCE USB doesn't support the NMRA packet format
+		// Always need speed command before function group command to reset consist pointer
+		setSpeedSetting(this.speedSetting);
 		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
@@ -184,6 +190,8 @@ public class NceThrottle extends AbstractThrottle{
 	 */
     protected void sendFunctionGroup4() {
 		// The NCE USB doesn't support the NMRA packet format
+		// Always need speed command before function group command to reset consist pointer
+		setSpeedSetting(this.speedSetting);
 		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
@@ -219,6 +227,8 @@ public class NceThrottle extends AbstractThrottle{
 	 */
     protected void sendFunctionGroup5() {
 		// The NCE USB doesn't support the NMRA packet format
+		// Always need speed command before function group command to reset consist pointer
+		setSpeedSetting(this.speedSetting);
 		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())

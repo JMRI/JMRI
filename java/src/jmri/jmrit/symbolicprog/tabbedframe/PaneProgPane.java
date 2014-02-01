@@ -20,17 +20,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressPanel;
-import jmri.jmrit.symbolicprog.FnMapPanel;
-import jmri.jmrit.symbolicprog.FnMapPanelESU;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.SymbolicProgBundle;
-import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.ValueRenderer;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.jmrit.symbolicprog.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom.Attribute;
@@ -122,6 +112,9 @@ public class PaneProgPane extends javax.swing.JPanel
         // laid-out JPanel
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
+        // Add tooltip if present
+        setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
+        
         // find out whether to display "label" (false) or "item" (true)
         boolean showItem = false;
         Attribute nameFmt = pane.getAttribute("nameFmt");
@@ -1199,20 +1192,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 c.add(j);
                 cs.gridwidth = 1;
             }
-            else if (name.equals("label")) { // its  a label
-                JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
-                l.setAlignmentX(1.0f);
-                cs.fill = GridBagConstraints.BOTH;
+            else if (name.equals("label")) {
                 cs.gridwidth = GridBagConstraints.REMAINDER;
-                if (log.isDebugEnabled()) {
-                    log.debug("Add label: "+l.getText()+" cs: "
-                              +cs.gridwidth+" "+cs.fill+" "
-                              +cs.gridx+" "+cs.gridy);
-                }
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.fill = GridBagConstraints.NONE;
-                cs.gridwidth = 1;
+                makeLabel(e, c, g, cs);
             }
             else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
@@ -1277,6 +1259,37 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
+     * Create label from Element
+     */
+    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        final JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add label: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
+    }
+    
+    /**
      * Create a single row from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
@@ -1317,12 +1330,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridheight = 1;
             }
             else if (name.equals("label")) { // its  a label
-                JLabel l = new JLabel(LocaleSelector.getAttribute(e, "label"));
-                l.setAlignmentX(1.0f);
                 cs.gridheight = GridBagConstraints.REMAINDER;
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.gridheight = 1;
+                makeLabel(e, c, g, cs);
             }
             else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);

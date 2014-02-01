@@ -9,7 +9,20 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
@@ -30,7 +43,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     JSpinner refreshDelaySpinner;
     EditableList disallowedFrames;
     JCheckBox useAjaxCB;
-    JCheckBox rebuildIndexCB;
     JTextField port;
     JTextField railroadName;
     JButton saveB;
@@ -66,7 +78,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(WebServer.getString("TitleWebServerPreferences")));
         add(rrNamePanel());
-        add(rebuildIndexPanel());
         add(portPanel());
         add(new JTitledSeparator(WebServer.getString("TitleDelayPanel")));
         add(delaysPanel());
@@ -96,7 +107,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         disallowedFrames.setModel(model);
         disallowedFrames.getModel().addListDataListener(this);
         useAjaxCB.setSelected(preferences.useAjax());
-        rebuildIndexCB.setSelected(preferences.isRebuildIndex());
         port.setText(Integer.toString(preferences.getPort()));
     }
 
@@ -127,7 +137,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         }
         preferences.setDisallowedFrames(frames);
         preferences.setUseAjax(useAjaxCB.isSelected());
-        preferences.setRebuildIndex(rebuildIndexCB.isSelected());
         int portNum;
         try {
             portNum = Integer.parseInt(port.getText());
@@ -217,14 +226,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         railroadName.setColumns(30);
         panel.add(new JLabel(WebServer.getString("LabelRailRoadName")));
         panel.add(railroadName);
-        return panel;
-    }
-
-    private JPanel rebuildIndexPanel() {
-        JPanel panel = new JPanel();
-        rebuildIndexCB = new JCheckBox(WebServer.getString("LabelRebuildIndex"));
-        rebuildIndexCB.setToolTipText(WebServer.getString("ToolTipRebuildIndex"));
-        panel.add(rebuildIndexCB);
         return panel;
     }
 

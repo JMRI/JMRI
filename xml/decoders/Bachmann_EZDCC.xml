@@ -167,6 +167,7 @@
     </resets>
   </decoder>
   <pane name="Bachmann">
+    <name>Bachmann</name>
     <column>
       <display item="Function F0F behavior"/>
       <display item="Function F0F options"/>
@@ -174,6 +175,5 @@
         <label> </label>
       </label>
     </column>
-    <name>Bachmann</name>
   </pane>
 </decoder-config>
