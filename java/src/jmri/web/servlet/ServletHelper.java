@@ -22,6 +22,21 @@ public class ServletHelper {
         return WebServerManager.getWebServerPreferences().getRailRoadName();
     }
 
+    public String getFooter(Locale locale, String context) throws IOException {
+        // Should return a built NavBar with li class for current context set to "active"
+        String footer = String.format(locale,
+                "-->" + FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale, "Footer.html"))) + "<!--", // NOI18N
+                this.getRailroadName(true));
+        context = "context" + context.replace("/", "-"); // NOI18N
+        // replace class "context-<this-context>-only" with class "show"
+        footer = footer.replace(context + "-only", "show"); // NOI18N
+        // replace class "context-<some-other-context>-only" with class "hidden"
+        footer = footer.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
+        // replace class "context-<this-context>" with class "active"
+        footer = footer.replace(context, "active"); // NOI18N
+        return footer;
+    }
+
     public String getNavBar(Locale locale, String context) throws IOException {
         // Should return a built NavBar with li class for current context set to "active"
         String navBar = String.format(locale,

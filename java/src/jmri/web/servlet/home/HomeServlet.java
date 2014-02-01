@@ -21,7 +21,8 @@ public class HomeServlet extends HttpServlet {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Home.html"))),
                 ServletHelper.getHelper().getRailroadName(false),
                 ServletHelper.getHelper().getNavBar(request.getLocale(), "/home"),
-                ServletHelper.getHelper().getRailroadName(false)
+                ServletHelper.getHelper().getRailroadName(false),
+                ServletHelper.getHelper().getFooter(request.getLocale(), "/home")
         ));
     }
 

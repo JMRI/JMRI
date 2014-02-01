@@ -112,7 +112,8 @@ abstract class AbstractPanelServlet extends HttpServlet {
                             Bundle.getMessage(request.getLocale(), "PanelsTitle")
                     ),
                     ServletHelper.getHelper().getNavBar(request.getLocale(), "/panel"),
-                    ServletHelper.getHelper().getRailroadName(false)
+                    ServletHelper.getHelper().getRailroadName(false),
+                    ServletHelper.getHelper().getFooter(request.getLocale(), "/panel")
             ));
         }
     }
