@@ -110,7 +110,4 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="ZTC">
-    <name>ZTC</name>
-  </pane>
 </decoder-config>

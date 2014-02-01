@@ -232,9 +232,9 @@
     </resets>
   </decoder>
   <pane name="Atlas">
+    <name>Atlas</name>
     <column>
       <display item="Decoder Software Version"/>
     </column>
-    <name>Atlas</name>
   </pane>
 </decoder-config>

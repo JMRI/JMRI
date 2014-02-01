@@ -40,6 +40,8 @@
     </revision>
   </revhistory>
   
+    <name>SUSI</name>
+
     <column>
       <row>
         <column>
@@ -55,5 +57,4 @@
         </column>
       </row>
     </column>
-    <name>SUSI</name>
 </pane>

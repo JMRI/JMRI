@@ -530,6 +530,7 @@
     </resets>
   </decoder>
   <pane name="Bachmann">
+    <name>Bachmann</name>
     <column>
       <display item="Motor Drive Selection"/>
       <display item="Directional Headlights"/>
@@ -563,6 +564,5 @@
       <display item="Output D blinks"/>
       <display item="Output C, D are ditch lights"/>
     </column>
-    <name>Bachmann</name>
   </pane>
 </decoder-config>

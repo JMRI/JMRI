@@ -40,6 +40,9 @@
     </revision>
   </revhistory>
 
+    <name>Lenz Lighting</name>
+    <name xml:lang="it">Effetti Luce Lenz</name>
+
     <column>
       <row>
         <column>
@@ -388,6 +391,4 @@
         </column>
       </row>
     </column>
-    <name>Lenz Lighting</name>
-  <name xml:lang="it">Effetti Luce Lenz</name>
   </pane>
