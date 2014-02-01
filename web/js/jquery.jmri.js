@@ -56,6 +56,9 @@
                 }
             };
             jmri.setLight = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("light", {name: name, state: state});
             };
             jmri.getMemory = function(name) {
@@ -93,42 +96,45 @@
                         break;
                 }
             },
-            jmri.setObject = function(type, name, state) {
-                switch (type) {
-                    case "light":
-                        jmri.setLight(name, state);
-                        break;
-                    case "memory":
-                        jmri.setMemory(name, state);
-                        break;
-                    case "rosterEntry":
-                        jmri.setRosterEntry(name, state);
-                        break;
-                    case "route":
-                        jmri.setRoute(name, state);
-                        break;
-                    case "sensor":
-                        jmri.setSensor(name, state);
-                        break;
-                    case "signalHead":
-                        jmri.setSignalHead(name, state);
-                        break;
-                    case "signalMast":
-                        jmri.setSignalMast(name, state);
-                        break;
-                    case "turnout":
-                        jmri.setTurnout(name, state);
-                        break;
-                }
-            },
-            jmri.getPower = function() {
-                if (!jmri.setPower(jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "power", function(json) {
-                        jmri.power(json.data.state);
-                    });
-                }
-            };
+                    jmri.setObject = function(type, name, state) {
+                        switch (type) {
+                            case "light":
+                                jmri.setLight(name, state);
+                                break;
+                            case "memory":
+                                jmri.setMemory(name, state);
+                                break;
+                            case "rosterEntry":
+                                jmri.setRosterEntry(name, state);
+                                break;
+                            case "route":
+                                jmri.setRoute(name, state);
+                                break;
+                            case "sensor":
+                                jmri.setSensor(name, state);
+                                break;
+                            case "signalHead":
+                                jmri.setSignalHead(name, state);
+                                break;
+                            case "signalMast":
+                                jmri.setSignalMast(name, state);
+                                break;
+                            case "turnout":
+                                jmri.setTurnout(name, state);
+                                break;
+                        }
+                    },
+                    jmri.getPower = function() {
+                        if (!jmri.setPower(jmri.UNKNOWN)) {
+                            $.getJSON(jmri.url + "power", function(json) {
+                                jmri.power(json.data.state);
+                            });
+                        }
+                    };
             jmri.setPower = function(state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("power", {state: state});
             };
             jmri.getRosterEntry = function(id) {
@@ -146,6 +152,9 @@
                 }
             };
             jmri.setRoute = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("route", {name: name, state: state});
             };
             jmri.getSensor = function(name) {
@@ -156,6 +165,9 @@
                 }
             };
             jmri.setSensor = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("sensor", {name: name, state: state});
             };
             jmri.getSignalHead = function(name) {
@@ -166,6 +178,9 @@
                 }
             };
             jmri.setSignalHead = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("signalHead", {name: name, state: state});
             };
             jmri.getSignalMast = function(name) {
@@ -176,6 +191,9 @@
                 }
             };
             jmri.setSignalMast = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("signalMast", {name: name, state: state});
             };
             jmri.getTime = function(name) {
@@ -193,6 +211,9 @@
                 }
             };
             jmri.setTurnout = function(name, state) {
+                if (jmri.socket === null) {
+                    return false;
+                }
                 return jmri.socket.send("turnout", {name: name, state: state});
             };
             // Heartbeat
@@ -258,6 +279,9 @@
                     }
                 }
             });
+            if (jmri.socket === null) {
+                $("#no-websockets").addClass("show").removeClass("hidden");
+            }
             return jmri;
         }
     });

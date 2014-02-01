@@ -113,4 +113,3 @@ $(document).ready(function() {
     getPanels(); // complete the panels menu
     getRosterGroups(); // list roster groups in menu
 });
-
