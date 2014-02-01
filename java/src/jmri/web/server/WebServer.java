@@ -154,7 +154,7 @@ public final class WebServer implements LifeCycle.Listener {
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
         HashMap<String, String> properties = new HashMap<String, String>();
-        properties.put("path", "/index.html"); // NOI18N
+        properties.put("path", "/"); // NOI18N
         properties.put(JSON, JSON_PROTOCOL_VERSION);
         log.info("Starting ZeroConfService _http._tcp.local for Web Server");
         zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), properties); // NOI18N

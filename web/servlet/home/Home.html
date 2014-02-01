@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- %3$s is the railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is title from Servlet -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/panel.css">
+
+        <script src="/js/vendor/jquery-1.10.1.min.js"></script>
+        <script src="/js/vendor/bootstrap.min.js"></script>
+        <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/vendor/jquery.activity-indicator-1.0.0.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/home.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#activity-indicator').activity();
+            });
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>%3$s</h1>
+                    <p>Welcome to <em>%3$s</em>, powered by <a href="http://jmri.org">JMRI</a>.</p>
+                </div>
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+                    <!-- throttles -->
+                    <div class="col-md-4">
+                        <h2>Throttles</h2>
+                        <h4><a href="/web/webThrottle.html">webThrottle</a></h4>
+                        <p><em>webThrottle</em> is a modern throttle that provides integrated support for controlling trains, layout elements, and panels.</p>
+                        <p>
+                            <a class="btn btn-default" href="/web/webThrottle.html" target="webThrottle" role="button">Open Now »</a>
+                            <a class="btn btn-default" href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml" role="button">Learn More »</a>
+                        </p>
+                        <h4><a href="/web/inControl.html">inControl</a></h4>
+                        <p><em>inControl</em> is an older throttle for devices and browsers that cannot support <em>webThrottle</em>.
+                        <p>
+                            <a class="btn btn-default" href="/web/inControl.html" target="_blank" role="button">Open Now »</a>
+                        </p>
+                        <div class="visible-jmri_withrottle">
+                            <h4><a href="http://enginedriver.rrclubs.org">Engine Driver</a></h4>
+                            <p><em>Engine Driver</em> is a native throttle for Android-powered phones and tablets.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://enginedriver.rrclubs.org" role="button">Learn More »</a>
+                            </p>
+                            <h4><a href="http://www.withrottle.com">WiThrottle</a></h4>
+                            <p><em>WiThrottle</em> is a native throttle for the iPhone, iPad, and iPod.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://www.withrottle.com" role="button">Learn More »</a>
+                            </p>
+                        </div>
+                        <div class="hidden-jmri_withrottle alert alert-info">Native throttle applications are available when the WiThrottle service is enabled.</div> 
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Open Windows</h2>
+                        <!-- ugh, how am I going to do this? -->
+                        <ul id="frame-list" class="list-group"></ul>
+                    </div>
+                    <!-- contributed / frames / file access -->
+                    <div class="col-md-4">
+                        <h2>Utilities</h2>
+                        <h4><a href="/web/Scan2BeInControl.html">Scan to be inControl</a></h4>
+                        <p>Use QR codes to open inControl throttles.</p>
+                        <h4><a href="/web/JMRIMobile.html">JMRI Mobile</a></h4>
+                        <p>A simple tool for controlling JMRI from a mobile device.</p>
+                        <h4 class="hidden-jmri_jmri-json">JSON Console</h4>
+                        <h4 class="visible-jmri_jmri-json"><a href="/json">JSON Console</a></h4>
+                        <p class="hidden-jmri_jmri-json alert alert-warning">The JSON Console is disabled.</p>
+                        <p>A console for directly issuing JSON commands to JMRI.</p>
+                        <h4 class="hidden-jmri_jmri-simple">Simple Console</h4>
+                        <h4 class="visible-jmri_jmri-simple"><a href="/simple">Simple Console</a></h4>
+                        <p class="hidden-jmri_jmri-json alert alert-warning">The Simple Console is disabled.</p>
+                        <p>A console for issuing plain text commands to JMRI.</p>
+                        <h2>File Access</h2>
+                        <p>Directly access certain files and directories:</p>
+                        <dl>
+                            <dt><a href="/prefs">/prefs</a></dt>
+                            <dd>The preferences directory for the current JMRI profile.</dd>
+                            <dt><a href="/dist">/dist</a><dt>
+                            <dd>The JMRI application installation directory.</dd>
+                            <dt><a href="/web">/web</a></dt>
+                            <dd>Some web applications, and files required for the web server.</dd>
+                            <dt><a href="/images">/images</a></dt>
+                            <dd>Images included with JMRI.</dd>
+                            <dt><a href="/xml/signals">/xml/signals</a></dt>
+                            <dd>Local signal definitions, formatted to be readable.</dd>
+                        </dl>
+                        <small>Note that if a directory contains an index.html file, the index.html file will be returned instead of the directory contents.</small>
+                    </div>
+                </div>
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <footer>
+            <div class="container">
+                <p class="text-muted">&copy; <a href="http://jmri.org">JMRI</a> Community 1997-2014</p>
+            </div>
+        </footer>
+    </body>
+</html>
