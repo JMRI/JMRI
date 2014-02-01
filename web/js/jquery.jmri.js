@@ -49,20 +49,27 @@
             jmri.POWER_OFF = 4;
             // Getters and Setters
             jmri.getLight = function(name) {
-                if (!jmri.setLight(name, jmri.UNKNOWN)) {
+                if (jmri.socket) {
+                    jmri.socket.send("light", {name: name, state: jmri.UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "light/" + name, function(json) {
                         jmri.light(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setLight = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("light", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "light/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getLight(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("light", {name: name, state: state});
             };
             jmri.getMemory = function(name) {
-                if (!jmri.socket.send("memory", {name: name})) {
+                if (jmri.socket) {
+                    jmri.socket.send("memory", {name: name});
+                } else {
                     $.getJSON(jmri.url + "memory/" + name, function(json) {
                         jmri.memory(json.data.name, json.data.value, json.data);
                     });
@@ -95,126 +102,160 @@
                         jmri.getTurnout(name);
                         break;
                 }
-            },
-                    jmri.setObject = function(type, name, state) {
-                        switch (type) {
-                            case "light":
-                                jmri.setLight(name, state);
-                                break;
-                            case "memory":
-                                jmri.setMemory(name, state);
-                                break;
-                            case "rosterEntry":
-                                jmri.setRosterEntry(name, state);
-                                break;
-                            case "route":
-                                jmri.setRoute(name, state);
-                                break;
-                            case "sensor":
-                                jmri.setSensor(name, state);
-                                break;
-                            case "signalHead":
-                                jmri.setSignalHead(name, state);
-                                break;
-                            case "signalMast":
-                                jmri.setSignalMast(name, state);
-                                break;
-                            case "turnout":
-                                jmri.setTurnout(name, state);
-                                break;
-                        }
-                    },
-                    jmri.getPower = function() {
-                        if (!jmri.setPower(jmri.UNKNOWN)) {
-                            $.getJSON(jmri.url + "power", function(json) {
-                                jmri.power(json.data.state);
-                            });
-                        }
-                    };
-            jmri.setPower = function(state) {
-                if (jmri.socket === null) {
-                    return false;
+            };
+            jmri.setObject = function(type, name, state) {
+                switch (type) {
+                    case "light":
+                        jmri.setLight(name, state);
+                        break;
+                    case "memory":
+                        jmri.setMemory(name, state);
+                        break;
+                    case "rosterEntry":
+                        jmri.setRosterEntry(name, state);
+                        break;
+                    case "route":
+                        jmri.setRoute(name, state);
+                        break;
+                    case "sensor":
+                        jmri.setSensor(name, state);
+                        break;
+                    case "signalHead":
+                        jmri.setSignalHead(name, state);
+                        break;
+                    case "signalMast":
+                        jmri.setSignalMast(name, state);
+                        break;
+                    case "turnout":
+                        jmri.setTurnout(name, state);
+                        break;
                 }
-                return jmri.socket.send("power", {state: state});
+            };
+            jmri.getPower = function() {
+                if (jmri.socket) {
+                    jmri.socket.send("power", {state: jmri.UNKNOWN});
+                } else {
+                    $.getJSON(jmri.url + "power", function(json) {
+                        jmri.power(json.data.state);
+                    });
+                }
+            };
+            jmri.setPower = function(state) {
+                if (jmri.socket) {
+                    jmri.socket.send("power", {state: state});
+                } else {
+                    $.post(jmri.url + "power?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getPower()", 1000);
+                    });
+                }
             };
             jmri.getRosterEntry = function(id) {
-                if (!jmri.socket.send("rosterEntry", {name: id})) {
+                if (jmri.socket) {
+                    jmri.socket.send("rosterEntry", {name: id});
+                } else {
                     $.getJSON(jmri.url + "rosterEntry/" + id, function(json) {
                         jmri.rosterEntry(json.data.name, json.data);
                     });
                 }
             };
             jmri.getRoute = function(name) {
-                if (!jmri.setSensor(name, jmri.UNKNOWN)) {
+                if (jmri.socket) {
+                    jmri.socket.send("route", {name: name, state: UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "route/" + name, function(json) {
-                        jmri.sensor(json.data.name, json.data.state, json.data);
+                        jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setRoute = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("route", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "route/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getRoute(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("route", {name: name, state: state});
             };
             jmri.getSensor = function(name) {
-                if (!jmri.setSensor(name, jmri.UNKNOWN)) {
+                if (jmri.socket) {
+                    jmri.socket.send("sensor", {name: name, state: UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "sensor/" + name, function(json) {
-                        jmri.sensor(json.data.name, json.data.state, json.data);
+                        jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setSensor = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("sensor", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "sensor/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getSensor(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("sensor", {name: name, state: state});
             };
             jmri.getSignalHead = function(name) {
-                if (!jmri.setSignalHead(name, jmri.UNKNOWN)) {
+                if (jmri.socket) {
+                    jmri.socket.send("signalHead", {name: name, state: UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "signalHead/" + name, function(json) {
                         jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setSignalHead = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("signalHead", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "signalHead/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getSignalHead(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("signalHead", {name: name, state: state});
             };
             jmri.getSignalMast = function(name) {
-                if (!jmri.setSignalMast(name, "")) {
+                if (jmri.socket) {
+                    jmri.socket.send("signalMast", {name: name, state: UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "signalMast/" + name, function(json) {
                         jmri.signalHead(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setSignalMast = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("signalMast", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "signalMast/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getSignalMast(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("signalMast", {name: name, state: state});
             };
-            jmri.getTime = function(name) {
-                if (!jmri.socket.send("time", {})) {
+            jmri.getTime = function() {
+                if (jmri.socket) {
+                    jmri.socket.send("time", {});
+                } else {
                     $.getJSON(jmri.url + "time", function(json) {
                         jmri.time(json.data.time, json.data);
                     });
                 }
             };
             jmri.getTurnout = function(name) {
-                if (!jmri.setTurnout(name, jmri.UNKNOWN)) {
+                if (jmri.socket) {
+                    jmri.socket.send("turnout", {name: name, state: jmri.UNKNOWN});
+                } else {
                     $.getJSON(jmri.url + "turnout/" + name, function(json) {
                         jmri.turnout(json.data.name, json.data.state, json.data);
                     });
                 }
             };
             jmri.setTurnout = function(name, state) {
-                if (jmri.socket === null) {
-                    return false;
+                if (jmri.socket) {
+                    jmri.socket.send("turnout", {name: name, state: state});
+                } else {
+                    $.post(jmri.url + "turnout/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
+                        setTimeout("jmri.getTurnout(\"" + json.data.name + "\")", 1000);
+                    });
                 }
-                return jmri.socket.send("turnout", {name: name, state: state});
             };
             // Heartbeat
             jmri.heartbeat = function() {
