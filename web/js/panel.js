@@ -42,6 +42,7 @@ var $gTimeout = 45; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
+var systemNames = {};   // associative array of array of elements indexed by systemName
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
@@ -138,13 +139,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                 // add and normalize the various type-unique values, from the various spots they are stored
                 // icon names based on states returned from JSON server,
                 $widget['state'] = UNKNOWN; //initial state is unknown
-                $widget['element'] = ""; //default to no JSON type (avoid undefined)
+                $widget.jsonType = ""; //default to no JSON type (avoid undefined)
                 if (typeof $widget["id"] !== "undefined") {
-                    $widget["systemName"] = $widget["id"];
-                    $widget["id"] = "widget-" + $widget["id"];
-                } else {
-                    $widget["id"] = "widget-noid-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
+                    $widget.systemName = $widget["id"];
                 }
+                $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
                 $widget['widgetFamily'] = $getWidgetFamily($widget);
                 var $jc = "";
                 if ($widget.class != undefined) {
@@ -176,7 +175,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $url = $(this).find('url').text();
                                 $widget['url'] = $url; //default to using url value as is
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 break;
                             case "indicatortrackicon" :
@@ -188,7 +187,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "indicatorturnouticon" :
                                 $widget['name'] = $(this).find('turnout').text();
                                 ; //normalize name
-                                $widget['element'] = 'turnout'; // JSON object type
+                                $widget.jsonType = 'turnout'; // JSON object type
                                 $widget['icon1'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
@@ -197,13 +196,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                jmri.getTurnout($widget["systemName"]);
+                                jmri.getTurnout($widget.systemName);
                                 break;
                             case "turnouticon" :
                                 $widget['name'] = $widget.turnout; //normalize name
-                                $widget['element'] = "turnout"; // JSON object type
+                                $widget.jsonType = "turnout"; // JSON object type
                                 $widget['icon1'] = $(this).find('icons').find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
                                 $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
@@ -212,13 +211,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                jmri.getTurnout($widget["systemName"]);
+                                jmri.getTurnout($widget.systemName);
                                 break;
                             case "sensoricon" :
                                 $widget['name'] = $widget.sensor; //normalize name
-                                $widget['element'] = "sensor"; // JSON object type
+                                $widget.jsonType = "sensor"; // JSON object type
                                 $widget['icon1'] = $(this).find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('active').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
@@ -227,13 +226,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                jmri.getSensor($widget["systemName"]);
+                                jmri.getSensor($widget.systemName);
                                 break;
                             case "signalheadicon" :
                                 $widget['name'] = $widget.signalhead; //normalize name
-                                $widget['element'] = "signalHead"; // JSON object type
+                                $widget.jsonType = "signalHead"; // JSON object type
                                 $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
                                 $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
                                 $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
@@ -251,13 +250,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = ($(this).find('icons').find('dark').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icons').find('dark').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                jmri.getSignalHead($widget["systemName"]);
+                                jmri.getSignalHead($widget.systemName);
                                 break;
                             case "signalmasticon" :
                                 $widget['name'] = $widget.signalmast; //normalize name
-                                $widget['element'] = "signalMast"; // JSON object type
+                                $widget.jsonType = "signalMast"; // JSON object type
                                 var icons = $(this).find('icons').children(); //get array of icons
                                 icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
                                     $widget['icon' + item.nodeName] = $(item).attr('url');
@@ -265,15 +264,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = $(this).attr('degrees') * 1;
                                 $widget['scale'] = $(this).attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 $widget['state'] = "Clear"; //set the default to a likely icon
-                                jmri.getSignalMast($widget["systemName"]);
+                                jmri.getSignalMast($widget.systemName);
                                 break;
                             case "multisensoricon" :
                                 //create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
                                 //  set up siblings array so each widget can also set state of the others
-                                $widget['element'] = "sensor"; // JSON object type
+                                $widget.jsonType = "sensor"; // JSON object type
                                 $widget['icon1'] = $(this).find('unknown').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
@@ -281,7 +280,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('unknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 $widget['siblings'] = new Array();  //array of related multisensors
                                 $widget['hoverText'] = "";  		//for override of hovertext
@@ -308,7 +307,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
                                     }
                                 });
-                                jmri.getSensor($widget["systemName"]);
+                                jmri.getSensor($widget.systemName);
                                 break;
                         }
                         $preloadWidgetImages($widget); //start loading all images
@@ -322,7 +321,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         switch ($widget.widgetType) {
                             case "sensoricon" :
                                 $widget['name'] = $widget.sensor; //normalize name
-                                $widget['element'] = "sensor"; // JSON object type
+                                $widget.jsonType = "sensor"; // JSON object type
                                 //set each state's text
                                 $widget['text1'] = $(this).find('unknownText').attr('text');
                                 $widget['text2'] = $(this).find('activeText').attr('text');
@@ -334,9 +333,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
                                 $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
                                 if ($widget.name != undefined && $widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                jmri.getSensor($widget["systemName"]);
+                                jmri.getSensor($widget.systemName);
                                 break;
                             case "locoicon" :
                             case "trainicon" :
@@ -351,7 +350,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "fastclock" :
                                 $widget['name'] = 'IMCURRENTTIME';
-                                $widget['element'] = 'memory';
+                                $widget.jsonType = 'memory';
                                 $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
                                 $widget.styles['height'] = "166px";
                                 $widget['scale'] = $(this).attr('scale');
@@ -363,23 +362,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
-                                $widget['element'] = "memory"; // JSON object type
+                                $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
-                                jmri.getMemory($widget["systemName"]);
+                                jmri.getMemory($widget.systemName);
                                 break;
                             case "memoryInputIcon" :
                             case "memoryComboIcon" :
                                 $widget['name'] = $widget.memory; //normalize name
-                                $widget['element'] = "memory"; // JSON object type
+                                $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
                                 $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
-                                jmri.getMemory($widget["systemName"]);
+                                jmri.getMemory($widget.systemName);
                                 break;
                             case "linkinglabel" :
                                 $url = $(this).find('url').text();
                                 $widget['url'] = $url; //just store url value in widget, for use in click handler
                                 if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 break;
                         }
@@ -410,11 +409,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                $widget['element'] = "turnout"; // JSON object type
+                                $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
                                 if ($widget.name != undefined) { //make it clickable (unless no turnout assigned)
-                                    $widget.classes += $widget.element + " clickable ";
+                                    $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 //set widget occupancysensor from block to speed affected changes later
                                 if ($gBlks[$widget.blockname] != undefined) {
@@ -432,7 +431,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $("#panel-area>#" + $widget.id).css(
                                         {position: 'absolute', left: ($widget.x - $cr) + 'px', top: ($widget.y - $cr) + 'px', zIndex: 3,
                                             width: $cd + 'px', height: $cd + 'px'});
-                                jmri.getTurnout($widget["systemName"]);
+                                jmri.getTurnout($widget.systemName);
                                 break;
                             case "tracksegment" :
                                 //set widget occupancysensor from block to speed affected changes later
@@ -484,6 +483,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                         });
                         break;
                 }
+                if ($widget.systemName) {
+                    if (!($widget.systemName in systemNames)) {
+                        systemNames[$widget.systemName] = new Array();
+                    }
+                    systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                }
             }  //end of function
     );  //end of each
 
@@ -517,9 +522,9 @@ function processPanelXML($returnedData, $success, $xhr) {
 function $handleClick(e) {
     var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
-    sendElementChange($widget.element, $widget.name, $newState);  //send new value to JMRI
+    sendElementChange($widget.jsonType, $widget.name, $newState);  //send new value to JMRI
     if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
-        sendElementChange($widget.element, $widget.secondturnoutname, $newState);  //also send 2nd turnout
+        sendElementChange($widget.jsonType, $widget.secondturnoutname, $newState);  //also send 2nd turnout
     }
 }
 ;
@@ -1166,7 +1171,7 @@ var $setElementState = function($element, $name, $newState) {
     //loop thru widgets, setting all matches
     jQuery.each($gWidgets, function($id, $widget) {
         //make the change if widget matches, and not already this value
-        if ($widget.element == $element && $widget.name == $name && $widget.state != $newState) {
+        if ($widget.jsonType == $element && $widget.name == $name && $widget.state != $newState) {
             $setWidgetState($id, $newState);
         }
         //if sensor and it changed, also check each widget's occupancy sensor and redraw widget's color if matched
@@ -1193,14 +1198,14 @@ var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value
         if (window.console)
-            console.log("setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
+            console.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
                 $('img#' + $id).attr('src', $widget['icon' + ($newState + "").replace(/ /g, "_")]);  //set image src to next state's image
                 break;
             case "text" :
-                if ($widget.element == "memory") {
+                if ($widget.jsonType == "memory") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
                     } else {
@@ -1465,6 +1470,13 @@ var $drawAllIconWidgets = function() {
     });
 };
 
+function updateWidgets(systemName, state) {
+    $.each(systemNames[systemName], function(index, widgetId) {
+        console.log("setting " + widgetId + " (a " + systemName + ")");
+        $setWidgetState(widgetId, state);
+    });
+}
+
 function listPanels() {
     $.ajax({
         url: "/panel/?format=json",
@@ -1535,30 +1547,30 @@ $(document).ready(function() {
     } else {
         jmri = $.JMRI({
             light: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
             },
             memory: function(name, value, data) {
-                $setWidgetState("widget-" + name, value);
+                updateWidgets(name, value);
             },
             reporter: function(name, value, data) {
-                $setWidgetState("widget-" + name, value);
+                updateWidgets(name, value);
             },
             route: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
             },
             sensor: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
                 // see also setElementState post-setWidgetState() code
                 // that needs to be redone here
             },
             signalHead: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
             },
             signalMast: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
             },
             turnout: function(name, state, data) {
-                $setWidgetState("widget-" + name, state);
+                updateWidgets(name, state);
             }
         });
         $("#panel-list").addClass("hidden").removeClass("show");
@@ -1584,7 +1596,7 @@ $(document).ready(function() {
         //add a widget to retrieve current fastclock rate
         //TODO: replace with websocket timer
         $widget = new Array();
-        $widget['element'] = "memory";
+        $widget.jsonType = "memory";
         $widget['name'] = "IMRATEFACTOR";  //already defined in JMRI
         $widget['id'] = $widget['name'];
         $widget['safeName'] = $widget['name'];
