@@ -1,16 +1,18 @@
 package jmri.web.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Randall Wood Copyright (C) 2012
@@ -25,7 +27,6 @@ public class WebServerPreferences extends Bean {
     public static final String Port = "port"; // NOI18N
     public static final String ClickDelay = "clickDelay"; // NOI18N
     public static final String RefreshDelay = "refreshDelay"; // NOI18N
-    public static final String RebuildIndex = "rebuildIndex"; // NOI18N
     public static final String UseAjax = "useAjax"; // NOI18N
     public static final String Simple = "simple"; // NOI18N
     public static final String RailRoadName = "railRoadName"; // NOI18N
@@ -38,7 +39,6 @@ public class WebServerPreferences extends Bean {
     private boolean useAjax = true;
     private boolean plain = false;
     private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(WebServer.getString("DefaultDisallowedFrames").split(";")));
-    private boolean rebuildIndex = false;
     private String railRoadName = WebServer.getString("DefaultRailroadName");
     private int port = 12080;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
@@ -71,9 +71,6 @@ public class WebServerPreferences extends Bean {
         }
         if ((a = child.getAttribute(Simple)) != null) {
             setPlain(Boolean.parseBoolean(a.getValue()));
-        }
-        if ((a = child.getAttribute(RebuildIndex)) != null) {
-            setRebuildIndex(Boolean.parseBoolean(a.getValue()));
         }
         if ((a = child.getAttribute(Port)) != null) {
             try {
@@ -108,16 +105,10 @@ public class WebServerPreferences extends Bean {
         if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) {
             return true;
         }
-        if (isRebuildIndex() != prefs.isRebuildIndex()) {
-            return true;
-        }
         if (getPort() != prefs.getPort()) {
             return true;
         }
-        if (!getRailRoadName().equals(prefs.getRailRoadName())) {
-            return true;
-        }
-        return false;
+        return !getRailRoadName().equals(prefs.getRailRoadName());
     }
 
     public void apply(WebServerPreferences prefs) {
@@ -125,7 +116,6 @@ public class WebServerPreferences extends Bean {
         setRefreshDelay(prefs.getRefreshDelay());
         setUseAjax(prefs.useAjax());
         setDisallowedFrames((ArrayList<String>) prefs.getDisallowedFrames());
-        setRebuildIndex(prefs.isRebuildIndex());
         setPort(prefs.getPort());
         setRailRoadName(prefs.getRailRoadName());
     }
@@ -137,7 +127,6 @@ public class WebServerPreferences extends Bean {
         prefs.setAttribute(UseAjax, "" + useAjax());
         prefs.setAttribute(Simple, "" + isPlain());
         prefs.setAttribute(DisallowedFrames, "" + getDisallowedFrames());
-        prefs.setAttribute(RebuildIndex, "" + isRebuildIndex());
         prefs.setAttribute(Port, "" + getPort());
         prefs.setAttribute(RailRoadName, getRailRoadName());
         Element df = new Element(DisallowedFrames);
@@ -162,8 +151,11 @@ public class WebServerPreferences extends Bean {
         } catch (java.io.FileNotFoundException ea) {
             log.info("Could not find Web Server preferences file.  Normal if preferences have not been saved before.");
             root = null;
-        } catch (Exception eb) {
+        } catch (IOException eb) {
             log.error("Exception while loading throttles preferences: " + eb);
+            root = null;
+        } catch (JDOMException ec) {
+            log.error("Exception while loading throttles preferences: " + ec);
             root = null;
         }
         if (root != null) {
@@ -191,13 +183,13 @@ public class WebServerPreferences extends Bean {
             if (file.createNewFile()) {
                 log.debug("Creating new Web Server prefs file: " + fileName);
             }
-        } catch (Exception ea) {
+        } catch (IOException ea) {
             log.error("Could not create Web Server preferences file.");
         }
 
         try {
             xmlFile.writeXML(file, XmlFile.newDocument(store()));
-        } catch (Exception eb) {
+        } catch (IOException eb) {
             log.warn("Exception in storing Web Server xml: " + eb);
         }
     }
@@ -252,14 +244,6 @@ public class WebServerPreferences extends Bean {
 
     public void addDisallowedFrame(String frame) {
         disallowedFrames.add(frame);
-    }
-
-    public boolean isRebuildIndex() {
-        return rebuildIndex;
-    }
-
-    public void setRebuildIndex(boolean value) {
-        rebuildIndex = value;
     }
 
     public int getPort() {

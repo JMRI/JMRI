@@ -88,6 +88,8 @@ public final class WebServer implements LifeCycle.Listener {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
                 context.setContextPath(path);
                 if (services.getProperty(path).equals("fileHandler")) { // NOI18N
+                    // TODO: replace DefaultServlet with a FileServlet (subclass DefaultServlet and override getResource)
+                    // so that file paths search preference:context and then program:context in that order
                     ServletHolder holder = context.addServlet(DefaultServlet.class, "/*"); // NOI18N
                     holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getProperty(path))); // NOI18N
                     holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N

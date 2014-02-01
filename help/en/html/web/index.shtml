@@ -124,23 +124,13 @@ Don't forget to save your changes!
 <img src="images/WebServerPreferences.PNG" height="200px" style="float:right;"></a> 
 There are a number of Web Server-related settings that you can change in Preferences, Web Server
 (see image at right, click to enlarge)
-<p>
-The "index.html" page 
-is automatically created by the program in the JMRI
-preferences directory.  You can edit it to 
-display whatever you want; by default, JMRI won't modify if it exists. 
-You can include links to web pages outside JMRI, and 
-links to various JMRI-served pages, see below.
-On the other hand, we periodically improve the 
-page, so you might want to turn on "Rebuild index.html?" in Preferences 
-to let JMRI replace it with the newest version.
 
 <a id="URLs">
 <h2>Access URLs</h2>
 You can create your own web pages using any tool you'd like. 
 To access JMRI from those pages, you just 
 need to know the proper URLs to request the services you'd like. 
-Several examples are linked from the index.html (JMRI Web Server home page), 
+Several examples are linked from the JMRI Web Server home page, 
 
 <h2>Open Window (Frame) Access</h2>
     To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
@@ -187,9 +177,8 @@ displayed using the appropriate URL.
 Files in your JMRI preferences directory can be
 accessed via a URL that starts with "prefs":
 <code><pre>
-<a href="http://localhost:12080/prefs/index.html">http://localhost:12080/prefs/index.html</a>
+<a href="http://localhost:12080/prefs/">http://localhost:12080/prefs/</a>
 </pre></code>
-(The index.html file is in your preferences directory)
 <p>
 Files in certain directories in the JMRI program directory can be
 accessed via a URL that starts with "dist":
