@@ -25,4 +25,11 @@ public interface Qualifier  {
      */
     public boolean currentDesiredState();
 
+    /**
+     * Drive the available or not state of the qualified object.
+     *<p>Subclasses implement this to control a specific type
+     * of qualified object, like a Variable or Pane.
+     */
+    public void setWatchedAvailable(boolean enable);
+
 }

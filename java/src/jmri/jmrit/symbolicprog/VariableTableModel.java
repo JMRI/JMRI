@@ -312,6 +312,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                v.addPropertyChangeListener(qc);
+            }
         };
         
         qa.processModifierElements(e, this);

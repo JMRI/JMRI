@@ -13,27 +13,22 @@ import java.util.List;
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
     
-    public QualifierCombiner(VariableValue qualifiedVal, List<Qualifier> qualifiers) {
+    public QualifierCombiner(List<Qualifier> qualifiers) {
         this.qualifiers = qualifiers;
-        this.qualifiedVal = qualifiedVal;
-        
-        qualifiedVal.addPropertyChangeListener(this);
         
         setWatchedAvailable(currentDesiredState());
 
     }
 
-    VariableValue qualifiedVal;
     List<Qualifier> qualifiers;
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("Available"))
-            // this was a change, may want to change it back
-            setWatchedAvailable(currentDesiredState());  // relies on non-propogation of null changes
+        // this was a change, may want to change it back
+        setWatchedAvailable(currentDesiredState());  // relies on non-propogation of null changes
     }
 
-    protected void setWatchedAvailable(boolean enable) {
-        qualifiedVal.setAvailable(enable);
+    public void setWatchedAvailable(boolean enable) {
+        qualifiers.get(0).setWatchedAvailable(enable);
     }
 
     public boolean currentDesiredState() {

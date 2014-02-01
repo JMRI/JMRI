@@ -32,6 +32,8 @@ public abstract class QualifierAdder {
      */
     // e.g. return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
     abstract protected Qualifier createQualifier(VariableValue var, String relation, String value);
+    // e.g. arrange for this to be sent a property change event on change of the qualified object
+    abstract protected void addListener(java.beans.PropertyChangeListener qc);
     
     public void processModifierElements(Element e, VariableTableModel model) {
         // currently only looks for one instance and one type
@@ -59,11 +61,10 @@ public abstract class QualifierAdder {
                 log.error("didn't find {} variable", variableRef, new Exception());
             }
         }
-        // Now add the AND logic
+        // Now add the AND logic - listen for change and ensure result correct
         if (lq.size()>1) {
-            // following registers itself
-            log.warn("multiple qualifiers on a single pane are not working yet - list of ArithmeticQualifiers?");
-            //new QualifierCombiner(v, lq);
+            QualifierCombiner qc = new QualifierCombiner(lq);
+            addListener(qc);
         }
     }
       

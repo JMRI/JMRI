@@ -981,6 +981,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
             }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                pane.addPropertyChangeListener(qc);
+            }
         };
         
         qa.processModifierElements(e, model);

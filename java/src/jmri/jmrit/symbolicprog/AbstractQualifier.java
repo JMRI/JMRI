@@ -67,6 +67,6 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      *<p>Subclasses implement this to control a specific type
      * of qualified object, like a Variable or Pane.
      */
-    abstract protected void setWatchedAvailable(boolean enable);
+    abstract public void setWatchedAvailable(boolean enable);
     
 }
