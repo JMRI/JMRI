@@ -79,11 +79,11 @@
                                 <a class="btn btn-default" href="http://www.withrottle.com" role="button">Learn More »</a>
                             </p>
                         </div>
-                        <div class="hidden-jmri_withrottle alert alert-info">Native throttle applications are available when the WiThrottle service is enabled.</div> 
+                        <div class="hidden-jmri_withrottle alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Native throttle applications are available when the WiThrottle service is enabled.</div>
                     </div>
                     <div class="col-md-4">
                         <h2>Open Windows</h2>
-                        <!-- ugh, how am I going to do this? -->
+                        <div id="no-open-frames" class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>No sharable windows are open.</div>
                         <ul id="frame-list" class="list-group"></ul>
                     </div>
                     <!-- contributed / frames / file access -->
@@ -95,11 +95,11 @@
                         <p>A simple tool for controlling JMRI from a mobile device.</p>
                         <h4 class="hidden-jmri_jmri-json">JSON Console</h4>
                         <h4 class="visible-jmri_jmri-json"><a href="/json">JSON Console</a></h4>
-                        <p class="hidden-jmri_jmri-json alert alert-warning">The JSON Console is disabled.</p>
+                        <p class="hidden-jmri_jmri-json alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>The JSON Console is disabled.</p>
                         <p>A console for directly issuing JSON commands to JMRI.</p>
                         <h4 class="hidden-jmri_jmri-simple">Simple Console</h4>
                         <h4 class="visible-jmri_jmri-simple"><a href="/simple">Simple Console</a></h4>
-                        <p class="hidden-jmri_jmri-json alert alert-warning">The Simple Console is disabled.</p>
+                        <p class="hidden-jmri_jmri-json alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>The Simple Console is disabled.</p>
                         <p>A console for issuing plain text commands to JMRI.</p>
                         <h2>File Access</h2>
                         <p>Directly access certain files and directories:</p>

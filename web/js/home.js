@@ -11,11 +11,15 @@ function listFrames() {
         data: {},
         success: function(data, textStatus, jqXHR) {
             if (data.length !== 0) {
+                $("#no-open-frames").addClass("hidden").removeClass("show");
                 $("#frame-list").empty();
                 $("#frame-list").addClass("show").removeClass("hidden");
                 $.each(data, function(index, value) {
                     $("#frame-list").append("<li class=\"list-group-item\"><a href=\"" + value.URL + "\"><img src=\"" + value.png + "\" style=\"max-width: 100%;\"><div class=\"caption\">" + value.name + "</div></a></li>");
                 });
+            } else {
+                $("#no-open-frames").addClass("show").removeClass("hidden");
+                $("#frame-list").addClass("hidden").removeClass("show");
             }
         }
     });
