@@ -22,7 +22,7 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
     boolean mLongAddr;
 
     public SRCPOpsModeProgrammer(int pAddress, boolean pLongAddr,
-           SRCPSystemConnectionMemo memo) {
+           SRCPBusConnectionMemo memo) {
         super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;

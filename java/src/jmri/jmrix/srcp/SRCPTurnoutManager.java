@@ -17,8 +17,17 @@ import jmri.Turnout;
 
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
+    int _bus = 0;
+    SRCPBusConnectionMemo _memo = null;
+
+    @Deprecated
     public SRCPTurnoutManager() {
     	
+    }
+
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus){
+      _bus = bus;
+      _memo=memo;
     }
 
     public String getSystemPrefix() { return "D"; }

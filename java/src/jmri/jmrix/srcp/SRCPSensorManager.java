@@ -17,10 +17,12 @@ import jmri.Sensor;
 
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    SRCPSystemConnectionMemo _memo = null;
+    SRCPBusConnectionMemo _memo = null;
+    int _bus;
 
-    public SRCPSensorManager(SRCPSystemConnectionMemo memo) {
+    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
     	_memo=memo;
+        _bus=bus;
     }
 
     public String getSystemPrefix() { return "D"; }

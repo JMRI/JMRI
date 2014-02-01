@@ -18,9 +18,11 @@ import java.beans.PropertyChangeEvent;
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
-    protected SRCPSystemConnectionMemo _memo=null;
+    protected SRCPBusConnectionMemo _memo=null;
+    private int _bus;
 
-    public SRCPProgrammer(SRCPSystemConnectionMemo memo) {
+    public SRCPProgrammer(SRCPBusConnectionMemo memo) {
+        _bus=memo.getBus();
         _memo=memo;
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT=180000;

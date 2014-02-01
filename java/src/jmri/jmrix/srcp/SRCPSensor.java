@@ -26,7 +26,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
 	/**
 	 * SRCP sensors use the sensor number on the remote host.
 	 */
-	public SRCPSensor(int number,SRCPSystemConnectionMemo memo)        {
+	public SRCPSensor(int number,SRCPBusConnectionMemo memo)        {
             super(memo.getSystemPrefix()+"s"+number);
             _number = number;
             _bus = 1; // for now

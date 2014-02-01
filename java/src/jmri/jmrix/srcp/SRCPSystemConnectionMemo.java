@@ -60,7 +60,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
     
-        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
+        /*setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
     
         jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
      
@@ -73,17 +73,17 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(getSensorManager());
         
         setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this)); 
-        jmri.InstanceManager.setThrottleManager(getThrottleManager());
+        jmri.InstanceManager.setThrottleManager(getThrottleManager());*/
 
     }
     
     /**
      * Configure the programming manager and "command station" objects
      */
-    SRCPCommandStation commandStation = null;
+    //SRCPCommandStation commandStation = null;
     public void configureCommandStation() {
-        commandStation = new jmri.jmrix.srcp.SRCPCommandStation(this);
-        jmri.InstanceManager.setCommandStation(getCommandStation());
+        //commandStation = new jmri.jmrix.srcp.SRCPCommandStation(this);
+        //jmri.InstanceManager.setCommandStation(getCommandStation());
 
         // start the connection
         et.sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
@@ -96,81 +96,81 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provides access to the Programmer for this particular connection.
      * NOTE: Programmer defaults to null
      */
-    public ProgrammerManager getProgrammerManager() {
-        return programmerManager;
-    }
-    public void setProgrammerManager(ProgrammerManager p) {
-        programmerManager = p;
-    }
+    //public ProgrammerManager getProgrammerManager() {
+    //    return programmerManager;
+    //}
+    //public void setProgrammerManager(ProgrammerManager p) {
+    //    programmerManager = p;
+    //}
 
-    private ProgrammerManager programmerManager=null;
+    //private ProgrammerManager programmerManager=null;
 
     /*
      * Provides access to the Throttle Manager for this particular connection.
      */
-    public ThrottleManager getThrottleManager(){
-        if (throttleManager == null)
-            throttleManager = new SRCPThrottleManager(this);
-        return throttleManager;
+    //public ThrottleManager getThrottleManager(){
+    //    if (throttleManager == null)
+    //        throttleManager = new SRCPThrottleManager(this);
+    //    return throttleManager;
 
-    }
-    public void setThrottleManager(ThrottleManager t){
-         throttleManager = t;
-    }
+    //}
+    //public void setThrottleManager(ThrottleManager t){
+    //     throttleManager = t;
+    //}
 
-    private ThrottleManager throttleManager;
+    //private ThrottleManager throttleManager;
 
     /*
      * Provides access to the Power Manager for this particular connection.
      */
-    public PowerManager getPowerManager(){
-        if (powerManager == null)
-            powerManager = new SRCPPowerManager();
-        return powerManager;
-   }
-    public void setPowerManager(PowerManager p){
-         powerManager = p;
-    }
+    //public PowerManager getPowerManager(){
+    //    if (powerManager == null)
+    //        powerManager = new SRCPPowerManager();
+    //    return powerManager;
+   //}
+   // public void setPowerManager(PowerManager p){
+   //      powerManager = p;
+   // }
 
-    private PowerManager powerManager;
+   // private PowerManager powerManager;
 
     /*
      * Provides access to the Sensor Manager for this particular connection.
      */
-    public SensorManager getSensorManager(){
-        if (sensorManager == null)
-            sensorManager = new SRCPSensorManager(this);
-        return sensorManager;
+    //public SensorManager getSensorManager(){
+    //    if (sensorManager == null)
+    //        sensorManager = new SRCPSensorManager(this);
+    //    return sensorManager;
 
-    }
-    public void setSensorManager(SensorManager s){
-         sensorManager = s;
-    }
+    //}
+    //public void setSensorManager(SensorManager s){
+    //     sensorManager = s;
+    //}
 
-    private SensorManager sensorManager=null;
+    //private SensorManager sensorManager=null;
 
     /*
      * Provides access to the Turnout Manager for this particular connection.
      * NOTE: Turnout manager defaults to NULL
      */
-    public TurnoutManager getTurnoutManager(){
-        return turnoutManager;
+    //public TurnoutManager getTurnoutManager(){
+    //    return turnoutManager;
 
-    }
-    public void setTurnoutManager(TurnoutManager t){
-         turnoutManager = t;
-    }
+    //}
+    //public void setTurnoutManager(TurnoutManager t){
+    //     turnoutManager = t;
+    //}
     
-    public CommandStation getCommandStation(){
-        return commandStation;
-    }
+    //public CommandStation getCommandStation(){
+    //    return commandStation;
+    //}
 
-    private TurnoutManager turnoutManager=null;
+    //private TurnoutManager turnoutManager=null;
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
-        if (getDisabled())
+     /*   if (getDisabled())
             return null;
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
@@ -183,7 +183,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
         if (T.equals(jmri.CommandStation.class))
-            return (T)getCommandStation();
+            return (T)getCommandStation();*/
         return null; // nothing, by default
     }
     
@@ -192,7 +192,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     @Override
     public boolean provides(Class<?> type) {
-        if (getDisabled())
+        /*if (getDisabled())
             return false;
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
@@ -205,7 +205,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.TurnoutManager.class))
             return true;
         if (type.equals(jmri.CommandStation.class))
-            return true;
+            return true;*/
         return false; // nothing, by default
     }
     
