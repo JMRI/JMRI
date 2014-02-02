@@ -61,7 +61,7 @@
                 } else {
                     state = state || jmri.UNKNOWN;
                     jmri.monitoring[name] = true;
-                    $.getJSON(jmri.url + "light/" + name, function(json) {
+                    $.getJSON(jmri.url + "light/" + name + "?state=" + state, function(json) {
                         jmri.monitoring[json.data.name] = false;
                         jmri.light(json.data.name, json.data.state, json.data);
                         jmri.getLight(json.data.name, json.data.state);
