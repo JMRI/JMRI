@@ -1847,7 +1847,7 @@
    <P>
     <img src="images/Cars.png">
    </P>
-   <H3>Add, Save, Find Buttons</H3>
+   <H3>Add, Find, Save Buttons</H3>
 
    There are three buttons located at the bottom of the Cars window. The "Add" button allows you to
    add a car to your roster. The "Save" button stores the cars roster to disk. It also saves the
@@ -2017,17 +2017,19 @@
    for a track to set out the kernel will only use the lead car's attributes when determining if the
    track can accept the kernel. However, the program does use the entire length of the kernel to
    determine if the group of cars will fit on the destination track.
+   
+   Manifest and switch lists will show the cars in the order that you added them to the kernel.
 
    <H3>Optional Fields</H3>
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
    
-   <H3>Moves, Built, Owner, Wait and Last</H3>
+   <H3>Moves, Built, Owner, Wait and Last Time Moved</H3>
 
-   You can edit the number of times a car has been moved by the program, built date, owner, wait
-   count, or last time the car was moved directly from the "Cars" window. Double click on the cell
-   in the Cars window to change.
+   You can edit the number of times a car has been moved by the program and the car's wait count
+   directly from the "Cars" window. Double click on the cell in the Cars window to change. The built and
+   owner fields can be found in the "Edit Car" window.  The last time moved is set by the program.
 
    <H3>Add</H3>
 
@@ -2219,6 +2221,9 @@
     will bring up the "Cars" window but only listing the cars for that location or track. Use the
     roster print or preview features of the "Cars" window to print out a list of the cars for that
     location or track.</P>
+
+   <P>You can if you wish add a checkbox for each car in your roster. The checkboxes are useful
+    when performing an audit using a PC or other electronic device.</P>
 
    <A NAME="Locomotives"></A>
    <H2>Locomotives</H2>
