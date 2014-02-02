@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 21216 $
+ * @version             $Revision$
  */
 public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
