@@ -12,12 +12,23 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import javax.servlet.AsyncContext;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.Light;
+import jmri.NamedBean;
+import jmri.Route;
+import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.SignalMast;
+import jmri.Turnout;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
+import static jmri.jmris.json.JSON.ASPECT;
 import static jmri.jmris.json.JSON.CAR;
 import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CODE;
@@ -62,6 +73,7 @@ import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
 import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.UNKNOWN;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
 import jmri.jmris.json.JsonClientHandler;
@@ -98,6 +110,7 @@ import org.slf4j.LoggerFactory;
 public class JsonServlet extends WebSocketServlet {
 
     private static final long serialVersionUID = -671593634343578915L;
+    private static final long longPollTimeout = 30000; // 5 minutes
     private ObjectMapper mapper;
     private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
@@ -153,7 +166,7 @@ public class JsonServlet extends WebSocketServlet {
     /**
      * handle HTTP get requests for json data examples:
      * <ul>
-     * <li>/json/sensor/IS22 (return data for sensor with systemname
+     * <li>/json/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
      * <li>/json/sensors (returns a list of all sensors known to JMRI)</li>
      * </ul>
@@ -172,19 +185,39 @@ public class JsonServlet extends WebSocketServlet {
      * the servlet handles the GET request
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
+
+        if (request.getAttribute("result") != null) {
+            JsonNode result = (JsonNode) request.getAttribute("result");
+            int code = result.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+            if (code == 200) {
+                response.getWriter().write(this.mapper.writeValueAsString(result));
+            } else {
+                this.sendError(response, code, this.mapper.writeValueAsString(result));
+            }
+            return;
+        }
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             response.setContentType("application/json"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
-            String name = (rest.length > 2) ? rest[2] : null;
+            Boolean longPoll = false;
+            final String name = (rest.length > 2) ? rest[2] : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
                 parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], "UTF-8"));
+            }
+            if (!parameters.path(STATE).isMissingNode()) {
+                // JSON unknown state (0) != NamedBean unknown state (1)
+                // unless its a SignalHead (where unknown state is 0)
+                if (parameters.path(STATE).asInt() == UNKNOWN && !type.equals(SIGNAL_HEAD)) {
+                    parameters.put(STATE, NamedBean.UNKNOWN);
+                }
+                longPoll = true;
             }
             JsonNode reply;
             try {
@@ -247,6 +280,15 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(ENGINE)) {
                         reply = JsonUtil.getEngine(name);
                     } else if (type.equals(LIGHT)) {
+                        if (longPoll) {
+                            Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
+                            if (light.getState() == parameters.path(STATE).asInt()) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new LightPollingHandler(light, parameters.path(STATE).asInt(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getLight(name);
                     } else if (type.equals(LOCATION)) {
                         reply = JsonUtil.getLocation(name);
@@ -259,16 +301,61 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
                         reply = JsonUtil.getRosterEntry(name);
                     } else if (type.equals(ROUTE)) {
+                        if (longPoll) {
+                            Route route = InstanceManager.routeManagerInstance().getBySystemName(name);
+                            if (InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState() == parameters.path(STATE).asInt()) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new RoutePollingHandler(route, parameters.path(STATE).asInt(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getRoute(name);
                     } else if (type.equals(SENSOR)) {
+                        if (longPoll) {
+                            Sensor sensor = InstanceManager.sensorManagerInstance().getBySystemName(name);
+                            if (sensor.getKnownState() == parameters.path(STATE).asInt()) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new SensorPollingHandler(sensor, parameters.path(STATE).asInt(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getSensor(name);
                     } else if (type.equals(SIGNAL_HEAD)) {
+                        if (longPoll) {
+                            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                            if (signalHead.getAppearance() == parameters.path(STATE).asInt()) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new SignalHeadPollingHandler(signalHead, parameters.path(STATE).asInt(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getSignalHead(name);
                     } else if (type.equals(SIGNAL_MAST)) {
+                        if (longPoll) {
+                            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+                            if (signalMast.getAspect().equals(parameters.path(ASPECT).asText())) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new SignalMastPollingHandler(signalMast, parameters.path(ASPECT).asText(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getSignalMast(name);
                     } else if (type.equals(TRAIN)) {
                         reply = JsonUtil.getTrain(name);
                     } else if (type.equals(TURNOUT)) {
+                        if (longPoll) {
+                            Turnout turnout = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+                            if (turnout.getKnownState() == parameters.path(STATE).asInt()) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new TurnoutPollingHandler(turnout, parameters.path(STATE).asInt(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getTurnout(name);
                     } else {
                         log.warn("Type {} unknown.", type);
@@ -331,6 +418,7 @@ public class JsonServlet extends WebSocketServlet {
                 } else if (name == null) {
                     name = data.path(NAME).asText();
                 }
+                log.debug("POST operation for {}/{} with {}", type, name, data);
                 if (name != null) {
                     if (type.equals(CONSIST)) {
                         JsonUtil.setConsist(JsonUtil.addressForString(name), data);
@@ -547,6 +635,281 @@ public class JsonServlet extends WebSocketServlet {
                 this.wsConnection.close();
                 sockets.remove(this);
             }
+        }
+    }
+
+    private static abstract class JsonPollingHandler implements Runnable, AsyncListener {
+
+        protected final int knownState;
+        protected final String knownValue;
+        protected final AsyncContext context;
+        protected PropertyChangeListener listener;
+
+        @SuppressWarnings("LeakingThisInConstructor")
+        public JsonPollingHandler(int expectedState, AsyncContext context) {
+            this.knownState = expectedState;
+            this.knownValue = null;
+            this.context = context;
+            context.addListener(this);
+        }
+
+        @SuppressWarnings("LeakingThisInConstructor")
+        public JsonPollingHandler(String knownValue, AsyncContext context) {
+            this.knownState = 0;
+            this.knownValue = knownValue;
+            this.context = context;
+            context.addListener(this);
+        }
+
+        @Override
+        public void onComplete(AsyncEvent ae) throws IOException {
+            log.debug("context is complete");
+        }
+
+        @Override
+        public void onTimeout(AsyncEvent ae) throws IOException {
+            log.debug("context timed out");
+            respond();
+        }
+
+        @Override
+        public void onError(AsyncEvent ae) throws IOException {
+            log.debug("context has error");
+        }
+
+        @Override
+        public void onStartAsync(AsyncEvent ae) throws IOException {
+            log.debug("context is starting");
+        }
+
+        protected abstract void respond();
+    }
+
+    private static class LightPollingHandler extends JsonPollingHandler {
+
+        private final Light light;
+
+        public LightPollingHandler(Light light, int knownState, AsyncContext context) {
+            super(knownState, context);
+            this.light = light;
+        }
+
+        @Override
+        protected void respond() {
+            light.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getLight(light.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (knownState != light.getState()) {
+                        respond();
+                    }
+                }
+
+            };
+            light.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class RoutePollingHandler extends JsonPollingHandler {
+
+        private final Route route;
+
+        public RoutePollingHandler(Route route, int knownState, AsyncContext context) {
+            super(knownState, context);
+            this.route = route;
+        }
+
+        @Override
+        protected void respond() {
+            route.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getRoute(route.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (knownState != InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState()) {
+                        respond();
+                    }
+                }
+
+            };
+            route.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class SensorPollingHandler extends JsonPollingHandler {
+
+        private final Sensor sensor;
+
+        public SensorPollingHandler(Sensor sensor, int knownState, AsyncContext context) {
+            super(knownState, context);
+            this.sensor = sensor;
+        }
+
+        @Override
+        protected void respond() {
+            sensor.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getSensor(sensor.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (knownState != sensor.getKnownState()) {
+                        respond();
+                    }
+                }
+
+            };
+            sensor.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class SignalHeadPollingHandler extends JsonPollingHandler {
+
+        private final SignalHead signalHead;
+
+        public SignalHeadPollingHandler(SignalHead signalHead, int knownState, AsyncContext context) {
+            super(knownState, context);
+            this.signalHead = signalHead;
+        }
+
+        @Override
+        protected void respond() {
+            signalHead.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getSignalHead(signalHead.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (knownState != signalHead.getAppearance()) {
+                        respond();
+                    }
+                }
+
+            };
+            signalHead.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class SignalMastPollingHandler extends JsonPollingHandler {
+
+        private final SignalMast signalMast;
+
+        public SignalMastPollingHandler(SignalMast signalMast, String knownValue, AsyncContext context) {
+            super(knownValue, context);
+            this.signalMast = signalMast;
+        }
+
+        @Override
+        protected void respond() {
+            signalMast.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getSignalMast(signalMast.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (!knownValue.equals(signalMast.getAspect())) {
+                        respond();
+                    }
+                }
+
+            };
+            signalMast.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class TurnoutPollingHandler extends JsonPollingHandler {
+
+        private final Turnout turnout;
+
+        public TurnoutPollingHandler(Turnout turnout, int knownState, AsyncContext context) {
+            super(knownState, context);
+            this.turnout = turnout;
+        }
+
+        @Override
+        protected void respond() {
+            turnout.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getTurnout(turnout.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (knownState != turnout.getKnownState()) {
+                        respond();
+                    }
+                }
+
+            };
+            turnout.addPropertyChangeListener(listener);
         }
     }
 }
