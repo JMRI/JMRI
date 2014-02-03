@@ -19,8 +19,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Light;
 import jmri.NamedBean;
+import jmri.PowerManager;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -239,6 +241,18 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(PANELS)) {
                         reply = JsonUtil.getPanels((request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
                     } else if (type.equals(POWER)) {
+                        if (longPoll) {
+                            try {
+                                if (InstanceManager.getDefault(PowerManager.class).getPower() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new PowerPollingHandler(parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
+                            } catch (JmriException ex) {
+                                // do nothing -- the following JsonUtil.getPower() statement should report the error to the client
+                            }
+                        }
                         reply = JsonUtil.getPower();
                     } else if (type.equals(RAILROAD)) {
                         reply = JsonUtil.getRailroad();
@@ -720,6 +734,45 @@ public class JsonServlet extends WebSocketServlet {
 
             };
             light.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class PowerPollingHandler extends JsonPollingHandler {
+
+        public PowerPollingHandler(int knownState, AsyncContext context) {
+            super(knownState, context);
+        }
+
+        @Override
+        protected void respond() {
+            InstanceManager.getDefault(PowerManager.class).removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getPower());
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    try {
+                        if (knownState != InstanceManager.getDefault(PowerManager.class).getPower()) {
+                            respond();
+                        }
+                    } catch (JmriException ex) {
+                        respond(); // should trip execpetion again, but get a Json-formatable Exception instead.
+                    }
+                }
+
+            };
+            InstanceManager.getDefault(PowerManager.class).addPropertyChangeListener(listener);
         }
     }
 
