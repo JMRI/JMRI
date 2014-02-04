@@ -2643,6 +2643,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             p.rotate(k);
         }
     }
+    
+    protected void setSelectionsDisplayLevel(int k, Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).setDisplayLevel(k);
+            }
+        } else {
+            p.setDisplayLevel(k);
+        }
+    }
+    
         
     protected void setSelectionsDockingLocation(Positionable p) {
         if (_selectionGroup!=null && _selectionGroup.contains(p)) {

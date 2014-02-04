@@ -481,6 +481,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         menuItem.setMnemonic(KeyEvent.VK_P);
         _editMenu.add(menuItem);
 
+        _editMenu.add(makeSelectTypeMenu());
+        _editMenu.add(makeSelectLevelMenu());
+
         menuItem = new JMenuItem(Bundle.getMessage("SelectAll"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -492,6 +495,109 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
           KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
         _editMenu.add(menuItem);
     }
+    private JMenu makeSelectTypeMenu() {
+        JMenu menu = new JMenu(Bundle.getMessage("SelectType"));
+        ButtonGroup typeGroup = new ButtonGroup();
+        JRadioButtonMenuItem button = makeSelectTypeButton("IndicatorTrack", "jmri.jmrit.display.IndicatorTrackIcon"); 
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("IndicatorTO", "jmri.jmrit.display.IndicatorTurnoutIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Turnout", "jmri.jmrit.display.TurnoutIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Sensor", "jmri.jmrit.display.SensorIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Shape", "jmri.jmrit.display.controlPanelEditor.shape");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("SignalMast", "jmri.jmrit.display.SignalMastIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("SignalHead", "jmri.jmrit.display.SignalHeadIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Memory", "jmri.jmrit.display.MemoryIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("MemoryInput", "jmri.jmrit.display.PositionableJPanel");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("MultiSensor", "jmri.jmrit.display.MultiSensorIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("LocoID", "jmri.jmrit.display.LocoIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Light", "jmri.jmrit.display.LightIcon");
+        typeGroup.add(button);
+        menu.add(button);
+    	return menu;
+    }
+    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
+        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
+        button.addActionListener(new ActionListener() {
+        	String className;
+        	ActionListener init(String name) {
+        		className = name;
+        		return this;
+        	}
+        	public void actionPerformed(ActionEvent event) {
+        		selectType(className);
+        	}
+        }.init(className));
+        return button;
+    }
+    private void selectType(String name) {
+    	try {
+    		Class cl = Class.forName(name);
+        	_selectionGroup = new ArrayList<Positionable>();
+        	Iterator<Positionable> it = _contents.iterator();
+        	while (it.hasNext()) {
+        		Positionable pos = it.next();
+        		if (cl.isInstance(pos)) {
+        			_selectionGroup.add(pos);
+        		}
+        	}   	
+    	} catch (ClassNotFoundException cnfe) {
+    		log.error("selectType Menu "+cnfe.toString());
+    	}
+        _targetPanel.repaint();
+    }
+    private JMenu makeSelectLevelMenu() {
+    	JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
+        ButtonGroup levelGroup = new ButtonGroup();
+        JRadioButtonMenuItem button = null;
+    	for (int i=0; i<11; i++) {
+            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", ""+i));
+            levelGroup.add(button);
+            menu.add(button);
+            button.addActionListener(new ActionListener() {
+            	int i;
+            	ActionListener init(int k) {
+            		i=k;
+            		return this;
+            	}
+                    public void actionPerformed(ActionEvent event) {
+                        selectLevel(i);
+                    }
+                }.init(i));
+    	}
+    	return menu;
+    }
+    private void selectLevel(int i) {
+    	_selectionGroup = new ArrayList<Positionable>();
+    	Iterator<Positionable> it = _contents.iterator();
+    	while (it.hasNext()) {
+    		Positionable pos = it.next();
+    		if (pos.getDisplayLevel()==i) {
+    			_selectionGroup.add(pos);
+    		}
+    	}   	
+        _targetPanel.repaint();
+    }	
 
     private void pasteFromClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
