@@ -76,24 +76,31 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	static String _defaultSearchdepth = "15";
 	static String _defaultSpeed = "0.5";
 	static String _defaultIntervalTime = "4.0";
+    public static int _maxHistorySize = 30;
 
-    JTextField  _startWarrant = new JTextField(30);
-    JTextField  _endWarrant = new JTextField(30);
+	private JTextField  _startWarrant = new JTextField(30);
+	private JTextField  _endWarrant = new JTextField(30);
     private NXFrame _nxFrame;
-    JTextField  _status = new JTextField(90);
-    ArrayList<String> _statusHistory = new ArrayList<String>();
-    public static int _maxHistorySize = 20;
-//    Color _background;
-    JScrollPane _tablePane;
-    int _rowHeight;
+    private JTextField  _status = new JTextField(90);
+    private ArrayList<String> _statusHistory = new ArrayList<String>();
+    private JScrollPane _tablePane;
+    private int _rowHeight;
     
-    private WarrantTableModel     _model;
+    private WarrantTableModel     _model;    
+    private static WarrantTableFrame _instance;
     
+    static WarrantTableFrame getInstance() {
+    	if (_instance==null) {
+    		_instance = new WarrantTableFrame();
+    	}
+    	return _instance;
+    }
+
     WarrantTableModel getModel() {
     	return _model;
     }
 
-    public WarrantTableFrame() 
+    private WarrantTableFrame() 
     {
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
@@ -259,7 +266,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     }
        
     private void nxAction() {
-    	_nxFrame = new NXFrame(this);
+    	_nxFrame = NXFrame.getInstance();
     }
     
     protected void closeNXFrame() {

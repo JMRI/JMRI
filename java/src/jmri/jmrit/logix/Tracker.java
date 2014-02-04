@@ -24,13 +24,13 @@ public class Tracker {
 
 //	OBlock _currentBlock;
 //	OBlock _prevBlock;
-	String _trainName;
-	ArrayList<OBlock> _headRange;	// blocks reachable from head block
-	ArrayList<OBlock> _tailRange;	// blocks reachable from tail block
-	ArrayList<OBlock> _lostRange;	// reachable block occupied by someone else
-	LinkedList<OBlock> _occupies;	// blocks occupied by train
-	Portal _headPortal;
-	Portal _tailPortal;
+	private String _trainName;
+	private ArrayList<OBlock> _headRange;	// blocks reachable from head block
+	private ArrayList<OBlock> _tailRange;	// blocks reachable from tail block
+	private ArrayList<OBlock> _lostRange;	// reachable block occupied by someone else
+	private LinkedList<OBlock> _occupies;	// blocks occupied by train
+	private Portal _headPortal;
+	private Portal _tailPortal;
 	private long _time;
 	static final int NO_BLOCK = 0;
 	static final int ENTER_BLOCK = 1;

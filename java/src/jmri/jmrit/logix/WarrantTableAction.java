@@ -65,8 +65,9 @@ public class WarrantTableAction extends AbstractAction {
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
     private static WarrantFrame _openFrame;
+    protected static NXFrame _nxFrame;
 
-    public WarrantTableAction(String menuOption) {
+    private WarrantTableAction(String menuOption) {
 	    super(Bundle.getMessage(menuOption));
 	    _trackerTable = TrackerTableAction.getInstance();
     }
@@ -81,15 +82,7 @@ public class WarrantTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)){
-            if (_tableFrame==null) {
-                _tableFrame = new WarrantTableFrame();
-                try {
-                    _tableFrame.initComponents();
-                } catch (Exception ex ) {/*bogus*/ }
-            } else {
-                _tableFrame.setVisible(true);
-                _tableFrame.pack();
-            }
+        	setupWarrantTable();
         } else if (Bundle.getMessage("CreateWarrant").equals(command)){
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
@@ -144,8 +137,26 @@ public class WarrantTableAction extends AbstractAction {
 
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
+        _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
+        	public void actionPerformed(ActionEvent e) {
+        		setupWarrantTable();
+            	_nxFrame = NXFrame.getInstance();
+            }        	
+        });
         
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
+    }
+    
+    private static void setupWarrantTable() {
+        if (_tableFrame==null) {
+            _tableFrame = WarrantTableFrame.getInstance();
+            try {
+                _tableFrame.initComponents();
+            } catch (Exception ex ) {/*bogus*/ }
+        } else {
+            _tableFrame.setVisible(true);
+            _tableFrame.pack();
+        }    	
     }
 
     synchronized protected static void closeWarrantFrame(WarrantFrame frame) {
@@ -189,7 +200,11 @@ public class WarrantTableAction extends AbstractAction {
     		return;
     	}
     	if (_openFrame!=null) {
-    		_openFrame.mouseClickedOnBlock(block);    		    		
+    		_openFrame.mouseClickedOnBlock(block);
+    		return;
+    	}
+    	if (_nxFrame!=null) {
+    		_nxFrame.mouseClickedOnBlock(block);
     	}
     }
     

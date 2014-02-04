@@ -193,6 +193,11 @@ public class TrackerTableAction extends AbstractAction {
         	if (_dialog!=null) {
         		_trainLocationBox.setText(block.getDisplayName());
             	return true;
+        	} else {
+        		if ((block.getState() & OBlock.OCCUPIED)!=0 && block.getValue()!=null) {
+        			markNewTracker(block, (String)block.getValue());
+        			return true;
+        		}
         	}
         	return false;
         }
