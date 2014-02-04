@@ -114,6 +114,11 @@ public class XmlFileValidateAction extends AbstractAction {
 
     }
 
+    // Main entry point fires the action
+    static public void main(String[] args) {
+		new XmlFileValidateAction("", null).actionPerformed(null);
+    }
+
     // initialize logging
     static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class.getName());
 }
