@@ -16,6 +16,9 @@
             jmri.console = function(data) {
             };
             jmri.error = function(error) {
+                if (window.console) {
+                    console.log(error);
+                }
             };
             jmri.light = function(name, state, data) {
             };
@@ -84,15 +87,38 @@
                     });
                 }
             };
-            jmri.getMemory = function(name) {
+            jmri.getMemory = function(name, value) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
                     jmri.socket.send("memory", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "memory/" + name, function(json) {
+                    value = $.param({value: value}) || "value=";
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "memory/" + name + "?" + value, function(json) {
+                        jmri.monitoring[name] = false;
                         jmri.memory(json.data.name, json.data.value, json.data);
+                        jmri.getMemory(json.data.name, json.data.value);
                     });
                 }
             };
+            jmri.setMemory = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("memory", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "memory/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.memory(json.data.name, json.data.value, json.data);
+                            jmri.getMemory(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            }
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -319,11 +345,17 @@
                 }
             };
             jmri.getTime = function() {
+                if (jmri.monitoring.time) {
+                    return;
+                }
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
+                    jmri.monitoring.time = true;
                     $.getJSON(jmri.url + "time", function(json) {
+                        jmri.monitoring.time = false;
                         jmri.time(json.data.time, json.data);
+                        jmri.getTime();
                     });
                 }
             };

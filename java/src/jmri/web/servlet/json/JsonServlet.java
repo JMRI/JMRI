@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
+import jmri.Memory;
 import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.Route;
@@ -207,12 +208,12 @@ public class JsonServlet extends WebSocketServlet {
         if (type != null) {
             response.setContentType("application/json"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
-            Boolean longPoll = false;
             final String name = (rest.length > 2) ? rest[2] : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
                 parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], "UTF-8"));
             }
+            Boolean longPoll = !parameters.path(VALUE).isMissingNode();
             if (!parameters.path(STATE).isMissingNode()) {
                 // JSON unknown state (0) != NamedBean unknown state (1)
                 // unless its a SignalHead (where unknown state is 0)
@@ -271,6 +272,12 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(SIGNAL_MASTS)) {
                         reply = JsonUtil.getSignalMasts();
                     } else if (type.equals(TIME)) {
+                        if (longPoll) {
+                            final AsyncContext context = request.startAsync(request, response);
+                            context.setTimeout(longPollTimeout);
+                            context.start(new TimePollingHandler(context));
+                            return;
+                        }
                         reply = JsonUtil.getTime();
                     } else if (type.equals(TRAINS)) {
                         reply = JsonUtil.getTrains();
@@ -307,6 +314,15 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(LOCATION)) {
                         reply = JsonUtil.getLocation(name);
                     } else if (type.equals(MEMORY)) {
+                        if (longPoll) {
+                            Memory memory = InstanceManager.memoryManagerInstance().getBySystemName(name);
+                            if (memory.getValue().toString().equals(parameters.path(VALUE).asText())) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new MemoryPollingHandler(memory, parameters.path(VALUE).asText(), context));
+                                return;
+                            }
+                        }
                         reply = JsonUtil.getMemory(name);
                     } else if (type.equals(METADATA)) {
                         reply = JsonUtil.getMetadata(name);
@@ -737,6 +753,44 @@ public class JsonServlet extends WebSocketServlet {
         }
     }
 
+    private static class MemoryPollingHandler extends JsonPollingHandler {
+
+        private final Memory memory;
+
+        public MemoryPollingHandler(Memory memory, String knownValue, AsyncContext context) {
+            super(knownValue, context);
+            this.memory = memory;
+        }
+
+        @Override
+        protected void respond() {
+            memory.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getMemory(memory.getSystemName()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (!knownValue.equals(memory.getValue().toString())) {
+                        respond();
+                    }
+                }
+
+            };
+            memory.addPropertyChangeListener(listener);
+        }
+    }
+
     private static class PowerPollingHandler extends JsonPollingHandler {
 
         public PowerPollingHandler(int knownState, AsyncContext context) {
@@ -925,6 +979,41 @@ public class JsonServlet extends WebSocketServlet {
 
             };
             signalMast.addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class TimePollingHandler extends JsonPollingHandler {
+
+        public TimePollingHandler(AsyncContext context) {
+            super(0, context);
+        }
+
+        @Override
+        protected void respond() {
+            InstanceManager.timebaseInstance().removeMinuteChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getTime());
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (evt.getPropertyName().equals("minutes")) {
+                        respond();
+                    }
+                }
+
+            };
+            InstanceManager.timebaseInstance().addPropertyChangeListener(listener);
         }
     }
 
