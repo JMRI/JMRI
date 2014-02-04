@@ -3,7 +3,7 @@
 
 <!-- $Id$ -->
 
-<!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
+<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -48,7 +48,7 @@
           </xs:documentation></xs:annotation>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="url" type="xs:string" />
+      <xs:attribute name="url" type="urlType" />
       <xs:attribute name="rotate" type="xs:string" >
         <xs:annotation><xs:documentation>        
           Deprecated in JMRI 2.9.4 in favor of &amp;rotation&amp; element;
@@ -107,6 +107,35 @@
       <xs:attribute name="showtooltip" type="trueFalseType" default="true" />
       <xs:attribute name="editable" type="trueFalseType" default="true" />
     </xs:attributeGroup>
+
+    <xs:complexType name="EditorIconsType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing icon information in a paneleditor element
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PanelEditor
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="visible" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="path_edit" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="hidden" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="to_arrow" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"/></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="from_arrow" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"/></xs:sequence></xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
 
     <xs:complexType name="EditorPositionableLabelType">
       <xs:annotation>
@@ -228,7 +257,15 @@
         <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="error" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="iconmaps" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="family" type="xs:string" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="activeText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="inactiveText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="unknownText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
@@ -907,6 +944,7 @@
         <xs:element name="signalAMast" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="signalBMast" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="signalCMast" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalDMast" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -1181,6 +1219,7 @@
       <xs:attribute name="radius" type="xs:float" use="required" />
       <xs:attribute name="xcen" type="xs:float" use="required" />
       <xs:attribute name="ycen" type="xs:float" use="required" />
+      <xs:attribute name="turnoutControlled" type="yesNoType" />
 
     </xs:complexType>
 

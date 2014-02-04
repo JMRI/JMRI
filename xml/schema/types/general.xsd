@@ -218,6 +218,19 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="urlType">
+    <xs:annotation>
+        <xs:documentation>
+          Only valid URLs for resource access
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+<!-- 
+      <xs:pattern value="program:[a-zA-Z0-9/][a-z.]*[a-z]"/>
+ -->
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="cvNameType">
     <xs:annotation>
         <xs:documentation>
