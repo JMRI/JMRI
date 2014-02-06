@@ -44,7 +44,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     EditableList disallowedFrames;
     JCheckBox useAjaxCB;
     JTextField port;
-    JTextField railroadName;
     JButton saveB;
     JButton cancelB;
     WebServerPreferences preferences;
@@ -69,17 +68,16 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
      layout.setAutoCreateGaps(true);
      layout.setAutoCreateContainerGaps(true);
      SequentialGroup group = layout.createSequentialGroup();
-     group.addComponent(new JTitledSeparator(WebServer.getString("TitleWebServerPreferences")));
+     group.addComponent(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
      group.addGroup(webServerPreferences(layout));
      layout.setVerticalGroup(group);
      }
      */
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(new JTitledSeparator(WebServer.getString("TitleWebServerPreferences")));
-        add(rrNamePanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
         add(portPanel());
-        add(new JTitledSeparator(WebServer.getString("TitleDelayPanel")));
+        add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
         add(delaysPanel());
         add(new JSeparator());
         add(cancelApplySave());
@@ -88,10 +86,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     /*
      private Group webServerPreferences(GroupLayout layout) {
      railroadName = new JTextField(preferences.getRailRoadName());
-     railroadName.setToolTipText(WebServer.getString("ToolTipRailRoadName"));
+     railroadName.setToolTipText(Bundle.getMessage("ToolTipRailRoadName"));
      railroadName.setColumns(30);
      ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-     group.addComponent(new JLabel(WebServer.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
+     group.addComponent(new JLabel(Bundle.getMessage("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
      group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
      return group;
      }
@@ -145,14 +143,13 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         }
         if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
             javax.swing.JOptionPane.showMessageDialog(this,
-                    WebServer.getString("WarningInvalidPort"),
-                    WebServer.getString("TitlePortWarningDialog"),
+                    Bundle.getMessage("WarningInvalidPort"),
+                    Bundle.getMessage("TitlePortWarningDialog"),
                     JOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
             preferences.setPort(portNum);
         }
-        preferences.setRailRoadName(railroadName.getText());
         return didSet;
     }
 
@@ -190,19 +187,19 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         SpinnerNumberModel spinMod = new SpinnerNumberModel(1, 0, 999, 1);
         clickDelaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) clickDelaySpinner.getEditor()).getTextField().setEditable(false);
-        clickDelaySpinner.setToolTipText(WebServer.getString("ToolTipClickDelay"));
+        clickDelaySpinner.setToolTipText(Bundle.getMessage("ToolTipClickDelay"));
         panel.add(clickDelaySpinner);
-        panel.add(new JLabel(WebServer.getString("LabelClickDelay")));
+        panel.add(new JLabel(Bundle.getMessage("LabelClickDelay")));
 
         spinMod = new SpinnerNumberModel(5, 1, 999, 1);
         refreshDelaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) refreshDelaySpinner.getEditor()).getTextField().setEditable(false);
-        refreshDelaySpinner.setToolTipText(WebServer.getString("ToolTipRefreshDelay"));
+        refreshDelaySpinner.setToolTipText(Bundle.getMessage("ToolTipRefreshDelay"));
         panel.add(refreshDelaySpinner);
-        panel.add(new JLabel(WebServer.getString("LabelRefreshDelay")));
+        panel.add(new JLabel(Bundle.getMessage("LabelRefreshDelay")));
 
-        useAjaxCB = new JCheckBox(WebServer.getString("LabelUseAjax"));
-        useAjaxCB.setToolTipText(WebServer.getString("ToolTipUseAjax"));
+        useAjaxCB = new JCheckBox(Bundle.getMessage("LabelUseAjax"));
+        useAjaxCB.setToolTipText(Bundle.getMessage("ToolTipUseAjax"));
         panel.add(useAjaxCB);
 
         JPanel dfPanel = new JPanel();
@@ -211,21 +208,11 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         tf.setBorder(BorderFactory.createLineBorder(Color.black));
         disallowedFrames.setListCellEditor(new DefaultListCellEditor(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
-        dfPanel.add(new JLabel(WebServer.getString("LabelDisallowedFrames")));
-        dfPanel.setToolTipText(WebServer.getString("ToolTipDisallowedFrames"));
+        dfPanel.add(new JLabel(Bundle.getMessage("LabelDisallowedFrames")));
+        dfPanel.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames"));
 
         panel.add(dfPanel);
 
-        return panel;
-    }
-
-    private JPanel rrNamePanel() {
-        JPanel panel = new JPanel();
-        railroadName = new JTextField(preferences.getRailRoadName());
-        railroadName.setToolTipText(WebServer.getString("ToolTipRailRoadName"));
-        railroadName.setColumns(30);
-        panel.add(new JLabel(WebServer.getString("LabelRailRoadName")));
-        panel.add(railroadName);
         return panel;
     }
 
@@ -234,15 +221,15 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         port = new JTextField();
         port.setText(Integer.toString(preferences.getPort()));
         port.setColumns(6);
-        port.setToolTipText(WebServer.getString("ToolTipPort"));
+        port.setToolTipText(Bundle.getMessage("ToolTipPort"));
         panel.add(port);
-        panel.add(new JLabel(WebServer.getString("LabelPort")));
+        panel.add(new JLabel(Bundle.getMessage("LabelPort")));
         return panel;
     }
 
     private JPanel cancelApplySave() {
         JPanel panel = new JPanel();
-        cancelB = new JButton(WebServer.getString("ButtonCancel"));
+        cancelB = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelB.setVisible(false);
         cancelB.addActionListener(new ActionListener() {
             @Override
@@ -250,14 +237,14 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
                 cancelValues();
             }
         });
-        JButton applyB = new JButton(WebServer.getString("ButtonApply"));
+        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
         applyB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 applyValues();
             }
         });
-        saveB = new JButton(WebServer.getString("ButtonSave"));
+        saveB = new JButton(Bundle.getMessage("ButtonSave"));
         saveB.setVisible(false);
         saveB.addActionListener(new ActionListener() {
             @Override
@@ -267,7 +254,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         });
         panel.add(cancelB);
         panel.add(saveB);
-        panel.add(new JLabel(WebServer.getString("LabelApplyWarning")));
+        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
         panel.add(applyB);
         return panel;
     }
@@ -294,12 +281,12 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     @Override
     public String getPreferencesItem() {
-        return WebServer.getString("PreferencesItem");
+        return Bundle.getMessage("PreferencesItem");
     }
 
     @Override
     public String getPreferencesItemText() {
-        return WebServer.getString("PreferencesItemTitle");
+        return Bundle.getMessage("PreferencesItemTitle");
     }
 
     @Override

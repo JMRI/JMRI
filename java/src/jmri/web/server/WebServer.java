@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -134,11 +133,6 @@ public final class WebServer implements LifeCycle.Listener {
         } else {
             return null;
         }
-    }
-
-    @SuppressWarnings("FinalStaticMethod")
-    public static final String getString(String message) {
-        return ResourceBundle.getBundle("jmri.web.server.Bundle").getString(message);
     }
 
     public int getPort() {
