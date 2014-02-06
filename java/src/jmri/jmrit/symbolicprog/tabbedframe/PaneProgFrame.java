@@ -791,15 +791,19 @@ abstract public class PaneProgFrame extends JmriJFrame
         // add the reset button
         JButton reset = new JButton(SymbolicProgBundle.getMessage("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        store.setPreferredSize(reset.getPreferredSize());
         reset.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     resetToDefaults();
                 }
             });
 
-        store.setPreferredSize(reset.getPreferredSize());
-
+        int sizeX = Math.max(reset.getPreferredSize().width, store.getPreferredSize().width);
+        int sizeY = Math.max(reset.getPreferredSize().height, store.getPreferredSize().height);
+        store.setPreferredSize(new Dimension(sizeX,sizeY));
+        reset.setPreferredSize(new Dimension(sizeX,sizeY));
+        
+        store.setToolTipText(_rosterEntry.getFileName());
+        
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
         
@@ -854,6 +858,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                     storeFile();
                 }
             });
+
+        store.setToolTipText(_rosterEntry.getFileName());
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
