@@ -293,9 +293,9 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testXMLFileCreate() throws Exception {
 		Setup s;
+		s = createTestSetup();
                 WebServerPreferences wsp = WebServerManager.getWebServerPreferences();
                 wsp.setRailRoadName(wsp.getDefaultRailroadName());
-		s = createTestSetup();
 
 		Assert.assertEquals("Create Railroad Name", wsp.getDefaultRailroadName(), s.getRailroadName());
 		Assert.assertEquals("Create Railroad Owner", "File Test Railroad Owner", s.getOwnerName());
@@ -424,6 +424,7 @@ public class OperationsSetupTest extends TestCase {
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
+                WebServerManager.getWebServerPreferences().setRailRoadName("File Test Railroad Name");
 		s.setOwnerName("File Test Railroad Owner");
 		s.setPanelName("File Test Panel Name");
 		s.setFontName("File Test Font Name");
