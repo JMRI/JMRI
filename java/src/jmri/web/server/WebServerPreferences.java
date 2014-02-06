@@ -272,6 +272,25 @@ public class WebServerPreferences extends Bean {
         }
     }
 
+    /**
+     * Test if the railroad name has been set by user.
+     *
+     * @return true if user has not set the railroad name.
+     */
+    public boolean isDefaultRailroadName() {
+        return this.getRailRoadName().equals(Bundle.getMessage("DefaultRailroadName"));
+    }
+
+    /**
+     * Get the default railroad name. This method exists solely to support unit
+     * testing.
+     *
+     * @return The default railroad name
+     */
+    public String getDefaultRailroadName() {
+        return Bundle.getMessage("DefaultRailroadName");
+    }
+
     public static class WebServerPreferencesXml extends XmlFile {
     }
 }
