@@ -21,7 +21,7 @@ public interface Qualifier  {
      * Check whether this Qualifier is currently in the OK,
      * qualified-to-act state.
      *
-     * @returns true if this Qualifier is currently saying OK
+     * @return true if this Qualifier is currently saying OK
      */
     public boolean currentDesiredState();
 
