@@ -2,29 +2,24 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
-import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsFrame;
@@ -35,6 +30,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of operation parameters
@@ -94,7 +91,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	// text field
 	// JTextField ownerTextField = new JTextField(10);
 	JTextField panelTextField = new JTextField(30);
-	JTextField railroadNameTextField = new JTextField(35);
+	JLabel railroadNameTextField = new JLabel(Setup.getRailroadName());
 	JTextField maxLengthTextField = new JTextField(5);
 	JTextField maxEngineSizeTextField = new JTextField(3);
 	JTextField hptTextField = new JTextField(3);
@@ -536,7 +533,6 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			Setup.setScale(Setup.O_SCALE);
 		if (scaleG.isSelected())
 			Setup.setScale(Setup.G_SCALE);
-		Setup.setRailroadName(railroadNameTextField.getText());
 		// Set Unit of Length
 		if (feetUnit.isSelected())
 			Setup.setLengthUnit(Setup.FEET);
