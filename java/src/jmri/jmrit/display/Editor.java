@@ -563,27 +563,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     private void setScrollbarScale(double ratio) {
-		Dimension dim = _targetPanel.getSize();
-        //Dimension dim = _targetPanel.getPreferredSize();
-        //Dimension dim = _targetPanel.getMaximumSize();
+    	//resize the panel to reflect scaling
+    	Dimension dim = _targetPanel.getSize();
 		int tpWidth = (int)((dim.width)*ratio);
 		int tpHeight = (int)((dim.height)*ratio);
         _targetPanel.setSize(tpWidth,tpHeight);
-        if (_debug) log.debug("setScrollbarScale: ratio= "+ratio+", tpWidth= "+tpWidth+", tpHeight= "+tpHeight);
-		// compute new scroll bar positions in order to keep image centered
+        log.debug("setScrollbarScale: ratio= {}, tpWidth= {}, tpHeight= {}", ratio, tpWidth, tpHeight);
+		// compute new scroll bar positions to keep upper left same
         JScrollBar horScroll = _panelScrollPane.getHorizontalScrollBar();
         JScrollBar vertScroll = _panelScrollPane.getVerticalScrollBar();
-		int hScroll = horScroll.getVisibleAmount()/2;
-		hScroll = (int)((horScroll.getValue() + hScroll) * ratio) - hScroll;
-		int vScroll = vertScroll.getVisibleAmount()/2;
-		vScroll = (int)((vertScroll.getValue() + vScroll) * ratio) - vScroll;
+		int hScroll = (int)(horScroll.getValue() * ratio);
+		int vScroll = (int)(vertScroll.getValue() * ratio);
 		// set scrollbars maximum range (otherwise setValue may fail);
 		horScroll.setMaximum((int)((horScroll.getMaximum())*ratio));
 		vertScroll.setMaximum((int)((vertScroll.getMaximum())*ratio));
 		// set scroll bar positions
 		horScroll.setValue(hScroll);
 		vertScroll.setValue(vScroll);
-		repaint();
     }
      
     /************************ Options setup **********************/

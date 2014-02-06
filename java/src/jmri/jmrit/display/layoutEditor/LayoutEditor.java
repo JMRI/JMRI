@@ -1312,7 +1312,31 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JMenu zoomMenu = new JMenu(rb.getString("MenuZoom"));
         menuBar.add(zoomMenu);
 		ButtonGroup zoomButtonGroup = new ButtonGroup();
-		// edit mode item
+		// add zoom choices to menu
+		JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+		zoomMenu.add(zoom025Item);
+		zoom025Item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				setZoom(0.25);
+			}
+		});			
+		zoomButtonGroup.add(zoom025Item);
+		JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+		zoomMenu.add(zoom05Item);
+		zoom05Item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				setZoom(0.5);
+			}
+		});			
+		zoomButtonGroup.add(zoom05Item);
+		JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+		zoomMenu.add(zoom075Item);
+		zoom075Item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				setZoom(0.75);
+			}
+		});			
+		zoomButtonGroup.add(zoom075Item);
         JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
         zoomMenu.add(noZoomItem);
         noZoomItem.addActionListener(new ActionListener() {
