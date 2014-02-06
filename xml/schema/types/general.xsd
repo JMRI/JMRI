@@ -227,7 +227,7 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[A-Z]:)[a-zA-Z0-9/\-_\.]*"/>
+      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
     </xs:restriction>
   </xs:simpleType>
 
