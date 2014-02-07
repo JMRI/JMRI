@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -337,6 +338,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
 
         ok = false;
+        ArrayList<OBlock> neighbors = new ArrayList<OBlock>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int j = 0; j < sysNames.length; j++) {
@@ -349,8 +351,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                         adjRect = comp.getBounds(adjRect);
                         if (iconIntersectsRect(icon, adjRect)) {
                             ok = true;
-                            _adjacentBlock = block;
-                            break;
+                            neighbors.add(block);
                         }
                     }
                 }
@@ -360,6 +361,29 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             msg = Bundle.getMessage("iconNotOnAdjacent", 
                        icon.getNameString(), _homeBlock.getDisplayName());
             return msg;
+        }
+        _adjacentBlock = neighbors.get(0);
+        if (neighbors.size()>1) {
+        	// show list
+        	String[] selects = new String[neighbors.size()];
+        	Iterator<OBlock> iter = neighbors.iterator();
+        	int i = 0;
+        	while (iter.hasNext()) {
+        		selects[i++] =  iter.next().getDisplayName();                			
+        	}
+        	Object select = JOptionPane.showInputDialog(this,Bundle.getMessage("multipleSelections", portal.getName()),
+        					Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE, 
+        					null, selects, null);
+        	if (select !=null) {
+            	iter = neighbors.iterator();
+            	while (iter.hasNext()) {
+            		OBlock block = iter.next();
+            		if (((String)select).equals(block.getDisplayName())) {
+                        _adjacentBlock = block;
+                		break;
+            		}
+            	}
+        	}        	
         }
         if (portal.getToBlock()!=null && !_adjacentBlock.equals(portal.getToBlock())
                          && !_adjacentBlock.equals(portal.getFromBlock()) ) {
@@ -419,6 +443,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         
         _parent._editor.highlight(icon);        
         _parent.getPortalIconMap().put(icon.getName(), icon);
+        clearListSelection();
         _portalListModel.dataChange();
     }
 

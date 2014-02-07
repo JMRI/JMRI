@@ -651,19 +651,19 @@ public class CircuitBuilder  {
             	retOK = true;
             } else {
                 int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
-                                Bundle.getMessage("blockExists"), sysname), 
+                                Bundle.getMessage("blockExists"), sysname, uname), 
                                 Bundle.getMessage("AskTitle"), JOptionPane.YES_NO_OPTION, 
                                 JOptionPane.QUESTION_MESSAGE);
                 if (result==JOptionPane.YES_OPTION) {
-                    _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
+                    _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getByUserName(uname);
                     if (_currentBlock==null) {
-                    	retOK = false;
+                        _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
                     }
-                    checkCircuits();
-                    _editor.setSelectionGroup(_circuitMap.get(_currentBlock));
-                    _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
-                    retOK = true;
-                }            }
+                    if (_currentBlock!=null) {
+                        retOK = true;
+                    }
+                }
+            }
         }
         if (!retOK) {
             JOptionPane.showMessageDialog(_editor, Bundle.getMessage("createOBlock"), 
@@ -1351,26 +1351,84 @@ public class CircuitBuilder  {
         }
         return false;
     }
-
     protected boolean doMouseClicked(List<Positionable> selections, MouseEvent event) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || 
-        			_editPortalFrame!=null || _editDirectionFrame!=null) {
-        	// selection may be under or over an icon CircuitBuilder wants. Filter selection stack.
-        	Iterator<Positionable> it = selections.iterator();
-        	while (it.hasNext()) {
-            	Positionable selection = it.next();
-            	if (isTrack(selection) || selection instanceof PortalIcon)
-                    if (_editPathsFrame!=null && event.isShiftDown()) {
+    			_editPortalFrame!=null || _editDirectionFrame!=null) {
+        	if (selections!=null && selections.size()>0)
+        	{
+        		ArrayList<Positionable> tracks = new ArrayList<Positionable>();
+        		Iterator<Positionable> iter = selections.iterator();
+        		if (_editCircuitFrame!=null) {
+            		while (iter.hasNext()) {
+            			Positionable pos = iter.next();
+            			if (isTrack(pos)) {
+            				tracks.add(pos);
+            			}
+            		}        			
+        		} else if (_editPathsFrame!=null) {        			
+            		while (iter.hasNext()) {
+            			Positionable pos = iter.next();
+            			if (isTrack(pos) || pos instanceof PortalIcon) {
+            				tracks.add(pos);
+            			}
+            		}
+        		} else{        			
+            		while (iter.hasNext()) {
+            			Positionable pos = iter.next();
+            			if (pos instanceof PortalIcon) {
+            				tracks.add(pos);
+            			}
+            		}
+        		}
+        		if (tracks.size()>0)
+        		{
+        			Positionable selection = null;
+        			if (tracks.size()==1) {
+        				selection = tracks.get(0);
+        			} else {
+        				selection = getSelection(tracks);
+        			}
+                    if (_editPathsFrame!=null && event.isShiftDown()&& !event.isControlDown()) {
                     	selection.doMouseClicked(event);
                     }
-            	if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
-                	handleSelection(selection, event);
-                }
-                return true;        		
-        	}
+                    handleSelection(selection, event);
+        		}
+       		}
             return true;
         }
         return false;
+    }
+
+
+    private Positionable getSelection(List<Positionable> tracks) {
+    	if (tracks.size()>0) {
+    		if (tracks.size()==1) {
+    			return tracks.get(0);
+    		}
+    		if (tracks.size()>1) {
+            	String[] selects = new String[tracks.size()];
+            	Iterator<Positionable> iter = tracks.iterator();
+            	int i = 0;
+            	while (iter.hasNext()) {
+        			selects[i++] =  iter.next().getNameString();
+            	}
+            	Object select = JOptionPane.showInputDialog(_editor,Bundle.getMessage("multipleSelections"),
+            					Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE, 
+            					null, selects, null);
+            	if (select !=null) {
+                	iter = tracks.iterator();
+                	while (iter.hasNext()) {
+                		Positionable pos = iter.next();
+                		if (((String)select).equals(pos.getNameString())) {
+                			return pos;
+                		}
+                	}
+            	} else {
+            		return tracks.get(tracks.size()-1);
+            	}			
+    		}
+    	}
+    	return null;
     }
 
     /**

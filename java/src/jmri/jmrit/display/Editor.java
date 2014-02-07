@@ -524,11 +524,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             if (_selectionGroup!=null){
                 g2d.setColor(_selectGroupColor);
+                Color halftone = new Color(_selectGroupColor.getRed(),_selectGroupColor.getGreen(),
+                				_selectGroupColor.getBlue(),_selectGroupColor.getAlpha()/2);
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
                 for(int i=0; i<_selectionGroup.size();i++){
                 	Positionable p = _selectionGroup.get(i);
                     if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
                         g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
+                    } else {
+                    	Rectangle r = new Rectangle(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
+                        g2d.setColor(halftone);
+                        g2d.fill(r);
                     }
                 }
             }
