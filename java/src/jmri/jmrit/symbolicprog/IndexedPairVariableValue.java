@@ -250,6 +250,7 @@ public class IndexedPairVariableValue extends VariableValue
     Color _defaultColor;
 
     // implement an abstract member to set colors
+    Color getDefaultColor() { return _defaultColor; }
     Color getColor() { return _value.getBackground(); }
     void setColor(Color c) {
         if (c != null) _value.setBackground(c);

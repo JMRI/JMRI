@@ -21,6 +21,7 @@ public class ComboCheckBox extends JCheckBox {
 		_var = var;
 		_box = box;
 		setBackground(_var._value.getBackground());
+        setOpaque(true);
 		// listen for changes to ourself
 		addActionListener(l1 = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -61,6 +62,7 @@ public class ComboCheckBox extends JCheckBox {
 		if (e.getPropertyName().equals("State")) {
 			if (log.isDebugEnabled()) log.debug("State change seen");
 			setBackground(_var._value.getBackground());
+            setOpaque(true);
 		}	
 	}
 	

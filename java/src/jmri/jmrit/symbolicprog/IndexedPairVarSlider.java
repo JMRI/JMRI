@@ -28,6 +28,11 @@ public class IndexedPairVarSlider extends JSlider implements ChangeListener {
         _iVar = iVar;
         // get the original color right
         setBackground(_iVar.getColor());
+        if (_iVar.getColor() == _iVar.getDefaultColor()) {
+            setOpaque(false);
+        } else {
+            setOpaque(true);
+        }
         // set the original value
         setValue(Integer.valueOf(_iVar.getValueString()).intValue());
         // listen for changes here
@@ -55,6 +60,11 @@ public class IndexedPairVarSlider extends JSlider implements ChangeListener {
         // update this color from original state
         if (e.getPropertyName().equals("State")) {
             setBackground(_iVar.getColor());
+            if (_iVar.getColor() == _iVar.getDefaultColor()) {
+                setOpaque(false);
+            } else {
+                setOpaque(true);
+            }
         }
         if (e.getPropertyName().equals("Value")) {
             int newValue = Integer.valueOf(((JTextField)_iVar.getCommonRep()).getText()).intValue();
