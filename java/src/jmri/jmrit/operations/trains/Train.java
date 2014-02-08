@@ -713,6 +713,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			return CODE_TRAIN_RESET;
 		if (getStatus().startsWith(BUILDING))
 			return CODE_BUILDING;
+		if (getStatus().startsWith(BUILD_FAILED))
+			return CODE_BUILD_FAILED;
 		if (getStatus().startsWith(PARTIAL_BUILT))
 			return CODE_PARTIAL_BUILT;
 		if (getStatus().startsWith(BUILT))
