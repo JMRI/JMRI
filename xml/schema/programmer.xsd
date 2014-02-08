@@ -69,6 +69,7 @@
     <xs:attribute name="showFnLanelPane"  type="yesNoType" default="no"/>
     <xs:attribute name="showRosterPane"  type="yesNoType" default="no"/>
     <xs:attribute name="showRosterMediaPane"  type="yesNoType" default="no"/>
+    <xs:attribute name="showCvNumbers" type="yesNoType" default="no" />
   </xs:complexType>
 
   <xs:element name="programmer-config">
