@@ -539,7 +539,7 @@ public class TrainCommon {
 		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
 			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		int count = countUtiltiyCars(messageFormat, carList, car, rl, rld, PICKUP);
+		int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
 		pickUpCar(fileOut, car, new StringBuffer(tabString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())
@@ -571,7 +571,7 @@ public class TrainCommon {
 			buf = new StringBuffer(tabString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
 			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		}
-		int count = countUtiltiyCars(messageFormat, carList, car, rl, null, !PICKUP);
+		int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
 		buf.append(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
@@ -584,7 +584,7 @@ public class TrainCommon {
 		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
 			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		int count = countUtiltiyCars(messageFormat, carList, car, rl, rld, PICKUP);
+		int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return null;
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
@@ -605,7 +605,7 @@ public class TrainCommon {
 		} else if (!isLocal && !isManifest) {
 			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		}
-		int count = countUtiltiyCars(messageFormat, carList, car, rl, null, !PICKUP);
+		int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return null;
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
@@ -630,7 +630,7 @@ public class TrainCommon {
 	 * @param isPickup
 	 * @return 0 if the car type has already been processed
 	 */
-	private int countUtiltiyCars(String[] messageFormat, List<Car> carList, Car car, RouteLocation rl,
+	private int countUtilityCars(String[] messageFormat, List<Car> carList, Car car, RouteLocation rl,
 			RouteLocation rld, boolean isPickup) {
 		int count = 0;
 		// figure out if the user wants to show the car's length
