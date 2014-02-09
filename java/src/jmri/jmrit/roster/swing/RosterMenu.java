@@ -72,11 +72,11 @@ public class RosterMenu extends JMenu {
         AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(Bundle.getMessage("MenuItemEdit"));
         editAction.setEnabled(false);
 
-        AbstractAction importAction = new ImportRosterItemAction(Bundle.getMessage("MenuItemImport"), pWho);
-        importAction.setEnabled(false);
-
         AbstractAction exportAction = new ExportRosterItemAction(Bundle.getMessage("MenuItemExport"), pWho);
         exportAction.setEnabled(false);
+
+        AbstractAction importAction = new ImportRosterItemAction(Bundle.getMessage("MenuItemImport"), pWho);
+        importAction.setEnabled(false);
 
         AbstractAction copyAction = new CopyRosterItemAction(Bundle.getMessage("MenuItemCopy"), pWho);
         copyAction.setEnabled(false);
