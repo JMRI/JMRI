@@ -121,7 +121,7 @@ public class OperationsServlet extends HttpServlet {
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
                     train.getComment(),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    "-->" + manifest.getLocations() + "<!--"
+                    manifest.getLocations()
             ));
             train.setModified(false);
         } else {

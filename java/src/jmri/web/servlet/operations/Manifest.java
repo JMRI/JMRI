@@ -21,6 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManifestText;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,7 @@ public class Manifest extends TrainCommon {
         List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
 
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
-        log.debug("Train has " + carList.size() + " cars assigned to it");
+        log.debug("Train has {} cars assigned to it", carList.size());
 
         boolean work = false;
         this.newWork = false; // true if current and next locations are the same
@@ -79,7 +80,7 @@ public class Manifest extends TrainCommon {
                 // add line break between locations without work and ones with work
                 // TODO sometimes an extra line break appears when the user has two or more locations with the
                 // "same" name and the second location doesn't have work
-                if (!oldWork) {
+                if (oldWork) {
                     builder.append("</li>"); // NOI18N
                 }
                 builder.append("<li>"); // NOI18N
@@ -318,6 +319,7 @@ public class Manifest extends TrainCommon {
         for (String f : format) {
             builder.append(getCarAttribute(car, f, PICKUP, !LOCAL));
         }
+        log.debug("Picking up car {}", builder);
         return builder.toString().trim();
     }
 
@@ -399,12 +401,13 @@ public class Manifest extends TrainCommon {
         for (String string : Setup.getPickupEngineMessageFormat()) {
             builder.append(getEngineAttribute(engine, string, true));
         }
-        return builder.toString();
+        log.debug("Picking up engine: {}", builder);
+        return String.format(locale, strings.getProperty("Engine"), builder.toString());
     }
 
     private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.LOAD)) {
-            return (car.isCaboose() || car.isPassenger()) ? "" : car.getLoadName(); // NOI18N
+            return (car.isCaboose() || car.isPassenger()) ? "" : StringEscapeUtils.escapeHtml4(car.getLoadName()); // NOI18N
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return (car.isHazardous() ? Setup.getHazardousMsg() : ""); // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {

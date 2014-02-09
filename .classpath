@@ -7,6 +7,7 @@
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>

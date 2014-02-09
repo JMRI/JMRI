@@ -138,6 +138,7 @@
         <pathelement location="${libdir}/junit.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
+        <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
