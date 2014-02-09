@@ -3,11 +3,14 @@ package jmri.jmrit.operations.setup;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.web.server.WebServerManager;
+
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -500,7 +503,13 @@ public class Setup {
 	}
 
 	public static String getRailroadName() {
-		return WebServerManager.getWebServerPreferences().getRailRoadName();
+		if (railroadName == null)
+			return WebServerManager.getWebServerPreferences().getRailRoadName();
+		return railroadName;
+	}
+
+	public static void setRailroadName(String name) {
+		railroadName = name;
 	}
 
 	public static String getHazardousMsg() {
@@ -1728,13 +1737,12 @@ public class Setup {
 		Element operations = e.getChild(Xml.OPERATIONS);
 		org.jdom.Attribute a;
 
-		if (WebServerManager.getWebServerPreferences().isDefaultRailroadName()
-                                && (operations.getChild(Xml.RAIL_ROAD) != null)
+		if ((operations.getChild(Xml.RAIL_ROAD) != null)
 				&& (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
 			String name = a.getValue();
 			if (log.isDebugEnabled())
 				log.debug("railroadName: " + name);
-			WebServerManager.getWebServerPreferences().setRailRoadName(name);
+			setRailroadName(name);
 		}
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {

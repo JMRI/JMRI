@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Setup;
+
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -267,6 +270,7 @@ public class WebServerPreferences extends Bean {
     public void setRailRoadName(String railRoadName) {
         if (railRoadName != null) {
             this.railRoadName = railRoadName;
+            Setup.setRailroadName(railRoadName); // Also change the railroad name in operations
         } else {
             this.railRoadName = Bundle.getMessage("DefaultRailroadName");
         }
