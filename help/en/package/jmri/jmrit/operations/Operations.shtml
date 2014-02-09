@@ -100,6 +100,7 @@
      <UL>
       <LI><A HREF="#ImportingCars">Importing Cars from a File</A></LI>
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
+      <LI><A HREF=#CabooseFredHazardous>Passenger, Caboose, Car with FRED, Utility, and Hazardous Options</A>
       <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
       <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
@@ -137,7 +138,8 @@
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
       <LI><A HREF="#Timetable">Timetable</A></LI>
       <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
-      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>    
+      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>   
+      <LI><A HREF="#TrainStatus">Train Status</A></LI>  
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
       <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
@@ -1033,8 +1035,8 @@
    <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
 
-   From the "Operations-&gt;Settings-&gt;Tools" menu select "Build Report Options" to open the build
-   report options window.
+   From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu
+   select "Build Report Options" to open the build report options window.
 
    <p>You can adjust the amount of information that the build report will show. Select one of
     the four levels using the radio buttons in the Build Report Options window. The program when
@@ -3029,8 +3031,32 @@
    <P>You can also control which trains are shown in the Trains window. When the "Show All"
     checkbox is unselected, only trains that have the "Build" checkbox selected are shown.</P>
 
+   <A NAME="TrainStatus"></A>
+   <H2>Train Status</H2>
 
-   
+   After pressing the "Build" button for a train, the train's status will become "Built", "Partial
+   X/Y", or "Build Failed". A "Built" train status means that the program was able to provide exact
+   number of car moves requested by the train's route. A train status of "Partial X/Y" means that
+   the program was only able to provide "X" cars out of the "Y" requested by the train's route. For
+   example let's say you wanted a total of 23 cars moved as defined by the train's route, and the
+   program could only provide 19, the status would be "Partial 19/23". As long as the number of cars
+   found by the program is reasonably close to the requested, then the program was able to build the
+   train to your expectations. "19/23" or 19 cars out of 23 cars would be considered by most
+   as reasonable.
+
+   <P>
+    When a train fails to build the status becomes "Build Failed" see <A
+     HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A> to understand how
+    to troubleshoot a build failure.
+   </P>
+
+   <P>After successfully building a train, you can have the train depart and travel to the first
+    location in your train's route by pressing the "Move" button. The train's status would then
+    become "In route", and the status will also show the number of cars in the train, along with the
+    train's current length and weight. Once the train reaches the last location in the train's
+    route, pressing the "Move" button again causes the program to terminate the train, and the
+    train's status becomes "Terminated" along with the date and time of when the train was terminated.</P>
+
    <A NAME="TroubleShootingBuildingTrains"></A>
    <H2>Problems Building Trains How to Fix</H2>
 
@@ -3046,6 +3072,36 @@
     detailed. See the Settings section <A HREF="#BuildReportDetails"> Build Report Options</A> for
     more information on how to change the build report detail level.
    </p>
+
+   <P>
+    The most common reason for a build failure is requesting a caboose or car with FRED and the
+    program can't find a caboose or car with FRED at the start of the train's route. The program
+    must also find a track at the train's destination that can service the caboose or car with FRED.
+    Note that you must select the "Caboose" <A HREF=#CabooseFredHazardous>checkbox</A> to make a car
+    a caboose, the type name "Caboose" doesn't make a car a caboose, as you can name your "crummy" or "hack" 
+    anything you want.
+   </P>
+
+   <P>
+    The next common reason for a build failure is requesting a certain number of locomotives for the train,
+    and the locos aren't at the start of the train's route. If you request more than 2 locos for a
+    train, they must be part of a consist, or you've selected the <A HREF="#TrainBuildOptions">option</A>
+    for the program to build a consist from individual locomotives. Again, the program must find the
+    requested number of locomotives at the start of the route, and must also find track that can
+    service the locos at the end of the train's route.
+   </P>
+
+   <P>The third most experienced reason for a build failure is when a train is departing staging and
+    the program can't find destinations for the cars. It is a requirement that a train must depart
+    with all cars on the staging track, no cars can be left behind in staging. A build failure
+    will occur if the program can't find destinations for all of the cars departing staging.</P>
+
+   <P>
+    Reading the build report can detail exactly why the train failed to build allowing you to
+    correct the problem. When reading the build report, use the "Very Detailed" <A
+     HREF="#BuildReportDetails">option</A> as it provides the most information with regards to how
+    the program works and why the failure occurred.
+   </P>
 
    <P>
     <img src="images/BuildReport.png">
