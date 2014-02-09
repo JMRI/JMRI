@@ -53,6 +53,7 @@ public class Tracker {
         _markerFont = block.getMarkerFont();
     	_occupies.addFirst(block);
         _time = System.currentTimeMillis();
+        block._entryTime = _time;
         showBlockValue(block);
     }
 

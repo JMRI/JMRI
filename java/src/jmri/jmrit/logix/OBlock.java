@@ -14,6 +14,7 @@ import java.awt.Font;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Sensor;
+import jmri.Timebase;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 
@@ -133,13 +134,17 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     	}
         return _statusNameMap.get(str);
     }
-
+    /* maybe show fast clock time later
+    protected static Timebase 	_clock = InstanceManager.timebaseInstance();
+    private java.util.Date	_entryTime;		// time when block became occupied
+	*/
     ArrayList<Portal> _portals = new ArrayList <Portal>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String  _pathName;      // when not null, this is the allocated path
-    private float _scaleRatio   = 87.1f;
-    private boolean _metric     = false; // desired display mode
+    protected long	_entryTime;		// time when block became occupied
+    static private float _scaleRatio   = 87.1f;
+    static private boolean _metric     = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
     // a list of their conflicting paths.

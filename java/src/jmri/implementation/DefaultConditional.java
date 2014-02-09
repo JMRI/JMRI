@@ -1081,7 +1081,9 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							String err = w.setRoute(0, null);
-                            err = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+							if (err!=null) {
+	                            err = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);								
+							}
                             if (err!=null) {
                                 errorList.add("runAutoTrain error - "+err);
                             }
@@ -1095,7 +1097,9 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							String err = w.setRoute(0, null);
-                            err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
+							if (err!=null) {
+	                            err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);								
+							}
                             if (err!=null) {
                                 errorList.add("runManualTrain error - "+err);
                             }

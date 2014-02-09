@@ -169,7 +169,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 		_status.setBackground(Color.white);
 //    	_background = _status.getBackground();
     	_status.setFont(jmri.util.FontUtil.deriveFont(_status.getFont(),java.awt.Font.BOLD));
-        setStatusText(BLANK.substring(0,90), null);
+        setStatusText(BLANK.substring(0,90), null, false);
         p.add(_status);
         _status.setEditable(false);
         JPanel ps = new JPanel();
@@ -342,33 +342,26 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     }
     
     String runTrain(Warrant w) {
-    	String msg = null;
-        msg = w.allocateRoute(null);
-        if (msg!=null) {
-        	setStatusText(msg, Color.red);
-        }
-        String msg2 = w.setRoute(0, null);
-        if (msg==null && msg2!=null) {
-        	setStatusText(msg2, Color.red);
-        }
+    	String msg =  w.setRoute(0, null);
         if (msg==null) {
-        	msg = w.checkRoute();
-        	if (msg!=null) {
-               	setStatusText(msg, Color.orange);                        		
-        	}
+            msg = w.checkForContinuation();
         }
-        if (msg==null) {
-        	msg = w.checkStartBlock();
-        	if (msg!=null) {
-               	setStatusText(msg, Color.orange);                        		
-        	}
-        }
-        msg = w.checkForContinuation();
         if (msg==null) {
             msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-            msg = null;		// will be the same message that user OK'd to ignore
         }
-    	return msg;
+        if (msg!=null) {
+        	setStatusText(msg, Color.red, false);
+        	return msg;
+        }
+    	msg = w.checkRoute();	// notify about occupation ahead
+    	if (msg!=null) {
+           	setStatusText(msg, WarrantTableModel.myGold, false);                        		
+    	}
+    	msg = w.checkStartBlock();	// notify first block occupied by this train
+    	if (msg!=null) {
+           	setStatusText(msg, WarrantTableModel.myGold, false);                        		
+    	}
+    	return null;
     }
 
     public void mouseClicked(MouseEvent event) {
@@ -384,17 +377,17 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     public void mouseExited(MouseEvent event) {}
     public void mouseReleased(MouseEvent event) {}
     
-    void setStatusText(String msg, Color c) {
-    	if (WarrantTableModel.myGold.equals(c)) {
+    void setStatusText(String msg, Color c, boolean save) {
+/*    	if (WarrantTableModel.myGold.equals(c)) {
     		_status.setBackground(Color.lightGray);
     	} else if (Color.red.equals(c)) {
         	_status.setBackground(Color.white);   		
     	} else {
         	_status.setBackground(Color.white);    		
-    	}
+    	}*/
     	_status.setForeground(c);
     	_status.setText(msg);
-    	if (msg!=null && msg.length()>0) {
+    	if (save && msg!=null && msg.length()>0) {
     		_statusHistory.add(msg);
     		while (_statusHistory.size()>_maxHistorySize) {
     			_statusHistory.remove(0);

@@ -157,25 +157,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return p;
     }
 
-    private OBlock getEndPointBlock(JTextField textBox) {
-        String text = textBox.getText();
-        int idx = text.indexOf(java.awt.event.KeyEvent.VK_TAB);
-        if (idx > 0){
-            if (idx+1 < text.length()) {
-                text = text.substring(idx+1);
-            } else {
-                text = text.substring(0, idx);
-            }
-        }
-        textBox.setText(text);
-        OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
-        if (block == null && text.length()>0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", text),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        }
-        return block;
-    }
-
     private boolean setOriginBlock() {
         return _origin.setBlock();
     }
@@ -271,13 +252,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         
         protected void clearFields() {
-//        	blockBox.setText(null);
         	setBlock(null);
         }
 
         protected boolean checkBlockBox(JTextField box) {
         	if (box == blockBox) {
-        		setBlock(getEndPointBlock(blockBox));
+        		setBlock(getEndPointBlock());
         		return true;
         	}
         	return false;
@@ -338,8 +318,27 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	return blockBox.getText();
         }
         
+        private OBlock getEndPointBlock() {
+            String text = blockBox.getText();
+            int idx = text.indexOf(java.awt.event.KeyEvent.VK_TAB);
+            if (idx > 0){
+                if (idx+1 < text.length()) {
+                    text = text.substring(idx+1);
+                } else {
+                    text = text.substring(0, idx);
+                }
+            }
+            blockBox.setText(text);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
+            if (block == null && text.length()>0) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("BlockNotFound", text),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            }
+            return block;
+        }
+
         private boolean setBlock() {
-            return setBlock(getEndPointBlock(blockBox));
+            return setBlock(getEndPointBlock());
         }
         private boolean setBlock(OBlock block) {
             boolean result = true;

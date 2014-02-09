@@ -305,6 +305,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return Warrant.WAIT_FOR_SENSOR;
         } else if (!_speedType.equals("Normal")) {
             return Warrant.SPEED_RESTRICTED;
+        } else if (_idxCurrentCommand<0) {
+        	return 0;
         }
         return Warrant.RUNNING;
     }
@@ -364,7 +366,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.warn("Throttle release and cancel threw: "+e);
             }
         }
-        _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
+        _warrant.stopWarrant();
         if (log.isDebugEnabled()) log.debug("Engineer shut down. warrant "+_warrant.getDisplayName());
     }
 
@@ -560,16 +562,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         	num--;
             ts.setValue(Integer.toString(num));    		
     	}
-        String msg = null;
         if (_warrant.equals(w)) {
             _idxCurrentCommand = -1;
         	w.startupWarrant();
         } else {
-            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);        	
+            w.stopWarrant();        	
         }
-        if (msg!=null) {
-        	log.error("Continuing warrant lanch from \""+_warrant.getDisplayName()+"\": "+msg);        	
-        }
+        if (log.isDebugEnabled())log.debug("Continuing warrant lanch from \""+_warrant.getDisplayName()+"\"");        	
     }
     
     class ThrottleRamp implements Runnable {
@@ -599,9 +598,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         public void run() {
             _lock.lock();
+            String old = _speedType;
+            _speedType = endSpeedType;   // transition
+            _warrant.fireRunStatus("SpeedRestriction", old, _speedType);
             try {
-                String old = _speedType;
-                _speedType = endSpeedType;   // transition
                 
                 synchronized(this) {
                     if (!_speedType.equals("Stop") && !_speedType.equals("EStop")) {
@@ -675,7 +675,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         }
                     }                	
                 }
-                _warrant.fireRunStatus("SpeedRestriction", old, _speedType);
             } finally {
                 _speedOverride = false;
                 _lock.unlock();
