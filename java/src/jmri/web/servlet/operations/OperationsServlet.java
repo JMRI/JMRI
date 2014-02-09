@@ -2,7 +2,6 @@ package jmri.web.servlet.operations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +11,8 @@ import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonUtil;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
@@ -46,6 +45,7 @@ public class OperationsServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             } else {
                 String id = pathInfo[1];
+                log.debug("Handling {} with id {}", pathInfo[0], id);
                 if (pathInfo[0].equals("manifest")) {
                     this.processManifest(id, request, response);
                 } else if (pathInfo[0].equals("conductor")) {
@@ -58,7 +58,7 @@ public class OperationsServlet extends HttpServlet {
         }
     }
 
-    protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType("application/json"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
@@ -68,15 +68,14 @@ public class OperationsServlet extends HttpServlet {
                 int code = ex.getJsonMessage().path(DATA).path(CODE).asInt(200);
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
             }
-        } else if ("tr".equals(request.getParameter("format"))) {
+        } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType("text/html"); // NOI18N
             ServletHelper.getHelper().setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
-            String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsTableRow.html")));
+            String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsSnippet.html")));
             for (Train train : TrainManager.instance().getTrainsByNameList()) {
-                List<Car> cars = CarManager.instance().getByTrainDestinationList(train);
-                if (showAll || !cars.isEmpty()) {
+                if (showAll || !CarManager.instance().getByTrainDestinationList(train).isEmpty()) {
                     html.append(String.format(request.getLocale(), format,
                             train.getName(),
                             train.getDescription(),
@@ -102,20 +101,54 @@ public class OperationsServlet extends HttpServlet {
                             Bundle.getMessage(request.getLocale(), "TrainsTitle")
                     ),
                     ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletHelper.getHelper().getRailroadName(false)
+                    ServletHelper.getHelper().getRailroadName(false),
+                    ServletHelper.getHelper().getFooter(request.getLocale(), request.getContextPath())
             ));
         }
     }
 
-    private void processManifest(String id, HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void processManifest(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Train train = TrainManager.instance().getTrainById(id);
+        if ("html".equals(request.getParameter("format"))) {
+            log.debug("Getting manifest HTML code for train {}", id);
+            Manifest manifest = new Manifest(request.getLocale(), train);
+            ServletHelper.getHelper().setNonCachingHeaders(response);
+            response.setContentType("text/html"); // NOI18N
+            response.getWriter().print(String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
+                    train.getName(),
+                    train.getDescription(),
+                    Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
+                    train.getComment(),
+                    Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
+                    "-->" + manifest.getLocations() + "<!--"
+            ));
+            train.setModified(false);
+        } else {
+            response.setContentType("text/html"); // NOI18N
+            response.getWriter().print(String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
+                    String.format(request.getLocale(),
+                            Bundle.getMessage(request.getLocale(), "HtmlTitle"),
+                            ServletHelper.getHelper().getRailroadName(false),
+                            String.format(request.getLocale(),
+                                    Bundle.getMessage(request.getLocale(), "ManifestTitle"),
+                                    train.getName(),
+                                    train.getDescription()
+                            )
+                    ),
+                    ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletHelper.getHelper().getRailroadName(false),
+                    ServletHelper.getHelper().getFooter(request.getLocale(), request.getContextPath())
+            ));
+        }
     }
 
     private void processConductor(String id, HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
