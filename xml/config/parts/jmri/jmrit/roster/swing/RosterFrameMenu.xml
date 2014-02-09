@@ -17,9 +17,14 @@
         <mnemonic>n</mnemonic>
         <current>newwindow</current>
     </node>
-    <node name="Import Roster">
+    <node name="Import Complete Roster">
         <name xml:lang="fr">Importer Listes</name>
         <name xml:lang="it">Importa Roster</name>
+        <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
+    </node>
+    <node name="Recreate Roster Index">
+        <name xml:lang="fr">Recreate Listes</name>
+        <name xml:lang="it">Recreate Roster</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node name="Import Roster Entry">
