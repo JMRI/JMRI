@@ -705,7 +705,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (accyNum > 0)
         	index+=2;
         accyNum = getAccyRow (macroAccy, index, textAccy8, accyTextField8, cmdButton8);
-        if (isUsb) {
+        if (!isUsb) {
 	        if (accyNum < 0)
 	        	return false;
 	        if (accyNum > 0)
@@ -1081,7 +1081,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     
     // writes 20 bytes of NCE macro memory, and adjusts for second write 
 	private NceMessage writeMacroMemory(int macroNum, byte[] b, boolean second) {
-		int nceMacroAddr = (macroNum * macroSize) + maxNumMacros;
+		int nceMacroAddr = (macroNum * macroSize) + memBase;
 		replyLen = NceMessage.REPLY_1; // Expect 1 byte response
 		waiting++;
 		byte[] bl;
