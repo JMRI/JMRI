@@ -74,6 +74,7 @@
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 
 <!ATTLIST settings lengthUnit		CDATA #IMPLIED>
+<!ATTLIST settings hpt				CDATA #IMPLIED>
 
 <!-- next 3 for backward compatibility -->
 <!ATTLIST settings carLogger 			(true | false ) "false">  
@@ -141,7 +142,8 @@
 <!ATTLIST buildReport useEditor			(true | false ) "false">   
 <!ATTLIST buildReport indent			(true | false ) "true">  
 <!ATTLIST buildReport fontSize			CDATA #IMPLIED>  
-<!ATTLIST buildReport routerLevel		CDATA #IMPLIED>  
+<!ATTLIST buildReport routerLevel		CDATA #IMPLIED>
+<!ATTLIST buildReport alwaysPreview		(true | false ) "false">   
                               
 <!ATTLIST owner name					CDATA #IMPLIED>
 
@@ -193,6 +195,7 @@
 <!ATTLIST router carRoutingViaStaging 	(true | false ) "false">
 <!ATTLIST router forwardToYard 			(true | false ) "true">
 <!ATTLIST router onlyActiveTrains		(true | false ) "false">
+<!ATTLIST router checkCarDestination	(true | false ) "false">
 
 <!ATTLIST CATS exactLocationName		CDATA #IMPLIED> 
 
@@ -201,7 +204,7 @@
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | departTime 
 | trainDepartsCars | trainDepartsLoads | trainTerminates | destination | from | to
-| addHelpers | removeHelpers | locoChange | cabooseChange | locoCabooseChange)*>
+| dest | finalDest | addHelpers | removeHelpers | locoChange | cabooseChange | locoCabooseChange)*>
 
 <!ELEMENT manifestForTrain EMPTY>
 <!ELEMENT valid EMPTY>
@@ -216,6 +219,8 @@
 <!ELEMENT destination EMPTY>
 <!ELEMENT from EMPTY>
 <!ELEMENT to EMPTY>
+<!ELEMENT dest EMPTY>
+<!ELEMENT finalDest EMPTY>
 <!ELEMENT addHelpers EMPTY>
 <!ELEMENT removeHelpers EMPTY>
 <!ELEMENT locoChange EMPTY>
@@ -235,6 +240,8 @@
 <!ATTLIST destination text			CDATA #IMPLIED>
 <!ATTLIST from text					CDATA #IMPLIED>
 <!ATTLIST to text					CDATA #IMPLIED>
+<!ATTLIST dest text					CDATA #IMPLIED>
+<!ATTLIST finalDest text			CDATA #IMPLIED>
 <!ATTLIST addHelpers text			CDATA #IMPLIED>
 <!ATTLIST removeHelpers text		CDATA #IMPLIED>
 <!ATTLIST locoChange text			CDATA #IMPLIED>
@@ -278,7 +285,8 @@
 <!ELEMENT control (backwardCompatibility | maximumStringLengths)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
- 
+<!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
+
 <!ELEMENT maximumStringLengths (max_len_string_attibute | max_len_string_road_number | max_len_string_location_name
 | max_len_string_track_name | max_len_string_track_length_name | max_len_string_length_name
 | max_len_string_weight_name | max_len_string_built_name | max_len_string_train_name

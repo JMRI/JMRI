@@ -218,6 +218,19 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="urlType">
+    <xs:annotation>
+        <xs:documentation>
+          Only valid URLs for resource access. 
+          Checks for a valid prefix, then a pathname of a-z, A-Z, 0-9 and / - _ or .
+          A: through Z: accepted for Windows.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="cvNameType">
     <xs:annotation>
         <xs:documentation>

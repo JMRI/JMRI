@@ -2,10 +2,12 @@
  * OperationsServlet specific JavaScript
  */
 
-//request and show a list of available trains from JMRI server
-var getTrains = function(showAll) {
+/*
+ * request and show a list of available trains from JMRI server
+ */
+function getTrains(showAll) {
     $.ajax({
-        url: "/operations/trains?format=tr" + ((showAll) ? "&show=all" : ""), //request proper url for train list
+        url: "/operations/trains?format=html" + ((showAll) ? "&show=all" : ""),
         data: {},
         success: function(data) {
             if (data.length === 0) {
@@ -17,23 +19,45 @@ var getTrains = function(showAll) {
                 $("#trains > tbody").append(data);
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
+            $("#trains-options").removeClass("hidden").addClass("show");
         },
         dataType: "html"
     });
-};
-
-//parse the page's input parameter and return value for name passed in
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && match[1];
 }
-;
+
+function getManifest(id) {
+    $.ajax({
+        url: "/operations/manifest/" + id + "?format=html",
+        data: {},
+        success: function(data) {
+            if (data.length === 0) {
+                $("#manifest").removeClass("show").addClass("hidden");
+            } else {
+                $("#manifest").removeClass("hidden").addClass("show");
+                $("#manifest").empty();
+                $("#manifest").append(data);
+            }
+            $("#activity-alert").removeClass("show").addClass("hidden");
+        },
+        dataType: "html"
+    });
+}
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
-    // need to read path to get method
-    // /operations/manifest/id > getManifest for Id
-    // /operations/conductor/id > getConductor for Id
-    // all other > getTrains
-    getTrains((getParameterByName('show') === "all") ? true : false);
+    var pathElements = window.location.pathname.replace(/\/$/, '').split('/');
+    console.log("pathElements:" + pathElements);
+    if (pathElements[2] === "manifest") {
+        $("#manifest").removeClass("hidden").addClass("show");
+        getManifest(pathElements[3]);
+    } else if (window.location.pathname.indexOf("/conductor") >= 0) {
+        $("#conductor").removeClass("hidden").addClass("show");
+    } else {
+        getTrains(getParameterByName('show') === "all");
+        $("#show-all-trains > input").prop("checked", getParameterByName('show') === "all");
+        $("#show-all-trains > span").tooltip({delay: {show: 500, hide: 0}});
+        $("#show-all-trains > input").change(function() {
+            getTrains($(this).is(":checked"));
+        });
+    }
 });

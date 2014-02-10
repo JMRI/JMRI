@@ -51,6 +51,8 @@
 <!ATTLIST programmer showFnLanelPane (yes | no ) "no">
 <!-- Show roster media pane? -->
 <!ATTLIST programmer showRosterMediaPane (yes | no ) "no">
+<!-- Show CV numbers in tooltips? -->
+<!ATTLIST programmer showCvNumbers ( yes | no ) "no" >
 
 <!-- The pane sections define each tabbed pane of options -->
 <!ELEMENT pane (column | row)*>

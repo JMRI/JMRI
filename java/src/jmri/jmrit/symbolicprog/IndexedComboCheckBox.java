@@ -23,6 +23,7 @@ public class IndexedComboCheckBox extends JCheckBox {
         _var = var;
         _box = box;
         setBackground(_var._value.getBackground());
+        setOpaque(true);
         // listen for changes to ourself
         addActionListener(l1 = new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {

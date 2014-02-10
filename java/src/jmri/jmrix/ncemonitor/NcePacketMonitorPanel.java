@@ -82,7 +82,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     	this.memo = m;
         
         // populate the GUI, invoked as part of startup
-    	
+
         // load the port selection part
         portBox.setToolTipText("Select the port to use");
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -103,16 +103,25 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     }
                 }
             });
-        add(new JSeparator());
+        {
+            JSeparator js = new JSeparator();
+            js.setMaximumSize( new Dimension(10000,10) );
+            add(js);
+        }
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel("Serial port: "));
         p1.add(portBox);
         p1.add(openPortButton);
+        p1.setMaximumSize( p1.getPreferredSize() );
         add(p1);
 
         // add user part of GUI
-        add(new JSeparator());
+        {
+            JSeparator js = new JSeparator();
+            js.setMaximumSize( new Dimension(10000,10) );
+            add(js);
+        }
         JPanel p2 = new JPanel();
         {
         JPanel p = new JPanel();
@@ -372,8 +381,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end acc single/double
 
-
-        add(p2);
+        p2.setMaximumSize( p2.getPreferredSize() );       
+        JScrollPane ps = new JScrollPane(p2);
+        ps.setMaximumSize( ps.getPreferredSize() );
+        ps.setVisible(true);
+        add(ps);
     }
 
     /**

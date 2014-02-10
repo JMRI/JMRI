@@ -2,9 +2,6 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Color;
 import java.io.File;
 import java.io.PrintWriter;
@@ -12,12 +9,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
-import org.jdom.Element;
-
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -34,15 +32,13 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.Editor;
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a train on the layout
@@ -717,12 +713,12 @@ public class Train implements java.beans.PropertyChangeListener {
 			return CODE_TRAIN_RESET;
 		if (getStatus().startsWith(BUILDING))
 			return CODE_BUILDING;
+		if (getStatus().startsWith(BUILD_FAILED))
+			return CODE_BUILD_FAILED;
 		if (getStatus().startsWith(PARTIAL_BUILT))
 			return CODE_PARTIAL_BUILT;
 		if (getStatus().startsWith(BUILT))
 			return CODE_BUILT;
-		if (getStatus().startsWith(PARTIAL_BUILT))
-			return CODE_PARTIAL_BUILT;
 		if (getStatus().startsWith(TRAIN_IN_ROUTE))
 			return CODE_TRAIN_IN_ROUTE;
 		if (getStatus().startsWith(TERMINATED))

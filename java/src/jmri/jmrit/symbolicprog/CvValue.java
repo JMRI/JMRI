@@ -96,6 +96,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     public int getValue()  { return _value; }
 
+    Color getDefaultColor() { return _defaultColor; }
     Color getColor() { return _tableEntry.getBackground(); }
 
     protected void notifyValueChange(int value) {

@@ -345,14 +345,14 @@ public class CoordinateEdit extends JmriJFrame {
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number)spinX.getValue()).intValue();
-                pl.setDisplayLevel(l);
+                pl.getEditor().setSelectionsDisplayLevel(l, pl);
                 textX.setText("level= " + l);
                 dispose();
 			}
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.setDisplayLevel(oldX);
+                pl.getEditor().setSelectionsDisplayLevel(oldX, pl);
                 dispose();
 			}
 		});

@@ -69,18 +69,18 @@ public class DecoderFile extends XmlFile {
             // lowVersionID is not null; check high version ID
             if (highVersionID!=null) {
                 // low version and high version are not null
-                setVersionRange(Integer.valueOf(lowVersionID).intValue(),
-                                Integer.valueOf(highVersionID).intValue());
+                setVersionRange(Integer.parseInt(lowVersionID),
+                                Integer.parseInt(highVersionID));
             } else {
                 // low version not null, but high is null. This is
                 // a single value to match
-                setOneVersion(Integer.valueOf(lowVersionID).intValue());
+                setOneVersion(Integer.parseInt(lowVersionID));
             }
         } else {
             // lowVersionID is null; check high version ID
             if (highVersionID!=null) {
                 // low version null, but high is not null
-                setOneVersion(Integer.valueOf(highVersionID).intValue());
+                setOneVersion(Integer.parseInt(highVersionID));
             } else {
                 // both low and high version are null; do nothing
             }
@@ -114,7 +114,7 @@ public class DecoderFile extends XmlFile {
         			} else {
         				part = "" + (i - 1);
         			}
-        			if (ret == "") {
+        			if (ret.equals("")) {
         				ret = part;
         			} else {
         				ret = "," + part;
@@ -287,7 +287,7 @@ public class DecoderFile extends XmlFile {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
+                    && getNumFunctions() < e.getAttribute("minFn").getIntValue() )
                     continue;
                 // if its associated with an inconsistent number of outputs,
                 // skip creating it
@@ -310,12 +310,12 @@ public class DecoderFile extends XmlFile {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
+                    && getNumFunctions() < e.getAttribute("minFn").getIntValue() )
                     continue;
                 // if its associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
+                    && getNumOutputs() < e.getAttribute("minOut").getIntValue() )
                     continue;
                 // if not correct productID, skip
                 if (!isProductIDok(e, extraInclude, extraExclude)) continue;
@@ -333,14 +333,14 @@ public class DecoderFile extends XmlFile {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() ) {
+                    && getNumFunctions() < e.getAttribute("minFn").getIntValue() ) {
                     log.debug("skip due to num functions");
                     continue;
                 }
                 // if its associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() ) {
+                    && getNumOutputs() < e.getAttribute("minOut").getIntValue() ) {
                     log.debug("skip due to num outputs");
                     continue;
                 }

@@ -844,6 +844,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             _var = var;
             // get the original color right
             setBackground(_var.getColor());
+            if (_var.getColor() == _var.getDefaultColor()) {
+                setOpaque(false);
+            } else {
+                setOpaque(true);
+        }
             // tooltip label
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
                             +" "+step;
@@ -863,6 +868,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // update this color from original state
             if (e.getPropertyName().equals("State")) {
                 setBackground(_var.getColor());
+                if (_var.getColor() == _var.getDefaultColor()) {
+                    setOpaque(false);
+                } else {
+                    setOpaque(true);
+                }
             }
         }
 

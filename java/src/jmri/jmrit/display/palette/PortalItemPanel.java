@@ -63,6 +63,8 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     	HashMap <String, NamedIcon> map = getIconMap();
     	((ControlPanelEditor)_editor).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
     }
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
+    }
 
     static Logger log = LoggerFactory.getLogger(PortalItemPanel.class.getName());
 }

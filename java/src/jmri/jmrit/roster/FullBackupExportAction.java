@@ -56,11 +56,11 @@ public class FullBackupExportAction
         ZipOutputStream zipper = null;
 
         try {
-            String roster_filename_extension = ".roster";
+            String roster_filename_extension = "roster";
 
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JMRI Roster files", roster_filename_extension);
+            "JMRI full roster files", roster_filename_extension);
             chooser.setFileFilter(filter);
 
             int returnVal = chooser.showSaveDialog(_parent);

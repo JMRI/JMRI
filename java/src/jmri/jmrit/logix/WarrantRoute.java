@@ -157,25 +157,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return p;
     }
 
-    private OBlock getEndPointBlock(JTextField textBox) {
-        String text = textBox.getText();
-        int idx = text.indexOf(java.awt.event.KeyEvent.VK_TAB);
-        if (idx > 0){
-            if (idx+1 < text.length()) {
-                text = text.substring(idx+1);
-            } else {
-                text = text.substring(0, idx);
-            }
-        }
-        textBox.setText(text);
-        OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
-        if (block == null && text.length()>0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", text),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        }
-        return block;
-    }
-
     private boolean setOriginBlock() {
         return _origin.setBlock();
     }
@@ -269,10 +250,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             p.add(blockBox, BorderLayout.CENTER);
             return p;
         }
+        
+        protected void clearFields() {
+        	setBlock(null);
+        }
 
         protected boolean checkBlockBox(JTextField box) {
         	if (box == blockBox) {
-        		setBlock(getEndPointBlock(blockBox));
+        		setBlock(getEndPointBlock());
         		return true;
         	}
         	return false;
@@ -290,10 +275,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	return (box == portalBox);
         }
         protected void setOrderEntryPortal()  {
-        	order.setEntryName((String)portalBox.getSelectedItem());
+        	if (order!=null) {
+            	order.setEntryName((String)portalBox.getSelectedItem());
+        	}
         }
         protected void setOrderExitPortal()  {
-        	order.setExitName((String)portalBox.getSelectedItem());       	
+        	if (order!=null) {
+            	order.setExitName((String)portalBox.getSelectedItem());       	
+        	}
         }
 
         protected void setOrder(BlockOrder o) {
@@ -329,8 +318,27 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	return blockBox.getText();
         }
         
+        private OBlock getEndPointBlock() {
+            String text = blockBox.getText();
+            int idx = text.indexOf(java.awt.event.KeyEvent.VK_TAB);
+            if (idx > 0){
+                if (idx+1 < text.length()) {
+                    text = text.substring(idx+1);
+                } else {
+                    text = text.substring(0, idx);
+                }
+            }
+            blockBox.setText(text);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
+            if (block == null && text.length()>0) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("BlockNotFound", text),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            }
+            return block;
+        }
+
         private boolean setBlock() {
-            return setBlock(getEndPointBlock(blockBox));
+            return setBlock(getEndPointBlock());
         }
         private boolean setBlock(OBlock block) {
             boolean result = true;
@@ -365,7 +373,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
             	setNextLocation();
             } else {
-            	blockBox.setText("");
+            	blockBox.setText(null);
             	pathBox.removeAllItems();
             	if (portalBox!=null) {
                 	portalBox.removeAllItems();            		
@@ -377,6 +385,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             pathBox.removeAllItems();
             if (portalBox!=null) {
                 portalBox.removeAllItems();
+            }
+            if (block==null) {
+            	return false;
             }
             List <Path> list = block.getPaths();
             if (list.size()==0) {
@@ -395,6 +406,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         	}
             portalBox.removeAllItems();
             String pathName = (String)pathBox.getSelectedItem();
+            if (order==null) {
+            	return;
+            }
             order.setPathName(pathName);
             OPath path = order.getPath();
             if (path != null) {
@@ -727,8 +741,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     
     protected void clearRoute() {
         _orders = new ArrayList <BlockOrder>();
-        _routeModel.fireTableDataChanged();
         clearFrames();
+        clearFields();
+        _focusedField = _origin;
+        _routeModel.fireTableDataChanged();
     }
     private void clearFrames() {
     	
@@ -740,6 +756,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             _pickRouteDialog.dispose();
             _pickRouteDialog = null;
         }    	
+    }
+    private void clearFields() {
+    	_origin.clearFields();
+        _destination.clearFields();
+        _via.clearFields();
+        _avoid.clearFields();   	
     }
     
     protected String routeIsValid() {

@@ -17,15 +17,6 @@
         <mnemonic>n</mnemonic>
         <current>newwindow</current>
     </node>
-    <node name="Import Roster">
-        <name xml:lang="fr">Importer Listes</name>
-        <name xml:lang="it">Importa Roster</name>
-        <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
-    </node>
-    <node name="Import Roster Entry">
-        <name xml:lang="it">Importa Voce Roster</name>
-        <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
-    </node>
     <node name="Import Decoder File">
         <name xml:lang="it">Importa File Decoder</name>
         <adapter>jmri.jmrit.decoderdefn.InstallDecoderFileAction</adapter>
@@ -39,10 +30,26 @@
         <name xml:lang="it">Esporta Voce Roster</name>
         <current>exportloco</current>
     </node>
-    <node name="Export Complete Roster">
+    <node name="Import Roster Entry">
+        <name xml:lang="it">Importa Voce Roster</name>
+        <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
+    </node>
+    <node>separator</node><!-- separator -->
+    <node name="Export Roster">
         <name xml:lang="it">Esporta Roster Completo</name>
         <name xml:lang="fr">Exporter Listes</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
+    </node>
+    <node name="Import Roster">
+        <name xml:lang="fr">Importer Listes</name>
+        <name xml:lang="it">Importa Roster</name>
+        <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
+    </node>
+    <node>separator</node><!-- separator -->
+    <node name="Rebuild Roster">
+        <name xml:lang="fr">Recreate Listes</name>
+        <name xml:lang="it">Rebuild Roster</name>
+        <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Close Window">

@@ -119,6 +119,7 @@ import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIZE_LIMIT;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.STATUS;
+import static jmri.jmris.json.JSON.STATUS_CODE;
 import static jmri.jmris.json.JSON.TERMINATES_LOCATION;
 import static jmri.jmris.json.JSON.THROWN;
 import static jmri.jmris.json.JSON.TIME;
@@ -1149,6 +1150,7 @@ public class JsonUtil {
                 data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
             data.put(STATUS, train.getStatus());
+            data.put(STATUS_CODE, train.getStatusCode());
             data.put(LENGTH, train.getTrainLength());
             data.put(WEIGHT, train.getTrainWeight());
             if (train.getLeadEngine() != null) {

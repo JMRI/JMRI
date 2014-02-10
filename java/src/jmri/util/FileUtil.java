@@ -730,6 +730,10 @@ public class FileUtil {
                 // 9 = length of jar:file:
                 jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
                 log.debug("jmri.jar path is {}", jarPath);
+            } 
+            if (jarPath == null) {
+                log.error("Unable to locate jmri.jar");
+                return null;
             }
         }
         try {
@@ -877,14 +881,20 @@ public class FileUtil {
         }
         if (!dest.exists()) {
             if (source.isDirectory()) {
-                dest.mkdirs();
+                boolean ok = dest.mkdirs();
+                if (!ok) {
+                    throw new IOException("Could not use mkdirs to create destination directory");
+                }
             } else {
-                dest.createNewFile();
+                boolean ok = dest.createNewFile();
+                if (!ok) {
+                    throw new IOException("Could not create destination file");
+                }
             }
         }
         if (source.isDirectory()) {
             for (File file : source.listFiles()) {
-                FileUtil.copy(source, new File(dest, file.getName()));
+                FileUtil.copy(file, new File(dest, file.getName()));
             }
         } else {
             FileInputStream sourceIS = null;

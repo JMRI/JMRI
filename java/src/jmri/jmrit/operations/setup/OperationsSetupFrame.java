@@ -2,29 +2,24 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
-import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsFrame;
@@ -35,6 +30,9 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jmri.web.server.WebServerManager;
 
 /**
  * Frame for user edit of operation parameters
@@ -124,7 +122,6 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		OperationsSetupXml.instance();
 
 		// load fields
-		railroadNameTextField.setText(Setup.getRailroadName());
 		maxLengthTextField.setText(Integer.toString(Setup.getMaxTrainLength()));
 		maxEngineSizeTextField.setText(Integer.toString(Setup.getMaxNumberEngines()));
 		hptTextField.setText(Integer.toString(Setup.getHorsePowerPerTon()));
@@ -155,6 +152,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		hptTextField.setToolTipText(Bundle.getMessage("HPperTonTip"));
 		switchTimeTextField.setToolTipText(Bundle.getMessage("SwitchTimeTip"));
 		travelTimeTextField.setToolTipText(Bundle.getMessage("TravelTimeTip"));
+		railroadNameTextField.setToolTipText(Bundle.getMessage("RailroadNameTip"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -394,6 +392,22 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
 		initMinimumSize(new Dimension(Control.tablePanelWidth, Control.panelHeight));
+		
+		// now provide the railroad name
+		railroadNameTextField.setText(Setup.getRailroadName()); // default
+		if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+			railroadNameTextField.setEnabled(false);
+		} else if (!WebServerManager.getWebServerPreferences().isDefaultRailroadName()) {
+			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+					.getMessage("ChangeRailroadName"), new Object[] { Setup.getRailroadName(),
+					WebServerManager.getWebServerPreferences().getRailRoadName() }), Bundle
+					.getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
+			if (results == JOptionPane.OK_OPTION) {
+				railroadNameTextField.setText(WebServerManager.getWebServerPreferences().getRailRoadName());
+				railroadNameTextField.setEnabled(false);
+			}
+		}
+		createShutDownTask();
 	}
 
 	// Save, Delete, Add buttons
@@ -537,6 +551,16 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		if (scaleG.isSelected())
 			Setup.setScale(Setup.G_SCALE);
 		Setup.setRailroadName(railroadNameTextField.getText());
+		if (!Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ChangeRailroadName"),
+					new Object[] { WebServerManager.getWebServerPreferences().getRailRoadName(),
+							Setup.getRailroadName() }), Bundle.getMessage("ChangeJMRIRailroadName"),
+					JOptionPane.YES_NO_OPTION);
+			if (results == JOptionPane.OK_OPTION) {
+				WebServerManager.getWebServerPreferences().setRailRoadName(Setup.getRailroadName());
+				WebServerManager.getWebServerPreferences().save();
+			}
+		}
 		// Set Unit of Length
 		if (feetUnit.isSelected())
 			Setup.setLengthUnit(Setup.FEET);

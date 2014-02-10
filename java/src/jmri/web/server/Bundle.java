@@ -1,6 +1,6 @@
 // Bundle.java
 
-package jmri.jmrit;
+package jmri.web.server;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
@@ -26,20 +26,20 @@ import java.util.Locale;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmrit.Bundle"; // NOI18N
+    private final static String name = "jmri.web.server.Bundle";
 
     //
     // below here is boilerplate to be copied exactly
     //
     
     /**
-     * Provides a translated string for a given
-     * key from the package resource bundle or
+     * Provides a translated string for a given 
+     * key from the package resource bundle or 
      * parent.
      *<p>
      * Note that this is intentionally package-local
      * access.
-     *
+     * 
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
@@ -64,11 +64,11 @@ public class Bundle extends jmri.Bundle {
     }
 
     /**
-     * Merges user data with a translated string for a given
-     * key from the package resource bundle or
+     * Merges user data with a translated string for a given 
+     * key from the package resource bundle or 
      * parent.
      *<p>
-     * Uses the transformation conventions of
+     * Uses the transformation conventions of 
      * the Java MessageFormat utility.
      *<p>
      * Note that this is intentionally package-local
@@ -82,7 +82,7 @@ public class Bundle extends jmri.Bundle {
     static String getMessage(String key, Object ... subs) {
         return b.handleGetMessage(key, subs);
     }
-
+    
     /**
      * Merges user data with a translated string for a given
      * key in a given locale from the package resource bundle or
@@ -103,7 +103,7 @@ public class Bundle extends jmri.Bundle {
     static String getMessage(Locale locale, String key, Object ... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
-   
+
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }

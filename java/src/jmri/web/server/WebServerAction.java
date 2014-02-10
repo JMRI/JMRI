@@ -28,7 +28,7 @@ public class WebServerAction extends JmriAbstractAction {
     }
 
     public WebServerAction() {
-        super(WebServer.getString("MenuWebServerAction"));
+        super(Bundle.getMessage("MenuWebServerAction"));
     }
 
     @Override

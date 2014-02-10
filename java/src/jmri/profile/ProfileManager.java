@@ -564,7 +564,7 @@ public class ProfileManager extends Bean {
      * <tr><td>NO</td><td>YES</td><td>NO</td><td>No preparation required -
      * catalog will be automatically regenerated</td></tr>
      * </table>
-     * This method returns true if a migration occured, and false in all other
+     * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
      * @param configFilename
@@ -588,7 +588,19 @@ public class ProfileManager extends Bean {
                 didMigrate = true;
             }
         } else if (appConfigFile.exists()) { // catalog and existing app config, but no profile config: migrate user who used profile with other JMRI app
-            this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, jmri.Application.getApplicationName()));
+            try {
+                this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, jmri.Application.getApplicationName()));
+            } catch (IllegalArgumentException ex) {
+                if (ex.getMessage().startsWith("A profile already exists at ")) {
+                    // caused by attempt to migrate application with custom launcher
+                    // strip ".xml" from configFilename name and use that to create profile
+                    this.setActiveProfile(this.migrateConfigToProfile(appConfigFile, appConfigFile.getName().substring(0, appConfigFile.getName().length() - 4)));
+                } else {
+                    // throw the exception so it can be dealt with, since other causes need user attention
+                    // (most likely cause is a read-only settings directory)
+                    throw ex;
+                }
+            }
             this.saveActiveProfile();
             didMigrate = true;
         } // all other cases need no prep

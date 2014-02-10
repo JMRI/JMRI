@@ -193,6 +193,11 @@ public class TrackerTableAction extends AbstractAction {
         	if (_dialog!=null) {
         		_trainLocationBox.setText(block.getDisplayName());
             	return true;
+        	} else {
+        		if ((block.getState() & OBlock.OCCUPIED)!=0 && block.getValue()!=null) {
+        			markNewTracker(block, (String)block.getValue());
+        			return true;
+        		}
         	}
         	return false;
         }
@@ -563,14 +568,16 @@ public class TrackerTableAction extends AbstractAction {
 		        	setStatus(msg);
 		        	break;
 				case Tracker.ENTER_BLOCK:
+		            block._entryTime = System.currentTimeMillis();
 					adjustBlockListeners(oldRange, tracker.getRange(), tracker);
 		        	setStatus(Bundle.getMessage("TrackerBlockEnter", tracker.getTrainName(),
 		        			block.getDisplayName()));
 		        	break;
 				case Tracker.LEAVE_BLOCK:
 					adjustBlockListeners(oldRange, tracker.getRange(), tracker);
+			    	long et = (System.currentTimeMillis()-block._entryTime)/1000;
 		        	setStatus(Bundle.getMessage("TrackerBlockLeave", tracker.getTrainName(),
-		        			block.getDisplayName()));
+		        			block.getDisplayName(), et/60, et%60));
 					break;
 				case Tracker.ERROR_BLOCK:
 					// tracker wrote error message
@@ -597,7 +604,7 @@ public class TrackerTableAction extends AbstractAction {
 	    public void mouseExited(MouseEvent event) {}
 	    public void mouseReleased(MouseEvent event) {}
 
-	    void  setStatus(String msg) {
+	    private void  setStatus(String msg) {
 	    	_status.setText(msg);
 	    	if (msg!=null && msg.length()>0) {
 	    		_statusHistory.add(msg);

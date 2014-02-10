@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Setup;
+
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -38,8 +41,8 @@ public class WebServerPreferences extends Bean {
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean plain = false;
-    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(WebServer.getString("DefaultDisallowedFrames").split(";")));
-    private String railRoadName = WebServer.getString("DefaultRailroadName");
+    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
+    private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private int port = 12080;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
@@ -268,8 +271,27 @@ public class WebServerPreferences extends Bean {
         if (railRoadName != null) {
             this.railRoadName = railRoadName;
         } else {
-            this.railRoadName = WebServer.getString("DefaultRailroadName");
+            this.railRoadName = Bundle.getMessage("DefaultRailroadName");
         }
+    }
+
+    /**
+     * Test if the railroad name has been set by user.
+     *
+     * @return true if user has not set the railroad name.
+     */
+    public boolean isDefaultRailroadName() {
+        return this.getRailRoadName().equals(Bundle.getMessage("DefaultRailroadName"));
+    }
+
+    /**
+     * Get the default railroad name. This method exists solely to support unit
+     * testing.
+     *
+     * @return The default railroad name
+     */
+    public String getDefaultRailroadName() {
+        return Bundle.getMessage("DefaultRailroadName");
     }
 
     public static class WebServerPreferencesXml extends XmlFile {

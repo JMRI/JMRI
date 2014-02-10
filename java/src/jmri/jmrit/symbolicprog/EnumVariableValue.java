@@ -78,6 +78,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
+        _value.setOpaque(true);
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
         CvValue cv = _cvMap.get(getCvNum());
@@ -252,9 +253,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     // implement an abstract member to set colors
     void setColor(Color c) {
-        if (c != null) _value.setBackground(c);
-        else _value.setBackground(_defaultColor);
-        // prop.firePropertyChange("Value", null, null);
+        if (c != null) {
+            _value.setBackground(c);
+        } else {
+            _value.setBackground(_defaultColor);
+        }
+        _value.setOpaque(true);
     }
 
     /**
@@ -340,6 +344,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 };
             // get the original color right
             setBackground(_var._value.getBackground());
+            setOpaque(true);
             // listen for changes to original state
             _var.addPropertyChangeListener(_l);
         }
@@ -351,6 +356,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // update this color from original state
             if (e.getPropertyName().equals("State")) {
                 setBackground(_var._value.getBackground());
+                setOpaque(true);
             }
         }
 

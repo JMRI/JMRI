@@ -47,30 +47,39 @@
                 <div id="warning-no-trains-built" class="alert alert-warning hidden">No built trains to operate.</div>
                 <div id="error-listing-trains" class="alert alert-error hidden">Error listing trains:<br></div>
 
-                <table id="trains" class="table table table-hover table-responsive hidden">
+                <table id="trains" class="table table-hover table-responsive hidden">
                     <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Lead Engine</th>
-                        <th>Departs</th>
-                        <th class='hideable'>Time</th>
-                        <th>Status</th>
-                        <th class='hideable'>Current</th>
-                        <th class='hideable'>Terminates</th>
-                        <th class='hideable'>Route</th>
-                    </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Lead Engine</th>
+                            <th>Departs</th>
+                            <th class='hideable'>Time</th>
+                            <th>Status</th>
+                            <th class='hideable'>Current</th>
+                            <th class='hideable'>Terminates</th>
+                            <th class='hideable'>Route</th>
+                        </tr>
                     </thead>
                     <tbody><!-- list of trains goes here --></tbody>
                 </table>
+                <form id="trains-options" class="form-inline hidden" role="form">
+                    <div class="checkbox">
+                        <label id="show-all-trains">
+                            <input type="checkbox">
+                            <span title="Shows all trains, including trains that have no cars or that have terminated." data-toggle="tooltip" data-placement="auto top" data-delay='{"show":"5000", "hide":"3000"}'>
+                                Show all trains
+                            </span>
+                        </label>
+                    </div>
+                </form>
 
+                <div id="manifest" class="hidden"><!-- train manifest goes here --></div>
+
+                <form id="conductor" class="hidden" role="form"><!-- conductor goes here --></form>
 
             </div> <!-- /container -->
         </div> <!-- /wrap -->
-        <footer>
-            <div class="container">
-                <p class="text-muted">&copy; <a href="http://jmri.org">JMRI</a> Community 1997-2014</p>
-            </div>
-        </footer>
+        <!-- Footer %4$s -->
     </body>
 </html>

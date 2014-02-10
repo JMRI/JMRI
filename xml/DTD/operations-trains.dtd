@@ -15,7 +15,8 @@
 
 <!ELEMENT operations-config (trains | options | schedules)*>
 
-<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator)*>
+<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
+| switchlistCreator)*>
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
@@ -57,6 +58,8 @@
 <!ELEMENT manifestLogo EMPTY>
 
 <!ELEMENT manifestCreator (directory | runFile | commonFile)*>
+<!ELEMENT switchlistCreator (directory | runFile | commonFile)*>
+
 <!ELEMENT directory EMPTY>
 <!ATTLIST directory name				CDATA #IMPLIED>
 <!ELEMENT runFile EMPTY>
@@ -124,6 +127,8 @@
 <!ATTLIST train leg2End				CDATA #IMPLIED>
 <!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
+<!ATTLIST train serviceAll			CDATA #IMPLIED>
+<!ATTLIST train buildConsist		CDATA #IMPLIED>
 
 <!ATTLIST carType name				CDATA #IMPLIED>
 <!ATTLIST locoType name				CDATA #IMPLIED>

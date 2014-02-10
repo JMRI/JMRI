@@ -63,7 +63,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     private ArrayList <Warrant>       _warList;
     private ArrayList <Warrant>       _warNX;	// temporary warrants appended to table
     static Color myGreen = new Color(0, 100, 0);
-    static Color myGold = new Color(50, 50, 0);
+    static Color myGold = new Color(255, 150, 0);
 
     public WarrantTableModel(WarrantTableFrame frame) {
         super();
@@ -280,7 +280,6 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
         Warrant w = getWarrantAt(row);
         String msg = null;
-//    	_frame.setStatusText(null, null);
     	switch (col) {
             case WARRANT_COLUMN:
             case ROUTE_COLUMN:
@@ -325,46 +324,35 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             case ALLOCATE_COLUMN:
                 msg = w.allocateRoute(null);
                 if (msg == null) {
-                	_frame.setStatusText(Bundle.getMessage("completeAllocate", w.getDisplayName()),myGreen);
+                	_frame.setStatusText(Bundle.getMessage("completeAllocate", w.getDisplayName()),myGreen, false);
                 } else {
-                	_frame.setStatusText(msg, Color.red);
+                	_frame.setStatusText(msg, myGold, false);
                 	msg = null;
                 }
                 break;
             case DEALLOC_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
                     w.deAllocate();
+                	_frame.setStatusText("", myGreen, false);
                 } else {
-                	_frame.setStatusText(Bundle.getMessage("TrainRunning", w.getDisplayName()), myGold);
+                	_frame.setStatusText(w.getRunModeMessage(), myGold, false);
                 }
                 break;
             case SET_COLUMN:
                 msg = w.setRoute(0, null);
                 if (msg == null) {
-                	_frame.setStatusText(Bundle.getMessage("pathsSet", w.getDisplayName()), myGreen);
+                	_frame.setStatusText(Bundle.getMessage("pathsSet", w.getDisplayName()), myGreen, false);
                 } else {
-                	_frame.setStatusText(msg, myGold);
+                	w.deAllocate();
+                	_frame.setStatusText(msg, myGold, false);
                 	msg = null;
                 }
                break;
             case AUTO_RUN_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
-                    DccLocoAddress address = w.getDccAddress();
-                    if (address == null) {
-                        msg = Bundle.getMessage("NoAddress", w.getDisplayName());
-                        break;
-                    }
-                    if (w.getThrottleCommands().size() == 0) {
-                        msg = Bundle.getMessage("NoCommands", w.getDisplayName());
-                        break;
-                    }
-                    if (w.getBlockOrders().size() == 0) {
-                        msg = Bundle.getMessage("EmptyRoute");
-                        break;
-                    }
                 	msg = _frame.runTrain(w);
                 } else {
-                	_frame.setStatusText(Bundle.getMessage("TrainRunning", w.getDisplayName()), Color.red);
+                	msg = w.getRunModeMessage();
                 }
                 break;
             case MANUAL_RUN_COLUMN:
@@ -374,33 +362,15 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                         break;
                     }
                     msg = w.setRoute(0, null);
-                    if (log.isDebugEnabled()) log.debug("w.setRoute= "+msg);
                     if (msg!=null) {
-                        BlockOrder bo = w.getfirstOrder();
-                        OBlock block = bo.getBlock();
-                        String msg2 = block.allocate(w);
-                        if (msg2 == null) {
-                            if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
-                                        Bundle.getMessage("OkToRun", msg), 
-                                        Bundle.getMessage("WarningTitle"), 
-                                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-                                w.deAllocate();
-                                return;
-                            }
-                            msg = block.setPath(bo.getPathName(), w);
-                        } else {
-                            if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);
-                            msg = Bundle.getMessage("OriginBlockNotSet", msg2);
-                            break;
-                        } 
+                        msg = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                     }
-                    msg = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                     if (msg!=null) {
                     	w.deAllocate();
                     }
                     if (log.isDebugEnabled()) log.debug("w.runManualTrain= "+msg);
                 } else {
-                    msg = Bundle.getMessage("TrainRunning", w.getDisplayName());
+                    msg = w.getRunModeMessage();
                 }
                 break;
             case CONTROL_COLUMN:
@@ -423,31 +393,9 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                             s = Warrant.ABORT;
                         }
                         w.controlRunTrain(s);
-                        if (s>0) {
-                			_frame.setStatusText(Bundle.getMessage("trainReport", w.getTrainName(), setting), myGreen);                	
-/*                            switch (state) {
-                        		case Warrant.HALT:
-                        		case Warrant.RESUME:
-                        		case Warrant.RETRY:
-                        			color = myGreen;
-                        			break;
-                        		case Warrant.ABORT:
-                        			color = Color.red;
-                        			break;
-                        		case Warrant.WAIT_FOR_TRAIN:
-                        		case Warrant.SPEED_RESTRICTED:
-                        		case Warrant.WAIT_FOR_CLEAR:
-                        		case Warrant.WAIT_FOR_SENSOR:
-                        			color = myGold;
-                        		case Warrant.RUNNING:
-                        			state = 0;
-                       			break;          		
-                            }*/
-                        }
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                     	w.deAllocate();                       	
                     } else if (mode==Warrant.MODE_NONE) {
-//                    	Bundle.getMessage("Idle");
                         msg = Bundle.getMessage("NotRunning", w.getDisplayName());
                     } else {
                     	getValueAt(row,col);
@@ -468,7 +416,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         if (msg!=null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            _frame.setStatusText(msg, Color.red);
+            _frame.setStatusText(msg, Color.red, true);
         }
         fireTableRowsUpdated(row, row);
     }
@@ -506,15 +454,48 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	OBlock oldBlock = (OBlock)e.getOldValue();
             	OBlock newBlock = (OBlock)e.getNewValue();
             	if (newBlock==null) {
-            		_frame.setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), oldBlock.getDisplayName()), Color.red);               	                		
+            		_frame.setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), oldBlock.getDisplayName()), Color.red, true);               	                		
             	} else {
-            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), myGreen);               	                		                		
+            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), myGreen, true);               	                		                		
             	}
+            } else if(e.getPropertyName().equals("blockRelease")) {
+            	OBlock block = (OBlock)e.getNewValue();
+		    	long et = (System.currentTimeMillis()-block._entryTime)/1000;
+		    	_frame.setStatusText(Bundle.getMessage("TrackerBlockLeave", bean.getTrainName(),
+	        			block.getDisplayName(), et/60, et%60), myGreen, true);           	
             } else if (e.getPropertyName().equals("SpeedRestriction")) {
             	_frame.setStatusText(Bundle.getMessage("speedChange", bean.getTrainName(), bean.getCurrentBlockOrder().getBlock().getDisplayName(),
-            			e.getNewValue()), myGold);               	                		                	
+            			e.getNewValue()), myGold, true);               	                		                	
+            } else if (e.getPropertyName().equals("runMode")) {
+            	int oldMode = ((Integer)e.getOldValue()).intValue();
+            	int newMode = ((Integer)e.getNewValue()).intValue();
+            	if (oldMode==Warrant.MODE_NONE) {
+            		if (newMode!=Warrant.MODE_NONE) {
+                	_frame.setStatusText(Bundle.getMessage("warrantStart", bean.getTrainName(), bean.getDisplayName(),
+                			bean.getCurrentBlockOrder().getBlock().getDisplayName(), Bundle.getMessage(Warrant.MODES[newMode])), myGreen, true);
+            		}
+            	} else if (newMode==Warrant.MODE_NONE) {
+            		if (oldMode!=Warrant.MODE_NONE) {
+                    	_frame.setStatusText(Bundle.getMessage("warrantEnd", bean.getTrainName(), bean.getDisplayName(),
+                    			bean.getCurrentBlockOrder().getBlock().getDisplayName()), myGreen, true);
+            		}
+            	} else {
+                	_frame.setStatusText(Bundle.getMessage("modeChange", bean.getTrainName(), bean.getDisplayName(),
+                			Bundle.getMessage(Warrant.MODES[oldMode]), Bundle.getMessage(Warrant.MODES[newMode])), myGold, true);
+            	}
+        	} else if (e.getPropertyName().equals("controlChange")){
+               	int runState = ((Integer)e.getOldValue()).intValue();
+            	int newCntrl = ((Integer)e.getNewValue()).intValue();
+            	String stateStr = null;
+            	if (runState<0) {
+            		stateStr = Bundle.getMessage(Warrant.MODES[-runState]);
+            	} else {
+            		stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState], bean.getCurrentBlockOrder().getBlock().getDisplayName());            		
+            	}
+            	_frame.setStatusText(Bundle.getMessage("controlChange", bean.getTrainName(), bean.getDisplayName(),
+            			stateStr, Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])), myGold, true);
             } else if (e.getPropertyName().equals("throttleFail")) {
-            	_frame.setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(), e.getNewValue()), Color.red);               	                		                	
+            	_frame.setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(), e.getNewValue()), Color.red, true);               	                		                	
             }
         }
         if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+

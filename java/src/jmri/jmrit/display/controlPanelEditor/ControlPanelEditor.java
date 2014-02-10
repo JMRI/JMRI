@@ -150,10 +150,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("Init SwingWorker launched");
     }
     
-    public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
-    	_shapeDrawer.setDrawFrame(f);
-    }
-
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
@@ -481,6 +477,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         menuItem.setMnemonic(KeyEvent.VK_P);
         _editMenu.add(menuItem);
 
+        _editMenu.add(makeSelectTypeMenu());
+        _editMenu.add(makeSelectLevelMenu());
+
         menuItem = new JMenuItem(Bundle.getMessage("SelectAll"));
         menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -492,6 +491,109 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
           KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
         _editMenu.add(menuItem);
     }
+    private JMenu makeSelectTypeMenu() {
+        JMenu menu = new JMenu(Bundle.getMessage("SelectType"));
+        ButtonGroup typeGroup = new ButtonGroup();
+        JRadioButtonMenuItem button = makeSelectTypeButton("IndicatorTrack", "jmri.jmrit.display.IndicatorTrackIcon"); 
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("IndicatorTO", "jmri.jmrit.display.IndicatorTurnoutIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Turnout", "jmri.jmrit.display.TurnoutIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Sensor", "jmri.jmrit.display.SensorIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Shape", "jmri.jmrit.display.controlPanelEditor.shape.PositionableShape");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("SignalMast", "jmri.jmrit.display.SignalMastIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("SignalHead", "jmri.jmrit.display.SignalHeadIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Memory", "jmri.jmrit.display.MemoryIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("MemoryInput", "jmri.jmrit.display.PositionableJPanel");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("MultiSensor", "jmri.jmrit.display.MultiSensorIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("LocoID", "jmri.jmrit.display.LocoIcon");
+        typeGroup.add(button);
+        menu.add(button);
+        button = makeSelectTypeButton("Light", "jmri.jmrit.display.LightIcon");
+        typeGroup.add(button);
+        menu.add(button);
+    	return menu;
+    }
+    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
+        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
+        button.addActionListener(new ActionListener() {
+        	String className;
+        	ActionListener init(String name) {
+        		className = name;
+        		return this;
+        	}
+        	public void actionPerformed(ActionEvent event) {
+        		selectType(className);
+        	}
+        }.init(className));
+        return button;
+    }
+    private void selectType(String name) {
+    	try {
+    		Class cl = Class.forName(name);
+        	_selectionGroup = new ArrayList<Positionable>();
+        	Iterator<Positionable> it = _contents.iterator();
+        	while (it.hasNext()) {
+        		Positionable pos = it.next();
+        		if (cl.isInstance(pos)) {
+        			_selectionGroup.add(pos);
+        		}
+        	}   	
+    	} catch (ClassNotFoundException cnfe) {
+    		log.error("selectType Menu "+cnfe.toString());
+    	}
+        _targetPanel.repaint();
+    }
+    private JMenu makeSelectLevelMenu() {
+    	JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
+        ButtonGroup levelGroup = new ButtonGroup();
+        JRadioButtonMenuItem button = null;
+    	for (int i=0; i<11; i++) {
+            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", ""+i));
+            levelGroup.add(button);
+            menu.add(button);
+            button.addActionListener(new ActionListener() {
+            	int i;
+            	ActionListener init(int k) {
+            		i=k;
+            		return this;
+            	}
+                    public void actionPerformed(ActionEvent event) {
+                        selectLevel(i);
+                    }
+                }.init(i));
+    	}
+    	return menu;
+    }
+    private void selectLevel(int i) {
+    	_selectionGroup = new ArrayList<Positionable>();
+    	Iterator<Positionable> it = _contents.iterator();
+    	while (it.hasNext()) {
+    		Positionable pos = it.next();
+    		if (pos.getDisplayLevel()==i) {
+    			_selectionGroup.add(pos);
+    		}
+    	}   	
+        _targetPanel.repaint();
+    }	
 
     private void pasteFromClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -670,7 +772,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_drawMenu!=null) {
         		_menuBar.remove(_drawMenu);
             }
-    		if (jmri.InstanceManager.oBlockManagerInstance().getSystemNameList().size() > 1) {
+    		if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getSystemNameList().size() > 1) {
     			makeWarrantMenu();
     		}	
             if (_markerMenu==null) {
@@ -823,8 +925,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("InitView done");
     }
 
-    /***************** Overriden methods of Editor *******************/
-    
+    /***************** Overridden methods of Editor *******************/
+
+    private boolean _manualSelection = false; 
     protected Positionable getCurrentSelection(MouseEvent event) {
         if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             return getCopySelection(event);
@@ -847,23 +950,68 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         Positionable selection = null;
         if (selections.size() > 0) {
-            if (event.isShiftDown() && selections.size() > 1) {
-                selection = selections.get(1); 
-            } else {
-                selection = selections.get(0); 
-            }            
             if (event.isControlDown()) {
-            	// select bottom-most item over the background, otherwise take the background item
-                selection = selections.get(selections.size()-1);
-                if (selection.getDisplayLevel()<=BKG && selections.size() > 1) {
-                	selection = selections.get(selections.size()-2);
+                if (event.isShiftDown() && selections.size() > 3) {
+                	if (_manualSelection) {
+                		// selection made - don't change it
+                        _selectionGroup = null;
+                		return _currentSelection;
+                	}
+                	// show list
+                	String[] selects = new String[selections.size()];
+                	Iterator<Positionable> iter = selections.iterator();
+                	int i = 0;
+                	while (iter.hasNext()) {
+                		Positionable pos = iter.next();
+                		if (pos instanceof jmri.NamedBean) {
+                    		selects[i++] = ((jmri.NamedBean)pos).getDisplayName();                			
+                		} else {
+                			selects[i++] =  pos.getNameString();
+                		}
+                	}
+                	Object select = JOptionPane.showInputDialog(this,Bundle.getMessage("multipleSelections"),
+                					Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE, 
+                					null, selects, null);
+                	if (select !=null) {
+                    	iter = selections.iterator();
+                    	while (iter.hasNext()) {
+                    		Positionable pos = iter.next();
+                    		String name =null;
+                    		if (pos instanceof jmri.NamedBean) {
+                    			name = ((jmri.NamedBean)pos).getDisplayName();                			
+                    		} else {
+                    			name =  pos.getNameString();
+                    		}
+                    		if (((String)select).equals(name)) {
+                        		_manualSelection = true;
+                        		return pos;
+                    		}
+                    	}
+                	} else {
+                		selection = selections.get(selections.size()-1);
+                	}
+                } else {
+                	// select bottom-most item over the background, otherwise take the background item
+                    selection = selections.get(selections.size()-1);
+                    if (selection.getDisplayLevel()<=BKG && selections.size() > 1) {
+                    	selection = selections.get(selections.size()-2);
+                    }
+//            		_manualSelection = false;
                 }
-            } else if (selection.getDisplayLevel()<=BKG) {
-                selection = null;
+            } else {
+                if (event.isShiftDown() && selections.size() > 1) {
+                    selection = selections.get(1); 
+                } else {
+                    selection = selections.get(0); 
+                }            
+            	if (selection.getDisplayLevel()<=BKG) {
+                    selection = null;
+            	}
+        		_manualSelection = false;
             }
         }
         if (!isEditable() && selection!=null && selection.isHidden()) {
-        	return null;
+        	selection = null;
         }
         return selection;
     }
@@ -929,7 +1077,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /*********** Mouse ***************/
 
     public void mousePressed(MouseEvent event) {
-        setToolTip(null); // ends tooltip if displayed
+    	setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
                             //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         boolean circuitBuilder = _circuitBuilder.saveSelectionGroup(_selectionGroup);
@@ -945,31 +1093,31 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
               	_selectionGroup = null;
               	_currentSelection = null;
               	return;
-              }
-                if (_currentSelection!=null) {
-                    _currentSelection.doMousePressed(event);
-                    if (isEditable()) {
-                        if ( !event.isControlDown() &&
-                             (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
-                            if (_pastePending) {
-                                abortPasteItems();
-                            }
-                            _selectionGroup = null;
+            }
+            if (_currentSelection!=null) {
+                _currentSelection.doMousePressed(event);
+                if (isEditable()) {
+                    if ( !event.isControlDown() &&
+                         (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
+                        if (_pastePending) {
+                            abortPasteItems();
                         }
+                        _selectionGroup = null;
                     }
-                } else {
-                    _highlightcomponent = null;
-                    if (_pastePending) {
-                        abortPasteItems();
-                    }
-                    _selectionGroup = null;
                 }
+            } else {
+                _highlightcomponent = null;
+                if (_pastePending) {
+                    abortPasteItems();
+                }
+                _selectionGroup = null;
+            }
         } else {
             if (_currentSelection==null || (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
             	_selectionGroup = null;
             }
         }
-        _circuitBuilder.doMousePressed(event, _currentSelection);
+		_circuitBuilder.doMousePressed(event, _currentSelection);
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -1060,7 +1208,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {
+            	if (!_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {
                     selection.doMouseClicked(event);
                 }
                 if (selection instanceof IndicatorTrack) {
@@ -1126,7 +1274,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     moveItem(_currentSelection, deltaX, deltaY);
                 }
             } else {
-                if ((isEditable() && _selectionGroup==null /*&& !_shapeDrawer.doMouseDragged(event)*/)) {
+                if ((isEditable() && _selectionGroup==null)) {
                     drawSelectRect(event.getX(), event.getY());
                 }
             }
@@ -1140,7 +1288,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) { return; }
-    	if (!_shapeDrawer.doMouseMoved(event)) {
+    	if (!(event.isShiftDown() && event.isControlDown()) && !_shapeDrawer.doMouseMoved(event)) {
             Positionable selection = getCurrentSelection(event);
             if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
                 showToolTip(selection, event);
@@ -1182,12 +1330,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         	Graphics2D g2d = (Graphics2D)g;
             g2d.setColor(new Color(150, 150, 255));
             g2d.setStroke(new java.awt.BasicStroke(2.0f));
-            if (_secondSelectionGroup!=null){
-                for(int i=0; i<_secondSelectionGroup.size();i++){
-                	Positionable p = _secondSelectionGroup.get(i);
-                    if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
-                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
-                    }
+            for(int i=0; i<_secondSelectionGroup.size();i++){
+            	Positionable p = _secondSelectionGroup.get(i);
+                if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
+                    g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
                 }
             }
         }

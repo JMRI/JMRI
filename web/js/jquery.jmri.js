@@ -2,6 +2,10 @@
     $.extend({
         JMRI: function(url, bindings) {
             var jmri = new Object();
+            // monitoring is a list of open get* requests for JMRI layout objects
+            // monitoring[name] is true if long polling request is open, and is
+            // false if no request is open, or if WebSockets are in use
+            jmri.monitoring = new Object();
             if (typeof (url) === 'string') {
                 jmri.url = url;
             } else {
@@ -12,6 +16,9 @@
             jmri.console = function(data) {
             };
             jmri.error = function(error) {
+                if (window.console) {
+                    console.log(error);
+                }
             };
             jmri.light = function(name, state, data) {
             };
@@ -48,12 +55,19 @@
             jmri.POWER_ON = 2;
             jmri.POWER_OFF = 4;
             // Getters and Setters
-            jmri.getLight = function(name) {
+            jmri.getLight = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("light", {name: name, state: jmri.UNKNOWN});
+                    jmri.socket.send("light", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "light/" + name, function(json) {
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "light/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
                         jmri.light(json.data.name, json.data.state, json.data);
+                        jmri.getLight(json.data.name, json.data.state);
                     });
                 }
             };
@@ -61,20 +75,50 @@
                 if (jmri.socket) {
                     jmri.socket.send("light", {name: name, state: state});
                 } else {
-                    $.post(jmri.url + "light/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getLight(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "light/" + name,
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.light(json.data.name, json.data.state, json.data);
+                            jmri.getLight(json.data.name, json.data.state);
+                        }
                     });
                 }
             };
-            jmri.getMemory = function(name) {
+            jmri.getMemory = function(name, value) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
                     jmri.socket.send("memory", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "memory/" + name, function(json) {
+                    value = $.param({value: value}) || "value=";
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "memory/" + name + "?" + value, function(json) {
+                        jmri.monitoring[name] = false;
                         jmri.memory(json.data.name, json.data.value, json.data);
+                        jmri.getMemory(json.data.name, json.data.value);
                     });
                 }
             };
+            jmri.setMemory = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("memory", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "memory/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.memory(json.data.name, json.data.value, json.data);
+                            jmri.getMemory(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            }
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -131,12 +175,19 @@
                         break;
                 }
             };
-            jmri.getPower = function() {
+            jmri.getPower = function(state) {
+                if (jmri.monitoring.power) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("power", {state: jmri.UNKNOWN});
+                    jmri.socket.send("power", {});
                 } else {
-                    $.getJSON(jmri.url + "power", function(json) {
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring.power = true;
+                    $.getJSON(jmri.url + "power?state=" + state, function(json) {
+                        jmri.monitoring.power = false;
                         jmri.power(json.data.state);
+                        jmri.getPower(json.data.state);
                     });
                 }
             };
@@ -144,8 +195,15 @@
                 if (jmri.socket) {
                     jmri.socket.send("power", {state: state});
                 } else {
-                    $.post(jmri.url + "power?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getPower()", 1000);
+                    $.ajax({
+                        url: jmri.url + "power",
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.power(json.data.state);
+                            jmri.getPower(json.data.state);
+                        }
                     });
                 }
             };
@@ -158,12 +216,19 @@
                     });
                 }
             };
-            jmri.getRoute = function(name) {
+            jmri.getRoute = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("route", {name: name, state: UNKNOWN});
+                    jmri.socket.send("route", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "route/" + name, function(json) {
-                        jmri.signalHead(json.data.name, json.data.state, json.data);
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "route/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
+                        jmri.route(json.data.name, json.data.state, json.data);
+                        jmri.getRoute(json.data.name, json.data.state);
                     });
                 }
             };
@@ -171,17 +236,31 @@
                 if (jmri.socket) {
                     jmri.socket.send("route", {name: name, state: state});
                 } else {
-                    $.post(jmri.url + "route/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getRoute(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "route/" + name,
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.route(json.data.name, json.data.state, json.data);
+                            jmri.getRoute(json.data.name, json.data.state);
+                        }
                     });
                 }
             };
-            jmri.getSensor = function(name) {
+            jmri.getSensor = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("sensor", {name: name, state: UNKNOWN});
+                    jmri.socket.send("sensor", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "sensor/" + name, function(json) {
-                        jmri.signalHead(json.data.name, json.data.state, json.data);
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "sensor/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
+                        jmri.sensor(json.data.name, json.data.state, json.data);
+                        jmri.getSensor(json.data.name, json.data.state);
                     });
                 }
             };
@@ -189,17 +268,31 @@
                 if (jmri.socket) {
                     jmri.socket.send("sensor", {name: name, state: state});
                 } else {
-                    $.post(jmri.url + "sensor/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getSensor(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "sensor/" + name,
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.sensor(json.data.name, json.data.state, json.data);
+                            jmri.getSensor(json.data.name, json.data.state);
+                        }
                     });
                 }
             };
-            jmri.getSignalHead = function(name) {
+            jmri.getSignalHead = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("signalHead", {name: name, state: UNKNOWN});
+                    jmri.socket.send("signalHead", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "signalHead/" + name, function(json) {
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "signalHead/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
                         jmri.signalHead(json.data.name, json.data.state, json.data);
+                        jmri.getSignalHead(json.data.name, json.data.state);
                     });
                 }
             };
@@ -207,44 +300,78 @@
                 if (jmri.socket) {
                     jmri.socket.send("signalHead", {name: name, state: state});
                 } else {
-                    $.post(jmri.url + "signalHead/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getSignalHead(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "signalHead/" + name,
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.signalHead(json.data.name, json.data.state, json.data);
+                            jmri.getSignalHead(json.data.name, json.data.state);
+                        }
                     });
                 }
             };
-            jmri.getSignalMast = function(name) {
+            jmri.getSignalMast = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("signalMast", {name: name, state: UNKNOWN});
+                    jmri.socket.send("signalMast", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "signalMast/" + name, function(json) {
-                        jmri.signalHead(json.data.name, json.data.state, json.data);
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "signalMast/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
+                        jmri.signalMast(json.data.name, json.data.state, json.data);
+                        jmri.getSignalMast(json.data.name, json.data.state);
                     });
                 }
             };
             jmri.setSignalMast = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("signalMast", {name: name, state: state});
+                    jmri.socket.send("signalMast", {name: name, aspect: state});
                 } else {
-                    $.post(jmri.url + "signalMast/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getSignalMast(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "signalMast/" + name,
+                        type: "POST",
+                        data: JSON.stringify({aspect: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.signalMast(json.data.name, json.data.state, json.data);
+                            jmri.getSignalMast(json.data.name, json.data.state);
+                        }
                     });
                 }
             };
             jmri.getTime = function() {
+                if (jmri.monitoring.time) {
+                    return;
+                }
                 if (jmri.socket) {
                     jmri.socket.send("time", {});
                 } else {
+                    jmri.monitoring.time = true;
                     $.getJSON(jmri.url + "time", function(json) {
+                        jmri.monitoring.time = false;
                         jmri.time(json.data.time, json.data);
+                        jmri.getTime();
                     });
                 }
             };
-            jmri.getTurnout = function(name) {
+            jmri.getTurnout = function(name, state) {
+                if (jmri.monitoring[name]) {
+                    return;
+                }
                 if (jmri.socket) {
-                    jmri.socket.send("turnout", {name: name, state: jmri.UNKNOWN});
+                    jmri.socket.send("turnout", {name: name});
                 } else {
-                    $.getJSON(jmri.url + "turnout/" + name, function(json) {
+                    state = state || jmri.UNKNOWN;
+                    jmri.monitoring[name] = true;
+                    $.getJSON(jmri.url + "turnout/" + name + "?state=" + state, function(json) {
+                        jmri.monitoring[json.data.name] = false;
                         jmri.turnout(json.data.name, json.data.state, json.data);
+                        jmri.getTurnout(json.data.name, json.data.state);
                     });
                 }
             };
@@ -252,8 +379,15 @@
                 if (jmri.socket) {
                     jmri.socket.send("turnout", {name: name, state: state});
                 } else {
-                    $.post(jmri.url + "turnout/" + name + "?state=" + state, JSON.stringify({state: state}), function(json) {
-                        setTimeout("jmri.getTurnout(\"" + json.data.name + "\")", 1000);
+                    $.ajax({
+                        url: jmri.url + "turnout/" + name,
+                        type: "POST",
+                        data: JSON.stringify({state: state}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.turnout(json.data.name, json.data.state, json.data);
+                            jmri.getTurnout(json.data.name, json.data.state);
+                        }
                     });
                 }
             };

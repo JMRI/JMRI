@@ -101,6 +101,12 @@ public final class JSON {
      * {@value #STATUS}
      */
     public static final String STATUS = "status"; // NOI18N
+    /**
+     * Numeric status value
+     * 
+     * {@value #STATUS_CODE}
+     */
+    public static final String STATUS_CODE = "statusCode"; // NOI18N
 
     /* JSON error */
     /**

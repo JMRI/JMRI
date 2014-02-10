@@ -24,6 +24,11 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 		_var = var;
 		// get the original color right
 		setBackground(_var.getColor());
+        if (_var.getColor() == _var.getDefaultColor()) {
+            setOpaque(false);
+        } else {
+            setOpaque(true);
+        }
 		// set the original value
 		setValue(Integer.valueOf(_var.getValueString()).intValue());
 		// listen for changes here
@@ -53,6 +58,11 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 		// update this color from original state
 		if (e.getPropertyName().equals("State")) {
 			setBackground(_var.getColor());
+            if (_var.getColor() == _var.getDefaultColor()) {
+                setOpaque(false);
+            } else {
+                setOpaque(true);
+            }
 		}
 		if (e.getPropertyName().equals("Value")) {
 			int newValue = Integer.valueOf(((JTextField)_var.getCommonRep()).getText()).intValue();

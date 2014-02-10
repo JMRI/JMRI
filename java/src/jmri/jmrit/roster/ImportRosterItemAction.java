@@ -66,9 +66,6 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         // ensure preferences will be found for read
         FileUtil.createDirectory(LocoFile.getFileLocation());
 
-        // locate the file
-        //File f = new File(mFullFromFilename);
-
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary
         Element lroot;
@@ -78,7 +75,13 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
             log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
             return false;
         }
+        
+        return loadEntryFromElement(lroot);
+    
+    }
+    
 
+    protected boolean loadEntryFromElement(Element lroot) {
         // create a new entry from XML info - find the element
         Element loco = lroot.getChild("locomotive");
         mToEntry = new RosterEntry(loco);

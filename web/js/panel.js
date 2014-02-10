@@ -359,6 +359,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 $widget['text'] = "00:00 AM";
                                 $widget['state'] = "00:00 AM";
+                                jmri.getMemory($widget["systemName"]);
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
@@ -1472,7 +1473,7 @@ var $drawAllIconWidgets = function() {
 
 function updateWidgets(systemName, state) {
     $.each(systemNames[systemName], function(index, widgetId) {
-        console.log("setting " + widgetId + " (a " + systemName + ")");
+        console.log("setting " + widgetId + " (" + systemName + ")");
         $setWidgetState(widgetId, state);
     });
 }

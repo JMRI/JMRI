@@ -112,6 +112,7 @@ public class ComboRadioButtons extends JPanel {
     protected void setColor() {
         for (int i = 0; i<v.size(); i++) {
             v.elementAt(i).setBackground(_value.getBackground());
+            v.elementAt(i).setOpaque(true);
         }
     }
 

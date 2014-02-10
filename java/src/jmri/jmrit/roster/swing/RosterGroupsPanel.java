@@ -16,6 +16,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.*;
 import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
@@ -336,6 +337,10 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         mi.addActionListener(ml);
         mi.setActionCommand("export");
         pm.add(mi);
+        mi = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Importddd"));
+        mi.addActionListener(ml);
+        mi.setActionCommand("import");
+        pm.add(mi);
         if (menu == GROUPS_MENU) {
             pm.addSeparator();
             mi = new JMenuItem("Rename...");
@@ -379,6 +384,8 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             if (g.isDescendant(_tree.getSelectionPath())) {
                 if (e.getActionCommand().equals("export")) {
                     new FullBackupExportAction(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Exportddd"), wi).actionPerformed(e);
+                } else if (e.getActionCommand().equals("import")) {
+                    new FullBackupImportAction(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Importddd"), wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("rename")) {
                     new RenameRosterGroupAction("Rename", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("duplicate")) {

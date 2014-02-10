@@ -1,17 +1,19 @@
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
+import jmri.web.server.WebServerManager;
 
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Operations settings.
@@ -501,10 +503,13 @@ public class Setup {
 	}
 
 	public static String getRailroadName() {
+		if (railroadName == null)
+			return WebServerManager.getWebServerPreferences().getRailRoadName();
 		return railroadName;
 	}
 
 	public static void setRailroadName(String name) {
+		OperationsSetupXml.instance().setDirty(true);
 		railroadName = name;
 	}
 
@@ -1738,7 +1743,7 @@ public class Setup {
 			String name = a.getValue();
 			if (log.isDebugEnabled())
 				log.debug("railroadName: " + name);
-			setRailroadName(name);
+			railroadName = name;	// don't set the dirty bit
 		}
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {

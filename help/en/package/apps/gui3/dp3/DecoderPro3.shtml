@@ -181,7 +181,7 @@ upper right-hand corner. </p>
   <li>Start WiThrottle Server </li>
   <li>Start Web Server</li>
   <li>--------------</li>
-  <li>Recreate Roster Index </li>
+  <li>Rebuild Roster</li>
   <li>Recreate Decoder Index</li>
   <li>--------------</li>
   <li>Run Script </li>
