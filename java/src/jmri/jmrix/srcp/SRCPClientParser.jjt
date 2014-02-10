@@ -147,7 +147,7 @@ SimpleNode command():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( LOOKAHEAD(4) go() | get() | set() | check() | wait_cmd() | init() |
+  ( LOOKAHEAD(4) go() | check() | wait_cmd() | init() |
                  term() | reset() | verify()) <EOL>
   {
     log.debug("Command Production");
@@ -198,11 +198,11 @@ SimpleNode connectionmode():{Token t;}
   }
 }
 
-SimpleNode inforesponse():{SimpleNode t; Token s; Token r;}
+SimpleNode inforesponse():{SimpleNode t; Token s; SimpleNode r;}
 {
-  t=address() (s=<INFO> | s=<OK> | s=<ERROR>) r=<EOL>
+  t=errorcode() (s=<INFO> | s=<OK> | s=<ERROR> ) r=reason()
   {
-    jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.image + r.image);
+    jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.image + r.jjtGetValue() );
     log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
     return jjtThis;
   }
@@ -210,11 +210,6 @@ SimpleNode inforesponse():{SimpleNode t; Token s; Token r;}
 
 SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
 {
-  // this should match any valid response to the client
-  /*((<ADDR> | <ERRORCODE>) bus() ( ga() address() port() zeroone() |
-				 power() onoff() )) <EOL>
-  <TIMESTAMP> s=inforesponse() bus() ( ga() address() port() zeroone() |
-                         power() onoff() ) <EOL>*/
   // this should match any valid response to the client in 
   // either command mode or info mode.
   t=timestamp() ( s=inforesponse() ) 
@@ -247,6 +242,26 @@ SimpleNode bus():{SimpleNode s;}
   }
 }
 
+SimpleNode errorcode():{Token t;}
+{
+  t=<ERRORCODE>
+  {
+    log.debug("ErrorCode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode reason():{Token t;}
+{
+  t=<EOL>
+  {
+    log.debug("Reason Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
 SimpleNode address():{SimpleNode s;}
 {
   (s=zeroaddress() | s=nonzeroaddress())
@@ -256,6 +271,7 @@ SimpleNode address():{SimpleNode s;}
     return jjtThis;
   }
 }
+
 SimpleNode zeroaddress():{Token t;}
 {
   t=<ZEROADDR>
@@ -309,44 +325,6 @@ SimpleNode go():{Token t;}
      log.debug("GO Production");
     jjtThis.jjtSetValue(t.image);
      return jjtThis;
-  }
-}
-
-SimpleNode get():{Token t;}
-{
-  t=<GET> bus() ( fb() address() | 
-                ga() address() port() | 
-                gl() address() | 
-                sm() address() | 
-                time() | 
-                power() | 
-                server() | 
-                session () | 
-                lock() devicegroup() address() | 
-                description() [ devicegroup() address() ] )
-
-  {
-     log.debug("GET Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode set():{Token t;}
-{
-  t=<SET> ( ( bus() ( gl() | 
-                sm() | 
-                ga() address() port() zeroone() delay() | 
-                fb() address() port() | 
-                time() | 
-                power() onoff() | 
-                lock() ) ) |
-	<PROTOCOLLITTERAL> serviceversion() | 
-	<CONNECTIONMODELITTERAL> connectionmode() ) 
-  {
-    log.debug("SET Production");
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
   }
 }
 

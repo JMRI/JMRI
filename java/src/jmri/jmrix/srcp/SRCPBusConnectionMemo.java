@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @version             $Revision$
  */
-public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements SRCPListener {
 
     private int _bus = 0;
 
@@ -39,8 +39,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setTrafficController(SRCPTrafficController et) 
     { 
        this.et = et; 
-       //this.et.setSystemConnectionMemo(this);
     }
+
     private SRCPTrafficController et;
     
     /**
@@ -191,6 +191,20 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         super.dispose();
     }
+
+    // functions for the SRCP Listener interface.
+    public void message(SRCPMessage m){
+    }
+
+    public void reply(SRCPReply m){
+    }
+
+    public void reply(jmri.jmrix.srcp.parser.SimpleNode n){
+       // Look for description information for this bus, and configure the
+       // managers for this bus.
+    }
+
+
 }
 
 

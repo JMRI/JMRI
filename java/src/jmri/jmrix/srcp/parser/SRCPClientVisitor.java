@@ -42,20 +42,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     return node.childrenAccept(this,data);
   }
 
-  public Object visit(ASTget node, Object data)
-  {
-    log.debug("Get " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-
-
-  public Object visit(ASTset node, Object data)
-  {
-    log.debug("Set " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-
-
   public Object visit(ASTterm node, Object data)
   {
     log.debug("TERM " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
@@ -240,6 +226,18 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
   public Object visit(ASTtimestamp node, Object data)
   {
     log.debug("Timestamp Node " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+  public Object visit(ASTerrorcode node, Object data)
+  {
+    log.debug("ErrorCode Node " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+  public Object visit(ASTreason node, Object data)
+  {
+    log.debug("Reason Node " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
 
