@@ -437,7 +437,8 @@
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
-	<li>Suzie Tall, who provided several international signal definitions
+	<li>Suzie Tall, who provided several North American and international signal definitions,
+	    including definitions for UP, Amtrak, and Great Western railroad.
     <li>Clint Taylor added code to allow function buttons to work within the loconet slot manager.
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,
