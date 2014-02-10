@@ -83,7 +83,7 @@ public class Manifest extends TrainCommon {
                 if (oldWork) {
                     builder.append("</li>"); // NOI18N
                 }
-                builder.append("<li>"); // NOI18N
+                builder.append(strings.getProperty("LocationStart")); // NOI18N
                 this.newWork = true;
                 if (!train.isShowArrivalAndDepartureTimesEnabled()) {
                     builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
@@ -274,7 +274,7 @@ public class Manifest extends TrainCommon {
                 break; // done
             }
         }
-        return builder.toString();
+        return String.format(locale, strings.getProperty("CarsList"), builder.toString());
     }
 
     @Override
@@ -316,19 +316,20 @@ public class Manifest extends TrainCommon {
             return ""; // print nothing local move, see dropCar
         }
         StringBuilder builder = new StringBuilder();
-        for (String f : format) {
-            builder.append(getCarAttribute(car, f, PICKUP, !LOCAL));
+        for (String attribute : format) {
+            builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, PICKUP, !LOCAL), attribute.toLowerCase())).append(" "); // NOI18N
         }
         log.debug("Picking up car {}", builder);
-        return builder.toString().trim();
+        return String.format(locale, strings.getProperty("PickUpCar"), builder.toString()); // NOI18N
     }
 
     private String dropCar(Car car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
-        for (String f : format) {
-            builder.append(getCarAttribute(car, f, !PICKUP, isLocal));
+        for (String attribute : format) {
+            builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, !PICKUP, isLocal), attribute.toLowerCase())).append(" "); // NOI18N
         }
-        return builder.toString().trim();
+        log.debug("Dropping car {}", builder);
+        return String.format(locale, strings.getProperty("DropCar"), builder.toString()); // NOI18N
     }
 
     private String addCarsLocationUnknown() {
@@ -379,10 +380,11 @@ public class Manifest extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
-        for (String string : Setup.getDropEngineMessageFormat()) {
-            builder.append(getEngineAttribute(engine, string, false));
+        for (String attribute : Setup.getDropEngineMessageFormat()) {
+            builder.append(String.format(locale, strings.getProperty("Attribute"), getEngineAttribute(engine, attribute, false), attribute.toLowerCase())).append(" ");
         }
-        return builder.toString();
+        log.debug("Drop engine: {}", builder);
+        return String.format(locale, strings.getProperty("DropEngine"), builder.toString());
     }
 
     private String pickupEngines(List<RollingStock> engines, RouteLocation location) {
@@ -398,11 +400,11 @@ public class Manifest extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
-        for (String string : Setup.getPickupEngineMessageFormat()) {
-            builder.append(getEngineAttribute(engine, string, true));
+        for (String attribute : Setup.getPickupEngineMessageFormat()) {
+            builder.append(String.format(locale, strings.getProperty("Attribute"), getEngineAttribute(engine, attribute, true), attribute.toLowerCase())).append(" ");
         }
         log.debug("Picking up engine: {}", builder);
-        return String.format(locale, strings.getProperty("Engine"), builder.toString());
+        return String.format(locale, strings.getProperty("PickUpEngine"), builder.toString());
     }
 
     private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
@@ -456,7 +458,7 @@ public class Manifest extends TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return splitString(rs.getNumber());
         } else if (attribute.equals(Setup.ROAD)) {
-            return rs.getRoadName();
+            return StringEscapeUtils.escapeHtml4(rs.getRoadName());
         } else if (attribute.equals(Setup.TYPE)) {
             String[] type = rs.getTypeName().split("-"); // second half of string
             // can be anything
@@ -467,21 +469,27 @@ public class Manifest extends TrainCommon {
             return rs.getColor();
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
             if (rs.getTrack() != null) {
-                return String.format(locale, strings.getProperty("FromTrack"), rs.getTrackName());
+                return String.format(locale, strings.getProperty("FromTrack"),
+                        StringEscapeUtils.escapeHtml4(rs.getTrackName()));
             }
             return "";
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
-            return String.format(locale, strings.getProperty("FromLocation"), rs.getLocationName());
+            return String.format(locale, strings.getProperty("FromLocation"),
+                    StringEscapeUtils.escapeHtml4(rs.getLocationName()));
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
-            return String.format(locale, strings.getProperty("ToLocation"), splitString(rs.getDestinationName()));
+            return String.format(locale, strings.getProperty("ToLocation"),
+                    StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationName())));
         } else if (attribute.equals(Setup.DESTINATION) && !isPickup) {
-            return String.format(locale, strings.getProperty("ToTrack"), splitString(rs.getDestinationTrackName()));
+            return String.format(locale, strings.getProperty("ToTrack"),
+                    StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationTrackName())));
         } else if (attribute.equals(Setup.DEST_TRACK)) {
-            return String.format(locale, strings.getProperty("ToLocationAndTrack"), splitString(rs.getDestinationName()), splitString(rs.getDestinationTrackName()));
+            return String.format(locale, strings.getProperty("ToLocationAndTrack"),
+                    StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationName())),
+                    StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationTrackName())));
         } else if (attribute.equals(Setup.OWNER)) {
-            return rs.getOwner();
+            return StringEscapeUtils.escapeHtml4(rs.getOwner());
         } else if (attribute.equals(Setup.COMMENT)) {
-            return rs.getComment();
+            return StringEscapeUtils.escapeHtml4(rs.getComment());
         } else if (attribute.equals(Setup.NONE) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)
