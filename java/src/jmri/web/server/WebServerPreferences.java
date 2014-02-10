@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Setup;
-
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -197,7 +195,7 @@ public class WebServerPreferences extends Bean {
         }
     }
 
-    public boolean getIsDirty() {
+    public boolean isDirty() {
         return isDirty;
     }
 

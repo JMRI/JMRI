@@ -124,7 +124,7 @@ public class JsonServerPreferences extends Bean {
         }
     }
 
-    public boolean getIsDirty() {
+    public boolean isDirty() {
         return this.isDirty;
     }
 

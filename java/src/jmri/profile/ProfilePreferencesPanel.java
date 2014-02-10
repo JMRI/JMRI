@@ -498,6 +498,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         }
     }
 
+    @Override
+    public boolean isDirty() {
+        return false; // ProfileManager preferences are saved immediately, so this is always false
+    }
+
     private static class ZipFileFilter extends FileFilter {
 
         public ZipFileFilter() {
