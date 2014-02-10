@@ -209,7 +209,7 @@ public class NXFrame extends WarrantRoute {
     	} else if (_dccNumBox.getText()==null || _dccNumBox.getText().length()==0){
             msg = Bundle.getMessage("NoLoco");
         }
-        if (msg!=null){
+        if (msg==null){
             String addr = _dccNumBox.getText();
             if (addr!= null && addr.length() != 0) {
                 boolean isLong = false;
