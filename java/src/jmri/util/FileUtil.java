@@ -894,7 +894,7 @@ public class FileUtil {
         }
         if (source.isDirectory()) {
             for (File file : source.listFiles()) {
-                FileUtil.copy(source, new File(dest, file.getName()));
+                FileUtil.copy(file, new File(dest, file.getName()));
             }
         } else {
             FileInputStream sourceIS = null;

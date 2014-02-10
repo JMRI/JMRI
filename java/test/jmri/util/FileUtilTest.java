@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -258,6 +259,20 @@ public class FileUtilTest extends TestCase {
         }
         FileUtil.delete(dest);
         Assert.assertTrue(sl.equals(dl));
+    }
+
+    public void testCopyDirectoryToExistingDirectory() throws FileNotFoundException, IOException {
+        File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:web/fonts"));
+        // create a temporary directory by creating a temp file, deleting it, and creating a directory with a similar name
+        // see http://stackoverflow.com/a/617438
+        File file = File.createTempFile("FileUtilTest", null);
+        file.delete();
+        File dest = new File(file.getPath() + ".d");
+        dest.mkdir();
+        FileUtil.copy(src, dest);
+        String[] destFiles = dest.list();
+        FileUtil.delete(dest);
+        Assert.assertTrue(Arrays.equals(src.list(), destFiles));
     }
 
     public void testDeleteFile() throws IOException {

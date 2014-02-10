@@ -39,6 +39,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
     private String profileId;
     private boolean setNextProfile = false;
+    private Profile source = null;
 
     public AddProfileDialog(java.awt.Frame parent, boolean modal, boolean setNextProfile) {
         super(parent, modal);
@@ -271,6 +272,11 @@ public class AddProfileDialog extends javax.swing.JDialog {
         try {
             Profile p = new Profile(this.profileName.getText(), this.profileId, new File(this.profileFolder.getText()));
             ProfileManager.defaultManager().addProfile(p);
+            if (this.source != null) {
+                // TODO: if source is active profile, save source first
+                FileUtil.copy(source.getPath(), p.getPath());
+                p.save();
+            }
             if (this.setNextProfile) {
                 ProfileManager.defaultManager().setNextActiveProfile(p);
             } else {
@@ -318,4 +324,8 @@ public class AddProfileDialog extends javax.swing.JDialog {
     private JTextField profileName;
     // End of variables declaration//GEN-END:variables
     private static final Logger log = LoggerFactory.getLogger(AddProfileDialog.class);
+
+    void setSourceProfile(Profile profile) {
+        this.source = profile;
+    }
 }

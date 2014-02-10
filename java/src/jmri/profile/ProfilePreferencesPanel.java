@@ -82,6 +82,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         btnCreateNewProfile = new JButton();
         btnActivateProfile = new JButton();
         btnExportProfile = new JButton();
+        btnCopyProfile = new JButton();
         searchPathsPanel = new JPanel();
         jScrollPane2 = new JScrollPane();
         searchPaths = new JList();
@@ -167,6 +168,13 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             }
         });
 
+        btnCopyProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCopyProfile.text")); // NOI18N
+        btnCopyProfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnCopyProfileActionPerformed(evt);
+            }
+        });
+
         GroupLayout enabledPanelLayout = new GroupLayout(enabledPanel);
         enabledPanel.setLayout(enabledPanelLayout);
         enabledPanelLayout.setHorizontalGroup(
@@ -185,6 +193,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCreateNewProfile)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCopyProfile)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExportProfile)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnDeleteProfile)))
@@ -202,7 +212,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                     .addComponent(btnCreateNewProfile)
                     .addComponent(btnActivateProfile)
                     .addComponent(btnExportProfile)
-                    .addComponent(btnDeleteProfile))
+                    .addComponent(btnDeleteProfile)
+                    .addComponent(btnCopyProfile))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chkStartWithActiveProfile)
                 .addContainerGap())
@@ -246,7 +257,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemoveSearchPath)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
                 .addContainerGap())
         );
         searchPathsPanelLayout.setVerticalGroup(
@@ -392,9 +403,17 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         }
     }//GEN-LAST:event_chkStartWithActiveProfileActionPerformed
 
+    private void btnCopyProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnCopyProfileActionPerformed
+        AddProfileDialog apd = new AddProfileDialog((Frame) SwingUtilities.getWindowAncestor(this), true, true);
+        apd.setSourceProfile(ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow()));
+        apd.setLocationRelativeTo(this);
+        apd.setVisible(true);
+    }//GEN-LAST:event_btnCopyProfileActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton btnActivateProfile;
     private JButton btnAddSearchPath;
+    private JButton btnCopyProfile;
     private JButton btnCreateNewProfile;
     private JButton btnDeleteProfile;
     private JButton btnExportProfile;
@@ -469,9 +488,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             } else {
                 this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
             }
+            this.btnCopyProfile.setEnabled(true);
             this.btnExportProfile.setEnabled(true);
         } else {
             this.btnDeleteProfile.setEnabled(false);
+            this.btnCopyProfile.setEnabled(false);
             this.btnExportProfile.setEnabled(false);
             this.btnActivateProfile.setEnabled(false);
         }
