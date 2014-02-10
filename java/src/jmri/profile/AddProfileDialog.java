@@ -327,5 +327,6 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
     void setSourceProfile(Profile profile) {
         this.source = profile;
+        this.setTitle(Bundle.getMessage("AddProfileDialog.copyTitle"));
     }
 }
