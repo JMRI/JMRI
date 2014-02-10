@@ -314,6 +314,7 @@
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
     <li>Peter Mansvelder, who contributed Flieschmann decoder definitions
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
+	<LI>Ken Mazer, who provided the GP40-2 Soundtraxx definition
     <li>David McDowell of the North Raleigh Model Railroad Club created
     a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
 	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
