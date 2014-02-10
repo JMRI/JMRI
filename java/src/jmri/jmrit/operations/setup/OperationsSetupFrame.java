@@ -152,6 +152,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		hptTextField.setToolTipText(Bundle.getMessage("HPperTonTip"));
 		switchTimeTextField.setToolTipText(Bundle.getMessage("SwitchTimeTip"));
 		travelTimeTextField.setToolTipText(Bundle.getMessage("TravelTimeTip"));
+		railroadNameTextField.setToolTipText(Bundle.getMessage("RailroadNameTip"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -406,6 +407,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				railroadNameTextField.setEnabled(false);
 			}
 		}
+		createShutDownTask();
 	}
 
 	// Save, Delete, Add buttons

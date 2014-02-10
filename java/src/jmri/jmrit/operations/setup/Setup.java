@@ -509,6 +509,7 @@ public class Setup {
 	}
 
 	public static void setRailroadName(String name) {
+		OperationsSetupXml.instance().setDirty(true);
 		railroadName = name;
 	}
 
@@ -1742,7 +1743,7 @@ public class Setup {
 			String name = a.getValue();
 			if (log.isDebugEnabled())
 				log.debug("railroadName: " + name);
-			setRailroadName(name);
+			railroadName = name;	// don't set the dirty bit
 		}
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {
