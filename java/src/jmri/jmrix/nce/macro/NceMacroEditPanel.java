@@ -271,7 +271,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         previousButton.setToolTipText(rb.getString("toolTipSearchDecrementing"));
         nextButton.setToolTipText(rb.getString("toolTipSearchIncrementing"));
         getButton.setToolTipText(rb.getString("toolTipReadMacro"));
-        macroTextField.setToolTipText(rb.getString("toolTipEnterMacro"));
+        if (isUsb) {
+            macroTextField.setToolTipText(rb.getString("toolTipEnterMacroUsb"));
+        } else {
+            macroTextField.setToolTipText(rb.getString("toolTipEnterMacroSerial"));
+        }
         saveButton.setToolTipText(rb.getString("toolTipUpdateMacro"));
         backUpButton.setToolTipText(rb.getString("toolTipBackUp"));
         restoreButton.setToolTipText(rb.getString("toolTipRestore"));
