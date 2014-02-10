@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2014-01-26</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial release</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>GWR-1931</aspecttable>
+  <name>3 Aspect Signal Mast</name>
+  <description>Double head signal mast</description>
+  <appearances>
+    <appearance>
+      <aspectname>Proceed</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/GWR-1931/proceed-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Caution</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/GWR-1931/caution-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Danger</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/GWR-1931/danger-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/GWR-1931/unlit-a.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Danger</aspect>
+    </danger>
+    <held>
+      <aspect>Danger</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Danger</advancedAspect>
+      <ourAspect>Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Caution</advancedAspect>
+      <ourAspect>Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Proceed</advancedAspect>
+      <ourAspect>Proceed</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Proceed</advancedAspect>
+      <ourAspect>Proceed</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>
