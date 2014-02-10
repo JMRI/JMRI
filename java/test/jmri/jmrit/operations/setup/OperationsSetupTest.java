@@ -2,20 +2,21 @@
 
 package jmri.jmrit.operations.setup;
 
-import java.io.File;
-import java.util.Locale;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.FileUtil;
-import jmri.web.server.WebServerManager;
-import jmri.web.server.WebServerPreferences;
+
+import java.io.File;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.Locale;
+import jmri.util.FileUtil;
 
 /**
  * Tests for the Operations Setup class
@@ -33,6 +34,8 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testCreate() {
 		Setup s = new Setup();
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
 		s.setOwnerName("Test Owner Name");
 		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 	}
@@ -41,6 +44,9 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testConstants() {
 		Setup s = new Setup();
+
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
 
 		Assert.assertEquals("Operations Setup Constant Z_SCALE", 1, Setup.Z_SCALE);
 		Assert.assertEquals("Operations Setup Constant N_SCALE", 2, Setup.N_SCALE);
@@ -93,6 +99,11 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testScaleAttributes() {
 		Setup s = new Setup();
+		// Not really necessary
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
 		s.setScale(Setup.Z_SCALE);
 		Assert.assertEquals("Z Scale", 1, s.getScale());
@@ -176,6 +187,11 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testTrainAttributes() {
 		Setup s = new Setup();
+		// Not really necessary
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
 		s.setTrainDirection(Setup.EAST);
 		Assert.assertEquals("Direction East", 1, s.getTrainDirection());
@@ -239,6 +255,11 @@ public class OperationsSetupTest extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testPanelAttributes() {
 		Setup s = new Setup();
+		// Not really necessary
+		s.setRailroadName("Test Railroad Name");
+		Assert.assertEquals("Railroad Name", "Test Railroad Name", s.getRailroadName());
+		s.setOwnerName("Test Owner Name");
+		Assert.assertEquals("Owner Name", "Test Owner Name", s.getOwnerName());
 
 		s.setPanelName("Test Panel Name");
 		Assert.assertEquals("Panel Name", "Test Panel Name", s.getPanelName());
@@ -294,10 +315,8 @@ public class OperationsSetupTest extends TestCase {
 	public void testXMLFileCreate() throws Exception {
 		Setup s;
 		s = createTestSetup();
-                WebServerPreferences wsp = WebServerManager.getWebServerPreferences();
-                wsp.setRailRoadName(wsp.getDefaultRailroadName());
 
-		Assert.assertEquals("Create Railroad Name", wsp.getDefaultRailroadName(), s.getRailroadName());
+		Assert.assertEquals("Create Railroad Name", "File Test Railroad Name", s.getRailroadName());
 		Assert.assertEquals("Create Railroad Owner", "File Test Railroad Owner", s.getOwnerName());
 		Assert.assertEquals("Create Panel Name", "File Test Panel Name", s.getPanelName());
 		Assert.assertEquals("Create Font Name", "File Test Font Name", s.getFontName());
@@ -319,6 +338,7 @@ public class OperationsSetupTest extends TestCase {
 		// now get ready for the read operation
 		s = new Setup();
 
+		s.setRailroadName("Before Read Test Railroad Name");
 		s.setOwnerName("Before Read Test Railroad Owner");
 		s.setPanelName("Before Read Test Panel Name");
 		s.setFontName("Before Read Test Font Name");
@@ -344,7 +364,7 @@ public class OperationsSetupTest extends TestCase {
 		s.setTrainIconColorLocal("White");
 		s.setTrainIconColorTerminate("Black");
 
-		Assert.assertEquals("Before Read Railroad Name", wsp.getDefaultRailroadName(), s.getRailroadName());
+		Assert.assertEquals("Before Read Railroad Name", "Before Read Test Railroad Name", s.getRailroadName());
 		Assert.assertEquals("Before Read Railroad Owner", "Before Read Test Railroad Owner", s.getOwnerName());
 		Assert.assertEquals("Before Read Panel Name", "Before Read Test Panel Name", s.getPanelName());
 		Assert.assertEquals("Before Read Font Name", "Before Read Test Font Name", s.getFontName());
@@ -424,7 +444,7 @@ public class OperationsSetupTest extends TestCase {
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
-                WebServerManager.getWebServerPreferences().setRailRoadName("File Test Railroad Name");
+		s.setRailroadName("File Test Railroad Name");
 		s.setOwnerName("File Test Railroad Owner");
 		s.setPanelName("File Test Panel Name");
 		s.setFontName("File Test Font Name");

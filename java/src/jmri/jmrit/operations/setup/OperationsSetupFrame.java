@@ -398,15 +398,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			railroadNameTextField.setEnabled(false);
 		} else if (!WebServerManager.getWebServerPreferences().isDefaultRailroadName()) {
 			int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-					.getMessage("ChangeRailroadName"), new Object[] {
-				Setup.getRailroadName(), WebServerManager.getWebServerPreferences().getRailRoadName(),  }), Bundle
-				.getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
+					.getMessage("ChangeRailroadName"), new Object[] { Setup.getRailroadName(),
+					WebServerManager.getWebServerPreferences().getRailRoadName() }), Bundle
+					.getMessage("ChangeOperationsRailroadName"), JOptionPane.YES_NO_OPTION);
 			if (results == JOptionPane.OK_OPTION) {
 				railroadNameTextField.setText(WebServerManager.getWebServerPreferences().getRailRoadName());
 				railroadNameTextField.setEnabled(false);
 			}
 		}
-
 	}
 
 	// Save, Delete, Add buttons

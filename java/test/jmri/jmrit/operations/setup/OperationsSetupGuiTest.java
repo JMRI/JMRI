@@ -225,6 +225,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		
+		new jmri.InstanceManager(); // for WebServer and the railroad name
 
 	}
 

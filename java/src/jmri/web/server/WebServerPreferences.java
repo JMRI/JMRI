@@ -270,7 +270,6 @@ public class WebServerPreferences extends Bean {
     public void setRailRoadName(String railRoadName) {
         if (railRoadName != null) {
             this.railRoadName = railRoadName;
-            Setup.setRailroadName(railRoadName); // Also change the railroad name in operations
         } else {
             this.railRoadName = Bundle.getMessage("DefaultRailroadName");
         }
