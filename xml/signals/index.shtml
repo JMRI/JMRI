@@ -45,6 +45,9 @@ The available definitions include:
 <dt><a href="AAR-1946/index.shtml">AAR-1946</a>
     <dd>American Association of Railroads 1946 rule book
 
+<dt><a href="Amtrak-2010/index.shtml">Amtrak-2010</a>
+    <dd>Amtrak Northeast Corridor Color Position Light signals
+
 <dt><a href="BN-1989/index.shtml">BN-1989</a>
     <dd>1989 October Burlington Northern
 
@@ -66,6 +69,9 @@ The available definitions include:
     <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
     <br>
     <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="GWR-1931/index.shtml">GWR-1931</a>
+    <dd>GWR 1931 searchlight signals
 
 <dt><a href="InfraBel-2013/index.shtml">InfraBel-2013</a>
     <dd>Current info for Belgium in 2013 taken from Wikipedia
@@ -101,6 +107,10 @@ The available definitions include:
 
 <dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
+    <br>
+
+<dt><a href="UP-2008/index.shtml">UP-2008</a>
+    <dd>Union Pacific Railroad 2008 rule book
     <br>
 
 </dl>
