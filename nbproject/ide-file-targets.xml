@@ -6,7 +6,7 @@
         <fail unless="files">Must set property 'files'</fail>
         <!-- TODO decide on and define some value for ${build.classes.dir} -->
         <mkdir dir="classes"/>
-        <javac includeantruntime="false" destdir="classes" includes="${files}" source="1.6" srcdir="src/jmri">
+        <javac destdir="classes" includeantruntime="false" includes="${files}" source="1.6" srcdir="src/jmri">
             <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;jlfgr-1_0.jar;lib/junit.jar;lib/jython.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/WinRegistry-4.4.jar"/>
         </javac>
     </target>
