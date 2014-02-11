@@ -24,7 +24,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
 /**
  * Table Model for edit of a schedule used by operations
@@ -32,8 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * @author Daniel Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	// Defines the columns
 	private static final int IDCOLUMN = 0;
@@ -78,8 +76,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
 
-	void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location,
-			Track track) {
+	void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
 		_schedule = schedule;
 		_location = location;
 		_track = track;
@@ -89,8 +86,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		// add property listeners
 		if (_schedule != null)
 			_schedule.addPropertyChangeListener(this);
-		// get notified if car type changes
-		CarTypes.instance().addPropertyChangeListener(this);
 		_location.addPropertyChangeListener(this);
 		_track.addPropertyChangeListener(this);
 		initTable(table);
@@ -339,8 +334,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (_track.acceptsTypeName(si.getTypeName()))
 			return si.getTypeName();
 		else
-			return MessageFormat
-					.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
+			return MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
 	}
 
 	private JComboBox getRoadComboBox(ScheduleItem si) {
@@ -358,8 +352,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		}
 		cb.setSelectedItem(si.getRoadName());
 		if (!cb.getSelectedItem().equals(si.getRoadName())) {
-			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getRoadName() });
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -368,14 +361,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private JComboBox getDayComboBox(ScheduleItem si) {
 		JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
-		TrainSchedule sch = TrainScheduleManager.instance()
-				.getScheduleById(si.getTrainScheduleId());
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
 		if (sch != null) {
 			cb.setSelectedItem(sch);
 		}
 		if (sch == null && !si.getTrainScheduleId().equals("")) {
-			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getTrainScheduleId() });
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
+					.getTrainScheduleId() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -388,8 +380,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		filterLoads(si, cb); // remove loads not accepted by this track
 		cb.setSelectedItem(si.getReceiveLoadName());
 		if (!cb.getSelectedItem().equals(si.getReceiveLoadName())) {
-			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getReceiveLoadName() });
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
+					.getReceiveLoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -401,8 +393,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getTypeName());
 		cb.setSelectedItem(si.getShipLoadName());
 		if (!cb.getSelectedItem().equals(si.getShipLoadName())) {
-			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getShipLoadName() });
+			String notValid = MessageFormat
+					.format(Bundle.getMessage("NotValid"), new Object[] { si.getShipLoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -415,8 +407,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		filterDestinations(cb, si.getTypeName());
 		cb.setSelectedItem(si.getDestination());
 		if (si.getDestination() != null && !cb.getSelectedItem().equals(si.getDestination())) {
-			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getDestination() });
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getDestination() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -431,10 +422,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			dest.updateComboBox(cb);
 			filterTracks(dest, cb, si.getTypeName(), si.getRoadName(), si.getShipLoadName());
 			cb.setSelectedItem(si.getDestinationTrack());
-			if (si.getDestinationTrack() != null
-					&& !cb.getSelectedItem().equals(si.getDestinationTrack())) {
-				String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getDestinationTrack() });
+			if (si.getDestinationTrack() != null && !cb.getSelectedItem().equals(si.getDestinationTrack())) {
+				String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si
+						.getDestinationTrack() });
 				cb.addItem(notValid);
 				cb.setSelectedItem(notValid);
 			}
@@ -579,13 +569,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			Location dest = (Location) cb.getItemAt(i);
 			if (!dest.acceptsTypeName(carType)) {
 				cb.removeItem(dest);
+				i--;
 			}
 		}
 	}
 
 	// remove destination tracks that don't service the car's type, road, or load
-	private void filterTracks(Location loc, JComboBox cb, String carType, String carRoad,
-			String carLoad) {
+	private void filterTracks(Location loc, JComboBox cb, String carType, String carRoad, String carLoad) {
 		List<Track> tracks = loc.getTrackList();
 		for (Track track : tracks) {
 			if (!track.acceptsTypeName(carType) || track.getTrackType().equals(Track.STAGING)
@@ -621,23 +611,21 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	// this table listens for changes to a schedule and it's car types
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("ScheduleTableModel sees property change: " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
+			log.debug("ScheduleTableModel sees property change: " + e.getPropertyName() + " old: " + e.getOldValue()
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
+		if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		}
-		// update hit count?
-		if (e.getPropertyName().equals(ScheduleItem.HITS_CHANGED_PROPERTY)
-				&& e.getSource().getClass().equals(ScheduleItem.class)) {
+		// update hit count or other schedule item?
+		if (e.getSource().getClass().equals(ScheduleItem.class)) {
 			ScheduleItem item = (ScheduleItem) e.getSource();
 			int row = _list.indexOf(item);
 			if (Control.showProperty && log.isDebugEnabled())
@@ -663,12 +651,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			removePropertyChangeScheduleItems();
 			_schedule.removePropertyChangeListener(this);
 		}
-		CarTypes.instance().removePropertyChangeListener(this);
 		_location.removePropertyChangeListener(this);
 		_track.removePropertyChangeListener(this);
 
 	}
 
-	static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
 }
