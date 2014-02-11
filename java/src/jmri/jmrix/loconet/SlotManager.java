@@ -425,22 +425,31 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     return i;
                 }
                 else if (m.getElement(2) == 0x40) { // task accepted blind
-                    // move to not programming state
-                    progState = 0;
-                    // notify user ProgListener
-                    stopTimer();
-                    // have to send this in a little while to 
-                    // allow command station time to execute
-                    int delay = 100; // milliseconds
-                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
-                            }
-                        });
-                    timer.stop();
-                    timer.setInitialDelay(delay);
-                    timer.setRepeats(false);
-                    timer.start();
+                	if((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
+                														// just treat it as a normal OpsMode Read response
+	                    // move to commandExecuting state
+	                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
+                        startShortTimer();
+	                    progState = 2;
+                	}
+	                else {
+	                    // move to not programming state
+	                    progState = 0;
+	                    // notify user ProgListener
+	                    stopTimer();
+	                    // have to send this in a little while to 
+	                    // allow command station time to execute
+	                    int delay = 100; // milliseconds
+	                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+	                            public void actionPerformed(java.awt.event.ActionEvent e) {
+	                                notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
+	                            }
+	                        });
+	                    timer.stop();
+	                    timer.setInitialDelay(delay);
+	                    timer.setRepeats(false);
+	                    timer.start();
+	                }
                     return i;
                 }
                 else { // not sure how to cope, so complain
