@@ -47,6 +47,18 @@
       <label label="The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'."/>
       <label label=" "/>
       <separator/>
+      <label label="&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label=" "/>
+      <label label="The ESU V4/Select decoders fail to honour the NMRA standard multiplier factor"/>
+      <label label="(0.896) for the values of Acceleration (CV 3) and Deceleration (CV 4) rates,"/>
+      <label label="instead using a factor of (0.25)."/>
+      <label label=" "/>
+      <label label="This means that you will need to enter a value nearly 4 times as great (3.6) in"/>
+      <label label="the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound"/>
+      <label label="V3.5 or indeed almost any other brand of decoder. This can be a particular"/>
+      <label label="problem if have V4/Select and other model decoders in the same consist."/>
+      <label label=" "/>
+      <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
       <label label="The ESU Function Map has 40 lines and these lines are not sequentially mapped to"/>
