@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
-import jmri.web.servlet.ServletHelper;
+import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class OperationsServlet extends HttpServlet {
     protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType("application/json"); // NOI18N
-            ServletHelper.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getHelper().setNonCachingHeaders(response);
             try {
                 response.getWriter().print(JsonUtil.getTrains());
             } catch (JsonException ex) {
@@ -70,7 +70,7 @@ public class OperationsServlet extends HttpServlet {
             }
         } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType("text/html"); // NOI18N
-            ServletHelper.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getHelper().setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
             String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsSnippet.html")));
@@ -97,12 +97,12 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletHelper.getHelper().getRailroadName(false),
+                            ServletUtil.getHelper().getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "TrainsTitle")
                     ),
-                    ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletHelper.getHelper().getRailroadName(false),
-                    ServletHelper.getHelper().getFooter(request.getLocale(), request.getContextPath())
+                    ServletUtil.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
+                    ServletUtil.getHelper().getRailroadName(false),
+                    ServletUtil.getHelper().getFooter(request.getLocale(), request.getContextPath())
             ));
         }
     }
@@ -112,7 +112,7 @@ public class OperationsServlet extends HttpServlet {
         if ("html".equals(request.getParameter("format"))) {
             log.debug("Getting manifest HTML code for train {}", id);
             Manifest manifest = new Manifest(request.getLocale(), train);
-            ServletHelper.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getHelper().setNonCachingHeaders(response);
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
@@ -130,16 +130,16 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletHelper.getHelper().getRailroadName(false),
+                            ServletUtil.getHelper().getRailroadName(false),
                             String.format(request.getLocale(),
                                     Bundle.getMessage(request.getLocale(), "ManifestTitle"),
                                     train.getName(),
                                     train.getDescription()
                             )
                     ),
-                    ServletHelper.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletHelper.getHelper().getRailroadName(false),
-                    ServletHelper.getHelper().getFooter(request.getLocale(), request.getContextPath())
+                    ServletUtil.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletUtil.getHelper().getRailroadName(false),
+                    ServletUtil.getHelper().getFooter(request.getLocale(), request.getContextPath())
             ));
         }
     }

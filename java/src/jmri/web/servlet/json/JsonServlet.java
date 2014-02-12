@@ -83,7 +83,7 @@ import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonServerManager;
 import jmri.jmris.json.JsonUtil;
-import jmri.web.servlet.ServletHelper;
+import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.slf4j.Logger;
@@ -207,7 +207,7 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             response.setContentType("application/json"); // NOI18N
-            ServletHelper.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getHelper().setNonCachingHeaders(response);
             final String name = (rest.length > 2) ? rest[2] : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
@@ -418,7 +418,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletHelper.getHelper().setNonCachingHeaders(response);
+        ServletUtil.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
@@ -511,7 +511,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletHelper.getHelper().setNonCachingHeaders(response);
+        ServletUtil.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
@@ -583,7 +583,7 @@ public class JsonServlet extends WebSocketServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        ServletHelper.getHelper().setNonCachingHeaders(response);
+        ServletUtil.getHelper().setNonCachingHeaders(response);
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;

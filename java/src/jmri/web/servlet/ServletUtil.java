@@ -11,9 +11,9 @@ import jmri.web.server.WebServerManager;
  *
  * @author rhwood
  */
-public class ServletHelper {
+public class ServletUtil {
 
-    private static ServletHelper instance = null;
+    private static ServletUtil instance = null;
 
     public String getRailroadName(boolean inComments) {
         if (inComments) {
@@ -52,11 +52,11 @@ public class ServletHelper {
         return navBar;
     }
 
-    public static ServletHelper getHelper() {
-        if (ServletHelper.instance == null) {
-            ServletHelper.instance = new ServletHelper();
+    public static ServletUtil getHelper() {
+        if (ServletUtil.instance == null) {
+            ServletUtil.instance = new ServletUtil();
         }
-        return ServletHelper.instance;
+        return ServletUtil.instance;
     }
 
     public void setNonCachingHeaders(HttpServletResponse response) {
