@@ -256,18 +256,18 @@ public class Manifest extends TrainCommon {
                     continue;
                 }
                 if (car.getRouteDestination() == location && car.getDestinationTrack() != null) {
+                    boolean local = isLocalMove(car);
                     if (car.isUtility()) {
                         builder.append(setoutUtilityCars(carList, car, location, isManifest));
-                    } // use truncated format if there's a switch list
-                    else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
-                        builder.append(dropCar(car, Setup.getTruncatedSetoutManifestMessageFormat(), !LOCAL));
+                    } else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                        // use truncated format if there's a switch list
+                        builder.append(dropCar(car, Setup.getTruncatedSetoutManifestMessageFormat(), isLocalMove(car)));
                     } else {
-                        String[] format = Setup.getSwitchListDropCarMessageFormat();
+                        String[] format = (!local) ? Setup.getSwitchListDropCarMessageFormat() : Setup.getSwitchListLocalMessageFormat();
                         if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
-                            format = Setup.getDropCarMessageFormat();
+                            format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
                         }
-                        // TODO: FIX ME!
-                        builder.append(dropCar(car, format, !LOCAL));
+                        builder.append(dropCar(car, format, isLocalMove(car)));
                     }
                     dropCars = true;
                     cars--;
@@ -334,7 +334,7 @@ public class Manifest extends TrainCommon {
         for (String attribute : format) {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, !PICKUP, isLocal), attribute.toLowerCase())).append(" "); // NOI18N
         }
-        log.debug("Dropping car {}", builder);
+        log.debug("Dropping {}car {}", (isLocal) ? "local " : "", builder);
         if (!isLocal) {
             return String.format(locale, strings.getProperty("DropCar"), builder.toString()); // NOI18N
         } else {
@@ -357,7 +357,7 @@ public class Manifest extends TrainCommon {
     private String addSearchForCar(Car car) {
         StringBuilder builder = new StringBuilder();
         for (String string : Setup.getMissingCarMessageFormat()) {
-            builder.append(getCarAttribute(car, string, false, false));
+            builder.append(getCarAttribute(car, string, !PICKUP, !LOCAL));
         }
         return builder.toString();
     }
