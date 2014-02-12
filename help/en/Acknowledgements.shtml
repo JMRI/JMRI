@@ -483,8 +483,9 @@
     <li>Simon White, who added support for FindBugs and EMMA to our build tools.
     <li>Stephen Williams, who improved the LocoNet slot monitor,
     made multiple small improvements to LocoNet internals, especially including the LocoNet monitor, 
-    fixed a nasty problem with looping LocoNet throttles, and 
-    added a command station option to the TCP connection.
+    fixed a nasty problem with looping LocoNet throttles,  
+    added a command station option to the TCP connection,
+    and improved the LocoNet simulator file processing.
     <li>Jos Wils updated the ESU decoder definitions, and extended
     the Comprehensive programmer format for really-high-functionality decoders.
     <li>Jim Wolters updated the MRC Sound Brilliance 1812 decoder definition.
