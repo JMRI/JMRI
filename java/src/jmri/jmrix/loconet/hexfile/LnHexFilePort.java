@@ -79,45 +79,70 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     public void run() { // invoked in a new thread
-        while (true) {
-            if (sFile!= null) {
-                _running = true;
-                // process the input file into the output side of pipe
-                try {
-                    String s;
-                    byte bval;
-                    int ival;
-                    int len;
-                    while ( (s = sFile.readLine()) != null) {
-                        // this loop reads one line per turn
-                        // ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
-                        len = s.length();
-                        for (int i=0; i<len; i+=3) {
-                            // parse as hex into integer, then convert to byte
-                            ival = Integer.valueOf(s.substring(i,i+2),16).intValue();
-                            // send each byte to the output pipe (input to consumer)
-                            bval = (byte) ival;
-                            outpipe.writeByte(bval);
-                        }
-                        // finished that line, wait
-                        Thread.sleep(delay);
-                    }
-                } catch (Exception e) {
-                    log.error("run: Exception: "+e.toString());
-                }
-                // here we're done processing the file
-                log.info("normal finish to file");
-                sFile = null;
-                _running = false;
-            }
-            // wait to be told there's another file
-            try {
-                Thread.sleep(Math.max(50, delay));  // wait at least 50 msec
-            } catch (java.lang.InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-                log.debug("woken from sleep");
-            }
-        }
+    	while (true) {
+    		while (sFile == null) {
+    			// Wait for a file to be available. We have nothing else to do, so we can sleep
+    			// until we are interrupted
+    			try {
+    				Thread.sleep(10000);
+    			} catch (InterruptedException e) {
+    				log.info("LnHexFilePort.run: woken from sleep");
+    				if (sFile == null) {
+    					log.error("LnHexFilePort.run: unexpected InterruptedException, exiting");
+    					Thread.currentThread().interrupt();
+    					return;
+    				}
+    			}
+    		}
+
+    		log.info("LnHexFilePort.run: changing input file...");
+
+    		// process the input file into the output side of pipe
+    		_running = true;
+    		try {
+        		// Take ownership of the current file, it will automatically go out of scope
+        		// when we leave this scope block.  Set sFile to null so we can detect a new file
+        		// being set in load() while we are running the current file.
+        		BufferedReader currFile = sFile;
+        		sFile = null;
+
+    			String s;
+    			while ( (s = currFile.readLine()) != null) {
+    				// this loop reads one line per turn
+    				// ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
+    				int len = s.length();
+    				for (int i=0; i<len; i+=3) {
+    					// parse as hex into integer, then convert to byte
+    					int ival = Integer.valueOf(s.substring(i,i+2),16).intValue();
+    					// send each byte to the output pipe (input to consumer)
+    					byte bval = (byte) ival;
+    					outpipe.writeByte(bval);
+    				}
+
+    				// flush the pipe so other threads can see the message
+    				outpipe.flush();
+
+    				// finished that line, wait
+    				Thread.sleep(delay);
+    			}
+
+    			// here we're done processing the file
+    			log.info("LnHexFDilePort.run: normal finish to file");
+
+    		} catch (InterruptedException e) {
+    			if (sFile != null) {
+    				log.info("LnHexFilePort.run: user selected new file");
+    				// swallow the exception since we have handled its intent
+    			} else {
+					log.error("LnHexFilePort.run: unexpected InterruptedException, exiting");
+					Thread.currentThread().interrupt();
+					return;
+    			}
+    		} catch (Exception e) {
+    			log.error("run: Exception: "+e.toString());
+    		}
+    		_running = false;
+    	}
     }
 
     /**

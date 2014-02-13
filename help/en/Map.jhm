@@ -178,9 +178,9 @@
 
 <mapID target="manual.JMRI_2-14_manual.Main_Tool_Ops" url="manual/JMRI_2-14_manual/Main_Tool.shtml#Ops"/>
 
-<mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
-
 <mapID target="manual.3-4_DecoderPro.Start_DCC_Systems" url="manual/3-4_DecoderPro/Start_DCC_Systems.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
 
 <mapID target="html.tools.throttle.BasicThrottleWindow" url="html/tools/throttle/BasicThrottleWindow.shtml"/>
 
@@ -1333,6 +1333,8 @@
 <mapID target="package.apps.gui3.dp3.StatusAndToDo" url="package/apps/gui3/dp3/StatusAndToDo.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Main_RPS_SpeedSound" url="manual/3-0_DecoderPro3/Main_RPS.shtml#SpeedSound"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_TrainStatus" url="package/jmri/jmrit/operations/Operations.shtml#TrainStatus"/>
 
 <mapID target="manual.3-4_DecoderPro3.Main_LocoNet_ClockMonitor" url="manual/3-4_DecoderPro3/Main_LocoNet.shtml#ClockMonitor"/>
 

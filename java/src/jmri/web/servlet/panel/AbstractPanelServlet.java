@@ -24,7 +24,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
-import jmri.web.servlet.ServletHelper;
+import jmri.web.servlet.ServletUtil;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.slf4j.Logger;
@@ -97,7 +97,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType("application/json"); // NOI18N
-            ServletHelper.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getHelper().setNonCachingHeaders(response);
             response.getWriter().print(JsonUtil.getPanels(JSON.XML));
         } else if (JSON.XML.equals(request.getParameter("format"))) {
             response.sendRedirect("/xmlio/list?type=panel");
@@ -108,12 +108,12 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Panel.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletHelper.getHelper().getRailroadName(false),
+                            ServletUtil.getHelper().getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "PanelsTitle")
                     ),
-                    ServletHelper.getHelper().getNavBar(request.getLocale(), "/panel"),
-                    ServletHelper.getHelper().getRailroadName(false),
-                    ServletHelper.getHelper().getFooter(request.getLocale(), "/panel")
+                    ServletUtil.getHelper().getNavBar(request.getLocale(), "/panel"),
+                    ServletUtil.getHelper().getRailroadName(false),
+                    ServletUtil.getHelper().getFooter(request.getLocale(), "/panel")
             ));
         }
     }
