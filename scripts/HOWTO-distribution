@@ -51,9 +51,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     ant
     
     (Need to consider whether to do this in help/fr, and eventually others)
-    
     Run the program and make sure help works.
-
     Commit any changed files.
 
 ( ) Confirm that all the above changes have been committed back to SVN trunk
