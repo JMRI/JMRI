@@ -175,13 +175,13 @@
             <compilation-unit>
                 <package-root>java/test</package-root>
                 <unit-tests/>
-                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/activation.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/log4j-1.2.17.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/i18nchecker.jar:lib/slf4j-api-1.7.5.jar</classpath>
+                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/activation.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/log4j-1.2.17.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/i18nchecker.jar:lib/slf4j-api-1.7.6.jar</classpath>
                 <built-to>java/classes</built-to>
                 <source-level>1.6</source-level>
             </compilation-unit>
             <compilation-unit>
                 <package-root>java/tmp</package-root>
-                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/activation.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/slf4j-api-1.7.5.jar</classpath>
+                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/activation.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/slf4j-api-1.7.6.jar</classpath>
                 <source-level>1.6</source-level>
             </compilation-unit>
         </java-data>
