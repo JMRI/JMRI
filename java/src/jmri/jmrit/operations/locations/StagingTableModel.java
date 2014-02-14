@@ -47,22 +47,20 @@ public class StagingTableModel extends TrackTableModel {
 	// this table listens for changes to a location and it's staging tracks
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());	// NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getTrackType();
-			if (type.equals(Track.STAGING)) {
-				String stagingId = ((Track) e.getSource()).getId();
-				int row = tracksList.indexOf(stagingId);
+			Track track = ((Track) e.getSource());
+			if (track.getTrackType().equals(Track.STAGING)) {
+				int row = tracksList.indexOf(track);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update staging table row: " + row + " id: " + stagingId);
+					log.debug("Update staging table row: " + row + " track: " + track.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(StagingTableModel.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(StagingTableModel.class.getName());
 }

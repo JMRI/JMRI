@@ -383,14 +383,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			Schedule schedule = (Schedule) e.getSource();
 			int row = sysList.indexOf(schedule);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule table row: " + row + " id: " + schedule.getId());
+				log.debug("Update schedule table row: " + row + " name: " + schedule.getName());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}
 		if (e.getPropertyName().equals(Track.SCHEDULE_MODE_CHANGED_PROPERTY)) {
 			Track track = (Track) e.getSource();
-			String id = track.getScheduleId();
-			int row = sysList.indexOf(id);
+			Schedule schedule = track.getSchedule();
+			int row = sysList.indexOf(schedule);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 			else
