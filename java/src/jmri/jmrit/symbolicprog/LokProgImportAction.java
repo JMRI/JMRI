@@ -52,7 +52,6 @@ public class LokProgImportAction  extends AbstractAction {
 
             try {
                 LokProgImporter importer = new LokProgImporter( file, mModel ) ;
-//                 importer.setCvTable( mModel ) ;
             }
             catch (IOException ex) {
             }
