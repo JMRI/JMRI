@@ -20,6 +20,9 @@
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
+      <label label="There is now an option to import CV value list files created by LokProgrammer."/>
+      <label label="(File menu when a roster entry is open.)"/>
+      <label label=" "/>
       <label label="These decoders are probably the most complex (and versatile) DCC decoders"/>
       <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses"/>
       <label label="extra challenges for JMRI coding. These defintions are a work in progress."/>
