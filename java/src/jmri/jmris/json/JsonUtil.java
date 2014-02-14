@@ -65,6 +65,7 @@ import static jmri.jmris.json.JSON.FUNCTION_KEYS;
 import static jmri.jmris.json.JSON.GROUP;
 import static jmri.jmris.json.JSON.HEARTBEAT;
 import static jmri.jmris.json.JSON.HELLO;
+import static jmri.jmris.json.JSON.ICON_NAME;
 import static jmri.jmris.json.JSON.ID;
 import static jmri.jmris.json.JSON.IMAGE_FILE_NAME;
 import static jmri.jmris.json.JSON.IMAGE_ICON_NAME;
@@ -1130,6 +1131,7 @@ public class JsonUtil {
         try {
             Train train = TrainManager.instance().getTrainById(id);
             data.put(NAME, train.getName());
+            data.put(ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
             data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
             data.put(DESCRIPTION, train.getDescription());

@@ -311,6 +311,10 @@ public final class JSON {
 
     /* JSON operations tokens */
     /**
+     * {@value #ICON_NAME}
+     */
+    public static final String ICON_NAME = "iconName"; // NOI18N
+    /**
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N

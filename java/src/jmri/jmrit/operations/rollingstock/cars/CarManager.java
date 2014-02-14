@@ -340,8 +340,7 @@ public class CarManager extends RollingStockManager {
 			rs = list.get(i);
 			if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
 				out.add(list.get(i));
-				list.remove(i);
-				i--;
+				list.remove(i--);
 			}
 		}
 		// now load all of the remaining low priority cars

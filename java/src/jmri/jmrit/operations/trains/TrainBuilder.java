@@ -719,8 +719,7 @@ public class TrainBuilder extends TrainCommon {
 			if (!train.acceptsTypeName(engine.getTypeName())) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineType"),
 						new Object[] { engine.toString(), engine.getTypeName() }));
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				continue;
 			}
 			// skip engines models that train does not service
@@ -739,24 +738,21 @@ public class TrainBuilder extends TrainCommon {
 			if (road.equals("") && !train.acceptsRoadName(engine.getRoadName())) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineRoad"),
 						new Object[] { engine.toString(), engine.getRoadName() }));
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				continue;
 			}
 			// remove engines with owners that train does not service
 			if (!train.acceptsOwnerName(engine.getOwner())) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineOwner"),
 						new Object[] { engine.toString(), engine.getOwner() }));
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				continue;
 			}
 			// remove engines with built dates that train does not service
 			if (!train.acceptsBuiltDate(engine.getBuilt())) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineBuilt"),
 						new Object[] { engine.toString(), engine.getBuilt() }));
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				continue;
 			}
 			// skip engines on tracks that don't service the train's departure direction
@@ -773,8 +769,7 @@ public class TrainBuilder extends TrainCommon {
 			if (engine.isOutOfService()) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineOutOfService"),
 						new Object[] { engine.toString(), engine.getLocationName(), engine.getTrackName() }));
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				continue;
 			}
 			// don't use non lead locos in a consist
@@ -788,8 +783,7 @@ public class TrainBuilder extends TrainCommon {
 			if (departTrack != null) {
 				if (!setLocoDestination(engine, rl, rld, terminateTrack))
 					return false;
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				foundLoco = true;
 				continue;	
 			}
@@ -829,8 +823,7 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildAtLocation"), new Object[] {
 					(engine.getLocationName() + ", " + engine.getTrackName()), rld.getName() }));
 			if (setLocoDestination(engine, rl, rld, terminateTrack)) {
-				engineList.remove(indexEng);
-				indexEng--;
+				engineList.remove(indexEng--);
 				return true; // done
 			}
 		}
@@ -1565,7 +1558,7 @@ public class TrainBuilder extends TrainCommon {
 				// block 0 cars have never left staging.
 				if (blockId.equals("0"))
 					continue;
-				routeList.remove(rld.getId());
+				routeList.remove(rld);
 				Location loc = locationManager.getLocationById(blockId);
 				Location setOutLoc = rld.getLocation();
 				if (loc != null && setOutLoc != null && checkDropTrainDirection(rld)) {
