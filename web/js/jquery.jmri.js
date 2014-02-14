@@ -330,12 +330,12 @@
             };
             jmri.setSignalMast = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("signalMast", {name: name, aspect: state});
+                    jmri.socket.send("signalMast", {name: name, state: state});
                 } else {
                     $.ajax({
                         url: jmri.url + "signalMast/" + name,
                         type: "POST",
-                        data: JSON.stringify({aspect: state}),
+                        data: JSON.stringify({state: state}),
                         contentType: "application/json; charset=utf-8",
                         success: function(json) {
                             jmri.signalMast(json.data.name, json.data.state, json.data);
