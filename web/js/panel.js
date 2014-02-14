@@ -11,8 +11,7 @@
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  
- *  TODO: finish indicatorXXicon logic, handling occupancy and error states
- *  TODO: "grey-out" screen to indicate loss of server connection
+ *  TODO: improve error notification when panel and/or server goes away
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: update drawn track on occupancy and state changes (color, width)
@@ -172,9 +171,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "indicatortrackicon" :
                                 $widget['icon1'] = $(this).find('iconmap').find('ClearTrack').attr('url');
+                                $widget['iconOccupied1'] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
                                 $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
+                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text(); 
+                                	$widget['occupancystate'] = UNKNOWN;
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                }
                                 break;
                             case "indicatorturnouticon" :
                                 $widget['name'] = $(this).find('turnout').text();
@@ -184,11 +189,20 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
                                 $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
+                                $widget['iconOccupied1'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
+                                $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
+                                $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                                $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
                                 $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
+                                }
+                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text(); 
+                                	$widget['occupancystate'] = UNKNOWN;
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 }
                                 jmri.getTurnout($widget["systemName"]);
                                 break;
@@ -757,10 +771,12 @@ function $drawIcon($widget) {
         $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
     }
 
+    //additional naming for indicator*icon widgets to reflect occupancy
+    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
     //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if ($widget['icon' + $widget.state] != undefined) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $widget['state']] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml);  //put the html in the panel
 
@@ -1080,15 +1096,10 @@ var $getTextCSSFromObj = function($widget) {
     }
     if ($widget.redBorder != undefined) {
         $retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";
-        ;
         $retCSS['border-style'] = 'solid';
     }
     if ($widget.fixedWidth != undefined) {
-        $adj = 0;
-        if ($widget.margin != undefined) {
-            $adj = $widget.margin * 2;
-        }  //margins are subtracted from JMRI fixedwidth
-        $retCSS['width'] = ($widget.fixedWidth - $adj) + "px ";
+        $retCSS['width'] = $widget.fixedWidth + "px ";
     }
     if ($widget.justification != undefined) {
         if ($widget.justification == "centre") {
@@ -1190,7 +1201,9 @@ var $setWidgetState = function($id, $newState) {
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
-                $('img#' + $id).attr('src', $widget['icon' + ($newState + "").replace(/ /g, "_")]);  //set image src to next state's image
+                //additional naming for indicator*icon widgets to reflect occupancy
+                $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+                $('img#' + $id).attr('src', $widget['icon' + $indicator + ($newState + "").replace(/ /g, "_")]);  //set image src to next state's image
                 break;
             case "text" :
                 if ($widget.jsonType == "memory") {
@@ -1472,8 +1485,10 @@ function updateOccupancy(occupancyName, state) {
 		$.each(occupancyNames[occupancyName], function(index, widgetId) {
 			console.log("setting occupancy of " + widgetId + " (" + occupancyName + ")");
 			$widget = $gWidgets[widgetId];
-			$gBlks[$widget.blockname].state = state; //set the block to the newstate first
-			$gWidgets[widgetId].occupancystate = state;
+			if ($widget.blockname) {
+				$gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
+			}
+			$gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
 			if (window.console)
 				console.log("redraw " + $widget.widgetType + " " + $widget.name + " for " + $widget.occupancysensor);
 			switch ($widget.widgetType) {
@@ -1482,6 +1497,10 @@ function updateOccupancy(occupancyName, state) {
 				break;
 			case 'tracksegment' :
 				$drawTrackSegment($widget);
+				break;
+			case 'indicatortrackicon' :
+			case 'indicatorturnouticon' :
+				$drawIcon($widget);
 				break;
 			}
 		});
