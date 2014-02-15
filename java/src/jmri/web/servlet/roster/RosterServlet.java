@@ -4,6 +4,7 @@ package jmri.web.servlet.roster;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -18,14 +19,14 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.ProcessingInstruction;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide roster data to HTTP clients.
@@ -97,6 +98,7 @@ public class RosterServlet extends HttpServlet {
      *
      * @param request
      * @param response
+     * @param groups
      * @throws ServletException
      * @throws IOException
      */
@@ -232,7 +234,7 @@ public class RosterServlet extends HttpServlet {
         root.setAttribute("noNamespaceSchemaLocation",
                 "http://jmri.org/xml/schema/roster" + Roster.schemaVersion + ".xsd",
                 Namespace.getNamespace("xsi",
-                "http://www.w3.org/2001/XMLSchema-instance"));
+                        "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = XmlFile.newDocument(root);
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
@@ -283,7 +285,7 @@ public class RosterServlet extends HttpServlet {
         BufferedImage image;
         try {
             image = ImageIO.read(file);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             // file not found or unreadable
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -354,8 +356,7 @@ public class RosterServlet extends HttpServlet {
         if (log.isDebugEnabled()) {
             log.debug(fname + " @responding: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
         }
-        response.setContentType("image/png");
-        response.setStatus(HttpServletResponse.SC_OK);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         if (height != image.getHeight() || width != image.getWidth()) {
             BufferedImage resizedImage = new BufferedImage(width, height, image.getType());
             Graphics2D g = resizedImage.createGraphics();
@@ -363,9 +364,15 @@ public class RosterServlet extends HttpServlet {
             g.drawImage(image, 0, 0, width, height, 0, 0, image.getWidth(), image.getHeight(), null);
             g.dispose();
             // ImageIO needs the simple type ("jpeg", "png") instead of the mime type ("image/jpeg", "image/png")
-            ImageIO.write(resizedImage, "png", response.getOutputStream());
+            ImageIO.write(resizedImage, "png", baos);
         } else {
-            ImageIO.write(image, "png", response.getOutputStream());
+            ImageIO.write(image, "png", baos);
         }
+        baos.close();
+        response.setContentType("image/png");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentLength(baos.size());
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().close();
     }
 }
