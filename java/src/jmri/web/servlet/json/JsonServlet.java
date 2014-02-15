@@ -84,6 +84,14 @@ import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonServerManager;
 import jmri.jmris.json.JsonUtil;
+import jmri.jmrit.operations.trains.Train;
+import static jmri.jmrit.operations.trains.Train.DEPARTURETIME_CHANGED_PROPERTY;
+import static jmri.jmrit.operations.trains.Train.STATUS_CHANGED_PROPERTY;
+import static jmri.jmrit.operations.trains.Train.TRAIN_LOCATION_CHANGED_PROPERTY;
+import static jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY;
+import static jmri.jmrit.operations.trains.Train.TRAIN_REQUIREMENTS_CHANGED_PROPERTY;
+import static jmri.jmrit.operations.trains.Train.TRAIN_ROUTE_CHANGED_PROPERTY;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
@@ -376,6 +384,12 @@ public class JsonServlet extends WebSocketServlet {
                         }
                         reply = JsonUtil.getSignalMast(name);
                     } else if (type.equals(TRAIN)) {
+                        if (longPoll) {
+                            final AsyncContext context = request.startAsync(request, response);
+                            context.setTimeout(longPollTimeout);
+                            context.start(new TrainPollingHandler(TrainManager.instance().getTrainById(name), context));
+                            return;
+                        }
                         reply = JsonUtil.getTrain(name);
                     } else if (type.equals(TURNOUT)) {
                         if (longPoll) {
@@ -1022,6 +1036,49 @@ public class JsonServlet extends WebSocketServlet {
 
             };
             InstanceManager.timebaseInstance().addPropertyChangeListener(listener);
+        }
+    }
+
+    private static class TrainPollingHandler extends JsonPollingHandler {
+
+        private final Train train;
+
+        public TrainPollingHandler(Train train, AsyncContext context) {
+            super(0, context);
+            this.train = train;
+        }
+
+        @Override
+        protected void respond() {
+            train.removePropertyChangeListener(listener);
+            if (context.getRequest().isAsyncStarted()) {
+                try {
+                    context.getRequest().setAttribute("result", JsonUtil.getTrain(train.getId()));
+                } catch (JsonException ex) {
+                    context.getRequest().setAttribute("result", ex.getJsonMessage());
+                }
+                context.dispatch();
+            }
+        }
+
+        @Override
+        public void run() {
+            listener = new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (evt.getPropertyName().equals(STATUS_CHANGED_PROPERTY)
+                            || evt.getPropertyName().equals(DEPARTURETIME_CHANGED_PROPERTY)
+                            || evt.getPropertyName().equals(TRAIN_LOCATION_CHANGED_PROPERTY)
+                            || evt.getPropertyName().equals(TRAIN_ROUTE_CHANGED_PROPERTY)
+                            || evt.getPropertyName().equals(TRAIN_REQUIREMENTS_CHANGED_PROPERTY)
+                            || evt.getPropertyName().equals(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+                        respond();
+                    }
+                }
+
+            };
+            train.addPropertyChangeListener(listener);
         }
     }
 

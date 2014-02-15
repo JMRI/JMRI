@@ -20,6 +20,8 @@
                     console.log(error);
                 }
             };
+            jmri.open = function() {
+            };
             jmri.light = function(name, state, data) {
             };
             jmri.memory = function(name, value, data) {
@@ -43,6 +45,8 @@
             jmri.throttle = function(id, data) {
             };
             jmri.time = function(time, data) {
+            };
+            jmri.train = function(id, data) {
             };
             jmri.turnout = function(name, state, data) {
             };
@@ -118,7 +122,7 @@
                         }
                     });
                 }
-            }
+            };
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -359,6 +363,24 @@
                     });
                 }
             };
+            jmri.getTrain = function(id) {
+                if (jmri.monitoring["ops-train-" + id] === true) {
+                    return;
+                }
+                if (jmri.socket) {
+                    jmri.socket.send("train", {id: id});
+                } else {
+                    // if we never set the monitor, get an immediate response
+                    // include state otherwise (even if ignored) to trigger a long poll
+                    var state = (typeof jmri.monitoring["ops-train-" + id] === "undefined") ? "" : "?state=true";
+                    jmri.monitoring["ops-train-" + id] = true;
+                    $.getJSON(jmri.url + "train/" + id + state, function(json) {
+                        jmri.monitoring["ops-train-" + id] = false;
+                        jmri.train(json.data.id, json.data);
+                        jmri.getTrain(json.data.id);
+                    });
+                }
+            };
             jmri.getTurnout = function(name, state) {
                 if (jmri.monitoring[name]) {
                     return;
@@ -398,6 +420,9 @@
             jmri.heartbeatInterval = null;
             // WebSocket
             jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
+                open: function() {
+                    jmri.open();
+                },
                 // stop the heartbeat when the socket closes
                 close: function() {
                     clearInterval(jmri.heartbeat);
@@ -448,6 +473,9 @@
                     },
                     time: function(e) {
                         jmri.time(e.data.time, e.data);
+                    },
+                    train: function(e) {
+                        jmri.train(e.data.id, e.data);
                     },
                     turnout: function(e) {
                         jmri.turnout(e.data.name, e.data.state, e.data);
