@@ -805,7 +805,7 @@ public class JsonUtil {
         }
         return root;
     }
-    
+
     static public JsonNode getRoute(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);
@@ -1177,9 +1177,23 @@ public class JsonUtil {
         return root;
     }
 
-    static public void setTrain(String id, JsonNode data) {
+    /**
+     * Sets the properties in the data parameter for the train with the given
+     * id.
+     *
+     * Currently only moves the train to the location given with the key
+     * {@value JSON#LOCATION}. If the move cannot be completed, throws error
+     * code 428.
+     *
+     * @param id The id of the train.
+     * @param data Train data to change.
+     * @throws JsonException
+     */
+    static public void setTrain(String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
-        train.move(data.path(id).asText());
+        if (!data.path(LOCATION).isMissingNode() && !train.move(data.path(LOCATION).asText())) {
+            throw new JsonException(428, Bundle.getMessage("ErrorTrainMovement", id, data.path(LOCATION).asText()));
+        }
     }
 
     static public JsonNode getTurnout(String name) throws JsonException {
