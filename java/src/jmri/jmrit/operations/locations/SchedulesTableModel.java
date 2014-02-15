@@ -24,8 +24,7 @@ import java.util.Hashtable;
  * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
  * @version $Revision$
  */
-public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	ScheduleManager scheduleManager; // There is only one manager
 
@@ -262,8 +261,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			return;
 		}
 		sef = new ScheduleEditFrame();
-		sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[] { ltp
-				.getTrack().getName() }));
+		sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[] { ltp.getTrack()
+				.getName() }));
 		sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
 		focusSef = true;
 	}
@@ -271,20 +270,19 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	private void deleteSchedule(int row) {
 		log.debug("Delete schedule");
 		Schedule s = sysList.get(row);
-		if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-				.getMessage("DoYouWantToDeleteSchedule"), new Object[] { s.getName() }), Bundle
-				.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),
+				new Object[] { s.getName() }), Bundle.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			scheduleManager.deregister(s);
 			OperationsXml.save();
 		}
 	}
 
-	protected Hashtable<String, String> comboSelect = new Hashtable<String, String>();
+	protected Hashtable<Schedule, String> comboSelect = new Hashtable<Schedule, String>();
 
 	private void selectJComboBox(Object value, int row) {
 		Schedule schedule = sysList.get(row);
 		JComboBox box = (JComboBox) value;
-		comboSelect.put(schedule.getId(), Integer.toString(box.getSelectedIndex()));
+		comboSelect.put(schedule, Integer.toString(box.getSelectedIndex()));
 		fireTableRowsUpdated(row, row);
 	}
 
@@ -343,19 +341,19 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			}
 		}
 	}
-	
+
 	private void addPropertyChangeTracks() {
 		// only spurs have schedules
 		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i=0; i<tracks.size(); i++) {
+		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
 			track.addPropertyChangeListener(this);
 		}
 	}
-	
+
 	private void removePropertyChangeTracks() {
 		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
-		for (int i=0; i<tracks.size(); i++) {
+		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
 			track.removePropertyChangeListener(this);
 		}
@@ -383,20 +381,20 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			Schedule schedule = (Schedule) e.getSource();
 			int row = sysList.indexOf(schedule);
 			if (Control.showProperty && log.isDebugEnabled())
-				log.debug("Update schedule table row: " + row + " id: " + schedule.getId());
+				log.debug("Update schedule table row: " + row + " name: " + schedule.getName());
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}
 		if (e.getPropertyName().equals(Track.SCHEDULE_MODE_CHANGED_PROPERTY)) {
 			Track track = (Track) e.getSource();
-			String id = track.getScheduleId();
-			int row = sysList.indexOf(id);
+			Schedule schedule = track.getSchedule();
+			int row = sysList.indexOf(schedule);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 			else
 				fireTableDataChanged();
 		}
-		
+
 		if (e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		}
