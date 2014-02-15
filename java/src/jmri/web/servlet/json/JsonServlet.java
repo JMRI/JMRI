@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -163,7 +164,7 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
         log.debug("Creating WebSocket for {} at {}", hsr.getRemoteHost(), hsr.getRequestURL());
-        return new JsonWebSocket();
+        return new JsonWebSocket(hsr.getLocale());
     }
 
     /**
@@ -625,6 +626,12 @@ public class JsonServlet extends WebSocketServlet {
         protected JmriConnection jmriConnection;
         protected ObjectMapper mapper;
         protected JsonClientHandler handler;
+        protected Locale locale;
+
+        public JsonWebSocket(Locale locale) {
+            super();
+            this.locale = locale;
+        }
 
         public void sendMessage(String message) throws IOException {
             this.wsConnection.sendMessage(message);
@@ -638,6 +645,7 @@ public class JsonServlet extends WebSocketServlet {
             this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
             this.mapper = new ObjectMapper();
             this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
+            this.handler.setLocale(this.locale);
             sockets.add(this);
             try {
                 log.debug("Sending hello");

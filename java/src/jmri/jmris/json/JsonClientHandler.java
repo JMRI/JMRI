@@ -300,4 +300,18 @@ public class JsonClientHandler {
     private void sendErrorMessage(JsonException ex) throws IOException {
         this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
     }
+
+    /**
+     * @return the locale
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
 }
