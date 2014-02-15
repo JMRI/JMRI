@@ -97,6 +97,7 @@ import static jmri.jmris.json.JSON.MFG;
 import static jmri.jmris.json.JSON.MODEL;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NODE;
+import static jmri.jmris.json.JSON.NULL;
 import static jmri.jmris.json.JSON.NUMBER;
 import static jmri.jmris.json.JSON.OFF;
 import static jmri.jmris.json.JSON.ON;
@@ -1191,8 +1192,13 @@ public class JsonUtil {
      */
     static public void setTrain(String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
-        if (!data.path(LOCATION).isMissingNode() && !train.move(data.path(LOCATION).asText())) {
-            throw new JsonException(428, Bundle.getMessage("ErrorTrainMovement", id, data.path(LOCATION).asText()));
+        if (!data.path(LOCATION).isMissingNode()) {
+            String location = data.path(LOCATION).asText();
+            if (location.equals(NULL)) {
+                train.terminate();
+            } else if (!train.move(location)) {
+                throw new JsonException(428, Bundle.getMessage("ErrorTrainMovement", id, location));
+            }
         }
     }
 
