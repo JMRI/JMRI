@@ -29,9 +29,9 @@ import org.slf4j.LoggerFactory;
  */
 public class Manifest extends TrainCommon {
 
-    private final Properties strings = new Properties();
-    private final Locale locale;
-    private final Train train;
+    protected final Properties strings = new Properties();
+    protected final Locale locale;
+    protected final Train train;
     private final static Logger log = LoggerFactory.getLogger(Manifest.class);
 
     public Manifest(Locale locale, Train train) throws IOException {
@@ -140,7 +140,7 @@ public class Manifest extends TrainCommon {
                             // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
                             builder.append(String.format(strings.getProperty("TrainDepartsCars"),
                                     routeLocationName,
-                                    location.getTrainDirectionString(),
+                                    strings.getProperty("Heading" + location.getTrainDirectionString()),
                                     train.getTrainLength(location),
                                     Setup.getLengthUnit().toLowerCase(),
                                     train.getTrainWeight(location),
@@ -149,7 +149,7 @@ public class Manifest extends TrainCommon {
                             // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
                             builder.append(String.format(strings.getProperty("TrainDepartsLoads"),
                                     routeLocationName,
-                                    location.getTrainDirectionString(),
+                                    strings.getProperty("Heading" + location.getTrainDirectionString()),
                                     train.getTrainLength(location),
                                     Setup.getLengthUnit().toLowerCase(),
                                     train.getTrainWeight(location),
@@ -298,7 +298,7 @@ public class Manifest extends TrainCommon {
         return pickUpCar(car, messageFormat);
     }
 
-    private String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
+    protected String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
@@ -317,7 +317,7 @@ public class Manifest extends TrainCommon {
         return dropCar(car, messageFormat, isLocal);
     }
 
-    private String pickUpCar(Car car, String[] format) {
+    protected String pickUpCar(Car car, String[] format) {
         if (isLocalMove(car)) {
             return ""; // print nothing local move, see dropCar
         }
@@ -329,7 +329,7 @@ public class Manifest extends TrainCommon {
         return String.format(locale, strings.getProperty("PickUpCar"), builder.toString()); // NOI18N
     }
 
-    private String dropCar(Car car, String[] format, boolean isLocal) {
+    protected String dropCar(Car car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         for (String attribute : format) {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, !PICKUP, isLocal), attribute.toLowerCase())).append(" "); // NOI18N
@@ -362,7 +362,7 @@ public class Manifest extends TrainCommon {
         return builder.toString();
     }
 
-    private String engineChange(RouteLocation location, int legOptions) {
+    protected String engineChange(RouteLocation location, int legOptions) {
         if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             return String.format(strings.getProperty("AddHelpersAt"), splitString(location.getName())); // NOI18N
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES
@@ -377,7 +377,7 @@ public class Manifest extends TrainCommon {
         return "";
     }
 
-    private String dropEngines(List<RollingStock> engines, RouteLocation location) {
+    protected String dropEngines(List<RollingStock> engines, RouteLocation location) {
         StringBuilder builder = new StringBuilder();
         for (RollingStock engine : engines) {
             if (engine.getRouteDestination().equals(location)) {
@@ -397,7 +397,7 @@ public class Manifest extends TrainCommon {
         return String.format(locale, strings.getProperty("DropEngine"), builder.toString());
     }
 
-    private String pickupEngines(List<RollingStock> engines, RouteLocation location) {
+    protected String pickupEngines(List<RollingStock> engines, RouteLocation location) {
         StringBuilder builder = new StringBuilder();
         for (RollingStock engine : engines) {
             if (engine.getRouteLocation().equals(location) && !engine.getTrackName().equals("")) {
@@ -507,7 +507,7 @@ public class Manifest extends TrainCommon {
         return Bundle.getMessage(locale, "ErrorPrintOptions"); // the operations code insanely stores what should be NOI18N information in localized manners, so this can easily be triggered
     }
 
-    private String getTrackComments(RouteLocation location, List<Car> cars) {
+    protected String getTrackComments(RouteLocation location, List<Car> cars) {
         StringBuilder builder = new StringBuilder();
         if (location.getLocation() != null) {
             List<Track> tracks = location.getLocation().getTrackByNameList(null);
