@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CARS;
@@ -17,6 +18,7 @@ import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LIGHT;
 import static jmri.jmris.json.JSON.LIGHTS;
 import static jmri.jmris.json.JSON.LIST;
+import static jmri.jmris.json.JSON.LOCALE;
 import static jmri.jmris.json.JSON.LOCATIONS;
 import static jmri.jmris.json.JSON.MEMORIES;
 import static jmri.jmris.json.JSON.MEMORY;
@@ -44,6 +46,7 @@ import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.THROTTLE;
 import static jmri.jmris.json.JSON.TIME;
+import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
@@ -70,6 +73,7 @@ public class JsonClientHandler {
     private final JsonTurnoutServer turnoutServer;
     private final JmriConnection connection;
     private final ObjectMapper mapper;
+    private Locale locale = Locale.getDefault();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JmriConnection connection, ObjectMapper mapper) {
@@ -127,11 +131,10 @@ public class JsonClientHandler {
      * with the value <em>post</em> is included in the <em>data</em> node:
      * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code>
      * Note that not all types support this.</li></ul>
-     * </li><li>a heartbeat in the form
-     * <code>{"type":"ping"}</code>. The heartbeat gets a
-     * <code>{"type":"pong"}</code> response.</li> <li>a sign off in the form:
-     * <code>{"type":"goodbye"}</code> to which an identical response is sent
-     * before the connection gets closed.</li>
+     * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
+     * heartbeat gets a <code>{"type":"pong"}</code> response.</li> <li>a sign
+     * off in the form: <code>{"type":"goodbye"}</code> to which an identical
+     * response is sent before the connection gets closed.</li>
      *
      * @param string
      * @throws IOException
@@ -142,7 +145,7 @@ public class JsonClientHandler {
             this.onMessage(this.mapper.readTree(string));
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
-            this.sendErrorMessage(500, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage(this.locale, "ErrorProcessingJSON", pe.getLocalizedMessage()));
         }
     }
 
@@ -169,7 +172,10 @@ public class JsonClientHandler {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
                 this.connection.close();
             } else if (type.equals(HELLO)) {
+                this.receiveHello(data);
                 this.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+            } else if (type.equals(LOCALE)) {
+                this.receiveHello(data);
             } else if (type.equals(LIST)) {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
@@ -210,7 +216,7 @@ public class JsonClientHandler {
                 } else if (list.equals(NETWORK_SERVICES)) {
                     reply = JsonUtil.getNetworkServices();
                 } else {
-                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownList", list));
+                    this.sendErrorMessage(404, Bundle.getMessage(this.locale, "ErrorUnknownList", list));
                     return;
                 }
                 //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
@@ -246,18 +252,39 @@ public class JsonClientHandler {
                     this.throttleServer.parseRequest(data);
                 } else if (type.equals(TIME)) {
                     this.timeServer.parseRequest(data);
+                } else if (type.equals(TRAIN)) {
+                    this.operationsServer.parseTrainRequest(data);
                 } else if (type.equals(TURNOUT)) {
                     this.turnoutServer.parseRequest(data);
                 } else {
-                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownType", type));
+                    this.sendErrorMessage(404, Bundle.getMessage(this.locale, "ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(400, Bundle.getMessage("ErrorMissingData"));
+                this.sendErrorMessage(400, Bundle.getMessage(this.locale, "ErrorMissingData"));
             }
         } catch (JmriException je) {
-            this.sendErrorMessage(500, Bundle.getMessage("ErrorUnsupportedOperation", je.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage(this.locale, "ErrorUnsupportedOperation", je.getLocalizedMessage()));
         } catch (JsonException je) {
             this.sendErrorMessage(je);
+        }
+    }
+
+    private void receiveHello(JsonNode data) {
+        if (!data.path(LOCALE).isMissingNode()) {
+            // the following would be a one liner in Java 1.7:
+            // this.locale = Locale.forLanguageTag(data.path(LOCALE).asText();
+            String[] parts = data.path(LOCALE).asText().split("-", 3);
+            switch (parts.length) {
+                case 3:
+                    this.locale = new Locale(parts[0], parts[1], parts[2]);
+                    break;
+                case 2:
+                    this.locale = new Locale(parts[0], parts[1]);
+                    break;
+                default:
+                    this.locale = new Locale(parts[0]);
+                    break;
+            }
         }
     }
 

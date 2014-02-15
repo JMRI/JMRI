@@ -15,10 +15,12 @@ import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.ID;
 import static jmri.jmris.json.JSON.LEAD_ENGINE;
 import static jmri.jmris.json.JSON.LENGTH;
 import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.OPERATIONS;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.TERMINATE;
@@ -114,6 +116,8 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * @param data
      * @throws JmriException
      * @throws IOException
+     * @deprecated The use of the {@value JSON#OPERATIONS} type is deprecated.
+     * Use types for the specific operations object instead.
      */
     public void parseRequest(JsonNode data) throws JmriException, IOException {
         ArrayList<Attribute> response = new ArrayList<Attribute>();
@@ -186,5 +190,14 @@ public class JsonOperationsServer extends AbstractOperationsServer {
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
+    }
+
+    void parseTrainRequest(JsonNode data) throws IOException, JsonException {
+        String id = data.path(ID).asText();
+        if (!data.path(METHOD).isMissingNode()) {
+            JsonUtil.setTrain(id, data);
+        }
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrain(id)));
+        this.addTrainToList(id);
     }
 }

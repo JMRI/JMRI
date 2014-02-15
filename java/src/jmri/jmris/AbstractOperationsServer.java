@@ -5,7 +5,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -28,6 +30,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 
     protected final TrainManager tm;
     protected final LocationManager lm;
+    protected final HashMap<String, TrainListener> trains;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public AbstractOperationsServer() {
@@ -36,6 +39,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         lm = LocationManager.instance();
         lm.addPropertyChangeListener(this);
         addPropertyChangeListeners();
+        trains = new HashMap<String, TrainListener>();
     }
 
     public abstract void sendTrainList();
@@ -265,6 +269,24 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         }
     }
 
+    synchronized protected void addTrainToList(String trainId) {
+        if (!trains.containsKey(trainId)) {
+            trains.put(trainId, new TrainListener(trainId));
+            TrainManager.instance().getTrainById(trainId).addPropertyChangeListener(trains.get(trainId));
+        }
+    }
+
+    synchronized protected void removeTrainFromList(String trainId) {
+        if (trains.containsKey(trainId)) {
+            TrainManager.instance().getTrainById(trainId).removePropertyChangeListener(trains.get(trainId));
+            trains.remove(trainId);
+        }
+    }
+
+    protected TrainListener getListener(String turnoutName) {
+        return new TrainListener(turnoutName);
+    }
+
     public void dispose() {
         if (tm != null) {
             tm.removePropertyChangeListener(this);
@@ -273,6 +295,10 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         if (lm != null) {
             lm.removePropertyChangeListener(this);
         }
+        for (Map.Entry<String, TrainListener> train : this.trains.entrySet()) {
+            TrainManager.instance().getTrainById(train.getKey()).removePropertyChangeListener(train.getValue());
+        }
+        this.trains.clear();
     }
 
     /*
@@ -284,6 +310,31 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-    static Logger log = LoggerFactory.getLogger(AbstractOperationsServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractOperationsServer.class.getName());
+
+    protected class TrainListener implements PropertyChangeListener {
+
+        private final String id;
+        private final Train train;
+
+        protected TrainListener(String trainId) {
+            id = trainId;
+            train = TrainManager.instance().getTrainById(id);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("KnownState")) {
+                try {
+                    sendFullStatus(train);
+                } catch (IOException ie) {
+                    log.debug("Error Sending Status");
+                    // if we get an error, de-register
+                    train.removePropertyChangeListener(this);
+                    removeTrainFromList(id);
+                }
+            }
+        }
+    }
 
 }
