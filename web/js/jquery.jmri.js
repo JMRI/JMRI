@@ -1,3 +1,31 @@
+/**
+ * JMRI JSON protocol abstract client.
+ *
+ * This library depends on jQuery 1.9 or newer.
+ *
+ * To be useful, you need to override one or more of the following functions:
+ * console(data)
+ * error(error)
+ * open()
+ * light(name, state, data)
+ * memory(name, value, data)
+ * power(state)
+ * railroad(name)
+ * reporter(name, value, data)
+ * rosterEntry(id, data)
+ * route(name, state, data)
+ * sensor(name, state, data)
+ * signalHead(name, state, data)
+ * signalMast(name, state, data)
+ * throttle(id, data)
+ * time(time, data)
+ * train(id, data)
+ * turnout(name, state, data)
+ * version(version)
+ * as demonstrated in the power.html demonstration web app
+ *
+ * Copyright (C) Randall Wood 2013, 2014
+ */
 (function($) {
     $.extend({
         JMRI: function(url, bindings) {
@@ -28,7 +56,7 @@
             };
             jmri.power = function(state) {
             };
-            jmri.railroad = function(string) {
+            jmri.railroad = function(name) {
             };
             jmri.reporter = function(name, value, data) {
             };
@@ -411,6 +439,37 @@
                             jmri.getTurnout(json.data.name, json.data.state);
                         }
                     });
+                }
+            };
+            /**
+             * Force the jmri object to begin communicating with the JMRI server
+             * even if the WebSocket connection cannot be immediately established
+             *
+             * @returns {undefined}
+             */
+            jmri.connect = function() {
+                // if the JMRI WebSocket was open before we overloaded the
+                // open() method, we call the open() method to ensure it gets
+                // called
+                if (jmri.socket && jmri.socket.readyState === 1) {
+                    if (window.console) {
+                        console.log("Connecting on connect()");
+                    }
+                    jmri.open();
+                } else {
+                    // if the JMRI WebSocket was not open when the document was
+                    // ready, wait one second and call open() if the socket
+                    // did not open in the meantime -- with the exception of
+                    // throttles, the JMRI object can work around the inability
+                    // to use WebSockets
+                    setTimeout(function() {
+                        if (!jmri.socket || jmri.socket.readyState !== 1) {
+                            if (window.console) {
+                                console.log("Connecting on timeout");
+                            }
+                            jmri.open();
+                        }
+                    }, 1000);
                 }
             };
             // Heartbeat

@@ -29,10 +29,14 @@
             // set the jmri global variable to null
             var jmri = null;
             $(document).ready(function() {
-                // once the document is loaded, create assign a $.JMRI object to
-                // the jmri variable and overload two functions: open() and power()
+                // once the document is loaded, assign a $.JMRI object to
+                // the jmri variable and overload two functions:
+                // open() and power(state)
                 jmri = $.JMRI({
                     // call getPower() when the JMRI WebSocket connection opens
+                    // getPower() does two things: it requests the current power
+                    // status from JMRI and it starts the power status monitor
+                    // on the JMRI server.
                     open: function() {
                         jmri.getPower();
                     },
@@ -56,22 +60,12 @@
                         }
                     }
                 });
-                // if the JMRI WebSocket was open before we overloaded the
-                // open function(), we call getPower() immediately
-                if (jmri.socket && jmri.socket.readyState === 1) {
-                    jmri.getPower();
-                } else {
-                    // if the JMRI WebSocket was not open when the document was
-                    // ready, wait one second and call getPower() if the socket
-                    // did not open in the meantime -- this allows the power
-                    // request to function if WebSockets are not supported by
-                    // the browser
-                    setTimeout(function() {
-                        if (!jmri.socket || jmri.socket.readyState !== 1) {
-                            jmri.getPower();
-                        }
-                    }, 1000);
-                }
+                // trigger the initial connection to the JMRI server; this
+                // method call ensures the jmri.open() method is called after
+                // a timeout to begin using fall back methods for monitoring
+                // items on the JMRI server even if a WebSocket connection
+                // cannot be established
+                jmri.connect();
             });
         </script>
 
