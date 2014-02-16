@@ -1,138 +1,93 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/tr/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-<meta name = "viewport" content = "width = device-width" />
-<style>
-html {background-color:#eeeeee}
-body {
-      background-color:#ccffcc;
-      font-family:Tahoma,Arial,Helvetica,sans-serif;
-      font-size:12px;
-	  margin-left:15%; 
-	  margin-right:15%;
-	  border:3px groove #006600; 
-	  padding:15px
-	 }
-h1   {
-      text-align:left;
-      font-size:1.5em;
-      font-weight:bold
-     }
-</style>
-<script type="text/javascript">
-// global flag
-var isIE = false;
+    <head>
+        <meta name = "viewport" content = "width = device-width" />
+        <title>JSON Set Power Demonstration</title>
+        <style>
+            html {background-color:#eeeeee}
+            body {
+                background-color:#ccffcc;
+                font-family:Tahoma,Arial,Helvetica,sans-serif;
+                font-size:12px;
+                margin-left:15%;
+                margin-right:15%;
+                border:3px groove #006600;
+                padding:15px
+            }
+            h1   {
+                text-align:left;
+                font-size:1.5em;
+                font-weight:bold
+            }
+        </style>
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-1.11.0.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script type="text/javascript">
+            // set the jmri global variable to null
+            var jmri = null;
+            $(document).ready(function() {
+                // once the document is loaded, create assign a $.JMRI object to
+                // the jmri variable and overload two functions: open() and power()
+                jmri = $.JMRI({
+                    // call getPower() when the JMRI WebSocket connection opens
+                    open: function() {
+                        jmri.getPower();
+                    },
+                    // when the JMRI object receives a power update, call this
+                    // function, regardless of source of update
+                    power: function(state) {
+                        power = state;
+                        switch (power) {
+                            case jmri.UNKNOWN:
+                                $('#powerImg').prop('src', "/images/PowerGrey.png");
+                                $('#powerImg').prop('alt', "Unknown");
+                                break;
+                            case jmri.POWER_ON:
+                                $('#powerImg').prop('src', "/images/PowerGreen.png");
+                                $('#powerImg').prop('alt', "Powered On");
+                                break;
+                            case jmri.POWER_OFF:
+                                $('#powerImg').prop('src', "/images/PowerRed.png");
+                                $('#powerImg').prop('alt', "Powered Off");
+                                break;
+                        }
+                    }
+                });
+                // if the JMRI WebSocket was open before we overloaded the
+                // open function(), we call getPower() immediately
+                if (jmri.socket && jmri.socket.readyState === 1) {
+                    jmri.getPower();
+                } else {
+                    // if the JMRI WebSocket was not open when the document was
+                    // ready, wait one second and call getPower() if the socket
+                    // did not open in the meantime -- this allows the power
+                    // request to function if WebSockets are not supported by
+                    // the browser
+                    setTimeout(function() {
+                        if (!jmri.socket || jmri.socket.readyState !== 1) {
+                            jmri.getPower();
+                        }
+                    }, 1000);
+                }
+            });
+        </script>
 
-// global request and XML document objects
-var req;
-
-// retrieve XML document (reusable generic function);
-// parameter is URL string that includes the XML request
-function loadXMLDoc(url, data) {
-    // branch for native XMLHttpRequest object
-    if (window.XMLHttpRequest) {
-        req = new XMLHttpRequest();
-        req.onreadystatechange = processReqChange;
-        req.open("POST", url, true);
-        req.send(data);
-        // GET method also works for short requests:
-        // req.open("GET", url+"/"+data, true);
-        // req.send(null);
-    // branch for IE/Windows ActiveX version
-    } else if (window.ActiveXObject) {
-        isIE = true;
-        req = new ActiveXObject("Microsoft.XMLHTTP");
-        if (req) {
-            req.onreadystatechange = processReqChange;
-            req.open("POST", url, true);
-            req.send(data);
-        }
-    }
-}
-
-// handle onreadystatechange event of req object
-function processReqChange() {
-    // only if req shows "loaded"
-    if (req.readyState == 4) {
-        // only if "OK"
-        if (req.status == 200) {
-            processReturn();
-         } else {
-            alert("There was a problem retrieving the XML data:\n" +
-                req.statusText);
-         }
-    }
-}
-
-// invoked by button push, sends an XML request
-function loadDoc(evt) {
-    // equalize W3C/IE event models to get event object
-    evt = (evt) ? evt : ((window.event) ? window.event : null);
-    if (evt) {
-        // equalize W3C/IE models to get event target reference
-        var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-
-        try {
-            loadXMLDoc("/xmlio/", "<xmlio><item><type>power</type><name>power</name><set>2</set></item></xmlio>");
-        }
-        catch(e) {
-            var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
-            alert("Unable to get XML data:\n" + msg);
-            return;
-        }
-            
-    }
-}
-
-// retrieve text of an XML document element, including
-// elements using namespaces
-function getElementTextNS(prefix, local, parentElem, index) {
-    var result = "";
-    if (prefix && isIE) {
-        // IE/Windows way of handling namespaces
-        result = parentElem.getElementsByTagName(prefix + ":" + local)[index];
-    } else {
-        // the namespace versions of this method 
-        // (getElementsByTagNameNS()) operate
-        // differently in Safari and Mozilla, but both
-        // return value with just local name, provided 
-        // there aren't conflicts with non-namespace element
-        // names
-        result = parentElem.getElementsByTagName(local)[index];
-    }
-    if (result) {
-        // get text, accounting for possible
-        // whitespace (carriage return) text nodes 
-        if (result.childNodes.length > 1) {
-            return result.childNodes[1].nodeValue;
-        } else {
-            return result.firstChild.nodeValue;    		
-        }
-    } else {
-        return "n/a";
-    }
-}
-
-// process returned XML document and create a table from it.
-function processReturn() {
-    // doesn't do anything, because we're not displaying
-}
-
-
-</script>
-
-</head>
-<body>
-<h1>XMLIO Set Power Demo</h1>
-<hr /> 
-This sample page sends a request to change layout power when clicked.
-<form name="form">
-<button type="button" id="button" onClick="loadDoc(event)">Power On</button>
-</form>
-
-<!-- location for result table -->
-<div id="results"><span></span></div>
-
-</body>
+    </head>
+    <body>
+        <h1>JSON Set Power Demonstration</h1>
+        <hr />
+        <p>This sample page sends a request to change layout power when clicked.
+            This page will update the power button automatically as it the track
+            power is changed elsewhere in JMRI.</p>
+        <p>The button is grey if the power state is unknown, green if powered
+            on, and red if powered off.</p>
+        <div id='power'>
+            <a href="javascript:jmri.setPower((power == jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);">
+                <img id="powerImg" alt="Unknown" src="/images/PowerGrey.png">
+            </a>
+        </div>
+    </body>
 </html>
