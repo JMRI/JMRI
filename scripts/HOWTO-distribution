@@ -90,7 +90,7 @@ Second, we build the release branch:
     
     This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.5.6
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.7.3
     <check in an update of the version number of trunk/HEAD>
     <check in an update of the version number of the new release>
 
@@ -100,9 +100,9 @@ Second, we build the release branch:
     and update to get the release copy:
 
     cd ../../branches/jmri/releases
-    svn update 3.7.1
+    svn update 3.7.3
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.7.1")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.7.3")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
@@ -133,7 +133,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Release%203.3.2/ws/jmri/dist/release/
+    http://builds.jmri.org/jenkins/job/Test%20Release%203.7.3/ws/jmri/dist/release/
 
     or from your local build files.
 
@@ -174,7 +174,7 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.1/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.7.3/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -184,8 +184,12 @@ Final release steps:
 
 ( ) Create and upload the JavaDocs
     and XSLT'd decoder pages
+    (as of late 2013, CloudBees was updating there from SVN weekly: 
+        https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
+    so please skip this step if that's working)
 
 	ant javadoc-uml uploadjavadoc
+	
 	cd xml/XSLT
 	ant xslt upload
 
@@ -215,8 +219,8 @@ Final release steps:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 3.7.1 of JMRI/DecoderPro is available for download"
-    or "JMRI 3.6 is available for download"
+    Subject is "Test version 3.7.3 of JMRI/DecoderPro is available for download"
+    or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
