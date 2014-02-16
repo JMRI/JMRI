@@ -28,9 +28,6 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class EngineManager extends RollingStockManager{
 	
-	// Engines frame table column widths (12), starts with Number column and ends with Edit
-	private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
-
 	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
 
 	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
@@ -203,6 +200,15 @@ public class EngineManager extends RollingStockManager{
     }
     
     /**
+     * Returns a list of locos sorted by blocking number.  This returns a list of consisted locos in the order
+     * that they were entered in.
+     */
+	public List<RollingStock> getByTrainList(Train train) {
+		List<RollingStock> out = getByIntList(super.getByTrainList(train), BY_BLOCKING);
+		return out;
+	}
+    
+    /**
      * Get a list of engine road names.
      * @return List of engine road names.
      */
@@ -219,14 +225,6 @@ public class EngineManager extends RollingStockManager{
     	return sortList(names);
     }
     
-	/**
-    * 
-    * @return get an array of table column widths for the trains frame
-    */
-   public int[] getEnginesFrameTableColumnWidths(){
-   	return _enginesTableColumnWidths.clone();
-   }
-
 	public void load(Element root) {
 		// new format using elements starting version 3.3.1
 		if (root.getChild(Xml.NEW_CONSISTS)!= null) {
@@ -252,26 +250,6 @@ public class EngineManager extends RollingStockManager{
         		}
         	}
         }
-         
-		if (root.getChild(Xml.OPTIONS) != null) {
-			Element values = root.getChild(Xml.OPTIONS);
-			// get Engines Table Frame attributes
-			Element e = values.getChild(Xml.ENGINES_OPTIONS);
-			if (e != null){
-				//TODO this code is here for backwards compatibility, remove after next major release
-				org.jdom.Attribute a;
-				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
-					String[] widths = a.getValue().split(" ");
-					for (int i=0; i<widths.length; i++){
-						try{
-							_enginesTableColumnWidths[i] = Integer.parseInt(widths[i]);
-						} catch (NumberFormatException ee){
-							log.error("Number format exception when reading trains column widths");
-						}
-					}
-				}
-			}
-		}
 		
         if (root.getChild(Xml.ENGINES) != null) {
         	@SuppressWarnings("unchecked")
@@ -289,7 +267,7 @@ public class EngineManager extends RollingStockManager{
      *
      */
     public void store(Element root) {
-    	root.addContent(new Element(Xml.OPTIONS));	// nothing to store under options
+//    	root.addContent(new Element(Xml.OPTIONS));	// nothing to store under options
     	
     	Element values;	
 		List<String> names = getConsistNameList();

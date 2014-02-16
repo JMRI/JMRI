@@ -2,7 +2,9 @@ package jmri.jmrit.operations.rollingstock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -53,6 +55,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	protected RouteLocation _routeDestination = null;
 	protected int _moves = 0;
 	protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
+	protected int _blocking = 0;
+	
 	public static final String LOCATION_UNKNOWN = "0";
 
 	protected int number = 0; // used by rolling stock manager for sort by number
@@ -761,6 +765,19 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		if (!old.equals(date))
 			firePropertyChange("rolling stock date", old, date); // NOI18N
 	}
+	
+	public void setBlocking(int number) {
+		int old = _blocking;
+		_blocking = number;
+		if (old != number)
+			firePropertyChange("car blocking changed", old, number); // NOI18N
+	}
+
+	public int getBlocking() {
+		return _blocking;
+	}
+
+
 
 	/**
 	 * Set where in a train's route this rolling stock will be set out.
@@ -994,6 +1011,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			_selected = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.DATE)) != null)
 			_last = a.getValue();
+		if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
+			_blocking = Integer.parseInt(a.getValue());
+		}
 		addPropertyChangeListeners();
 	}
 
@@ -1055,6 +1075,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.LOC_UNKNOWN, isLocationUnknown() ? Xml.TRUE : Xml.FALSE);
 		if (isOutOfService())
 			e.setAttribute(Xml.OUT_OF_SERVICE, isOutOfService() ? Xml.TRUE : Xml.FALSE);
+		if (getBlocking() != 0) {
+			e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
+		}
 		if (!getComment().equals(""))
 			e.setAttribute(Xml.COMMENT, getComment());
 		return e;

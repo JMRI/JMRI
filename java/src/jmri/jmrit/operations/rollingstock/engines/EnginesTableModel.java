@@ -210,6 +210,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		_frame = frame;
 		initTable();
 	}
+	
+	// Engines frame table column widths (12), starts with Number column and ends with Edit
+	private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
 
 	void initTable() {
 		// Install the button handlers
@@ -224,24 +227,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		// set column preferred widths
 		if (!_frame.loadTableDetails(_table)) {
 			// load defaults, xml file data not found
-			int[] tableColumnWidths = manager.getEnginesFrameTableColumnWidths();
 			for (int i = 0; i < tcm.getColumnCount(); i++)
-				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+				tcm.getColumn(i).setPreferredWidth(_enginesTableColumnWidths[i]);
 		}
-		/*
-		 * table.getColumnModel().getColumn(NUMCOLUMN).setPreferredWidth(60);
-		 * table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(60);
-		 * table.getColumnModel().getColumn(MODELCOLUMN).setPreferredWidth(65);
-		 * table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(65);
-		 * table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(35);
-		 * table.getColumnModel().getColumn(CONSISTCOLUMN).setPreferredWidth(75);
-		 * table.getColumnModel().getColumn(LOCATIONCOLUMN).setPreferredWidth(190);
-		 * table.getColumnModel().getColumn(DESTINATIONCOLUMN).setPreferredWidth(190);
-		 * table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(65);
-		 * table.getColumnModel().getColumn(MOVESCOLUMN).setPreferredWidth(50);
-		 * table.getColumnModel().getColumn(SETCOLUMN).setPreferredWidth(65);
-		 * table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
-		 */
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		_table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}

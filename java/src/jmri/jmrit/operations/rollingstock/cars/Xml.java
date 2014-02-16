@@ -30,7 +30,6 @@ public class Xml {
 	static final String LOAD_FROM_STAGING = "loadFromStaging"; // NOI18N
 	static final String WAIT = "wait"; // NOI18N
 	static final String ORDER = "order"; // NOI18N
-	static final String BLOCKING = "blocking"; // NOI18N
 	static final String SCHEDULE_ID = "scheduleId"; // NOI18N
 	
 	static final String NEXT_LOAD = "nextLoad"; // NOI18N

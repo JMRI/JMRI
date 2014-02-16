@@ -1505,8 +1505,9 @@ public class TrainBuilder extends TrainCommon {
 		if (departStageTrack == null || !departStageTrack.isBlockCarsEnabled()) {
 			return;
 		}
-
-		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockDepartureHasBlocks"), new Object[] {
+		
+		addLine(buildReport, THREE, BLANK_LINE); // add line when in very detailed report mode
+		addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("blockDepartureHasBlocks"), new Object[] {
 				departStageTrack.getName(), numOfBlocks.size() }));
 
 		Enumeration<String> en = numOfBlocks.keys();
@@ -1716,7 +1717,7 @@ public class TrainBuilder extends TrainCommon {
 						car.setLocation(car.getLocation(), departStageTrack, true); // force
 				}
 			}
-			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[] {
+			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[] {
 					rl.getName(), reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
 			addLine(buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
