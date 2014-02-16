@@ -61,7 +61,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         for (int i=0; i<firstFreeSpace; i++) {
             CvValue cv = _cvMap.get(cvNumbers[i]);
             if (cv == null) continue;  // if CV not present this decoder...
-            if (cvNumbers[i]!=cv.number())
+            if (! cvNumbers[i].equals(cv.number()))
                 log.error("CV numbers don't match: "
                           +cvNumbers[i]+" "+cv.number());
             cv.setToWrite(true);
