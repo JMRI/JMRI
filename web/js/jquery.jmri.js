@@ -7,6 +7,7 @@
  * console(data)
  * error(error)
  * open()
+ * close()
  * light(name, state, data)
  * memory(name, value, data)
  * power(state)
@@ -49,6 +50,8 @@
                 }
             };
             jmri.open = function() {
+            };
+            jmri.close = function() {
             };
             jmri.light = function(name, state, data) {
             };
@@ -376,6 +379,40 @@
                     });
                 }
             };
+            /**
+             * Get the current status of the throttle
+             *
+             * @param {String} throttle identity
+             * @returns {Boolean} false if unable to use throttles
+             */
+            jmri.getThrottle = function(throttle) {
+                if (jmri.socket) {
+                    jmri.socket.send("throttle", {throttle: throttle, status: true});
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            /**
+             * Set some aspect of a throttle as defined in data
+             *
+             * Call this method with the data elements address:[dcc address]
+             * or id:[roster entry id] to create a JMRI throttle. Include the
+             * data element status:true to get the complete throttle status.
+             *
+             * @param {String} throttle identity
+             * @param {Object} key, value pairs of those throttle properties to change
+             * @returns {Boolean} false if unable to use throttles
+             */
+            jmri.setThrottle = function(throttle, data) {
+                if (jmri.socket) {
+                    data.throttle = throttle;
+                    jmri.socket.send("throttle", data);
+                    return true;
+                } else {
+                    return false;
+                }
+            };
             jmri.getTime = function() {
                 if (jmri.monitoring.time) {
                     return;
@@ -484,13 +521,14 @@
                 },
                 // stop the heartbeat when the socket closes
                 close: function() {
-                    clearInterval(jmri.heartbeat);
+                    clearInterval(jmri.heartbeatInterval);
+                    jmri.close();
                 },
                 message: function(e) {
                     jmri.console(e.originalEvent.data);
                 },
                 events: {
-                    // TODO: add constist, programmer, and operations events
+                    // TODO: add consist, programmer, and operations-related events
                     error: function(e) {
                         jmri.error(e.data);
                     },
