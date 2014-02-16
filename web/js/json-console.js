@@ -2,7 +2,7 @@
  * JMRI JSON Console javascript
  *
  * Demonstration of how the JMRI extension to jQuery can be used.
- * Note that the JMRI extension relies on the jquery-websocket and jquery-json extensions.
+ * Note that the JMRI extension relies on the jquery-websocket and jquery2 extensions.
  */
 var jmri = null;
 var power = 0;
