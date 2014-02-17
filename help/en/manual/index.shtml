@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
 
 
 
 
-<title>Decoder Pro Manual: Index</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
@@ -87,7 +87,7 @@ Printable Guide (pdf 3.95MB)</a></strong></td>
 <td>&nbsp;</td>
 <td><strong><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI® Operations
 Program 3.2</a></strong></td>
-<td><br>
+<td>in work<br>
 </td>
 </tr>
 <tr>
@@ -99,23 +99,29 @@ Version 3.4</span></td>
 <tr>
 <td>&nbsp;</td>
 <td><a href="3-4_DecoderPro/index.shtml">&nbsp;</a><a style="font-weight: bold;" href="3-4_DecoderPro/index.shtml">DecoderPro® 3.4 </a><a href="3-4_DecoderPro/index.shtml">&nbsp;</a></td>
-<td style="font-weight: bold;"><a href="pdf/DP3_Man_3-4.pdf">Download Printable Guide (pdf &nbsp;3.94MB 163 pages)</a> </td>
+<td>in work 8/21/2013 </td>
 </tr>
 <tr>
 <td>&nbsp;</td>
 <td><a style="font-weight: bold;" href="3-4_DecoderPro3/index.shtml">&nbsp;DecoderPro3® 3.4 </a>&nbsp;</td>
-<td>pdf version coming soon </td>
+<td>pdf version in work 2/17/2014<br>
+ </td>
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td style="font-weight: bold;"><a href="3-4_JMRI_OPS_UsersGuide/index.shtml">&nbsp;JMRI® Operations Program 3.4 &nbsp;</a></td>
-<td>pdf version coming soon </td>
-</tr>
+<td>&nbsp;<a style="font-weight: bold;" href="3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI® Operations Program 3.4 </a>&nbsp;</td>
+<td>Coming Soon </td>
+</tr><tr><td><span style="font-weight: bold;">JMRI® Version 3.6</span></td><td><br>
+</td><td><br>
+</td></tr><tr><td><br>
+</td><td><span style="font-weight: bold;">Decoder® 3.6</span></td><td>scheduled for update</td></tr><tr><td><br>
+</td><td style="font-weight: bold;"><a href="3-6_DecoderPro3/index.shtml">DecoderPro3® &nbsp;3.6 </a></td><td>in work</td></tr><tr><td><br>
+</td><td style="font-weight: bold;">JMRI® Operations Program 3.6</td><td>scheduled for update</td></tr>
 </tbody>
 </table>
-<h4>Updated 9/7/2013</h4>
-<p>&nbsp;
-</p>
+<h4>Updated 2/17/2014</h4>
+=======&nbsp;
+
 <p><strong>JMRI is a Java-based cross-platform application
 for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital Command Control (DCC)
