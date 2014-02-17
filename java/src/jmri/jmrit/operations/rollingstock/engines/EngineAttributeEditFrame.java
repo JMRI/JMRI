@@ -267,12 +267,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					}
 				}
 			}
-			if (_comboboxName == EngineEditFrame.CONSIST) {
-				if (engine.getConsist() != null && engine.getConsistName().equals(oldItem)) {
-					Consist consist = manager.newConsist(newItem);
-					engine.setConsist(consist);
-				}
-			}
+		}
+		if (_comboboxName == EngineEditFrame.CONSIST) {
+			manager.replaceConsistName(oldItem, newItem);
 		}
 		// now adjust locations and trains
 		if (_comboboxName == EngineEditFrame.TYPE) {

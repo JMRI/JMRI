@@ -4,6 +4,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -106,9 +107,21 @@ public class EngineManager extends RollingStockManager{
     }
     
     public Consist getConsistByName(String name){
-    	Consist consist = _consistHashTable.get(name);
-    	return consist;
+    	return _consistHashTable.get(name);
     }
+    
+	public void replaceConsistName(String oldName, String newName) {
+		Consist oldConsist = getConsistByName(oldName);
+		if (oldConsist != null) {
+			Consist newConsist = newConsist(newName);
+			// keep the lead engine
+			Engine leadEngine = (Engine) oldConsist.getLead();
+			leadEngine.setConsist(newConsist);
+			for (Engine engine : oldConsist.getEngines()) {
+				engine.setConsist(newConsist);
+			}
+		}
+	}
     
     /**
      * Creates a combo box containing all of the consist names
