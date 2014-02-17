@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
 
 
 
@@ -89,7 +90,7 @@ Printable Guide (pdf 3.95MB)</a></strong></td>
 <td>&nbsp;</td>
 <td><strong><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI® Operations
 Program 3.2</a></strong></td>
-<td>in work<br>
+<td><br>
 </td>
 </tr>
 <tr>
