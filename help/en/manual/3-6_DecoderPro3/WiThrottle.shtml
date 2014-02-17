@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009, 2010 --><!-- $Id: Adv_RosterMedia.shtml 18142 2011-08-08 11:30:48Z dat7719 $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 --><!-- $Id: Adv_RosterMedia.shtml 18142 2011-08-08 11:30:48Z dat7719 $ --><title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style -->
 
 
 
 
 
-<title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -34,17 +33,17 @@
         </p>
       </blockquote>
     </blockquote>
-    <p>Menu Bar</p>
+    <p style="font-weight: bold;">Menu Bar</p>
     <p><img src="images/ThrottleWi_menu.png" alt="menu" height="167" width="217"></p>
     <ul>
-      <li>WiThrottle
-        <ul>
-          <li>Start Server</li>
+      <li><span style="font-weight: bold;">WiThrottle</span>
+        <ul style="font-weight: bold;">
+          <li>Stop Server</li>
         </ul>
         <blockquote>
-          <p>Starts the server for the Withrottle</p>
+          <p>Stops the server for the Withrottle</p>
         </blockquote>
-        <ul>
+        <ul style="font-weight: bold;">
           <li>Filter Controls</li>
         </ul>
         <blockquote>
@@ -52,14 +51,14 @@
           <p>Set up Turnouts and Routes that can be controlled by DecoderPro3® for control by WiThrottle.</p>
         </blockquote>
         <ul>
-          <li>Preferences...</li>
+          <li><span style="font-weight: bold;">Preferences</span>...</li>
         </ul>
       </li>
       <blockquote>
         <p>Opens the WiThrottle Preferences Pane in<a style="font-weight: bold;" href="Start_Preferences.shtml"> preferences.</a></p>
       </blockquote>
-      <li>Window</li>
-      <li>Help</li>
+      <li style="font-weight: bold;">Window</li>
+      <li style="font-weight: bold;">Help</li>
     </ul>
   </blockquote>
 </blockquote>

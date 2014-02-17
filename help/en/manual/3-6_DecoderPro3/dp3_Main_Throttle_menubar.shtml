@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ --><title>DecoderPro Throttle</title><!-- Style -->
 
 
 
 
 
-<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -60,13 +59,13 @@
   <hr>
 </blockquote>
 <ul>
-  <li>Open Throttles Layout...
+  <li><span style="font-weight: bold;">Open Throttles Layout...</span>
     <blockquote>
       <p>Opens Throttle layout that you select.</p>
     </blockquote>
   </li>
 
-  <li>Save Throttles Layout...
+  <li><span style="font-weight: bold;">Save Throttles Layout...</span>
     <blockquote>
       <p>Save Throttles Layout to file in Throttle Folder</p>
     </blockquote>
@@ -76,13 +75,13 @@
   <hr>
 </blockquote>
 <ul>
-  <li>Load Default Throttles Layout
+  <li><span style="font-weight: bold;">Load Default Throttles Layout</span>
     <blockquote>
       <p>Load the default throttle layout from Throttle Folder</p>
     </blockquote>
   </li>
 
-  <li>Save As Default Throttles Layout
+  <li><span style="font-weight: bold;">Save As Default Throttles Layout</span>
     <blockquote>
       <p>Save as the default throttle layout from Throttle Folder</p>
     </blockquote>
