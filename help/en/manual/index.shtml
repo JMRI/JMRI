@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+
+
 
 
 
@@ -104,8 +105,8 @@ Version 3.4</span></td>
 </tr>
 <tr>
 <td>&nbsp;</td>
-<td><a style="font-weight: bold;" href="3-4_DecoderPro3/index.shtml">&nbsp;DecoderPro3® 3.4 </a>&nbsp;</td>
-<td>pdf version in work 2/17/2014<br>
+<td style="font-weight: bold;"><a href="3-4_DecoderPro3/index.shtml">&nbsp;DecoderPro3® 3.4 </a>&nbsp;</td>
+<td style="font-weight: bold;"><a href="pdf/DP3_Man_3-4.pdf" target="_blank">Download Printable Guide (pdf 3.9MB)</a><br>
  </td>
 </tr>
 <tr>
