@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><!-- Sidebar --><!-- This is the common sidebar definition for Manual pages --></head><body><hr class="hide">
+<html><head>
+<!-- Sidebar --><!-- This is the common sidebar definition for Manual pages --></head><body><hr class="hide">
 
 <div id="mBody">
 
@@ -17,6 +18,9 @@
       <li><a href="pdf/DP3_Man_3-2.pdf">Download DP3 Guide 3.2</a></li>
       <li><a href="pdf/DP_man_3-2.pdf">Download DP Guide 3.2</a></li>
     <li><a href="pdf/DP3_Man_3-4.pdf">Download DP3 Guide &nbsp;3.4</a></li>
+    <li><a href="pdf/DP_man_3-4.pdf" target="_blank">Download DP Guide 3.4</a><br>
+    </li>
+
 
       </ul>
       </dd>
