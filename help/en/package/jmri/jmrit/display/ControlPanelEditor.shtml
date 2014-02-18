@@ -25,6 +25,21 @@
 
 <H1>The Control Panel Editor</H1>
 
+<H2>Quick Reference Guide for Mouse</H2>
+<ul>
+<li>Click(left) - Select and Drag top item</li>
+<li>Shift-Click(left) - Select and Drag item under top item, i.e. 2nd item</li>
+<li>Control-Click(left) - Select and Drag bottom item</li>
+<li>Control-Shift-Click(left) - Show list of all selected items, for superimposed item stacks</li>
+<li>Click(right) - Select and Popup item property changes</li>
+<li>Shift-Click(right) - Select and Popup item property changes for 2nd item</li>
+<li>Control-Click(right) - Select and Popup item property changes for bottom item</li>
+<li>Control-Shift-Click(right) - Select and Popup item property changes of selected item from stack</li>
+</ul>
+Note: For Control-Shift-Click, keep holding the Control and Shift keys down through the entire process of selecting
+the item and the subsequent drag or popup on that item.
+
+<p>
 <b>Control Panel Editor</b> is simply an alternative view and controller with exactly the
 same content data as <b>Panel Editor</b>.  You may change the view and control of your 
 panel whenever and as often as you please.  Storage and loading can be done from either
@@ -42,7 +57,7 @@ the other editor mode.
 Panel Editor has a separate window for its editing functions. Control Panel Editor
 does not.  In Panel Editor the <b>Edit</b> menu opens an edit window.  In Control Panel Editor 
 the <b>Edit</b> menu adds three additional menus to the panel: <b>File</b>, <b>Options</b>, 
-<b>Zoom</b>, <b>AddItems</b>.
+<b>Zoom</b>, <b>AddItems</b>, <b>Circuit Builder</b>, <b>Draw Shapes</b>
 </p>
 
 <H2>Control Panel Editor Menus</H2>
@@ -67,8 +82,13 @@ In operating mode Control Panel Editor's File menu has only one item, <b>Open Ed
 <H3>Edit Menu</H3>
 This menu supports Cut, Copy and Paste with the system clipboard.  Cut and Copy will 
 place a copy of a selection item or group into the clipboard.  This feature allows 
-copying selections from one panel to different panel.
-<p>It also has a menu item to Select All panel items.
+copying selections from one panel to different Control Editor panel.
+<p>It also has a menu items.
+<ul>
+<li><b>Select type...</b> - Select all items of a given type, e.g. Sensors, etc</li>
+<li><b>Select Level...</b> - Select all items of a given display level.</li>
+<li><b>Select All</b> - Select all items.</li>
+</ul>
 
 </p>
 <H3>Options Menu</H3>
@@ -76,9 +96,12 @@ The items in this menu are similar to the checkboxes in Panel Editor's edit wind
 a few additional items and features. As with PE, CPE can globally set repositioning and 
 control attributes. Hwever CPE will preserve the individual repositioning and controlling 
 attributes of items when global overriding is removed.
-<p>The <b>Override individual Position & Control settings</b> item enables or disables, 
-the next two menu items 
-(<b>All panel items can be repositioned</b> and <b>All panel items control layout</b>).  
+<ul>
+<li>The <b>Override individual Position & Control settings</b> item enables or disables, 
+the next two menu items</li> 
+<li><b>All panel items can be repositioned</b> - globally /lock/unlock all items.</li>
+<li><b>All panel items control layout</b - globally enable/disable all controlling items.</li>
+</ul>
 When <b>Override individual Position & Control settings</b> is unchecked, locking or unlocking
 individual icon positions is done as it is in Panel Editor - likewise for enabling or disabling an item's control
 of layout devices.  When <b>Override individual Position & Control settings</b> is checked, the
@@ -126,6 +149,9 @@ Warrants will appear.</p>
 The items under this menu provide a graphic user interface (GUI) for defining Occupancy Blocks,
 Portals and Paths.  Each item has the help file for such track circuit building.</p>
 <p>
+
+<H3>Draw Shapes</H3>
+This menu allows drawing of various gemetric shapes.
 
 <H2>Mouse operation in Control Panel Editor</H2>
 Control Panel Editor does not implement the rollover highlighting found in Panel Editor.

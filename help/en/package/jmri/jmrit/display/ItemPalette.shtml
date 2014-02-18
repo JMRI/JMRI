@@ -126,6 +126,8 @@ represent it.
                         <b>Occupancy Circuit</b> field will accept a sensor name.  When this is the case
                         only the "Occupied" and "Clear" colors can be displayed.</li>
         <li> <b>Indicator Turnout</b> The above comment applies to Indicator Turnouts also.</li>
+        <li> <b>Portal</b>Portal icons are used in CircuitBuilder to define Portals and Paths.  They also
+        				will display direction arrows along a rouye when Warrants are allocated.</li>
 </ul>
 
 
@@ -144,7 +146,7 @@ it contains, the following status states are be displayed by color:
         <li><b>Not In Use</b> (Gray) The state of the track is not known or it has been set to be
                         out of service.  This state is also used when local control of blocks is
                         granted from a panel.</li>
-        <li><b>Power Error</b> (Red0 This is the state of another sensor - not the occupancy sensor.
+        <li><b>Power Error</b> (Red) This is the state of another sensor - not the occupancy sensor.
                         If used, most likely it would be wired to indicate a short or power 
                         failure.</li>
 </ul>
