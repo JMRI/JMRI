@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Main_Edit.shtml 18146 2011-08-09 11:51:16Z dat7719 $ -->
+<title>Edit Menu</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro&reg; Main Window</h1>
+<h1>Edit Menu </h1>
+
+<div align=right>
+<p><a href="Main_File.shtml">Previous </a><a href="Main_Tool.shtml">Next </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>Cut</strong></p>
+<p>Removes the  selected text and temporarily stores it in your computer's clipboard</p>
+<p><strong>Copy</strong></p>
+<p>Copies selected text into the computer's clipboard</p>
+<p><strong>Paste</strong></p>
+<p>Pastes the contents of your computer's clipboard to the location of your cursor</p>
+<p><strong>Preferences.</strong>..</p>
+<p>Opens the <a href="Start_Preferences.shtml">Preferences window</a>.</p>
+<p align="center"><img src="images/Preferences.png" width="753" height="432" alt="preferences"></p>
+<p>
+<hr>
+
+<div align=right>
+<p><a href="Main_Tool.shtml"></a><a href="Main_File.shtml">Previous </a><a href="Main_Tool.shtml">Next </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
