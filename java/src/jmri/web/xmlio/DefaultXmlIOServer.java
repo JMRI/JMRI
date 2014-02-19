@@ -6,7 +6,26 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import jmri.*;
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.Metadata;
+import jmri.PowerManager;
+import jmri.Route;
+import jmri.RouteManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
+import jmri.Throttle;
+import jmri.ThrottleListener;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -16,24 +35,81 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
-import static jmri.web.xmlio.XmlIO.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static jmri.web.xmlio.XmlIO.ADDRESS;
+import static jmri.web.xmlio.XmlIO.ADDRESS_LENGTH;
+import static jmri.web.xmlio.XmlIO.COMMENT;
+import static jmri.web.xmlio.XmlIO.CONTROLPANEL;
+import static jmri.web.xmlio.XmlIO.DARK;
+import static jmri.web.xmlio.XmlIO.DCC_ADDRESS;
+import static jmri.web.xmlio.XmlIO.F;
+import static jmri.web.xmlio.XmlIO.FALSE;
+import static jmri.web.xmlio.XmlIO.FORWARD;
+import static jmri.web.xmlio.XmlIO.FRAME;
+import static jmri.web.xmlio.XmlIO.FUNCTION;
+import static jmri.web.xmlio.XmlIO.FUNCTION_LABEL;
+import static jmri.web.xmlio.XmlIO.FUNCTION_LOCKABLE;
+import static jmri.web.xmlio.XmlIO.HELD;
+import static jmri.web.xmlio.XmlIO.IMAGE_FILE_NAME;
+import static jmri.web.xmlio.XmlIO.IMAGE_ICON_NAME;
+import static jmri.web.xmlio.XmlIO.INVERTED;
+import static jmri.web.xmlio.XmlIO.IS_NULL;
+import static jmri.web.xmlio.XmlIO.ITEM;
+import static jmri.web.xmlio.XmlIO.L;
+import static jmri.web.xmlio.XmlIO.LABEL;
+import static jmri.web.xmlio.XmlIO.LAYOUT;
+import static jmri.web.xmlio.XmlIO.LIST;
+import static jmri.web.xmlio.XmlIO.LOCKABLE;
+import static jmri.web.xmlio.XmlIO.MAX_SPEED_PCT;
+import static jmri.web.xmlio.XmlIO.MEMORY;
+import static jmri.web.xmlio.XmlIO.METADATA;
+import static jmri.web.xmlio.XmlIO.MFG;
+import static jmri.web.xmlio.XmlIO.MODEL;
+import static jmri.web.xmlio.XmlIO.NAME;
+import static jmri.web.xmlio.XmlIO.PANEL;
+import static jmri.web.xmlio.XmlIO.PANEL_ELEMENT;
+import static jmri.web.xmlio.XmlIO.PATH_SEP;
+import static jmri.web.xmlio.XmlIO.POWER;
+import static jmri.web.xmlio.XmlIO.RAILROAD;
+import static jmri.web.xmlio.XmlIO.ROAD_NAME;
+import static jmri.web.xmlio.XmlIO.ROAD_NUMBER;
+import static jmri.web.xmlio.XmlIO.ROSTER;
+import static jmri.web.xmlio.XmlIO.ROUTE;
+import static jmri.web.xmlio.XmlIO.S;
+import static jmri.web.xmlio.XmlIO.SENSOR;
+import static jmri.web.xmlio.XmlIO.SET;
+import static jmri.web.xmlio.XmlIO.SIGNAL_HEAD;
+import static jmri.web.xmlio.XmlIO.SIGNAL_MAST;
+import static jmri.web.xmlio.XmlIO.SPEED;
+import static jmri.web.xmlio.XmlIO.SSM;
+import static jmri.web.xmlio.XmlIO.THROTTLE;
+import static jmri.web.xmlio.XmlIO.TRUE;
+import static jmri.web.xmlio.XmlIO.TURNOUT;
+import static jmri.web.xmlio.XmlIO.TYPE;
+import static jmri.web.xmlio.XmlIO.UNKNOWN;
+import static jmri.web.xmlio.XmlIO.USERNAME;
+import static jmri.web.xmlio.XmlIO.VALUE;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation for XML I/O.
  *
- * <hr> This file is part of JMRI. <P> JMRI is free software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P> JMRI is distributed in the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
- * the GNU General Public License for more details. <P>
+ * <hr> This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
  *
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
  * @author	Bob Jacobsen Copyright (C) 2008, 2009, 2010
  * @version	$Revision$
  * @see jmri.web.xmlio.XmlIOFactory
@@ -44,14 +120,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
     boolean useAttributes = false;
     static Logger log = LoggerFactory.getLogger(DefaultXmlIOServer.class);
-    
+
     @Override
     public Element immediateRequest(Element e) throws JmriException {
 
         // process panels and frames as the same elements through 2.14.
         // after 2.14, process panels as XML definitions of panels so that
         // iPads or Android tablet apps could directly render the panels.
-
         // first, process any list elements
         // roster, frame, panel, metadata and railroad are immediate only
         // power, turnout, sensor, signalhead, signalmast, memory and route 
@@ -938,10 +1013,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (item.getAttributeValue(SET) != null) {
             int state = Integer.parseInt(item.getAttributeValue(SET));
             if (state == SignalHead.HELD) {
-            	b.setHeld(true);
+                b.setHeld(true);
             } else {
-            	b.setState(state);
-            	b.setHeld(false);
+                b.setState(state);
+                b.setHeld(false);
             }
             item.removeAttribute(SET);
         } else {
@@ -1441,7 +1516,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(SPEED)
                             .addContent(
-                            "" + t.getSpeedSetting()));
+                                    "" + t.getSpeedSetting()));
                 }
 
                 if ((e = item.getChild(FORWARD)) != null) {
@@ -1453,7 +1528,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(FORWARD)
                             .addContent(
-                            t.getIsForward() ? TRUE : FALSE));
+                                    t.getIsForward() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F0)) != null) {
@@ -1465,7 +1540,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F0)
                             .addContent(
-                            t.getF0() ? TRUE : FALSE));
+                                    t.getF0() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F1)) != null) {
@@ -1477,7 +1552,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F1)
                             .addContent(
-                            t.getF1() ? TRUE : FALSE));
+                                    t.getF1() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F2)) != null) {
@@ -1489,7 +1564,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F2)
                             .addContent(
-                            t.getF2() ? TRUE : FALSE));
+                                    t.getF2() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F3)) != null) {
@@ -1501,7 +1576,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F3)
                             .addContent(
-                            t.getF3() ? TRUE : FALSE));
+                                    t.getF3() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F4)) != null) {
@@ -1513,7 +1588,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F4)
                             .addContent(
-                            t.getF4() ? TRUE : FALSE));
+                                    t.getF4() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F5)) != null) {
@@ -1525,7 +1600,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F5)
                             .addContent(
-                            t.getF5() ? TRUE : FALSE));
+                                    t.getF5() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F6)) != null) {
@@ -1537,7 +1612,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F6)
                             .addContent(
-                            t.getF6() ? TRUE : FALSE));
+                                    t.getF6() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F7)) != null) {
@@ -1549,7 +1624,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F7)
                             .addContent(
-                            t.getF7() ? TRUE : FALSE));
+                                    t.getF7() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F8)) != null) {
@@ -1561,7 +1636,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F8)
                             .addContent(
-                            t.getF8() ? TRUE : FALSE));
+                                    t.getF8() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F9)) != null) {
@@ -1573,7 +1648,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F9)
                             .addContent(
-                            t.getF9() ? TRUE : FALSE));
+                                    t.getF9() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F10)) != null) {
@@ -1585,7 +1660,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F10)
                             .addContent(
-                            t.getF10() ? TRUE : FALSE));
+                                    t.getF10() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F11)) != null) {
@@ -1597,7 +1672,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F11)
                             .addContent(
-                            t.getF11() ? TRUE : FALSE));
+                                    t.getF11() ? TRUE : FALSE));
                 }
 
                 if ((e = item.getChild(Throttle.F12)) != null) {
@@ -1609,7 +1684,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else {
                     item.addContent(new Element(Throttle.F12)
                             .addContent(
-                            t.getF12() ? TRUE : FALSE));
+                                    t.getF12() ? TRUE : FALSE));
                 }
                 if ((e = item.getChild(Throttle.F13)) != null) {
                     if (e.getText().equals(FALSE)) {

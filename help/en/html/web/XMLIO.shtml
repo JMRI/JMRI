@@ -24,6 +24,10 @@
 JMRI: XML IO Servlet
 </h1>
 
+<strong>The XML IO protocol is deprecated and support will be removed from JMRI
+    during the 3.11 development cycle.</strong> Affected applications should
+    be ported to using the <a href="JsonServlet.shtml">JSON protocol</a>.
+<p>
 The JMRI XML Servlet provides bidirectional web access to JMRI services.
 
 <p>

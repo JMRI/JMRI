@@ -2,8 +2,8 @@
 
 package jmri.web.xmlio;
 
-import org.jdom.*;
 import jmri.JmriException;
+import org.jdom.Element;
 
 /**
  * Interface for doing XML I/O.
@@ -25,6 +25,8 @@ import jmri.JmriException;
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
  * @version	$Revision$
  * @see  jmri.web.xmlio.XmlIOFactory
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
  */
 public interface XmlIOServer {
 

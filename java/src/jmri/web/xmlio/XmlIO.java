@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.xmlio;
 
 /**
- *
- * @author rhwood
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
+ * @author Randall Wood
  */
 public class XmlIO {
 
