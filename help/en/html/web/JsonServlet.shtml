@@ -3,7 +3,7 @@
     <head>
         <!-- Copyright 2012 -->
         <!-- $Id: JsonServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
-        <title>JMRI: Json Servlet</title>
+        <title>JMRI JSON Protocol</title>
 
         <!-- Style -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -32,12 +32,17 @@
         <!--#include virtual="Sidebar" -->
         <div id="mainContent">
 
-            <h1>
-                JMRI: Json Servlet
-            </h1>
-            <p>The <b>JMRI Json Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
-                <a href='http://en.wikipedia.org/wiki/JSON' target=_new>JSON format</a>.  It also provides a
-                <a href='http://en.wikipedia.org/wiki/WebSocket' target=_new>WebSocket</a> interface for
+            <h1>JMRI JSON Protocol</h1>
+            <p>The JMRI JSON Protocol provides access for a number of JMRI-defined entities, and is accessible through multiple methods:</p>
+            <ul>
+                <li><strong>The JMRI JSON servlet</strong>, providing both HTTP and WebSocket access</li>
+                <li><strong>The JMRI JSON server</strong>, providing a standard network socket for streamed access</li>
+                <li><strong>jquery-json</strong>, A jQuery-based JavaScript library that chooses the best method to communicate with a JMRI server using the JMRI JSON protocol</li>
+            </ul>
+            <h2>JMRI JSON Servlet</h2>
+            <p>The <b>JMRI JSON Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
+                <a href='http://en.wikipedia.org/wiki/JSON'>JSON format</a>.  It also provides a
+                <a href='http://en.wikipedia.org/wiki/WebSocket'>WebSocket</a> interface for
                 making changes to the state of those entities, and listening for external changes.</p>
 
             The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
@@ -90,6 +95,19 @@
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
             </table>
         </div>
+        <h2>jquery-json</h2>
+        <p><em>jquery-json</em> is a JavaScript library that ships with JMRI and
+            makes the JSON protocol support just work on most current browsers.</p>
+        <p>Examples of use of the jquery-json JavaScript library that ship with JMRI include (all links assume you are reading this on your JMRI web server):</p>
+        <ul>
+            <li><a href="/operations">Operations Conductor</a> (implemented in <a href="/js/operations.js">/js/operations.js</a></li>
+            <li><a href="/panel">Panel</a> (implemented in <a href="/js/panel.js">/js/panel.js</a></li>
+            <!-- the webThrottle does not use jquery-json, but instead uses its own implementation, so do not include it in this list
+            <li><a href="/web/webThrottle.html">webThrottle</a> (implemented in <a href="/js/webThrottle.js">/js/webThrottle.js</a></li>
+            -->
+            <li><a href="/json">JSON Console</a> (implemented in <a href="/js/json-console.js">/js/json-console.js</a></li>
+            <li><a href="/web/power.html">Power Demonstration</a> (view the page source for the implementation)</li>
+        </ul>
         <!--#include virtual="/Footer" -->
     </body>
 </html>
