@@ -25,7 +25,9 @@
  * version(version)
  * as demonstrated in the power.html demonstration web app
  *
- * Copyright (C) Randall Wood 2013, 2014
+ * @author Copyright (C) Randall Wood 2013, 2014
+ * @param {a jQuery object} $
+ * @returns {a JMRI object}
  */
 (function($) {
     $.extend({
@@ -73,7 +75,7 @@
             };
             jmri.signalMast = function(name, state, data) {
             };
-            jmri.throttle = function(id, data) {
+            jmri.throttle = function(throttle, data) {
             };
             jmri.time = function(time, data) {
             };
@@ -89,6 +91,10 @@
             jmri.UNKNOWN = 0;
             jmri.POWER_ON = 2;
             jmri.POWER_OFF = 4;
+            jmri.CLOSED = 2;
+            jmri.THROWN = 4;
+            jmri.ACTIVE = 2;
+            jmri.INACTIVE = 4;
             // Getters and Setters
             jmri.getLight = function(name, state) {
                 if (jmri.monitoring[name]) {
@@ -400,9 +406,9 @@
              * or id:[roster entry id] to create a JMRI throttle. Include the
              * data element status:true to get the complete throttle status.
              *
-             * @param {String} throttle identity
-             * @param {Object} key, value pairs of those throttle properties to change
-             * @returns {Boolean} false if unable to use throttles
+             * @param {string} throttle the throttle identity
+             * @param {object} data key/value pairs of the throttle properties to change
+             * @returns {boolean} false if unable to use throttles
              */
             jmri.setThrottle = function(throttle, data) {
                 if (jmri.socket) {
