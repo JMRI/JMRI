@@ -65,12 +65,12 @@ public class LokProgImporter {
                 value = Integer.parseInt(line.substring(9, 12));
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
-                    log.warn("CV "+name+" was in loco file, but not defined by the decoder definition");
+                    log.warn("CV "+name+" was in import file, but not defined by the decoder definition");
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
                 cvObject.setValue(value);
-            }        
+            }
         }
         fileReader.close();
     } catch (IOException e) {
