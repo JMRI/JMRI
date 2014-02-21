@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,14 +12,13 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -30,12 +26,13 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train and creates the train's manifest.
@@ -107,11 +104,11 @@ public class TrainBuilder extends TrainCommon {
 	private void build() throws BuildFailedException {
 		log.debug("Building train " + train.getName());
 
-		train.setStatus(Train.BUILDING);
+		train.setStatus(Train.CODE_BUILDING, Train.BUILDING);
 		train.setBuilt(false);
 		train.setLeadEngine(null);
 
-		// create build status file
+		// create build statusCode file
 		File file = TrainManagerXml.instance().createTrainBuildReportFile(train.getName());
 		try {
 			buildReport = new PrintWriter(new BufferedWriter(
@@ -508,12 +505,12 @@ public class TrainBuilder extends TrainCommon {
 
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested) {
-			train.setStatus(Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
+			train.setStatus(Train.CODE_PARTIAL_BUILT, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
 					+ Bundle.getMessage("cars"));
 			addLine(buildReport, ONE, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
 					+ Bundle.getMessage("cars"));
 		} else {
-			train.setStatus(Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
+			train.setStatus(Train.CODE_BUILT, Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
 			addLine(buildReport, ONE, Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
 		}
 
@@ -3874,7 +3871,7 @@ public class TrainBuilder extends TrainCommon {
 	private void buildFailed(BuildFailedException e) {
 		String msg = e.getMessage();
 		train.setBuildFailedMessage(msg);
-		train.setStatus(Train.BUILD_FAILED);
+		train.setStatus(Train.CODE_BUILD_FAILED, Train.BUILD_FAILED);
 		train.setBuildFailed(true);
 		if (log.isDebugEnabled())
 			log.debug(msg);

@@ -102,6 +102,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _switchListStatus = UNKNOWN; // print switch list status
 	protected String _comment = "";
 	protected String _serviceStatus = "";	// status only if train is being built
+        protected int statusCode = CODE_UNKNOWN;
 
 	// Engine change and helper engines
 	protected int _leg2Options = 0; // options
@@ -688,10 +689,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Set's the train's status
 	 * 
+         * @param code machine readable statusCode
 	 * @param status
 	 *            BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
 	 */
-	public void setStatus(String status) {
+	public void setStatus(int code, String status) {
+                this.statusCode = code;
 		String old = _status;
 		_status = status;
 		if (!old.equals(status)) {
@@ -709,21 +712,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public int getStatusCode() {
-		if (getStatus().startsWith(TRAIN_RESET))
-			return CODE_TRAIN_RESET;
-		if (getStatus().startsWith(BUILDING))
-			return CODE_BUILDING;
-		if (getStatus().startsWith(BUILD_FAILED))
-			return CODE_BUILD_FAILED;
-		if (getStatus().startsWith(PARTIAL_BUILT))
-			return CODE_PARTIAL_BUILT;
-		if (getStatus().startsWith(BUILT))
-			return CODE_BUILT;
-		if (getStatus().startsWith(TRAIN_IN_ROUTE))
-			return CODE_TRAIN_IN_ROUTE;
-		if (getStatus().startsWith(TERMINATED))
-			return CODE_TERMINATED;
-		return CODE_UNKNOWN;
+            return this.statusCode;
 	}
 
 	/**
@@ -1565,8 +1554,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Returns the status of the "services(Car)" routine. There are two statuses that need special consideration when
-	 * the train is being built, the moves in a train's route and the maximum train length.
+	 * Returns the statusCode of the "services(Car)" routine. There are two statusCodees that need special consideration when
+ the train is being built, the moves in a train's route and the maximum train length.
 	 */
 	protected void setServiceStatus(String status) {
 		_serviceStatus = status;
@@ -2984,14 +2973,14 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next) {
 		if (next != null) {
-			setStatus(TRAIN_IN_ROUTE + " " + getNumberCarsInTrain() + " " + Bundle.getMessage("cars") + " "
+			setStatus(CODE_TRAIN_IN_ROUTE, TRAIN_IN_ROUTE + " " + getNumberCarsInTrain() + " " + Bundle.getMessage("cars") + " "
 					+ getTrainLength() + " " + Bundle.getMessage("feet") + ", " + getTrainWeight() + " "
 					+ Bundle.getMessage("tons"));
 			// run move scripts
 			runScripts(getMoveScripts());
 		} else {
 			log.debug("Train (" + getName() + ") terminated");
-			setStatus(TERMINATED + " " + TrainCommon.getDate(false));
+			setStatus(CODE_TERMINATED, TERMINATED + " " + TrainCommon.getDate(false));
 			setBuilt(false);
 			// run termination scripts
 			runScripts(getTerminationScripts());
@@ -3034,7 +3023,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setBuildFailedMessage("");
 		setPrinted(false);
 		// remove cars and engines from this train via property change
-		setStatus(TRAIN_RESET);
+		setStatus(CODE_TRAIN_RESET, TRAIN_RESET);
 		// remove train icon
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
