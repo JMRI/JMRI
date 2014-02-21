@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -61,21 +62,21 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
             data.put(STATE, status);
             this.connection.sendMessage(this.mapper.writeValueAsString(root));
         } else {
-            this.sendError(416, Bundle.getMessage("ErrorProgrammer416"));
+            this.sendError(416, Bundle.getMessage(this.connection.getLocale(), "ErrorProgrammer416"));
         }
     }
 
     @Override
     public void sendNotAvailableStatus() throws IOException {
-        this.sendError(499, Bundle.getMessage("ErrorProgrammer499"));
+        this.sendError(499, Bundle.getMessage(this.connection.getLocale(), "ErrorProgrammer499"));
     }
 
     @Override
     public void parseRequest(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        this.parseRequest(Locale.getDefault(), this.mapper.readTree(statusString).path(DATA));
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         int mode = data.path(MODE).asInt(Programmer.REGISTERMODE);
         int CV = data.path(NODE_CV).asInt();
         int value = data.path(VALUE).asInt();

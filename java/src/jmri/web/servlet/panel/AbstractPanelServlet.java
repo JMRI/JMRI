@@ -98,7 +98,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType("application/json"); // NOI18N
             ServletUtil.getHelper().setNonCachingHeaders(response);
-            response.getWriter().print(JsonUtil.getPanels(JSON.XML));
+            response.getWriter().print(JsonUtil.getPanels(request.getLocale(), JSON.XML));
         } else if (JSON.XML.equals(request.getParameter("format"))) {
             response.sendRedirect("/xmlio/list?type=panel");
         } else {

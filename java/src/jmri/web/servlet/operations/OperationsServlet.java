@@ -75,7 +75,7 @@ public class OperationsServlet extends HttpServlet {
             response.setContentType("application/json"); // NOI18N
             ServletUtil.getHelper().setNonCachingHeaders(response);
             try {
-                response.getWriter().print(JsonUtil.getTrains());
+                response.getWriter().print(JsonUtil.getTrains(request.getLocale()));
             } catch (JsonException ex) {
                 int code = ex.getJsonMessage().path(DATA).path(CODE).asInt(200);
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));

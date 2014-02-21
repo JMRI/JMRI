@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.AbstractSignalHeadServer;
@@ -66,10 +67,10 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        this.parseRequest(Locale.getDefault(),this.mapper.readTree(statusString).path(DATA));
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         String name = data.path(NAME).asText();
         int state = data.path(STATE).asInt(UNKNOWN);
         if (state == UNKNOWN) {  //if unknown, retrieve current and respond
