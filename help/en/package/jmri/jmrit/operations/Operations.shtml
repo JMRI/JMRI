@@ -188,6 +188,17 @@
     program and later once you get good car movement, try the more advanced features.
    </P>
 
+   <P>One question that comes up often, is whether to enter the arrival and departure tracks
+    into the operations program, and the simple answer is that you don't need to enter them into the
+    program. Although it is possible to specify the A/D tracks in the program, it complicates the
+    car movement by requiring an "extra" session to move the car from arrival track to the car's
+    destination, and from the car's origin track to the departure track. Most find that allowing the
+    program to pull a car directly from a train sitting on the "arrival" track and eventually spot
+    the car to its destination, is the best method when using the program. Same goes when building a
+    train using the "departure" track, car pulls directly into the train rather than to a specific
+    departure track makes the operations run more smoothly.  By not specifying the A/D tracks, you're
+    letting your operators, and not the program, decide which tracks to use when servicing a train.</P>
+
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
 
