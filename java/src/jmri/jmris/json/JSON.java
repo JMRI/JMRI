@@ -18,8 +18,10 @@ public final class JSON {
      * the protocol.
      * <p>
      * Protocol version 1.0 was first introduced in JMRI 3.4<br>
-     * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in JMRI 3.8<br>
-     * Protocol version 2.0 will be introduced in the JMRI 3.9 or later development cycle
+     * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
+     * JMRI 3.8<br>
+     * Protocol version 2.0 will be introduced in the JMRI 3.9 or later
+     * development cycle
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
@@ -642,6 +644,9 @@ public final class JSON {
     /* Common state */
     /**
      * {@value #UNKNOWN}
+     * <p>
+     * Note that this value deliberately differs from
+     * {@link jmri.NamedBean#UNKNOWN}.
      */
     public static final int UNKNOWN = 0x00;
 
