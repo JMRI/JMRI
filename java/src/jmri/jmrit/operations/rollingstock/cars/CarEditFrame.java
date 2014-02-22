@@ -173,6 +173,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		pBlocking.setLayout(new GridBagLayout());
 		pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
 		addItem(pBlocking, blockingTextField, 0, 0);
+		blockingTextField.setText("0");
 		pPanel.add(pBlocking);
 		pBlocking.setVisible(false);
 
