@@ -1159,7 +1159,7 @@ public class JsonUtil {
             if (train.getCurrentLocation() != null) {
                 data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
-            data.put(STATUS, train.getStatus());
+            data.put(STATUS, train.getStatus(locale));
             data.put(STATUS_CODE, train.getStatusCode());
             data.put(LENGTH, train.getTrainLength());
             data.put(WEIGHT, train.getTrainWeight());

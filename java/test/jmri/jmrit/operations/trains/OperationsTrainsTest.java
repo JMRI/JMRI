@@ -176,8 +176,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Road Option EXCLUDEROADS", "EXCLUDEROADS", train1.getRoadOption());
 		train1.setRoadOption("ALLROADS");
 		Assert.assertEquals("Train Road Option ALLROADS", "ALLROADS", train1.getRoadOption());
-		train1.setStatus(Train.CODE_UNKNOWN, "TESTSTATUS");
-		Assert.assertEquals("Train Status", "TESTSTATUS", train1.getStatus());
+		train1.setStatus(Train.CODE_UNKNOWN);
+		Assert.assertEquals("Train Status", Train.UNKNOWN, train1.getStatus());
 		train1.setRequirements(Train.CABOOSE);
 		Assert.assertEquals("Train Requirements CABOOSE", 1, train1.getRequirements());
 		train1.setRequirements(Train.FRED);
@@ -5942,7 +5942,7 @@ public class OperationsTrainsTest extends TestCase {
 		t3.setRequirements(Train.CABOOSE);
 		t3.setRoadOption("t3 X raod option");
 		t3.setRoute(B);
-		t3.setStatus(Train.CODE_UNKNOWN, "t3 X status");
+		t3.setStatus(Train.CODE_UNKNOWN);
 
 		TrainManagerXml.instance().writeOperationsFile();
 
@@ -5989,7 +5989,7 @@ public class OperationsTrainsTest extends TestCase {
 		t1.setSecondLegOptions(Train.ADD_CABOOSE);
 		t1.setSecondLegStartLocation(endC);
 		t1.setSendCarsToTerminalEnabled(true);
-		t1.setStatus(Train.CODE_UNKNOWN, "t1 status");
+		t1.setStatus(Train.CODE_UNKNOWN);
 		t1.setSwitchListStatus(Train.PRINTED);
 		t1.setThirdLegCabooseRoad("t1 third leg caboose road");
 		t1.setThirdLegEndLocation(startC);
@@ -6022,7 +6022,7 @@ public class OperationsTrainsTest extends TestCase {
 		t3.setRequirements(Train.NONE);
 		t3.setRoadOption("t3 raod option");
 		t3.setRoute(A);
-		t3.setStatus(Train.CODE_UNKNOWN, "t3 status");
+		t3.setStatus(Train.CODE_UNKNOWN);
 
 		t5.setBuildEnabled(true);
 		t5.setBuildFailed(false);
@@ -6046,7 +6046,7 @@ public class OperationsTrainsTest extends TestCase {
 		t5.setRequirements(Train.NONE);
 		t5.setRoadOption("t5 raod option");
 		t5.setRoute(B);
-		t5.setStatus(Train.CODE_UNKNOWN, "t5 status");
+		t5.setStatus(Train.CODE_UNKNOWN);
 
 		TrainManagerXml.instance().writeOperationsFile();
 		
@@ -6124,7 +6124,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t1 second leg options", Train.ADD_CABOOSE, t1.getSecondLegOptions());
 		Assert.assertEquals("t1 second leg start location", endC, t1.getSecondLegStartLocation());
 		Assert.assertEquals("t1 send cars to terminal", true, t1.isSendCarsToTerminalEnabled());
-		Assert.assertEquals("t1 status", "t1 status", t1.getStatus());
+		Assert.assertEquals("t1 status", Train.UNKNOWN, t1.getStatus());
 		Assert.assertEquals("t1 switch list status", Train.PRINTED, t1.getSwitchListStatus());
 		Assert.assertEquals("t1 third leg caboose road", "t1 third leg caboose road", t1
 				.getThirdLegCabooseRoad());
@@ -6171,7 +6171,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 second leg options", Train.NONE, t3.getSecondLegOptions());
 		Assert.assertEquals("t3 second leg start location", null, t3.getSecondLegStartLocation());
 		Assert.assertEquals("t3 send cars to terminal", false, t3.isSendCarsToTerminalEnabled());
-		Assert.assertEquals("t3 status", "t3 status", t3.getStatus());
+		Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
 		Assert.assertEquals("t3 switch list status", Train.UNKNOWN, t3.getSwitchListStatus());
 		// test third leg defaults
 		Assert.assertEquals("t3 third leg caboose road", "", t3.getThirdLegCabooseRoad());
@@ -6203,7 +6203,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t5 requirements", Train.NONE, t5.getRequirements());
 		Assert.assertEquals("t5 road option", "t5 raod option", t5.getRoadOption());
 		Assert.assertEquals("t5 route", B, t5.getRoute());
-		Assert.assertEquals("t5 status", "t5 status", t5.getStatus());
+		Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());
 
 		// now test the train backup file
 		manager.dispose();

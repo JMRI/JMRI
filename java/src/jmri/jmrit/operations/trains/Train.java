@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -58,7 +59,6 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _name = "";
 	protected String _description = "";
 	protected RouteLocation _current = null;// where the train is located in its route
-	protected String _status = "";
 	protected String _buildFailedMessage = ""; // the build failed message for this train
 	protected boolean _built = false; // when true, a train manifest has been built
 	protected boolean _modified = false; // when true, user has modified train after being built
@@ -103,6 +103,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _comment = "";
 	protected String _serviceStatus = "";	// status only if train is being built
         protected int statusCode = CODE_UNKNOWN;
+        protected String statusTerminatedDate = null;
+        protected int statusCarsRequested = 0;
 
 	// Engine change and helper engines
 	protected int _leg2Options = 0; // options
@@ -686,31 +688,106 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _terminationTrack;
 	}
 
-	/**
-	 * Set's the train's status
-	 * 
-         * @param code machine readable statusCode
-	 * @param status
-	 *            BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
+        /**
+         * Convenience method for calling {@link #setStatus(int, java.lang.String, int) }
+         * with a null String and 0 for the number.
+         *
+         * @param status
+         */
+        public void setStatus(int status) {
+            this.setStatus(status, null, 0);
+        }
+
+        /**
+	 * Set the train's status
+	 * <p>
+         * number should be 0 for all statuses except CODE_PARTIAL_BUILT
+         * ({@value #CODE_PARTIAL_BUILT}), when it should be number of cars
+         * requested to be worked on the train.
+         * </p>
+         * @param status machine readable stringCode
+	 * @param string BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
+         * @param number an integer that clarifies the string
 	 */
-	public void setStatus(int code, String status) {
-                this.statusCode = code;
-		String old = _status;
-		_status = status;
-		if (!old.equals(status)) {
-			setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
-		}
+	public void setStatus(int status, String string, int number) {
+            String oldStatus = this.getStatus();
+            int oldCode = this.statusCode;
+            int oldCarsRequested = this.statusCarsRequested;
+            this.statusCode = status;
+            if (status == Train.CODE_TERMINATED) {
+                this.statusTerminatedDate = string;
+            }
+            this.statusCarsRequested = number;
+            string = this.getStatus();
+            if (oldCode != this.statusCode
+                    || status == Train.CODE_TRAIN_IN_ROUTE // always fire property change on this status
+                    || !oldStatus.equals(string)
+                    || oldCarsRequested != this.statusCarsRequested) {
+                setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, string);
+            }
 	}
 
 	/**
-	 * Get train's status
+	 * Get train's status in the default locale.
 	 * 
-	 * @return Train's status BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
+	 * @return Human-readable status
 	 */
 	public String getStatus() {
-		return _status;
+		return this.getStatus(Locale.getDefault());
 	}
-	
+
+        /**
+         * Get train's status in the specified locale.
+         *
+         * @param locale
+         * @return Human-readable status
+         */
+        public String getStatus(Locale locale) {
+            return this.getStatus(locale, this.getStatusCode());
+        }
+
+        /**
+         * Get the human-readable status for the requested status code.
+         *
+         * @param locale
+         * @param code requested status
+         * @return Human-readable status
+         */
+        public String getStatus(Locale locale, int code) {
+            switch (code) {
+                case Train.CODE_BUILDING:
+                    return Train.BUILDING;
+                case Train.CODE_BUILD_FAILED:
+                    return Train.BUILD_FAILED;
+                case Train.CODE_BUILT:
+                    // getNumberCarsWorked() is assumed to be constant if status is "built" or "partially built"
+                    return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
+                case Train.CODE_PARTIAL_BUILT:
+                    // 0 should be number of cars requested to be worked
+                    return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(), this.statusCarsRequested); // NOI18N
+                case Train.CODE_TERMINATED:
+                    return Bundle.getMessage(locale, "StatusTerminated", this.statusTerminatedDate); // NOI18N
+                case Train.CODE_TRAIN_IN_ROUTE:
+                    return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), this.getTrainWeight()); // NOI18N
+                case Train.CODE_TRAIN_RESET:
+                    return Train.TRAIN_RESET;
+                case Train.CODE_UNKNOWN:
+                default:
+                    return Train.UNKNOWN;
+            }
+        }
+
+        public String getMRStatus() {
+            switch (this.statusCode) {
+                case Train.CODE_PARTIAL_BUILT:
+                    return this.statusCode + "||" + this.statusCarsRequested;
+                case Train.CODE_TERMINATED:
+                    return this.statusCode + "||" + this.statusTerminatedDate;
+                default:
+                    return Integer.toString(this.statusCode);
+            }
+        }
+
 	public int getStatusCode() {
             return this.statusCode;
 	}
@@ -1404,7 +1481,7 @@ public class Train implements java.beans.PropertyChangeListener {
 									continue;
 								}
 							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
-									&& getStatus().equals(BUILDING) && getTerminationTrack() != null
+									&& getStatusCode() == CODE_BUILDING && getTerminationTrack() != null
 									&& getTerminationTrack().getLocation() == rldest.getLocation()) {
 								if (debugFlag)
 									log.debug("Car (" + car.toString() + ") destination is staging, check train ("
@@ -1509,7 +1586,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								continue;
 							}
 							// check to see if moves are available
-							if (getStatus().equals(BUILDING) && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
+							if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
 								setServiceStatus(MessageFormat.format(Bundle.getMessage("trainNoMoves"), new Object[] {
 									getName(), getRoute().getName(), rldest.getId(), rldest.getName() }));
 								if (debugFlag)
@@ -1525,7 +1602,7 @@ public class Train implements java.beans.PropertyChangeListener {
 							return true;
 						}
 						// check to see if train length is okay
-						if (getStatus().equals(BUILDING) && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
+						if (getStatusCode() == CODE_BUILDING && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
 							setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
 									new Object[] { getName(), getRoute().getName(), rLoc.getId(),
 											rLoc.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
@@ -2973,14 +3050,12 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next) {
 		if (next != null) {
-			setStatus(CODE_TRAIN_IN_ROUTE, TRAIN_IN_ROUTE + " " + getNumberCarsInTrain() + " " + Bundle.getMessage("cars") + " "
-					+ getTrainLength() + " " + Bundle.getMessage("feet") + ", " + getTrainWeight() + " "
-					+ Bundle.getMessage("tons"));
+			setStatus(CODE_TRAIN_IN_ROUTE);
 			// run move scripts
 			runScripts(getMoveScripts());
 		} else {
 			log.debug("Train (" + getName() + ") terminated");
-			setStatus(CODE_TERMINATED, TERMINATED + " " + TrainCommon.getDate(false));
+			setStatus(CODE_TERMINATED, TrainCommon.getDate(false), 0);
 			setBuilt(false);
 			// run termination scripts
 			runScripts(getTerminationScripts());
@@ -3023,7 +3098,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setBuildFailedMessage("");
 		setPrinted(false);
 		// remove cars and engines from this train via property change
-		setStatus(CODE_TRAIN_RESET, TRAIN_RESET);
+		setStatus(CODE_TRAIN_RESET);
 		// remove train icon
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
@@ -3090,7 +3165,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				setTrainSkipsLocations(locs);
 			}
 		} else {
-			// old format
+			// oldStatus format
 			// try and first get the route by id then by name
 			if ((a = e.getAttribute(Xml.ROUTE_ID)) != null) {
 				setRoute(RouteManager.instance().getRouteById(a.getValue()));
@@ -3127,14 +3202,14 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setTypeNames(types);
 		}
-		// old way of reading car types up to version 2.99.6
+		// oldStatus way of reading car types up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
 			// if (log.isDebugEnabled()) log.debug("Car types: "+names);
 			setTypeNames(types);
 		}
-		// old misspelled format
+		// oldStatus misspelled format
 		if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
 			_roadOption = a.getValue();
 		if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null)
@@ -3152,7 +3227,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setRoadNames(roads);
 		}
-		// old way of reading car roads up to version 2.99.6
+		// oldStatus way of reading car roads up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
@@ -3182,7 +3257,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setLoadNames(loads);
 		}
-		// old way of reading car loads up to version 2.99.6
+		// oldStatus way of reading car loads up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
 			String names = a.getValue();
 			String[] loads = names.split("%%"); // NOI18N
@@ -3203,7 +3278,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			setOwnerNames(owners);
 		}
-		// old way of reading car owners up to version 2.99.6
+		// oldStatus way of reading car owners up to version 2.99.6
 		else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null) {
 			String names = a.getValue();
 			String[] owners = names.split("%%"); // NOI18N
@@ -3272,8 +3347,38 @@ public class Train implements java.beans.PropertyChangeListener {
 			_switchListStatus = a.getValue();
 		if ((a = e.getAttribute(Xml.LEAD_ENGINE)) != null)
 			_leadEngineId = a.getValue();
-		if ((a = e.getAttribute(Xml.STATUS)) != null)
-			_status = a.getValue();
+		if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.MRSTATUS) == null) {
+                    String status = a.getValue();
+                    if (status.startsWith(Train.BUILD_FAILED)) {
+                        this.setStatus(Train.CODE_BUILD_FAILED);
+                    } else if (status.startsWith(Train.BUILT)) {
+                        this.setStatus(Train.CODE_BUILT);
+                    } else if (status.startsWith(Train.PARTIAL_BUILT)) {
+                        this.setStatus(Train.CODE_PARTIAL_BUILT);
+                    } else if (status.startsWith(Train.TERMINATED)) {
+                        this.setStatus(Train.CODE_TERMINATED);
+                    } else if (status.startsWith(Train.TRAIN_IN_ROUTE)) {
+                        this.setStatus(Train.CODE_TRAIN_IN_ROUTE);
+                    } else if (status.startsWith(Train.TRAIN_RESET)) {
+                        this.setStatus(Train.CODE_TRAIN_RESET);
+                    } else {
+                        this.setStatus(Train.CODE_UNKNOWN);
+                    }
+                }
+                if ((a = e.getAttribute(Xml.MRSTATUS)) != null) {
+                    String[] tokens = a.getValue().split("\\|\\|"); // NOI18N // need to escape | characters in regex
+                    int status = Integer.parseInt(tokens[0]);
+                    switch (status) {
+                        case Train.CODE_PARTIAL_BUILT:
+                            this.setStatus(status, null, Integer.parseInt(tokens[1]));
+                            break;
+                        case Train.CODE_TERMINATED:
+                            this.setStatus(status, tokens[1], 0);
+                            break;
+                        default:
+                            this.setStatus(status);
+                    }
+                }
 		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = OperationsXml.convertFromXmlComment(a.getValue());
 		if (_route != null) {
@@ -3377,7 +3482,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
 		Element eRoute = new Element(Xml.ROUTE);
 		if (getRoute() != null) {
-			// old format
+			// oldStatus format
 			e.setAttribute(Xml.ROUTE, getRoute().getName());
 			e.setAttribute(Xml.ROUTE_ID, getRoute().getId());
 			// new format
@@ -3402,7 +3507,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		// build list of locations that this train skips
-		// old format
+		// oldStatus format
 		if (Control.backwardCompatible) {
 			String[] locationIds = getTrainSkipsLocations();
 			StringBuffer buf = new StringBuffer();
@@ -3443,6 +3548,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (getLeadEngine() != null)
 			e.setAttribute(Xml.LEAD_ENGINE, getLeadEngine().getId());
 		e.setAttribute(Xml.STATUS, getStatus());
+                e.setAttribute(Xml.MRSTATUS, getMRStatus());
 		e.setAttribute(Xml.COMMENT, getComment());
 		e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
 		// build list of car types for this train
@@ -3476,7 +3582,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getRoadOption().equals(ALL_ROADS)) {
 			e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 			String[] roads = getRoadNames();
-			// old way of saving road names
+			// oldStatus way of saving road names
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (int i = 0; i < roads.length; i++) {
@@ -3497,7 +3603,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getLoadOption().equals(ALL_LOADS)) {
 			e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 			String[] loads = getLoadNames();
-			// old way of saving car loads
+			// oldStatus way of saving car loads
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (int i = 0; i < loads.length; i++) {
@@ -3518,7 +3624,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!getOwnerOption().equals(ALL_OWNERS)) {
 			e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());
 			String[] owners = getOwnerNames();
-			// old way of saving car owners
+			// oldStatus way of saving car owners
 			if (Control.backwardCompatible) {
 				StringBuffer buf = new StringBuffer();
 				for (int i = 0; i < owners.length; i++) {

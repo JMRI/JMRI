@@ -104,7 +104,7 @@ public class TrainBuilder extends TrainCommon {
 	private void build() throws BuildFailedException {
 		log.debug("Building train " + train.getName());
 
-		train.setStatus(Train.CODE_BUILDING, Train.BUILDING);
+		train.setStatus(Train.CODE_BUILDING);
 		train.setBuilt(false);
 		train.setLeadEngine(null);
 
@@ -505,12 +505,11 @@ public class TrainBuilder extends TrainCommon {
 
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested) {
-			train.setStatus(Train.CODE_PARTIAL_BUILT, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
-					+ Bundle.getMessage("cars"));
+			train.setStatus(Train.CODE_PARTIAL_BUILT, null, requested);
 			addLine(buildReport, ONE, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
 					+ Bundle.getMessage("cars"));
 		} else {
-			train.setStatus(Train.CODE_BUILT, Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
+			train.setStatus(Train.CODE_BUILT);
 			addLine(buildReport, ONE, Train.BUILT + " " + train.getNumberCarsWorked() + " " + Bundle.getMessage("cars"));
 		}
 
@@ -3871,7 +3870,7 @@ public class TrainBuilder extends TrainCommon {
 	private void buildFailed(BuildFailedException e) {
 		String msg = e.getMessage();
 		train.setBuildFailedMessage(msg);
-		train.setStatus(Train.CODE_BUILD_FAILED, Train.BUILD_FAILED);
+		train.setStatus(Train.CODE_BUILD_FAILED);
 		train.setBuildFailed(true);
 		if (log.isDebugEnabled())
 			log.debug(msg);

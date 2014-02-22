@@ -107,6 +107,7 @@
 <!ATTLIST train showTimes			(true | false) "true">
 <!ATTLIST train buildFailedMessage	CDATA #IMPLIED>
 <!ATTLIST train switchListStatus	CDATA #IMPLIED>
+<!ATTLIST train mrStatus                CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train departureTrack		CDATA #IMPLIED>
