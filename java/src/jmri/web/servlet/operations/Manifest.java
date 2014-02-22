@@ -32,6 +32,7 @@ public class Manifest extends TrainCommon {
     protected final Properties strings = new Properties();
     protected final Locale locale;
     protected final Train train;
+    protected String resourcePrefix;
     private final static Logger log = LoggerFactory.getLogger(Manifest.class);
 
     public Manifest(Locale locale, Train train) throws IOException {
@@ -50,6 +51,7 @@ public class Manifest extends TrainCommon {
         }
         this.cars = 0;
         this.emptyCars = 0;
+        this.resourcePrefix = "Manifest";
     }
 
     public String getLocations() {
@@ -326,7 +328,7 @@ public class Manifest extends TrainCommon {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, PICKUP, !LOCAL), attribute.toLowerCase())).append(" "); // NOI18N
         }
         log.debug("Picking up car {}", builder);
-        return String.format(locale, strings.getProperty("PickUpCar"), builder.toString()); // NOI18N
+        return String.format(locale, strings.getProperty(this.resourcePrefix + "PickUpCar"), builder.toString()); // NOI18N
     }
 
     protected String dropCar(Car car, String[] format, boolean isLocal) {
@@ -336,9 +338,9 @@ public class Manifest extends TrainCommon {
         }
         log.debug("Dropping {}car {}", (isLocal) ? "local " : "", builder);
         if (!isLocal) {
-            return String.format(locale, strings.getProperty("DropCar"), builder.toString()); // NOI18N
+            return String.format(locale, strings.getProperty(this.resourcePrefix + "DropCar"), builder.toString()); // NOI18N
         } else {
-            return String.format(locale, strings.getProperty("LocalCar"), builder.toString()); // NOI18N
+            return String.format(locale, strings.getProperty(this.resourcePrefix + "LocalCar"), builder.toString()); // NOI18N
         }
     }
 
@@ -372,7 +374,7 @@ public class Manifest extends TrainCommon {
             return String.format(strings.getProperty("LocoChangeAt"), splitString(location.getName())); // NOI18N
         } else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
                 || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
-            return String.format(strings.getProperty("CabooseChageAt"), splitString(location.getName())); // NOI18N
+            return String.format(strings.getProperty("CabooseChangeAt"), splitString(location.getName())); // NOI18N
         }
         return "";
     }
@@ -394,7 +396,7 @@ public class Manifest extends TrainCommon {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getEngineAttribute(engine, attribute, false), attribute.toLowerCase())).append(" ");
         }
         log.debug("Drop engine: {}", builder);
-        return String.format(locale, strings.getProperty("DropEngine"), builder.toString());
+        return String.format(locale, strings.getProperty(this.resourcePrefix + "DropEngine"), builder.toString());
     }
 
     protected String pickupEngines(List<RollingStock> engines, RouteLocation location) {
@@ -414,7 +416,7 @@ public class Manifest extends TrainCommon {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getEngineAttribute(engine, attribute, true), attribute.toLowerCase())).append(" ");
         }
         log.debug("Picking up engine: {}", builder);
-        return String.format(locale, strings.getProperty("PickUpEngine"), builder.toString());
+        return String.format(locale, strings.getProperty(this.resourcePrefix + "PickUpEngine"), builder.toString());
     }
 
     private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {

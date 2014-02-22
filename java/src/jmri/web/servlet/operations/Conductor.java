@@ -30,6 +30,7 @@ public class Conductor extends Manifest {
 
     public Conductor(Locale locale, Train train) throws IOException {
         super(locale, train);
+        this.resourcePrefix = "Conductor";
     }
 
     public String getLocation() throws IOException {
