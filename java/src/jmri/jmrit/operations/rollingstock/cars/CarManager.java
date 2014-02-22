@@ -159,7 +159,8 @@ public class CarManager extends RollingStockManager {
 			Kernel newKernel = newKernel(newName);
 			// keep the lead car
 			Car leadCar = (Car) oldKernel.getLead();
-			leadCar.setKernel(newKernel);
+			if (leadCar != null)
+				leadCar.setKernel(newKernel);
 			for (Car car : oldKernel.getCars()) {
 				car.setKernel(newKernel);
 			}
