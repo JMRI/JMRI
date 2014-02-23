@@ -14,6 +14,8 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.TreeSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -77,6 +79,8 @@ public class PaneProgPane extends javax.swing.JPanel
     protected transient ItemListener l4;
     transient ItemListener l5;
     transient ItemListener l6;
+    
+    boolean isCvTablePane = false;
 
     String mName = "";
     
@@ -351,13 +355,13 @@ public class PaneProgPane extends javax.swing.JPanel
     int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet
-     * operation.  They are stored as a list of Integer objects, each of which
+     * operation.  They are stored as a set of Integer objects, each of which
      * is the index of the CV in the CVTable. Note that variables are handled
      * separately, and the CVs that are represented by variables are not
      * entered here.  So far (sic), the only use of this is for the cvtable rep.
      */
-    protected List<Integer> cvList = new ArrayList<Integer>();
-    protected int cvListIndex;
+    protected TreeSet<Integer> cvList = new TreeSet<Integer>(); //  TreeSet is iterated in order
+    protected Iterator<Integer> cvListIterator;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -477,6 +481,9 @@ public class PaneProgPane extends javax.swing.JPanel
     public void prepReadPane(boolean onlyChanges) {
         if (log.isDebugEnabled()) log.debug("start prepReadPane with onlyChanges="+onlyChanges);
         justChanges = onlyChanges;
+        
+        if (isCvTablePane) setCvListFromTable();  // make sure list of CVs up to date if table
+        
         enableButtons(false);
         if (justChanges == true) {
             readChangesButton.setEnabled(true);
@@ -490,7 +497,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         setToRead(justChanges, true);
         varListIndex = 0;
-        cvListIndex = 0;
+        cvListIterator = cvList.iterator();
         indexedCvListIndex = 0;
     }
 
@@ -538,8 +545,9 @@ public class PaneProgPane extends javax.swing.JPanel
                     var.setToRead(startProcess);
                 }
             }
-            for (int i = 0; i < cvList.size(); i++) {
-                int cvNum = cvList.get(i).intValue();
+
+            if (isCvTablePane) setCvListFromTable();  // make sure list of CVs up to date if table
+            for (int cvNum : cvList) {
                 CvValue cv = _cvModel.getCvByRow(cvNum);
                 if (justChanges) {
                     if (VariableValue.considerChanged(cv)) {
@@ -553,6 +561,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     cv.setToRead(startProcess);
                 }
             }
+
             for (int i = 0; i < indexedCvList.size(); i++) {
                 CvValue icv = _indexedCvModel.getCvByRow(i);
                 if (justChanges) {
@@ -595,9 +604,10 @@ public class PaneProgPane extends javax.swing.JPanel
                    var.setToWrite(startProcess);
                }
            }
+           
            log.debug("about to start setToWrite of cvList");
-           for (int i = 0; i < cvList.size(); i++) {
-               int cvNum = cvList.get(i).intValue();
+           if (isCvTablePane) setCvListFromTable();  // make sure list of CVs up to date if table
+           for (int cvNum : cvList) {
                CvValue cv = _cvModel.getCvByRow(cvNum);
                if (justChanges) {
                    if (VariableValue.considerChanged(cv)) {
@@ -611,6 +621,7 @@ public class PaneProgPane extends javax.swing.JPanel
                    cv.setToWrite(startProcess);
                }
            }
+           
            log.debug("about to start setToWrite of indexedCvList");
            for (int i = 0; i < indexedCvList.size(); i++) {
                CvValue icv = _indexedCvModel.getCvByRow(i);
@@ -692,11 +703,11 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no variables needing read, try CVs
         if (log.isDebugEnabled()) log.debug("nextRead scans "+cvList.size()+" CVs");
-        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = cvList.get(cvListIndex).intValue();
+        while (cvListIterator!= null && cvListIterator.hasNext()) {
+            int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
-            cvListIndex++;
+
             if (cv.isToRead()) {  // always read UNKNOWN state
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
                 setBusy(true);
@@ -763,11 +774,11 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     boolean nextConfirm() {
         // look for possible CVs
-        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = cvList.get(cvListIndex).intValue();
+        while (cvListIterator!= null && cvListIterator.hasNext()) {
+            int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextConfirm cv index "+cvNum+" state "+cv.getState());
-            cvListIndex++;
+
             if (cv.isToRead()) {
                if (log.isDebugEnabled()) log.debug("start confirm of cv "+cvNum);
                 setBusy(true);
@@ -853,6 +864,9 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("start prepWritePane with "+onlyChanges);
         justChanges = onlyChanges;
         enableButtons(false);
+
+        if (isCvTablePane) setCvListFromTable();  // make sure list of CVs up to date if table
+
         if (justChanges == true) {
             writeChangesButton.setEnabled(true);
             writeChangesButton.setSelected(true);
@@ -865,7 +879,9 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         setToWrite(justChanges, true);
         varListIndex = 0;
-        cvListIndex = 0;
+        
+        cvListIterator = cvList.iterator();
+
         indexedCvListIndex = 0;
         log.debug("end prepWritePane");
     }
@@ -890,11 +906,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for CVs to handle (e.g. for CV table)
-        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
-            int cvNum = cvList.get(cvListIndex).intValue();
+        while (cvListIterator!= null && cvListIterator.hasNext()) {
+            int cvNum = cvListIterator.next();
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
-            cvListIndex++;
+
             if (cv.isToWrite()) {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
@@ -960,6 +976,9 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("start prepReadPane with onlyChanges="+onlyChanges);
         justChanges = onlyChanges;
         enableButtons(false);
+
+        if (isCvTablePane) setCvListFromTable();  // make sure list of CVs up to date if table
+
         if (justChanges) {
             confirmChangesButton.setEnabled(true);
             confirmChangesButton.setSelected(true);
@@ -973,7 +992,9 @@ public class PaneProgPane extends javax.swing.JPanel
         // we can use the read prep since confirm has to read first
         setToRead(justChanges, true);
         varListIndex = 0;
-        cvListIndex = 0;
+        
+        cvListIterator = cvList.iterator();
+        
         indexedCvListIndex = 0;
     }
 
@@ -1067,14 +1088,19 @@ public class PaneProgPane extends javax.swing.JPanel
         } else if (e.getSource() == _programmingCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
-            if (_programmingCV.getState() == CvValue.UNKNOWN) {
-                if (retry == 0) {
-                    cvListIndex--;
-                    retry++;
-                } else {
-                    retry = 0;
-                }
-            }
+                   
+            // there's no -- operator on the HashSet Iterator we're
+            // using for the CV list, so we don't do individual retries
+            // now.
+            //if (_programmingCV.getState() == CvValue.UNKNOWN) {
+            //    if (retry == 0) {
+            //        cvListIndex--;
+            //        retry++;
+            //    } else {
+            //        retry = 0;
+            //    }
+            //}
+            
             replyWhileProgrammingCV();
             return;
         } else if (e.getSource() == _programmingIndexedCV &&
@@ -1148,7 +1174,9 @@ public class PaneProgPane extends javax.swing.JPanel
         setToRead(false, false);
         setToWrite(false, false);
         varListIndex = varList.size();
-        cvListIndex = cvList.size();
+        
+        cvListIterator = null;
+
         indexedCvListIndex = indexedCvList.size();
         log.debug("end stopProgramming");
     }
@@ -1396,7 +1424,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
         log.debug("starting to build CvTable pane");
-
+        
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(_cvModel);
 
         JTable			cvTable		= new JTable(_cvModel);
@@ -1428,11 +1456,19 @@ public class PaneProgPane extends javax.swing.JPanel
         cs.gridheight = 1;
 
         // remember which CVs to read/write
+        isCvTablePane = true;
+        setCvListFromTable();
+        
+        _cvTable = true;
+        log.debug("end of building CvTable pane");
+    }
+    
+    void setCvListFromTable() {
+        // remember which CVs to read/write
+        System.out.println("found "+_cvModel.getRowCount()+" rows");
         for (int j=0; j<_cvModel.getRowCount(); j++) {
             cvList.add(Integer.valueOf(j));
         }
-        _cvTable = true;
-        log.debug("end of building CvTable pane");
     }
     
     /**
@@ -1984,9 +2020,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 cvStrings[j] = "";
 
                 // get each CV and value
-              for (int i = 0; i < cvList.size(); i++) {
-
-                int cvNum = cvList.get(i).intValue();
+              int i = 0;
+              for (int cvNum : cvList) {
                 CvValue cv = _cvModel.getCvByRow(cvNum);
 
                 int value = cv.getValue();
@@ -2011,13 +2046,14 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 //populate printing array - still treated as a single column
                 cvStrings[i] = s;
+                i++;
               }
                 //sort the array in CV order (just the members with values)
                 String temp;
                 boolean swap = false;
                 do {
                   swap = false;
-                  for (int i = 0; i < _cvModel.getRowCount() - 1; i++) {
+                  for (i = 0; i < _cvModel.getRowCount() - 1; i++) {
                     if (Integer.parseInt(cvStrings[i + 1].substring(2, 5).trim()) <
                         Integer.parseInt(cvStrings[i].substring(2, 5).trim())) {
                       temp = cvStrings[i + 1];
@@ -2030,7 +2066,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 while (swap == true);
 
                 //Print the array in four columns
-                for (int i = 0; i < tableHeight; i++) {
+                for (i = 0; i < tableHeight; i++) {
                   s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
                       tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3];
                   w.write(s, 0, s.length());
