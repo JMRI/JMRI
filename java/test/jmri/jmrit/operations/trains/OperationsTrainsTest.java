@@ -6254,7 +6254,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 railroad name", "t3 X railroad name", t3.getRailroadName());
 		Assert.assertEquals("t3 requirements", Train.CABOOSE, t3.getRequirements());
 		Assert.assertEquals("t3 raod option", "t3 X raod option", t3.getRoadOption());
-		Assert.assertEquals("t3 status", "t3 X status", t3.getStatus());
+		Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
 
 		LocationManager.instance().dispose();
 
