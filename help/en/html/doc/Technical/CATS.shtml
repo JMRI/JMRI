@@ -90,6 +90,17 @@ Note that this does include the CATS source within the build, so any
 jar files you create will also include CATS.  Don't use jar files from 
 a build like this for JMRI-only purposes.
 
+<p>
+JMRI itself has lots of deprecation warnings, so if you want to see just
+the CATS ones:
+<ul>
+<li>ant clean compile
+<li>rm -r java/classes/cats java/classes/designer
+<li>ant -Ddeprecation="on" compile
+</ul>
+The first compilation will compile everything.  The second one will only compile the
+CATS source, so will only give you warnings from those classes.
+
 <h3>From CATS from a local JMRI build</h3>
 
 Download the most recent CATS release from the bottom of the 
