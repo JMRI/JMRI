@@ -285,7 +285,7 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param address The address of the new consist.
      * @param data The JSON representation of the consist. See
-     * {@link #getConsist(jmri.DccLocoAddress)} for the JSON structure.
+     * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the JSON structure.
      * @throws JsonException
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
@@ -304,7 +304,7 @@ public class JsonUtil {
      *
      * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
-     * {@link #getConsist(jmri.DccLocoAddress)}
+     * {@link #getConsist(Locale, jmri.DccLocoAddress) }
      * @throws JsonException
      */
     static public JsonNode getConsists(Locale locale) throws JsonException {
@@ -323,7 +323,7 @@ public class JsonUtil {
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(jmri.DccLocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.DccLocoAddress) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
@@ -1190,7 +1190,7 @@ public class JsonUtil {
      * id.
      *
      * Currently only moves the train to the location given with the key
-     * {@value JSON#LOCATION}. If the move cannot be completed, throws error
+     * {@value jmri.jmris.json.JSON#LOCATION}. If the move cannot be completed, throws error
      * code 428.
      *
      * @param locale The locale to throw exceptions in.

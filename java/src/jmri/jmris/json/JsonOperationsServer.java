@@ -118,8 +118,8 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * @param data
      * @throws JmriException
      * @throws IOException
-     * @deprecated The use of the {@value JSON#OPERATIONS} type is deprecated.
-     * Use types for the specific operations object instead.
+     * @deprecated The use of the {@value jmri.jmris.json.JSON#OPERATIONS} key is deprecated.
+     * Use keys for the specific operations object instead.
      */
     public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         ArrayList<Attribute> response = new ArrayList<Attribute>();
