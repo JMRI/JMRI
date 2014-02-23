@@ -65,6 +65,10 @@ First, we merge in as much tentative content as possible to the SVN trunk.
         ant
     If you fix anything, commit it back.
 
+( ) This is a good place to make sure CATS still builds
+        http://jmri.org/help/en/html/doc/Technical/CATS.shtml
+    If you fix anything, commit it back.
+        
 
 ================================================================================
 Second, we build the release branch:
