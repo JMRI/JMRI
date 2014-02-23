@@ -124,7 +124,7 @@ public class DecoderPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("DecoderPro");
+        Apps.setStartupInfo("DecoderPro");
 
         setConfigFilename("DecoderProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("DecoderPro");

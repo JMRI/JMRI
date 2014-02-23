@@ -115,7 +115,7 @@ public class InstallTest extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("InstallTest");
+        Apps.setStartupInfo("InstallTest");
 
         setConfigFilename("InstallTestConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("InstallTest");

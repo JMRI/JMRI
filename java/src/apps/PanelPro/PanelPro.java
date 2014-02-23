@@ -97,7 +97,7 @@ public class PanelPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("PanelPro");
+        Apps.setStartupInfo("PanelPro");
 
         setConfigFilename("PanelProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("PanelPro");

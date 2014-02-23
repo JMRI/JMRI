@@ -97,7 +97,7 @@ public class DispatcherPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("DispatcherPro");
+        Apps.setStartupInfo("DispatcherPro");
 
         setConfigFilename("DispatcherProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("DispatcherPro");

@@ -57,7 +57,7 @@ public class CornwallRR extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("CornwallRR");
+        Apps.setStartupInfo("CornwallRR");
 
         setConfigFilename("CornwallConfig2.xml", args);
         JFrame f = new JFrame("Cornwall Railroad");

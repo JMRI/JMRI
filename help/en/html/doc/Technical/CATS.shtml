@@ -42,7 +42,7 @@ JMRI is a library, and CATS is a large, separately maintained application
 that uses the library.  As such, CATS provides an important 
 reference case for JMRI developers as they extend and adapt their code.
 CATS should continue to work for it's users, with a minimum of extranous
-effort for the CATS developers!
+effort for the CATS developers, even as JMRI changes!
 
 <H3>Integration for testing</h3>
 
@@ -50,29 +50,53 @@ CATS has two package trees, "cats.*" and "developer.*", roughly
 corresponding to the two CATS applications.
 
 <p>
-CATS development does not use CVS, and the code is not generally
+CATS development does not use SVN, and the code is not generally
 available while it's being developed.  
 Rodney Black periodoically mades releases
 available, including source code, as zip-file archives at the
-<a href="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+<a href="http://home.comcast.net/%7Ekb0oys/">CATS web site</a>,
+see the download links at the bottom of the 
+<a href="http://home.comcast.net/%7Ekb0oys/license.htm">CATS license page</a>.
 
 <p>
-Since July 2009, the current CATS distribution works
-with JMRI 2.6 and current (2.7.*) test versions.  
+As of early 2014, the current CATS distribution (2037) works
+with JMRI 3.6 and current (3.7.3) test versions.  
 From this baseline, we want to keep CATS compiling during
-ongoing JMRI development.
+ongoing JMRI development. Changes that break CATS should be
+handled through deprecation, at least for one JMRI production release.
 
 <h3>Compiling CATS with JMRI</h3>
 
-(drop directories directly under java/src/; ant will do the rest)
+Download the CATS source and unpack.  You'll get a "cats" and "designer" 
+directory.  (Designer is meant to be independent of JMRI, but we 
+compile it together just in case)  Depending on how you unpacked, 
+you might find those duplicated:  cats/cats.  Take the lowest level
+"cats" and "designer" directory and move them directly under
+JMRI's java/src directory, i.e. alongside the existing apps and jmri directories.
 
 <p>
 CATS doesn't have any unit tests, so there's nothing to go in the 
 "test" source tree.
 
 <p>
-To simplify CVS work, the two CATS directories are ignored...
+The Ant compilation rules will then compile CATS every time you 
+compile JMRI itself. This will show you errors, deprecation warnings, etc.
 
+<p>
+To simplify SVN work, the two CATS-related directories are ignored when doing SVN operations.
+
+<p>
+Note that this does include the CATS source within the build, so any
+jar files you create will also include CATS.  Don't use jar files from 
+a build like this for JMRI-only purposes.
+
+<h3>Compiling CATS with a local JMRI build</h3>
+
+Download a recent CATS release. 
+Move the contents, including the startup scripts "cats.csh" (Linux, Mac OS X) and "cats.bat" (Windows)
+and other related files, into your top-level JMRI directory.
+<p>
+If you've compiled CATS locally, you don't need the cats.jar or designer.jar files.
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

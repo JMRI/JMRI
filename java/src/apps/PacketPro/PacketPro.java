@@ -55,7 +55,7 @@ public class PacketPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("PacketPro");
+        Apps.setStartupInfo("PacketPro");
 
         setConfigFilename("PacketProConfig2.xml", args);
         JFrame f = new JFrame("PacketPro");
