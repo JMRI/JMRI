@@ -51,7 +51,8 @@ public class LokProgImportAction  extends AbstractAction {
             if (log.isDebugEnabled()) log.debug("Import from LokProgrammer file: " + file );
 
             try {
-                LokProgImporter importer = new LokProgImporter( file, mModel ) ;
+                // ctor launches operation
+                new LokProgImporter( file, mModel ) ;
             }
             catch (IOException ex) {
             }
