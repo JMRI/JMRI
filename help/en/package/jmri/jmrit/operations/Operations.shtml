@@ -343,8 +343,14 @@
    <H3>Railroad Name</H3>
 
    Enter your railroad name in the field across from "Railroad Name". This name will show up on your
-   manifests. You can also have a different railroad name for every train in your roster, see <A
-    HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
+   manifests. You can also have a different railroad name for every train in your roster, see
+   <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
+
+   <P>When you close the "Settings" window you will be prompted to make whatever railroad name
+    you've entered to be the JMRI railroad name. You should answer "Yes" to the dialog window, this
+    way all of the other applications in JMRI will reference the same railroad name. To change the
+    railroad name once you've done this, you will need to go to the Preferences window found under
+    "Edit" in the main menu bar.</P>
 
    <H3>Train Directions</H3>
 

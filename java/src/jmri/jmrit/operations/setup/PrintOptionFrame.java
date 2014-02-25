@@ -349,8 +349,8 @@ public class PrintOptionFrame extends OperationsFrame {
 
 		commentTextArea.setText(Setup.getMiaComment());
 
-		// load font sizes 7 through 14
-		for (int i = 7; i < 15; i++)
+		// load font sizes 7 through 18
+		for (int i = 7; i < 19; i++)
 			fontSizeComboBox.addItem(i);
 		fontSizeComboBox.setSelectedItem(Setup.getManifestFontSize());
 		loadFontComboBox();
