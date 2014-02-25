@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: zoo $) 2009, 2010 --><!-- $Id: Adv_start.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: zoo $) 2009, 2010 --><!-- $Id: Adv_start.shtml 17977 2011-07-18 17:23:46Z zoo $ --><title>Basic Programming</title><!-- Style -->
 
 
 
 
 
-<title>Basic Programming</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -43,7 +42,7 @@ for all future DecoderPro sessions you may set this up by editing your <a href="
 Select the decoder you wish to program, if you have not already done
 so.&nbsp; This is done just &nbsp;as you would in the <a href="Basic_Programming.shtml#Setting%20Up">Comprehensive programmer.</a>&nbsp;&nbsp; </p>
   <p align="left">Now click on the Open  Programmer button to get to the Advanced Programmer Screen.&nbsp;</p>
-  <p align="center"><img src="images/Adv_02_Roster.png" alt="advanced roster" height="598" width="636"></p>
+  <p align="center"><img style="width: 636px; height: 598px;" src="images/Adv_02_Roster.png" alt="advanced roster"></p>
   <p align="left">Note the Advanced Programmer has two new TABS, <strong>Function Labels</strong> and <strong>Roster Media</strong>,  all other TABS are the same as those available (depending upon decoder) in Comprehensive programmer.</p>
 <p align="left">&nbsp;</p>
   <p align="left">&nbsp;</p>
