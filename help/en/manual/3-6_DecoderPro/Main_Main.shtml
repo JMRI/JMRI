@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Main.shtml 18146 2011-08-09 11:51:16Z dat7719 $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Main.shtml 18146 2011-08-09 11:51:16Z dat7719 $ --><title>DecodePro Main window</title><!-- Style -->
 
 
 
 
 
-<title>DecodePro Main window</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -36,17 +35,17 @@ operations setup window), which is also in the tools menu.</p>
 buttons at the bottom of the screen to open various tools that you may
 want to use. These buttons will vary to match your preferences, I have
 setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> and <strong>Monitor Loconet</strong>.</p>
-<p align="center"><img style="width: 496px; height: 308px;" alt="splash" src="images/Splash_Screen01.png"><br></p>
+<p align="center"><img style="width: 456px; height: 308px;" alt="splash" src="images/Splash_Screen01.png"><br></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
 <p align="left">DecoderPro® icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
 <p align="left"><strong>
   <input name="button" id="button" value="Service Mode (Programming Track) Programmer" type="button"> 
-</strong>Provides access to the decoder programming capability in <a href="Basic_Programming.shtml#ServiceMode"><strong>Service Mode Programmer<br>
+</strong>Provides access to the decoder programming capability in <a href="Programmer_ServiceMode.shtml"><strong>Service Mode Programmer<br>
 </strong></a>
 <input name="button2" id="button2" value="Operations Mode (Main Track) Programmer" type="button">
-Provides access to the <a href="Basic_Programming.shtml#OpsMode"><strong>Operations Mode Programmer. 
-<br>
+Provides access to the<a href="Programmer_OpsMode.shtml"> </a><a href="Basic_Programming.shtml#OpsMode"><strong><a href="Programmer_OpsMode.shtml">Operations Mode Programmer. 
+</a><br>
 <input name="button3" id="button3" value="Help" type="button">
 </strong></a>Opens the Help Window<br>
 <input name="button4" id="button4" value="Quit" type="button">

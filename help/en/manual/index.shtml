@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 23971 2013-08-21 09:55:46Z dat7719 $ --><title>Decoder Pro Manual: Index</title><!-- Style -->
 
 
 
@@ -122,14 +123,14 @@ Version 3.4</span></td>
 </tr><tr><td><span style="font-weight: bold;">JMRI® Version 3.6</span></td><td><br>
 </td><td><br>
 </td></tr><tr><td><br>
-</td><td style="font-weight: bold;"><a target="_blank" href="3-6_DecoderPro/index.shtml">Decoder® 3.6</a></td><td>in work 2/25/2014<br>
+</td><td style="font-weight: bold;"><a target="_blank" href="3-6_DecoderPro/index.shtml">Decoder® 3.6</a></td><td>in work 2/262014<br>
 </td></tr><tr><td><br>
 </td><td style="font-weight: bold;"><a href="3-6_DecoderPro3/index.shtml">DecoderPro3® &nbsp;3.6 </a></td><td><br>
 </td></tr><tr><td><br>
 </td><td style="font-weight: bold;">JMRI® Operations Program 3.6</td><td>scheduled for update</td></tr>
 </tbody>
 </table>
-<h4>Updated 2/25/2014</h4>
+<h4>Updated 2/26/2014</h4>
 =======&nbsp;
 
 <p><strong>JMRI is a Java-based cross-platform application

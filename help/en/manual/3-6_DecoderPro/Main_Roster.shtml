@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Roster.shtml 18150 2011-08-10 13:07:19Z dat7719 $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Roster.shtml 18150 2011-08-10 13:07:19Z dat7719 $ --><title>Roster Menu</title><!-- Style -->
 
 
 
 
 
-<title>Roster Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -27,7 +26,7 @@
 </div>
 <p><big><big><big><strong>Roster</strong></big></big></big></p>
 <blockquote>
-  <p>Opens in DecoderPro3® Window. (See <a style="font-weight: bold;" href="../index.shtml" target="_blank">DecoderPro3® Manual.</a>)</p>
+  <p>Opens in DecoderPro3® Window. (See <a style="font-weight: bold;" href="../3-6_DecoderPro3/index.shtml" target="_blank">DecoderPro3® Manual.</a>)</p>
 <p><img src="images/Main_DP3Roster.png" alt="DP3 Roster" height="527" width="899"></p><p></p><p><img src="images/separator.png" alt="sep" height="4" width="340"></p></blockquote><p><span style="font-weight: bold;">Create Entry...</span></p><strong></strong>
 <blockquote>
   <h4>New Roster Setup Pane</h4>
