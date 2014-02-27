@@ -169,18 +169,29 @@ this page
 	an XPressNet interface circuit similar to that of the LI101F.  
 	Note:  If you are using the XPressNet version 3.6 update in your command station, 
 	you should also update your LI-USB to version 3.6.  There are instructions
-	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a> or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
+	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a> 
+	or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
 	The device is configured via a software tool provided by Lenz which 
 	runs on Windows only.  We have provided a tool that will allow users 
         of other operating systems to configure their LIUSB as well.  On 
         Windows, starting with version 2.7.2, JMRI supports interfacing with 
         the LIUSB through the Lenz LIUSBServer.
 
-        <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes 
-        built in Ethernet adapter.  The USB connection on the device is provided by a Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  For Windows users, Connection via the USB port will be identical to the previous version of the LIUSB.  For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number.)  For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
+        <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the 
+        LIUSB which includes a
+        built-in Ethernet adapter.  The USB connection on the device is provided by a
+        Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+        For Windows users, connection via the USB port will be identical to the previous 
+        version of the LIUSB.  
+        For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number).  
+        For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
 
-<p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB.  When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>  
-<p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in version 2.13.7.</p>
+<p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the 
+USB connection is supported by any JMRI version with support for the LIUSB.  
+When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>
+  
+<p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, 
+which was first made available in version 2.13.7.</p>
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
@@ -283,7 +294,8 @@ this page
 
         <p> It is unknown at this point in time if we can control either an
         Elite or a Select using one of the other interfaces.  Hornby's manuals
-        warn against using their equipment with that of other manufacturers, so         we expect some incompatibilities in this area.
+        warn against using their equipment with that of other manufacturers, so
+        we expect some incompatibilities in this area.
 
         </dd>
 
@@ -366,7 +378,8 @@ this page
  
         <dt class=left>Paco Canada</dt>
         <dd>
-        <p> Paco Canada has two versions of his do-it-yourself Nanox DCC system         available,  both are compatible with JMRI.
+        <p> Paco Canada has two versions of his do-it-yourself Nanox DCC system
+        available,  both are compatible with JMRI.
 
         <p> The original NanoX DCC system supports operating equipment on a 
         layout (running trains and throwing switches) and programming 
@@ -601,12 +614,14 @@ this page
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB Ethernet (Lenz Part Number 23151) via the Ethernet connection</H2>
+<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB Ethernet (Lenz Part Number 23151) 
+via the Ethernet connection</H2>
 
 <b>NOTE: The first JMRI release supporting the Lenz LIUSB Ethernet connection is 2.13.7</b> 
 <ol> 
     <li>To connect your computer to one of these XPressNet based DCC
-    systems, you can use a Lenz LIUSB Ethernet interface unit in ethernet mode.     Connect the LIUSB to your DCC command station via their XPressNet 
+    systems, you can use a Lenz LIUSB Ethernet interface unit in ethernet mode.     
+    Connect the LIUSB to your DCC command station via their XPressNet 
     connection, then connect the LIUSB Ethernet to your computer Network using i
     the supplied ethernet cable.
     
@@ -645,10 +660,9 @@ this page
 </ol>
 
 <H2>Connecting to the XPressNet Simulator</H2>
-<b>NOTE: The first JMRI release supporting the Lenz LIUSB Server connection is 2.5.5</b> 
-
 <ol> 
-    <li> Start one of the JMRI-based programs, Then go to the preferences panel.    This opens automatically the first time a program is run, or you can select
+    <li> Start one of the JMRI-based programs, Then go to the preferences panel.    
+    This opens automatically the first time a program is run, or you can select
      it from the "Edit" menu.  
 
     <li>Select "XPressNet Simulator" from the top selection box. There are no

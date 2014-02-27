@@ -1,3 +1,34 @@
+/**
+ * JMRI JSON protocol abstract client.
+ *
+ * This library depends on jQuery 1.9 or newer.
+ *
+ * To be useful, you need to override one or more of the following functions:
+ * console(data)
+ * error(error)
+ * open()
+ * close()
+ * light(name, state, data)
+ * memory(name, value, data)
+ * power(state)
+ * railroad(name)
+ * reporter(name, value, data)
+ * rosterEntry(id, data)
+ * route(name, state, data)
+ * sensor(name, state, data)
+ * signalHead(name, state, data)
+ * signalMast(name, state, data)
+ * throttle(id, data)
+ * time(time, data)
+ * train(id, data)
+ * turnout(name, state, data)
+ * version(version)
+ * as demonstrated in the power.html demonstration web app
+ *
+ * @author Copyright (C) Randall Wood 2013, 2014
+ * @param {a jQuery object} $
+ * @returns {a JMRI object}
+ */
 (function($) {
     $.extend({
         JMRI: function(url, bindings) {
@@ -20,13 +51,17 @@
                     console.log(error);
                 }
             };
+            jmri.open = function() {
+            };
+            jmri.close = function() {
+            };
             jmri.light = function(name, state, data) {
             };
             jmri.memory = function(name, value, data) {
             };
             jmri.power = function(state) {
             };
-            jmri.railroad = function(string) {
+            jmri.railroad = function(name) {
             };
             jmri.reporter = function(name, value, data) {
             };
@@ -40,9 +75,11 @@
             };
             jmri.signalMast = function(name, state, data) {
             };
-            jmri.throttle = function(id, data) {
+            jmri.throttle = function(throttle, data) {
             };
             jmri.time = function(time, data) {
+            };
+            jmri.train = function(id, data) {
             };
             jmri.turnout = function(name, state, data) {
             };
@@ -54,6 +91,10 @@
             jmri.UNKNOWN = 0;
             jmri.POWER_ON = 2;
             jmri.POWER_OFF = 4;
+            jmri.CLOSED = 2;
+            jmri.THROWN = 4;
+            jmri.ACTIVE = 2;
+            jmri.INACTIVE = 4;
             // Getters and Setters
             jmri.getLight = function(name, state) {
                 if (jmri.monitoring[name]) {
@@ -118,7 +159,7 @@
                         }
                     });
                 }
-            }
+            };
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -330,18 +371,52 @@
             };
             jmri.setSignalMast = function(name, state) {
                 if (jmri.socket) {
-                    jmri.socket.send("signalMast", {name: name, aspect: state});
+                    jmri.socket.send("signalMast", {name: name, state: state});
                 } else {
                     $.ajax({
                         url: jmri.url + "signalMast/" + name,
                         type: "POST",
-                        data: JSON.stringify({aspect: state}),
+                        data: JSON.stringify({state: state}),
                         contentType: "application/json; charset=utf-8",
                         success: function(json) {
                             jmri.signalMast(json.data.name, json.data.state, json.data);
                             jmri.getSignalMast(json.data.name, json.data.state);
                         }
                     });
+                }
+            };
+            /**
+             * Get the current status of the throttle
+             *
+             * @param {String} throttle identity
+             * @returns {Boolean} false if unable to use throttles
+             */
+            jmri.getThrottle = function(throttle) {
+                if (jmri.socket) {
+                    jmri.socket.send("throttle", {throttle: throttle, status: true});
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            /**
+             * Set some aspect of a throttle as defined in data
+             *
+             * Call this method with the data elements address:[dcc address]
+             * or id:[roster entry id] to create a JMRI throttle. Include the
+             * data element status:true to get the complete throttle status.
+             *
+             * @param {string} throttle the throttle identity
+             * @param {object} data key/value pairs of the throttle properties to change
+             * @returns {boolean} false if unable to use throttles
+             */
+            jmri.setThrottle = function(throttle, data) {
+                if (jmri.socket) {
+                    data.throttle = throttle;
+                    jmri.socket.send("throttle", data);
+                    return true;
+                } else {
+                    return false;
                 }
             };
             jmri.getTime = function() {
@@ -356,6 +431,24 @@
                         jmri.monitoring.time = false;
                         jmri.time(json.data.time, json.data);
                         jmri.getTime();
+                    });
+                }
+            };
+            jmri.getTrain = function(id) {
+                if (jmri.monitoring["ops-train-" + id] === true) {
+                    return;
+                }
+                if (jmri.socket) {
+                    jmri.socket.send("train", {id: id});
+                } else {
+                    // if we never set the monitor, get an immediate response
+                    // include state otherwise (even if ignored) to trigger a long poll
+                    var state = (typeof jmri.monitoring["ops-train-" + id] === "undefined") ? "" : "?state=true";
+                    jmri.monitoring["ops-train-" + id] = true;
+                    $.getJSON(jmri.url + "train/" + id + state, function(json) {
+                        jmri.monitoring["ops-train-" + id] = false;
+                        jmri.train(json.data.id, json.data);
+                        jmri.getTrain(json.data.id);
                     });
                 }
             };
@@ -391,6 +484,37 @@
                     });
                 }
             };
+            /**
+             * Force the jmri object to begin communicating with the JMRI server
+             * even if the WebSocket connection cannot be immediately established
+             *
+             * @returns {undefined}
+             */
+            jmri.connect = function() {
+                // if the JMRI WebSocket was open before we overloaded the
+                // open() method, we call the open() method to ensure it gets
+                // called
+                if (jmri.socket && jmri.socket.readyState === 1) {
+                    if (window.console) {
+                        console.log("Connecting on connect()");
+                    }
+                    jmri.open();
+                } else {
+                    // if the JMRI WebSocket was not open when the document was
+                    // ready, wait one second and call open() if the socket
+                    // did not open in the meantime -- with the exception of
+                    // throttles, the JMRI object can work around the inability
+                    // to use WebSockets
+                    setTimeout(function() {
+                        if (!jmri.socket || jmri.socket.readyState !== 1) {
+                            if (window.console) {
+                                console.log("Connecting on timeout");
+                            }
+                            jmri.open();
+                        }
+                    }, 1000);
+                }
+            };
             // Heartbeat
             jmri.heartbeat = function() {
                 jmri.socket.send("ping");
@@ -398,15 +522,19 @@
             jmri.heartbeatInterval = null;
             // WebSocket
             jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
+                open: function() {
+                    jmri.open();
+                },
                 // stop the heartbeat when the socket closes
                 close: function() {
-                    clearInterval(jmri.heartbeat);
+                    clearInterval(jmri.heartbeatInterval);
+                    jmri.close();
                 },
                 message: function(e) {
                     jmri.console(e.originalEvent.data);
                 },
                 events: {
-                    // TODO: add constist, programmer, and operations events
+                    // TODO: add consist, programmer, and operations-related events
                     error: function(e) {
                         jmri.error(e.data);
                     },
@@ -448,6 +576,9 @@
                     },
                     time: function(e) {
                         jmri.time(e.data.time, e.data);
+                    },
+                    train: function(e) {
+                        jmri.train(e.data.id, e.data);
                     },
                     turnout: function(e) {
                         jmri.turnout(e.data.name, e.data.state, e.data);

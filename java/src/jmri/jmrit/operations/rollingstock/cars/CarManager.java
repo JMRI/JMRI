@@ -150,8 +150,21 @@ public class CarManager extends RollingStockManager {
 	 * @return named Kernel
 	 */
 	public Kernel getKernelByName(String name) {
-		Kernel kernel = _kernelHashTable.get(name);
-		return kernel;
+		return _kernelHashTable.get(name);
+	}
+	
+	public void replaceKernelName(String oldName, String newName) {
+		Kernel oldKernel = getKernelByName(oldName);
+		if (oldKernel != null) {
+			Kernel newKernel = newKernel(newName);
+			// keep the lead car
+			Car leadCar = (Car) oldKernel.getLead();
+			if (leadCar != null)
+				leadCar.setKernel(newKernel);
+			for (Car car : oldKernel.getCars()) {
+				car.setKernel(newKernel);
+			}
+		}
 	}
 
 	/**
@@ -340,8 +353,7 @@ public class CarManager extends RollingStockManager {
 			rs = list.get(i);
 			if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
 				out.add(list.get(i));
-				list.remove(i);
-				i--;
+				list.remove(i--);
 			}
 		}
 		// now load all of the remaining low priority cars

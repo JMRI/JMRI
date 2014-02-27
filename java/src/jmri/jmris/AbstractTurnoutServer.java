@@ -106,7 +106,7 @@ abstract public class AbstractTurnoutServer {
 
     public void dispose() {
         for (Map.Entry<String, TurnoutListener> turnout : this.turnouts.entrySet()) {
-            InstanceManager.signalHeadManagerInstance().getSignalHead(turnout.getKey()).removePropertyChangeListener(turnout.getValue());
+            InstanceManager.turnoutManagerInstance().getTurnout(turnout.getKey()).removePropertyChangeListener(turnout.getValue());
         }
         this.turnouts.clear();
     }

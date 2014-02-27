@@ -360,7 +360,7 @@ public class LayoutBlockConnectivityTools{
     * @param validateOnly - When set false, the system will not use layout blocks
     *                       that are set as either reserved(useExtraColor set) or occupied, if it 
     *                       finds any then it will try to find an alternative path
-    *                       When set false, no block state checking is performed.
+    *                       When set true, no block state checking is performed.
     * @param pathMethod - Performs a check to see if any signal heads/masts are 
     *                     in the path, if there are then the system will try to find
     *                     an alternative path.  If set to NONE, then no checking is performed.
@@ -530,11 +530,11 @@ public class LayoutBlockConnectivityTools{
     private boolean canLBlockBeUsed(LayoutBlock lBlock){
         if(lBlock==null)
             return true;
+        if (lBlock.getUseExtraColor())
+            return false;
         if (lBlock.getBlock().getPermissiveWorking())
             return true;
         if (lBlock.getState()==Block.OCCUPIED)
-            return false;
-        if (lBlock.getUseExtraColor())
             return false;
         return true;
     }

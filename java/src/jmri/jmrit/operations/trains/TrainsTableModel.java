@@ -30,8 +30,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Daniel Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
-public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	TrainManager manager = TrainManager.instance(); // There is only one manager
 
@@ -296,8 +295,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			if (train.getDepartureTrack() == null)
 				return train.getTrainDepartsName();
 			else
-				return train.getTrainDepartsName() + " (" + train.getDepartureTrack().getName()
-						+ ")";
+				return train.getTrainDepartsName() + " (" + train.getDepartureTrack().getName() + ")";
 		}
 		case CURRENTCOLUMN:
 			return train.getCurrentLocationName();
@@ -305,8 +303,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			if (train.getTerminationTrack() == null)
 				return train.getTrainTerminatesName();
 			else
-				return train.getTrainTerminatesName() + " ("
-						+ train.getTerminationTrack().getName() + ")";
+				return train.getTrainTerminatesName() + " (" + train.getTerminationTrack().getName() + ")";
 		}
 		case STATUSCOLUMN:
 			return train.getStatus();
@@ -373,10 +370,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		tef.initComponents(train);
 		focusTef = true;
 	}
-	
+
 	boolean focusRef = false;
 	RouteEditFrame ref = null;
-	
+
 	private synchronized void editRoute(int row) {
 		if (ref != null)
 			ref.dispose();
@@ -388,6 +385,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	Thread build;
+
 	private synchronized void buildTrain(int row) {
 		final Train train = sysList.get(row);
 		if (!train.isBuilt()) {
@@ -428,60 +426,46 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			if (log.isDebugEnabled())
 				log.debug("Reset train (" + train.getName() + ")");
 			// check to see if departure track was reused
-			if (checkDepartureTrack(train) ) {
+			if (checkDepartureTrack(train)) {
 				log.debug("Train is departing staging that already has inbound cars");
-				JOptionPane.showMessageDialog(null, MessageFormat.format(
-						Bundle.getMessage("StagingTrackUsed"), new Object[] { train.getDepartureTrack()
-								.getName() }), Bundle.getMessage("CanNotResetTrain"),
+				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("StagingTrackUsed"),
+						new Object[] { train.getDepartureTrack().getName() }), Bundle.getMessage("CanNotResetTrain"),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else if (!train.reset())
-				JOptionPane.showMessageDialog(
-						null,
-						MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-								new Object[] { train.getTrainTerminatesName() }),
-						Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
+						new Object[] { train.getTrainTerminatesName() }), Bundle.getMessage("CanNotResetTrain"),
+						JOptionPane.ERROR_MESSAGE);
 		} else if (!train.isBuilt()) {
-			JOptionPane.showMessageDialog(
-					null,
-					MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"),
-							new Object[] { train.getName() }), Bundle.getMessage("CanNotPerformAction"),
+			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"),
+					new Object[] { train.getName() }), Bundle.getMessage("CanNotPerformAction"),
 					JOptionPane.INFORMATION_MESSAGE);
-		} else if (train.isBuilt()
-				&& manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
 			if (log.isDebugEnabled())
 				log.debug("Move train (" + train.getName() + ")");
 			train.move();
-		} else if (train.isBuilt()
-				&& manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
+		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
 			if (log.isDebugEnabled())
 				log.debug("Terminate train (" + train.getName() + ")");
-			int status = JOptionPane.showConfirmDialog(
-					null,
-					MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-							new Object[] { train.getName(), train.getDescription() }),
-					MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"),
-							new Object[] { train.getName() }), JOptionPane.YES_NO_OPTION);
+			int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
+					new Object[] { train.getName(), train.getDescription() }), MessageFormat.format(Bundle
+					.getMessage("DoYouWantToTermiate"), new Object[] { train.getName() }), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
-		} else if (train.isBuilt()
-				&& manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
+		} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
 			if (log.isDebugEnabled())
 				log.debug("Enable conductor for train (" + train.getName() + ")");
 			launchConductor(train);
 		}
 	}
-	
+
 	/*
-	 * Check to see if the departure track in staging has been taken by another train.
-	 * return true if track has been allocated to another train.
+	 * Check to see if the departure track in staging has been taken by another train. return true if track has been
+	 * allocated to another train.
 	 */
 	private boolean checkDepartureTrack(Train train) {
-		return (Setup.isStagingTrackImmediatelyAvail() 
-				&& !train.isTrainInRoute()
-				&& train.getDepartureTrack() != null
+		return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainInRoute() && train.getDepartureTrack() != null
 				&& train.getDepartureTrack().getTrackType().equals(Track.STAGING)
-				&& train.getDepartureTrack() != train.getTerminationTrack()
-				&& train.getDepartureTrack().getDropRS() > 0 );
+				&& train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
 	}
 
 	TrainConductorFrame tcf = null;
@@ -496,15 +480,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			_trainConductorHashTable.put(train.getId(), f);
 		} else {
 			f.setExtendedState(Frame.NORMAL);
-		   	f.setVisible(true);	// this also brings the frame into focus
+			f.setVisible(true); // this also brings the frame into focus
 		}
 		tcf = f;
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
 			_frame.setModifiedFlag(true);
@@ -524,7 +508,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				Train train = ((Train) e.getSource());
 				int row = sysList.indexOf(train);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update train table row: " + row + " id: " + train.getId());
+					log.debug("Update train table row: " + row + " name: " + train.getName());
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}
@@ -554,6 +538,5 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeTrains();
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainsTableModel.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
 }

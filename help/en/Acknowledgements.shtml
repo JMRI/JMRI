@@ -314,6 +314,7 @@
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
     <li>Peter Mansvelder, who contributed Flieschmann decoder definitions
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
+	<LI>Ken Mazer, who provided the GP40-2 Soundtraxx definition
     <li>David McDowell of the North Raleigh Model Railroad Club created
     a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
 	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
@@ -436,7 +437,8 @@
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
-	<li>Suzie Tall, who provided several international signal definitions
+	<li>Suzie Tall, who provided several North American and international signal definitions,
+	    including definitions for UP, Amtrak, and Great Western railroad.
     <li>Clint Taylor added code to allow function buttons to work within the loconet slot manager.
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,
@@ -481,8 +483,9 @@
     <li>Simon White, who added support for FindBugs and EMMA to our build tools.
     <li>Stephen Williams, who improved the LocoNet slot monitor,
     made multiple small improvements to LocoNet internals, especially including the LocoNet monitor, 
-    fixed a nasty problem with looping LocoNet throttles, and 
-    added a command station option to the TCP connection.
+    fixed a nasty problem with looping LocoNet throttles,  
+    added a command station option to the TCP connection,
+    and improved the LocoNet simulator file processing.
     <li>Jos Wils updated the ESU decoder definitions, and extended
     the Comprehensive programmer format for really-high-functionality decoders.
     <li>Jim Wolters updated the MRC Sound Brilliance 1812 decoder definition.

@@ -68,7 +68,7 @@ public class LocoTools extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("LocoTools");
+        Apps.setStartupInfo("LocoTools");
 
         setConfigFilename("LocoToolsConfig2.xml", args);
         JFrame f = new JFrame("LocoTools");

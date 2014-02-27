@@ -487,6 +487,7 @@ public class RollingStockManager {
 	protected static final int BY_VALUE = 15;
 	// BY_WAIT = 16
 	protected static final int BY_LAST = 17;
+	protected static final int BY_BLOCKING = 18;
 
 	protected Object getRsAttribute(RollingStock rs, int attribute) {
 		switch (attribute) {
@@ -516,6 +517,8 @@ public class RollingStockManager {
 			return rs.getValue();
 		case BY_LAST:
 			return convertLastDate(rs.getLastDate());
+		case BY_BLOCKING:
+			return rs.getBlocking();
 		default:
 			return "unknown"; // NOI18N
 		}

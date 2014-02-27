@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -46,11 +47,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             try {
                 result = InstanceManager.throttleManagerInstance().requestThrottle(Roster.instance().getEntryForId(data.path(ID).asText()), this);
             } catch (NullPointerException ex) {
-                this.sendErrorMessage(-100, Bundle.getMessage("ErrorThrottleRosterEntry", data.path(ID).asText()));
+                this.sendErrorMessage(-100, Bundle.getMessage(this.server.connection.getLocale(),"ErrorThrottleRosterEntry", data.path(ID).asText()));
                 throw new JmriException("Roster entry " + data.path(ID).asText() + " does not exist."); // NOI18N
             }
         } else {
-            this.sendErrorMessage(-101, Bundle.getMessage("ErrorThrottleNoAddress"));
+            this.sendErrorMessage(-101, Bundle.getMessage(this.server.connection.getLocale(),"ErrorThrottleNoAddress"));
             throw new JmriException("No address specified."); // NOI18N
         }
         if (!result) {
@@ -74,8 +75,8 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             this.sendMessage(this.mapper.createObjectNode().putNull(RELEASE));
         }
     }
-    
-    public void parseRequest(JsonNode data) {
+
+    public void parseRequest(Locale locale, JsonNode data) {
         if (data.path(ESTOP).asBoolean(false)) {
             this.throttle.setSpeedSetting(-1);
         } else if (data.path(IDLE).asBoolean(false)) {
@@ -190,7 +191,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        this.sendErrorMessage(-102, Bundle.getMessage("ErrorThrottleRequestFailed", address, reason));
+        this.sendErrorMessage(-102, Bundle.getMessage(this.server.connection.getLocale(), "ErrorThrottleRequestFailed", address, reason));
     }
 
     private void sendErrorMessage(int code, String message) {

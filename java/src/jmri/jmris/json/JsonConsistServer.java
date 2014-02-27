@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import jmri.ConsistListListener;
 import jmri.ConsistListener;
 import jmri.ConsistManager;
@@ -92,7 +93,7 @@ public class JsonConsistServer {
         }
     }
 
-    public void parseRequest(JsonNode data) throws IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         DccLocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
             address = new DccLocoAddress(data.path(ADDRESS).asInt(), data.path(IS_LONG_ADDRESS).asBoolean(false));
@@ -100,13 +101,13 @@ public class JsonConsistServer {
             address = JsonUtil.addressForString(data.path(ADDRESS).asText());
         }
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonUtil.putConsist(address, data);
+            JsonUtil.putConsist(locale, address, data);
         } else if (data.path(METHOD).asText().equals(DELETE)) {
-            JsonUtil.delConsist(address);
+            JsonUtil.delConsist(locale, address);
         } else {
-            JsonUtil.setConsist(address, data);
+            JsonUtil.setConsist(locale, address, data);
         }
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getConsist(address)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getConsist(locale, address)));
         InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address).addConsistListener(new JsonConsistListener(address));
     }
 
@@ -116,7 +117,7 @@ public class JsonConsistServer {
         public void notifyConsistListChanged() {
             JsonNode message;
             try {
-                message = JsonUtil.getConsists();
+                message = JsonUtil.getConsists(connection.getLocale());
             } catch (JsonException ex) {
                 message = ex.getJsonMessage();
             }
@@ -142,7 +143,7 @@ public class JsonConsistServer {
         public void consistReply(DccLocoAddress locoAddress, int status) {
             JsonNode message;
             try {
-                message = JsonUtil.getConsist(this.consistAddress);
+                message = JsonUtil.getConsist(connection.getLocale(), this.consistAddress);
                 if (!locoAddress.equals(this.consistAddress)) {
                     ObjectNode data = (ObjectNode) message.get(DATA);
                     ObjectNode op = data.putObject(STATUS);

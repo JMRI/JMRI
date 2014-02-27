@@ -164,6 +164,10 @@ public class Route implements java.beans.PropertyChangeListener {
 		}
 	}
 
+	public int size() {
+		return _routeHashTable.size();
+	}
+
 	/**
 	 * Reorder the location sequence numbers for this route
 	 */

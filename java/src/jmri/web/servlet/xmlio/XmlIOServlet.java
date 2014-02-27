@@ -15,16 +15,18 @@ import jmri.web.xmlio.XmlIO;
 import jmri.web.xmlio.XmlIOFactory;
 import jmri.web.xmlio.XmlIORequestor;
 import jmri.web.xmlio.XmlIOServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jdom.Comment;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- *
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
  * @author rhwood
  */
 public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
@@ -67,6 +69,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
         String client = request.getRemoteHost() + ":" + request.getRemotePort(); // NOI18N
 
         Element root = doc.getRootElement();
+        doc.addContent(new Comment("XmlIO is deprecated and will be removed in JMRI 3.11. See the JMRI release notes."));
 
         if (log.isDebugEnabled()) {
             String s = "received " + root.getContentSize() + " elements from " + client; // NOI18N
@@ -79,6 +82,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
         // start processing reply
         if (factory == null) {
             factory = new XmlIOFactory();
+            log.warn("XmlIO is deprecated and will be removed in JMRI 3.11. See the JMRI release notes.");
         }
         XmlIOServer srv = factory.getServer();
 

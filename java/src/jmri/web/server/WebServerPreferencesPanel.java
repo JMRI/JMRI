@@ -2,7 +2,7 @@ package jmri.web.server;
 
 /**
  * @author Steve Todd Copyright (C) 2011
- * @author Randall Wood Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012, 2014
  * @version $Revision$
  */
 import java.awt.Color;
@@ -317,5 +317,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     @Override
     public void savePreferences() {
         this.storeValues();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.preferences.isDirty();
     }
 }

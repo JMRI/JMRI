@@ -271,10 +271,10 @@ system from the preference menu for reliable operation.</P>
 	</ul>
 	</LI>
 	<LI>On most computers, you'll need to install a driver for the
-    <a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">USB interface chip</a>
-	in the NCE USB Interface. 
+    <a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">CP201x USB to UART Bridge VCP</a>
+	used in the NCE USB Interface. 
 	    <UL>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a></LI>
+	    <LI><a href="http://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">Windows driver</a></LI>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X driver</a></LI>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></LI>
         <LI>

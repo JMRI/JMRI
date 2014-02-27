@@ -4,6 +4,7 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractMemoryServer;
 import jmri.jmris.JmriConnection;
@@ -45,7 +46,7 @@ public class JsonMemoryServer extends AbstractMemoryServer {
     @Override
     public void sendStatus(String memoryName, String status) throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(memoryName)));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(this.connection.getLocale(), memoryName)));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
@@ -53,7 +54,7 @@ public class JsonMemoryServer extends AbstractMemoryServer {
 
     @Override
     public void sendErrorStatus(String memoryName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", MEMORY, memoryName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorObject", MEMORY, memoryName))));
     }
 
     @Override
@@ -61,14 +62,14 @@ public class JsonMemoryServer extends AbstractMemoryServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonUtil.putMemory(name, data);
+            JsonUtil.putMemory(locale, name, data);
         } else {
-            JsonUtil.setMemory(name, data);
+            JsonUtil.setMemory(locale, name, data);
         }
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(name)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(locale, name)));
         this.addMemoryToList(name);
     }
 }

@@ -4,6 +4,7 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractRouteServer;
 import jmri.jmris.JmriConnection;
@@ -37,7 +38,7 @@ public class JsonRouteServer extends AbstractRouteServer {
     @Override
     public void sendStatus(String routeName, int status) throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(routeName)));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(this.connection.getLocale(), routeName)));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
@@ -45,7 +46,7 @@ public class JsonRouteServer extends AbstractRouteServer {
 
     @Override
     public void sendErrorStatus(String routeName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", ROUTE, routeName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorObject", ROUTE, routeName))));
     }
 
     @Override
@@ -53,10 +54,10 @@ public class JsonRouteServer extends AbstractRouteServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
-        JsonUtil.setRoute(name, data);
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(name)));
+        JsonUtil.setRoute(locale, name, data);
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(locale, name)));
         this.addRouteToList(name);
     }
 }

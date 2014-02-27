@@ -899,7 +899,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     /**
      * Called from Warrant Table list.  This could be bogus
-     * @return
      */
     public String checkForContinuation() {
     	OBlock block = _orders.get(0).getBlock();

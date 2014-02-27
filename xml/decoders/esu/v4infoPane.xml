@@ -20,6 +20,9 @@
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
+      <label label="There is now an option to import CV value list files created by LokProgrammer."/>
+      <label label="(File menu when a roster entry is open.)"/>
+      <label label=" "/>
       <label label="These decoders are probably the most complex (and versatile) DCC decoders"/>
       <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses"/>
       <label label="extra challenges for JMRI coding. These defintions are a work in progress."/>
@@ -45,6 +48,17 @@
       <label label="conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the"/>
       <label label="CVs list in the same order as in the ESU documentation and LokProgrammer software."/>
       <label label="The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'."/>
+      <label label=" "/>
+      <separator/>
+      <label label="&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label=" "/>
+      <label label="The ESU V4/Select decoders use a multiplier factor of 0.25 rather than the NMRA standard"/>
+      <label label="factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates."/>
+      <label label=" "/>
+      <label label="This means that you will need to enter a value nearly 4 times as great (3.6) in"/>
+      <label label="the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound"/>
+      <label label="V3.5 or almost any other brand of decoder. This can be a particular problem"/>
+      <label label="if have V4/Select and other model decoders in the same consist."/>
       <label label=" "/>
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;"/>

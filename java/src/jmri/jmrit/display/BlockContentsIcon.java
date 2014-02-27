@@ -18,30 +18,23 @@ import java.awt.event.ActionEvent;
 import jmri.NamedBeanHandle;
 
 /**
- * An icon to display a status of a Memory.<P>
- * <P>
- * The value of the memory can't be changed with this icon.
- *<P>
+ * An icon to display the value contained within a Block.<P>
+ *
  * @author Bob Jacobsen  Copyright (c) 2004
  * @version $Revision: 23861 $
  */
 
-public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
+public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener {
 
 	NamedIcon defaultIcon = null;
-    // the associated Memory object
-    //protected Memory memory = null;
-    // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
     
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
-        //setIcon(defaultIcon);
         _namedIcon=defaultIcon;
-        //updateSize();
-        //By default all memory is left justified
+        //By default all text objects are left justified
         _popupUtil.setJustification(LEFT);
         this.setTransferHandler(new TransferHandler());
     }
@@ -50,7 +43,6 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         super(s, editor);
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
-        //updateSize();
         _popupUtil.setJustification(LEFT);
         log.debug("BlockContentsIcon ctor= "+BlockContentsIcon.class.getName());
         this.setTransferHandler(new TransferHandler());
@@ -82,11 +74,11 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
     
     /**
-     * Attached a named Memory to this display item
-      * @param pName Used as a system/user name to lookup the Memory object
+     * Attached a named Block to this display item
+      * @param pName Used as a system/user name to lookup the Block object
      */
      public void setBlock(String pName) {
-         if (InstanceManager.memoryManagerInstance()!=null) {
+         if (InstanceManager.blockManagerInstance()!=null) {
             Block block = InstanceManager.blockManagerInstance().
                  provideBlock(pName);
              if (block != null) {
@@ -210,10 +202,10 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     /**
-    * Text edits cannot be done to Memory text - override
+    * Text edits cannot be done to Block text - override
     */    
     public boolean setTextEditMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
+        popup.add(new AbstractAction(Bundle.getMessage("EditBlockValue")) {
             public void actionPerformed(ActionEvent e) {
                 editBlockValue();
             }
@@ -223,7 +215,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
 
     /**
      * Drive the current state of the display from the state of the
-     * Memory.
+     * Block Value
      */
     public void displayState() {
         if (log.isDebugEnabled()) log.debug("displayState");
@@ -294,7 +286,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
             newBlock.setText(getBlock().getValue().toString());
         Object[] options = {"Cancel", "OK", newBlock};
         int retval = JOptionPane.showOptionDialog(this,
-                                                  "Edit Current Block Value", namedBlock.getName(),
+                                                  Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   options, options[2] );
 

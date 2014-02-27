@@ -783,8 +783,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			track = moveList.get(i);
 			if (!track.getScheduleId().equals("")) {
 				out.add(moveList.get(i));
-				moveList.remove(i);
-				i--;
+				moveList.remove(i--);
 			}
 		}
 		for (int i = 0; i < moveList.size(); i++) {

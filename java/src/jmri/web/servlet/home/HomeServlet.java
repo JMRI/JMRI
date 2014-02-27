@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.util.FileUtil;
-import jmri.web.servlet.ServletHelper;
+import jmri.web.servlet.ServletUtil;
 
 /**
  *
@@ -19,10 +19,10 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html"); // NOI18N
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Home.html"))),
-                ServletHelper.getHelper().getRailroadName(false),
-                ServletHelper.getHelper().getNavBar(request.getLocale(), "/home"),
-                ServletHelper.getHelper().getRailroadName(false),
-                ServletHelper.getHelper().getFooter(request.getLocale(), "/home")
+                ServletUtil.getHelper().getRailroadName(false),
+                ServletUtil.getHelper().getNavBar(request.getLocale(), "/home"),
+                ServletUtil.getHelper().getRailroadName(false),
+                ServletUtil.getHelper().getFooter(request.getLocale(), "/home")
         ));
     }
 

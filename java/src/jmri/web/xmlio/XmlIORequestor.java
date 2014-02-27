@@ -2,7 +2,7 @@
 
 package jmri.web.xmlio;
 
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
  * Interface received a delayed response to a monitoring request.
@@ -28,6 +28,8 @@ import org.jdom.*;
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
  * @version	$Revision$
  * @see  jmri.web.xmlio.XmlIOFactory
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
  */
 public interface XmlIORequestor {
 

@@ -88,6 +88,10 @@ public class RollingStockGroup {
 			return true;
 		return false;
 	}
+	
+	public RollingStock getLead() {
+		return _lead;
+	}
 
 	/**
 	 * Gets the number of rolling stock in this group

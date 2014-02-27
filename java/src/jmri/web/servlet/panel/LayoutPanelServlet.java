@@ -137,7 +137,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     if (!b.getOccupancySensorName().isEmpty()) {
                         Sensor s = sm.getSensor(b.getOccupancySensorName());
                         if (s != null) {
-                            elem.setAttribute("occupancysensor", s.getDisplayName()); //send username if set, systemname otherwise
+                            elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
                         }
                     }
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));

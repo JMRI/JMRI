@@ -97,7 +97,7 @@ public class SignalPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("SignalPro");
+        Apps.setStartupInfo("SignalPro");
 
         setConfigFilename("SignalProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("SignalPro");

@@ -3,6 +3,7 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTimeServer;
 import jmri.jmris.JmriConnection;
@@ -27,7 +28,7 @@ public class JsonTimeServer extends AbstractTimeServer {
     @Override
     public void sendTime() throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTime()));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTime(this.connection.getLocale())));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
@@ -43,9 +44,9 @@ public class JsonTimeServer extends AbstractTimeServer {
         this.sendTime();
     }
 
-    void parseRequest(JsonNode data) throws JsonException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JsonException, IOException {
         if (data.path(METHOD).asText().equals(POST)) {
-            JsonUtil.setTime(data);
+            JsonUtil.setTime(locale, data);
         }
         this.sendTime();
         listenToTimebase(true);
@@ -53,16 +54,16 @@ public class JsonTimeServer extends AbstractTimeServer {
 
     @Override
     public void sendErrorStatus() throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorInternal", TIME))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorInternal", TIME))));
     }
 
     @Override
-    public void parseTime(String statusString) throws JmriException, IOException    {
+    public void parseTime(String statusString) throws JmriException, IOException {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
     @Override
-    public void parseRate(String statusString) throws JmriException, IOException    {
+    public void parseRate(String statusString) throws JmriException, IOException {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 }

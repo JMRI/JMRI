@@ -20,6 +20,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-02-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected specific appearances</revremark>
+    </revision>
   </revhistory>
   <aspecttable>BNSF-1996</aspecttable>
   <name>Double head stop and proceed searchlight signal with Lunar</name>
@@ -102,7 +108,7 @@
   <specificappearances>
     <!-- Start of Specific Appearances list -->
     <danger>
-      <aspect>Stop</aspect>
+      <aspect>Stop and Proceed</aspect>
     </danger>
     <permissive>
       <aspect>Restricting (Diverging)</aspect>

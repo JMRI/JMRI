@@ -287,7 +287,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 			return getModifiedString(length, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
 					.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
 		}
-	case POOL_COLUMN:
+		case POOL_COLUMN:
 			return track.getPoolName();
 		case PLANPICKUP_COLUMN:
 			if (track.getIgnoreUsedLengthPercentage() > 0)
@@ -362,8 +362,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	}
 
 	public void dispose() {
-//		if (log.isDebugEnabled())
-//			log.debug("dispose");
+		// if (log.isDebugEnabled())
+		// log.debug("dispose");
 		removePropertyChangeTracks();
 		if (_location != null)
 			_location.removePropertyChangeListener(this);

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>Amtrak-2010</name>
+  <date>2010</date>
+  <reference>As described on Railroad Signals of the US website</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-01-25</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed not exceeding Normal Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Cab Speed</name>
+      <rule>Rule 281a</rule>
+      <indication>Proceed in accordance with cab signal indication. Reduce speed to not exceeding 60 MPH if Cab Speed cab signal is displayed without a signal speed, or if cab signals are not operative.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 281b</rule>
+      <indication>Proceed approaching the next signal at Limited Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule 281c</rule>
+      <indication>Proceed at Limited Speed until entire train clears all interlocking or spring switches, then proceed at Normal Speed.</indication>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed approaching the next signal at Medium Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282a</rule>
+      <indication>Proceed prepared to stop at the second signal. Trains exceeding Limited Speed must begin reduction to Limited Speed as soon as engine passes the Advance Approach signal</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed at Medium Speed until entire train clears all interlocking or spring switches, then proceed at Normal Speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching the next signal at Slow Speed. Trains exceeding Medium Speed must begin reduction to Medium Speed as soon as the engine passes the Approach Slow signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed prepared to stop at the next signal. Trains exceeding Medium Speed must begin reduction to Medium Speed as soon as the engine passes the Approach signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed prepared to stop at the next signal. Trains exceeding Medium Speed must begin reduction to Medium Speed as soon as the Medium Approach signal is clearly visible.</indication>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+    </aspect>
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed prepared to stop at next signal. Slow Speed applies until entire train clears all interlocking or spring switches, then Medium Speed applies</indication>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at Restricted Speed until the entire train has cleared all interlocking and spring switches (if signal is an interlocking or CP Signal).</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop, then proceed at Restricted Speed until the entire train has cleared all interlocking and spring switches (if signal is an inter-locking or CP signal)</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <rule>-</rule>
+      <indication>Unlit aspect for approach control.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="aspects" />
+    <imagetype type="noflash" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-Double.xml" />
+    <appearancefile href="appearance-Single.xml" />
+    <appearancefile href="appearance-Permissive.xml" />
+  </appearancefiles>
+</aspecttable>

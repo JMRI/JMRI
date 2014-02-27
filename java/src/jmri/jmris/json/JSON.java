@@ -12,14 +12,17 @@ public final class JSON {
 
     /**
      * JMRI JSON protocol version.
-     *<p>
+     * <p>
      * Changes to the major number represent a backwards incompatible change in
      * the protocol, while changes to the minor number represent an addition to
      * the protocol.
-     *<p>
-     * Protocol 1.0 first in JMRI 3.4<br>
-     * Protocol 1.1 first in JMRI 3.7.1
-     *<p>
+     * <p>
+     * Protocol version 1.0 was first introduced in JMRI 3.4<br>
+     * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
+     * JMRI 3.8<br>
+     * Protocol version 2.0 will be introduced in the JMRI 3.9 or later
+     * development cycle
+     * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
     public static final String JSON_PROTOCOL_VERSION = "1.1"; // NOI18N
@@ -103,7 +106,7 @@ public final class JSON {
     public static final String STATUS = "status"; // NOI18N
     /**
      * Numeric status value
-     * 
+     *
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
@@ -141,13 +144,22 @@ public final class JSON {
     public static final String RAILROAD = "railroad"; // NOI18N
     /**
      * {@value #NODE}
+     * <p>
+     * @since 1.1
      */
     public static final String NODE = "node"; // NOI18N
     /**
      * {@value #FORMER_NODES}
+     * <p>
      * @since 1.1
      */
     public static final String FORMER_NODES = "formerNodes"; // NOI18N
+    /**
+     * {@value #LOCALE}
+     * <p>
+     * @since 1.1
+     */
+    public static final String LOCALE = "locale"; // NOI18N
 
     /* JSON list types */
     /**
@@ -191,7 +203,7 @@ public final class JSON {
      */
     public static final String ROSTER = "roster"; // NOI18N
     /**
-     * {@value #ROSTER_GROUP}
+     * {@value #ROSTER_GROUPS}
      */
     public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
     /**
@@ -254,6 +266,10 @@ public final class JSON {
     public static final String MEMORY = "memory"; // NOI18N
     /**
      * {@value #OPERATIONS}
+     * <p>
+     * @deprecated The use of the <code>{@value #OPERATIONS}</code> type will be
+     * dropped in version 2.0 of the JSON protocol. Use types corresponding to
+     * specific operations objects instead.
      */
     public static final String OPERATIONS = "operations"; // NOI18N
     /**
@@ -310,6 +326,10 @@ public final class JSON {
     public static final String TURNOUT = "turnout"; // NOI18N
 
     /* JSON operations tokens */
+    /**
+     * {@value #ICON_NAME}
+     */
+    public static final String ICON_NAME = "iconName"; // NOI18N
     /**
      * {@value #LENGTH}
      */
@@ -574,7 +594,7 @@ public final class JSON {
     public static final String SSM = "SSM"; // NOI18N
     /**
      * Prefix for the throttle function keys (F0-F28).
-     *<p>
+     * <p>
      * {@value #F}
      */
     public static final String F = "F"; // NOI18N
@@ -616,7 +636,7 @@ public final class JSON {
      * {@value #RATE}
      */
     public static final String RATE = "rate"; // NOI18N
-    
+
     /*
      * JSON State (an unsigned integer)
      */
@@ -624,6 +644,9 @@ public final class JSON {
     /* Common state */
     /**
      * {@value #UNKNOWN}
+     * <p>
+     * Note that this value deliberately differs from
+     * {@link jmri.NamedBean#UNKNOWN}.
      */
     public static final int UNKNOWN = 0x00;
 

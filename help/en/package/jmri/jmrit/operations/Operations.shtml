@@ -26,10 +26,11 @@
    <H2>JMRI Operations</H2>
 
    The operations program allows you to create computer generated train manifests for your railroad.
-   A train <A HREF="#PrintingManifests">manifest</A> details the work that a crew will perform
-   during an operations session. The manifest provides a list of car pick up and set outs and shows
-   where the cars are located and where they should be eventually positioned on the railroad. The
-   program allows you to enter a roster of cars and locomotives, define locations (stations) on the
+   A train
+   <A HREF="#PrintingManifests">manifest</A> details the work that a crew will perform during an
+   operations session. The manifest provides a list of car pick up and set outs and shows where the
+   cars are located and where they should be eventually positioned on the railroad. The program
+   allows you to enter a roster of cars and locomotives, define locations (stations) on the
    railroad, and routes for trains to travel. The car roster includes information about the car,
    including road name, number, type of car, color, length, weight, load, date built, and owner.
    Trains are assigned routes that define locations or stations where cars can be picked up or set
@@ -38,12 +39,13 @@
    train can be between any two locations on the train's route.
    <P>
     Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
-    to service industries, and can optionally have custom <A HREF="#Schedules">schedules</A>
-    assigned to them. Trains can be configured to require a caboose or car with Flashing Rear End
-    Device (FRED). The program generates manifests for each train and switch lists for any location.
-    A <A HREF="#SwitchList">switch list</A> for a location shows the work for all of the trains that
-    will visit that location. The program can also place icons representing trains on a JMRI panel.
-    The icon can be taught to move in the panel along with the train from location to location.
+    to service industries, and can optionally have <A HREF="#Schedules">schedules</A> assigned to
+    them which allows for very fine control over car movement and loads. Trains can be configured to
+    require a caboose or car with Flashing Rear End Device (FRED). The program generates manifests
+    for each train and switch lists for any location. A <A HREF="#SwitchList">switch list</A> for a
+    location shows the work for all of the trains that will visit that location. The program can
+    also place icons representing trains on a JMRI panel. The icon can be taught to move in the
+    panel along with the train from location to location.
    </P>
    <P>The operations program is included in the JMRI/DecoderPro suite of tools and can be found
     under the main menu heading "Tools-&gt;Operations".</P>
@@ -176,7 +178,7 @@
     proficient with the build reports before you start using the more advanced features of the
     program. Once you get your trains to build correctly, you can add staging tracks if you've
     designed staging into your layout. The other three advanced features are completely optional and
-    aren't needed for the majority of users. The next track type to experiment with could be
+    aren't needed for good car movement. The next track type to experiment with could be
     classification/interchange tracks. Once you get classification/interchange tracks to work
     correctly, you could then introduce schedules for your industries and custom loads for your
     cars. If you do decide to use schedules, the first thing to understand is that you don't need
@@ -185,6 +187,17 @@
     most cases will reduce car movement! So our advice is start off using the basic features of the
     program and later once you get good car movement, try the more advanced features.
    </P>
+
+   <P>One question that comes up often, is whether to enter the arrival and departure tracks
+    into the operations program, and the simple answer is that you don't need to enter them into the
+    program. Although it is possible to specify the A/D tracks in the program, it complicates the
+    car movement by requiring an "extra" session to move the car from arrival track to the car's
+    destination, and from the car's origin track to the departure track. Most find that allowing the
+    program to pull a car directly from a train sitting on the "arrival" track and eventually spot
+    the car to its destination, is the best method when using the program. Same goes when building a
+    train using the "departure" track, car pulls directly into the train rather than to a specific
+    departure track makes the operations run more smoothly.  By not specifying the A/D tracks, you're
+    letting your operators, and not the program, decide which tracks to use when servicing a train.</P>
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
@@ -330,8 +343,14 @@
    <H3>Railroad Name</H3>
 
    Enter your railroad name in the field across from "Railroad Name". This name will show up on your
-   manifests. You can also have a different railroad name for every train in your roster, see <A
-    HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
+   manifests. You can also have a different railroad name for every train in your roster, see
+   <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
+
+   <P>When you close the "Settings" window you will be prompted to make whatever railroad name
+    you've entered to be the JMRI railroad name. You should answer "Yes" to the dialog window, this
+    way all of the other applications in JMRI will reference the same railroad name. To change the
+    railroad name once you've done this, you will need to go to the Preferences window found under
+    "Edit" in the main menu bar.</P>
 
    <H3>Train Directions</H3>
 
@@ -550,12 +569,17 @@
    <A NAME="AllowLocalCarMovements"></A>
    <H3>Switcher Service</H3>
 
-   The next set of options control local car movements when using <A HREF="#SwitcherService">switcher</A>
-   to service a location. Normally it is better not to allow a car to move from one spur directly to
-   another spur at the same location. This type of move can be very unrealistic, picture moving a
-   boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from one yard
-   track to another can have your operators wondering what kind of busy work is being generated! But
-   if you need these types of moves, select the appropriate checkbox.
+   The next set of options control local car movements when using a
+   <A HREF="#SwitcherService">switcher</A> to service a location. A switcher only services one
+   location. Normally it is better not to allow a car to move from one spur directly to another spur
+   at the same location when using a switcher. This type of move can be very unrealistic, picture
+   moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from
+   one yard track to another can have your operators wondering what kind of busy work is being
+   generated! We recommend that you leave all of the checkboxes unselected, but if you need these
+   types of moves, select the appropriate checkbox.
+   <P>
+   You should note that schedules can override the switcher options.  So if you need certain car movements
+   for a switcher, it's best to use a schedule to define them.</P>
 
    <H3>Staging</H3>
    <A NAME="TypeRoadLoadRestrictionsStaging"></A>
@@ -966,8 +990,11 @@
    <A NAME="ManifestComments"></A>
    <H3>Manifests Options</H3>
 
-   The program allows you to customize your train manifest to your liking. There are nine optional
-   checkboxes and their functions are described below.
+   The program allows you to customize your train manifest to your liking. You can change the
+   manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text" windows
+   found under the
+   <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
+   nine optional checkboxes and their functions are described next.
    <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the manifest was printed. The print time is always shown at the top
     right of the manifest.</P>

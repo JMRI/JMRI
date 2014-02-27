@@ -115,7 +115,7 @@ public class SoundPro extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("SoundPro");
+        Apps.setStartupInfo("SoundPro");
 
         setConfigFilename("SoundProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("SoundPro");

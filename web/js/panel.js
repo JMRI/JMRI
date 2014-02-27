@@ -10,14 +10,10 @@
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
- *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
- *  		2) send list of current states to server and wait for changes
- *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
- *  		4) browser user clicks on widget? send "set state" command and go to 3)
- *  		5) error? go back to 2) 
  *  
- *  TODO: finish indicatorXXicon logic, handling occupancy and error states
- *  TODO: "grey-out" screen to indicate loss of server connection
+ *  TODO: change le panel xml to only send systemnames (occupancy sensors are sending usernames)
+ *  TODO: address false positive touch screen
+ *  TODO: improve error notification when panel and/or server goes away
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: update drawn track on occupancy and state changes (color, width)
@@ -29,11 +25,7 @@
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
- *  TODO: improve visual of multisensorclick by sending all state changes in one message
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
- *  TODO: determine proper level (z-index) for canvas layer
- *  TODO: convert to WebSockets
- *  TODO: change JMRI to accept HELD state for signalHeads
  *   
  **********************************************************************************************/
 
@@ -43,9 +35,9 @@ var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
 var systemNames = {};   // associative array of array of elements indexed by systemName
+var occupancyNames = {};   // associative array of array of elements indexed by occupancysensor name
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
-var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
 var $gCtx;  		//persistent context of canvas layer   
 var $gDashArray = [12, 12]; //on,off of dashed lines
 var DOWNEVENT;  	//either mousedown or touchstart, based on device
@@ -146,8 +138,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                 $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
                 $widget['widgetFamily'] = $getWidgetFamily($widget);
                 var $jc = "";
-                if ($widget.class != undefined) {
-                    var $ta = $widget.class.split('.'); //get last part of java class name for a css class
+                if (typeof $widget["class"] !== "undefined") {
+                    var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
                     $jc = $ta[$ta.length - 1];
                 }
                 $widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
@@ -180,9 +172,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "indicatortrackicon" :
                                 $widget['icon1'] = $(this).find('iconmap').find('ClearTrack').attr('url');
+                                $widget['icon2'] = $widget.icon1;
+                                $widget['icon4'] = $widget.icon1;
+                                $widget['icon8'] = $widget.icon1;
+                                $widget['iconOccupied1'] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
+                                $widget['iconOccupied2'] = $widget.iconOccupied1;
+                                $widget['iconOccupied4'] = $widget.iconOccupied1;
+                                $widget['iconOccupied8'] = $widget.iconOccupied1;
                                 $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
+                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                    $widget['occupancystate'] = UNKNOWN;
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                }
                                 break;
                             case "indicatorturnouticon" :
                                 $widget['name'] = $(this).find('turnout').text();
@@ -192,11 +196,20 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
                                 $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
+                                $widget['iconOccupied1'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
+                                $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
+                                $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                                $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
                                 $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
+                                }
+                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                    $widget['occupancystate'] = UNKNOWN;
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 }
                                 jmri.getTurnout($widget["systemName"]);
                                 break;
@@ -228,6 +241,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
                                 break;
                             case "signalheadicon" :
@@ -236,7 +251,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
                                 $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
                                 $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
-                                if ($widget['icon' + RED] == undefined) { //look for held if no red
+                                if (typeof $widget['icon' + RED] == "undefined") { //look for held if no red
                                     $widget['icon' + RED] = $(this).find('icons').find('held').attr('url');
                                 }
                                 $widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
@@ -289,7 +304,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 actives.each(function(i, item) {  //loop thru array once to set up siblings array, to be copied to all siblings
                                     $widget.siblings.push($id);
                                     $widget.hoverText += $(item).attr('sensor') + " "; //add sibling names to hovertext
-                                    $id = (typeof $widget["id"] !== "undefined") ? "widget-" + $widget["id"] : "widget-noid-" + $gUnique(); // set new id
+                                    $id = "widget-" + $gUnique(); //set new id to a unique value for each sibling
                                 });
                                 actives.each(function(i, item) {  //loop thru array again to create each widget
                                     $widget['id'] = $widget.siblings[i]; 	  	 // use id already set in sibling array
@@ -298,8 +313,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     if (i < actives.size() - 1) { //only save widget and make a new one if more than one active found
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                                        $widget["systemName"] = $widget.name;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
+                                        jmri.getSensor($widget["systemName"]);
+                                        if (!($widget.systemName in systemNames)) {  //set where-used for this new sensor
+                                            systemNames[$widget.systemName] = new Array();
+                                        }
+                                        systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
                                         $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
                                         $widget['icon1'] = "/web/images/transparent_1x1.png";
                                         $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
@@ -307,6 +328,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
                                     }
                                 });
+                                $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
                                 break;
                         }
@@ -332,9 +354,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['css2'] = $getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
                                 $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
                                 $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
-                                if ($widget.name != undefined && $widget.forcecontroloff != "true") {
+                                if (typeof $widget.name !== "undefined" && $widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
                                 break;
                             case "locoicon" :
@@ -354,17 +378,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
                                 $widget.styles['height'] = "166px";
                                 $widget['scale'] = $(this).attr('scale');
-                                if ($widget.level == undefined) {
+                                if (typeof $widget.level == "undefined") {
                                     $widget['level'] = 10;  //if not included in xml
                                 }
                                 $widget['text'] = "00:00 AM";
                                 $widget['state'] = "00:00 AM";
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
                                 $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
                                 break;
                             case "memoryInputIcon" :
@@ -373,6 +401,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
                                 $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
                                 break;
                             case "linkinglabel" :
@@ -413,11 +443,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
-                                if ($widget.name != undefined) { //make it clickable (unless no turnout assigned)
+                                if (typeof $widget.name !== "undefined") { //make it clickable (unless no turnout assigned)
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 //set widget occupancysensor from block to speed affected changes later
-                                if ($gBlks[$widget.blockname] != undefined) {
+                                if (typeof $gBlks[$widget.blockname] !== "undefined") {
                                     $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
                                     $widget['occupancystate'] = $gBlks[$widget.blockname].state;
                                 }
@@ -432,11 +462,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $("#panel-area>#" + $widget.id).css(
                                         {position: 'absolute', left: ($widget.x - $cr) + 'px', top: ($widget.y - $cr) + 'px', zIndex: 3,
                                             width: $cd + 'px', height: $cd + 'px'});
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 jmri.getTurnout($widget["systemName"]);
+                                if ($widget["occupancysensor"])
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "tracksegment" :
                                 //set widget occupancysensor from block to speed affected changes later
-                                if ($gBlks[$widget.blockname] != undefined) {
+                                if (typeof $gBlks[$widget.blockname] !== "undefined") {
                                     $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
                                     $widget['occupancystate'] = $gBlks[$widget.blockname].state;
                                 }
@@ -445,13 +479,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $gWidgets[$widget.id] = $widget;
                                 //draw the tracksegment
                                 $drawTrackSegment($widget);
+                                if ($widget["occupancysensor"])
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "levelxing" :
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
                                 //set widget occupancysensor from block to speed affected changes later
                                 //TODO: handle BD block
-                                if ($gBlks[$widget.blocknameac] != undefined) {
+                                if (typeof $gBlks[$widget.blocknameac] !== "undefined") {
                                     $widget['blockname'] = $widget.blocknameac; //normalize blockname
                                     $widget['occupancysensor'] = $gBlks[$widget.blocknameac].occupancysensor;
                                     $widget['occupancystate'] = $gBlks[$widget.blocknameac].state;
@@ -462,6 +498,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $storeLevelXingPoints($widget);
                                 //draw the xing
                                 $drawLevelXing($widget);
+                                if ($widget["occupancysensor"])
+                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "layoutturntable" :
                                 //just draw the circle for now, don't even store it
@@ -489,6 +527,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                         systemNames[$widget.systemName] = new Array();
                     }
                     systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                }
+                //store occupancy sensor where-used
+                if ($widget.occupancysensor && $gWidgets[$widget.id]) {
+                    if (!($widget.occupancysensor in occupancyNames)) {
+                        occupancyNames[$widget.occupancysensor] = new Array();
+                    }
+                    occupancyNames[$widget.occupancysensor][occupancyNames[$widget.occupancysensor].length] = $widget.id;
                 }
             }  //end of function
     );  //end of each
@@ -524,7 +569,7 @@ function $handleClick(e) {
     var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
     sendElementChange($widget.jsonType, $widget.systemName, $newState);  //send new value to JMRI
-    if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
+    if (typeof $widget.secondturnoutname !== "undefined") {  //TODO: put this in a more logical place?
         sendElementChange($widget.jsonType, $widget.secondturnoutname, $newState);  //also send 2nd turnout
     }
 }
@@ -533,8 +578,8 @@ function $handleClick(e) {
 //perform multisensor click-handling, bound to click event for clickable multisensor widgets.
 function $handleMultiClick(e) {
     var $widget = $gWidgets[this.id];
-    var clickX = e.pageX - this.offsetLeft;  //get click location on widget
-    var clickY = e.pageY - this.offsetTop;
+    var clickX = e.pageX - $(this).parent().offset().left - this.offsetLeft;  //get click location on widget
+    var clickY = e.pageY - $(this).parent().offset().top - this.offsetTop;
 //find if we want to increment or decrement
     var dec = false;
     if ($widget.updown == "true") {
@@ -583,7 +628,7 @@ function $handleLinkingLabelClick(e) {
     if ($url.toLowerCase().indexOf("frame:") == 0) {
         $frameName = $url.substring(6); //if "frame" found, remove it
         $frameType = $gPanelList[$frameName];  //find panel type in panel list
-        if ($frameType == undefined) {
+        if (typeof $frameType == "undefined") {
             $url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver
         } else {
             $url = "?name=" + $frameType + "/" + $frameName; //format for panel server
@@ -598,9 +643,9 @@ function $handleLinkingLabelClick(e) {
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
     var $savStrokeStyle = $gCtx.strokeStyle;
     var $savLineWidth = $gCtx.lineWidth;
-    if ($color != undefined)
+    if (typeof $color !== "undefined")
         $gCtx.strokeStyle = $color;
-    if ($width != undefined)
+    if (typeof $width !== "undefined")
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.arc($ptx, $pty, $radius, 0, 2 * Math.PI, false);
@@ -620,13 +665,13 @@ function $drawTrackSegment($widget) {
 
     //get the endpoints by name
     var $pt1 = $gPts[$widget.connect1name + "." + $widget.type1];
-    if ($pt1 == undefined) {
+    if (typeof $pt1 == "undefined") {
         if (window.console)
             console.log("can't draw tracksegment " + $widget.connect1name + "." + $widget.type1 + " undefined (1)");
         return;
     }
     var $pt2 = $gPts[$widget.connect2name + "." + $widget.type2];
-    if ($pt2 == undefined) {
+    if (typeof $pt2 == "undefined") {
         if (window.console)
             console.log("can't draw tracksegment " + $widget.connect2name + "." + $widget.type2 + " undefined (2)");
         return;
@@ -635,7 +680,7 @@ function $drawTrackSegment($widget) {
     //	set trackcolor based on block occupancy state
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blockname];
-    if ($blk != undefined) {
+    if (typeof $blk !== "undefined") {
         if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
             $color = $blk.occupiedcolor;
             //if (window.console) console.log("set block color to occupiedcolor " + $color);
@@ -649,7 +694,7 @@ function $drawTrackSegment($widget) {
     if ($widget.mainline == "yes") {
         $width = $gPanel.mainlinetrackwidth;
     }
-    if ($widget.angle == undefined) {
+    if (typeof $widget.angle == "undefined") {
         //draw straight line between the points
         if ($widget.dashed == "yes") {
             $drawDashedLine($pt1.x, $pt1.y, $pt2.x, $pt2.y, $color, $width, $gDashArray);
@@ -670,9 +715,9 @@ function $drawTrackSegment($widget) {
 function $drawDashedLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width, dashArray) {
     var $savLineWidth = $gCtx.lineWidth;
     var $savStrokeStyle = $gCtx.strokeStyle;
-    if ($color != undefined)
+    if (typeof $color !== "undefined")
         $gCtx.strokeStyle = $color;
-    if ($width != undefined)
+    if (typeof $width !== "undefined")
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.dashedLine($pt1x, $pt1y, $pt2x, $pt2y, dashArray);
@@ -735,22 +780,24 @@ function $drawClock($widget) {
 //draw an icon-type widget (pass in widget)
 function $drawIcon($widget) {
     var $hoverText = "";
-    if ($widget.hoverText != undefined) {
+    if (typeof $widget.hoverText !== "undefined") {
         $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "'";
     }
-    if ($hoverText == "" && $widget.name != undefined) { //if name available, use it as hover text if still blank
+    if ($hoverText == "" && typeof $widget.name !== "undefined") { //if name available, use it as hover text if still blank
         $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
     }
 
+    //additional naming for indicator*icon widgets to reflect occupancy
+    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
     //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if ($widget['icon' + $widget.state] != undefined) {
+    if (typeof $widget['icon' + $widget.state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $widget['state']] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml);  //put the html in the panel
 
         //add in overlay text if specified  (append "overlay" to id to keep them unique)
-        if ($widget.text != undefined) {
+        if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
             $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
         }
@@ -768,7 +815,7 @@ function $drawLevelXing($widget) {
     }
     var $width = $gPanel.sidetrackwidth;
     //set levelxing width same as the A track
-    if ($gWidgets[$widget.connectaname] != undefined) {
+    if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $width = $gPanel.mainlinetrackwidth;
         }
@@ -781,7 +828,7 @@ function $drawLevelXing($widget) {
     //	set trackcolor based on block occupancy state of AC block
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blocknameac];
-    if ($blk != undefined) {
+    if (typeof $blk !== "undefined") {
         if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
             $color = $blk.occupiedcolor;
         } else {
@@ -816,7 +863,7 @@ function $drawTurnout($widget) {
     }
     var $width = $gPanel.sidetrackwidth;
     //set turnout width same as the A track
-    if ($gWidgets[$widget.connectaname] != undefined) {
+    if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $width = $gPanel.mainlinetrackwidth;
         }
@@ -840,7 +887,7 @@ function $drawTurnout($widget) {
         var cency = (ceny * 1) + ((cy - ceny) * 0.5);
     }
     var dx, dy, dcx, dcy;
-    if ($gPts[$widget.ident + PT_D] != undefined) {
+    if (typeof $gPts[$widget.ident + PT_D] !== "undefined") {
         dx = $gPts[$widget.ident + PT_D].x;
         dy = $gPts[$widget.ident + PT_D].y;
         dcx = (dx * 1) + ((cx - dx) * 0.5); // midpoint DC
@@ -851,7 +898,7 @@ function $drawTurnout($widget) {
     //	set trackcolor based on block occupancy state
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blockname];
-    if ($blk != undefined) {
+    if (typeof $blk != "undefined") {
         if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
             $color = $blk.occupiedcolor;
         } else {
@@ -981,9 +1028,9 @@ function $storeLevelXingPoints($widget) {
 function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width) {
     var $savLineWidth = $gCtx.lineWidth;
     var $savStrokeStyle = $gCtx.strokeStyle;
-    if ($color != undefined)
+    if (typeof $color !== "undefined")
         $gCtx.strokeStyle = $color;
-    if ($width != undefined)
+    if (typeof $width !== "undefined")
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.moveTo($pt1x, $pt1y);
@@ -1007,9 +1054,9 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         //save track settings for restore
         var $savLineWidth = $gCtx.lineWidth;
         var $savStrokeStyle = $gCtx.strokeStyle;
-        if ($color != undefined)
+        if (typeof $color !== "undefined")
             $gCtx.strokeStyle = $color;
-        if ($width != undefined)
+        if (typeof $width !== "undefined")
             $gCtx.lineWidth = $width;
 
         var halfAngle = (degrees / 2) * Math.PI / 180; //in radians
@@ -1048,41 +1095,36 @@ var $getTextCSSFromObj = function($widget) {
     var $retCSS = {};
     $retCSS['color'] = '';  //only clear attributes
     $retCSS['background-color'] = '';
-    if ($widget.red != undefined) {
+    if (typeof $widget.red !== "undefined") {
         $retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
     }
-    if ($widget.redBack != undefined) {
+    if (typeof $widget.redBack !== "undefined") {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
     }
-    if ($widget.size != undefined) {
+    if (typeof $widget.size !== "undefined") {
         $retCSS['font-size'] = $widget.size + "px ";
     }
-    if ($widget.margin != undefined) {
+    if (typeof $widget.margin !== "undefined") {
         $retCSS['padding'] = $widget.margin + "px ";
     }
-    if ($widget.borderSize != undefined) {
+    if (typeof $widget.borderSize !== "undefined") {
         $retCSS['border-width'] = $widget.borderSize + "px ";
     }
-    if ($widget.redBorder != undefined) {
+    if (typeof $widget.redBorder !== "undefined") {
         $retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";
-        ;
         $retCSS['border-style'] = 'solid';
     }
-    if ($widget.fixedWidth != undefined) {
-        $adj = 0;
-        if ($widget.margin != undefined) {
-            $adj = $widget.margin * 2;
-        }  //margins are subtracted from JMRI fixedwidth
-        $retCSS['width'] = ($widget.fixedWidth - $adj) + "px ";
+    if (typeof $widget.fixedWidth !== "undefined") {
+        $retCSS['width'] = $widget.fixedWidth + "px ";
     }
-    if ($widget.justification != undefined) {
+    if (typeof $widget.justification !== "undefined") {
         if ($widget.justification == "centre") {
             $retCSS['text-align'] = "center";
         } else {
             $retCSS['text-align'] = $widget.justification;
         }
     }
-    if ($widget.style != undefined) {
+    if (typeof $widget.style !== "undefined") {
         switch ($widget.style) { //set font based on style attrib from xml
             case "1":
                 $retCSS['font-weight'] = 'bold';
@@ -1115,7 +1157,7 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if ($widget != undefined) {  //don't bother if widget not found
+    if (typeof $widget !== "undefined") {  //don't bother if widget not found
 
         var $height = e.height() * $widget.scale;
         var $width = e.width() * $widget.scale;
@@ -1166,32 +1208,11 @@ var $setWidgetPosition = function(e) {
     }
 };
 
-//set new value for all widgets having specified type and element name
-var $setElementState = function($element, $name, $newState) {
-//	if (window.console) console.log( "setting " + $element + " " + $name + " --> " + $newState);
-    //loop thru widgets, setting all matches
-    jQuery.each($gWidgets, function($id, $widget) {
-        //make the change if widget matches, and not already this value
-        if ($widget.jsonType == $element && $widget.name == $name && $widget.state != $newState) {
-            $setWidgetState($id, $newState);
-        }
-        //if sensor and it changed, also check each widget's occupancy sensor and redraw widget's color if matched
-        if ($element == 'sensor' && $widget.occupancysensor == $name && $widget.occupancystate != $newState) {
-            $gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
-            $gWidgets[$widget.id].occupancystate = $newState;
-            if (window.console)
-                console.log("redraw " + $widget.widgetType + " " + $widget.name + " for " + $widget.occupancysensor);
-            switch ($widget.widgetType) {
-                case 'layoutturnout' :
-                    $drawTurnout($widget);
-                    break;
-                case 'tracksegment' :
-                    $drawTrackSegment($widget);
-                    break;
-            }
-        }
-
-    });
+//reDraw an icon-based widget to reflect changes to state or occupancy
+var $reDrawIcon = function($widget) {
+    //additional naming for indicator*icon widgets to reflect occupancy
+    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+    $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
 };
 
 //set new value for widget, showing proper icon, return widgets changed
@@ -1203,8 +1224,8 @@ var $setWidgetState = function($id, $newState) {
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
-                $('img#' + $id).attr('src', $widget['icon' + ($newState + "").replace(/ /g, "_")]);  //set image src to next state's image
-                break;
+            	$reDrawIcon($widget)
+            	break;
             case "text" :
                 if ($widget.jsonType == "memory") {
                     if ($widget.widgetType == "fastclock") {
@@ -1213,10 +1234,10 @@ var $setWidgetState = function($id, $newState) {
                         $('div#' + $id).text($newState);  //set memory text to new value from server
                     }
                 } else {
-                    if ($widget['text' + $newState] != undefined) {
+                    if (typeof $widget['text' + $newState] !== "undefined") {
                         $('div#' + $id).text($widget['text' + $newState]);  //set text to new state's text
                     }
-                    if ($widget['css' + $newState] != undefined) {
+                    if (typeof $widget['css' + $newState] !== "undefined") {
                         $('div#' + $id).css($widget['css' + $newState]); //set css to new state's css
                     }
                 }
@@ -1242,7 +1263,7 @@ var $gUnique = function() {
 
 //clean up a name, for example to use as an id  
 var $safeName = function($name) {
-    if ($name == undefined) {
+    if (typeof $name == "undefined") {
         return "unique-" + $gUnique();
     } else {
         return $name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
@@ -1320,10 +1341,10 @@ var $getNextState = function($widget) {
                 var $currentState = undefined;
                 for (k in $widget) {
                     var s = k.substr(4); //extract the state from current icon var
-                    if (k.indexOf('icon') == 0 && $widget[k] != undefined && k != 'icon' + HELD) { //valid value, name starts with 'icon', but not the HELD one
-                        if ($firstState == undefined)
+                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD) { //valid value, name starts with 'icon', but not the HELD one
+                        if (typeof $firstState == "undefined")
                             $firstState = s;  //remember the first state (for last one)
-                        if ($currentState != undefined && $nextState == undefined)
+                        if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
@@ -1332,7 +1353,7 @@ var $getNextState = function($widget) {
                     }
                 }
                 ;
-                if ($nextState == undefined)
+                if (typeof $nextState == "undefined")
                     $nextState = $firstState;  //if still not set, start over
         } //end of switch 
 
@@ -1342,10 +1363,10 @@ var $getNextState = function($widget) {
         var $currentState = undefined;
         for (k in $widget) {
             var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
-            if (k.indexOf('icon') == 0 && $widget[k] != undefined && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
-                if ($firstState == undefined)
+            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
+                if (typeof $firstState == "undefined")
                     $firstState = s;  //remember the first state (for last one)
-                if ($currentState != undefined && $nextState == undefined)
+                if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
                     $nextState = s; //last one was the current, so this one must be next
                 if (s == $widget.state)
                     $currentState = s;
@@ -1354,14 +1375,14 @@ var $getNextState = function($widget) {
             }
         }
         ;
-        if ($nextState == undefined)
+        if (typeof $nextState == "undefined")
             $nextState = $firstState;  //if still not set, start over
 
     } else {  //start with INACTIVE, then toggle to ACTIVE and back
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }
 
-    if ($nextState == undefined)
+    if (typeof $nextState == "undefined")
         $nextState = $widget.state;  //default to no change
     return $nextState;
 };
@@ -1388,7 +1409,7 @@ var requestPanelXML = function(panelName) {
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
     for (k in $widget) {
-        if (k.indexOf('icon') == 0 && $widget[k] != undefined && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
+        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
             $("<img src='" + $widget[k] + "'/>");
         }
     }
@@ -1399,7 +1420,7 @@ var $preloadWidgetImages = function($widget) {
 //note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel") && $widget.text != undefined) {
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel") && typeof $widget.text !== "undefined") {
         return "text";  //special case to distinguish text vs. icon labels
     }
     if ($widget.widgetType == "sensoricon" && $widget.icon == "no") {
@@ -1472,10 +1493,39 @@ var $drawAllIconWidgets = function() {
 };
 
 function updateWidgets(systemName, state) {
-    $.each(systemNames[systemName], function(index, widgetId) {
-        console.log("setting " + widgetId + " (" + systemName + ")");
-        $setWidgetState(widgetId, state);
-    });
+    if (systemNames[systemName]) {
+        $.each(systemNames[systemName], function(index, widgetId) {
+            console.log("setting state of " + widgetId + " (" + systemName + ") to " + state);
+            $setWidgetState(widgetId, state);
+        });
+    }
+}
+
+function updateOccupancy(occupancyName, state) {
+    if (occupancyNames[occupancyName]) {
+        $.each(occupancyNames[occupancyName], function(index, widgetId) {
+            console.log("setting occupancy of " + widgetId + " (" + occupancyName + ")");
+            $widget = $gWidgets[widgetId];
+            if ($widget.blockname) {
+                $gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
+            }
+            $gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
+            if (window.console)
+                console.log("redraw " + $widget.widgetType + " " + $widget.name + " for " + $widget.occupancysensor);
+            switch ($widget.widgetType) {
+                case 'layoutturnout' :
+                    $drawTurnout($widget);
+                    break;
+                case 'tracksegment' :
+                    $drawTrackSegment($widget);
+                    break;
+                case 'indicatortrackicon' :
+                case 'indicatorturnouticon' :
+                    $reDrawIcon($widget);
+                    break;
+            }
+        });
+    }
 }
 
 function listPanels() {
@@ -1561,8 +1611,7 @@ $(document).ready(function() {
             },
             sensor: function(name, state, data) {
                 updateWidgets(name, state);
-                // see also setElementState post-setWidgetState() code
-                // that needs to be redone here
+                updateOccupancy(name, state);
             },
             signalHead: function(name, state, data) {
                 updateWidgets(name, state);

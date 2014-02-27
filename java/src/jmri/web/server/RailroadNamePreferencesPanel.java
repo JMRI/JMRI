@@ -208,4 +208,9 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     public void savePreferences() {
         this.storeValues();
     }
+
+    @Override
+    public boolean isDirty() {
+        return this.preferences.isDirty();
+    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
@@ -62,7 +63,7 @@ public class JsonReporterServer extends AbstractReporterServer {
 
     @Override
     public void sendErrorStatus(String reporterName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", REPORTER, reporterName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorObject", REPORTER, reporterName))));
     }
 
     @Override
@@ -70,14 +71,14 @@ public class JsonReporterServer extends AbstractReporterServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonUtil.putReporter(name, data);
+            JsonUtil.putReporter(locale, name, data);
         } else {
-            JsonUtil.setReporter(name, data);
+            JsonUtil.setReporter(locale, name, data);
         }
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getReporter(name)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getReporter(locale, name)));
         this.addReporterToList(name);
     }
 }

@@ -5,8 +5,16 @@ package apps;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
-
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
 /**
@@ -20,9 +28,10 @@ import jmri.util.FileUtil;
  * @version	$Revision$
  */
  
-public class FileLocationPane extends JPanel {
+public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    private boolean isDirty = false;
 
     public FileLocationPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -56,11 +65,13 @@ public class FileLocationPane extends JPanel {
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcScript.setAcceptAllFileFilterUsed(false);
         bScript.addActionListener(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // get the file
                 fcScript.showOpenDialog(null);
                 if (fcScript.getSelectedFile()==null) return; // cancelled
                 scriptLocation.setText(fcScript.getSelectedFile()+File.separator);
+                isDirty = true;
                 validate();
                 if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
             }
@@ -92,11 +103,13 @@ public class FileLocationPane extends JPanel {
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcUser.setAcceptAllFileFilterUsed(false);
         bUser.addActionListener(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // get the file
                 fcUser.showOpenDialog(null);
                 if (fcUser.getSelectedFile()==null) return; // cancelled
                 userLocation.setText(fcUser.getSelectedFile()+File.separator);
+                isDirty = true;
                 validate();
                 if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
             }
@@ -105,9 +118,54 @@ public class FileLocationPane extends JPanel {
         return p;
     }
 
-    private static JTextField scriptLocation = new JTextField();
-    private static JTextField userLocation = new JTextField();
+    private static final JTextField scriptLocation = new JTextField();
+    private static final JTextField userLocation = new JTextField();
     //protected static JTextField throttleLocation = new JTextField();
+
+    @Override
+    public String getPreferencesItem() {
+        return "FILELOCATIONS"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuFileLocation"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutFileLocations"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedFileLocations"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        FileLocationPane.save();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return isDirty;
+    }
 
 }
 

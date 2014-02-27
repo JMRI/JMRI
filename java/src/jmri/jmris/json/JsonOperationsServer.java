@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
@@ -15,10 +16,12 @@ import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.ID;
 import static jmri.jmris.json.JSON.LEAD_ENGINE;
 import static jmri.jmris.json.JSON.LENGTH;
 import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.OPERATIONS;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.TERMINATE;
@@ -101,7 +104,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        this.parseRequest(Locale.getDefault(), this.mapper.readTree(statusString).path(DATA));
     }
 
     /**
@@ -111,11 +114,14 @@ public class JsonOperationsServer extends AbstractOperationsServer {
      * anything, but relies on the JsonClientHandler to handle requests for
      * lists of operations data on its behalf.
      *
+     * @param locale
      * @param data
      * @throws JmriException
      * @throws IOException
+     * @deprecated The use of the {@value jmri.jmris.json.JSON#OPERATIONS} key is deprecated.
+     * Use keys for the specific operations object instead.
      */
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         ArrayList<Attribute> response = new ArrayList<Attribute>();
         if (!data.path(TRAIN).isMissingNode() && !data.path(TRAIN).isNull()) {
             String train = data.path(TRAIN).asText();
@@ -152,7 +158,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
                 this.sendMessage(response);
             }
         } else {
-            this.sendErrorStatus(Bundle.getMessage("ErrorTrainAttribute"));
+            this.sendErrorStatus(Bundle.getMessage(locale, "ErrorTrainAttribute"));
         }
     }
 
@@ -160,7 +166,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     public void sendTrainList() {
         try {
             try {
-                this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrains()));
+                this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrains(this.connection.getLocale())));
             } catch (JsonException ex) {
                 this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
             }
@@ -182,9 +188,18 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     @Override
     public void sendFullStatus(Train train) throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrain(train.getId())));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrain(this.connection.getLocale(), train.getId())));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
+    }
+
+    void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
+        String id = data.path(ID).asText();
+        if (!data.path(METHOD).isMissingNode()) {
+            JsonUtil.setTrain(locale, id, data);
+        }
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTrain(locale, id)));
+        this.addTrainToList(id);
     }
 }

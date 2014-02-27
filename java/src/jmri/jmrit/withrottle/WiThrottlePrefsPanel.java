@@ -1,37 +1,36 @@
 package jmri.jmrit.withrottle;
 
 /**
- *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2010
+ * @version $Revision$
  */
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ResourceBundle;
-
-import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JCheckBox;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import java.io.File;
-import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
-public class WiThrottlePrefsPanel extends JPanel{
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
-    
+public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
+
     JCheckBox eStopCB;
     JSpinner delaySpinner;
-    
+
     JCheckBox momF2CB;
 
     JCheckBox portCB;
@@ -51,23 +50,23 @@ public class WiThrottlePrefsPanel extends JPanel{
     JFrame parentFrame = null;
     boolean enableSave;
 
-    public WiThrottlePrefsPanel(){
-        if(jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class)==null){
-            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(FileUtil.getUserFilesPath()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
+    public WiThrottlePrefsPanel() {
+        if (InstanceManager.getDefault(WiThrottlePreferences.class) == null) {
+            InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
-        localPrefs = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
+        localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
         //  set local prefs to match instance prefs
         //localPrefs.apply(WiThrottleManager.withrottlePreferencesInstance());
         initGUI();
         setGUI();
     }
 
-    public WiThrottlePrefsPanel(JFrame f){
+    public WiThrottlePrefsPanel(JFrame f) {
         this();
         parentFrame = f;
     }
 
-    public void initGUI(){
+    public void initGUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(eStopDelayPanel());
         add(functionsPanel());
@@ -77,10 +76,10 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     }
 
-    private void setGUI(){
+    private void setGUI() {
         eStopCB.setSelected(localPrefs.isUseEStop());
         delaySpinner.setValue(localPrefs.getEStopDelay());
-        
+
         momF2CB.setSelected(localPrefs.isUseMomF2());
 
         portCB.setSelected(localPrefs.isUseFixedPort());
@@ -94,44 +93,45 @@ public class WiThrottlePrefsPanel extends JPanel{
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
 
-/**
- * Show the save and cancel buttons if displayed in its own frame.
- */
-    public void enableSave(){
+    /**
+     * Show the save and cancel buttons if displayed in its own frame.
+     */
+    public void enableSave() {
         saveB.setVisible(true);
         cancelB.setVisible(true);
     }
-/**
- * set the local prefs to match the GUI
- * Local prefs are independant from the singleton instance prefs.
- * @return true if set, false if values are unacceptable.
- */
-    private boolean setValues(){
+
+    /**
+     * set the local prefs to match the GUI Local prefs are independant from the
+     * singleton instance prefs.
+     *
+     * @return true if set, false if values are unacceptable.
+     */
+    private boolean setValues() {
         boolean didSet = true;
         localPrefs.setUseEStop(eStopCB.isSelected());
-        localPrefs.setEStopDelay((Integer)delaySpinner.getValue());
-        
+        localPrefs.setEStopDelay((Integer) delaySpinner.getValue());
+
         localPrefs.setUseMomF2(momF2CB.isSelected());
 
         localPrefs.setUseFixedPort(portCB.isSelected());
-        if (portCB.isSelected()){
+        if (portCB.isSelected()) {
             int portNum;
-            try{
+            try {
                 portNum = Integer.parseInt(port.getText());
-            }catch (NumberFormatException NFE){ //  Not a number
+            } catch (NumberFormatException NFE) { //  Not a number
                 portNum = 0;
             }
-            if ((portNum < 1024) || (portNum > 65535)){ //  Invalid port value
+            if ((portNum < 1024) || (portNum > 65535)) { //  Invalid port value
                 javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("WarningInvalidPort"),
-                    rb.getString("TitlePortWarningDialog"),
-                    JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningInvalidPort"),
+                        Bundle.getMessage("TitlePortWarningDialog"),
+                        JOptionPane.WARNING_MESSAGE);
                 didSet = false;
-            }else {
+            } else {
                 localPrefs.setPort(port.getText());
             }
         }
-        
 
         localPrefs.setAllowTrackPower(powerCB.isSelected());
         localPrefs.setAllowTurnout(turnoutCB.isSelected());
@@ -143,115 +143,114 @@ public class WiThrottlePrefsPanel extends JPanel{
     }
 
     public void storeValues() {
-        if (setValues()){
+        if (setValues()) {
             WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
             WiThrottleManager.withrottlePreferencesInstance().save();
-            
-            if (parentFrame != null){
+
+            if (parentFrame != null) {
                 parentFrame.dispose();
             }
         }
 
-        
     }
-/**
- * Update the singleton instance of prefs,
- * then mark (isDirty) that the
- * values have changed and needs to save to xml file.
- */
-    protected void applyValues(){
-        if (setValues()){
+
+    /**
+     * Update the singleton instance of prefs, then mark (isDirty) that the
+     * values have changed and needs to save to xml file.
+     */
+    protected void applyValues() {
+        if (setValues()) {
             WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
             WiThrottleManager.withrottlePreferencesInstance().setIsDirty(true); //  mark to save later
         }
     }
 
-    protected void cancelValues(){
+    protected void cancelValues() {
         if (getTopLevelAncestor() != null) {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }
 
-
-    private JPanel eStopDelayPanel(){
+    private JPanel eStopDelayPanel() {
         JPanel panel = new JPanel();
 
         panel.setBorder(BorderFactory.createCompoundBorder(
-                            BorderFactory.createTitledBorder(rb.getString("TitleDelayPanel")),
-                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        eStopCB = new JCheckBox(rb.getString("LabelUseEStop"));
-        eStopCB.setToolTipText(rb.getString("ToolTipUseEStop"));
-        SpinnerNumberModel spinMod = new SpinnerNumberModel(10,4,60,2);
+                BorderFactory.createTitledBorder(Bundle.getMessage("TitleDelayPanel")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        eStopCB = new JCheckBox(Bundle.getMessage("LabelUseEStop"));
+        eStopCB.setToolTipText(Bundle.getMessage("ToolTipUseEStop"));
+        SpinnerNumberModel spinMod = new SpinnerNumberModel(10, 4, 60, 2);
         delaySpinner = new JSpinner(spinMod);
-        ((JSpinner.DefaultEditor)delaySpinner.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) delaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(eStopCB);
         panel.add(delaySpinner);
-        panel.add(new JLabel(rb.getString("LabelEStopDelay")));
+        panel.add(new JLabel(Bundle.getMessage("LabelEStopDelay")));
         return panel;
     }
-    
-    private JPanel functionsPanel(){
+
+    private JPanel functionsPanel() {
         JPanel panel = new JPanel();
 
         panel.setBorder(BorderFactory.createCompoundBorder(
-                            BorderFactory.createTitledBorder(rb.getString("TitleFunctionsPanel")),
-                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        momF2CB = new JCheckBox(rb.getString("LabelMomF2"));
-        momF2CB.setToolTipText(rb.getString("ToolTipMomF2"));
+                BorderFactory.createTitledBorder(Bundle.getMessage("TitleFunctionsPanel")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        momF2CB = new JCheckBox(Bundle.getMessage("LabelMomF2"));
+        momF2CB.setToolTipText(Bundle.getMessage("ToolTipMomF2"));
         panel.add(momF2CB);
         return panel;
     }
 
-    private JPanel socketPortPanel(){
+    private JPanel socketPortPanel() {
         JPanel SPPanel = new JPanel();
 
         SPPanel.setBorder(BorderFactory.createCompoundBorder(
-                            BorderFactory.createTitledBorder(rb.getString("TitleNetworkPanel")),
-                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        portCB = new JCheckBox(rb.getString("LabelUseFixedPortNumber"));
-        portCB.setToolTipText(rb.getString("ToolTipUseFixedPortNumber"));
-        portCB.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event){
+                BorderFactory.createTitledBorder(Bundle.getMessage("TitleNetworkPanel")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        portCB = new JCheckBox(Bundle.getMessage("LabelUseFixedPortNumber"));
+        portCB.setToolTipText(Bundle.getMessage("ToolTipUseFixedPortNumber"));
+        portCB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 updatePortField();
             }
         });
         port = new JTextField();
-        port.setText(rb.getString("LabelNotFixed"));
+        port.setText(Bundle.getMessage("LabelNotFixed"));
         port.setPreferredSize(port.getPreferredSize());
         SPPanel.add(portCB);
         SPPanel.add(port);
         return SPPanel;
     }
 
-    private JPanel allowedControllers(){
+    private JPanel allowedControllers() {
         JPanel panel = new JPanel();
 
         panel.setBorder(BorderFactory.createCompoundBorder(
-                            BorderFactory.createTitledBorder(rb.getString("TitleControllersPanel")),
-                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        powerCB = new JCheckBox(rb.getString("LabelTrackPower"));
-        powerCB.setToolTipText(rb.getString("ToolTipTrackPower"));
+                BorderFactory.createTitledBorder(Bundle.getMessage("TitleControllersPanel")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        powerCB = new JCheckBox(Bundle.getMessage("LabelTrackPower"));
+        powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
 
-        turnoutCB = new JCheckBox(rb.getString("LabelTurnout"));
-        turnoutCB.setToolTipText(rb.getString("ToolTipTurnout"));
+        turnoutCB = new JCheckBox(Bundle.getMessage("LabelTurnout"));
+        turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
         panel.add(turnoutCB);
 
-        routeCB = new JCheckBox(rb.getString("LabelRoute"));
-        routeCB.setToolTipText(rb.getString("ToolTipRoute"));
+        routeCB = new JCheckBox(Bundle.getMessage("LabelRoute"));
+        routeCB.setToolTipText(Bundle.getMessage("ToolTipRoute"));
         panel.add(routeCB);
 
-        consistCB = new JCheckBox(rb.getString("LabelConsist"));
-        consistCB.setToolTipText(rb.getString("ToolTipConsist"));
+        consistCB = new JCheckBox(Bundle.getMessage("LabelConsist"));
+        consistCB.setToolTipText(Bundle.getMessage("ToolTipConsist"));
         panel.add(consistCB);
-        
+
         JPanel conPanel = new JPanel();
         conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
-        wifiRB = new JRadioButton(rb.getString("LabelWiFiConsist"));
-        wifiRB.setToolTipText(rb.getString("ToolTipWiFiConsist"));
-        dccRB = new JRadioButton(rb.getString("LabelDCCConsist"));
-        dccRB.setToolTipText(rb.getString("ToolTipDCCConsist"));
-        
+        wifiRB = new JRadioButton(Bundle.getMessage("LabelWiFiConsist"));
+        wifiRB.setToolTipText(Bundle.getMessage("ToolTipWiFiConsist"));
+        dccRB = new JRadioButton(Bundle.getMessage("LabelDCCConsist"));
+        dccRB.setToolTipText(Bundle.getMessage("ToolTipDCCConsist"));
+
         ButtonGroup group = new ButtonGroup();
         group.add(wifiRB);
         group.add(dccRB);
@@ -261,46 +260,93 @@ public class WiThrottlePrefsPanel extends JPanel{
 
         return panel;
     }
-    
-    private JPanel cancelApplySave(){
+
+    private JPanel cancelApplySave() {
         JPanel panel = new JPanel();
-        cancelB = new JButton(rb.getString("ButtonCancel"));
+        cancelB = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelB.setVisible(false);
-        cancelB.addActionListener(new ActionListener (){
-            public void actionPerformed(ActionEvent event){
+        cancelB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 cancelValues();
             }
         });
-        JButton applyB = new JButton(rb.getString("ButtonApply"));
-        applyB.addActionListener(new ActionListener (){
-            public void actionPerformed(ActionEvent event){
+        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
+        applyB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 applyValues();
             }
         });
-        saveB = new JButton(rb.getString("ButtonSave"));
+        saveB = new JButton(Bundle.getMessage("ButtonSave"));
         saveB.setVisible(false);
-        saveB.addActionListener(new ActionListener (){
-            public void actionPerformed(ActionEvent event){
+        saveB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 storeValues();
             }
         });
         panel.add(cancelB);
         panel.add(saveB);
-        panel.add(new JLabel(rb.getString("LabelApplyWarning")));
+        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
         panel.add(applyB);
         return panel;
     }
 
-    private void updatePortField(){
-        if (portCB.isSelected()){
+    private void updatePortField() {
+        if (portCB.isSelected()) {
             port.setText(localPrefs.getPort());
 
-        }else {
-            port.setText(rb.getString("LabelNotFixed"));
+        } else {
+            port.setText(Bundle.getMessage("LabelNotFixed"));
         }
 
     }
 
     //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
+    @Override
+    public String getPreferencesItem() {
+        return "WITHROTTLE"; // NOI18N
+    }
 
+    @Override
+    public String getPreferencesItemText() {
+        // TODO: migrate to local resource bundle
+        return ResourceBundle.getBundle("apps.AppsConfigBundle").getString("MenuWiThrottle"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return null;
+    }
+
+    @Override
+    public String getLabelKey() {
+        return null;
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return false;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        this.storeValues();
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.localPrefs.isDirty();
+    }
 }

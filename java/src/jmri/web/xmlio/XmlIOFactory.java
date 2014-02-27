@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
  * @version	$Revision$
  * @see  jmri.web.xmlio.XmlIOServer
+ * @deprecated Applications relying on XmlIO should migrate to JSON.
+ * @see jmri.web.servlet.json.JsonServlet
  */
 public class XmlIOFactory {
 

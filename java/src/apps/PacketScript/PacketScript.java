@@ -64,7 +64,7 @@ public class PacketScript extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("PacketScript");
+        Apps.setStartupInfo("PacketScript");
 
         setConfigFilename("PacketScriptConfig2.xml", args);
         JFrame f = new JFrame("PanelPro");

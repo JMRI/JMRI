@@ -306,6 +306,24 @@ public abstract class AppsBase {
     protected void installShutDownManager() {
         InstanceManager.setShutDownManager(
                 new DefaultShutDownManager());
+
+        // configure the shutdown manager as a shutdown hook
+        // when it is installed.  This allows a clean shutdown
+        // when the shutdown hook is triggered via the POSIX signals
+        // HUP (Signal 1), INT (Signal 2), or TERM (Signal 15).  Note 
+        // SIGHUP, SIGINT, and SIGTERM cause the program to go through
+        // the shutdown actions, but the Java process still remains until
+        // it receives a KILL (Signal 9).  A completely orderly shutdown
+        // can be forced by the two step process:
+        // `kill -s 15 pid`
+        // `kill -s 9 pid`
+        jmri.util.RuntimeUtil.addShutdownHook( new Thread(new Runnable(){
+               public void run() {
+                  if(log.isDebugEnabled()) 
+                     log.debug("Shutdown hook called");
+                  handleQuit();
+               }
+        }));
     }
 
     protected void addDefaultShutDownTasks() {

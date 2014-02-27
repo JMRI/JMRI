@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Programmer_SingleCV.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>DecoderPro Simple Programmer</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>
+<img SRC="images/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15"></h1>
+
+
+
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>Simple Programmer</h1>
+
+<div align=right>
+<p><a href="dp3_menubar.shtml#single">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The <strong>Simple Programmer</strong> is opened from the <strong>Main</strong> Page of DecoderPro3&reg; <strong>Action </strong>menu. The <strong>Simple Programmer </strong>allows you to read or write CV values in DCC decoders one  at a time. </p>
+<p align="center"><img src="images/Main_SingleCVProgram.png" alt="Simple Programmer" width="241" height="335" border="4"></p>
+<p>Prior to reading a CV value you should enter the CV Number (address) into the <strong>CV Number</strong> text box. If writing a CV value you should enter the CV Number and then a value in the <strong>Value </strong>text box. You may enter the value as Decimal or Hexadecimal depending upon the option selected in <strong>Value is:</strong> area.</p>
+<p>On the left side of the window you can select the Programming Mode. Any mode not supported by your command station will be grayed out.</p>
+<p>If you select the<strong> Ops</strong> mode, which programs on the main track, you need to enter the address of the decoder (locomotive) that you are programming. Your DCC system may require you to check the <strong>Long address </strong>check box if the address is a long address. Most DCC systems do not allow you to read on the main, if so, the <strong>Read CV </strong>button will be disabled.</p>
+<p>Now that you have everything  setup, you may read the current  value in the decoder&rsquo;s memory from the CV by clicking on the<strong> Read CV </strong>button  or write your new value to  the CV by clicking on the <strong>Write CV</strong> button.</p>
+<p>
+<hr>
+
+<div align=right>
+<p><a href="dp3_menubar.shtml#single">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

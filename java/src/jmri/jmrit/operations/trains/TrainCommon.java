@@ -277,7 +277,7 @@ public class TrainCommon {
 							// check for utility car, and local route with two or more locations
 							if (!sl.equals(s)) {
 								s = sl;
-								carList.remove(car.getId()); // done with this car, remove from list
+								carList.remove(car); // done with this car, remove from list
 								k--;
 							}
 						} else {

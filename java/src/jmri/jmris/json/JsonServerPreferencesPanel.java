@@ -170,4 +170,9 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
             }
         }
     }
+
+    @Override
+    public boolean isDirty() {
+        return this.preferences.isDirty();
+    }
 }

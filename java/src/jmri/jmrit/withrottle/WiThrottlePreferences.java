@@ -1,10 +1,10 @@
 package jmri.jmrit.withrottle;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
@@ -104,7 +104,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         return element;
     }
     
-    public boolean getIsDirty(){
+    public boolean isDirty(){
         return isDirty;
     }
     public void setIsDirty(boolean value){

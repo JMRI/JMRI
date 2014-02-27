@@ -8,11 +8,9 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.Block;
 import javax.swing.JOptionPane;
 
-// This is the same name as display.MemoryIcon, but a very
-// separate class. That's not good. Unfortunately, it's too 
-// hard to disentangle that now because it's resident in the
-// panel file that have been written out, so we just annote 
-// the fact.
+// This is the same name as display.BlockContentsIcon, it follows 
+// on from the MemoryIcon
+
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 

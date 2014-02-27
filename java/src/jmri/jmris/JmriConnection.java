@@ -2,6 +2,7 @@ package jmri.jmris;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ public class JmriConnection {
 
     private Connection webSocketConnection = null;
     private DataOutputStream dataOutputStream = null;
+    protected Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
     /**
@@ -78,5 +80,19 @@ public class JmriConnection {
         } else if (this.webSocketConnection != null) {
             this.webSocketConnection.close();
         }
+    }
+
+    /**
+     * @return the locale
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    public void setLocale(Locale locale) {
+        this.locale = locale;
     }
 }

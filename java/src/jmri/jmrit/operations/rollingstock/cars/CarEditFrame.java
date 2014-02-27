@@ -173,6 +173,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		pBlocking.setLayout(new GridBagLayout());
 		pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
 		addItem(pBlocking, blockingTextField, 0, 0);
+		blockingTextField.setText("0");
 		pPanel.add(pBlocking);
 		pBlocking.setVisible(false);
 
@@ -508,10 +509,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				_car.setNumber(number);
 			}
 			saveCar(true);
-			/*
-			 * all JMRI window position and size are now saved // save frame size and position
-			 * carManager.setEditFrame(this);
-			 */
 			// save car file
 			writeFiles();
 			if (Setup.isCloseWindowOnSaveEnabled())

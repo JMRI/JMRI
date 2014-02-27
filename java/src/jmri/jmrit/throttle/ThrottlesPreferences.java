@@ -1,18 +1,16 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
-
-import org.jdom.Document;
-import org.jdom.Element;
-
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
@@ -25,6 +23,7 @@ public class ThrottlesPreferences {
     private boolean _hideUndefinedFunButton = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
+    protected boolean dirty = false;
 
     private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
@@ -67,6 +66,14 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isAutoLoading")) != null )  setAutoLoad( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isHidingUndefinedFunctionButtons")) != null )  setHideUndefinedFuncButt( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null )  setIgnoreThrottlePosition( a.getValue().compareTo("true") == 0 );
+        this.dirty = false;
+    }
+
+    /**
+     * @return true if preferences need to be saved
+     */
+    public boolean isDirty() {
+        return dirty;
     }
 
 	/**
@@ -162,70 +169,82 @@ public class ThrottlesPreferences {
     	catch (Exception ex){
     		log.warn("Exception in storing throttles preferences xml: "+ex);
     	}
+        this.dirty = false;
     }
     
     public Dimension getWindowDimension() {
     	return _winDim ;
     }    
     public void setWindowDimension(Dimension d) {
-    	_winDim = d;	
+    	_winDim = d;
+        this.dirty = true;
     }    
 	public boolean isUsingExThrottle() { 
 		return _useExThrottle;
 	}
 	public void setUseExThrottle(boolean exThrottle) {
 		_useExThrottle = exThrottle; 
+        this.dirty = true;
 	}
 	public boolean isUsingToolBar() {
 		return _useToolBar;
 	}
 	public void setUsingToolBar(boolean win4all) {
 		_useToolBar = win4all;
+        this.dirty = true;
 	}
 	public boolean isUsingFunctionIcon() {
 		return _useFunctionIcon;
 	}
 	public void setUsingFunctionIcon(boolean useFunctionIcon) {
 		_useFunctionIcon = useFunctionIcon;
+        this.dirty = true;
 	}	
 	public boolean isResizingWindow() {
 		return _resizeWinImg;
 	}
 	public void setResizeWindow(boolean winImg) {
 		_resizeWinImg = winImg;
+        this.dirty = true;
 	}
 	public boolean isUsingRosterImage() {
 		return _useRosterImage;
 	}
 	public void setUseRosterImage(boolean rosterImage) {
 		_useRosterImage = rosterImage;
+        this.dirty = true;
 	}
     public boolean isEnablingRosterSearch() {
     	return _enableRosterSearch;
 	}
 	public void setEnableRosterSearch(boolean b) {
 		_enableRosterSearch = b;		
+        this.dirty = true;
 	}
 	public void setAutoLoad(boolean b) {
 		_enableAutoLoad = b;		
+        this.dirty = true;
 	}    
 	public boolean isAutoLoading() {
 		return _enableAutoLoad;
 	}
 	public void setHideUndefinedFuncButt(boolean b) {
 		_hideUndefinedFunButton = b;
+        this.dirty = true;
 	}
 	public boolean isHidingUndefinedFuncButt() {
 		return _hideUndefinedFunButton;
 	}
 	public void setIgnoreThrottlePosition(boolean b) {
 		_ignoreThrottlePosition = b;		
+        this.dirty = true;
 	}    
 	public boolean isIgnoringThrottlePosition() {
 		return _ignoreThrottlePosition;
 	}
 	public void setSaveThrottleOnLayoutSave(boolean b) {
 		_saveThrottleOnLayoutSave = b;
+        this.dirty = true;
 	}
 	public boolean isSavingThrottleOnLayoutSave() {
 		return _saveThrottleOnLayoutSave;

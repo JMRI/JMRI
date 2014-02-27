@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CARS;
@@ -17,6 +18,7 @@ import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LIGHT;
 import static jmri.jmris.json.JSON.LIGHTS;
 import static jmri.jmris.json.JSON.LIST;
+import static jmri.jmris.json.JSON.LOCALE;
 import static jmri.jmris.json.JSON.LOCATIONS;
 import static jmri.jmris.json.JSON.MEMORIES;
 import static jmri.jmris.json.JSON.MEMORY;
@@ -44,6 +46,7 @@ import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.THROTTLE;
 import static jmri.jmris.json.JSON.TIME;
+import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
@@ -127,11 +130,10 @@ public class JsonClientHandler {
      * with the value <em>post</em> is included in the <em>data</em> node:
      * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code>
      * Note that not all types support this.</li></ul>
-     * </li><li>a heartbeat in the form
-     * <code>{"type":"ping"}</code>. The heartbeat gets a
-     * <code>{"type":"pong"}</code> response.</li> <li>a sign off in the form:
-     * <code>{"type":"goodbye"}</code> to which an identical response is sent
-     * before the connection gets closed.</li>
+     * </li><li>a heartbeat in the form <code>{"type":"ping"}</code>. The
+     * heartbeat gets a <code>{"type":"pong"}</code> response.</li> <li>a sign
+     * off in the form: <code>{"type":"goodbye"}</code> to which an identical
+     * response is sent before the connection gets closed.</li>
      *
      * @param string
      * @throws IOException
@@ -142,7 +144,7 @@ public class JsonClientHandler {
             this.onMessage(this.mapper.readTree(string));
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
-            this.sendErrorMessage(500, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()));
         }
     }
 
@@ -169,100 +171,124 @@ public class JsonClientHandler {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
                 this.connection.close();
             } else if (type.equals(HELLO)) {
+                this.receiveHello(data);
                 this.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+            } else if (type.equals(LOCALE)) {
+                this.receiveHello(data);
             } else if (type.equals(LIST)) {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
                 if (list.equals(CARS)) {
-                    reply = JsonUtil.getCars();
+                    reply = JsonUtil.getCars(this.connection.getLocale());
                 } else if (list.equals(CONSISTS)) {
-                    reply = JsonUtil.getConsists();
+                    reply = JsonUtil.getConsists(this.connection.getLocale());
                 } else if (list.equals(ENGINES)) {
-                    reply = JsonUtil.getEngines();
+                    reply = JsonUtil.getEngines(this.connection.getLocale());
                 } else if (list.equals(LIGHTS)) {
-                    reply = JsonUtil.getLights();
+                    reply = JsonUtil.getLights(this.connection.getLocale());
                 } else if (list.equals(LOCATIONS)) {
-                    reply = JsonUtil.getLocations();
+                    reply = JsonUtil.getLocations(this.connection.getLocale());
                 } else if (list.equals(MEMORIES)) {
-                    reply = JsonUtil.getMemories();
+                    reply = JsonUtil.getMemories(this.connection.getLocale());
                 } else if (list.equals(METADATA)) {
-                    reply = JsonUtil.getMetadata();
+                    reply = JsonUtil.getMetadata(this.connection.getLocale());
                 } else if (list.equals(PANELS)) {
-                    reply = JsonUtil.getPanels((data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
+                    reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
                 } else if (list.equals(REPORTERS)) {
-                    reply = JsonUtil.getReporters();
+                    reply = JsonUtil.getReporters(this.connection.getLocale());
                 } else if (list.equals(ROSTER)) {
-                    reply = JsonUtil.getRoster(data);
+                    reply = JsonUtil.getRoster(this.connection.getLocale(), data);
                 } else if (list.equals(ROSTER_GROUPS)) {
-                    reply = JsonUtil.getRosterGroups();
+                    reply = JsonUtil.getRosterGroups(this.connection.getLocale());
                 } else if (list.equals(ROUTES)) {
-                    reply = JsonUtil.getRoutes();
+                    reply = JsonUtil.getRoutes(this.connection.getLocale());
                 } else if (list.equals(SENSORS)) {
-                    reply = JsonUtil.getSensors();
+                    reply = JsonUtil.getSensors(this.connection.getLocale());
                 } else if (list.equals(SIGNAL_HEADS)) {
-                    reply = JsonUtil.getSignalHeads();
+                    reply = JsonUtil.getSignalHeads(this.connection.getLocale());
                 } else if (list.equals(SIGNAL_MASTS)) {
-                    reply = JsonUtil.getSignalMasts();
+                    reply = JsonUtil.getSignalMasts(this.connection.getLocale());
                 } else if (list.equals(TRAINS)) {
-                    reply = JsonUtil.getTrains();
+                    reply = JsonUtil.getTrains(this.connection.getLocale());
                 } else if (list.equals(TURNOUTS)) {
-                    reply = JsonUtil.getTurnouts();
+                    reply = JsonUtil.getTurnouts(this.connection.getLocale());
                 } else if (list.equals(NETWORK_SERVICES)) {
-                    reply = JsonUtil.getNetworkServices();
+                    reply = JsonUtil.getNetworkServices(this.connection.getLocale());
                 } else {
-                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownList", list));
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
                     return;
                 }
                 //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.mapper.writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 if (type.equals(CONSIST)) {
-                    this.consistServer.parseRequest(data);
+                    this.consistServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(LIGHT)) {
-                    this.lightServer.parseRequest(data);
+                    this.lightServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(MEMORY)) {
-                    this.memoryServer.parseRequest(data);
+                    this.memoryServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(METADATA)) {
-                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(data.path(NAME).asText())));
+                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText())));
                 } else if (type.equals(OPERATIONS)) {
-                    this.operationsServer.parseRequest(data);
+                    this.operationsServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(POWER)) {
-                    this.powerServer.parseRequest(data);
+                    this.powerServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(PROGRAMMER)) {
-                    this.programmerServer.parseRequest(data);
+                    this.programmerServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(SENSOR)) {
-                    this.sensorServer.parseRequest(data);
+                    this.sensorServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(SIGNAL_HEAD)) {
-                    this.signalHeadServer.parseRequest(data);
+                    this.signalHeadServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(SIGNAL_MAST)) {
-                    this.signalMastServer.parseRequest(data);
+                    this.signalMastServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(REPORTER)) {
-                    this.reporterServer.parseRequest(data);
+                    this.reporterServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(ROSTER_ENTRY)) {
-                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterEntry(data.path(NAME).asText())));
+                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterEntry(this.connection.getLocale(), data.path(NAME).asText())));
                 } else if (type.equals(ROUTE)) {
-                    this.routeServer.parseRequest(data);
+                    this.routeServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(THROTTLE)) {
-                    this.throttleServer.parseRequest(data);
+                    this.throttleServer.parseRequest(this.connection.getLocale(), data);
                 } else if (type.equals(TIME)) {
-                    this.timeServer.parseRequest(data);
+                    this.timeServer.parseRequest(this.connection.getLocale(), data);
+                } else if (type.equals(TRAIN)) {
+                    this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
                 } else if (type.equals(TURNOUT)) {
-                    this.turnoutServer.parseRequest(data);
+                    this.turnoutServer.parseRequest(this.connection.getLocale(), data);
                 } else {
-                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownType", type));
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(400, Bundle.getMessage("ErrorMissingData"));
+                this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
             }
         } catch (JmriException je) {
-            this.sendErrorMessage(500, Bundle.getMessage("ErrorUnsupportedOperation", je.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
         } catch (JsonException je) {
             this.sendErrorMessage(je);
         }
     }
 
+    private void receiveHello(JsonNode data) {
+        if (!data.path(LOCALE).isMissingNode()) {
+            // the following would be a one liner in Java 1.7:
+            // this.connection.getLocale() = Locale.forLanguageTag(data.path(LOCALE).asText();
+            String[] parts = data.path(LOCALE).asText().split("-", 3);
+            switch (parts.length) {
+                case 3:
+                    this.connection.setLocale(new Locale(parts[0], parts[1], parts[2]));
+                    break;
+                case 2:
+                    this.connection.setLocale(new Locale(parts[0], parts[1]));
+                    break;
+                default:
+                    this.connection.setLocale(new Locale(parts[0]));
+                    break;
+            }
+        }
+    }
+
     public void sendHello(int heartbeat) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getHello(heartbeat)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getHello(this.connection.getLocale(), heartbeat)));
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {

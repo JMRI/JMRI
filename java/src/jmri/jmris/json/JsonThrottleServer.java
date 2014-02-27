@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CODE;
@@ -57,10 +58,10 @@ public class JsonThrottleServer {
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
         String id = data.path(THROTTLE).asText();
         if ("".equals(id)) {
-            this.sendErrorMessage(-1, Bundle.getMessage("ErrorThrottleId"));
+            this.sendErrorMessage(-1, Bundle.getMessage(locale, "ErrorThrottleId"));
             return;
         }
         JsonThrottle throttle = this.throttles.get(id);
@@ -73,6 +74,6 @@ public class JsonThrottleServer {
                 return;
             }
         }
-        throttle.parseRequest(data);
+        throttle.parseRequest(locale, data);
     }
 }

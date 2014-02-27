@@ -154,7 +154,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }, s.getName(), "Block Sensor " + getDisplayName());
             _current = getSensor().getState();
         } else {
-            _current = UNOCCUPIED;
+            _current = UNKNOWN;
         }
     }
     
@@ -410,7 +410,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	public float getLengthIn() { return (_length/25.4f); }  // return length in inches
     
     // internal data members
-    private int _current = UNOCCUPIED; // state
+    private int _current = UNKNOWN; // state
     //private Sensor _sensor = null;
     private NamedBeanHandle<Sensor> _namedSensor = null;
 	private java.beans.PropertyChangeListener _sensorListener = null;

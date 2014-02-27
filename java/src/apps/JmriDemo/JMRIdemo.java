@@ -72,7 +72,7 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.startupInfo("JMRIdemo");
+        Apps.setStartupInfo("JMRIdemo");
 
         setConfigFilename("JmriDemoConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("JmriDemo");

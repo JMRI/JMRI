@@ -2,6 +2,8 @@
  * OperationsServlet specific JavaScript
  */
 
+var jmri = null;
+
 /*
  * request and show a list of available trains from JMRI server
  */
@@ -43,15 +45,138 @@ function getManifest(id) {
     });
 }
 
+function getConductor(id, location) {
+    var data = (location !== false) ? {format: "html", location: location} : {format: "html"};
+    $.ajax({
+        url: "/operations/conductor/" + id,
+        data: JSON.stringify(data),
+        type: "PUT",
+        contentType: "application/json; charset=utf-8",
+        success: function(data) {
+            if (data.length === 0) {
+                $("#conductor").removeClass("show").addClass("hidden");
+            } else {
+                // insert data
+                $("#conductor").removeClass("hidden").addClass("show");
+                $("#conductor").empty();
+                $("#conductor").append(data);
+                var pickup = $.trim($("#ops-pickup > ul").html()) ? true : false;
+                var setout = $.trim($("#ops-setout > ul").html()) ? true : false;
+                var local = $.trim($("#ops-local > ul").html()) ? true : false;
+                // hide empty panels
+                if (pickup) {
+                    if (!setout && !local) {
+                        $("#ops-pickup").addClass("col-xs-12").removeClass("col-md-4");
+                    } else if (!setout || !local) {
+                        $("#ops-pickup").addClass("col-sm-6").removeClass("col-md-4");
+                    }
+                } else {
+                    $("#ops-pickup").addClass("hidden").removeClass("col-md-4");
+                }
+                if (setout) {
+                    if (!pickup && !local) {
+                        $("#ops-setout").addClass("col-xs-12").removeClass("col-md-4");
+                    } else if (!pickup || !local) {
+                        $("#ops-setout").addClass("col-sm-6").removeClass("col-md-4");
+                    }
+                } else {
+                    $("#ops-setout").addClass("hidden").removeClass("col-md-4");
+                }
+                if (local) {
+                    if (!pickup && !setout) {
+                        $("#ops-local").addClass("col-xs-12").removeClass("col-md-4");
+                    } else if (!pickup || !setout) {
+                        $("#ops-local").addClass("col-sm-6").removeClass("col-md-4");
+                    }
+                } else {
+                    $("#ops-local").addClass("hidden").removeClass("col-md-4");
+                }
+                if (!$.trim($("#ops-engine-pickup > ul").html())) {
+                    $("#ops-engine-pickup").addClass("hidden").removeClass("col-sm-6");
+                    $("#ops-engine-setout").addClass("col-xs-12").removeClass("col-sm-6");
+                } else if (!$.trim($("#ops-engine-setout > ul").html())) {
+                    $("#ops-engine-setout").addClass("hidden").removeClass("col-sm-6");
+                    $("#ops-engine-pickup").addClass("col-xs-12").removeClass("col-sm-6");
+                }
+                // make check/unckeck buttons usable
+                $("#check-all").click(function() {
+                    $(".rs-check").prop("checked", true);
+                    $("#move-train").prop("disabled", false);
+                });
+                $("#clear-all").click(function() {
+                    $(".rs-check").prop("checked", false);
+                    $("#move-train").prop("disabled", true);
+                });
+                // disable/enable controls if no work
+                if ($(".rs-check").length === 0) {
+                    $("#move-train").prop("disabled", false);
+                    $("#check-all").prop("disabled", true);
+                    $("#clear-all").prop("disabled", true);
+                }
+                if (!$("#move-train").data("location")) {
+                    $("#move-train").prop("disabled", true);
+                }
+                // enable move button only if all checkboxs are checked
+                $(".rs-check").click(function() {
+                    var disabled = true;
+                    if (this.checked) {
+                        disabled = false;
+                        $(".rs-check").each(function() {
+                            if (!this.checked) {
+                                disabled = true;
+                                return false;
+                            }
+                        });
+                    }
+                    $("#move-train").prop("disabled", disabled);
+                });
+                // add function to move button
+                $("#move-train").click(function() {
+                    getConductor(id, $("#move-train").data("location"));
+                });
+            }
+            $("#activity-alert").removeClass("show").addClass("hidden");
+        },
+        dataType: "html"
+    });
+}
+
+function getTrainName(id) {
+    $.ajax({
+        url: "/json/train/" + id,
+        data: {},
+        success: function(json) {
+            $("#navbar-operations-train").append(json.data.iconName + " (" + json.data.description + ")");
+        },
+        dataType: "json"
+    });
+}
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
-    var pathElements = window.location.pathname.replace(/\/$/, '').split('/');
-    console.log("pathElements:" + pathElements);
-    if (pathElements[2] === "manifest") {
+    if (window.location.pathname.indexOf("/manifest") >= 0) {
         $("#manifest").removeClass("hidden").addClass("show");
-        getManifest(pathElements[3]);
+        getManifest($("html").data("train"));
     } else if (window.location.pathname.indexOf("/conductor") >= 0) {
         $("#conductor").removeClass("hidden").addClass("show");
+        jmri = $.JMRI({
+            open: function() {
+                jmri.getTrain($("html").data("train"));
+            },
+            train: function(id, data) {
+                getConductor(id, false);
+            }
+        });
+        if (jmri.socket && jmri.socket.readyState === 1) {
+            jmri.getTrain($("html").data("train"));
+        } else {
+            // wait one second, and getTrain if jmri.socker is not open
+            setTimeout(function() {
+                if (!jmri.socket || jmri.socket.readyState !== 1) {
+                    jmri.getTrain($("html").data("train"));
+                }
+            }, 1000);
+        }
     } else {
         getTrains(getParameterByName('show') === "all");
         $("#show-all-trains > input").prop("checked", getParameterByName('show') === "all");
@@ -59,5 +184,16 @@ $(document).ready(function() {
         $("#show-all-trains > input").change(function() {
             getTrains($(this).is(":checked"));
         });
+    }
+    // setup the functional menu items
+    if ($("html").data("train") !== "") {
+        getTrainName($("html").data("train"));
+        $("#navbar-operations-manifest > a").attr("href", "/operations/manifest/" + $("html").data("train"));
+        $("#navbar-operations-conductor > a").attr("href", "/operations/conductor/" + $("html").data("train"));
+    } else {
+        $("#navbar-operations-train-divider").addClass("hidden").removeClass("show");
+        $("#navbar-operations-train").addClass("hidden").removeClass("show");
+        $("#navbar-operations-manifest").addClass("hidden").removeClass("show");
+        $("#navbar-operations-conductor").addClass("hidden").removeClass("show");
     }
 });

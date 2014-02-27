@@ -60,8 +60,10 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         // ensure preferences will be found for read
         FileUtil.createDirectory(LocoFile.getFileLocation());
 
+        // make sure instance loaded
+        Roster.instance();
+        	    
         // set up to read import file
-	    Roster roster = Roster.instance();
         ZipInputStream zipper = null;
         FileInputStream inputfile = null;
         
