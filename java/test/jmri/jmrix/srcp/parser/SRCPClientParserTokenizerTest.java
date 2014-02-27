@@ -35,14 +35,20 @@ public class SRCPClientParserTokenizerTest extends TestCase {
         }
 
        // constants.
-       public void testTokenizeONOFF() {
-           String cmd = "ON OFF\n\r";
+       public void testTokenizeON() {
+           String cmd = "ON\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
            assertTrue("Wrong token kind for ON",SRCPClientParserConstants.ONOFF == t.kind);
-           t = stm.getNextToken();
-           assertTrue("Wrong token kind for ON",SRCPClientParserConstants.ONOFF == t.kind);
+        }
+
+       public void testTokenizeOFf() {
+           String cmd = "OFF\n\r";
+           SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+           SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
+           Token t = stm.getNextToken();
+           assertTrue("Wrong token kind for OFF",SRCPClientParserConstants.ONOFF == t.kind);
         }
 
      // Device Groups
@@ -127,63 +133,73 @@ public class SRCPClientParserTokenizerTest extends TestCase {
            assertTrue("Wrong token kind for SERVER",SRCPClientParserConstants.SERVER == t.kind);
         }
 
-       // commands
-       public void testTokenizeGET() {
-           String cmd = "GET\n\r";
+       public void testTokenizeCOMMAND() {
+           String cmd = "COMMAND\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for GET",SRCPClientParserConstants.GET == t.kind);
+           assertTrue("Wrong token kind for COMMAND",SRCPClientParserConstants.COMMAND == t.kind);
         }
-       public void testTokenizeSET() {
-           String cmd = "SET\n\r";
+
+       public void testTokenizeINFO() {
+           String cmd = "INFO\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for SET",SRCPClientParserConstants.SET == t.kind);
+           assertTrue("Wrong token kind for INFO",SRCPClientParserConstants.INFO == t.kind);
         }
-       public void testTokenizeCHECK() {
-           String cmd = "CHECK\n\r";
+       public void testTokenizeERROR() {
+           String cmd = "ERROR\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for CHECK",SRCPClientParserConstants.CHECK == t.kind);
+           assertTrue("Wrong token kind for ERROR",SRCPClientParserConstants.ERROR == t.kind);
         }
-       public void testTokenizeINIT() {
-           String cmd = "INIT\n\r";
+       public void testTokenizeOK() {
+           String cmd = "OK\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for INIT",SRCPClientParserConstants.INIT == t.kind);
+           assertTrue("Wrong token kind for OK",SRCPClientParserConstants.OK == t.kind);
         }
-       public void testTokenizeTERM() {
-           String cmd = "TERM\n\r";
+       public void testTokenizeSRCP() {
+           String cmd = "SRCP\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for TERM",SRCPClientParserConstants.TERM == t.kind);
+           assertTrue("Wrong token kind for SRCP",SRCPClientParserConstants.SRCP == t.kind);
         }
-       public void testTokenizeWAIT() {
-           String cmd = "WAIT\n\r";
+       public void testTokenizeGO() {
+           String cmd = "GO\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for WAIT",SRCPClientParserConstants.WAIT == t.kind);
+           assertTrue("Wrong token kind for GO",SRCPClientParserConstants.GO == t.kind);
         }
-       public void testTokenizeVERIFY() {
-           String cmd = "VERIFY\n\r";
+       public void testTokenizeVERSION() {
+           String cmd = "0.8.3\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for VERIFY",SRCPClientParserConstants.VERIFY == t.kind);
+           assertTrue("Wrong token kind for VERSION",SRCPClientParserConstants.VERSION == t.kind);
         }
-       public void testTokenizeRESET() {
-           String cmd = "RESET\n\r";
+       public void testTokenizePROTOCOLLITTERAL() {
+           String cmd = "PROTOCOL\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
            Token t = stm.getNextToken();
-           assertTrue("Wrong token kind for RESET",SRCPClientParserConstants.RESET == t.kind);
+           assertTrue("Wrong token kind for PROTOCOLLITTERAL",SRCPClientParserConstants.PROTOCOLLITTERAL == t.kind);
         }
+       public void testTokenizeCONNECTIONMODELITTERAL() {
+           String cmd = "CONNECTIONMODE\n\r";
+           SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+           SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
+           Token t = stm.getNextToken();
+           assertTrue("Wrong token kind for CONNECTIONMODELITTERAL",SRCPClientParserConstants.CONNECTIONMODELITTERAL == t.kind);
+        }
+
+
+
        public void testTokenizeCV() {
            String cmd = "CV\n\r";
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));

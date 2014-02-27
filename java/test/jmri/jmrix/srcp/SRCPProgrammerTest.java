@@ -17,11 +17,11 @@ import junit.framework.TestSuite;
 public class SRCPProgrammerTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
           @Override
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
-        });
+        },"A",1);
         SRCPProgrammer s = new SRCPProgrammer(sm);
         Assert.assertNotNull(s);
     }

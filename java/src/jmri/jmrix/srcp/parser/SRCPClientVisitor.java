@@ -19,11 +19,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Generic Visit " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
-  public Object visit(ASTcommand node,Object data)
-  {
-    log.debug("Command " + node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
  public Object visit(ASTcommandresponse node,Object data)
   {
     log.debug("Command Response " + node.jjtGetValue() );
@@ -39,37 +34,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
   public Object visit(ASTgo node,Object data)
   {
     log.debug("Go " + node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
-
-  public Object visit(ASTterm node, Object data)
-  {
-    log.debug("TERM " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTcheck node, Object data)
-  {
-    log.debug("CHECK " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTverify node,java.lang.Object data)
-  {
-    log.debug("CHECK " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTreset node,java.lang.Object data)
-  {
-    log.debug("RESET " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTinit node,java.lang.Object data)
-  {
-    log.debug("INIT " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTcomment node,java.lang.Object data)
-  {
-    log.debug("COMMENT " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTgl node, Object data)
@@ -102,6 +66,11 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("POWER " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  public Object visit(ASTlock node, Object data)
+  {
+    log.debug("LOCK " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
   public Object visit(ASTserver node, Object data)
   {
     log.debug("SERVER " +node.jjtGetValue() );
@@ -110,16 +79,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
   public Object visit(ASTsession node, Object data)
   {
     log.debug("SESION " +node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTlock node, Object data)
-  {
-    log.debug("LOCK " +node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
-  public Object visit(ASTwait_cmd node, Object data)
-  {
-    log.debug("Received WAIT CMD " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTbus node, Object data)
@@ -191,6 +150,24 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     return node.childrenAccept(this,data);
   }
 
+  public Object visit(ASTinfo node, Object data)
+  {
+    log.debug("Info Response " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+  public Object visit(ASTok node, Object data)
+  {
+    log.debug("Ok Response " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+  public Object visit(ASTerror node, Object data)
+  {
+    log.debug("Information Response " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
   public Object visit(ASTtimeout node, Object data)
   {
     log.debug("Timeout " +node.jjtGetValue() );
@@ -228,19 +205,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Timestamp Node " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
-
-  public Object visit(ASTerrorcode node, Object data)
-  {
-    log.debug("ErrorCode Node " +node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
-
-  public Object visit(ASTreason node, Object data)
-  {
-    log.debug("Reason Node " +node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }
-
 
   static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class.getName());
 

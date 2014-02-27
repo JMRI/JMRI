@@ -29,23 +29,39 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     public SRCPReply(SimpleNode n){
 	super();
 	log.debug("Parser Constructor called with node type " + n.getClass()+ " and "+ n.jjtGetNumChildren() +" children.");
-        StringBuilder b;
+        /*StringBuilder b;
         if(n.jjtGetNumChildren()>1) {
         b = new StringBuilder(n.jjtGetFirstToken().toString());
 	for(int i=1;i<n.jjtGetNumChildren();i++) {
             b.append(" ");
             b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
+            inOrderTraversal((SimpleNode)n.jjtGetChild(i)));
         }
         }
         else {
           b = new StringBuilder((String)n.jjtGetValue() );
         }
-        String s = b.toString();
+        String s = b.toString();*/
+        String s = inOrderTraversal(n);
 	log.debug("Parser Constructor built :"+ s);
         _nDataChars = s.length();
         for (int i = 0; i<_nDataChars; i++)
             _dataChars[i] = s.charAt(i);
+    }
 
+    private String inOrderTraversal(SimpleNode n) {
+        StringBuilder b;
+        if(n.jjtGetNumChildren()>1) {
+           b = new StringBuilder(n.jjtGetFirstToken().toString());
+	   for(int i=1;i<n.jjtGetNumChildren();i++) {
+              b.append(" ");
+              b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
+              b.append(inOrderTraversal((SimpleNode)n.jjtGetChild(i)));
+           }
+        } else {
+          b = new StringBuilder((String)n.jjtGetValue() );
+        }
+        return b.toString();
     }
 
 

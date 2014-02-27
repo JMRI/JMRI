@@ -80,11 +80,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Configure the programming manager and "command station" objects
      */
-    //SRCPCommandStation commandStation = null;
     public void configureCommandStation() {
-        //commandStation = new jmri.jmrix.srcp.SRCPCommandStation(this);
-        //jmri.InstanceManager.setCommandStation(getCommandStation());
-
         // start the connection
         et.sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
         et.sendSRCPMessage(new SRCPMessage("SET CONNECTIONMODE SRCP COMMAND\n"), null);
@@ -161,10 +157,6 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     //     turnoutManager = t;
     //}
     
-    //public CommandStation getCommandStation(){
-    //    return commandStation;
-    //}
-
     //private TurnoutManager turnoutManager=null;
 
     @Override
@@ -181,9 +173,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.SensorManager.class))
             return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
-            return (T)getTurnoutManager();
-        if (T.equals(jmri.CommandStation.class))
-            return (T)getCommandStation();*/
+            return (T)getTurnoutManager();*/
         return null; // nothing, by default
     }
     
@@ -203,8 +193,6 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.SensorManager.class))
             return true;
         if (type.equals(jmri.TurnoutManager.class))
-            return true;
-        if (type.equals(jmri.CommandStation.class))
             return true;*/
         return false; // nothing, by default
     }

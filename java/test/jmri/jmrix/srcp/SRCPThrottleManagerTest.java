@@ -17,11 +17,11 @@ import junit.framework.TestSuite;
 public class SRCPThrottleManagerTest extends TestCase {
 
     public void testCtor() {
-        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
           @Override
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
-        });
+        }, "A",1);
 
         SRCPThrottleManager m = new SRCPThrottleManager(sm);
         Assert.assertNotNull(m);

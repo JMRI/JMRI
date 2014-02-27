@@ -36,11 +36,11 @@ public class SRCPReplyTest extends TestCase {
 
     // Test the parser constructor.
     public void testParserCtor() {
-        String s = "100 OK REASON GOES HERE\n\r";
+        String s = "12345678910 400 ERROR Reason GOES HERE\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(s));
         SRCPReply m = null;
         try {
-            m = new SRCPReply(p.inforesponse());
+            m = new SRCPReply(p.commandresponse());
         } catch (ParseException pe) {
             // m is already null if there is an exception parsing the string
         }
