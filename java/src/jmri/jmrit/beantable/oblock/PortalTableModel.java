@@ -176,9 +176,10 @@ public class PortalTableModel extends jmri.jmrit.picker.PickListModel {
         }
 
         Portal portal = (Portal)getBeanAt(row);
-        if (log.isDebugEnabled() && portal==null) {
-        	log.debug("getValueAt row= "+row+", col= "+col+", " +
+        if (portal==null) {
+        	log.error("Portal null, getValueAt row= "+row+", col= "+col+", " +
         			"portalListSize= "+_manager.getSystemNameArray().length);
+        	return;
         }
 
         switch(col) {
