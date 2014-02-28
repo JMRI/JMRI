@@ -55,7 +55,7 @@ public class OBlockManager extends AbstractManager
     public OBlock createNewOBlock(String systemName, String userName) {
         // Check that OBlock does not already exist
         OBlock r;
-        if (userName!= null && !userName.equals("")) {
+        if (userName!= null && (userName.trim().length()>0)) {
             r = getByUserName(userName);
             if (r!=null) return null;
         }

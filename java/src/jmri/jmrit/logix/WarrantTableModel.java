@@ -495,7 +495,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	_frame.setStatusText(Bundle.getMessage("controlChange", bean.getTrainName(), bean.getDisplayName(),
             			stateStr, Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])), myGold, true);
             } else if (e.getPropertyName().equals("throttleFail")) {
-            	_frame.setStatusText(Bundle.getMessage("throttleFail", bean.getTrainName(), e.getNewValue()), Color.red, true);               	                		                	
+            	_frame.setStatusText(Bundle.getMessage("ThrottleFail", bean.getTrainName(), e.getNewValue()), Color.red, true);               	                		                	
             }
         }
         if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+

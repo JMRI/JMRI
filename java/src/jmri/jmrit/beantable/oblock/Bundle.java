@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable.oblock;
 
+import java.util.ResourceBundle;
+
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -25,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class Bundle extends jmri.jmrit.beantable.Bundle {
 
-    @Nullable private final static String name = null;
+    private final static String name = "jmri.jmrit.beantable.OBlockTableBundle";
 
     //
     // below here is boilerplate to be copied exactly
@@ -42,7 +44,7 @@ public class Bundle extends jmri.jmrit.beantable.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getMessage(String key) {
+    static public String getMessage(String key) {
         return b.handleGetMessage(key);
     }
     /**

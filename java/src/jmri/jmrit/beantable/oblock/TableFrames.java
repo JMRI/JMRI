@@ -32,7 +32,6 @@ import java.awt.event.ActionEvent;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 
 import java.beans.PropertyVetoException;
 
@@ -74,7 +73,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
-	public static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
 
     OBlockTableModel    _oBlockModel;
     PortalTableModel    _portalModel;
@@ -105,9 +103,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     public void initComponents() {
-        setTitle(rbo.getString("TitleOBlocks"));
+        setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
         menuBar.add(fileMenu);
@@ -141,8 +139,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         editMenu.add(menuItem);
         menuBar.add(editMenu);
 
-        JMenu optionMenu = new JMenu(rbo.getString("MenuOptions"));
-        _showWarnItem = new JMenuItem(rbo.getString("SuppressWarning"));
+        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
+        _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
         _showWarnItem.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent event) {
                     String cmd = event.getActionCommand();
@@ -153,7 +151,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setShowWarnings("ShowWarning");
         menuBar.add(optionMenu);
 
-        _openMenu = new JMenu(rbo.getString("OpenMenu"));
+        _openMenu = new JMenu(Bundle.getMessage("OpenMenu"));
         updateOpenMenu();   // replaces the last item with appropriate
         menuBar.add(_openMenu);
 
@@ -218,11 +216,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (cmd.equals("ShowWarning")) {
             _showWarnings = true;
             _showWarnItem.setActionCommand("SuppressWarning");
-            _showWarnItem.setText(rbo.getString("SuppressWarning"));
+            _showWarnItem.setText(Bundle.getMessage("SuppressWarning"));
         } else {
             _showWarnings = false;
             _showWarnItem.setActionCommand("ShowWarning"); 
-            _showWarnItem.setText(rbo.getString("ShowWarning"));
+            _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
         if (log.isDebugEnabled()) log.debug("setShowWarnings: _showWarnings= "+_showWarnings);
     }
@@ -256,7 +254,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     protected void updateOpenMenu() {
         _openMenu.removeAll();
-        JMenuItem openBlock = new JMenuItem(rbo.getString("OpenBlockMenu"));
+        JMenuItem openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu"));
         _openMenu.add(openBlock);
         openBlock.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -269,7 +267,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     _blockTableFrame.moveToFront();
                 }
             });
-        JMenuItem openPortal = new JMenuItem(rbo.getString("OpenPortalMenu"));
+        JMenuItem openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu"));
         _openMenu.add(openPortal);
         openPortal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -282,7 +280,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     _portalTableFrame.moveToFront();
                 }
             });
-        JMenuItem openXRef = new JMenuItem(rbo.getString("OpenXRefMenu"));
+        JMenuItem openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu"));
         _openMenu.add(openXRef);
         openXRef.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -295,7 +293,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     _blockPortalXRefFrame.moveToFront();
                 }
             });
-        JMenuItem openSignal = new JMenuItem(rbo.getString("OpenSignalMenu"));
+        JMenuItem openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu"));
         _openMenu.add(openSignal);
         openSignal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -309,7 +307,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 }
             });
 
-        JMenu openBlockPath = new JMenu(rbo.getString("OpenBlockPathMenu")); 
+        JMenu openBlockPath = new JMenu(Bundle.getMessage("OpenBlockPathMenu")); 
         ActionListener openFrameAction = new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -322,20 +320,18 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
-            JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                    rbo.getString("OpenPathMenu"), block.getDisplayName()));
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
             mi.setActionCommand(sysNames[i]);
             mi.addActionListener(openFrameAction);
             openBlockPath.add(mi);                                                  
         }
         _openMenu.add(openBlockPath);
 
-        JMenu openTurnoutPath = new JMenu(rbo.getString("OpenBlockPathTurnoutMenu")); 
+        JMenu openTurnoutPath = new JMenu(Bundle.getMessage("OpenBlockPathTurnoutMenu")); 
         sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
-            JMenu openTurnoutMenu = new JMenu(java.text.MessageFormat.format(
-                    rbo.getString("OpenTurnoutMenu"), block.getDisplayName()));
+            JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
             openTurnoutPath.add(openTurnoutMenu);
             openFrameAction = new ActionListener()
             {
@@ -348,8 +344,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             Iterator <Path> iter = block.getPaths().iterator();
             while (iter.hasNext()) {
                 OPath path = (OPath)iter.next();
-                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                                             rbo.getString("OpenPathTurnoutMenu"), path.getName()));
+                JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
                 mi.setActionCommand(makePathTurnoutName(sysNames[i], path.getName()));
                 mi.addActionListener(openFrameAction);
                 openTurnoutMenu.add(mi);                                                  
@@ -360,7 +355,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  BlockFrame ******************************/
     protected JInternalFrame makeBlockFrame() {
-        JInternalFrame frame = new JInternalFrame(rbo.getString("TitleBlockTable"), true, false, false, true);
+        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleBlockTable"), true, false, false, true);
         _oBlockModel = new OBlockTableModel(this);
         _oBlockModel.init();
         JTable blockTable = new DnDJTable(_oBlockModel, new int[] {OBlockTableModel.EDIT_COL, 
@@ -382,15 +377,15 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         blockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
-        									new MyBooleanRenderer(rbo.getString("cm"), rbo.getString("in")));
+        									new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         JComboBox box = new JComboBox(OBlockTableModel.curveOptions);
         blockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         blockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
-        									new MyBooleanRenderer(rbo.getString("Current"), rbo.getString("Last")));
+        									new MyBooleanRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
         box = new JComboBox(jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames());
         blockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         blockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
-											new MyBooleanRenderer(rbo.getString("Permissive"), rbo.getString("Absolute")));
+											new MyBooleanRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         for (int i=0; i<_oBlockModel.getColumnCount(); i++) {
             int width = _oBlockModel.getPreferredWidth(i);
             blockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -414,7 +409,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));
-        JLabel prompt = new JLabel(rbo.getString("AddBlockPrompt"));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddBlockPrompt"));
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(_blockTablePane, BorderLayout.CENTER);
 
@@ -425,18 +420,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  PortalFrame ******************************/
     protected JInternalFrame makePortalFrame() {
-        JInternalFrame frame = new JInternalFrame(rbo.getString("TitlePortalTable"), true, false, false, true);
+        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitlePortalTable"), true, false, false, true);
         _portalModel = new PortalTableModel(this);
         _portalModel.init();
         JTable portalTable = new DnDJTable(_portalModel, new int[] {PortalTableModel.DELETE_COL});
-        try {   // following might fail due to a missing method on Mac Classic
+        _portalModel.makeSorter(portalTable);
+/*        try {   // following might fail due to a missing method on Mac Classic
         	TableSorter sorter = new TableSorter(portalTable.getModel());
             sorter.setTableHeader(portalTable.getTableHeader());
             sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
             portalTable.setModel(sorter);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("makePortalFrame: Unexpected error: "+e);
-        }
+        }*/
         
         portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -456,7 +452,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));
-        JLabel prompt = new JLabel(rbo.getString("AddPortalPrompt"));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddPortalPrompt"));
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(_portalTablePane, BorderLayout.CENTER);
 
@@ -468,7 +464,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  BlockPortalFrame ******************************/
     protected JInternalFrame makeBlockPortalFrame() {
-        JInternalFrame frame = new JInternalFrame(rbo.getString("TitleBlockPortalXRef"), true, false, false, true);
+        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleBlockPortalXRef"), true, false, false, true);
         _blockPortalXRefModel = new BlockPortalTableModel(_oBlockModel);
         JTable blockPortalTable = new DnDJTable(_blockPortalXRefModel, new int[] {BlockPortalTableModel.BLOCK_NAME_COLUMN, 
                                                                 BlockPortalTableModel.PORTAL_NAME_COLUMN});
@@ -499,7 +495,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  SignalFrame ******************************/
     protected JInternalFrame makeSignalFrame() {
-        JInternalFrame frame = new JInternalFrame(rbo.getString("TitleSignalTable"), true, false, false, true);
+        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleSignalTable"), true, false, false, true);
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
         JTable signalTable = new DnDJTable(_signalModel, new int[] {SignalTableModel.DELETE_COL});
@@ -526,7 +522,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));
-        JLabel prompt = new JLabel(rbo.getString("AddSignalPrompt"));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddSignalPrompt"));
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(_signalTablePane, BorderLayout.CENTER);
 
@@ -557,8 +553,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /***********************  BlockPathFrame ******************************/
     protected BlockPathFrame makeBlockPathFrame(OBlock block) {
-        String title = java.text.MessageFormat.format(
-                        rbo.getString("TitleBlockPathTable"), block.getDisplayName());
+        String title = Bundle.getMessage("TitleBlockPathTable", block.getDisplayName());
         BlockPathFrame frame = new BlockPathFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) log.debug("makeBlockPathFrame for Block "+block.getDisplayName());
         frame.setName(block.getSystemName());
@@ -588,7 +583,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));
-        JLabel prompt = new JLabel(rbo.getString("AddPathPrompt"));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddPathPrompt"));
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(tablePane, BorderLayout.CENTER);
 
@@ -601,8 +596,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         /***********************  PathTurnoutFrame ******************************/
     protected JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
-        String title = java.text.MessageFormat.format(
-                        rbo.getString("TitlePathTurnoutTable"), block.getDisplayName(), pathName);
+        String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
         JInternalFrame frame = new JInternalFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) log.debug("makePathTurnoutFrame for Block "+block.getDisplayName()+" and Path "+pathName);
         frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
@@ -633,7 +627,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5,5));
-        JLabel prompt = new JLabel(rbo.getString("AddTurnoutPrompt"));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddTurnoutPrompt"));
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(tablePane, BorderLayout.CENTER);
 

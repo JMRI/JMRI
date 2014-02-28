@@ -21,6 +21,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 
 /**
@@ -48,6 +49,7 @@ public class OBlockManagerXml // extends XmlFile
     public Element store(Object o) {
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class","jmri.jmrit.logix.configurexml.OBlockManagerXml");
+        blocks.setAttribute("nextSysNum", ""+InstanceManager.getDefault(PortalManager.class).getNextSysNum());
         OBlockManager manager = (OBlockManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -105,6 +107,7 @@ public class OBlockManagerXml // extends XmlFile
 
     Element storePortal(Portal portal) {
         Element elem = new Element("portal");
+        elem.setAttribute("systemName", portal.getSystemName());
         elem.setAttribute("portalName", portal.getName());
         OBlock block = portal.getFromBlock();
         if (block!=null) {
@@ -198,8 +201,8 @@ public class OBlockManagerXml // extends XmlFile
     */
     HashMap <String, OBlock> _blockMap;
     HashMap <String, OPath> _pathMap;
-    HashMap <String, Portal> _portalMap;
     OBlockManager _manager;
+    PortalManager _portalMgr;
 
     OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
@@ -215,6 +218,15 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
+    Portal getPortal(String name) {
+        Portal portal = _portalMgr.providePortal(name);
+        if (portal == null) {
+        	portal = _portalMgr.createNewPortal(null, name);
+            if (log.isDebugEnabled()) log.debug("create Portal: ("+portal.getSystemName()+", "+name+")");
+        }
+        return portal;
+    }
+
     OPath getPath(OBlock block, String name) {
         String key = block.getSystemName()+name;
         OPath path = _pathMap.get(key);
@@ -224,23 +236,6 @@ public class OBlockManagerXml // extends XmlFile
             if (log.isDebugEnabled()) log.debug("create OPath: ("+name+") in block ("+block.getSystemName()+")");
         }
         return path;
-    }
-
-    Portal getPortal(OBlock fromBlock, String name, OBlock toBlock) {
-        Portal portal = _portalMap.get(name);
-        if (portal == null) {
-            portal = new Portal(fromBlock, name, toBlock);
-            _portalMap.put(name, portal);
-            if (log.isDebugEnabled()) log.debug("create Portal: ("+name+")");
-        } else {
-            if (fromBlock!=null) {
-                portal.setFromBlock(fromBlock, false);
-            }
-            if (toBlock!=null) {
-                portal.setToBlock(toBlock, false);
-            }
-        }
-        return portal;
     }
 
     /**
@@ -253,110 +248,28 @@ public class OBlockManagerXml // extends XmlFile
     public boolean load(Element blocks) {
         _blockMap = new HashMap <String, OBlock>();
         _pathMap = new HashMap <String, OPath>();
-        _portalMap = new HashMap <String, Portal>();
-        _manager = InstanceManager.oBlockManagerInstance();
+         _manager = InstanceManager.getDefault(OBlockManager.class);
+        _portalMgr = InstanceManager.getDefault(PortalManager.class);
+
+        Attribute attr = blocks.getAttribute("nextSysNum");
+        if (attr!=null) {
+        	try {
+                _portalMgr.setNextSysNum(attr.getIntValue());        	        		
+        	} catch (Exception e) {/*ignore*/}
+        }
 
         List<Element> blockList = blocks.getChildren("oblock");
         if (log.isDebugEnabled()) log.debug("Found "+blockList.size()+" OBlock objects");
         for (int i=0; i<blockList.size(); i++) {
-            Element elem = blockList.get(i);
-            if (elem.getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+elem+" "+elem.getAttributes());
-                break;
-            }
-            String sysName = elem.getAttribute("systemName").getValue();
-            String userName = null;
-            if (elem.getAttribute("userName") != null)
-                userName = elem.getAttribute("userName").getValue();
-            if (log.isDebugEnabled()) log.debug("Load block sysName= "+sysName+" userName= "+userName);
-            // Portal may have already created a skeleton of this block
-            OBlock block = getBlock(sysName);
-            if (block==null) {
-                log.error("Null block!! sysName= "+sysName+", userName= "+userName);
-                continue;
-            }
-            block.setUserName(userName);
-            String c = elem.getChildText("comment");
-            if (c != null) {
-                block.setComment(c);
-            }
-			if (elem.getAttribute("units") != null) {
-				block.setMetricUnits(elem.getAttribute("units").getValue().equals("true"));
-			} else {
-				block.setMetricUnits(false);
-			}
-			if (elem.getAttribute("length") != null) {
-				block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
-			}
-			if (elem.getAttribute("curve") != null) {
-				block.setCurvature(Integer.parseInt((elem.getAttribute("curve")).getValue()));
-			}
-            List<Element> sensors = elem.getChildren("sensor");
-            if (sensors.size()>1) log.error("More than one sensor present: "+sensors.size());
-            if (sensors.size()>0) {
-                // sensor
-                String name = sensors.get(0).getAttribute("systemName").getValue();
-                block.setSensor(name);
-            }
-            Element errSensor = elem.getChild("errorSensor");
-            if (errSensor!=null) {
-                // sensor
-                String name = errSensor.getAttribute("systemName").getValue();
-                //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
-                block.setErrorSensor(name);
-            }
-            Element reporter = elem.getChild("reporter");
-            if (reporter!=null) {
-                // sensor
-                String name = reporter.getAttribute("systemName").getValue();
-                //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
-                try {
-                    Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
-                    if (rep!=null) {
-                    	block.setReporter(rep);
-                    }
-                } catch (Exception ex) {
-                    log.error("No Reporter named \""+name+"\" found. threw exception: "+ ex);
-                }
-    			if (reporter.getAttribute("reportCurrent") != null) {
-    				block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));
-    			} else {
-    				block.setReportingCurrent(false);
-    			}
-            }
-			if (elem.getAttribute("permissive") != null) {
-				block.setPermissiveWorking(elem.getAttribute("permissive").getValue().equals("true"));
-			} else {
-				block.setPermissiveWorking(false);
-			}
-			if (elem.getAttribute("speedNotch") != null) {
-                try {
-    				block.setBlockSpeed(elem.getAttribute("speedNotch").getValue());
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + elem.getAttribute("speedNotch").getValue());
-                }
-			}
-            List<Element> paths = elem.getChildren("path");
-            for (int j=0; j<paths.size(); j++) {
-                if (!block.addPath(loadPath(paths.get(j), block))) {
-                    log.error("load: block \""+sysName+"\" failed to add path \""+
-                              paths.get(j).getName()+"\" in block \""+block.getSystemName()+"\"");
-                }
-            }
-            List<Element> portals = elem.getChildren("portal");
-            for (int k=0; k<portals.size(); k++) {
-                block.addPortal(loadPortal(portals.get(k)));
-            }
+            loadBlock(blockList.get(i));
         }
-        // Build data structure for blocks to know with whon they share turnouts.
+        // Build data structure for blocks to know with whom they share turnouts.
         // check whether any turnouts are shared between two blocks;
         String[] sysNames = _manager.getSystemNameArray();
         for (int i=0; i<sysNames.length; i++)
         {
             WarrantTableAction.checkSharedTurnouts(_manager.getOBlock(sysNames[i]));        	
         }
-        // patch in Paths to Portals
-        //addPathsToPortals();
         return true;
     }
     
@@ -364,42 +277,173 @@ public class OBlockManagerXml // extends XmlFile
         log.error("load called. Invalid method.");
     }
     
-    @SuppressWarnings("null")
+    @SuppressWarnings("unchecked")
+    void loadBlock(Element elem) {
+        if (elem.getAttribute("systemName") == null) {
+            log.error("unexpected null in systemName "+elem+" "+elem.getAttributes());
+            return;
+        }
+        String sysName = elem.getAttribute("systemName").getValue();
+        String userName = null;
+        if (elem.getAttribute("userName") != null)
+            userName = elem.getAttribute("userName").getValue();
+        if (log.isDebugEnabled()) log.debug("Load block sysName= "+sysName+" userName= "+userName);
+        // Portal may have already created a skeleton of this block
+        OBlock block = getBlock(sysName);
+        if (block==null) {
+            log.error("Null block!! sysName= "+sysName+", userName= "+userName);
+            return;
+        }
+        block.setUserName(userName);
+        String c = elem.getChildText("comment");
+        if (c != null) {
+            block.setComment(c);
+        }
+		if (elem.getAttribute("units") != null) {
+			block.setMetricUnits(elem.getAttribute("units").getValue().equals("true"));
+		} else {
+			block.setMetricUnits(false);
+		}
+		if (elem.getAttribute("length") != null) {
+			block.setLength(Float.valueOf(elem.getAttribute("length").getValue()).floatValue());
+		}
+		if (elem.getAttribute("curve") != null) {
+			block.setCurvature(Integer.parseInt((elem.getAttribute("curve")).getValue()));
+		}
+        List<Element> sensors = elem.getChildren("sensor");
+        if (sensors.size()>1) log.error("More than one sensor present: "+sensors.size());
+        if (sensors.size()>0) {
+            // sensor
+            String name = sensors.get(0).getAttribute("systemName").getValue();
+            block.setSensor(name);
+        }
+        Element errSensor = elem.getChild("errorSensor");
+        if (errSensor!=null) {
+            // sensor
+            String name = errSensor.getAttribute("systemName").getValue();
+            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+            block.setErrorSensor(name);
+        }
+        Element reporter = elem.getChild("reporter");
+        if (reporter!=null) {
+            // sensor
+            String name = reporter.getAttribute("systemName").getValue();
+            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+            try {
+                Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
+                if (rep!=null) {
+                	block.setReporter(rep);
+                }
+            } catch (Exception ex) {
+                log.error("No Reporter named \""+name+"\" found. threw exception: "+ ex);
+            }
+			if (reporter.getAttribute("reportCurrent") != null) {
+				block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));
+			} else {
+				block.setReportingCurrent(false);
+			}
+        }
+		if (elem.getAttribute("permissive") != null) {
+			block.setPermissiveWorking(elem.getAttribute("permissive").getValue().equals("true"));
+		} else {
+			block.setPermissiveWorking(false);
+		}
+		if (elem.getAttribute("speedNotch") != null) {
+            try {
+				block.setBlockSpeed(elem.getAttribute("speedNotch").getValue());
+            } catch (jmri.JmriException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + elem.getAttribute("speedNotch").getValue());
+            }
+		}
+		
+        List<Element> portals = elem.getChildren("portal");
+        for (int k=0; k<portals.size(); k++) {
+            block.addPortal(loadPortal(portals.get(k)));
+        }
+        
+        List<Element> paths = elem.getChildren("path");
+        for (int j=0; j<paths.size(); j++) {
+            if (!block.addPath(loadPath(paths.get(j), block))) {
+                log.error("load: block \""+sysName+"\" failed to add path \""+
+                          paths.get(j).getName()+"\" in block \""+block.getSystemName()+"\"");
+            }
+        }
+    	
+    }
+    
     Portal loadPortal(Element elem) {
-        String portalName = elem.getAttribute("portalName").getValue();
-        String blockName = null;
-        OBlock fromBlock = null;
-        OBlock toBlock = null;
-
+    	String sysName = null;
+        String userName = elem.getAttribute("portalName").getValue();
+        if (elem.getAttribute("systemName") == null) {
+        	if (log.isDebugEnabled()) log.debug("Portal systemName is null");
+        } else {
+            sysName = elem.getAttribute("systemName").getValue();	
+        }
+        // Portals must have user names.
+    	Portal portal = _portalMgr.providePortal(userName);
+    	if (portal==null) {
+            if (sysName!=null && sysName.trim().length()>2) {
+            	portal = _portalMgr.providePortal(sysName);
+            	if (portal!=null) {
+            		if (portal.getUserName()!=null) {
+            			portal.setUserName(userName);
+            		} else {
+        	            log.error("Portal \""+sysName+"\" has conflicting user names: "+userName+
+        	            		" or "+portal.getUserName()+ " ??");    				            			
+            		}
+            	}
+            } else {
+            	sysName = null;
+            }
+            if (portal==null) {
+            	portal = _portalMgr.createNewPortal(sysName, userName);    		            	
+            }
+    	} else { // userName found, check systemNames match
+    		if (sysName!=null && sysName.trim().length()>2) {
+    			if (!portal.getSystemName().equals(sysName)) {
+    	            log.error("Portal \""+userName+"\" has conflicting system names: "+sysName+
+    	            		" or "+portal.getSystemName()+ " ??");    				
+    			}
+    		}
+    	}
+        if (portal == null) {
+            log.error("unable to create Portal ("+sysName+", "+userName+") "+elem+" "+elem.getAttributes());
+        } else {
+            if (log.isDebugEnabled()) log.debug("create Portal: ("+sysName+", "+userName+")");            	
+        }
+         
+        String fromBlockName = "";
+        OBlock fromBlock = null;        
         Element eFromBlk = elem.getChild("fromBlock");
         if (eFromBlk!=null && eFromBlk.getAttribute("blockName")!=null) {
-            blockName = eFromBlk.getAttribute("blockName").getValue();
-            fromBlock = getBlock(blockName);
+        	fromBlockName = eFromBlk.getAttribute("blockName").getValue();
+            fromBlock = getBlock(fromBlockName);
         } else {
-            log.error("Portal \""+portalName+"\" has no fromBlock!");
+            log.error("Portal \""+userName+"\" has no fromBlock!");
         }
 
+        String toBlockName = "";
+        OBlock toBlock = null;
         Element eToBlk = elem.getChild("toBlock"); 
         if (eToBlk!=null && eToBlk.getAttribute("blockName")!=null) {
-            blockName = eToBlk.getAttribute("blockName").getValue();
-            toBlock = getBlock(blockName);
+        	toBlockName = eToBlk.getAttribute("blockName").getValue();
+            toBlock = getBlock(toBlockName);
         } else {
-            log.error("Portal \""+portalName+"\" has no toBlock!");
+            log.error("Portal \""+userName+"\" has no toBlock!");
         }
 
-        Portal portal = getPortal(fromBlock, portalName, toBlock);
-
         if (fromBlock!=null) {
+        	portal.setFromBlock(fromBlock, false);
             fromBlock.addPortal(portal);
             @SuppressWarnings("unchecked")
             List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
             for (int i=0; i<ePathsFromBlock.size(); i++) {
                 Element e = ePathsFromBlock.get(i);
                 String pathName = e.getAttribute("pathName").getValue();
-                blockName= e.getAttribute("blockName").getValue();
-                if (log.isDebugEnabled()) log.debug("Load portal= "+portalName+" fromBlock= "+fromBlock.getSystemName()
+                String blockName= e.getAttribute("blockName").getValue();
+                if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" fromBlock= "+fromBlock.getSystemName()
                                                     +" pathName= "+pathName+" blockName= "+blockName);
-                if (fromBlock.getSystemName().equals(blockName)) {
+                /*(if (fromBlock.getSystemName().equals(blockName))*/ {
                     // path is in the fromBlock
                     OPath path = getPath(fromBlock, pathName);
                     portal.addPath(path);
@@ -407,16 +451,17 @@ public class OBlockManagerXml // extends XmlFile
             }
         }
         if (toBlock!=null) {
+            portal.setToBlock(toBlock, false);
             toBlock.addPortal(portal);
             @SuppressWarnings("unchecked")
             List<Element> ePathsToBlock = eToBlk.getChildren("path");
             for (int i=0; i<ePathsToBlock.size(); i++) {
                 Element e = ePathsToBlock.get(i);
                 String pathName = e.getAttribute("pathName").getValue();
-                blockName= e.getAttribute("blockName").getValue();
-                if (log.isDebugEnabled()) log.debug("Load portal= "+portalName+" toBlock= "+toBlock.getSystemName()
+                String blockName= e.getAttribute("blockName").getValue();
+                if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" toBlock= "+toBlock.getSystemName()
                                                     +" pathName= "+pathName+" blockName= "+blockName);
-                if (toBlock.getSystemName().equals(blockName)) {
+                /*if (toBlock.getSystemName().equals(blockName))*/ {
                     // path is in the toBlock
                     OPath path = getPath(toBlock, pathName);
                     portal.addPath(path);
@@ -434,7 +479,7 @@ public class OBlockManagerXml // extends XmlFile
                     time = attr.getLongValue();
                 }
             } catch (org.jdom.DataConversionException e) {
-                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+portalName+")");
+                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+userName+")");
             }
             portal.setProtectSignal(Portal.getSignal(name), time, toBlock);
         }
@@ -448,12 +493,12 @@ public class OBlockManagerXml // extends XmlFile
                     time = attr.getLongValue();
                 }
             } catch (org.jdom.DataConversionException e) {
-                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+portalName+")");
+                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+userName+")");
             }
             portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
         }
 
-        if (log.isDebugEnabled()) log.debug("End Load portal "+portalName);
+        if (log.isDebugEnabled()) log.debug("End Load portal "+userName);
         return portal;
     }
 
@@ -476,11 +521,19 @@ public class OBlockManagerXml // extends XmlFile
 
         Attribute attr = elem.getAttribute("fromPortal");
         if (attr != null){
-            path.setFromPortal(getPortal(null, attr.getValue(), null));
+        	Portal portal = getPortal(attr.getValue());
+        	if (portal!=null) {
+                path.setFromPortal(portal);
+                portal.addPath(path);       		
+        	}
         }
         attr = elem.getAttribute("toPortal");
         if (attr != null){
-            path.setToPortal(getPortal(null, attr.getValue(), null));
+        	Portal portal = getPortal(attr.getValue());
+        	if (portal!=null) {
+                path.setToPortal(portal);
+                portal.addPath(path);        		
+        	}
         }
 
         List<Element> settings = elem.getChildren("setting");
@@ -504,7 +557,7 @@ public class OBlockManagerXml // extends XmlFile
     }
     
     public int loadOrder(){
-        return InstanceManager.oBlockManagerInstance().getXMLOrder();
+    	return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
     static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());

@@ -410,9 +410,15 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             if (result==JOptionPane.NO_OPTION) {
             	return;
             }
-        	// Change portal position
+        	// Change portal position to join different pair of blocks
             portal.dispose();
-            portal = new Portal(_homeBlock, name, _adjacentBlock);
+            PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
+        	portal = portalMgr.createNewPortal(null, name);
+        	if (portal==null) {
+            	portal = portalMgr.providePortal(name);
+        	}
+            portal.setToBlock(_homeBlock, false);
+            portal.setFromBlock(_adjacentBlock, false);
             icon.setPortal(portal);
         }
         OBlock block = portal.getToBlock();
@@ -681,7 +687,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 } else {
                     Portal portal = _homeBlock.getPortalByName(name);
                     if (portal==null) {
-                        portal = new Portal(_homeBlock, name, null);
+                    	PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
+                    	portal = portalMgr.createNewPortal(null, name);
+                        portal.setToBlock(_homeBlock, false);
                         _portalListModel.dataChange();
                     }
                 	pi = new PortalIcon(_parent._editor, portal);

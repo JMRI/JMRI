@@ -607,12 +607,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (InstanceManager.throttleManagerInstance()==null) {
             msg = Bundle.getMessage("noThrottle");
             abortWarrant(msg);
+            firePropertyChange("throttleFail", null, msg);
             return msg;
         }
         if (!InstanceManager.throttleManagerInstance().
                 requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
                 msg = Bundle.getMessage("trainInUse", address.getNumber());
                 abortWarrant(msg);
+                firePropertyChange("throttleFail", null, msg);
                 return msg;
         }
         log.debug("Throttle at "+address.toString()+" acquired for warrant "+getDisplayName());        	
