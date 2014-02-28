@@ -256,7 +256,7 @@ public class FileUtil {
             if (new File(path.substring(SETTINGS.length())).isAbsolute()) {
                 path = path.substring(SETTINGS.length());
             } else {
-                path = path.replaceFirst(SETTINGS, Matcher.quoteReplacement(FileUtil.getProfilePath()));
+                path = path.replaceFirst(SETTINGS, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
             }
         } else if (path.startsWith(HOME)) {
             if (new File(path.substring(HOME.length())).isAbsolute()) {

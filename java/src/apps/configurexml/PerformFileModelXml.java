@@ -2,10 +2,12 @@ package apps.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.PerformFileModel;
 
+import apps.PerformFileModel;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.util.FileUtil;
+
 import java.io.File;
 
 import org.jdom.Element;
@@ -14,6 +16,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Ken Cameron Copyright: 2014(c)
  * @version $Revision$
  * @see apps.PerformFilePanel
  */
@@ -31,7 +34,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         Element e = new Element("perform");
         PerformFileModel g = (PerformFileModel) o;
 
-        e.setAttribute("name", g.getFileName());
+        e.setAttribute("name", FileUtil.getPortableFilename(g.getFileName()));
         e.setAttribute("type", "XmlFile");
         e.setAttribute("class", this.getClass().getName());
         return e;
@@ -55,8 +58,8 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
       */
     public boolean load(Element e) throws JmriException {
     	boolean result = true;
-        String fileName = e.getAttribute("name").getValue();
-        log.debug("Load file "+fileName);
+        String fileName = FileUtil.getAbsoluteFilename(e.getAttribute("name").getValue());
+        log.info("Load file "+fileName);
 
         // load the file
         File file = new File(fileName);
