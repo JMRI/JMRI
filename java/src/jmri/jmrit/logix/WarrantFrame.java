@@ -916,9 +916,7 @@ public class WarrantFrame extends WarrantRoute {
             _statusBox.setText(msg);
             return;
     	}
-    	if (msg==null) {
-        	msg = _warrant.checkStartBlock();    		
-    	}
+    	msg = _warrant.checkStartBlock();    		
         if (msg != null) {
         	OBlock block = _warrant.getBlockAt(0);
         	if (msg.equals(Bundle.getMessage("BlockDark", block.getDisplayName()))) {

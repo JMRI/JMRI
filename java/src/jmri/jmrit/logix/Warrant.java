@@ -311,7 +311,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public DccLocoAddress getDccAddress() { return _dccAddress;  }
     public void setDccAddress(DccLocoAddress address) { 
         _dccAddress = address;
-        String id = null;
         if (address!=null && _trainId==null) {
             _trainId = address.toString();
         }

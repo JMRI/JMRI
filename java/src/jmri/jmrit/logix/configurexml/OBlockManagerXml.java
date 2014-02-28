@@ -408,8 +408,9 @@ public class OBlockManagerXml // extends XmlFile
     	}
         if (portal == null) {
             log.error("unable to create Portal ("+sysName+", "+userName+") "+elem+" "+elem.getAttributes());
+            return null;
         } else {
-            if (log.isDebugEnabled()) log.debug("create Portal: ("+sysName+", "+userName+")");            	
+            if (log.isDebugEnabled()) log.debug("create Portal: ("+sysName+", "+userName+")");
         }
          
         String fromBlockName = "";
@@ -418,6 +419,24 @@ public class OBlockManagerXml // extends XmlFile
         if (eFromBlk!=null && eFromBlk.getAttribute("blockName")!=null) {
         	fromBlockName = eFromBlk.getAttribute("blockName").getValue();
             fromBlock = getBlock(fromBlockName);
+            if (fromBlock!=null) {
+            	portal.setFromBlock(fromBlock, false);
+                fromBlock.addPortal(portal);
+                @SuppressWarnings("unchecked")
+                List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
+                for (int i=0; i<ePathsFromBlock.size(); i++) {
+                    Element e = ePathsFromBlock.get(i);
+                    String pathName = e.getAttribute("pathName").getValue();
+                    String blockName= e.getAttribute("blockName").getValue();
+                    if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" fromBlock= "+fromBlock.getSystemName()
+                                                        +" pathName= "+pathName+" blockName= "+blockName);
+                    /*(if (fromBlock.getSystemName().equals(blockName))*/ {
+                        // path is in the fromBlock
+                        OPath path = getPath(fromBlock, pathName);
+                        portal.addPath(path);
+                    }
+                }
+            }
         } else {
             log.error("Portal \""+userName+"\" has no fromBlock!");
         }
@@ -428,47 +447,27 @@ public class OBlockManagerXml // extends XmlFile
         if (eToBlk!=null && eToBlk.getAttribute("blockName")!=null) {
         	toBlockName = eToBlk.getAttribute("blockName").getValue();
             toBlock = getBlock(toBlockName);
+            if (toBlock!=null) {
+                portal.setToBlock(toBlock, false);
+                toBlock.addPortal(portal);
+                @SuppressWarnings("unchecked")
+                List<Element> ePathsToBlock = eToBlk.getChildren("path");
+                for (int i=0; i<ePathsToBlock.size(); i++) {
+                    Element e = ePathsToBlock.get(i);
+                    String pathName = e.getAttribute("pathName").getValue();
+                    String blockName= e.getAttribute("blockName").getValue();
+                    if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" toBlock= "+toBlock.getSystemName()
+                                                        +" pathName= "+pathName+" blockName= "+blockName);
+                    /*if (toBlock.getSystemName().equals(blockName))*/ {
+                        // path is in the toBlock
+                        OPath path = getPath(toBlock, pathName);
+                        portal.addPath(path);
+                    }
+                }
+            }
         } else {
             log.error("Portal \""+userName+"\" has no toBlock!");
         }
-
-        if (fromBlock!=null) {
-        	portal.setFromBlock(fromBlock, false);
-            fromBlock.addPortal(portal);
-            @SuppressWarnings("unchecked")
-            List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
-            for (int i=0; i<ePathsFromBlock.size(); i++) {
-                Element e = ePathsFromBlock.get(i);
-                String pathName = e.getAttribute("pathName").getValue();
-                String blockName= e.getAttribute("blockName").getValue();
-                if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" fromBlock= "+fromBlock.getSystemName()
-                                                    +" pathName= "+pathName+" blockName= "+blockName);
-                /*(if (fromBlock.getSystemName().equals(blockName))*/ {
-                    // path is in the fromBlock
-                    OPath path = getPath(fromBlock, pathName);
-                    portal.addPath(path);
-                }
-            }
-        }
-        if (toBlock!=null) {
-            portal.setToBlock(toBlock, false);
-            toBlock.addPortal(portal);
-            @SuppressWarnings("unchecked")
-            List<Element> ePathsToBlock = eToBlk.getChildren("path");
-            for (int i=0; i<ePathsToBlock.size(); i++) {
-                Element e = ePathsToBlock.get(i);
-                String pathName = e.getAttribute("pathName").getValue();
-                String blockName= e.getAttribute("blockName").getValue();
-                if (log.isDebugEnabled()) log.debug("Load portal= "+userName+" toBlock= "+toBlock.getSystemName()
-                                                    +" pathName= "+pathName+" blockName= "+blockName);
-                /*if (toBlock.getSystemName().equals(blockName))*/ {
-                    // path is in the toBlock
-                    OPath path = getPath(toBlock, pathName);
-                    portal.addPath(path);
-                }
-            }
-        }
-
         Element eSignal = elem.getChild("fromSignal");
         if (eSignal!=null) {
             String name = eSignal.getAttribute("signalName").getValue();

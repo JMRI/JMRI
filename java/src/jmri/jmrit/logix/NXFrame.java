@@ -248,13 +248,15 @@ public class NXFrame extends WarrantRoute {
                 } catch (NumberFormatException nfe) {
                     msg = Bundle.getMessage("BadDccAddress", addr);
                 }
+            } else {
+            	msg = Bundle.getMessage("BadDccAddress", addr);
+            }
+            if (msg==null) {
+            	msg = makeCommands(warrant);           	
             }
         }
         if (msg==null) {
             warrant.setBlockOrders(getOrders());
-        }
-        if (msg==null) {
-        	msg = makeCommands(warrant);           	
         }
         if (msg==null) {
         	msg = _parent.runTrain(warrant);           	

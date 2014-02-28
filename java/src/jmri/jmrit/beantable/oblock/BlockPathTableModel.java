@@ -189,8 +189,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         }
                         portal = portalMgr.providePortal(strValue);
                         if (portal==null) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchPortalName", strValue),
-                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                        	
+                            msg = Bundle.getMessage("NoSuchPortalName", strValue);
+                            break;
                         } else {
                             if ( !portal.setFromBlock(_block, false)) {
                                 response = JOptionPane.showConfirmDialog(null, 
@@ -238,8 +238,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         }
                         portal = portalMgr.providePortal(strValue);
                         if (portal==null) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchPortalName", strValue),
-                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                        	
+                            msg = Bundle.getMessage("NoSuchPortalName", strValue);
+                            break;
                         } else {
                             if ( !portal.setToBlock(_block, false)) {
                                 response = JOptionPane.showConfirmDialog(null, 
