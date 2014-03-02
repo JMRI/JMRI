@@ -232,7 +232,8 @@ public class CarManager extends RollingStockManager {
 	 * @return list of cars ordered by car kernel
 	 */
 	public List<RollingStock> getByKernelList() {
-		return getByList(getByNumberList(), BY_KERNEL);
+		List<RollingStock> byBlocking = getByIntList(getByNumberList(), BY_BLOCKING);
+		return getByList(byBlocking, BY_KERNEL);
 	}
 
 	/**
