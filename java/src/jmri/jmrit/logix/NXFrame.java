@@ -50,15 +50,18 @@ public class NXFrame extends WarrantRoute {
 	WarrantTableFrame 	_parent;
     JTextField  _dccNumBox = new JTextField();
     JTextField  _trainNameBox = new JTextField();
+    JTextField  _nameBox = new JTextField();
     JTextField  _speedBox = new JTextField();
-    JCheckBox	_forward = new JCheckBox();
+    JRadioButton _forward = new JRadioButton(Bundle.getMessage("forward"));
+    JRadioButton _reverse = new JRadioButton(Bundle.getMessage("reverse"));
     JCheckBox	_stageEStop = new JCheckBox();    
     JCheckBox	_haltStart = new JCheckBox();    
     JTextField _rampInterval = new JTextField();
     JTextField _searchDepth = new JTextField();
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
-//    int _clickCount;
+    JPanel		_autoRunPanel;
+    JPanel		_manualPanel;
 
     private static NXFrame _instance;
     
@@ -69,6 +72,7 @@ public class NXFrame extends WarrantRoute {
     	_instance.setVisible(true);
     	_instance._dccNumBox.setText(null);
     	_instance._trainNameBox.setText(null);
+    	_instance._nameBox.setText(null);
     	_instance.clearRoute();
     	return _instance;
     }
@@ -106,35 +110,58 @@ public class NXFrame extends WarrantRoute {
         pp.add(_runManual);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(pp);
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
-//        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _speedBox, "Speed", true));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeBoxPanel(false, _forward, "forward"));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        p1.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
+        p1.add(WarrantFrame.makeTextBoxPanel(false, _speedBox, "Speed", true));        
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+        p2.add(WarrantFrame.makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
+        bg = new ButtonGroup();
+        bg.add(_forward);
+        bg.add(_reverse);
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));        	
+        ppp.add(_forward);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));        	
+        ppp.add(_reverse);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));        	
+        p2.add(ppp);
+        
+        _autoRunPanel = new JPanel();
+        _autoRunPanel.setLayout(new BoxLayout(_autoRunPanel, BoxLayout.Y_AXIS));
         pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        JPanel ppp = new JPanel();
+        pp.add(p1);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(p2);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        _autoRunPanel.add(pp);
+        _autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp = new JPanel();
         ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
         ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
         ppp.add(WarrantFrame.makeBoxPanel(false, _haltStart, "HaltStart"));
         pp.add(ppp);
         pp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
+        _autoRunPanel.add(pp);
+       
+        _manualPanel = new JPanel();
+        _manualPanel.setLayout(new BoxLayout(_manualPanel, BoxLayout.X_AXIS));
+        _manualPanel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
+        _manualPanel.add(WarrantFrame.makeTextBoxPanel(false, _nameBox, "TrainName", true));
+        _manualPanel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
+        
+        panel.add(_autoRunPanel);
+        panel.add(_manualPanel);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         pp = new JPanel();
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -179,12 +206,13 @@ public class NXFrame extends WarrantRoute {
 	}
     
     private void enableAuto(boolean enable) {
-		_dccNumBox.setEnabled(enable);
-	    _speedBox.setEnabled(enable);
-	    _forward.setEnabled(enable);
-	    _stageEStop.setEnabled(enable);    
-	    _haltStart.setEnabled(enable);    
-	    _rampInterval.setEnabled(enable);    		
+    	if (enable) {
+    		_manualPanel.setVisible(false);
+    		_autoRunPanel.setVisible(true);
+    	} else {
+    		_manualPanel.setVisible(true);
+    		_autoRunPanel.setVisible(false);    		
+    	}
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -235,27 +263,26 @@ public class NXFrame extends WarrantRoute {
                         isLong = (ch=='0' || dccNum>127);  // leading zero means long
                         addr = addr + (isLong?"L":"S");
             		}
-            		if (msg==null) {
-                    	String name =_trainNameBox.getText();
-                    	if (name==null || name.trim().length()==0) {
-                    		name = addr;
-                    	}
-                    	String s = (""+Math.random()).substring(2);
-                    	warrant = new Warrant("IW"+s, "NX("+addr+")");
-                    	warrant.setDccAddress( new DccLocoAddress(dccNum, isLong));
-                    	warrant.setTrainName(name);            			
-            		}
                 } catch (NumberFormatException nfe) {
                     msg = Bundle.getMessage("BadDccAddress", addr);
                 }
+        		if (msg==null) {
+                	String name =_trainNameBox.getText();
+                	if (name==null || name.trim().length()==0) {
+                		name = addr;
+                	}
+                	String s = (""+Math.random()).substring(2);
+                	warrant = new Warrant("IW"+s, "NX("+addr+")");
+                	warrant.setDccAddress( new DccLocoAddress(dccNum, isLong));
+                	warrant.setTrainName(name);
+                	
+                	msg = makeCommands(warrant);           	
+                    if (msg==null) {
+                        warrant.setBlockOrders(getOrders());
+                    }
+        		}
             } else {
             	msg = Bundle.getMessage("BadDccAddress", addr);
-            }
-            if (msg==null) {
-            	msg = makeCommands(warrant);           	
-            }
-            if (msg==null) {
-                warrant.setBlockOrders(getOrders());
             }
         }
         if (msg==null) {
@@ -298,17 +325,18 @@ public class NXFrame extends WarrantRoute {
         }
     }
     private void runManual() {
-    	String name =_trainNameBox.getText();
+    	String name =_nameBox.getText();
     	if (name==null || name.trim().length()==0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noTrainName"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
     	}
     	String s = (""+Math.random()).substring(2);
-    	Warrant warrant = new Warrant("IW"+s, name);
+    	Warrant warrant = new Warrant("IW"+s, "NX("+name+")");
     	warrant.setTrainName(name);            			
-        warrant.setBlockOrders(getOrders());
+        warrant.setRoute(0, getOrders());
     	_parent.getModel().addNXWarrant(warrant);
+    	warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
     	_parent.getModel().fireTableDataChanged();    	
     	_parent.scrollTable();
     	dispose();

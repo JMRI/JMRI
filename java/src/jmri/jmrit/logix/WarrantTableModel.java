@@ -362,11 +362,16 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                         break;
                     }
                     msg = w.setRoute(0, null);
-                    if (msg!=null) {
+                    if (msg==null) {
                         msg = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                     }
                     if (msg!=null) {
                     	w.deAllocate();
+                    } else {
+                    	msg = w.checkStartBlock();	// notify first block occupied by this train
+                    	if (msg!=null) {
+                    		_frame.setStatusText(msg, WarrantTableModel.myGold, false);                        		
+                    	}                    	
                     }
                     if (log.isDebugEnabled()) log.debug("w.runManualTrain= "+msg);
                 } else {
@@ -454,9 +459,11 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	OBlock oldBlock = (OBlock)e.getOldValue();
             	OBlock newBlock = (OBlock)e.getNewValue();
             	if (newBlock==null) {
-            		_frame.setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), oldBlock.getDisplayName()), Color.red, true);               	                		
+            		_frame.setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), 
+            				oldBlock.getDisplayName(), bean.getTrainName()), Color.red, true);               	                		
             	} else {
-            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), myGreen, true);               	                		                		
+            		_frame.setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), 
+            				newBlock.getDisplayName()), myGreen, true);               	                		                		
             	}
             } else if(e.getPropertyName().equals("blockRelease")) {
             	OBlock block = (OBlock)e.getNewValue();
@@ -464,7 +471,8 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
 		    	_frame.setStatusText(Bundle.getMessage("TrackerBlockLeave", bean.getTrainName(),
 	        			block.getDisplayName(), et/60, et%60), myGreen, true);           	
             } else if (e.getPropertyName().equals("SpeedRestriction")) {
-            	_frame.setStatusText(Bundle.getMessage("speedChange", bean.getTrainName(), bean.getCurrentBlockOrder().getBlock().getDisplayName(),
+            	_frame.setStatusText(Bundle.getMessage("speedChange", bean.getTrainName(), 
+            			bean.getCurrentBlockOrder().getBlock().getDisplayName(),
             			e.getNewValue()), myGold, true);               	                		                	
             } else if (e.getPropertyName().equals("runMode")) {
             	int oldMode = ((Integer)e.getOldValue()).intValue();
@@ -472,12 +480,19 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	if (oldMode==Warrant.MODE_NONE) {
             		if (newMode!=Warrant.MODE_NONE) {
                 	_frame.setStatusText(Bundle.getMessage("warrantStart", bean.getTrainName(), bean.getDisplayName(),
-                			bean.getCurrentBlockOrder().getBlock().getDisplayName(), Bundle.getMessage(Warrant.MODES[newMode])), myGreen, true);
+                			bean.getCurrentBlockOrder().getBlock().getDisplayName(), 
+                			Bundle.getMessage(Warrant.MODES[newMode])), myGreen, true);
             		}
             	} else if (newMode==Warrant.MODE_NONE) {
             		if (oldMode!=Warrant.MODE_NONE) {
-                    	_frame.setStatusText(Bundle.getMessage("warrantEnd", bean.getTrainName(), bean.getDisplayName(),
-                    			bean.getCurrentBlockOrder().getBlock().getDisplayName()), myGreen, true);
+            			OBlock block = bean.getCurrentBlockOrder().getBlock();
+            			if ((block.getState() & OBlock.OCCUPIED)>0) {
+                        	_frame.setStatusText(Bundle.getMessage("warrantEnd", bean.getTrainName(),
+                        			bean.getDisplayName(), block.getDisplayName()), myGreen, true);
+            			} else {
+                        	_frame.setStatusText(Bundle.getMessage("warrantAbort", bean.getTrainName(),
+                        			bean.getDisplayName()), myGreen, true);            				
+            			}
             		}
             	} else {
                 	_frame.setStatusText(Bundle.getMessage("modeChange", bean.getTrainName(), bean.getDisplayName(),
