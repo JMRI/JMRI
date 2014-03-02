@@ -35,7 +35,7 @@ public class TrainManifest extends TrainCommon {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
 					true);
 		} catch (IOException e) {
-			log.error("can not open train manifest file");
+			log.error("Can not open train manifest file: "+file.getName());
 			return;
 		}
 		// build header

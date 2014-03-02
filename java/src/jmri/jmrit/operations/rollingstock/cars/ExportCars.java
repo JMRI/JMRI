@@ -79,7 +79,7 @@ public class ExportCars extends XmlFile {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
 					true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open car roster CSV file");
+			log.error("Can not open export cars CSV file: "+file.getName());
 			return;
 		}
 

@@ -48,7 +48,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
 					true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open cvs switchlist file");
+			log.error("Can not open CSV switch list file: "+file.getName());
 			return null;
 		}
 		// build header

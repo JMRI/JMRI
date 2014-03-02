@@ -59,7 +59,7 @@ public class ImportEngines extends ImportRollingStock {
 		} catch (FileNotFoundException e) {
 			return;
 		} catch (IOException e) {
-			log.error("can not open car roster CSV file");
+			log.error("Can not open import engines CSV file: "+file.getName());
 			return;
 		}
 

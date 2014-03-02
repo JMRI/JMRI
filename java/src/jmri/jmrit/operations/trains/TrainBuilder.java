@@ -114,7 +114,7 @@ public class TrainBuilder extends TrainCommon {
 			buildReport = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open build status file");
+			log.error("Can not open build status file: "+file.getName());
 			return;
 		}
 		Date startTime = new Date();
