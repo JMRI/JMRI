@@ -130,20 +130,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     @Override
     public int getRowCount () {
         return super.getRowCount() + 1;
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@inheritDoc}
-     */
- /*   @Override
-    public NamedBean getBeanAt(int index) {
-    	if (index >=_pickList.size()) {
-    		return null;
-    	}
-       return _pickList.get(index);
-    }*/
+    }    
 
     static String ZEROS ="00000000";
     @Override
@@ -622,7 +609,6 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         super.propertyChange(e);
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("PropertyChange = "+property);
-//        _parent.getPortalModel().propertyChange(e);
         _parent.getXRefModel().propertyChange(e);
         _parent.getSignalModel().propertyChange(e);
 
