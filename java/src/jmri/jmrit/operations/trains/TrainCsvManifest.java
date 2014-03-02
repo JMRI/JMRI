@@ -147,12 +147,18 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carList.get(k);
 					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
-						fileOutCsvCar(fileOut, car, PC);
 						cars++;
 						newWork = true;
 						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 								CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
+						int count = 0;
+						if (car.isUtility()) {
+							count = countPickupUtilityCars(carList, car, rl, rld, true);
+							if (count == 0)
+								continue; // already done this set of utility cars
+						}
+						fileOutCsvCar(fileOut, car, PC, count);
 					}
 				}
 			}
@@ -160,12 +166,18 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carList.get(j);
 				if (car.getRouteDestination() == rl) {
-					fileOutCsvCar(fileOut, car, SC);
 					cars--;
 					newWork = true;
 					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
+					int count = 0;
+					if (car.isUtility()) {
+						count = countSetoutUtilityCars(carList, car, rl, false, true);
+						if (count == 0)
+							continue; // already done this set of utility cars
+					}
+					fileOutCsvCar(fileOut, car, SC, count);
 				}
 			}
 			if (r != routeList.size() - 1) {

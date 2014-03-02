@@ -66,7 +66,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String VN = "VN"+DEL+Bundle.getMessage("csvVisitNumber")+DEL; // NOI18N
 	protected final static String END = "END"+DEL+Bundle.getMessage("csvEnd")+DEL; // NOI18N
 	
-	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
+	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation, int count){
 		// check for delimiter in names
       	String carRoad = car.getRoadName();
     	if (carRoad.contains(DEL)){
@@ -150,7 +150,9 @@ public class TrainCsvCommon extends TrainCommon {
 				+DEL+(car.isHazardous()?"H":"")
 				+DEL+ESC+car.getRfid()+ESC
 				+DEL+carRWEDestName
-				+DEL+carRWETrackName);
+				+DEL+carRWETrackName
+				+DEL+(car.isUtility()?"U":"")
+				+DEL+count);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	
