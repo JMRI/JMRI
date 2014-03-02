@@ -843,8 +843,9 @@
    <P>Time uses the format Hour:Minute.</P>
    <P>The car parameters for pick up car (PC) and set out car (SC) are: road, number, type,
     length, load, color, location name, track name, destination name, destination track name, owner
-    name, kernel name, car comment, pick up comment, set out comment,C,F,H, RFID, RWE location name,
-    RWE track name. Where C = Caboose, F = FRED, and H = Hazardous.</P>
+    name, kernel name, car comment, pick up comment, set out comment, C, F, H, RFID, RWE location
+    name, RWE track name, U, utility car count, final destination name, final destination track
+    name. Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</P>
    <P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number, model,
     length, type, hp, location name, track name, destination name, destination track name, owner
     name, consist name, car comment, RFID.</P>
