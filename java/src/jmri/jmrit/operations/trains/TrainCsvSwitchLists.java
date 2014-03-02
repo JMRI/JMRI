@@ -159,9 +159,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							Car car = carList.get(k);
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
-								int count = 0;
-								fileOutCsvCar(fileOut, car, PC, count);
 								pickupCars++;
+								int count = 0;
+								if (car.isUtility()) {
+									count = countPickupUtilityCars(carList, car, rl, rld, false);
+									if (count == 0)
+										continue; // already done this set of utility cars
+								}
+								fileOutCsvCar(fileOut, car, PC, count);
 							}
 						}
 					}
@@ -175,9 +180,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 					for (int j = 0; j < carList.size(); j++) {
 						Car car = carList.get(j);
 						if (car.getRouteDestination() == rl) {
-							int count = 0;
-							fileOutCsvCar(fileOut, car, SC, count);
 							dropCars++;
+							int count = 0;
+							if (car.isUtility()) {
+								count = countSetoutUtilityCars(carList, car, rl, false, false);
+								if (count == 0)
+									continue; // already done this set of utility cars
+							}
+							fileOutCsvCar(fileOut, car, SC, count);
 						}
 					}
 					stops++;

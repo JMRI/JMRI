@@ -128,6 +128,16 @@ public class TrainCsvCommon extends TrainCommon {
     		log.debug("Car ("+car.toString()+") has delimiter in RWE destination track field: "+carRWETrackName);
     		carRWETrackName = ESC+carRWETrackName+ESC;
     	}
+      	String carFinalDestinationName = car.getFinalDestinationName();
+      	if (carFinalDestinationName.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in final destination field: "+carFinalDestinationName);
+    		carFinalDestinationName = ESC+carFinalDestinationName+ESC;
+    	}
+     	String carFinalDestinationTrackName = car.getFinalDestinationTrackName();
+      	if (carFinalDestinationTrackName.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in final destination track field: "+carFinalDestinationTrackName);
+    		carFinalDestinationTrackName = ESC+carFinalDestinationTrackName+ESC;
+    	}
 
 		addLine(fileOut, operation 
 				+DEL+carRoad
@@ -152,7 +162,9 @@ public class TrainCsvCommon extends TrainCommon {
 				+DEL+carRWEDestName
 				+DEL+carRWETrackName
 				+DEL+(car.isUtility()?"U":"")
-				+DEL+count);
+				+DEL+count
+				+DEL+carFinalDestinationName
+				+DEL+carFinalDestinationTrackName);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	
