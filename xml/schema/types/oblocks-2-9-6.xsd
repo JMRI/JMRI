@@ -101,6 +101,7 @@
         </xs:element>
             
       </xs:sequence>
+      <xs:attribute name="nextSysNum" type="xs:integer"/>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>
 
