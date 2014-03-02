@@ -940,7 +940,9 @@
    <H3>Manifest Printer Font</H3>
 
    The program supports several types of fonts for printing. Select the desired font and size using
-   the pull down menus.
+   the pull down menus. You can also select which printer to use when printing out a manifest or
+   switch list. See
+   <A HREF="#SwitchList">Switch Lists</A> for more details.
 
    <H3>Message Format</H3>
 
@@ -3268,6 +3270,9 @@
     switch list for a given location. A menu will appear that allows you to select which locations
     to preview or print. Once you've determined which locations you want to print or preview, press
     the "Save" button to keep your selections.</P>
+    
+       
+   <img src="images/SwitchListMenu.png">
 
    <P>The switch list menu also lets you add a comment to the switch list for a location and
     select which printer to use when printing out the switch list. Note that the program when
