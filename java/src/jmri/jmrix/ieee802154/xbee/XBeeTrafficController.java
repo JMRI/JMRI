@@ -14,7 +14,7 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.XBeeResponse;
-
+import com.rapplogic.xbee.api.AtCommandResponse;
 
 /**
  * Traffic Controller interface for communicating with XBee devices
@@ -147,6 +147,21 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
     public void processResponse(XBeeResponse response){
+
+        // before we forward this on to the listeners, handle
+        // responses that may modify how the message is interpreted.
+
+        try {
+          // set the hardware type from a response to an "HV" AtCommandResponse
+          if(response instanceof AtCommandResponse &&
+             ((AtCommandResponse)response).getCommand().equals("HV")){
+             setSeries(com.rapplogic.xbee.api.HardwareVersion.parse( 
+               (com.rapplogic.xbee.api.AtCommandResponse)response));
+          }
+        } catch( com.rapplogic.xbee.api.XBeeException xbe){
+            setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
+        }
+
         XBeeReply reply=new XBeeReply(this,response);
 
         // message is complete, dispatch it !!
@@ -166,6 +181,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             e.printStackTrace();
         }
         if (log.isDebugEnabled()) log.debug("dispatch thread invoked");
+
  
         // from here to the end of the function was copied verbatim from 
         // handleOneIncomingReply.  We may not need it after the send code
@@ -277,7 +293,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     public void sendXBeeMessage(XBeeMessage m, XBeeListener l){
         sendMessage(m,l);
     }
-
+ 
     /**
      * This is invoked with messages to be forwarded to the port.
      * It queues them, then notifies the transmission thread.
@@ -319,7 +335,27 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
+    // keep track of the XBee Series
+    private com.rapplogic.xbee.api.HardwareVersion.RadioType series=com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN;
 
+    private void setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType type){
+ }
+
+    // if we are using Series 1 XBees, use wpan classes from the XBee API library
+
+    public boolean isSeries1(){
+      return (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1 ||
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1_PRO ||
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN 
+      );
+    }
+
+    // if we are using Series 2 XBees, use zigbee classes from the XBee API library
+    public boolean isSeries2(){
+      return (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2 ||
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2_PRO ||
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2B_PRO);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeTrafficController.class.getName());
 
