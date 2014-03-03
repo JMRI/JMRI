@@ -3363,7 +3363,11 @@ public class Train implements java.beans.PropertyChangeListener {
 			} else if (status.startsWith(Train.PARTIAL_BUILT)) {
 				this.setStatus(Train.CODE_PARTIAL_BUILT);
 			} else if (status.startsWith(Train.TERMINATED)) {
-				this.setStatus(Train.CODE_TERMINATED, status.split(" ")[1], 0);
+				String date ="";
+				String[] splitStatus = status.split(" ");
+				if (splitStatus.length > 1)
+					date = splitStatus[1];
+				this.setStatus(Train.CODE_TERMINATED, date, 0);
 			} else if (status.startsWith(Train.TRAIN_IN_ROUTE)) {
 				this.setStatus(Train.CODE_TRAIN_IN_ROUTE);
 			} else if (status.startsWith(Train.TRAIN_RESET)) {
@@ -3380,7 +3384,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				this.setStatus(status, null, Integer.parseInt(tokens[1]));
 				break;
 			case Train.CODE_TERMINATED:
-				this.setStatus(status, tokens[1], 0);
+				String date = "";
+				if (tokens.length > 1)
+					date = tokens[1];
+				this.setStatus(status, date, 0);
 				break;
 			default:
 				this.setStatus(status);
