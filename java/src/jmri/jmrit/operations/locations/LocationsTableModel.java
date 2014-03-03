@@ -99,7 +99,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 				Math.max(60, new JLabel(getColumnName(DROPS)).getPreferredSize().width + 10));
 		table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
 				Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}

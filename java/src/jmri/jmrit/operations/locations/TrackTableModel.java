@@ -124,7 +124,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
 		tcm.getColumn(POOL_COLUMN).setPreferredWidth(70);
 		tcm.getColumn(PLANPICKUP_COLUMN).setPreferredWidth(70);
-		tcm.getColumn(EDIT_COLUMN).setPreferredWidth(70);
+		tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
 		tcm.getColumn(EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
 		tcm.getColumn(EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
 
