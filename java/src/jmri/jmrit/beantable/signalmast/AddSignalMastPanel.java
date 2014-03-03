@@ -124,14 +124,18 @@ public class AddSignalMastPanel extends JPanel {
         
         TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         disableborder.setTitle("Disable Specific Aspects");
-        disabledAspectsPanel.setBorder(disableborder);
-        add(disabledAspectsPanel);
+        disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
+        disabledAspectsScroll.setBorder(disableborder);
+        disabledAspectsScroll.setVisible(false);
+        add(disabledAspectsScroll);
         
         turnoutMastScroll = new JScrollPane(turnoutMastPanel);
+        turnoutMastScroll.setBorder(BorderFactory.createEmptyBorder());
         turnoutMastScroll.setVisible(false);
         add(turnoutMastScroll);
         
         dccMastScroll = new JScrollPane(dccMastPanel);
+        dccMastScroll.setBorder(BorderFactory.createEmptyBorder());
         dccMastScroll.setVisible(false);
         add(dccMastScroll);
         
@@ -335,7 +339,7 @@ public class AddSignalMastPanel extends JPanel {
     protected void updateSelectedDriver(){
         signalHeadPanel.setVisible(false);
         turnoutMastScroll.setVisible(false);
-        disabledAspectsPanel.setVisible(false);
+        disabledAspectsScroll.setVisible(false);
         dccMastScroll.setVisible(false);
         if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
             updateTurnoutAspectPanel();
@@ -344,10 +348,10 @@ public class AddSignalMastPanel extends JPanel {
             updateHeads();
             updateDisabledOption();
             signalHeadPanel.setVisible(true);
-            disabledAspectsPanel.setVisible(true);
+            disabledAspectsScroll.setVisible(true);
         } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
             updateDisabledOption();
-            disabledAspectsPanel.setVisible(true);
+            disabledAspectsScroll.setVisible(true);
         } else if ((rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) || (rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem()))){
             updateDCCMastPanel();
             dccMastScroll.setVisible(true);
@@ -389,6 +393,7 @@ public class AddSignalMastPanel extends JPanel {
     
     HashMap<String, JCheckBox> disabledAspects = new HashMap<String, JCheckBox>(10);
     JPanel disabledAspectsPanel = new JPanel();
+    JScrollPane disabledAspectsScroll;
     
     void updateDisabledOption(){
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
