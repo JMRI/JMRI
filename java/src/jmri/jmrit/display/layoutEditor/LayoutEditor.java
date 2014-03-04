@@ -316,8 +316,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private float mainlineTrackWidth = 4.0F;
     private float sideTrackWidth = 2.0F;
 	private Color defaultTrackColor = Color.black;
-	private Color defaultOccupiedTrackColor = Color.black;
-	private Color defaultAlternativeTrackColor = Color.black;
+	private Color defaultOccupiedTrackColor = Color.red;
+	private Color defaultAlternativeTrackColor = Color.white;
     private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
 	private Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
