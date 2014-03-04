@@ -746,8 +746,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		case Train.CODE_TERMINATED:
 			return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
 		case Train.CODE_TRAIN_IN_ROUTE:
-			return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), this
-					.getTrainWeight()); // NOI18N
+			return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), Setup
+					.getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
 		case Train.CODE_TRAIN_RESET:
 			return Train.TRAIN_RESET;
 		case Train.CODE_UNKNOWN:
