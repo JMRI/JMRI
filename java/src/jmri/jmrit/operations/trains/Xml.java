@@ -81,7 +81,9 @@ public class Xml {
 	static final String SWITCH_LIST_STATUS = "switchListStatus"; // NOI18N
 	static final String LEAD_ENGINE = "leadEngine"; // NOI18N
 	static final String STATUS = "status"; // NOI18N
-        static final String MRSTATUS = "mrStatus"; // NOI18N
+    static final String STATUS_CODE = "statusCode"; // NOI18N
+    static final String TERMINATION_DATE = "TerminationDate";
+    static final String REQUESTED_CARS = "RequestedCars";
 	
 	static final String CURRENT = "current"; // NOI18N
 	static final String LEG2_START = "leg2Start"; // NOI18N
