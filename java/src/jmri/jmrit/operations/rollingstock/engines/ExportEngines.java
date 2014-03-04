@@ -79,7 +79,7 @@ public class ExportEngines extends XmlFile {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
 					true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open Engine roster CSV file");
+			log.error("Can not open export engines CSV file: "+file.getName());
 			return;
 		}
 

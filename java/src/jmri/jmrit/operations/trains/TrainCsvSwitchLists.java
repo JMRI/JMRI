@@ -48,7 +48,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
 					true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open cvs switchlist file");
+			log.error("Can not open CSV switch list file: "+file.getName());
 			return null;
 		}
 		// build header
@@ -159,8 +159,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							Car car = carList.get(k);
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
-								fileOutCsvCar(fileOut, car, PC);
 								pickupCars++;
+								int count = 0;
+								if (car.isUtility()) {
+									count = countPickupUtilityCars(carList, car, rl, rld, false);
+									if (count == 0)
+										continue; // already done this set of utility cars
+								}
+								fileOutCsvCar(fileOut, car, PC, count);
 							}
 						}
 					}
@@ -174,8 +180,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 					for (int j = 0; j < carList.size(); j++) {
 						Car car = carList.get(j);
 						if (car.getRouteDestination() == rl) {
-							fileOutCsvCar(fileOut, car, SC);
 							dropCars++;
+							int count = 0;
+							if (car.isUtility()) {
+								count = countSetoutUtilityCars(carList, car, rl, false, false);
+								if (count == 0)
+									continue; // already done this set of utility cars
+							}
+							fileOutCsvCar(fileOut, car, SC, count);
 						}
 					}
 					stops++;

@@ -86,7 +86,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(220);
 		table.getColumnModel().getColumn(COMMENTCOLUMN).setPreferredWidth(300);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}

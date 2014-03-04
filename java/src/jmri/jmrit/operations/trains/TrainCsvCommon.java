@@ -66,7 +66,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String VN = "VN"+DEL+Bundle.getMessage("csvVisitNumber")+DEL; // NOI18N
 	protected final static String END = "END"+DEL+Bundle.getMessage("csvEnd")+DEL; // NOI18N
 	
-	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
+	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation, int count){
 		// check for delimiter in names
       	String carRoad = car.getRoadName();
     	if (carRoad.contains(DEL)){
@@ -128,6 +128,16 @@ public class TrainCsvCommon extends TrainCommon {
     		log.debug("Car ("+car.toString()+") has delimiter in RWE destination track field: "+carRWETrackName);
     		carRWETrackName = ESC+carRWETrackName+ESC;
     	}
+      	String carFinalDestinationName = car.getFinalDestinationName();
+      	if (carFinalDestinationName.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in final destination field: "+carFinalDestinationName);
+    		carFinalDestinationName = ESC+carFinalDestinationName+ESC;
+    	}
+     	String carFinalDestinationTrackName = car.getFinalDestinationTrackName();
+      	if (carFinalDestinationTrackName.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in final destination track field: "+carFinalDestinationTrackName);
+    		carFinalDestinationTrackName = ESC+carFinalDestinationTrackName+ESC;
+    	}
 
 		addLine(fileOut, operation 
 				+DEL+carRoad
@@ -150,7 +160,11 @@ public class TrainCsvCommon extends TrainCommon {
 				+DEL+(car.isHazardous()?"H":"")
 				+DEL+ESC+car.getRfid()+ESC
 				+DEL+carRWEDestName
-				+DEL+carRWETrackName);
+				+DEL+carRWETrackName
+				+DEL+(car.isUtility()?"U":"")
+				+DEL+count
+				+DEL+carFinalDestinationName
+				+DEL+carFinalDestinationTrackName);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	

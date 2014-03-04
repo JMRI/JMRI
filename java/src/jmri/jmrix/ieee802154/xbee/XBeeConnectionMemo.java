@@ -33,19 +33,25 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     /** 
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
     	if (getDisabled())
     		return false;
+         if (type.equals(jmri.SensorManager.class))
+             return true;
         return false; // nothing, by default
     }
     
     /** 
      * Provide manager by class
      */
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;
+        if (T.equals(jmri.SensorManager.class))
+             return (T)getSensorManager();
         return null; // nothing, by default
     }
 
@@ -57,7 +63,18 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     @Override
     public void configureManagers() {
          log.error("Configuring Managers for XBee Connection");
-         _NodeManager = new XBeeNodeManager((XBeeTrafficController)getTrafficController());
+
+         XBeeTrafficController cont = (XBeeTrafficController)getTrafficController();
+         // before we start the managers, request the hardware
+         // version.
+         cont.sendXBeeMessage(XBeeMessage.getHardwareVersionRequest(),null);
+
+         // the start the managers.
+         _NodeManager = new XBeeNodeManager(cont);
+         
+ 	setSensorManager(new XBeeSensorManager(cont,getSystemPrefix()));
+        jmri.InstanceManager.setSensorManager(getSensorManager());
+
     }
 
     /*
@@ -70,6 +87,22 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
    public void setXBeeNodeManager(XBeeNodeManager manager) { _NodeManager=manager; }
  
    private XBeeNodeManager _NodeManager=null;
+
+    /*
+     * Provides access to the Sensor Manager for this particular connection.
+     * NOTE: Sensor manager defaults to NULL
+     */
+    public SensorManager getSensorManager(){
+        return sensorManager;
+
+    }
+    public void setSensorManager(SensorManager s){
+         sensorManager = s;
+    }
+
+    private SensorManager sensorManager=null;
+
+
 
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");

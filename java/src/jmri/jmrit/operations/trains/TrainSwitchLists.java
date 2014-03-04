@@ -61,7 +61,7 @@ public class TrainSwitchLists extends TrainCommon {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append),
 					"UTF-8")), true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open switchlist file");
+			log.error("Can not open switchlist file: "+file.getName());
 			return;
 		}
 		// build header

@@ -573,19 +573,27 @@ public class TrainCommon {
 
 	public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
 			boolean isManifest) {
-		// list utility cars by type, track, length, and load
+		int count = countPickupUtilityCars(carList, car, rl, rld, isManifest);
+		if (count == 0)
+			return null;
 		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
 			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
-		if (count == 0)
-			return null;
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
 		for (int i = 0; i < messageFormat.length; i++) {
 			String s = getCarAttribute(car, messageFormat[i], PICKUP, !LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
+	}
+	
+	public int countPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
+			boolean isManifest) {
+		// list utility cars by type, track, length, and load
+		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
+		if (!isManifest)
+			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
+		return countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
 	}
 
 	public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
@@ -609,6 +617,19 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		return buf.toString();
+	}
+	
+	public int countSetoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
+		// list utility cars by type, track, length, and load
+		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+		if (isLocal && isManifest) {
+			messageFormat = Setup.getLocalUtilityCarMessageFormat();
+		} else if (isLocal && !isManifest) {
+			messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+		} else if (!isLocal && !isManifest) {
+			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+		}
+		return countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
 	}
 
 	/**

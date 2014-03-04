@@ -114,7 +114,7 @@ public class TrainBuilder extends TrainCommon {
 			buildReport = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true); // NOI18N
 		} catch (IOException e) {
-			log.error("can not open build status file");
+			log.error("Can not open build status file: "+file.getName());
 			return;
 		}
 		Date startTime = new Date();
@@ -240,6 +240,7 @@ public class TrainBuilder extends TrainCommon {
 			requested = requested / 2; // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
+		train.setNumberCarsRequested(requested); // save number of car requested
 
 		// get engine requirements for this train
 		if (train.getNumberEngines().equals(Train.AUTO)) {
@@ -505,8 +506,8 @@ public class TrainBuilder extends TrainCommon {
 
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested) {
-			train.setStatus(Train.CODE_PARTIAL_BUILT, null, requested);
-			addLine(buildReport, ONE, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + requested + " "
+			train.setStatus(Train.CODE_PARTIAL_BUILT);
+			addLine(buildReport, ONE, Train.PARTIAL_BUILT + " " + train.getNumberCarsWorked() + "/" + train.getNumberCarsRequested() + " "
 					+ Bundle.getMessage("cars"));
 		} else {
 			train.setStatus(Train.CODE_BUILT);

@@ -3059,7 +3059,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
         // set selected file location in data string
             try {
-                _longActionString.setText(currentChooser.getSelectedFile().getCanonicalPath());
+                _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) log.error("exception setting file location: " + ex);
                 _longActionString.setText("");

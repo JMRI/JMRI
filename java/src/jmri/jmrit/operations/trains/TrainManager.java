@@ -821,8 +821,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 					_openFile = a.getValue().equals(Xml.TRUE);
 				if ((a = e.getAttribute(Xml.RUN_FILE)) != null)
 					_runFile = a.getValue().equals(Xml.TRUE);
-				if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null)
-					_trainAction = a.getValue();
+				// verify that the Trains Window action is valid
+				if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null
+						&& (a.getValue().equals(TrainsTableFrame.MOVE) || a.getValue().equals(TrainsTableFrame.RESET)
+								|| a.getValue().equals(TrainsTableFrame.TERMINATE) || a.getValue().equals(
+								TrainsTableFrame.CONDUCTOR)))
+				_trainAction = a.getValue();
 
 				// TODO This here is for backwards compatibility, remove after next major release
 				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {

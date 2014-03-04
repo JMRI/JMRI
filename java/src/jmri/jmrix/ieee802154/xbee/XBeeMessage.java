@@ -98,6 +98,14 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
           }
           setElement(len-1, chksum&0xFF);
        }
+
+      // a few canned messages
+      public static XBeeMessage getHardwareVersionRequest(){
+          return new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("HV"));
+      }
+
+
    }
+
 
 /* @(#)XBeeMessage.java */

@@ -766,7 +766,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         JComboBox box = new JComboBox();
         List<String> nameList = getManager().getSystemNameList();
         for(int i = 0; i<nameList.size(); i++){
-        NamedBean nb = getBySystemName(nameList.get(i));
+            NamedBean nb = getBySystemName(nameList.get(i));
             //Only add items that do not have a username assigned.
             if(nb.getDisplayName().equals(nameList.get(i)))
                 box.addItem(nameList.get(i));
@@ -800,7 +800,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
             fireTableRowsUpdated(row, row);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                showInfoMessage("Reminder",getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"),BeanTableDataModel.class.getName(), "remindSaveReLoad");
+                showInfoMessage("Reminder",getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"),getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"));
         }
     

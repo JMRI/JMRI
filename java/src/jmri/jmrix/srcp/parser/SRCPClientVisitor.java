@@ -5,6 +5,9 @@ package jmri.jmrix.srcp.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPBusConnectionMemo;
+
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI front end.
  * @author Paul Bender Copyright (C) 2011
@@ -153,6 +156,8 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
   public Object visit(ASTinfo node, Object data)
   {
     log.debug("Info Response " +node.jjtGetValue() );
+    int bus=Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+    SRCPBusConnectionMemo busMemo=((SRCPSystemConnectionMemo)data).getMemo(bus);
     return node.childrenAccept(this,data);
   }
 

@@ -39,7 +39,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     boolean _debug;
 
     // transient members
-    private List <BlockOrder> _orders;		// temp orders used in run mode
+     List <BlockOrder> _orders;		// temp orders used in run mode
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
     private boolean _tempRunBlind;			// run mode flag
     private boolean _delayStart;			// allows start block unoccupied and wait for train
@@ -311,7 +311,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public DccLocoAddress getDccAddress() { return _dccAddress;  }
     public void setDccAddress(DccLocoAddress address) { 
         _dccAddress = address;
-        String id = null;
         if (address!=null && _trainId==null) {
             _trainId = address.toString();
         }
@@ -411,8 +410,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     return Bundle.getMessage("NoCommands", getDisplayName());
                 }
                 if (_idxCurrentOrder!=0 && _idxLastOrder==_idxCurrentOrder) {
-                	//_idxLastOrder = 0;
-                	return Bundle.getMessage("locationUnknown", _trainName);
+                 	return Bundle.getMessage("locationUnknown", _trainName);
                 } else {
                     return Bundle.getMessage("Idle");                	
                 }
@@ -505,9 +503,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         deAllocate();
         int oldMode = _runMode;
         _runMode = MODE_NONE;
-        _idxCurrentOrder = 0;
-        _orders = getBlockOrders();
         firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
+        //_orders = getBlockOrders();
+        //_idxCurrentOrder = 0;
         if(_debug) log.debug("stopWarrant() "+getDisplayName()+". prev mode= "+oldMode);
     }
     /**
@@ -572,11 +570,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         		 _dccAddress = address;
         	 }
         }
-        getBlockAt(0)._entryTime = System.currentTimeMillis();
+        getBlockAt(0)._entryTime = System.currentTimeMillis();        	
         _runMode = mode;	// set mode before callback to notifyThrottleFound is called
-        if (mode!=MODE_MANUAL) {
-             _tempRunBlind = runBlind;
-             if (!_delayStart) {
+        _tempRunBlind = runBlind;
+        if (!_delayStart) {
+        	if (mode!=MODE_MANUAL) {
             	 if (address==null) {
             		 address = _dccAddress;
             	 }
@@ -584,11 +582,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                  if (msg!=null){
                 	 return msg;
                  }                	 
+             } else {
+             	startupWarrant();            	 
              }
-        } else if (!_delayStart) {
-        	OBlock b = getBlockAt(0);
-            b.setValue(_trainName);
-            b.setState(b.getState() | OBlock.RUNNING);
         }
         _runMode = mode;
         firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
@@ -607,12 +603,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (InstanceManager.throttleManagerInstance()==null) {
             msg = Bundle.getMessage("noThrottle");
             abortWarrant(msg);
+            firePropertyChange("throttleFail", null, msg);
             return msg;
         }
         if (!InstanceManager.throttleManagerInstance().
                 requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
                 msg = Bundle.getMessage("trainInUse", address.getNumber());
                 abortWarrant(msg);
+                firePropertyChange("throttleFail", null, msg);
                 return msg;
         }
         log.debug("Throttle at "+address.toString()+" acquired for warrant "+getDisplayName());        	
@@ -722,8 +720,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         b.setState(b.getState() | OBlock.RUNNING);
         // getNextSpeed() calls allocateNextBlock() who will set _stoppingBlock, if necessary
         // do before starting throttle commands in engineer
-        _currentSpeed = getNextSpeed();		// will modify _currentSpeed, if necessary
-        _engineer.rampSpeedTo(_currentSpeed, 0);    	
+        if (_engineer!=null) {
+            _currentSpeed = getNextSpeed();		// will modify _currentSpeed, if necessary
+            _engineer.rampSpeedTo(_currentSpeed, 0);        	
+        }
     }
 
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
@@ -953,6 +953,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 msg = acquireThrottle(_dccAddress);        						
              				} else if (_runMode==MODE_MANUAL){
              	            	_delayStart = false;
+             	             	startupWarrant();            	 
             	            	firePropertyChange("blockChange", null, block);
             				}
                				tempSave.setValue(_trainName);
@@ -987,7 +988,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         if (msg!=null) {
         	log.error(msg);
-        	deAllocate();
         	stopWarrant();
             removePropertyChangeListener(this);
         }
@@ -1216,15 +1216,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // If Auto running, let script finish according to recorded times.
         	// End of script will deallocate warrant.
         	// getCurrentSpeedAt() will (re)set the path for safety
-        	String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);        	
             if (_engineer!=null) {
                 // notify engineer of control point
+            	String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);        	
                 _engineer.rampSpeedTo(currentSpeed, 0);
             }
 
         	if (_runMode==MODE_MANUAL) {
         		stopWarrant();
-                deAllocate();
+                return;
         	}
         } else {
         	boolean moveOK = moveIntoNextBlock();
@@ -1305,6 +1305,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     firePropertyChange("blockChange", block, null);
                		if (_engineer!=null) {
                			_engineer.setHalt(true);
+               		} else {
+               			controlRunTrain(ABORT);
                		}
                     return;
                	}

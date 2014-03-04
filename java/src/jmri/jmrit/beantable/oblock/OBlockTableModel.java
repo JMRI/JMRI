@@ -23,7 +23,6 @@ package jmri.jmrit.beantable.oblock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -39,7 +38,6 @@ import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 
-import org.python.antlr.PythonParser.return_stmt_return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,11 +71,9 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
     
 
-	static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
-
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
-    OBlockManager manager;
+    OBlockManager _manager;
     private final String[] tempRow= new String[NUMCOLS];
     TableFrames _parent;
 
@@ -96,31 +92,31 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             tempRow[i] = null;
         }
         tempRow[LENGTHCOL] = twoDigit.format(0.0);
-        tempRow[UNITSCOL] = rbo.getString("in");
+        tempRow[UNITSCOL] = Bundle.getMessage("in");
         tempRow[CURVECOL] = noneText;
-        tempRow[REPORT_CURRENTCOL] = rbo.getString("Current");
-        tempRow[PERMISSIONCOL] = rbo.getString("Permissive");
-        tempRow[SPEEDCOL] = rbo.getString("Normal");
-        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
+        tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
+        tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
+        tempRow[SPEEDCOL] = Bundle.getMessage("Normal");
+        tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
     @Override
     public Manager getManager() {
-        manager = InstanceManager.oBlockManagerInstance();
-        return manager;
+        _manager = InstanceManager.getDefault(OBlockManager.class);
+        return _manager;
     }
     @Override
     public NamedBean getBySystemName(String name) {
-        return manager.getBySystemName(name);
+        return _manager.getBySystemName(name);
     }
     // Method name not appropriate (initial use was for Icon Editors)
     @Override
     public NamedBean addBean(String name) {
-        return manager.getOBlock(name);
+        return _manager.getOBlock(name);
     }
     @Override
     public NamedBean addBean(String sysName, String userName) {
-        return manager.createNewOBlock(sysName, userName);
+        return _manager.createNewOBlock(sysName, userName);
     }
     @Override
     public boolean canAddBean() {
@@ -134,20 +130,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     @Override
     public int getRowCount () {
         return super.getRowCount() + 1;
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@inheritDoc}
-     */
-    @Override
-    public NamedBean getBeanAt(int index) {
-    	if (index >=_pickList.size()) {
-    		return null;
-    	}
-       return _pickList.get(index);
-    }
+    }    
 
     static String ZEROS ="00000000";
     @Override
@@ -205,7 +188,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 if (b != null) {
                     return b.isMetric();
                 } else {
-                    return Boolean.valueOf(tempRow[UNITSCOL].equals(rbo.getString("in")));
+                    return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("in")));
                 }
             case CURVECOL:
                 if (b != null) {
@@ -243,13 +226,13 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 		return "";
                 	}
                 } else {
-                    return Boolean.valueOf(tempRow[REPORT_CURRENTCOL].equals(rbo.getString("Current")));
+                    return Boolean.valueOf(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
                 }
             case PERMISSIONCOL:
                 if (b != null) {
                     return b.getPermissiveWorking();
                 } else {
-                    return Boolean.valueOf(tempRow[PERMISSIONCOL].equals(rbo.getString("Permissive")));
+                    return Boolean.valueOf(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
                 }
             case SPEEDCOL:
                 if (b != null) {
@@ -259,7 +242,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 }
             case EDIT_COL:
                 if (b != null) {
-                    return rbo.getString("ButtonEditPath");
+                    return Bundle.getMessage("ButtonEditPath");
                 } else {
                 	return "";
                 }
@@ -267,7 +250,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 if (b != null) {
                     return AbstractTableAction.rb.getString("ButtonDelete");
                 } else {
-                	return rbo.getString("ButtonClear");
+                	return Bundle.getMessage("ButtonClear");
                 }
         }
         return super.getValueAt(row, col);
@@ -279,28 +262,31 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         if (super.getRowCount() == row) 
         {
             if (col==SYSNAMECOL) {
-                OBlock block = manager.createNewOBlock((String)value, tempRow[USERNAMECOL]);
+                OBlock block = _manager.createNewOBlock((String)value, tempRow[USERNAMECOL]);
                 if (block==null) {
-                    block = manager.getOBlock(tempRow[USERNAMECOL]);
-                    String name = "blank";     // zero length string error
+                    block = _manager.getOBlock(tempRow[USERNAMECOL]);
+                    String name = (String)value+" / "+tempRow[USERNAMECOL];
                     if (block!=null) {
                         name = block.getDisplayName();
+                    } else {
+                    	block = _manager.getOBlock((String)value);
+                    	if (block!=null) {
+                            name = block.getDisplayName();
+                        }
                     }
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("CreateDuplBlockErr"), name),
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", name),
                         AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 if (tempRow[SENSORCOL] != null) {
                     if (!sensorExists(tempRow[SENSORCOL])) {
-                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[SENSORCOL]),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 block.setComment(tempRow[COMMENTCOL]);
                 float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                if (tempRow[UNITSCOL].equals(rbo.getString("cm"))) {
+                if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                     block.setLength(len*10.0f);
                     block.setMetricUnits(true);
                 } else {
@@ -316,7 +302,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 } else if (tempRow[CURVECOL].equals(severeText)) {
                 	block.setCurvature(Block.SEVERE);
                 }
-                block.setPermissiveWorking(tempRow[PERMISSIONCOL].equals(rbo.getString("Permissive")));
+                block.setPermissiveWorking(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
                 try {
                     block.setBlockSpeed(tempRow[SPEEDCOL]);
                 } catch (jmri.JmriException ex) {
@@ -326,8 +312,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 if (tempRow[ERR_SENSORCOL] != null) {
                     if (tempRow[ERR_SENSORCOL].trim().length()>0) {
                         if (!sensorExists(tempRow[ERR_SENSORCOL])) {
-                            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbo.getString("NoSuchSensorErr"), tempRow[ERR_SENSORCOL]),
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[ERR_SENSORCOL]),
                                 AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                         }
                     }
@@ -338,22 +323,19 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                         rep = InstanceManager.reporterManagerInstance().getReporter(tempRow[REPORTERCOL]);
                         if (rep!=null) {
                         	block.setReporter(rep);
-                            block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(rbo.getString("Current")));
+                            block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
                         }
                     } catch (Exception ex) {
                         log.error("No Reporter named \""+tempRow[REPORTERCOL]+"\" found. threw exception: "+ ex);
                     }
                     if (rep==null) {
-                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("NoSuchReporterErr"), tempRow[REPORTERCOL]),
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
                     block.setReporter(rep);                	
-                }
-                
+                }               
                 initTempRow();
-                fireTableDataChanged();
-          	
+                fireTableDataChanged();         	
             }else {
             	switch (col) {
             	case DELETE_COL:			// clear
@@ -362,23 +344,23 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             		return;
             	case UNITSCOL:
                     if (((Boolean)value).booleanValue()) {//toggle
-                        tempRow[UNITSCOL] = rbo.getString("in");
+                        tempRow[UNITSCOL] = Bundle.getMessage("in");
                     } else {
-                        tempRow[UNITSCOL] = rbo.getString("cm");
+                        tempRow[UNITSCOL] = Bundle.getMessage("cm");
                     }
                     return;
             	case REPORT_CURRENTCOL:
                     if (((Boolean)value).booleanValue()) {//toggle
-                        tempRow[REPORT_CURRENTCOL] = rbo.getString("Current");
+                        tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
                     } else {
-                        tempRow[REPORT_CURRENTCOL] = rbo.getString("Last");
+                        tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Last");
                     }
                     return;
             	case PERMISSIONCOL:
                     if (((Boolean)value).booleanValue()) {//toggle
-                        tempRow[PERMISSIONCOL] = rbo.getString("Permissive");
+                        tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
                     } else {
-                        tempRow[PERMISSIONCOL] = rbo.getString("Absolute");
+                        tempRow[PERMISSIONCOL] = Bundle.getMessage("Absolute");
                     }
                     return;
             	}
@@ -389,10 +371,9 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         OBlock block = (OBlock)getBeanAt(row);
         switch (col) {
             case USERNAMECOL:
-                OBlock b = manager.getOBlock((String)value);
+                OBlock b = _manager.getOBlock((String)value);
                 if (b != null) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("CreateDuplBlockErr"), block.getDisplayName()),
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("CreateDuplBlockErr", block.getDisplayName()),
                         AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
@@ -414,8 +395,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 return;
             case SENSORCOL:
                 if (!block.setSensor((String)value)) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("NoSuchSensorErr"), (String)value),
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String)value),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                	
                 }
                 fireTableRowsUpdated(row,row);
@@ -460,8 +440,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     log.error("getSensor("+(String)value+") threw exception: "+ ex);
                 }
                 if (err) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("NoSuchSensorErr"), (String)value),
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String)value),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                	
                 }
                 fireTableRowsUpdated(row,row);
@@ -478,8 +457,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     log.error("No Reporter named \""+(String)value+"\" found. threw exception: "+ ex);
                 }
                 if (rep==null) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("NoSuchReporterErr"), tempRow[REPORTERCOL]),
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
                         AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 }
                 block.setReporter(rep);                	
@@ -531,11 +509,11 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             case CURVECOL: return AbstractTableAction.rb.getString("BlockCurveColName");
             case LENGTHCOL: return AbstractTableAction.rb.getString("BlockLengthColName");
             case UNITSCOL: return "";
-            case ERR_SENSORCOL: return rbo.getString("ErrorSensorCol");
-            case REPORTERCOL: return rbo.getString("ReporterCol");
-            case REPORT_CURRENTCOL: return rbo.getString("RepCurrentCol");
-            case PERMISSIONCOL: return rbo.getString("PermissionCol");
-            case SPEEDCOL: return rbo.getString("SpeedCol");
+            case ERR_SENSORCOL: return Bundle.getMessage("ErrorSensorCol");
+            case REPORTERCOL: return Bundle.getMessage("ReporterCol");
+            case REPORT_CURRENTCOL: return Bundle.getMessage("RepCurrentCol");
+            case PERMISSIONCOL: return Bundle.getMessage("PermissionCol");
+            case SPEEDCOL: return Bundle.getMessage("SpeedCol");
             case EDIT_COL: return "";
             case DELETE_COL: return "";
         }
@@ -631,8 +609,8 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         super.propertyChange(e);
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("PropertyChange = "+property);
-        _parent.getPortalModel().propertyChange(e);
         _parent.getXRefModel().propertyChange(e);
+        _parent.getSignalModel().propertyChange(e);
 
         if (property.equals("length") || property.equals("UserName")
                             || property.equals("portalCount")) {
