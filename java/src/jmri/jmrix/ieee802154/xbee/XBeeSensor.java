@@ -47,7 +47,9 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
     private void init(String id) {
         // store address
 	systemName=id;
-        address = Integer.parseInt(id.substring(2,id.length()));
+        String prefix = ((XBeeConnectionMemo)tc.getAdapterMemo())
+                                         .getSensorManager().getSystemPrefix();
+        address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
 	// calculate the base address, the nibble, and the bit to examine
 	baseaddress = ((address) / 10);
         pin = ((address)%10);

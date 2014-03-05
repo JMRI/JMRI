@@ -17,7 +17,11 @@ public class XBeeLightTest extends TestCase {
 
     public void testCtor() {
         XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeLight s = new XBeeLight("ABC1234","XBee Light Test",tc); 
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setLightManager(new XBeeLightManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeLight s = new XBeeLight("ABCL1234","XBee Light Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 

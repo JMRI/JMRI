@@ -17,7 +17,11 @@ public class XBeeSensorTest extends TestCase {
 
     public void testCtor() {
         XBeeTrafficController tc = new XBeeTrafficController();
-        XBeeSensor s = new XBeeSensor("ABC1234","XBee Sensor Test",tc); 
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeSensor s = new XBeeSensor("ABCS1234","XBee Sensor Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
