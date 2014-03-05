@@ -39,6 +39,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     		return false;
          if (type.equals(jmri.SensorManager.class))
              return true;
+         if (type.equals(jmri.LightManager.class))
+             return true;
         return false; // nothing, by default
     }
     
@@ -52,6 +54,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
             return null;
         if (T.equals(jmri.SensorManager.class))
              return (T)getSensorManager();
+        if (T.equals(jmri.LightManager.class))
+             return (T)getLightManager();
         return null; // nothing, by default
     }
 
@@ -74,6 +78,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
          
  	setSensorManager(new XBeeSensorManager(cont,getSystemPrefix()));
         jmri.InstanceManager.setSensorManager(getSensorManager());
+ 	setLightManager(new XBeeLightManager(cont,getSystemPrefix()));
+        jmri.InstanceManager.setLightManager(getLightManager());
 
     }
 
@@ -102,7 +108,19 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
     private SensorManager sensorManager=null;
 
+    /*
+     * Provides access to the Light Manager for this particular connection.
+     * NOTE: Light manager defaults to NULL
+     */
+    public LightManager getLightManager(){
+        return lightManager;
 
+    }
+    public void setLightManager(LightManager s){
+         lightManager = s;
+    }
+
+    private LightManager lightManager=null;
 
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
