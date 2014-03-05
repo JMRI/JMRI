@@ -3023,15 +3023,19 @@
    switch list allows the person assigned to the location to service all trains that stop at that
    location. However, there can be locations that don't get enough work servicing through or local
    trains and it would be nice to create some additional work for the operator assigned to that
-   location. To create a "switcher" job, create a route with one location, the location that the
-   switcher will service, and assign that route to a train. The "train" now becomes a switcher that
-   will only service that location. Adjust the "Move" count in the route to control how many cars
-   the switcher will service.
+   location. To create a "switcher" job, create a route with just one location, the location that
+   the switcher will service, and assign that route to a train. The "train" now becomes a switcher
+   that will only service that location. Adjust the "Move" count in the route to control how many
+   cars the switcher will service.
+
+   <P>Since a switcher only services a single location, the program ignores the train direction
+    control in the switcher's route, and therefore the location and track service direction controls
+    for a train are also ignored by the program.</P>
 
    <P>Some operators like to produce a train manifest that only shows set outs or pick ups from
     a yard or interchange, and then have a switch list that shows moves between the yard and spurs.
-    To eliminate tracks from showing up on a train's manifest, deselect all of the direction boxes
-    for that track. Only a "switcher" will service a track that doesn't have any direction boxes
+    To eliminate tracks from showing up on a train's manifest, deselect all of the direction control
+    boxes for that track. Only a switcher will service a track that doesn't have any direction boxes
     selected.</P>
 
    <H3>Switcher Restrictions</H3>
