@@ -50,10 +50,11 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
         address = Integer.parseInt(id.substring(2,id.length()));
 	// calculate the base address, the nibble, and the bit to examine
 	baseaddress = ((address) / 10);
+        pin = ((address)%10);
         if (log.isDebugEnabled())
         	log.debug("Created Sensor " + systemName  + 
  				  " (Address " + baseaddress + 
-                                  " D" + (((address) % 10) ) +
+                                  " D" + pin +
 				  ")");
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
