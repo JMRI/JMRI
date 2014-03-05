@@ -509,7 +509,8 @@ public class Setup {
 	}
 
 	public static void setRailroadName(String name) {
-		OperationsSetupXml.instance().setDirty(true);
+		if (!railroadName.equals(name))
+			OperationsSetupXml.instance().setDirty(true);
 		railroadName = name;
 	}
 
