@@ -1115,11 +1115,12 @@
    </P>
    <P>
     The "Locations" window shows all of the places that your trains can work. For each location the
-    window shows the total length of all tracks at that location, the amount of track used by your
-    rolling stock, the quantity of rolling stock, and the number of pick ups and set outs of your
-    rolling stock that are scheduled for that location. The "Yardmaster" button produces a window <A
-     HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set outs
-    by train. Only trains that have work for the location are available.
+    window shows the type of tracks at that location, the total length of all tracks at that
+    location, the amount of track used by your rolling stock, the quantity of rolling stock, and the
+    number of pick ups and set outs of your rolling stock that are scheduled for that location. The
+    "Yardmaster" button produces a window
+    <A HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set
+    outs by train. Only trains that have work for the location are available.
    </P>
 
    <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.

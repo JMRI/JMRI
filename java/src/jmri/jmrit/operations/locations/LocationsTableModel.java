@@ -87,7 +87,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
-		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(
+				Math.max(60, new JLabel(Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs")
+						+ Bundle.getMessage("Yards")).getPreferredSize().width + 20));
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(
 				Math.max(60, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width + 10));
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
@@ -225,27 +227,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		if (location.getLocationOps() == Location.STAGING) {
 			return (Bundle.getMessage("Staging"));
 		} else {
-			boolean hasSpurs = location.hasSpurs();
-			boolean hasYards = location.hasYards();
-			boolean hasInterchanges = location.hasInterchanges();
-			// lots of combinations
-			if (hasSpurs && !hasYards && !hasInterchanges)
-				return Bundle.getMessage("Spurs");
-			if (!hasSpurs && hasYards && !hasInterchanges)
-				return Bundle.getMessage("Yards");
-			if (!hasSpurs && !hasYards && hasInterchanges)
-				return Bundle.getMessage("Class/Interchange");
-			if (hasSpurs || hasYards || hasInterchanges) {
-				StringBuffer sb = new StringBuffer();
-				if (hasInterchanges)
-					sb.append(Bundle.getMessage("Class/Interchange") + " ");
-				if (hasSpurs)
-					sb.append(Bundle.getMessage("SpurAbrv") + " ");
-				if (hasYards)
-					sb.append(Bundle.getMessage("YardAbrv") + " ");
-				return sb.toString();
-			}
-			return "";
+			StringBuffer sb = new StringBuffer();
+			if (location.hasInterchanges())
+				sb.append(Bundle.getMessage("Class/Interchange") + " ");
+			if (location.hasSpurs())
+				sb.append(Bundle.getMessage("Spurs") + " ");
+			if (location.hasYards())
+				sb.append(Bundle.getMessage("Yards"));
+			return sb.toString();
 		}
 	}
 
