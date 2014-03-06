@@ -7665,7 +7665,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				g2.setColor(Color.red);
 			}
 			else {
-				g2.setColor(Color.green);
+                if(t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType()<=LayoutTurnout.LH_XOVER){
+                    g2.setColor(Color.blue);
+                } else {
+                    g2.setColor(Color.green);
+                }
 			}
 			g2.draw(new Rectangle2D.Double (
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));

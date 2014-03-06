@@ -16,6 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
+
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
@@ -1763,47 +1766,76 @@ public class LayoutTurnout
 			panel33.add (hiddenBox);
             contentPane.add(panel33);			
 
+            TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+            border.setTitle(rb.getString("Block"));
 			// setup block name
             JPanel panel2 = new JPanel(); 
+            panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
-			JLabel blockNameLabel = new JLabel( rb.getString("BlockID"));
-            panel2.add(blockNameLabel);
             panel2.add(blockNameField);
             blockNameField.setToolTipText( rb.getString("EditBlockNameHint") );
+            panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
+            turnoutEditBlock.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    turnoutEditBlockPressed(e);
+                }
+            });
             contentPane.add(panel2);
 			if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) { 
 				JPanel panel21 = new JPanel(); 
 				panel21.setLayout(new FlowLayout());
-				JLabel blockBNameLabel = new JLabel( rb.getString("Block2ID"));
-				panel21.add(blockBNameLabel);
-				panel21.add(blockBNameField);
+                TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                borderblk2.setTitle(rb.getString("Block") + " 2");
+                panel21.setBorder(borderblk2);
+				panel21.add(blockBNameField);                
 				blockBNameField.setToolTipText( rb.getString("EditBlockBNameHint") );
-				contentPane.add(panel21);
+				
+				panel21.add(turnoutEditBlockB = new JButton(rb.getString("CreateEdit")));
+				turnoutEditBlockB.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						turnoutEditBlockBPressed(e);
+					}
+				});
+				turnoutEditBlockB.setToolTipText( rb.getString("EditBlockBHint") );
+                contentPane.add(panel21);
+                
 				JPanel panel22 = new JPanel(); 
 				panel22.setLayout(new FlowLayout());
-				JLabel blockCNameLabel = new JLabel( rb.getString("Block3ID"));
-				panel22.add(blockCNameLabel);
+                TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                borderblk3.setTitle(rb.getString("Block") + " 3");
+                panel22.setBorder(borderblk3);
 				panel22.add(blockCNameField);
-				blockCNameField.setToolTipText( rb.getString("EditBlockCNameHint") );
+                blockCNameField.setToolTipText( rb.getString("EditBlockCNameHint") );
+                panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
+				turnoutEditBlockC.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						turnoutEditBlockCPressed(e);
+					}
+				});
+				turnoutEditBlockC.setToolTipText( rb.getString("EditBlockCHint") );
 				contentPane.add(panel22);
+
 				JPanel panel23 = new JPanel(); 
 				panel23.setLayout(new FlowLayout());
-				JLabel blockDNameLabel = new JLabel( rb.getString("Block4ID"));
-				panel23.add(blockDNameLabel);
+                TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                borderblk4.setTitle(rb.getString("Block") + " 4");
+                panel23.setBorder(borderblk4);
 				panel23.add(blockDNameField);
 				blockDNameField.setToolTipText( rb.getString("EditBlockDNameHint") );
+                panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
+				turnoutEditBlockD.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						turnoutEditBlockDPressed(e);
+					}
+				});
+				turnoutEditBlockD.setToolTipText( rb.getString("EditBlockDHint") );
 				contentPane.add(panel23);
 			}
 			// set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
 			// Edit Block
-            panel5.add(turnoutEditBlock = new JButton(rb.getString("EditBlock")));
-            turnoutEditBlock.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditBlockPressed(e);
-                }
-            });
+
             turnoutEditBlock.setToolTipText( rb.getString("EditBlockHint") );
 			// Done
             panel5.add(turnoutEditDone = new JButton(rb.getString("Done")));
@@ -1822,35 +1854,6 @@ public class LayoutTurnout
             });
             turnoutEditCancel.setToolTipText( rb.getString("CancelHint") );
             contentPane.add(panel5);
-			if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
-				JPanel panel6 = new JPanel();
-				panel6.setLayout(new FlowLayout());
-				// Edit Block 2
-				panel6.add(turnoutEditBlockB = new JButton(rb.getString("EditBlock2")));
-				turnoutEditBlockB.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						turnoutEditBlockBPressed(e);
-					}
-				});
-				turnoutEditBlockB.setToolTipText( rb.getString("EditBlockBHint") );
-				// Edit Block 3
-				panel6.add(turnoutEditBlockC = new JButton(rb.getString("EditBlock3")));
-				turnoutEditBlockC.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						turnoutEditBlockCPressed(e);
-					}
-				});
-				turnoutEditBlockC.setToolTipText( rb.getString("EditBlockCHint") );
-				// Edit Block 4
-				panel6.add(turnoutEditBlockD = new JButton(rb.getString("EditBlock4")));
-				turnoutEditBlockD.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						turnoutEditBlockDPressed(e);
-					}
-				});
-				turnoutEditBlockD.setToolTipText( rb.getString("EditBlockDHint") );
-				contentPane.add(panel6);
-			}
 		}
         
         hiddenBox.setSelected(hidden);
@@ -1889,7 +1892,8 @@ public class LayoutTurnout
         editLayoutTurnoutFrame.setVisible(true);		
 		editOpen = true;
 		needsBlockUpdate = false;
-	}	
+	}
+    
 	void turnoutEditBlockPressed(ActionEvent a) {
 		// check if a block name has been entered
 		if (!blockName.equals(blockNameField.getText().trim()) ) {
