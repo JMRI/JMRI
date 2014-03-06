@@ -33,6 +33,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added permissive specific appearance as Restricting Signal</revremark>
     </revision>
+    <revision>
+      <revnumber>1.04</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Changed Danger specific appearance to Stop Signal</revremark>
+    </revision>
   </revhistory>
   <aspecttable>CROR-2008</aspecttable>
   <name>Triple head searchlight high signal</name>
@@ -45,7 +51,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 405</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-405.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-405.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Limited</aspectname>
@@ -53,7 +59,7 @@
       <show>flashgreen</show>
       <show>red</show>
       <reference>Rule 406</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-406.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-406.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Medium</aspectname>
@@ -61,7 +67,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Rule 407</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-407.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-407.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Slow</aspectname>
@@ -69,7 +75,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 409</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-409.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-409.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Restricting</aspectname>
@@ -77,7 +83,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Rule 410</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-410.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-410.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear to Stop</aspectname>
@@ -85,7 +91,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 411</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-411.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-411.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Clear to Limited</aspectname>
@@ -93,7 +99,7 @@
       <show>flashgreen</show>
       <show>red</show>
       <reference>Rule 412</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-412.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-412.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Clear to Medium</aspectname>
@@ -101,7 +107,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Rule 413</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-413.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-413.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Clear to Slow</aspectname>
@@ -109,7 +115,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 414</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-414.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-414.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Clear to Stop</aspectname>
@@ -117,7 +123,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 415</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-415.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-415.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Clear</aspectname>
@@ -125,7 +131,7 @@
       <show>flashgreen</show>
       <show>red</show>
       <reference>Rule 416</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-416.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-416.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Limited</aspectname>
@@ -133,7 +139,7 @@
       <show>flashgreen</show>
       <show>flashgreen</show>
       <reference>Rule 417</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-417.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-417.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Medium</aspectname>
@@ -141,7 +147,7 @@
       <show>flashgreen</show>
       <show>green</show>
       <reference>Rule 418</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-418.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-418.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Slow</aspectname>
@@ -149,7 +155,7 @@
       <show>flashgreen</show>
       <show>flashyellow</show>
       <reference>Rule 419</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-419.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-419.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Restricting</aspectname>
@@ -157,7 +163,7 @@
       <show>flashyellow</show>
       <show>flashred</show>
       <reference>Rule 420</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-420.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-420.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited to Stop</aspectname>
@@ -165,7 +171,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Rule 421</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-421.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-421.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Clear</aspectname>
@@ -173,7 +179,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Rule 422</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-422.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-422.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Limited</aspectname>
@@ -181,7 +187,7 @@
       <show>green</show>
       <show>flashgreen</show>
       <reference>Rule 423</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-423.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-423.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Medium</aspectname>
@@ -189,7 +195,7 @@
       <show>green</show>
       <show>green</show>
       <reference>Rule 424</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-424.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-424.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Slow</aspectname>
@@ -197,7 +203,7 @@
       <show>green</show>
       <show>flashyellow</show>
       <reference>Rule 425</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-425.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-425.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Restricting</aspectname>
@@ -205,7 +211,7 @@
       <show>yellow</show>
       <show>flashred</show>
       <reference>Rule 426</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-426.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-426.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium to Stop</aspectname>
@@ -213,7 +219,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 427</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-427.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-427.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow to Clear</aspectname>
@@ -221,7 +227,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Rule 431</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-431.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-431.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow to Limited</aspectname>
@@ -229,7 +235,7 @@
       <show>flashyellow</show>
       <show>flashgreen</show>
       <reference>Rule 432</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-432.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-432.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow to Medium</aspectname>
@@ -237,7 +243,7 @@
       <show>flashyellow</show>
       <show>green</show>
       <reference>Rule 433</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-433.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-433.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow to Slow</aspectname>
@@ -245,7 +251,7 @@
       <show>flashyellow</show>
       <show>flashyellow</show>
       <reference>Rule 434</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-434.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-434.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow to Stop</aspectname>
@@ -253,7 +259,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Rule 435</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-435.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-435.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting Signal</aspectname>
@@ -261,7 +267,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 436</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-436.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-436.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Take Siding</aspectname>
@@ -269,7 +275,7 @@
       <show>red</show>
       <show>flashred</show>
       <reference>Rule 438</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-438.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-438.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Stop Signal</aspectname>
@@ -277,19 +283,19 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 439</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-439.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-439.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-Hi/CROR-3-Dark.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-Dark.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>
     <danger>
-      <aspect>Restricting Signal</aspect>
+      <aspect>Stop Signal</aspect>
     </danger>
     <permissive>
       <aspect>Restricting Signal</aspect>
