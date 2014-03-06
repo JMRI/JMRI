@@ -2226,7 +2226,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //Do not do anything if the blocks are the same!
             return;
         }
-        if(enableAddRouteLogging)
+        //if(enableAddRouteLogging)
             log.info("From " + this.getDisplayName() + " Add ThroughPath with panel " +srcBlock.getDisplayName() + " " + dstBlock.getDisplayName());
         //Initally check to make sure that the through path doesn't already exist.
         //no point in going through the checks if the path already exists.
@@ -2265,10 +2265,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         ArrayList<Integer> tmpdtosSet = new ArrayList<Integer>();
         
         try{
-            MDC.put("loggingDisabled", connection.getClass().getName());
+            //MDC.put("loggingDisabled", connection.getClass().getName());
             tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock);
             tmpdtosSet = connection.getTurnoutSettingList();
-            MDC.remove("loggingDisabled");
+            //MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex){
             MDC.remove("loggingDisabled");
             if(enableAddRouteLogging)
@@ -2286,15 +2286,18 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 dtos.add(tmpdtos.get(i-1));
             }
             //check to make sure that we pass through the same turnouts
-            if(enableAddRouteLogging){
+            //if(enableAddRouteLogging){
                 log.info("From " + this.getDisplayName() + " destination size " + dtos.size() + " v source size " + stod.size());
                 log.info("From " + this.getDisplayName() + " destination setting size " + tmpdtosSet.size() + " v source setting size " + stodSet.size());
-            }
+            //}
+            boolean useAdditionalCheck = false;
             for (int i=0;i<dtos.size();i++){
                 if(dtos.get(i)!=stod.get(i)){
-                    if(enableAddRouteLogging)
-                        log.info("not equal will quit " + dtos.get(i) + ", " + stod.get(i));
-                    return;
+                    useAdditionalCheck = true;
+                    //additionalCheck(stod, dtos);
+                    //if(enableAddRouteLogging)
+                    //    log.info("not equal will quit " + dtos.get(i).getName() + ", " + stod.get(i).getName());
+                    //return;
                 }
             }
             ArrayList<Integer> dtosSet = new ArrayList<Integer>();
@@ -2302,19 +2305,35 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 //Need to reorder the tmplist (dst-src) to be the same order as src-dst
                 dtosSet.add(tmpdtosSet.get(i-1));
             }
-            for (int i=0;i<dtosSet.size();i++){
-                int x = stodSet.get(i);
-                int y = dtosSet.get(i);
-                if(x!=y){
-                    if(enableAddRouteLogging)
-                        log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
-                    return;
-                } else if(x==Turnout.UNKNOWN){
-                    if(enableAddRouteLogging)
-                        log.info(block.getDisplayName() + " turnout state returned as UNKNOWN");
+            if(useAdditionalCheck){
+                HashMap<LayoutTurnout, Integer> stodhm = new HashMap<LayoutTurnout, Integer>();
+                HashMap<LayoutTurnout, Integer> dtoshm = new HashMap<LayoutTurnout, Integer>();
+                for(int i=0;i<dtos.size();i++){
+                    dtoshm.put(dtos.get(i), dtosSet.get(i));
+                }
+                for(int i=0;i<stod.size();i++){
+                    stodhm.put(stod.get(i), stodSet.get(i));
+                }
+                if(!additionalCheck(stodhm, dtoshm)){
+                    log.info("Not equal so will quit");
                     return;
                 }
+            }else {
+                for (int i=0;i<dtosSet.size();i++){
+                    int x = stodSet.get(i);
+                    int y = dtosSet.get(i);
+                    if(x!=y){
+                        //if(enableAddRouteLogging)
+                            log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
+                        return;
+                    } else if(x==Turnout.UNKNOWN){
+                        //if(enableAddRouteLogging)
+                            log.info(block.getDisplayName() + " turnout state returned as UNKNOWN");
+                        return;
+                    }
+                }
             }
+            
             HashSet<LayoutTurnout> set = new HashSet<LayoutTurnout>();
             for (int i = 0; i<stod.size();i++){
                 boolean val = set.add(stod.get(i));
@@ -2375,6 +2394,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
         }
+    }
+    
+    boolean additionalCheck( HashMap<LayoutTurnout, Integer> stod,  HashMap<LayoutTurnout, Integer> dtos){
+        for (Map.Entry<LayoutTurnout, Integer> t : stod.entrySet()) {
+            LayoutTurnout key = t.getKey();
+            Integer value = t.getValue();
+            if(dtos.containsKey(key)){
+                if(!dtos.get(key).equals(value)){
+                    log.info("turnouts not the same setting");
+                    log.info(key.getName() + " " + value + " v " + dtos.get(key));
+                    return false;
+                }
+            } else {
+                log.info("turnouts not matching");
+                return false;
+            }
+        }
+        log.info("Additional checks have the same turnouts listed");
+        return true;
     }
     
     private void addThroughPathPostChecks(Block srcBlock, Block dstBlock, ArrayList<LayoutTurnout> stod, ArrayList<Integer> stodSet ){
