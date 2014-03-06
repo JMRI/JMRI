@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected apearance of heads for clear</revremark>
+    </revision>
   </revhistory>
   <aspecttable>LMS-1932</aspecttable>
   <name>Stop signal 1932-1937</name>
@@ -38,7 +44,7 @@
       <aspectname>Clear</aspectname>
       <show>dark</show>
       <show>green</show>
-      <show>red</show>
+      <show>dark</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Clear.gif</imagelink>
     </appearance>
     <appearance>
