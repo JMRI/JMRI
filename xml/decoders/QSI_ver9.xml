@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="2" lastUpdated="20140214"/>
+  <!-- version 2 - bug fix on some include attributes -->
   <version author="Michael Mosher" version="1" lastUpdated="20130816"/>
   <!-- version 1 - Created from Ver 8 file -->
   <decoder>
@@ -220,16 +222,16 @@
       <ivariable label="Heavy Load Feedback" CVname="51.2" CV="51" PI="2" default="1" item="CV51.2 Heavy" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Cylinder Cocks at Startup" CVname="51.2" CV="51" PI="2" default="1" item="CV51.2 Cocks1" mask="XXXVXXXX" include="3100,4100">
+      <ivariable label="Cylinder Cocks at Startup" CVname="51.2" CV="51" PI="2" default="1" item="CV51.2 Cocks1" mask="XXXVXXXX" include="3104">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Cylinder Cocks after NFF/NFR" CVname="51.2" CV="51" PI="2" default="1" item="CV51.2 Cocks2" mask="XXVXXXXX" include="3100,4100">
+      <ivariable label="Cylinder Cocks after NFF/NFR" CVname="51.2" CV="51" PI="2" default="1" item="CV51.2 Cocks2" mask="XXVXXXXX" include="3104">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Bell Actuator Sound" CVname="51.2" CV="51" PI="2" default="0" item="CV51.2 Bell" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Fuel Type" CVname="51.3" CV="51" PI="3" default="1" item="CV51.3 Fuel" mask="XXXXXXVV" include="3100,4100">
+      <ivariable label="Fuel Type" CVname="51.3" CV="51" PI="3" default="1" item="CV51.3 Fuel" mask="XXXXXXVV" include="3104">
         <ienumVal>
           <ienumChoice choice="Coal shovel">
             <choice>Coal shovel</choice>
@@ -245,19 +247,19 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Long air let-off at start" CVname="51.3" CV="51" PI="3" default="1" item="CV51.3 Air" mask="XXXXVXXX" include="3100,4100">
+      <ivariable label="Long air let-off at start" CVname="51.3" CV="51" PI="3" default="1" item="CV51.3 Air" mask="XXXXVXXX" include="3104">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" item="CV51.5">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Chuff Cutoff" CVname="51.10" CV="51" PI="10" default="50" item="CV51.10" include="3100,3101,3106,3107,4100,4101,4102">
+      <ivariable label="Chuff Cutoff" CVname="51.10" CV="51" PI="10" default="50" item="CV51.10" include="3104">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Min Sound of Power" CVname="51.12" CV="51" PI="12" default="40" item="CV51.12" include="3100,3101,3106,3107,4100,4101,4102">
+      <ivariable label="Min Sound of Power" CVname="51.12" CV="51" PI="12" default="40" item="CV51.12" include="3104">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Max Sound of Power" CVname="51.13" CV="51" PI="13" default="65" item="CV51.13" include="3100,3101,3106,3107,4100,4101,4102">
+      <ivariable label="Max Sound of Power" CVname="51.13" CV="51" PI="13" default="65" item="CV51.13" include="3104">
         <indexedVal/>
       </ivariable>
       <ivariable label="System Balance" CVname="51.14" CV="51" PI="14" default="0" item="CV51.14 Value" mask="XVVVVVVV" >
@@ -1468,7 +1470,7 @@
       <ivariable label="BEMF Offset Sign" CVname="56.8" CV="56" PI="8" default="0" item="CV56.8 Sign" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ienum-PositiveNegative.xml"/>
       </ivariable>
-      <ivariable label="Chuff per Wheel Rev" CVname="56.14" CV="56" PI="14" default="4" item="CV56.14" include="3100,4100">
+      <ivariable label="Chuff per Wheel Rev" CVname="56.14" CV="56" PI="14" default="4" item="CV56.14" include="3104">
         <indexedVal/>
       </ivariable>
       <ivariable label="Very Low Speed Proportional Gain" CVname="56.18.0" CV="56" PI="18" SI="0" default="30" item="CV56.18.0">
