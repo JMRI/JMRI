@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">	
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-02-20</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Those new Railcom options are only available starting with firmware 3.03 from January 2014.</revremark>
+    </revision>
+  </revhistory>
+
+	  <variable label="Multiplicator for speed fedback" CV="135" tooltip="CV135 (0-255)">
+		<decVal min="0" max="255"/>
+		<label xml:lang="fr">Multiplicateur feedback de vitesse</label>
+		<label xml:lang="de">Multiplikation Geschwindichkeitsrückmeldung</label>
+	  </variable>
+	  <variable label="Divider for speed fedback" CV="136" tooltip="CV136 (0-6)">
+		<decVal min="0" max="6"/>
+		<label xml:lang="fr">Diviseur feedback de vitesse</label>
+		<label xml:lang="de">Division Geschwindichkeitsrückmeldung</label>
+	  </variable>
+</variables>

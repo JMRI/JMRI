@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - 2014-02-20 - for common D&H software -->
+	<pane name="Railcom">
+		<column>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <display item="Feedback (RailCom)" format="checkbox"/>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <display item="Address broadcast" format="checkbox"/>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <display item="POM enable" format="checkbox"/>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <separator/>
+		  <label label=" ">
+			<label> </label>
+		  </label>
+		  <row>
+				<display item="Multiplicator for speed fedback"/>
+				<label label=" "/>
+				<display item="Multiplicator for speed fedback" label="" format="hslider"/>
+		  </row>
+		  <row>
+				<display item="Divider for speed fedback"/>
+				<label label=" "/>
+				<display item="Divider for speed fedback" label="" format="hslider"/>
+		  </row>
+		</column>
+		<name>Railcom</name>
+	  </pane>
