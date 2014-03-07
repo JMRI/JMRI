@@ -12,13 +12,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140225"/>
-  <!-- 2 2014/02/25 Update: future proofing
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
+  <!-- 2 2014/02/20 Update: future proofing
 		This is a complete rewrite of my original submission for many D&H decoders.
-		This file now contains ONLY the definition for the DH05A/B decoders with firmware 3.02.
-		PLEASE DO NOT UPDATE THIS FILE OR ADD OTHER DECODERS TO IT ANYMORE (unless to fix issues).
-		To add new decoders, use the individual file templates as used from firmware 3.03.
-		--> 
+		This updates ensure a cleaner, more future proof organisation (despite more files). 
+		FIRMWARE INFORMATION: from http://doehler-haass.de/cms/pages/haeufige-fragen/decoder-cv-tabelle.php
+		DECODER VERSION INFORMATION: from the changelog files, downloaded through the D&H Update program.
+		Please note that the "firmware" and "decoder" versions differ in their numbering, despite a common
+		software platform for most D&H decoders. Each decoder version is incremented individually, whereas the
+		global firmware version as published on the website is numbered as an absolute number.
+		These definitions include both numbers (Firmware version & Decoder version).
+		-->
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
   <!-- 1 2013/07/31 Creation 
 		First decoder template for the Doehler & Haass decoder range.
@@ -27,13 +31,12 @@
 		It requires variables and panes as defined in the doehler_hass/ folder.
   -->
   <decoder>
-    <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
-	  <model model="DH05A/B" lowVersionID="1" highVersionID="2" numOuts="4" numFns="14" productID="DH05AB" comment="DH05A/B-0 / DH05A/B-1 / DH05A/B-3" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
-        <output name="1" label="Front Light" maxcurrent="150mA"/>
-		<output name="2" label="Rear Light" maxcurrent="150mA"/>
+    <family name="Train Decoders (firmware 3.03+)" mfg="Doehler und Haass">
+	  <model model="DHP160/161/163 v8.10 (firmware 3.03+)" lowVersionID="8" highVersionID="8" numOuts="3" numFns="14" productID="DHP160_3.03" comment="DHP160 / DHP161 / DHP163 with update from 15 Jan 2014" maxInputVolts="25V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651/NEM652">
+        <output name="1" label="Front Light" maxcurrent="300mA"/>
+		<output name="2" label="Rear Light" maxcurrent="300mA"/>
 		<output name="3" label="AUX 1" maxcurrent="300mA"/>
-		<output name="4" label="AUX 2" maxcurrent="300mA"/>
-        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+        <size length="14.2" width="9.2" height="2.0" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
@@ -61,7 +64,7 @@
 			<!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
 				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
 			<!-- SECTION 6	- Extra general options as of fw3.03 -->
-				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/> -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/>
 			<!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
 				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/> -->
     </variables>

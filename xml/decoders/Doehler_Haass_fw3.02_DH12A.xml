@@ -12,28 +12,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140225"/>
-  <!-- 2 2014/02/25 Update: future proofing
-		This is a complete rewrite of my original submission for many D&H decoders.
-		This file now contains ONLY the definition for the DH05A/B decoders with firmware 3.02.
-		PLEASE DO NOT UPDATE THIS FILE OR ADD OTHER DECODERS TO IT ANYMORE (unless to fix issues).
-		To add new decoders, use the individual file templates as used from firmware 3.03.
-		--> 
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2013/07/31 Creation 
-		First decoder template for the Doehler & Haass decoder range.
-		This LOCOMOTIVE decoder file creates the corresponding family, and 
-		includes all decoders defs & specs. 
-		It requires variables and panes as defined in the doehler_hass/ folder.
-  -->
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
+  <!-- 1 2014/02/20 Creation 
+		Based on DH16A, minus 2 outputs.
+		-->
   <decoder>
     <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
-	  <model model="DH05A/B" lowVersionID="1" highVersionID="2" numOuts="4" numFns="14" productID="DH05AB" comment="DH05A/B-0 / DH05A/B-1 / DH05A/B-3" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+	  <model model="DH12A" lowVersionID="1" highVersionID="1" numOuts="6" numFns="14" productID="DH12A" comment="DH12A" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
         <output name="1" label="Front Light" maxcurrent="150mA"/>
 		<output name="2" label="Rear Light" maxcurrent="150mA"/>
 		<output name="3" label="AUX 1" maxcurrent="300mA"/>
 		<output name="4" label="AUX 2" maxcurrent="300mA"/>
-        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+		<output name="5" label="AUX 3" maxcurrent="NC - Logic Level"/>
+		<output name="6" label="AUX 4" maxcurrent="NC - Logic Level"/>
+        <size length="14.5" width="8" height="2.8" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
             <protocol>selectrix</protocol>
@@ -50,14 +42,14 @@
 			<!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
 				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
 			<!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
-				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/> -->
-				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
 			<!-- SECTION 3	- Analog functions  -->
 				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
 				<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
 				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
 			<!-- SECTION 4	- Basic Railcom feedback  -->
-				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/> -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
 			<!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
 				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
 			<!-- SECTION 6	- Extra general options as of fw3.03 -->
@@ -74,5 +66,5 @@
 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
 	<!-- Pane(s) valid for some decoders only  -->
-		<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/> -->
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
 </decoder-config>
