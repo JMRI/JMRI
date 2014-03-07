@@ -2922,7 +2922,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			_trainIcon.setShowTooltip(true);
 			String txt = null;
 			if (getCurrentLocationName().equals(""))
-				txt = getDescription() + " " + TERMINATED + " (" + getTrainTerminatesName() + ")";
+				txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
 			else
 				txt = MessageFormat.format(Bundle.getMessage("TrainAtNext"), new Object[] { getDescription(),
 						getCurrentLocationName(), getNextLocationName() });
