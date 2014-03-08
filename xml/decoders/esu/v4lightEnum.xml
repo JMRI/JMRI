@@ -1,5 +1,5 @@
         <enumVal>
-          <enumChoice choice="Standard on off">
+          <enumChoice choice="(Disabled)">
             <choice>Standard on off</choice>
             <choice xml:lang="it">Standard 0n-Off</choice>
           </enumChoice>

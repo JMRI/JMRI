@@ -95,7 +95,7 @@ public class FnMapPanelESU extends JPanel {
                                            ,"F20/on","F20/off","F21/on","F21/off","F22/on","F22/off","F23/on","F23/off","F24/on","F24/off","F25/on","F25/off","F26/on","F26/off","F27/on","F27/off","F28/on","F28/off"
                                            ,"sensW/on","sensW/off","Sens1/on","Sens1/off","Sens2/on","Sens2/off","Sens3/on","Sens3/off","Sens4/on","Sens4/off"
                                            ,"Head/light[1]","Rear/light[1]","Aux/1[1]","Aux/2[1]","Aux/3","Aux/4","Aux/5","Aux/6","Aux/7","Aux/8","Aux/9","Aux/10","Head/light[2]","Rear/light[2]","Aux/1[2]","Aux/2[2]"
-                                           ,"Mome/off","Shunt/mode","Dynam/brake","Fire/box","Dim/lights","Grade/cross","not/used","not/used","Smoke/gen","Notch/up","Notch/down","Sound/fade","Bk sql/off","Doppler/effect","Volume/& mute","Shift/mode"
+                                           ,"Momentum/off","Shunt/mode","Dynamic/brake","Uncouple/Cycle","not/used","Fire/box","Dim/lights","Grade/cross","Smoke/gen","Notch/up","Notch/down","Sound/fade","Brk sql/off","Doppler/effect","Volume/& mute","Shift/mode"
                                            ,"SS/1","SS/2","SS/3","SS/4","SS/5","SS/6","SS/7","SS/8","SS/9","SS/10","SS/11","SS/12","SS/13","SS/14","SS/15","SS/16","SS/17","SS/18","SS/19","SS/20","SS/21","SS/22","SS/23","SS/24"
                                            };
 
@@ -159,16 +159,16 @@ public class FnMapPanelESU extends JPanel {
                     outBlockStart = iOut+outBlockLength[outBlockNum];
                     outBlockLabel = iOut+(outBlockLength[outBlockNum]-1)/2;
                 }
-                // column labels
-                if (iRow == 0) {
-                    labelAt( outputNum,   currentCol, outName[iOut]);
-                    labelAt( outputLabel, currentCol, outLabel[iOut]);
-                    labelAt( firstRow+numRows, currentCol, String.valueOf(iOut+1));
-                }
                 // find the variable using the output label
                 String name = "ESU Function Row "+Integer.toString(iRow+1)+" Column "+Integer.toString(iOut+1);
                 int iVar = _varModel.findVarIndex(name);
                 if (iVar>=0) {
+                // column labels
+                    if (iRow == 0) {
+                        labelAt( outputNum,   currentCol, outName[iOut]);
+                        labelAt( outputLabel, currentCol, outLabel[iOut]);
+                        labelAt( firstRow+numRows, currentCol, String.valueOf(iOut+1));
+                    }
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
                     varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));

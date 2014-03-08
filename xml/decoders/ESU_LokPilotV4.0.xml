@@ -109,6 +109,48 @@
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, Next18" -->
       </model>
+      <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
+        <output name="65" label="not/used"/>
+        <output name="66" label="not/used"/>
+        <output name="67" label="not/used"/>
+        <output name="68" label="not/used"/>
+        <output name="69" label="not/used"/>
+        <output name="70" label="not/used"/>
+        <output name="71" label="not/used"/>
+        <output name="72" label="not/used"/>
+        <output name="97" label="not/used"/>
+        <output name="98" label="not/used"/>
+        <output name="99" label="not/used"/>
+        <output name="100" label="not/used"/>
+        <output name="101" label="not/used"/>
+        <output name="102" label="not/used"/>
+        <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
+        <size length="17.5" width="15.5" height="5.5" units="mm"/>
+        <!-- connector="NEM651, 21MTC" -->
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
+        <output name="97" label="not/used"/>
+        <output name="98" label="not/used"/>
+        <output name="99" label="not/used"/>
+        <output name="100" label="not/used"/>
+        <output name="101" label="not/used"/>
+        <output name="102" label="not/used"/>
+        <output name="103" label="not/used"/>
+        <output name="105" label="Virtual/Drv Snd"/>
+        <size length="55" width="25" height="10" units="mm"/>
+        <!-- connector="screw terminals" -->
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -134,27 +176,6 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <pane name="Indexed CVs">
-    <column>
-      <row>
-        <column>
-      <label label="Due to changes in the internal structure of JMRI, this pane is now obsolete and"/>
-      <label label="should be empty. If you find this pane is not empty, please report back to us by"/>
-      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or log a bug report on"/>
-      <label label="the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
-          <label label=" "/>
-          <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
-          <label label=" "/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
-        </column>
-      </row>
-    </column>
-    <name>Indexed CVs</name>
-  </pane>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
 </decoder-config>

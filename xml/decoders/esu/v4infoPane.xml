@@ -1,7 +1,7 @@
   <pane name="Read Me - IMPORTANT">
     <column>
       <label label=" "/>
-      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.3 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
       <label label=" "/>
       <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;"/>
       <label label=" "/>
@@ -20,6 +20,9 @@
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
+      <label label="LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added. Also"/>
+      <label label="many corrections and improvements since JMRI 3.7.2."/>
+      <label label=" "/>
       <label label="There is now an option to import CV value list files created by LokProgrammer."/>
       <label label="(File menu when a roster entry is open.)"/>
       <label label=" "/>
@@ -27,22 +30,10 @@
       <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses"/>
       <label label="extra challenges for JMRI coding. These defintions are a work in progress."/>
       <label label=" "/>
-      <label label="The good news is that we now have a fully working Function Map tab."/>
-      <label label=" "/>
-      <label label="The bad news is that in its current form it is very large and cumbersome to use."/>
-      <label label="It is planned to eventually rewrite it in a more compact and readable form, similar"/>
-      <label label="to the way it is done in LokProgrammer software, but this will be a big job."/>
-      <label label=" "/>
       <label label="If you have an NCE Power Pro system, there is now a workaround in JMRI for the"/>
       <label label="firmware issue that prevents the Power Pro from correctly writing Indexed CVs on"/>
       <label label="the Programming Track. You can now safely use the the Programming Track to read"/>
       <label label="or write any CVs in this definition."/>
-      <label label=" "/>
-      <label label="Due to changes in the internal structure of JMRI, the Indexed CVs pane is now"/>
-      <label label="obsolete and should be empty. If you find this pane is not empty, please report"/>
-      <label label="back to us by posting to either the JMRI or LokSound Yahoo&#174; groups or log a"/>
-      <label label="bug report on the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
-      <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
       <label label=" "/>
       <label label="The naming convention for Indexed CVs has been changed for these decoders to"/>
       <label label="conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the"/>

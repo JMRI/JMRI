@@ -27,12 +27,15 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2014-02-20</date>
+      <date>2013-07-31</date>
       <authorinitials>PB</authorinitials>
-      <revremark>First version for Doehler und Haass, contains only analog
-		mode function status for function FL and F9 to F12 (CV14)</revremark>
+      <revremark>
+		First version for Doehler und Haass, contains only analog
+		mode function status for function FL and F9 to F12 (CV14)
+      </revremark>
     </revision>
   </revhistory>
+
 	  <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
