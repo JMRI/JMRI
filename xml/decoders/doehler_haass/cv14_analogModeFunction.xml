@@ -12,11 +12,30 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
-  <!-- 1 2013/07/31 Creation 
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>
 		First version for Doehler und Haass, contains only analog
 		mode function status for function FL and F9 to F12 (CV14)
-  -->
+      </revremark>
+    </revision>
+  </revhistory>
+
 	  <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
