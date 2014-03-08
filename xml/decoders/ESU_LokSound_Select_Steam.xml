@@ -346,27 +346,6 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <pane name="Indexed CVs">
-    <column>
-      <row>
-        <column>
-      <label label="Due to changes in the internal structure of JMRI, this pane is now obsolete and"/>
-      <label label="should be empty. If you find this pane is not empty, please report back to us by"/>
-      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or log a bug report on"/>
-      <label label="the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
-          <label label=" "/>
-          <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
-          <label label=" "/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
-        </column>
-      </row>
-    </column>
-    <name>Indexed CVs</name>
-  </pane>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>

@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" default="3">
+      <variable label="Vstart" CV="2" default="3" exclude="LPfxV4">
         <decVal/>
       </variable>
       <variable label="Acceleration" CV="3" default="16" item="Accel">
@@ -23,10 +23,10 @@
       <variable label="Deceleration" CV="4" default="12" item="Decel">
         <decVal/>
       </variable>
-      <variable label="Vhigh" CV="5" default="255">
+      <variable label="Vhigh" CV="5" default="255" exclude="LPfxV4">
         <decVal/>
       </variable>
-      <variable label="Vmid" CV="6" default="88">
+      <variable label="Vmid" CV="6" default="88" exclude="LPfxV4">
         <decVal/>
       </variable>
       <variable label="Decoder Version" CV="7" readOnly="yes" item="Decoder Version">
@@ -143,7 +143,7 @@
       <variable label="RailCom Enable" CV="29" mask="XXXXVXXX" default="1" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LPfxV4">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -165,16 +165,16 @@
       <variable label="M4 Protocol" CV="47" mask="XXXXXXVX" default="0" include="" item="ESU V4 Extra Protocols Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 2">
+      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LPV4DCC,LPmV4DCC" item="ESU V4 Extra Protocols Option 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 3">
+      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LPV4DCC,LPmV4DCC" item="ESU V4 Extra Protocols Option 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
+      <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable" exclude="LPfxV4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1">
+      <variable label="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1" exclude="LPfxV4">
         <enumVal>
           <enumChoice choice="20 kHz">
             <choice>20 kHz</choice>
@@ -205,45 +205,47 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>LGB Function Button Mode</label>
       </variable>
-      <variable label="AC Analog Mode" CV="50" mask="XXXXXXXV" default="1" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Mode">
+      <variable label="AC Analog Mode" CV="50" mask="XXXXXXXV" default="1" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="DC Analog Mode" CV="50" mask="XXXXXXVX" default="1" item="Analog (DC) Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="BEMF Parameter 'I' Slow" CV="51" default="0" item="EMF Option 4">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'K' Slow" CV="52" default="32" item="Motor Option 1">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Reference Voltage" CV="53" default="140" item="EMF Control Reference">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'K'" CV="54" default="48" item="EMF Option 1">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Parameter 'I'" CV="55" default="32" item="EMF Option 2">
-        <decVal/>
-      </variable>
-      <variable label="BEMF Dynamic Drive Control" CV="56" default="255" item="EMF Option 3">
-        <decVal/>
-        <label>BEMF Dynamic Drive Control'</label>
-      </variable>
-      <variable label="Forward Trim" CV="66" default="128" comment="Range 0-255">
-        <decVal/>
-        <comment>Range 0-255</comment>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
-      <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
-        <decVal/>
-        <comment>Range 0-255</comment>
-      </variable>
+      <variables exclude="LPfxV4">
+        <variable label="BEMF Parameter 'I' Slow" CV="51" default="0" item="EMF Option 4">
+          <decVal/>
+        </variable>
+        <variable label="BEMF Parameter 'K' Slow" CV="52" default="32" item="Motor Option 1">
+          <decVal/>
+        </variable>
+        <variable label="BEMF Reference Voltage" CV="53" default="140" item="EMF Control Reference">
+          <decVal/>
+        </variable>
+        <variable label="BEMF Parameter 'K'" CV="54" default="48" item="EMF Option 1">
+          <decVal/>
+        </variable>
+        <variable label="BEMF Parameter 'I'" CV="55" default="32" item="EMF Option 2">
+          <decVal/>
+        </variable>
+        <variable label="BEMF Dynamic Drive Control" CV="56" default="255" item="EMF Option 3">
+          <decVal/>
+          <label>BEMF Dynamic Drive Control'</label>
+        </variable>
+        <variable label="Forward Trim" CV="66" default="128" comment="Range 0-255">
+          <decVal/>
+          <comment>Range 0-255</comment>
+        </variable>
+        <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
+        <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
+          <decVal/>
+          <comment>Range 0-255</comment>
+        </variable>
+      </variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable label="Rate for Blinking Effects" CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Extra Function Output Settings Slider 1">
         <decVal/>
       </variable>
-      <variable label="Power Pack Maintain Time" CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1">
+      <variable label="Power Pack Maintain Time" CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1" exclude="LPfxV4">
         <decVal/>
       </variable>
       <variable label="Remember Current Function States" CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Extra Power Handling Option 1">
@@ -267,10 +269,10 @@
       <variable label="Serial protocol for C-Sinus" CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period">
+      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LPfxV4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Motor Overload Protection" CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2">
+      <variable label="Motor Overload Protection" CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2" exclude="LPfxV4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Start Volts in DC Mode" CV="125" default="90" item="Analog Vstart">
@@ -279,10 +281,10 @@
       <variable label="Maximum Speed in DC mode" CV="126" default="130" item="Analog Vhigh">
         <decVal/>
       </variable>
-      <variable label="Start Volts in AC Mode" CV="127" default="90" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vstart">
+      <variable label="Start Volts in AC Mode" CV="127" default="90" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Vstart">
         <decVal/>
       </variable>
-      <variable label="Maximum Speed in AC mode" CV="128" default="130" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vhigh">
+      <variable label="Maximum Speed in AC mode" CV="128" default="130" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Vhigh">
         <decVal/>
       </variable>
       <variable label="Analog Mode Function Hysteresis" CV="129" default="15" item="Radio Power Conversion">
@@ -297,37 +299,37 @@
       <variable label="ABC detection threshold" CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 6">
         <decVal min="4" max="32"/>
       </variable>
-      <variable label="Fan Speed Trim" CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2">
+      <variable label="Fan Speed Trim" CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LPfxV4">
         <decVal/>
         <label>Smoke Unit Minimum Steam Chuff Duration</label>
       </variable>
-      <variable label="Temperature Trim" CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3">
+      <variable label="Temperature Trim" CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3" exclude="LPfxV4">
         <decVal/>
         <label>Smoke Unit Maximum Steam Chuff Duration</label>
       </variable>
-      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1">
+      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1" exclude="LPfxV4">
         <decVal/>
         <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
       </variable>
-      <variable label="Auto Uncoupling Speed" CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1">
+      <variable label="Auto Uncoupling Speed" CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1" exclude="LPfxV4">
         <decVal/>
       </variable>
-      <variable label="Auto Uncoupling Remove Time" CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3">
+      <variable label="Auto Uncoupling Remove Time" CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3" exclude="LPfxV4">
         <decVal/>
       </variable>
-      <variable label="Auto Uncoupling Push Time" CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2">
+      <variable label="Auto Uncoupling Push Time" CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2" exclude="LPfxV4">
         <decVal/>
       </variable>
       <variable label="Prime Mover Startup Delay if Virtual Drive Sound Enabled" CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
         <decVal/>
       </variable>
-      <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1">
+      <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1" exclude="LPfxV4">
         <decVal/>
       </variable>
-      <variable label="Constant Brake Mode - Brake Distance Forward" CV="254" default="0" item="Advanced Group 1 Option 2">
+      <variable label="Constant Brake Mode - Brake Distance Forward" CV="254" default="0" item="Advanced Group 1 Option 2" exclude="LPfxV4">
         <decVal/>
       </variable>
-      <variable label="Constant Brake Mode - Brake Distance Backward" CV="255" default="0" item="Advanced Group 1 Option 3">
+      <variable label="Constant Brake Mode - Brake Distance Backward" CV="255" default="0" item="Advanced Group 1 Option 3" exclude="LPfxV4">
         <decVal/>
       </variable>
       <variable label="Constant Brake Mode - Constant Brake Distance on speed step 0" CV="27" mask="VXXXXXXX" default="0" item="Advanced Group 1 Option 4">
