@@ -58,6 +58,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
 		addLine(fileOut, LN + ESC + splitString(location.getName()) + ESC);
 		addLine(fileOut, PRNTR + ESC + location.getDefaultPrinterName() + ESC);
+		addLine(fileOut, SWLC + ESC + location.getSwitchListComment() + ESC);
+		// add location comment
+		if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals("")) {
+			// location comment can have multiple lines
+			String[] comments = location.getComment().split("\n"); // NOI18N
+			for (int i = 0; i < comments.length; i++)
+				addLine(fileOut, LC + ESC + comments[i] + ESC);
+		}
 		addLine(fileOut, VT + getDate(true));
 
 		// get a list of trains
