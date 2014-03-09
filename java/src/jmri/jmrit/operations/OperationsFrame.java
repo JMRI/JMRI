@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
-	public static SwingShutDownTask trainDirtyTask;
 
 	public OperationsFrame(String s) {
 		super(s);
@@ -335,29 +334,28 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	}
 	
 	protected synchronized void createShutDownTask(){
-		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
-			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", Bundle.getMessage("PromptQuitWindowNotWritten"),	// NOI18N
-					Bundle.getMessage("PromptSaveQuit"), this) {
-                                @Override
-				public boolean checkPromptNeeded() {
-					return !OperationsXml.areFilesDirty();
-				}
+            OperationsManager.getInstance().setShutDownTask(
+                    new SwingShutDownTask("Operations Train Window Check", // NOI18N
+                            Bundle.getMessage("PromptQuitWindowNotWritten"), // NOI18N
+                            Bundle.getMessage("PromptSaveQuit"), // NOI18N
+                            this) {
+                        @Override
+                        public boolean checkPromptNeeded() {
+                            return !OperationsXml.areFilesDirty();
+                        }
 
-                                @Override
-				public boolean doPrompt() {
-					storeValues();
-					return true;
-				}
-				
-                                @Override
-				public boolean doClose() {
-					storeValues();
-					return true;
-				}
-			};
-			jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);        
-		}
+                        @Override
+                        public boolean doPrompt() {
+                            storeValues();
+                            return true;
+                        }
+
+                        @Override
+                        public boolean doClose() {
+                            storeValues();
+                            return true;
+                        }
+                    });
 	}
 	
         @Override
