@@ -14,8 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/01/30"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
+  <!-- Version 2 - Fixed manufacturer label from "Kuehn" to "Kuehn Ing." as per current decoderIndex.xml file (Alain Le Marchand) -->
   <decoder>
-    <family name="NMRA-DCC/Motorola" mfg="Kuehn">
+    <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
       <model model="N025" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
         <versionCV lowVersionID="34"/>
         <output name="1" label="White"/>
