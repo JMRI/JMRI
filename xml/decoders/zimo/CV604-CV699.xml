@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<!-- Nigel Cliffe, 7th March 2014 -->
+<!-- from version 32 firmware -->
+<!-- CV's 500-603 control volume and sound choices of individual sounds -->
+<!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
+<!-- see Zimo German manual for small decoders, -->
+ <!-- March 2014 - F20-F28 are in CV674-698 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+  <!-- include this CV to put it onto the Sound Levels pane -->
+  <variable label="Volume on Key F20" CV="674" item="Zimo Sound Setting 22">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F21" CV="677" item="Zimo Sound Setting 23">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F22" CV="680" item="Zimo Sound Setting 24">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F23" CV="683" item="Zimo Sound Setting 25">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F24" CV="686" item="Zimo Sound Setting 26">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F25" CV="689" item="Zimo Sound Setting 27">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F26" CV="692" item="Zimo Sound Setting 28">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F27" CV="695" item="Zimo Sound Setting 29">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F28" CV="698" item="Zimo Sound Setting 30">
+    <decVal/>
+  </variable>
+  
+ 
+ 
+  
+</variables>
