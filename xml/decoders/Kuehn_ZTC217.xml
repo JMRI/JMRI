@@ -15,8 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Blackwell afticarr@sympatico.ca)" version="1" lastUpdated="20060812"/>
   <!-- ZTC Speed Stabilized / WhisperDrive decoder -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
+  <!-- Version 2 - Fixed manufacturer label from "Kuehn" to "Kuehn Ing." as per current decoderIndex.xml file (Alain Le Marchand) -->
   <decoder>
-    <family name="ZTC WhisperDrive" mfg="Kuehn" lowVersionID="0" highVersionID="255">
+    <family name="ZTC WhisperDrive" mfg="Kuehn Ing." lowVersionID="0" highVersionID="255">
       <model model="ZTC217" numOuts="2">
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
