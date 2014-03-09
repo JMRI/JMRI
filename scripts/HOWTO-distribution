@@ -100,6 +100,15 @@ Second, we build the release branch:
 
 ( ) If using the CI system, set up CI builds for that branch
 
+    Sign on to Jenkins
+    Under Test Releases, select "New Item",
+        create the job with the new release name, 
+        using Copy Existing Item with the previous test release
+    Then fix the version number in a couple of places:
+        Description, 
+        and then Source Code Management|Repository URL.
+
+
 ( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:
 
