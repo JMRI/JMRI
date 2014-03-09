@@ -13,15 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License-->
 <!-- for more details.-->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
   <version author="Xavier Chazelle" version="1.1" lastUpdated="2009/01/06"/>
+  <!-- Version 2 - Increased Hi version value to 4, change family name to Mini instead of Micro, No Speed Table, Fix enum for CV54 (Alain Le Marchand) -->
   <decoder>
-    <family name="MicroMultiprotocol Decoder" mfg="Uhlenbrock Elektronik">
-      <model model="73400" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version">
+    <family name="Mini-Multiprotocol Decoder" mfg="Uhlenbrock Elektronik" highVersionID="4">
+      <model model="73400" highVersionID="4" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version">
         <output name="1" label="F0F" connection="wire" maxcurrent="0.2A"/>
         <output name="2" label="F0R" connection="wire" maxcurrent="0.2A"/>
         <size length="10.8 " width="7.5 " height="2.4 " units="mm"/>
       </model>
-      <model model="73410" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="NEM651 version" connector="NMRAsmall">
+      <model model="73410" highVersionID="4" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="NEM651 version" connector="NMRAsmall">
         <output name="1" label="F0F" connection="plug" maxcurrent="0.2A"/>
         <output name="2" label="F0R" connection="plug" maxcurrent="0.2A"/>
         <size length="10.8 " width="7.5 " height="2.4 " units="mm"/>
@@ -29,7 +31,11 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <comment>Short address</comment>
+      </variable>
       <variable label="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
         <decVal max="63"/>
         <label>Vstart</label>
@@ -55,13 +61,18 @@
         <label>Vmid</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable label="Manufacturer Version No: " CV="7" item="Decoder Version" default="8" readOnly="yes">
+      <variable label="Manufacturer Version No: " CV="7" item="Decoder Version" default="4" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No: </label>
       </variable>
       <variable label="Manufacturer ID: " CV="8" item="Manufacturer" default="85" readOnly="yes">
         <decVal/>
         <label>Manufacturer ID: </label>
+      </variable>
+      <variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
+        <longAddressVal/>
+        <label>Extended Address</label>
+        <comment>4 digit address (Range 128-10240)</comment>
       </variable>
       <variable label="Consist Address" CV="19" comment="0-127 0= no consist" item="Consist Address" default="0" mask="XVVVVVVV">
         <decVal/>
@@ -112,16 +123,27 @@
         </enumVal>
         <label>Analog (DC) Operation</label>
       </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <variable label="Speed Table Definition - Not Used" CV="29" default="0" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
           </enumChoice>
-          <enumChoice choice="Use table in CVs 67 through 94">
-            <choice>Use table in CVs 67 through 94</choice>
+          <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
+            <choice>(Not supported) Use table in CVs 67 through 94</choice>
           </enumChoice>
         </enumVal>
-        <label>Speed Table Definition</label>
+        <label>Speed Table Definition - Not Used</label>
+      </variable>
+      <variable label="Address Format" CV="29" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="One byte (short) address">
+            <choice>One byte (short) address</choice>
+          </enumChoice>
+          <enumChoice choice="Two byte (extended) address">
+            <choice>Two byte (extended) address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Address Format</label>
       </variable>
       <variable label="Main Motor Control - load regulation" CV="49" default="0" mask="XXXXXXXV">
         <enumVal>
@@ -201,7 +223,7 @@
         <decVal/>
         <label>Repetition rate</label>
       </variable>
-      <variable label="Fixed or variable repetition rate" CV="54" tooltip="128 fixed or 132 speed dependant" default="0" mask="XXXXXVXX">
+      <variable label="Fixed or variable repetition rate" CV="54" tooltip="128 fixed or 132 speed dependant" default="132">
         <enumVal>
           <enumChoice choice="fixed repetition rate" value="128">
             <choice>fixed repetition rate</choice>
@@ -228,10 +250,11 @@
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable label="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <!-- No Speed Table for this decoder -->
+	 <!-- <variable label="Speed Table" CV="67"> -->
+      <!--   <speedTableVal/> -->
+      <!--   <label>Speed Table</label> -->
+      <!-- </variable> -->
       <variable label="Error register" CV="100" default="0" readOnly="yes" mask="XXXXXXVV" tooltip="0 = No error (reset error register)">
         <enumVal>
           <enumChoice choice="No error" value="0">
