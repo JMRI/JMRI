@@ -308,6 +308,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
+            if(speedMessageSent!=0){
+                if(System.currentTimeMillis()-lastSpeedMessageTime>500 || speedMessageSent<0){
+                    speedMessageSent=0;
+                }
+            }
+            lastSpeedMessageTime = System.currentTimeMillis();
             speedMessageSent++;
         }
         else {
@@ -321,8 +327,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         //record(speed);
     }
     
-    //float lastRequestedSpeed = 0f;
-
+    long lastSpeedMessageTime = 0l;
+    
     EcosTrafficController tc;
     
     int speedMessageSent = 0;
@@ -342,7 +348,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     protected void throttleDispose(){
-
         String message = "release("+this.objectNumber+", control)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -353,13 +358,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void reply(EcosReply m) {
-        /*int tmpstart;
-        int tmpend;
-        int start;
-        int end;
-        String msg = m.toString();
-        String[] lines = msg.split("\n");
-        log.debug("found "+(lines.length)+" response from Ecos");*/
         int resultCode = m.getResultCode();
         if (resultCode==0){
             String replyType = m.getReplyType();
@@ -397,7 +395,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 for (String line: msgDetails) {
                     if (line.contains("speed")&& !line.contains("speedstep")){
                         speedMessageSent--;
-                        if(speedMessageSent<=1){
+                        if(speedMessageSent<=0){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
                         }
@@ -412,7 +410,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     //For some reason in recent ECOS software releases we do not get the contents, only a header and End State
                     if(m.toString().contains("speed")&& !m.toString().contains("speedstep")){
                         speedMessageSent--;
-                        if(speedMessageSent<=1){
+                        if(speedMessageSent<=0){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
                         }
