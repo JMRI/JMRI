@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: NCE_D13SR_TC.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id: Atlas_NCE_N.xml 2014-03-02 xx:xx:xx $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,19 +14,21 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140302"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20140308"/>
   <!-- version 1 created by modifing NCE_D13SR_TC.xml ver 10 - kept decoders N12A0, N12A1 and N12A2 - Add CV15 on NCE pane (Alain Le Marchand) -->  
+  <!-- version 1.1 - Used same family name as existing Atlas N-scale decoders (Alain Le Marchand) -->  
   <decoder>
-    <family name="NCE Four-Function Decoder for Atlas N Scale" mfg="Atlas" lowVersionID="36" highVersionID="36" comment="NCE decoders factory installed in Atlas N scale locomotives since 2011 and rebranded by Atlas">
-      <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="36" highVersionID="36"  comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
+      <model model="AN12A0 by NCE (Part #518299)" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
         <size length="2.65" width="0.37" height="0.12" units="inches"/>
       </model>
-      <model model="N12A1" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+      <model model="N12A1-ATL by NCE" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
       </model>
-      <model model="N12A2" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+      <model model="N12A2-ATL by NCE" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
       </model>
