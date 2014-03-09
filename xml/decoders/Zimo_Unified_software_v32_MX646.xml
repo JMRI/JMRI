@@ -27,6 +27,7 @@
   <!-- V 1 new file -->
   <!-- v1.1,  small change to refer CV's 260-355 to the "version 30" file,  Nigel Cliffe. 9th Dec 2011 -->
   <!-- v1.2,  "version 32 firmware" inclusion of sound control CV's and "coast" function for diesels  Nigel Cliffe. 17th Nov 2012 -->
+  <!-- v1.3,  Extended Sound Volume controls to cover FnKeys F20-F28.   Nigel Cliffe, 7 March 2014 -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
       <model model="MX646 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
@@ -99,6 +100,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
       <!-- does MX646 have any switch inputs ?   <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744twoSwitchIP.xml"/>
   -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>

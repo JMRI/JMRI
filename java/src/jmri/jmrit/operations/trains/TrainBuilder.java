@@ -3177,6 +3177,8 @@ public class TrainBuilder extends TrainCommon {
 			}
 		}
 		log.debug("car (" + car.toString() + ") not added to train");
+		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildDestinationNotReachable"),
+				new Object[] { car.getDestinationName(), rl.getName(), rl.getId() }));
 		// remove destination and revert to final destination
 		if (car.getDestinationTrack() != null) {
 			Track destTrack = car.getDestinationTrack();
@@ -3190,6 +3192,7 @@ public class TrainBuilder extends TrainCommon {
 		car.setFinalDestination(car.getPreviousFinalDestination());
 		car.setFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
 		car.setDestination(null, null);
+		car.updateKernel();
 		// is car sitting on a FIFO or LIFO track?
 		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),

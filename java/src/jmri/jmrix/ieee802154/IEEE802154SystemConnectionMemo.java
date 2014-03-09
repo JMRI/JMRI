@@ -27,8 +27,8 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         InstanceManager.store(this, IEEE802154SystemConnectionMemo.class); // also register as specific type
         
         // create and register the ComponentFactory
-//      InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.swing.PowerlineComponentFactory(this), 
- //                               jmri.jmrix.swing.ComponentFactory.class);
+      InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.swing.IEEE802154ComponentFactory(this), 
+                               jmri.jmrix.swing.ComponentFactory.class);
     }
     
     jmri.jmrix.swing.ComponentFactory componentFactory = null;

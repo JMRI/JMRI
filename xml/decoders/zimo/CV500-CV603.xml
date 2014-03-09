@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- Nigel Cliffe, 16th Nov 2012 -->
@@ -73,6 +73,7 @@
   </variable>
   <!-- assume Zimo extend this to F28 in time, so require settings 22 to 30 to be reserved -->
   <!-- CV571 is at top of list for Fn Key F0 -->
+  <!-- March 2014 - F20-F28 are in CV674-698 -->
   <variable label="Boiling Sound" CV="574" item="Zimo Sound Setting 31">
     <decVal/>
   </variable>

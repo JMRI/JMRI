@@ -15,6 +15,7 @@ import jmri.util.jdom.LocaleSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.SystemType;
 import jmri.Application;
+import java.util.Arrays;
 
 /**
  * <p>Provide a graphical representation of the ESU mapping table.
@@ -56,11 +57,11 @@ public class FnMapPanelESU extends JPanel {
     int currentCol = firstCol;
     
     // rows
-    int guiWarning = 0;
-    int blockName = 1;
-    int outputNum = blockName+1;
-    int outputLabel = outputNum+1;
-    int firstRow = outputLabel+1;
+    int guiWarningRow = 0;
+    int blockNameRow = 1;
+    int outputNumRow = blockNameRow+1;
+    int outputLabelRow = outputNumRow+1;
+    int firstRow = outputLabelRow+1;
     int currentRow = firstRow;
     
     // these will eventually be passed in from the ctor
@@ -72,14 +73,22 @@ public class FnMapPanelESU extends JPanel {
     VariableTableModel _varModel;
     
     /**
-     * Titles for blocks of columns
+     * How many columns between GUI warning intervals
+     */
+    final int GUIwarningInterval = 26;
+    
+    /**
+     * Titles for blocks of items
      */
     final String[] outBlockName = new String[] {"Input Conditions (AND operation) Block ","Physical Outputs","Logical Outputs","Sound Slots"};
     
     /**
-     * Number of columns per block
+     * Number of items per block
      */
     final int[] outBlockLength = new int[] {72,16,16,24};
+
+    final int[] outBlockStartCol = new int[outBlockLength.length]; // Starting column column of block
+    final int[] outBlockUsed = new int[outBlockLength.length]; // Number of used items per block
     
     /**
      * <p>Default column labels.
@@ -102,6 +111,7 @@ public class FnMapPanelESU extends JPanel {
     final int maxOut = outDescESU.length;
     final String[] outName = new String[maxOut];
     final String[] outLabel = new String[maxOut];
+    final boolean[] outIsUsed = new boolean[maxOut];
                                            
     public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model) {
         if (log.isDebugEnabled()) log.debug("ESU Function map starts");
@@ -111,6 +121,7 @@ public class FnMapPanelESU extends JPanel {
         for (int iOut=0; iOut<maxOut; iOut++) {
             outName[iOut] = Integer.toString(iOut+1);
             outLabel[iOut] = "";
+            outIsUsed[iOut] = false;
         }
         // configure numRows(numFns), numOuts & any custom labels from decoder file
         configOutputs(model);
@@ -120,8 +131,8 @@ public class FnMapPanelESU extends JPanel {
         cs = new GridBagConstraints();
         setLayout(gl);
                 
-        labelAt(outputNum,firstCol, "Mapping");
-        labelAt(outputLabel,firstCol, "Row");
+        labelAt(outputNumRow,firstCol, "Mapping");
+        labelAt(outputLabelRow,firstCol, "Row");
         labelAt(firstRow+numRows,firstCol, "Column");
         
         // loop through rows
@@ -130,34 +141,21 @@ public class FnMapPanelESU extends JPanel {
             currentRow = firstRow+iRow;
             int outBlockNum = -1;
             int outBlockStart = 0;
-            int outBlockLabel = -1;
             labelAt( currentRow, currentCol++, Integer.toString(iRow+1));
            // loop through outputs
             for (int iOut = 0; iOut < numOut; iOut++) {
-                // check for block labels
-                if ((iOut == outBlockLabel) && (iRow == 0)) {
-                    JLabel lx = new JLabel("<html><center><strong>"+outBlockName[outBlockNum]+"</strong></center></html>");
-                    GridBagConstraints csx = new GridBagConstraints();
-                    csx.gridy = blockName;
-                    csx.gridx = currentCol;
-                    csx.weightx = 1;
-                    csx.gridwidth = GridBagConstraints.RELATIVE;
-                    csx.fill = GridBagConstraints.HORIZONTAL;
-                    gl.setConstraints(lx, csx);
-                    add(lx);
-                }
                 // check for block separators
                 if (iOut == outBlockStart) {
                     if (iOut != 0) {
                         if (iRow == 0) {
-                            labelAt( outputNum,   currentCol, " | ");
-                            labelAt( outputLabel, currentCol, " | ");
+                            labelAt( outputNumRow,   currentCol, " | ");
+                            labelAt( outputLabelRow, currentCol, " | ");
                         }
                         labelAt( currentRow, currentCol++, " | "); // Integer.toString(iRow+1)
                     }
                     outBlockNum++;
+                    outBlockStartCol[outBlockNum] = currentCol;
                     outBlockStart = iOut+outBlockLength[outBlockNum];
-                    outBlockLabel = iOut+(outBlockLength[outBlockNum]-1)/2;
                 }
                 // find the variable using the output label
                 String name = "ESU Function Row "+Integer.toString(iRow+1)+" Column "+Integer.toString(iOut+1);
@@ -165,8 +163,8 @@ public class FnMapPanelESU extends JPanel {
                 if (iVar>=0) {
                 // column labels
                     if (iRow == 0) {
-                        labelAt( outputNum,   currentCol, outName[iOut]);
-                        labelAt( outputLabel, currentCol, outLabel[iOut]);
+                        labelAt( outputNumRow,   currentCol, outName[iOut]);
+                        labelAt( outputLabelRow, currentCol, outLabel[iOut]);
                         labelAt( firstRow+numRows, currentCol, String.valueOf(iOut+1));
                     }
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
@@ -175,6 +173,7 @@ public class FnMapPanelESU extends JPanel {
                     VariableValue var = _varModel.getVariable(iVar);
                     j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
                     saveAt(currentRow, currentCol++, j);
+                    outIsUsed[iOut] = true;
                 } else {
                     if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
                 }
@@ -183,19 +182,41 @@ public class FnMapPanelESU extends JPanel {
             labelAt( currentRow, currentCol++, Integer.toString(iRow+1));
         }
 
+        // tally used columns
+        int currentBlock = -1;
+        int blockStart = 0;
+        for (int iOut=0; iOut<maxOut; iOut++) {
+            if (iOut == blockStart) {
+                currentBlock++;
+                blockStart = blockStart + outBlockLength[currentBlock];
+                outBlockUsed[currentBlock] = 0;
+            }
+            if (outIsUsed[iOut]) outBlockUsed[currentBlock]++;
+        }
+
+        for (int iBlock=0; iBlock<outBlockLength.length; iBlock++) {
+            if (outBlockUsed[iBlock] > 0) {
+                JLabel lx = new JLabel("<html><center><strong>"+outBlockName[iBlock]+"</strong></center></html>");
+                GridBagConstraints csx = new GridBagConstraints();
+                csx.gridy = blockNameRow;
+                csx.gridx = outBlockStartCol[iBlock];
+                csx.gridwidth = outBlockUsed[iBlock];
+                gl.setConstraints(lx, csx);
+                add(lx);
+            }
+        }
+
         // warn if using OS X GUI
         if (SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel()) {
-            int numWarnings = numOut/26;
+            int numWarnings = numOut/GUIwarningInterval;
             for (int i=0; i<numWarnings; i++) {
                 JLabel l = new JLabel("<html><center><strong>You are using the Mac OS X native GUI<br/>"+
                     "and may experience slow scrolling</strong><br/>"+
                     "If affected, change GUI in "+Application.getApplicationName()+
                     " &gt; Preferences &gt; Display  &gt; GUI<br/><br/></center></html>");
-                cs.gridy = guiWarning;
-                cs.gridx = numOut/(numWarnings*2)+i*numOut/numWarnings;
-                cs.weightx = 1;
-                cs.gridwidth = GridBagConstraints.RELATIVE;
-                cs.fill = GridBagConstraints.HORIZONTAL;
+                cs.gridy = guiWarningRow;
+                cs.gridx = i*numOut/numWarnings;
+                cs.gridwidth = GUIwarningInterval;
                 gl.setConstraints(l, cs);
                 add(l);
             }

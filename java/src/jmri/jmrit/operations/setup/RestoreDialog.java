@@ -1,40 +1,36 @@
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.Apps;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.IOException;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.border.TitledBorder;
 import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
-
-import apps.Apps;
-
-import java.awt.Color;
-
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.UnexpectedExceptionContext;
-import jmri.jmrit.operations.trains.TrainsTableFrame;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RestoreDialog extends JDialog {
 
@@ -235,14 +231,7 @@ public class RestoreDialog extends JDialog {
 			// now deregister shut down task
 			// If Trains window was opened, then task is active
 			// otherwise it is normal to not have the task running
-			try {
-				if (TrainsTableFrame.trainDirtyTask != null) {
-					jmri.InstanceManager.shutDownManagerInstance().deregister(
-							TrainsTableFrame.trainDirtyTask);
-				}
-			} catch (Exception ex) {
-				log.debug("Unable to deregister Train Dirty Task");
-			}
+			OperationsManager.getInstance().setShutDownTask(null);
 
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
 					Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);

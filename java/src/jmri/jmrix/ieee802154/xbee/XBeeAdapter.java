@@ -43,22 +43,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
-            // set framing (end) character
-            try {
-                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
-                      +" "+activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.debug("failed to set serial framing: "+ef);
-            }
-
-            // set timeout; framing should work before this anyway
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: "+et);
-            }
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -103,49 +87,58 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     public void serialEvent(SerialPortEvent e) {
        int type = e.getEventType();
-       if(type==SerialPortEvent.DATA_AVAILABLE) {
-          if(log.isDebugEnabled())
-             log.debug("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
-          synchronized(this) {
-             this.notify();
+       try {
+          if(type==SerialPortEvent.DATA_AVAILABLE) {
+             if(this.getInputStream().available()>0) {
+                if(log.isDebugEnabled())
+                   log.debug("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
+                synchronized(this) {
+                   this.notify();
+                }
+             } else {
+                   log.warn("SerialEvent: DATA_AVAILABLE but no data available.");
+             }
+             return;
+          } else if(log.isDebugEnabled()) {
+             switch (type) {
+                case SerialPortEvent.DATA_AVAILABLE:
+                   log.info("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+                   log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.CTS:
+                   log.info("SerialEvent: CTS is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.DSR:
+                   log.info("SerialEvent: DSR is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.RI:
+                   log.info("SerialEvent: RI is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.CD:
+                   log.info("SerialEvent: CD is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.OE:
+                   log.info("SerialEvent: OE (overrun error) is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.PE:
+                   log.info("SerialEvent: PE (parity error) is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.FE:
+                   log.info("SerialEvent: FE (framing error) is "+e.getNewValue());
+                   return;
+                case SerialPortEvent.BI:
+                   log.info("SerialEvent: BI (break interrupt) is "+e.getNewValue());
+                   return;
+                default:
+                   log.info("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
+                   return;
+             }
           }
-          return;
-       } else if(log.isDebugEnabled()) {
-          switch (type) {
-             case SerialPortEvent.DATA_AVAILABLE:
-                log.info("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
-                return;
-             case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
-                return;
-             case SerialPortEvent.CTS:
-                log.info("SerialEvent: CTS is "+e.getNewValue());
-                return;
-             case SerialPortEvent.DSR:
-                log.info("SerialEvent: DSR is "+e.getNewValue());
-                return;
-             case SerialPortEvent.RI:
-                log.info("SerialEvent: RI is "+e.getNewValue());
-                return;
-             case SerialPortEvent.CD:
-                log.info("SerialEvent: CD is "+e.getNewValue());
-                return;
-             case SerialPortEvent.OE:
-                log.info("SerialEvent: OE (overrun error) is "+e.getNewValue());
-                return;
-             case SerialPortEvent.PE:
-                log.info("SerialEvent: PE (parity error) is "+e.getNewValue());
-                return;
-             case SerialPortEvent.FE:
-                log.info("SerialEvent: FE (framing error) is "+e.getNewValue());
-                return;
-             case SerialPortEvent.BI:
-                log.info("SerialEvent: BI (break interrupt) is "+e.getNewValue());
-                return;
-             default:
-                log.info("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
-                return;
-          }
+       } catch (java.io.IOException ex) {
+         // it's best not to throw the exception because the RXTX thread may not be prepared to handle
+         log.error("RXTX error in serialEvent method", ex);
        }
     }
 
@@ -159,10 +152,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        //activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-        //activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default

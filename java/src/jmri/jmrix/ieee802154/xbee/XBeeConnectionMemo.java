@@ -24,11 +24,19 @@ import java.util.ResourceBundle;
  */
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
    
+    jmri.jmrix.swing.ComponentFactory componentFactory = null;
+
     public XBeeConnectionMemo(){
       super();
       register(); // registers the general type
       InstanceManager.store(this, XBeeConnectionMemo.class); // also register as specific type
+      // create and register the XBeeComponentFactory
+     InstanceManager.store(componentFactory=new jmri.jmrix.ieee802154.xbee.swing.XBeeComponentFactory(this),
+                           jmri.jmrix.swing.ComponentFactory.class);
+
     }
+
+
  
     /** 
      * Tells which managers this provides by class
