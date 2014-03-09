@@ -300,6 +300,7 @@
 	<LI>Jeff Law provided two Umelec decoder definitions
 	<LI>Jim LeFevre, who did the testing on the TMCC implementation, including buying components so we could do a more complete job,
 	    and coded the function support
+    <LI>Alain Le Marchand, who provided a number of decoder definitions and updates
     <LI>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle 
     and wrote instructions and an installer Ubuntu Linux
 	<LI>Stephen Lowens, who updated the Digitrax sound decoder definitions
