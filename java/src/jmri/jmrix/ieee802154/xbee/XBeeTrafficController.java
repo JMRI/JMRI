@@ -162,10 +162,10 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
         }
 
-        if(response.isError()) {
-            log.error("XBee API Reports error in parsing reply");
-            return;
-        }
+        //if(response.isError()) {
+        //    log.error("XBee API Reports error in parsing reply");
+        //    return;
+        //}
 
         XBeeReply reply=new XBeeReply(this,response);
 

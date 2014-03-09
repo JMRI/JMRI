@@ -97,6 +97,9 @@ public class SystemsMenu extends JMenu {
         add( new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
         
         add(new jmri.jmrix.rfid.swing.RfidMenu(null));
+
+        add( new jmri.jmrix.ieee802154.swing.IEEE802154Menu(null));
+        add( new jmri.jmrix.ieee802154.xbee.swing.XBeeMenu(null));
     }
 
     void addMenu(String className) {
