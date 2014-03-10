@@ -27,9 +27,13 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     jmri.jmrix.swing.ComponentFactory componentFactory = null;
 
     public XBeeConnectionMemo(){
-      super();
+      super("Z","XBee");
       register(); // registers the general type
       InstanceManager.store(this, XBeeConnectionMemo.class); // also register as specific type
+    }
+
+    @Override
+    protected void init() {
       // create and register the XBeeComponentFactory
      InstanceManager.store(componentFactory=new jmri.jmrix.ieee802154.xbee.swing.XBeeComponentFactory(this),
                            jmri.jmrix.swing.ComponentFactory.class);
