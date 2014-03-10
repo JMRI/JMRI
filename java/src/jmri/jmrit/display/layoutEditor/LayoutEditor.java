@@ -7662,7 +7662,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
 			pt = t.getCoordsA();
  			if (t.getConnectA()==null) {
-				g2.setColor(Color.red);
+                if(t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType()<=LayoutTurnout.LH_XOVER){
+                    g2.setColor(Color.magenta);
+                } else {
+                    g2.setColor(Color.red);
+                }
 			}
 			else {
                 if(t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER && t.getTurnoutType()<=LayoutTurnout.LH_XOVER){
@@ -7758,10 +7762,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
 			pt = x.getCoordsA();
  			if (x.getConnectA()==null) {
-				g2.setColor(Color.red);
+				g2.setColor(Color.magenta);
 			}
 			else {
-				g2.setColor(Color.green);
+				g2.setColor(Color.blue);
 			}
 			g2.draw(new Rectangle2D.Double (
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
@@ -7776,10 +7780,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
 			pt = x.getCoordsC();
  			if (x.getConnectC()==null) {
-				g2.setColor(Color.red);
+				g2.setColor(Color.magenta);
 			}
 			else {
-				g2.setColor(Color.green);
+				g2.setColor(Color.blue);
 			}
 			g2.draw(new Rectangle2D.Double (
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
@@ -7806,10 +7810,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
 			pt = x.getCoordsA();
  			if (x.getConnectA()==null) {
-				g2.setColor(Color.red);
+				g2.setColor(Color.magenta);
 			}
 			else {
-				g2.setColor(Color.green);
+				g2.setColor(Color.blue);
 			}
 			g2.draw(new Rectangle2D.Double (
 							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
