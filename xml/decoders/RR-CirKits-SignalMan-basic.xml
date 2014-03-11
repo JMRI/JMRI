@@ -92,6 +92,9 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer ID" default="87">
         <decVal/>
       </variable>
+      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="SignalMan ID=21">
+        <decVal/>
+      </variable>
       <variable label="Address Format" CV="29" mask="XXVXXXXX" readOnly="yes" item="Address Format" default="1">
         <enumVal>
           <enumChoice choice="1 Byte XX (not supported)"/>
@@ -8933,6 +8936,20 @@
     <column>
       <row>
         <column>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+           <qualifier>
+           <variableref>Hardware ID</variableref>
+           <relation>ne</relation>
+           <value>21</value></qualifier>
+         </label>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;h1&gt;SignalMan&lt;/h1&gt;&lt;/html&gt;"/>
+      	<label label=" "/>
+        </column>
+      </row>
+      <row>
+        <column>
           <display item="Long Address" tooltip="Use a 5 digit address from 10000-16383" label="Long Address">
             <label>Long Address</label>
           </display>
@@ -8974,8 +8991,37 @@
           <display item="Manufacturer ID" tooltip="RR-CirKits, Inc."/>
         </column>
         <column>
+          <display item="Hardware ID" tooltip="SignalMan HW ID=21"/>
+        </column>
+        <column>
           <display item="Firmware Version" tooltip="Firmware version number"/>
         </column>
+      </row>
+      <row>
+        <column>
+          <label label=" "/>
+          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (21 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+             <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>ne</relation>
+              <value>21</value>
+            </qualifier>
+          </label>
+          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may not be a SignalMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Hardware ID</variableref>
+              <relation>ne</relation>
+              <value>21</value>
+            </qualifier>
+          </label>
+        <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may require a firmware upgrade!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Firmware Version</variableref>
+              <relation>lt</relation>
+              <value>10</value>
+            </qualifier>
+          </label>
+          </column>
       </row>
       <row>
         <column>

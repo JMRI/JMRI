@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2014 All rights reserved -->
-<!-- $Id: RR-CirKits-Signalman-basic.xml,v 0.11 2014/02/26 12:22:43 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2013, 2014 All rights reserved -->
+<!-- $Id: RR-CirKits-WatchMan-basic.xml,v 0.01 2014/02/01 12:48:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,14 +13,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.15" lastUpdated="20140226"/>
+  <version author="dick@rr-cirkits.com" version="0.12" lastUpdated="20140201"/>
   <!-- Version 0.01  Working version modified from SignalMan -->
-  <!-- Version 0.15  TowerMan version -->
+  <!-- Version 0.10  TowerMan version -->
+  <!-- Version 0.11  WatchMan version -->
+  <!-- Version 0.12  WatchMan version -->
 
 
   <decoder>
-    <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode">
-      <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10"/>
+    <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode">
+      <model model="WatchMan" comment="8 block detector plus 8 Line I/O Driver" lowVersionID="11"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
@@ -34,7 +36,7 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer ID" default="87">
         <decVal/>
       </variable>
-      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="TowerMan ID=22">
+      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="WatchMan ID=23">
         <decVal/>
       </variable>
 		<variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
@@ -91,101 +93,86 @@
       <variable label="Flash Write MSB" CV="114" readOnly="yes" mask="VVXXXXXX" item="Flash Write MSB">
         <splitVal highCV="115" upperMask="VVVVVVVV"/>
       </variable>
-      <variable label="Stepper 1" CV="116" mask="XXXXXXXV" default="0">
+      
+      <!-- Sensitivity values -->
+      <variable label="S1" CV="117" mask="VVVVVVVV" default="128" item="BOD 1 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S2" CV="118" mask="VVVVVVVV" default="128" item="BOD 2 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S3" CV="119" mask="VVVVVVVV" default="128" item="BOD 3 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S4" CV="120" mask="VVVVVVVV" default="128" item="BOD 4 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S5" CV="121" mask="VVVVVVVV" default="128" item="BOD 5 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S6" CV="122" mask="VVVVVVVV" default="128" item="BOD 6 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S7" CV="123" mask="VVVVVVVV" default="128" item="BOD 7 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="S8" CV="124" mask="VVVVVVVV" default="128" item="BOD 8 Sensitivity" comment="Sensitivity (Range 1-255)">
+        <decVal min="1" max="255"/>
+      </variable>
+
+      <!-- AutoSet -->
+      <variable label="AS1" CV="125" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 2" CV="116" mask="XXXXXXVX" default="0">
+      <variable label="AS2" CV="125" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 3" CV="116" mask="XXXXXVXX" default="0">
+      <variable label="AS3" CV="125" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 4" CV="116" mask="XXXXVXXX" default="0">
+      <variable label="AS4" CV="125" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 5" CV="116" mask="XXXVXXXX" default="0">
+      <variable label="AS5" CV="125" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 6" CV="116" mask="XXVXXXXX" default="0">
+      <variable label="AS6" CV="125" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 7" CV="116" mask="XVXXXXXX" default="0">
+      <variable label="AS7" CV="125" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 8" CV="116" mask="VXXXXXXX" default="0">
+      <variable label="AS8" CV="125" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
         </enumVal>
       </variable>
-      <variable label="Stepper 9" CV="117" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 10" CV="117" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 11" CV="117" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 12" CV="117" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 13" CV="117" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 14" CV="117" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 15" CV="117" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-      </variable>
-      <variable label="Stepper 16" CV="117" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
+      
+      <!-- Margin -->
+      <variable label="margin" CV="126" mask="VVVVVVVV" default="128" item="BOD Margin" comment="Offset (Range 1-255)">
+        <decVal min="0" max="15"/>
       </variable>
 
       <!-- I/O Table entries -->
@@ -194,12 +181,12 @@
         <splitVal highCV="130" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PA1 Mode" CV="130" mask="XXVVXXXX" default="2">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
+      <variable label="PA1 Output-Input" CV="131" mask="XVXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
-      <variable label="PA1 Output-Input" CV="131" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+      <variable label="PA1 Mode" CV="130" mask="XXVVXXXX" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
       <variable label="PA1 Input Direction" CV="131" mask="VXXXXXXX">
@@ -327,7 +314,7 @@
       <variable label="PA2 Mode" CV="138" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA2 Output-Input" CV="139" mask="XVXXXXXX">
+      <variable label="PA2 Output-Input" CV="139" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA2 Input Direction" CV="139" mask="VXXXXXXX">
@@ -453,7 +440,7 @@
       <variable label="PA3 Mode" CV="146" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA3 Output-Input" CV="147" mask="XVXXXXXX">
+      <variable label="PA3 Output-Input" CV="147" mask="XVXXXXXX"  default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA3 Input Direction" CV="147" mask="VXXXXXXX">
@@ -579,7 +566,7 @@
       <variable label="PA4 Mode" CV="154" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA4 Output-Input" CV="155" mask="XVXXXXXX">
+      <variable label="PA4 Output-Input" CV="155" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA4 Input Direction" CV="155" mask="VXXXXXXX">
@@ -703,12 +690,12 @@
         <splitVal highCV="162" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PA5 Mode" CV="162" mask="XXVVXXXX" default="2">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
+      <variable label="PA5 Output-Input" CV="163" mask="XVXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
-      <variable label="PA5 Output-Input" CV="163" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+      <variable label="PA5 Mode" CV="162" mask="XXVVXXXX" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
       <variable label="PA5 Input Direction" CV="163" mask="VXXXXXXX">
@@ -836,7 +823,7 @@
       <variable label="PA6 Mode" CV="170" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA6 Output-Input" CV="171" mask="XVXXXXXX">
+      <variable label="PA6 Output-Input" CV="171" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA6 Input Direction" CV="171" mask="VXXXXXXX">
@@ -962,7 +949,7 @@
       <variable label="PA7 Mode" CV="178" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA7 Output-Input" CV="179" mask="XVXXXXXX">
+      <variable label="PA7 Output-Input" CV="179" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA7 Input Direction" CV="179" mask="VXXXXXXX">
@@ -1088,7 +1075,7 @@
       <variable label="PA8 Mode" CV="186" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA8 Output-Input" CV="187" mask="XVXXXXXX">
+      <variable label="PA8 Output-Input" CV="187" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA8 Input Direction" CV="187" mask="VXXXXXXX">
@@ -1212,12 +1199,12 @@
         <splitVal highCV="194" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PB1 Mode" CV="194" mask="XXVVXXXX" default="2">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-      </variable>
-
       <variable label="PB1 Output-Input" CV="195" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+      </variable>
+
+      <variable label="PB1 Mode" CV="194" mask="XXVVXXXX" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
       <variable label="PB1 Input Direction" CV="195" mask="VXXXXXXX">
@@ -1721,12 +1708,12 @@
         <splitVal highCV="226" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PB5 Mode" CV="226" mask="XXVVXXXX" default="2">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-      </variable>
-
       <variable label="PB5 Output-Input" CV="227" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+      </variable>
+
+      <variable label="PB5 Mode" CV="226" mask="XXVVXXXX" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
       <variable label="PB5 Input Direction" CV="227" mask="VXXXXXXX">
@@ -7876,6 +7863,7 @@
             <compositeSetting label="PA1 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA1 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA1 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA1 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA1 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -7960,6 +7948,7 @@
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA2 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8044,6 +8033,7 @@
             <compositeSetting label="PA3 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA3 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA3 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA3 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA3 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8128,6 +8118,7 @@
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA4 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8212,6 +8203,7 @@
             <compositeSetting label="PA5 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA5 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA5 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA5 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA5 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8296,6 +8288,7 @@
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA6 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8380,6 +8373,7 @@
             <compositeSetting label="PA7 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PA7 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA7 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA7 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA7 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8464,6 +8458,7 @@
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8548,6 +8543,7 @@
             <compositeSetting label="PB1 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PB1 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB1 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB1 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB1 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8632,6 +8628,7 @@
             <compositeSetting label="PB2 Output-Input" value="1"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="2"/>
+            <compositeSetting label="PB2 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB2 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8716,6 +8713,7 @@
             <compositeSetting label="PB3 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PB3 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB3 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB3 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB3 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8800,6 +8798,7 @@
             <compositeSetting label="PB4 Output-Input" value="1"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="2"/>
+            <compositeSetting label="PB4 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB4 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8884,6 +8883,7 @@
             <compositeSetting label="PB5 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PB5 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB5 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB5 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB5 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8968,6 +8968,7 @@
             <compositeSetting label="PB6 Output-Input" value="1"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="2"/>
+            <compositeSetting label="PB6 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB6 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9052,6 +9053,7 @@
             <compositeSetting label="PB7 Output-Input" value="1"/> <!-- Direction -->
             <compositeSetting label="PB7 Paired" value="0"/> <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB7 Mode" value="2"/> <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB7 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB7 Transition" value="3"/> <!-- None, Positive, Negative, Both -->
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9136,6 +9138,7 @@
             <compositeSetting label="PB8 Output-Input" value="1"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="2"/>
+            <compositeSetting label="PB8 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9255,34 +9258,42 @@
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="0"/>
             <compositeSetting label="PA1 Mode" value="2"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA1 Transition" value="3"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA2 Transition" value="3"/>
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="0"/>
             <compositeSetting label="PA3 Mode" value="2"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA3 Transition" value="3"/>
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA4 Transition" value="3"/>
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="0"/>
             <compositeSetting label="PA5 Mode" value="2"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA5 Transition" value="3"/>
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA6 Transition" value="3"/>
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="0"/>
             <compositeSetting label="PA7 Mode" value="2"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA7 Transition" value="3"/>
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9589,34 +9600,42 @@
             <compositeSetting label="PB1 Output-Input" value="1"/>
             <compositeSetting label="PB1 Paired" value="0"/>
             <compositeSetting label="PB1 Mode" value="2"/>
+            <compositeSetting label="PB1 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB1 Transition" value="3"/>
             <compositeSetting label="PB2 Output-Input" value="1"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="2"/>
+            <compositeSetting label="PB2 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB2 Transition" value="3"/>
             <compositeSetting label="PB3 Output-Input" value="1"/>
             <compositeSetting label="PB3 Paired" value="0"/>
             <compositeSetting label="PB3 Mode" value="2"/>
+            <compositeSetting label="PB3 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB3 Transition" value="3"/>
             <compositeSetting label="PB4 Output-Input" value="1"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="2"/>
+            <compositeSetting label="PB4 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB4 Transition" value="3"/>
             <compositeSetting label="PB5 Output-Input" value="1"/>
             <compositeSetting label="PB5 Paired" value="0"/>
             <compositeSetting label="PB5 Mode" value="2"/>
+            <compositeSetting label="PB5 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB5 Transition" value="3"/>
             <compositeSetting label="PB6 Output-Input" value="1"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="2"/>
+            <compositeSetting label="PB6 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB6 Transition" value="3"/>
             <compositeSetting label="PB7 Output-Input" value="1"/>
             <compositeSetting label="PB7 Paired" value="0"/>
             <compositeSetting label="PB7 Mode" value="2"/>
+            <compositeSetting label="PB7 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB7 Transition" value="3"/>
             <compositeSetting label="PB8 Output-Input" value="1"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="2"/>
+            <compositeSetting label="PB8 Input Direction" value="0"/> <!-- Normal -->
             <compositeSetting label="PB8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9879,7 +9898,7 @@
 
     </variables>
   </decoder>
-  <pane name="TowerMan">
+  <pane name="WatchMan">
     <column>
       <row>
         <column>
@@ -9888,10 +9907,10 @@
            <qualifier>
            <variableref>Hardware ID</variableref>
            <relation>ne</relation>
-           <value>22</value></qualifier>
+           <value>23</value></qualifier>
          </label>
       	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;h1&gt;TowerMan&lt;/h1&gt;&lt;/html&gt;"/>
+      	<label label="&lt;html&gt;&lt;h1&gt;WatchMan&lt;/h1&gt;&lt;/html&gt;"/>
       	<label label=" "/>
         </column>
       </row>
@@ -9904,6 +9923,11 @@
             <label label="  The unit address may only be changed in OPs Mode."/>
             <label label="  A changed unit address will only activate after a power cycle."/>
         </column>
+      </row>
+      <row>
+      <column>
+      	<label label=" "/>
+      </column>
       </row>
       <row>
         <column>
@@ -9955,7 +9979,7 @@
           <display item="Manufacturer ID" tooltip="RR-CirKits, Inc."/>
         </column>
         <column>
-          <display item="Hardware ID" tooltip="TowerMan HW ID=22"/>
+          <display item="Hardware ID" tooltip="WatchMan HW ID=23"/>
         </column>
         <column>
           <display item="Firmware Version" tooltip="Firmware version number"/>
@@ -9964,40 +9988,41 @@
       <row>
         <column>
           <label label=" "/>
-          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (22 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! Bad Hardware ID! (23 required) Read full sheet to update.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
              <qualifier>
               <variableref>Hardware ID</variableref>
               <relation>ne</relation>
-              <value>22</value>
+              <value>23</value>
             </qualifier>
           </label>
-          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may not be a TowerMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may not be a WatchMan!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
             <qualifier>
               <variableref>Hardware ID</variableref>
               <relation>ne</relation>
-              <value>22</value>
+              <value>23</value>
             </qualifier>
           </label>
-        <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may require a firmware upgrade!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+          <label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Warning! This unit may require a firmware upgrade!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>15</value>
+              <value>10</value>
             </qualifier>
           </label>
-          </column>
+        </column>
       </row>
       <row>
         <column>
           <label label=" "/>
           <label label="Use DecoderPro Version 3.7.2 or later."/>
-          <label label="Decoder File Version: 0.15"/>
+          <label label="Decoder File Version: 0.12"/>
         </column>
       </row>
     </column>
   </pane>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOA1.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOA2.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneWMA1.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneWMA2.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneBODSensitivity.xml"/>
 <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOB1.xml"/>
 <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOB2.xml"/>
 <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicA.xml"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
 <!--                                                                        -->
@@ -13,16 +13,11 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
 <!-- Panes to show I/O lines -->
-<pane name="I/O-1 B">
+<pane name="BOD 5-8">
   <column>
     <row>
       <column>
-      	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
-      	<label label=" "/>
-      	<label label="&lt;html&gt;&lt;h1&gt;I/O Port 1 Lines #5 - #8&lt;/h1&gt;&lt;/html&gt;"/>
-      	<label label=" "/>
-        <label label="TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual">
+        <label label="WatchMan Input Port Configuration settings. All numbers are entered as their actual">
           </label>
         <label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
           </label>
@@ -34,7 +29,7 @@
     <separator/>
     <row>
       <column>
-        <display item="PA5 Output-Input" label=" " tooltip="Line direction">
+        <display item="PA5 Output-Input" label=" " tooltip="Input only">
           </display>
       </column>
       <column>
@@ -131,7 +126,7 @@
     <separator/>
     <row>
       <column>
-        <display item="PA6 Output-Input" label=" " tooltip="Line direction">
+        <display item="PA6 Output-Input" label=" " tooltip="Input only">
           </display>
       </column>
       <column>
@@ -228,7 +223,7 @@
     <separator/>
     <row>
       <column>
-        <display item="PA7 Output-Input" label=" " tooltip="Line direction">
+        <display item="PA7 Output-Input" label=" " tooltip="Input only">
           </display>
       </column>
       <column>
@@ -325,7 +320,7 @@
     <separator/>
     <row>
       <column>
-        <display item="PA8 Output-Input" label=" " tooltip="Line direction">
+        <display item="PA8 Output-Input" label=" " tooltip="Input only">
           </display>
       </column>
       <column>

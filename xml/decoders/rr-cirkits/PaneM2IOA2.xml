@@ -22,12 +22,13 @@
       	<label label=" "/>
       	<label label="&lt;html&gt;&lt;h1&gt;I/O Port 1 Lines #5 - #8&lt;/h1&gt;&lt;/html&gt;"/>
       	<label label=" "/>
-        <label label="TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual">
+        	<label label="Tower Controller Mark II Input/Output Port Configuration settings. All numbers are entered as their actual">
           </label>
-        <label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
+        	<label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
           </label>
-        <label label="only to the first line's event numbers. The second line's event numbers are ignored.">
+        	<label label="only to the first line's event numbers. The second line's event numbers are ignored.">
           </label>
+         <label label=" "/>
       </column>
     </row>
     <separator/>

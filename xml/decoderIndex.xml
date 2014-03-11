@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140310-1403-jake on Mon Mar 10 07:04:01 PDT 2014 $Id$-->
-  <decoderIndex version="302">
+  <!--Written by JMRI version 20140311-0515-jake on Mon Mar 10 22:15:52 PDT 2014 $Id$-->
+  <decoderIndex version="304">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5374,8 +5374,14 @@
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
       </family>
+      <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The TowerController Mark-II is normally programmed in OPs mode" file="RR-CirKits-TowerController-Mark-II.xml">
+        <model model="Mark-II" comment="64 Line I/O Driver" lowVersionID="11" />
+      </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode" file="RR-CirKits-TowerMan-basic.xml">
         <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10" />
+      </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode" file="RR-CirKits-WatchMan-basic .xml">
+        <model model="WatchMan" comment="8 block detector plus 8 Line I/O Driver" lowVersionID="11" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
