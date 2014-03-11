@@ -2793,13 +2793,13 @@ public class TrainBuilder extends TrainCommon {
 		// TODO, not sure if we really need to try the terminate track, attempt to generate car load to staging was done
 		// earlier
 		// first try this train's termination track if one exists
-		if (train.isAllowThroughCarsEnabled()
-				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
-			return true;
+//		if (train.isAllowThroughCarsEnabled()
+//				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
+//			return true;
 		List<Track> tracks = locationManager.getTracks(Track.STAGING);
 		log.debug("Found " + tracks.size() + " staging tracks for load generation");
 		// list of locations that can't be reached by the router
-		List<Location> locations = new ArrayList<Location>();
+		List<Location> locationsNotReachable = new ArrayList<Location>();
 		while (tracks.size() > 0) {
 			// pick a track randomly
 			int rnd = (int) (Math.random() * tracks.size());
@@ -2807,9 +2807,11 @@ public class TrainBuilder extends TrainCommon {
 			tracks.remove(track);
 			log.debug("Staging track (" + track.getLocation().getName() + ", " + track.getName() + ")");
 			// find a staging track that isn't at the departure or terminal
-			if (track.getLocation() == departLocation || track.getLocation() == terminateLocation)
+			if (track.getLocation() == departLocation)
 				continue;
-			if (locations.contains(track.getLocation()))
+			if (!train.isAllowThroughCarsEnabled() && track.getLocation() == terminateLocation)
+				continue;
+			if (locationsNotReachable.contains(track.getLocation()))
 				continue;
 			// the following method sets the load generated from staging boolean
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
@@ -2827,7 +2829,7 @@ public class TrainBuilder extends TrainCommon {
 				car.setLoadGeneratedFromStaging(false);
 				car.setFinalDestination(null);
 				car.updateKernel();
-				locations.add(track.getLocation()); // couldn't route to this staging location
+				locationsNotReachable.add(track.getLocation()); // couldn't route to this staging location
 			}
 		}
 		return false;
