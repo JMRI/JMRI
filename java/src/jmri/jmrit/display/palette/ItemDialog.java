@@ -29,14 +29,10 @@ public class ItemDialog extends JmriJFrame {
     public ItemDialog(String type, String title) {
         super(title, true, true);
         if (_instance!=null) {
-        	_instance.closeDialogs();
         	_instance.dispose();
         }
         _instance = this;
         _type = type;
- //       _family = family;
-//        _parent = parent;
-//        setAlwaysOnTop(true);
     }
 /*
     protected void sizeLocate() {

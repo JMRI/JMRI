@@ -30,6 +30,8 @@ import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Path;
+import jmri.implementation.swing.SwingShutDownTask;
+import jmri.ShutDownTask;
 
 /**
  * A WarrantAction contains the operating permissions and directives needed for
@@ -66,6 +68,8 @@ public class WarrantTableAction extends AbstractAction {
     private static JDialog _errorDialog;
     private static WarrantFrame _openFrame;
     protected static NXFrame _nxFrame;
+    private static OpSessionLog	_log;
+    static ShutDownTask 	_shutDownTask;
 
     private WarrantTableAction(String menuOption) {
 	    super(Bundle.getMessage(menuOption));
@@ -143,8 +147,58 @@ public class WarrantTableAction extends AbstractAction {
             	_nxFrame = NXFrame.getInstance();
             }        	
         });
+        _warrantMenu.add(makeLogMenu());
         
         if (log.isDebugEnabled()) log.debug("updateMenu to "+sysNames.length+" warrants.");
+    }
+    
+    private static JMenuItem makeLogMenu() {
+    	JMenuItem mi;
+    	if (_log==null) {
+        	mi = new JMenuItem(Bundle.getMessage("startLog"));    		
+            mi.addActionListener( new ActionListener()
+            	{
+                    public void actionPerformed(ActionEvent e) {
+                    	_log = OpSessionLog.getInstance();
+                    	_log.showFileChooser(_tableFrame);
+                        if (_shutDownTask == null) {
+                        	_shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                        			null, null, null)
+                    		{
+                                public boolean checkPromptNeeded() {
+                                	_log.close();
+                                	_log = null;
+                                	return true;
+                                }
+                    		};
+                            jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+                        }
+                    	updateWarrantMenu();
+                    }
+            	});
+    	} else {
+        	mi = new JMenuItem(Bundle.getMessage("stopLog"));    		
+            mi.addActionListener( new ActionListener()
+            	{
+                    public void actionPerformed(ActionEvent e) {
+                    	_log.close();
+                        jmri.InstanceManager.shutDownManagerInstance().deregister(_shutDownTask);
+                    	_shutDownTask = null;
+                    	_log = null;
+                       	updateWarrantMenu();
+                    }
+            	});
+    	}
+    	return mi;
+    }
+    
+    synchronized protected static void writetoLog(String text) {
+    	if (_log!=null) {
+    		_log.writeLn(text);
+    	} else {
+    		log.error("Op Session log cannot write \""+text+"\"");
+    	}
+    	
     }
     
     private static void setupWarrantTable() {

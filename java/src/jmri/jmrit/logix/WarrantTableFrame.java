@@ -388,6 +388,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     	_status.setForeground(c);
     	_status.setText(msg);
     	if (save && msg!=null && msg.length()>0) {
+    		WarrantTableAction.writetoLog(msg);
     		_statusHistory.add(msg);
     		while (_statusHistory.size()>_maxHistorySize) {
     			_statusHistory.remove(0);
