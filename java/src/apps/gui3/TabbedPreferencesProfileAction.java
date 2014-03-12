@@ -17,16 +17,6 @@ import javax.swing.Icon;
 
 public class TabbedPreferencesProfileAction extends TabbedPreferencesAction {
 
-    /**
-     * Create an action with a specific title.
-     * <P>
-     * Note that the argument is the Action title, not the title of the
-     * resulting frame.  Perhaps this should be changed?
-     * @param s
-     * @param category
-     * @param subCategory
-     */
-
     public TabbedPreferencesProfileAction() { 
         super(Bundle.getMessage("MenuItemPreferencesProfile"));
         //preferencesItem = jmri.profile.Bundle.getMessage("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle");
