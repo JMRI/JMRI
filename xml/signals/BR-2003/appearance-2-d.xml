@@ -64,6 +64,7 @@
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/held.gif</imagelink>
     </held>
     <dark>
+        <aspect>Caution</aspect>
         <imagelink type="large">../../../resources/icons/BritishRailSignals/Aspects/notlit.gif</imagelink>
         <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/notlit.gif</imagelink>
     </dark>
