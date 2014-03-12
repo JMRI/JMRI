@@ -43,7 +43,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         super(s);
     }
     
-    public TabbedPreferencesAction() { this("Listed Table Access");}
+    public TabbedPreferencesAction() { this(Bundle.getMessage("MenuItemPreferences"));}
     
     public TabbedPreferencesAction(String s, WindowInterface wi) {
     	super(s, wi);

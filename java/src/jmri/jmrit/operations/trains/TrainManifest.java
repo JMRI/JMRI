@@ -10,13 +10,14 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest.
@@ -26,10 +27,12 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainManifest extends TrainCommon {
 
+        private static final Logger log = LoggerFactory.getLogger(TrainManifest.class);
+
 	public TrainManifest(Train train) {
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
-		PrintWriter fileOut = null;
+		PrintWriter fileOut;
 
 		try {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N

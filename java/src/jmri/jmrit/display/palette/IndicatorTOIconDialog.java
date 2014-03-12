@@ -34,8 +34,8 @@ public class IndicatorTOIconDialog extends IconDialog {
         _family = family;
         _key = key;
         sizeLocate();
-        log.debug("IndicatorTOIconDialog ctor done. type= \""+type+"\", family= \""+
-                                        family+"\", key= \""+key+"\"");
+        if (log.isDebugEnabled()) log.debug("IndicatorTOIconDialog ctor done. type= \""+
+        		type+"\", family= \""+family+"\", key= \""+key+"\"");
     }
 
     /**
@@ -70,7 +70,8 @@ public class IndicatorTOIconDialog extends IconDialog {
     * NOT add a new family.  Create a status family when previous status was deleted
     */
     private void createNewStatusSet() {
-        log.debug("createNewFamily: type= \""+_type+"\", family= \""+_family+"\" key= "+_key);
+    	if (log.isDebugEnabled()) log.debug("createNewFamily: type= \""+
+    				_type+"\", family= \""+_family+"\" key= "+_key);
         //check text        
         HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
         ItemPalette.addLevel4FamilyMap(_type, _parent._family, _key, iconMap);
@@ -82,7 +83,8 @@ public class IndicatorTOIconDialog extends IconDialog {
     * Action item for add new status set in makeAddIconButtonPanel
     */
     private void addFamilySet() {
-        log.debug("addFamilySet: type= \""+_type+"\", family= \""+_family+"\" key= "+_key);
+    	if (log.isDebugEnabled()) log.debug("addFamilySet: type= \""+
+    				_type+"\", family= \""+_family+"\" key= "+_key);
         setVisible(false);
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
@@ -132,8 +134,8 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     private boolean addFamilySet(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
-        log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+", key= \""+
-                  _key+"\", _iconMap.size= "+_iconMap.size());
+    	if (log.isDebugEnabled()) log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+
+    			", key= \""+_key+"\", _iconMap.size= "+_iconMap.size());
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
         parent.updateIconGroupsMap(subFamily, _iconMap);
         _parent.updateFamiliesPanel();

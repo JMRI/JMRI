@@ -3,10 +3,11 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
-
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Contains the csv operators for manifests and switch lists
@@ -66,7 +67,9 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String TIR = "TIR"+DEL+Bundle.getMessage("csvTrainInRoute"); // NOI18N
 	protected final static String TDONE = "TDONE"+DEL+Bundle.getMessage("csvTrainHasAlreadyServiced"); // NOI18N	
 	protected final static String VN = "VN"+DEL+Bundle.getMessage("csvVisitNumber")+DEL; // NOI18N
-	
+
+        private final static Logger log = LoggerFactory.getLogger(TrainCsvCommon.class);
+
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation, int count){
 		// check for delimiter in names
       	String carRoad = car.getRoadName();

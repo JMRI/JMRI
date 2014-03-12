@@ -1725,19 +1725,14 @@
     which type of loads the program will generate from the departure staging track.</P>
 
    <P>The third option "Generate custom loads for any staging track" will try and place custom
-    loads into your empty cars by searching for destinations that are staging tracks. First, if the
-    train departing staging is also terminating into staging, the program will try a place a custom
-    load into an empty car that meets the train's load requirements, and the train's departure and
-    terminal staging track's load requirements. If there isn't a terminal staging track for the
-    train, or the program was unsuccessful in adding a custom load to the car that meets the
-    terminal staging track requirements, the program will then search for other staging tracks that
-    aren't at the departure or terminal location. If the program does find a staging track that
-    isn't located at the departure or terminal location, it will randomly assign a custom load that
-    is serviced by the train, the staging departure track and destination staging track. Next the
-    program will determine if the car can be routed to destination staging track using the assigned
-    custom load. If the staging track is reachable, the program will in addition to placing the
-    custom load in the car, set the car's final destination to the location where the staging track
-    resides.</P>
+    loads into your empty cars by searching for destinations that are staging tracks. The program
+    will randomly search for a staging track that isn't located at the train's departure location.
+    If the program does find a staging track, it will then randomly assign a custom load that is
+    serviced by the train, the train's staging departure track and the car's destination staging
+    track. Next the program will determine if the car can be routed to destination staging track
+    using the assigned custom load. If the staging track is reachable, the program will in addition
+    to placing the custom load in the car, set the car's final destination to the location where the
+    staging track resides.</P>
 
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>

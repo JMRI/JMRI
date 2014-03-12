@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show I/O lines -->
+<pane name="I/O-4 A">
+  <column>
+    <row>
+      <column>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;h1&gt;I/O Port 4 Lines #1 - #4&lt;/h1&gt;&lt;/html&gt;"/>
+      	<label label=" "/>
+        	<label label="Tower Controller Mark II Input/Output Port Configuration settings. All numbers are entered as their actual">
+          </label>
+        	<label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
+          </label>
+        	<label label="only to the first line's event numbers. The second line's event numbers are ignored.">
+          </label>
+         <label label=" "/>
+      </column>
+    </row>
+    <separator/>
+
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PD1 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Paired" label=" #1  (Pin 10) Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Paired-I" label=" #1  (Pin 10)  Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP25 Type" label="Type" tooltip="Line #1 is paired with Line #2">
+          <label>IP1 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD1 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD1 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD1 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD1 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PD2 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Paired" label=" #2  (Pin  9)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Paired-I" label=" #2  (Pin  9)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP26 Type" label="Type" tooltip="Line #2 is paired with Line #1">
+          <label>IP2 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD2 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD2 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD2 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD2 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PD3 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Paired" label=" #3  (Pin  8)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Paired-I" label=" #3  (Pin  8)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP27 Type" label="Type" tooltip="Line #3 is paired with Line #4">
+          <label>IP3 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD3 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD3 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD3 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD3 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PD4 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Paired" label=" #4  (Pin  7)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Paired-I" label=" #4  (Pin  7)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP28 Type" label="Type" tooltip="Line #4 is paired with Line #3">
+          <label>IP4 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD4 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD4 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PD4 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PD4 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="IOP4 Port Type" label="Set Port 4 Type" tooltip="Complete Port type setting">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

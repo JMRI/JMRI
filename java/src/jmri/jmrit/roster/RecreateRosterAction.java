@@ -31,6 +31,10 @@ public class RecreateRosterAction extends JmriAbstractAction {
     	super(s, i, wi);
     }
 
+    public RecreateRosterAction() {
+        this("Rebuild Roster");
+    }
+
     public RecreateRosterAction(String s) {
         super(s);
     }
@@ -83,6 +87,7 @@ public class RecreateRosterAction extends JmriAbstractAction {
         // use the new one
         Roster.resetInstance();
         Roster.instance();
+        log.info("Roster rebuilt, stored in "+Roster.defaultRosterFilename());
 
     }
     

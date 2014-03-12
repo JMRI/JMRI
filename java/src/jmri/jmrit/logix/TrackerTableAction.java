@@ -607,13 +607,13 @@ public class TrackerTableAction extends AbstractAction {
 	    private void  setStatus(String msg) {
 	    	_status.setText(msg);
 	    	if (msg!=null && msg.length()>0) {
+	    		WarrantTableAction.writetoLog(msg);
 	    		_statusHistory.add(msg);
 	    		while (_statusHistory.size()>_maxHistorySize) {
 	    			_statusHistory.remove(0);
 	    		}
 	    	}
 	    }
-
     }
     
     static class TrackerTableModel extends AbstractTableModel {
