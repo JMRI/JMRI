@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -21,6 +20,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -34,11 +35,13 @@ public class TrainCsvManifest extends TrainCsvCommon {
 	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
 
+        private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
+
 	public TrainCsvManifest(Train train) {
 		// create comma separated value manifest file
 		File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());
 
-		PrintWriter fileOut = null;
+		PrintWriter fileOut;
 
 		try {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
