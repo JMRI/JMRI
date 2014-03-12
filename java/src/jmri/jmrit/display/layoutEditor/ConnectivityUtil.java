@@ -81,6 +81,10 @@ public class ConnectivityUtil
 	 * Returns an empty list if a connectivity anamoly is discovered--specified blocks are not connected.
 	 */
     public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
+        return getTurnoutList(block, prevBlock, nextBlock, false);
+    }
+     
+    public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock, boolean suppress) {
         turnoutConnectivity = true;
 		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
 		companion = new ArrayList<Integer>();
@@ -114,7 +118,7 @@ public class ConnectivityUtil
                         } else if (((TrackSegment)ls.getConnectD()).getLayoutBlock()==lb){
                             companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
                         } else {
-                            log.error("Cannot determine slip setting " + ls.getName());
+                            if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                             companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                         }
                     } 
@@ -134,7 +138,7 @@ public class ConnectivityUtil
                                 companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
                             }
                             else {
-                                log.error("Cannot determine slip setting " + ls.getName());
+                                if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                                 companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                             }
                         
@@ -145,7 +149,7 @@ public class ConnectivityUtil
                             } else if (((TrackSegment)ls.getConnectD()).getLayoutBlock()==lb){
                                 companion.add(Integer.valueOf(LayoutSlip.STATE_BD));
                             } else {
-                                log.error("Cannot determine slip setting " + ls.getName());
+                                if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                                 companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                             }
                         }
@@ -166,7 +170,7 @@ public class ConnectivityUtil
                                 companion.add(Integer.valueOf(LayoutSlip.STATE_BC));
                             }
                             else {
-                                log.error("Cannot determine slip setting " + ls.getName());
+                                if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                                 companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                             }
                         
@@ -177,7 +181,7 @@ public class ConnectivityUtil
                             } else if (((TrackSegment)ls.getConnectA()).getLayoutBlock()==lb){
                                 companion.add(Integer.valueOf(LayoutSlip.STATE_AC));
                             } else {
-                                log.error("Cannot determine slip setting " + ls.getName());
+                                if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                                 companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                             }
                         }
@@ -195,12 +199,12 @@ public class ConnectivityUtil
                         } else if (((TrackSegment)ls.getConnectB()).getLayoutBlock()==lb){
                             companion.add(Integer.valueOf(LayoutSlip.STATE_AD));
                         } else {
-                            log.error("Cannot determine slip setting " + ls.getName());
+                            if(!suppress) log.error("Cannot determine slip setting " + ls.getName());
                             companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                         }
                     }
                     else {
-                        log.error("Cannot determine turnout setting for "+ls.getName());
+                        if(!suppress) log.error("Cannot determine turnout setting for "+ls.getName());
                         companion.add(Integer.valueOf(LayoutSlip.UNKNOWN));
                     }
                     break;
@@ -230,7 +234,7 @@ public class ConnectivityUtil
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 }
                                 else {
-                                    log.error("Cannot determine turnout setting - "+ltx.getTurnoutName());
+                                    if(!suppress) log.error("Cannot determine turnout setting - "+ltx.getTurnoutName());
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             }
@@ -241,8 +245,8 @@ public class ConnectivityUtil
                                 companion.add(Integer.valueOf(Turnout.THROWN));
                             }
                             else {
-                                log.error("Cannot determine turnout setting for "+ltx.getTurnoutName());
-                                log.error("lb " + lb + " nlb " + nlb + " connect B " + ((TrackSegment)ltx.getConnectB()).getLayoutBlock() + " connect C " + ((TrackSegment)ltx.getConnectC()).getLayoutBlock());
+                                if(!suppress) log.error("Cannot determine turnout setting for "+ltx.getTurnoutName());
+                                if(!suppress) log.error("lb " + lb + " nlb " + nlb + " connect B " + ((TrackSegment)ltx.getConnectB()).getLayoutBlock() + " connect C " + ((TrackSegment)ltx.getConnectC()).getLayoutBlock());
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                             }
                             break;
@@ -266,7 +270,7 @@ public class ConnectivityUtil
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 }
                                 else {
-                                    log.error("Cannot determine turnout setting(A) - "+ltx.getTurnoutName());
+                                    if(!suppress) log.error("Cannot determine turnout setting(A) - "+ltx.getTurnoutName());
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             }
@@ -279,7 +283,7 @@ public class ConnectivityUtil
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 }
                                 else {
-                                    log.error("Cannot determine turnout setting(B) - "+ltx.getTurnoutName());
+                                    if(!suppress) log.error("Cannot determine turnout setting(B) - "+ltx.getTurnoutName());
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             }
@@ -296,7 +300,7 @@ public class ConnectivityUtil
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 }
                                 else {
-                                    log.error("Cannot determine turnout setting(C) - "+ltx.getTurnoutName());
+                                    if(!suppress) log.error("Cannot determine turnout setting(C) - "+ltx.getTurnoutName());
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             }
@@ -309,7 +313,7 @@ public class ConnectivityUtil
                                     companion.add(Integer.valueOf(Turnout.THROWN));
                                 }
                                 else {
-                                    log.error("Cannot determine turnout setting(D) - "+ltx.getTurnoutName());
+                                    if(!suppress) log.error("Cannot determine turnout setting(D) - "+ltx.getTurnoutName());
                                     companion.add(Integer.valueOf(Turnout.CLOSED));
                                 }
                             }
@@ -422,11 +426,11 @@ public class ConnectivityUtil
 				else if ( (cType>=LayoutEditor.TURNOUT_A) && (cType<=LayoutEditor.TURNOUT_D) ) {
 					// add turnout to list
 					list.add((LayoutTurnout)lc.getConnectedObject());
-					companion.add(getTurnoutSetting((LayoutTurnout)lc.getConnectedObject(), cType));
+					companion.add(getTurnoutSetting((LayoutTurnout)lc.getConnectedObject(), cType, suppress));
 				} 
                 else if ((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
                     list.add((LayoutSlip)lc.getConnectedObject());
-                    companion.add(getTurnoutSetting((LayoutSlip)lc.getConnectedObject(), cType));
+                    companion.add(getTurnoutSetting((LayoutSlip)lc.getConnectedObject(), cType, suppress));
                 }
                 notFound = false;
 			}
@@ -434,10 +438,10 @@ public class ConnectivityUtil
 		if (notFound) {
 			if (prevBlock!=null)
 				// could not initialize the connectivity search
-				log.error ("Could not find connection between Blocks "+block.getUserName()+" and "+
+				if(!suppress) log.error ("Could not find connection between Blocks "+block.getUserName()+" and "+
 						prevBlock.getUserName());
 			else
-				log.error("Could not find connection between Blocks "+block.getUserName()+", prevBock is null!");
+				if(!suppress) log.error("Could not find connection between Blocks "+block.getUserName()+", prevBock is null!");
 			return list;
 		}
 		// search connectivity for turnouts by following TrackSegments to end of Block		
@@ -453,7 +457,7 @@ public class ConnectivityUtil
 				cObject = tr.getConnect1();
 			}
 			else {
-				log.error("Connectivity error when searching turnouts in Block "+lb.getUserName());
+				if(!suppress) log.error("Connectivity error when searching turnouts in Block "+lb.getUserName());
 				tr = null;
 				break;
 			}
@@ -551,7 +555,7 @@ public class ConnectivityUtil
                                 tr = null;
                             } else {
 								// no legal outcome found, print error
-								log.error("Connectivity mismatch at A in turnout "+lt.getTurnoutName());
+								if(!suppress) log.error("Connectivity mismatch at A in turnout "+lt.getTurnoutName());
 								tr = null;
 							}
 							break;
@@ -594,7 +598,7 @@ public class ConnectivityUtil
                             }
 							else {
 								// no legal outcome found, print error
-								log.error("Connectivity mismatch at B in turnout "+lt.getTurnoutName());
+								if(!suppress) log.error("Connectivity mismatch at B in turnout "+lt.getTurnoutName());
 								tr = null;
 							}
 							break;
@@ -637,7 +641,7 @@ public class ConnectivityUtil
                             }
 							else {
 								// no legal outcome found, print error
-								log.error("Connectivity mismatch at C in turnout "+lt.getTurnoutName());
+								if(!suppress) log.error("Connectivity mismatch at C in turnout "+lt.getTurnoutName());
 								tr = null;
 							}
 							break;
@@ -680,7 +684,7 @@ public class ConnectivityUtil
                             }
 							else {
 								// no legal outcome found, print error
-								log.error("Connectivity mismatch at D in turnout "+lt.getTurnoutName());
+								if(!suppress) log.error("Connectivity mismatch at D in turnout "+lt.getTurnoutName());
 								tr = null;
 							}
 							break;
@@ -696,7 +700,7 @@ public class ConnectivityUtil
 					else {
 						// turnout is inside current block, add it to the list 
                         list.add((LayoutTurnout)cObject);
-                        companion.add(getTurnoutSetting(lt, cType));
+                        companion.add(getTurnoutSetting(lt, cType, suppress));
 					}
 				}
 			} 
@@ -709,7 +713,7 @@ public class ConnectivityUtil
                 } else {
                     // turnout is inside current block, add it to the list 
                     list.add(ls);
-                    companion.add(getTurnoutSetting(ls, cType));
+                    companion.add(getTurnoutSetting(ls, cType, suppress));
                 }
             }
 		}
@@ -1861,7 +1865,7 @@ public class ConnectivityUtil
 	 * Initializes the setting (as an object), sets the new track segment (if in Block), and sets the
 	 *    prevConnectType. 
 	 */
-	private Integer getTurnoutSetting(LayoutTurnout lt, int cType) {
+	private Integer getTurnoutSetting(LayoutTurnout lt, int cType, boolean suppress) {
         prevConnectObject = lt;
 		int setting = Turnout.THROWN;
 		int tType = lt.getTurnoutType();
@@ -1905,7 +1909,7 @@ public class ConnectivityUtil
                                                     tr = (TrackSegment)lt.getConnectD();
                                                 }
                                                 else {
-                                                    log.error("Error - Neither branch at track node leads to requested Block.(LS1)");
+                                                    if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(LS1)");
                                                     tr=null;
                                                 }
                                             }
@@ -1948,7 +1952,7 @@ public class ConnectivityUtil
                                                             tr = (TrackSegment)lt.getConnectC();
                                                         }
                                                         else {
-                                                            log.error("Error - Neither branch at track node leads to requested Block.(LS2)");
+                                                            if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(LS2)");
                                                             tr=null;
                                                         }
                                                     
@@ -2006,7 +2010,7 @@ public class ConnectivityUtil
                                                             tr = (TrackSegment)lt.getConnectB();
                                                         }
                                                         else {
-                                                            log.error("Error - Neither branch at track node leads to requested Block.(LS3)");
+                                                            if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(LS3)");
                                                             tr=null;
                                                         }
                                                     }
@@ -2056,7 +2060,7 @@ public class ConnectivityUtil
                                                     tr = (TrackSegment)lt.getConnectB();
                                                 }
                                                 else {
-                                                    log.error("Error - Neither branch at track node leads to requested Block.(LS4)");
+                                                    if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(LS4)");
                                                     tr=null;
                                                 }
                                             }
@@ -2068,7 +2072,7 @@ public class ConnectivityUtil
                 tr = null;
             }
             else if (tr==null) {
-                log.error("Connectivity not complete at Slip "+ls.getDisplayName());
+                if(!suppress) log.error("Connectivity not complete at Slip "+ls.getDisplayName());
                             turnoutConnectivity = false;
             }
         } else {
@@ -2123,7 +2127,7 @@ public class ConnectivityUtil
                             tr = (TrackSegment)lt.getConnectC();
                         }
                         else {
-                            log.error("Error - Neither branch at track node leads to requested Block.(1)");
+                            if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(1)");
                             tr = null;
                         }					
                     }
@@ -2172,7 +2176,7 @@ public class ConnectivityUtil
                                 tr = (TrackSegment)lt.getConnectD();
                             }
                             else {
-                                log.error("Error - Neither branch at track node leads to requested Block.(2)");
+                                if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(2)");
                                 tr = null;
                             }					
                         }
@@ -2228,7 +2232,7 @@ public class ConnectivityUtil
                                 tr = (TrackSegment)lt.getConnectA();
                             }
                             else {
-                                log.error("Error - Neither branch at track node leads to requested Block.(3)");
+                                if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(3)");
                                 tr = null;
                             }					
                         }
@@ -2287,7 +2291,7 @@ public class ConnectivityUtil
                                 tr = (TrackSegment)lt.getConnectB();
                             }
                             else {
-                                log.error("Error - Neither branch at track node leads to requested Block.(2)");
+                                if(!suppress) log.error("Error - Neither branch at track node leads to requested Block.(2)");
                                 tr = null;
                             }					
                         }
@@ -2308,7 +2312,7 @@ public class ConnectivityUtil
                 tr = null;
             }
             else if (tr==null) {
-                log.error("Connectivity not complete at turnout "+lt.getTurnoutName());
+                if(!suppress) log.error("Connectivity not complete at turnout "+lt.getTurnoutName());
                             turnoutConnectivity = false;
             }
             if (lt.getContinuingSense() != Turnout.CLOSED) {

@@ -2248,7 +2248,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         try{
             MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
-            stod = connection.getTurnoutList(block, srcBlock, dstBlock);
+            stod = connection.getTurnoutList(block, srcBlock, dstBlock, true);
             stodSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex){
@@ -2266,7 +2266,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         try{
             MDC.put("loggingDisabled", connection.getClass().getName());
-            tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock);
+            tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock, true);
             tmpdtosSet = connection.getTurnoutSettingList();
             MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex){
