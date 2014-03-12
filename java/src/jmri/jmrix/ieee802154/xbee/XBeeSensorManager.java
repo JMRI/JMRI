@@ -109,7 +109,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         int iName = 0;
         
         if(curAddress.contains(":")){
-            //Address format passed is in the form of encoderAddress:input or T:turnout address
+            //Address format passed is in the form of encoderAddress:input or T:sensor address
             int seperator = curAddress.indexOf(":");
             try {
                 encoderAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
