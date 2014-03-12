@@ -60,7 +60,13 @@
     </danger>
     <held>
       <aspect>Caution</aspect>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Aspects/held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/held.gif</imagelink>
     </held>
+    <dark>
+        <imagelink type="large">../../../resources/icons/BritishRailSignals/Aspects/notlit.gif</imagelink>
+        <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/notlit.gif</imagelink>
+    </dark>
   </specificappearances>
   
   <aspectMappings>
