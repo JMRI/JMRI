@@ -138,13 +138,19 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		Point2D coords = p.getCoordsCenter();
 		element.setAttribute("xcen", ""+coords.getX());
 		element.setAttribute("ycen", ""+coords.getY());
+        coords = p.getCoordsA();
+		element.setAttribute("xa", ""+coords.getX());
+		element.setAttribute("ya", ""+coords.getY());		
 		coords = p.getCoordsB();
 		element.setAttribute("xb", ""+coords.getX());
 		element.setAttribute("yb", ""+coords.getY());		
 		coords = p.getCoordsC();
 		element.setAttribute("xc", ""+coords.getX());
 		element.setAttribute("yc", ""+coords.getY());
-
+		coords = p.getCoordsD();
+		element.setAttribute("xd", ""+coords.getX());
+		element.setAttribute("yd", ""+coords.getY());
+        element.setAttribute("ver", ""+p.getVersion());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutTurnoutXml");
         return element;
     }
@@ -176,10 +182,19 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		} catch (org.jdom.DataConversionException e) {
             log.error("failed to convert layoutturnout attribute");
         }
+        
+        int version = 1;
+        try {
+			version = element.getAttribute("ver").getIntValue();
+		} catch (org.jdom.DataConversionException e) {
+            log.error("failed to convert layoutturnout b coords attribute");
+        } catch (java.lang.NullPointerException e){
+            //can be ignored as panel file may not support method
+        }
 		
 		// create the new LayoutTurnout
         LayoutTurnout l = new LayoutTurnout(name,tType,
-							new Point2D.Double(x,y),0.0,1.0,1.0,p);
+							new Point2D.Double(x,y),0.0,1.0,1.0,p, version);
 		
 		// get remaining attributes
 		Attribute a = element.getAttribute("blockname");
@@ -291,6 +306,16 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
                 hide = true;
         }
         l.setHidden(hide);
+        try {
+			x = element.getAttribute("xa").getFloatValue();
+			y = element.getAttribute("ya").getFloatValue();
+            l.setCoordsA(new Point2D.Double(x,y));
+		} catch (org.jdom.DataConversionException e) {
+            log.error("failed to convert layoutturnout b coords attribute");
+        } catch (java.lang.NullPointerException e){
+            //can be ignored as panel file may not support method
+        }
+		
 		try {
 			x = element.getAttribute("xb").getFloatValue();
 			y = element.getAttribute("yb").getFloatValue();
@@ -305,6 +330,16 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturnout c coords attribute");
         }
 		l.setCoordsC(new Point2D.Double(x,y));
+        try {
+			x = element.getAttribute("xd").getFloatValue();
+			y = element.getAttribute("yd").getFloatValue();
+            l.setCoordsD(new Point2D.Double(x,y));
+		} catch (org.jdom.DataConversionException e) {
+            log.error("failed to convert layoutturnout c coords attribute");
+        } catch (java.lang.NullPointerException e){
+            //can be ignored as panel file may not support method
+        }
+		
         
         if (element.getChild("signalAMast")!=null){
             String mast = element.getChild("signalAMast").getText();

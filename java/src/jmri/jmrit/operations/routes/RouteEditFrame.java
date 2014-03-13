@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -22,7 +23,7 @@ import java.text.MessageFormat;
 /**
  * Frame for user edit of route
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
  * @version $Revision$
  */
 
@@ -71,7 +72,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	public RouteEditFrame() {
 		super(Bundle.getMessage("TitleRouteEdit"));
 	}
-	
+
 	public void initComponents(Route route, Train train) {
 		_train = train;
 		initComponents(route);
@@ -110,6 +111,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		JScrollPane p1Pane = new JScrollPane(p1);
 		p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		p1Pane.setMinimumSize(new Dimension(300, 3 * routeNameTextField.getPreferredSize().height));
+		p1Pane.setMaximumSize(new Dimension(2000, 200));
 		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 
 		// name panel
@@ -129,6 +131,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+		JScrollPane p2Pane = new JScrollPane(p2);
+		p2Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		p2Pane.setMinimumSize(new Dimension(300, 3 * routeNameTextField.getPreferredSize().height));
+		p2Pane.setMaximumSize(new Dimension(2000, 200));
+		p2Pane.setBorder(BorderFactory.createTitledBorder(""));
 
 		// location panel
 		JPanel pLoc = new JPanel();
@@ -157,15 +164,20 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 12 buttons
 		JPanel pB = new JPanel();
 		pB.setLayout(new GridBagLayout());
-		pB.setBorder(BorderFactory.createTitledBorder(""));
+		JScrollPane pBPane = new JScrollPane(pB);
+		pBPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		pBPane.setMinimumSize(new Dimension(300, 3 * routeNameTextField.getPreferredSize().height));
+		pBPane.setMaximumSize(new Dimension(2000, 200));
+		pBPane.setBorder(BorderFactory.createTitledBorder(""));
+
 		addItem(pB, deleteRouteButton, 0, 0);
 		addItem(pB, addRouteButton, 1, 0);
 		addItem(pB, saveRouteButton, 3, 0);
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(routePane);
-		getContentPane().add(p2);
-		getContentPane().add(pB);
+		getContentPane().add(p2Pane);
+		getContentPane().add(pBPane);
 
 		// setup buttons
 		addButtonAction(addLocationButton);
@@ -182,8 +194,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
-		toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"),
-				routeName));
+		toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), routeName));
 		toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
 		toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
 		menuBar.add(toolMenu);
@@ -229,10 +240,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deleteRouteButton) {
 			log.debug("route delete button activated");
-			if (JOptionPane.showConfirmDialog(this,
-					MessageFormat.format(Bundle.getMessage("AreYouSure?"),
-							new Object[] { routeNameTextField.getText() }), Bundle
-							.getMessage("DeleteRoute?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("AreYouSure?"),
+					new Object[] { routeNameTextField.getText() }), Bundle.getMessage("DeleteRoute?"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			Route route = manager.getRouteByName(routeNameTextField.getText());
@@ -317,18 +327,14 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	private boolean checkName(String s) {
 		if (routeNameTextField.getText().trim().equals("")) {
 			log.debug("Must enter a name for the route");
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
-					MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
+					.getMessage("CanNotRoute"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
-			JOptionPane
-					.showMessageDialog(this, MessageFormat.format(
-							Bundle.getMessage("RouteNameLess"),
-							new Object[] { Control.max_len_string_route_name + 1 }), MessageFormat
-							.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-							JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("RouteNameLess"),
+					new Object[] { Control.max_len_string_route_name + 1 }), MessageFormat.format(Bundle
+					.getMessage("CanNotRoute"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -336,9 +342,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void reportRouteExists(String s) {
 		log.info("Can not " + s + ", route already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
-				MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
-				JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"), MessageFormat.format(Bundle
+				.getMessage("CanNotRoute"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void enableButtons(boolean enabled) {
@@ -375,13 +380,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateComboBoxes();
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(RouteEditFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(RouteEditFrame.class.getName());
 }

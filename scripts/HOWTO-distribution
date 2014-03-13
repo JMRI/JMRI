@@ -41,7 +41,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     cd help/en/
     ./JHelpDev.csh   (See the doc page for setup)
-    (navigate to JHelpDev.xml in release html/en/ & open it)
+    (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
     (click "Create All", takes a bit of time, wait for button to release)
     (quit)
 

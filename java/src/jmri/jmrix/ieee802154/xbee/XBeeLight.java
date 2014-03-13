@@ -18,7 +18,7 @@ public class XBeeLight extends AbstractLight{
 
     private int address;
     private int baseaddress; /* The XBee Address */
-    private int pin;         /* Which DIO pin does this turnout represent. */
+    private int pin;         /* Which DIO pin does this light represent. */
     private String systemName;
     private com.rapplogic.xbee.api.XBeeAddress16 xbeeAddress;
 

@@ -177,6 +177,13 @@ public class LayoutTurnout
 	public Point2D center = new Point2D.Double(50.0,50.0);
 	public Point2D dispB = new Point2D.Double(20.0,0.0);
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
+    public Point2D pointA = new Point2D.Double(0,0);
+    public Point2D pointB = new Point2D.Double(40,0);
+    public Point2D pointC = new Point2D.Double(60,20);
+    public Point2D pointD = new Point2D.Double(20,20);
+    
+    private int version = 1;
+    
 	public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
 	public int linkType = NO_LINK;
     
@@ -186,11 +193,16 @@ public class LayoutTurnout
     
     protected LayoutTurnout() {}
     
+    public LayoutTurnout(String id, int t, Point2D c, double rot, 
+								double xFactor, double yFactor, LayoutEditor myPanel) {
+        this(id, t, c, rot, xFactor, yFactor, myPanel, 1);
+    }
+    
 	/** 
 	 * constructor method
 	 */  
     public LayoutTurnout(String id, int t, Point2D c, double rot, 
-								double xFactor, double yFactor, LayoutEditor myPanel) {
+								double xFactor, double yFactor, LayoutEditor myPanel, int v) {
 		instance = this;
 		namedTurnout = null;
 		turnoutName = "";
@@ -203,49 +215,82 @@ public class LayoutTurnout
 		ident = id;
 		type = t;
 		center = c;
+        version = v;
 		// adjust initial coordinates
-		if (type==LH_TURNOUT) {
-			dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
-			dispC.setLocation(layoutEditor.getTurnoutCX(),-layoutEditor.getTurnoutWid());
-		}
-		else if (type==RH_TURNOUT) {
-			dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
-			dispC.setLocation(layoutEditor.getTurnoutCX(),layoutEditor.getTurnoutWid());
-		}
-		else if (type==WYE_TURNOUT) {
-			dispB.setLocation(layoutEditor.getTurnoutBX(),0.5*layoutEditor.getTurnoutWid());
-			dispC.setLocation(layoutEditor.getTurnoutBX(),-0.5*layoutEditor.getTurnoutWid());
-		}
-		else if (type==DOUBLE_XOVER) {
-			dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
-			dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
-			blockB = null;
-			blockBName = "";
-			blockC = null;
-			blockCName = "";
-			blockD = null;
-			blockDName = "";
-		}
-		else if (type==RH_XOVER) {
-			dispB.setLocation(layoutEditor.getXOverShort(),-layoutEditor.getXOverHWid());
-			dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
-			blockB = null;
-			blockBName = "";
-			blockC = null;
-			blockCName = "";
-			blockD = null;
-			blockDName = "";
-		}
-		else if (type==LH_XOVER) {
-			dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
-			dispC.setLocation(layoutEditor.getXOverShort(),layoutEditor.getXOverHWid());
-			blockB = null;
-			blockBName = "";
-			blockC = null;
-			blockCName = "";
-			blockD = null;
-			blockDName = "";
-		}		
+        if (type==LH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
+            dispC.setLocation(layoutEditor.getTurnoutCX(),-layoutEditor.getTurnoutWid());
+        }
+        else if (type==RH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(),0.0);
+            dispC.setLocation(layoutEditor.getTurnoutCX(),layoutEditor.getTurnoutWid());
+        }
+        else if (type==WYE_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(),0.5*layoutEditor.getTurnoutWid());
+            dispC.setLocation(layoutEditor.getTurnoutBX(),-0.5*layoutEditor.getTurnoutWid());
+        }
+        else if (type==DOUBLE_XOVER) {
+            if(version ==2){
+                center = new Point2D.Double(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
+                pointB.setLocation(layoutEditor.getXOverLong()*2,0);
+                pointC.setLocation(layoutEditor.getXOverLong()*2,(layoutEditor.getXOverHWid()*2));
+                pointD.setLocation(0,(layoutEditor.getXOverHWid()*2));
+                setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
+                dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
+            }
+            blockB = null;
+            blockBName = "";
+            blockC = null;
+            blockCName = "";
+            blockD = null;
+            blockDName = "";
+        }
+        else if (type==RH_XOVER) {
+            if(version ==2){
+                center = new Point2D.Double(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
+                pointB.setLocation((layoutEditor.getXOverShort()+layoutEditor.getXOverLong()),0);
+                pointC.setLocation(layoutEditor.getXOverLong()*2,(layoutEditor.getXOverHWid()*2));
+                pointD.setLocation((center.getX()-layoutEditor.getXOverShort()),(layoutEditor.getXOverHWid()*2));
+                setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverShort(),-layoutEditor.getXOverHWid());
+                dispC.setLocation(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
+            }
+            blockB = null;
+            blockBName = "";
+            blockC = null;
+            blockCName = "";
+            blockD = null;
+            blockDName = "";
+        }
+        else if (type==LH_XOVER) {
+            if(version ==2){
+                center = new Point2D.Double(layoutEditor.getXOverLong(),layoutEditor.getXOverHWid());
+                pointA.setLocation(20,0);
+                pointB.setLocation(60,0);
+                pointC.setLocation(40,20);
+                pointD.setLocation(0,20);
+                
+                pointA.setLocation((center.getX()-layoutEditor.getXOverShort()),0);
+                pointB.setLocation((layoutEditor.getXOverLong()*2),0);
+                pointC.setLocation(layoutEditor.getXOverLong()+layoutEditor.getXOverShort(),(layoutEditor.getXOverHWid()*2));
+                pointD.setLocation(0, (layoutEditor.getXOverHWid()*2));
+                
+                
+                setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(),-layoutEditor.getXOverHWid());
+                dispC.setLocation(layoutEditor.getXOverShort(),layoutEditor.getXOverHWid());
+            }
+            blockB = null;
+            blockBName = "";
+            blockC = null;
+            blockCName = "";
+            blockD = null;
+            blockDName = "";
+        }
 		rotateCoords(rot);
 		// adjust size of new turnout
 		Point2D pt = new Point2D.Double(round(dispB.getX()*xFactor),
@@ -255,6 +300,7 @@ public class LayoutTurnout
 										round(dispC.getY()*yFactor));
 		dispC = pt;		
 	}
+    
 	private double round (double x) {
 		int i = (int)(x+0.5);
 		return i;
@@ -264,17 +310,35 @@ public class LayoutTurnout
 		// rotate coordinates
 		double sineAng = Math.sin(rot*Math.PI/180.0);
 		double cosineAng = Math.cos(rot*Math.PI/180.0);
-		double x = (cosineAng*dispB.getX()) - (sineAng*dispB.getY());
-		double y = (sineAng*dispB.getX()) + (cosineAng*dispB.getY());
-		dispB = new Point2D.Double(x,y);
-		x = (cosineAng*dispC.getX()) - (sineAng*dispC.getY());
-		y = (sineAng*dispC.getX()) + (cosineAng*dispC.getY());
-		dispC = new Point2D.Double(x,y);
+
+        if(version == 2){
+            pointA = rotatePoint(pointA, sineAng, cosineAng);
+            pointB = rotatePoint(pointB, sineAng, cosineAng);
+            pointC = rotatePoint(pointC, sineAng, cosineAng);
+            pointD = rotatePoint(pointD, sineAng, cosineAng);
+        } else {
+            double x = (cosineAng*dispB.getX()) - (sineAng*dispB.getY());
+            double y = (sineAng*dispB.getX()) + (cosineAng*dispB.getY());
+            dispB = new Point2D.Double(x,y);
+            x = (cosineAng*dispC.getX()) - (sineAng*dispC.getY());
+            y = (sineAng*dispC.getX()) + (cosineAng*dispC.getY());
+            dispC = new Point2D.Double(x,y);
+        }
+    }
+    
+    protected Point2D rotatePoint(Point2D p, double sineAng, double cosineAng){
+        double cX = center.getX();
+        double cY = center.getY();
+        double x = cX + cosineAng * (p.getX()-cX) - sineAng * (p.getY()-cY);
+        double y = cY + sineAng * (p.getX()-cX) + cosineAng * (p.getY()-cY);
+        return new Point2D.Double(x,y);
     }
 
 	/**
 	 * Accessor methods
 	*/
+    public int getVersion() { return version;}
+    public void setVersion(int v) { version = v; }
 	public String getName() {return ident;}
     public boolean useBlockSpeed() { return useBlockSpeed; }
 	public String getTurnoutName() {
@@ -660,6 +724,9 @@ public class LayoutTurnout
 	public Point2D getCoordsCenter() {return center;}
 	public Point2D getCoordsA() {
 		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
+            if (version == 2){
+                return pointA;
+            }
 			double x = center.getX() - dispC.getX();
 			double y = center.getY() - dispC.getY();
 			return new Point2D.Double(x,y);
@@ -676,16 +743,25 @@ public class LayoutTurnout
 		}
 	}
 	public Point2D getCoordsB() {
+        if ((version == 2) && ((type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER))){
+            return pointB;
+        }
 		double x = center.getX() + dispB.getX();
 		double y = center.getY() + dispB.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsC() {
+        if ((version == 2) && ((type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER))){
+            return pointC;
+        }
 		double x = center.getX() + dispC.getX();
 		double y = center.getY() + dispC.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsD() {
+        if ((version == 2) && ((type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER))){
+            return pointD;
+        }
 		// only allowed for single and double crossovers
 		double x = center.getX() - dispB.getX();
 		double y = center.getY() - dispB.getY();
@@ -751,26 +827,71 @@ public class LayoutTurnout
 			layoutEditor.setTurnoutCX(round(xx+0.1));
 			layoutEditor.setTurnoutWid(round(distBC+0.1));
 		}
-		else if (type == DOUBLE_XOVER) {
-			double lng = Math.sqrt((lenB*lenB)-(0.25*(distBC*distBC)));
-			layoutEditor.setXOverLong(round(lng+0.1));			
-			layoutEditor.setXOverHWid(round((0.5*distBC)+0.1));
-			layoutEditor.setXOverShort(round((0.5*lng)+0.1));
-		}
-		else if (type == RH_XOVER) {
-			double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
-			layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
-			layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
-			double hwid = Math.sqrt((lenC*lenC)-(0.5625*distDC*distDC));
-			layoutEditor.setXOverHWid(round(hwid+0.1));
-		}
-		else if (type == LH_XOVER) {
-			double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
-			layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
-			layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
-			double hwid = Math.sqrt((lenC*lenC)-(0.0625*distDC*distDC));
-			layoutEditor.setXOverHWid(round(hwid+0.1));
-		}
+		else {
+            if(version == 2){
+                double aX = pointA.getX()/layoutEditor.getXScale();
+                double aY = pointA.getY()/layoutEditor.getYScale();
+                bX = pointB.getX()/layoutEditor.getXScale();
+                bY = pointB.getY()/layoutEditor.getYScale();
+                cX = pointC.getX()/layoutEditor.getXScale();
+                cY = pointC.getY()/layoutEditor.getYScale();
+                double lenAB = Math.sqrt(((bX-aX)*(bX-aX))+((bY-aY)*(bY-aY)));
+                if (type == DOUBLE_XOVER){
+                    double lenBC = Math.sqrt(((bX-cX)*(bX-cX))+((bY-cY)*(bY-cY)));
+                    layoutEditor.setXOverLong(round(lenAB/2)); //set to half to be backwardly compatible
+                    layoutEditor.setXOverHWid(round(lenBC/2));
+                    layoutEditor.setXOverShort(round((0.5*lenAB)/2));
+                }
+                else if (type == RH_XOVER) {
+                    lenAB = lenAB/3;
+                    layoutEditor.setXOverShort(round(lenAB));
+                    layoutEditor.setXOverLong(round(lenAB*2));
+                    double opp = (aY-bY);
+                    double ang = Math.asin(opp/(lenAB*3));
+                    opp = Math.sin(ang)*lenAB;
+                    bY = bY+opp;
+                    double adj = Math.cos(ang)*lenAB;
+                    bX = bX+adj;
+                    double lenBC = Math.sqrt(((bX-cX)*(bX-cX))+((bY-cY)*(bY-cY)));
+                    layoutEditor.setXOverHWid(round(lenBC/2));
+                    
+                }
+                else if (type == LH_XOVER) {
+                    double dY = pointD.getY()/layoutEditor.getYScale();
+                    lenAB = lenAB/3;
+                    layoutEditor.setXOverShort(round(lenAB));
+                    layoutEditor.setXOverLong(round(lenAB*2));
+                    double opp = (dY-cY);
+                    double ang = Math.asin(opp/(lenAB*3)); //Lenght of AB should be the same as CD
+                    opp = Math.sin(ang)*lenAB;
+                    cY = cY+opp;
+                    double adj = Math.cos(ang)*lenAB;
+                    cX = cX+adj;
+                    double lenBC = Math.sqrt(((bX-cX)*(bX-cX))+((bY-cY)*(bY-cY)));
+                    layoutEditor.setXOverHWid(round(lenBC/2));
+                }
+            } 
+            else if (type == DOUBLE_XOVER) {
+                double lng = Math.sqrt((lenB*lenB)-(0.25*(distBC*distBC)));
+                layoutEditor.setXOverLong(round(lng+0.1));			
+                layoutEditor.setXOverHWid(round((0.5*distBC)+0.1));
+                layoutEditor.setXOverShort(round((0.5*lng)+0.1));
+            }
+            else if (type == RH_XOVER) {
+                double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
+                layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
+                layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
+                double hwid = Math.sqrt((lenC*lenC)-(0.5625*distDC*distDC));
+                layoutEditor.setXOverHWid(round(hwid+0.1));
+            }
+            else if (type == LH_XOVER) {
+                double distDC = Math.sqrt(((bX+cX)*(bX+cX)) + ((bY+cY)*(bY+cY)));
+                layoutEditor.setXOverShort(round((0.25*distDC)+0.1));
+                layoutEditor.setXOverLong(round((0.75*distDC)+0.1));
+                double hwid = Math.sqrt((lenC*lenC)-(0.0625*distDC*distDC));
+                layoutEditor.setXOverHWid(round(hwid+0.1));
+            }
+        }
 	}
 
 	/**
@@ -918,9 +1039,30 @@ public class LayoutTurnout
 	 * Modify coordinates methods
 	 */
 	public void setCoordsCenter(Point2D p) {
+        if(version == 2) {
+            Point2D oldC = center;
+            double offsety = oldC.getY()-p.getY();
+            double offsetx = oldC.getX()-p.getX();
+            pointA = new Point2D.Double(pointA.getX()-offsetx, pointA.getY()-offsety);
+            pointB = new Point2D.Double(pointB.getX()-offsetx, pointB.getY()-offsety);
+            pointC = new Point2D.Double(pointC.getX()-offsetx, pointC.getY()-offsety);
+            pointD = new Point2D.Double(pointD.getX()-offsetx, pointD.getY()-offsety);
+        }
 		center = p;
 	}
+    
+    private void reCalculateCenter(){
+        double centreX = (pointC.getX()-pointA.getX())/2;
+        double centreY = (pointC.getY()-pointA.getY())/2;
+        centreX = pointA.getX()+centreX;
+        centreY = pointA.getY()+centreY;
+        center = new Point2D.Double(centreX,centreY);
+    }
+    
 	public void setCoordsA(Point2D p) {
+        pointA = p;
+        if(version == 2)
+            reCalculateCenter();
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
 		if (type == DOUBLE_XOVER) {
@@ -976,6 +1118,7 @@ public class LayoutTurnout
 		}
 	}
 	public void setCoordsB(Point2D p) {
+        pointB = p;
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
 		dispB = new Point2D.Double(-x,-y);
@@ -1012,6 +1155,9 @@ public class LayoutTurnout
 		}
 	}
 	public void setCoordsC(Point2D p) {
+        pointC = p;
+        if(version == 2)
+            reCalculateCenter();
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
 		dispC = new Point2D.Double(-x,-y);
@@ -1047,6 +1193,8 @@ public class LayoutTurnout
 		}
 	}
 	public void setCoordsD(Point2D p) {
+        pointD = p;
+
 		// only used for crossovers
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
@@ -1087,12 +1235,24 @@ public class LayoutTurnout
 		Point2D pt = new Point2D.Double(round(center.getX()*xFactor),
 										round(center.getY()*yFactor));
 		center = pt;
-		pt = new Point2D.Double(round(dispB.getX()*xFactor),
-										round(dispB.getY()*yFactor));
-		dispB = pt;
-		pt = new Point2D.Double(round(dispC.getX()*xFactor),
-										round(dispC.getY()*yFactor));
-		dispC = pt;
+
+        if(version == 2){
+            pointA = new Point2D.Double(round(pointA.getX()*xFactor),
+                                        round(pointA.getY()*yFactor));
+            pointB = new Point2D.Double(round(pointB.getX()*xFactor),
+                                        round(pointB.getY()*yFactor));
+            pointC = new Point2D.Double(round(pointC.getX()*xFactor),
+                                        round(pointC.getY()*yFactor));
+            pointD = new Point2D.Double(round(pointD.getX()*xFactor),
+                                        round(pointD.getY()*yFactor));
+        } else {
+            pt = new Point2D.Double(round(dispB.getX()*xFactor),
+                                            round(dispB.getY()*yFactor));
+            dispB = pt;
+            pt = new Point2D.Double(round(dispC.getX()*xFactor),
+                                            round(dispC.getY()*yFactor));
+            dispC = pt;        
+        }
 	}
 	
 	/**

@@ -28,6 +28,8 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ResourceBundle;
 import jmri.util.SystemType;
@@ -2155,11 +2157,36 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			// loop over all defined turnouts
 			for (int i = 0; i<turnoutList.size();i++) {
 				LayoutTurnout t = turnoutList.get(i);
-				Point2D center = t.getCoordsCenter();
-				if (selectRect.contains(center)) {
-					t.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
-																center.getY()+yTranslation));
-				}
+
+                if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                        || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                    if(selectRect.contains(t.getCoordsA())){
+                        Point2D coord = t.getCoordsA();
+                        t.setCoordsA(new Point2D.Double(coord.getX()+xTranslation,
+																coord.getY()+yTranslation));
+                    }
+                    if(selectRect.contains(t.getCoordsB())){
+                        Point2D coord = t.getCoordsB();
+                        t.setCoordsB(new Point2D.Double(coord.getX()+xTranslation,
+																coord.getY()+yTranslation));
+                    }
+                    if(selectRect.contains(t.getCoordsC())){
+                        Point2D coord = t.getCoordsC();
+                        t.setCoordsC(new Point2D.Double(coord.getX()+xTranslation,
+																coord.getY()+yTranslation));
+                    }
+                    if(selectRect.contains(t.getCoordsD())){
+                        Point2D coord = t.getCoordsD();
+                        t.setCoordsD(new Point2D.Double(coord.getX()+xTranslation,
+																coord.getY()+yTranslation));
+                    }
+                } else {
+                    Point2D center = t.getCoordsCenter();
+                    if (selectRect.contains(center)) {
+                        t.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
+                                                                    center.getY()+yTranslation));
+                    }
+                }
 			}
 			// loop over all defined level crossings
 			for (int i = 0; i<xingList.size();i++) {
@@ -2226,11 +2253,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
  			}
 			for (int i = 0; i<turnoutList.size();i++) {
 				LayoutTurnout t = turnoutList.get(i);
-				Point2D center = t.getCoordsCenter();
-				if (undoRect.contains(center)) {
-					t.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
-															center.getY()+undoDeltaY));
-				}
+                if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                        || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                    if(undoRect.contains(t.getCoordsA())){
+                        Point2D coord = t.getCoordsA();
+                        t.setCoordsA(new Point2D.Double(coord.getX()+undoDeltaX,
+																coord.getY()+undoDeltaY));
+                    }
+                    if(undoRect.contains(t.getCoordsB())){
+                        Point2D coord = t.getCoordsB();
+                        t.setCoordsB(new Point2D.Double(coord.getX()+undoDeltaX,
+																coord.getY()+undoDeltaY));
+                    }
+                    if(undoRect.contains(t.getCoordsC())){
+                        Point2D coord = t.getCoordsC();
+                        t.setCoordsC(new Point2D.Double(coord.getX()+undoDeltaX,
+																coord.getY()+undoDeltaY));
+                    }
+                    if(undoRect.contains(t.getCoordsD())){
+                        Point2D coord = t.getCoordsD();
+                        t.setCoordsD(new Point2D.Double(coord.getX()+undoDeltaX,
+																coord.getY()+undoDeltaY));
+                    }
+                } else {
+                    Point2D center = t.getCoordsCenter();
+                    if (undoRect.contains(center)) {
+                        t.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
+                                                                    center.getY()+undoDeltaY));
+                    }
+                }
 			}
 			for (int i = 0; i<xingList.size();i++) {
 				LevelXing x = xingList.get(i);
@@ -3173,7 +3224,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return null;
 	}
-	
+    
 	private PositionableLabel checkBackgrounds(Point2D loc) {
 		// check background images, if any
 		for (int i=backgroundImage.size()-1; i>=0; i--) {
@@ -3488,6 +3539,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				// controlling layout, in edit mode
                 LayoutTurntable t =  (LayoutTurntable)selectedObject;
                 t.setPosition(selectedPointType-TURNTABLE_RAY_OFFSET);
+            } else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
+					allControlling() && (event.isMetaDown()) && (!event.isAltDown()) && 
+						(!event.isShiftDown()) && (!event.isControlDown()) && isDragging ) {
+                    // controlling layout, in edit mode
+                    checkPointsOfTurnout((LayoutTurnout) selectedObject);
 			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
@@ -3775,7 +3831,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                         amendSelectionGroup((PositionablePoint)foundObject);
                         break;
                     case TURNOUT_CENTER:
-                        amendSelectionGroup((LayoutTurnout)foundObject);
+                        amendSelectionGroup((LayoutTurnout)foundObject, dLoc);
                         break;
                     case LEVEL_XING_CENTER:
                         amendSelectionGroup((LevelXing)foundObject);
@@ -3786,10 +3842,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     case TURNTABLE_CENTER:
                         amendSelectionGroup((LayoutTurntable)foundObject);
                         break;
+                    case TURNOUT_A:
+                    case TURNOUT_B:
+                    case TURNOUT_C:
+                    case TURNOUT_D:
+                        LayoutTurnout t = (LayoutTurnout)foundObject;
+                        if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                            || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                            amendSelectionGroup((LayoutTurnout)foundObject, dLoc);
+                        }
+                    
                     default: break;
                 }
             } else {
-            
                 PositionableLabel s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					amendSelectionGroup(s);
@@ -3819,7 +3884,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                     if (sm!=null) {
                                         amendSelectionGroup(sm);
                                     }
-
                                 }
                             }
                         }
@@ -3834,8 +3898,72 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         thisPanel.requestFocusInWindow();
         return;
 	}
+
+    private void checkPointsOfTurnout(LayoutTurnout lt){
+        beginObject = lt;
+        if(lt.getConnectA()==null){
+            beginPointType = TURNOUT_A;
+            dLoc = lt.getCoordsA();
+            checkPointsOfTurnoutSub(lt.getCoordsA());
+        }
+        if(lt.getConnectB()==null){
+            beginPointType = TURNOUT_B;
+            dLoc = lt.getCoordsB();
+            checkPointsOfTurnoutSub(lt.getCoordsB());
+        }
+        if(lt.getConnectC()==null){
+            beginPointType = TURNOUT_C;
+            dLoc = lt.getCoordsC();
+            checkPointsOfTurnoutSub(lt.getCoordsC());
+        }
+        if(lt.getConnectD()==null && ( (lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                            || (lt.getTurnoutType()==LayoutTurnout.LH_XOVER) || (lt.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+            beginPointType = TURNOUT_D;
+            dLoc = lt.getCoordsD();
+            checkPointsOfTurnoutSub(lt.getCoordsD());
+        }
+        beginObject = null;
+        foundObject = null;
+    }
     
-    private ArrayList<LayoutTurnout> _turnoutSelection = null; //new ArrayList<LayoutTurnout>();  // LayoutTurnouts
+    private void checkPointsOfTurnoutSub(Point2D dLoc){
+        if (checkSelect(dLoc, true)) {
+            LayoutTurnout ft = (LayoutTurnout)foundObject;
+            switch (foundPointType) {
+                case POS_POINT:
+                    break;
+                case TURNOUT_A:
+                case TURNOUT_B:
+                case TURNOUT_C:
+                case TURNOUT_D:
+                    addTrackSegment();
+                    break;
+            }
+        }
+    }
+    
+    //private ArrayList<LayoutTurnout> _turnoutSelection = null; // LayoutTurnouts
+    private java.util.HashMap<LayoutTurnout, TurnoutSelection> _turnoutSelection = null;
+    static class TurnoutSelection{
+        boolean pointA = false;
+        boolean pointB = false;
+        boolean pointC = false;
+        boolean pointD = false;
+        
+        TurnoutSelection(){ }
+        
+        void setPointA(boolean boo){ pointA=boo;}
+        void setPointB(boolean boo){ pointB=boo;}
+        void setPointC(boolean boo){ pointC=boo;}
+        void setPointD(boolean boo){ pointD=boo;}
+        
+        boolean getPointA() { return pointA; }
+        boolean getPointB() { return pointB; }
+        boolean getPointC() { return pointC; }
+        boolean getPointD() { return pointD; }
+        
+    }
+    
 	private ArrayList<PositionablePoint> _pointSelection = null; //new ArrayList<PositionablePoint>();  // PositionablePoint list
 	private ArrayList<LevelXing> _xingSelection = null; //new ArrayList<LevelXing>();  // LevelXing list
 	private ArrayList<LayoutSlip> _slipSelection = null; //new ArrayList<LevelXing>();  // LayoutSlip list
@@ -3855,18 +3983,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         // loop over all defined turnouts
         if (_turnoutSelection!=null){
-            for (int i = 0; i<_turnoutSelection.size();i++) {
-                LayoutTurnout t = _turnoutSelection.get(i);
-                int minx = (int) Math.min(Math.min(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.min(t.getCoordsC().getX(), t.getCoordsD().getX()));
-                int miny = (int) Math.min(Math.min(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.min(t.getCoordsC().getY(), t.getCoordsD().getY()));
-                int maxx = (int) Math.max(Math.max(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.max(t.getCoordsC().getX(), t.getCoordsD().getX()));
-                int maxy = (int) Math.max(Math.max(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.max(t.getCoordsC().getY(), t.getCoordsD().getY()));
-                int width = maxx-minx;
-                int height = maxy-miny;
-                int x = (int) t.getCoordsCenter().getX()-(width/2);
-                int y = (int) t.getCoordsCenter().getY()-(height/2);
-                g.drawRect(x, y, width, height);
+            for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                LayoutTurnout t = (LayoutTurnout)entry.getKey();
+                if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                        || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                        TurnoutSelection ts = (TurnoutSelection)entry.getValue();
+                    if(ts.getPointA()){
+                        Point2D coord = t.getCoordsA();
+                        g.drawRect((int)coord.getX()-4, (int)coord.getY()-4, 9, 9);
+                    }
+                    if(ts.getPointB()){
+                        Point2D coord = t.getCoordsB();
+                        g.drawRect((int)coord.getX()-4, (int)coord.getY()-4, 9, 9);
+                    }
+                    if(ts.getPointC()){
+                        Point2D coord = t.getCoordsC();
+                        g.drawRect((int)coord.getX()-4, (int)coord.getY()-4, 9, 9);
+                    }
+                    if(ts.getPointD()){
+                        Point2D coord = t.getCoordsD();
+                        g.drawRect((int)coord.getX()-4, (int)coord.getY()-4, 9, 9);
+                    }
+                } else {
+                    int minx = (int) Math.min(Math.min(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.min(t.getCoordsC().getX(), t.getCoordsD().getX()));
+                    int miny = (int) Math.min(Math.min(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.min(t.getCoordsC().getY(), t.getCoordsD().getY()));
+                    int maxx = (int) Math.max(Math.max(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.max(t.getCoordsC().getX(), t.getCoordsD().getX()));
+                    int maxy = (int) Math.max(Math.max(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.max(t.getCoordsC().getY(), t.getCoordsD().getY()));
+                    int width = maxx-minx;
+                    int height = maxy-miny;
+                    int x = (int) t.getCoordsCenter().getX()-(width/2);
+                    int y = (int) t.getCoordsCenter().getY()-(height/2);
+                    g.drawRect(x, y, width, height);
                 }
+                
+            }
         }
         if (_xingSelection!=null){
         // loop over all defined level crossings
@@ -3881,7 +4031,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 int x = (int) xing.getCoordsCenter().getX()-(width/2);
                 int y = (int) xing.getCoordsCenter().getY()-(height/2);
                 g.drawRect(x, y, width, height);
-                }
+            }
         }
         if (_slipSelection!=null){
         // loop over all defined level crossings
@@ -3936,12 +4086,63 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         // loop over all defined turnouts
         for (int i = 0; i<turnoutList.size();i++) {
             LayoutTurnout t = turnoutList.get(i);
-            Point2D center = t.getCoordsCenter();
-            if (selectRect.contains(center)) {
-                if (_turnoutSelection==null) _turnoutSelection = new ArrayList<LayoutTurnout>();
-                if(!_turnoutSelection.contains(t))
-                    _turnoutSelection.add(t);
+            if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                    || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                if(selectRect.contains(t.getCoordsA())){
+                    if (_turnoutSelection==null) _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(t)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(t, ts);
+                    } else {
+                        ts = _turnoutSelection.get(t);
+                    }
+                    ts.setPointA(true);
+                }
+                if(selectRect.contains(t.getCoordsB())){
+                    if (_turnoutSelection==null) _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(t)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(t, ts);
+                    } else {
+                        ts = _turnoutSelection.get(t);
+                    }
+                    ts.setPointB(true);
+                }
+                
+                if(selectRect.contains(t.getCoordsC())){
+                    if (_turnoutSelection==null) _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(t)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(t, ts);
+                    } else {
+                        ts = _turnoutSelection.get(t);
+                    }
+                    ts.setPointC(true);
+                }
+                
+                if(selectRect.contains(t.getCoordsD())){
+                    if (_turnoutSelection==null) _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(t)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(t, ts);
+                    } else {
+                        ts = _turnoutSelection.get(t);
+                    }
+                    ts.setPointD(true);
+                }
+            } else {
+                Point2D center = t.getCoordsCenter();
+                if (selectRect.contains(center)) {
+                    if (_turnoutSelection==null) _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    if(!_turnoutSelection.containsKey(t))
+                        _turnoutSelection.put(t, new TurnoutSelection());
+                }
             }
+
         }
         // loop over all defined level crossings
         for (int i = 0; i<xingList.size();i++) {
@@ -4051,8 +4252,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         if(_turnoutSelection!=null){
             boolean oldTurnout = noWarnLayoutTurnout;
             noWarnLayoutTurnout = true;
-            for(LayoutTurnout point: _turnoutSelection){
-                removeLayoutTurnout(point);
+            for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                removeLayoutTurnout((LayoutTurnout)entry.getKey());
             }
             noWarnLayoutTurnout = oldTurnout;
         }
@@ -4081,21 +4282,107 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         repaint();
     }
     
-    private void amendSelectionGroup(LayoutTurnout p){
+    private void amendSelectionGroup(LayoutTurnout p, Point2D dLoc){
         if (_turnoutSelection==null){
-            _turnoutSelection = new ArrayList <LayoutTurnout>();
+            _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
         }
         boolean removed = false;
-        for(int i=0; i<_turnoutSelection.size();i++){
-            if (_turnoutSelection.get(i)==p){
-                _turnoutSelection.remove(i);
-                removed = true;
-                break;
+        for (Map.Entry entry : _turnoutSelection.entrySet()) {
+            LayoutTurnout t = (LayoutTurnout)entry.getKey();
+            if (t==p){
+                if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                    || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                    TurnoutSelection ts = (TurnoutSelection)entry.getValue();
+                    Rectangle2D r = new Rectangle2D.Double(
+                        dLoc.getX() - SIZE,dLoc.getY() - SIZE,SIZE2,SIZE2);
+                    if(ts.getPointA()){
+                        if (r.contains(t.getCoordsA())) {
+                            ts.setPointA(false);
+                            removed=true;
+                        }
+                    }
+                    if(ts.getPointB()){
+                        if (r.contains(t.getCoordsB())) {
+                            ts.setPointB(false);
+                            removed=true;
+                        }
+                    }
+                    if(ts.getPointC()){
+                        if (r.contains(t.getCoordsC())) {
+                            ts.setPointC(false);
+                            removed=true;
+                        }
+                    }
+                    if(ts.getPointD()){
+                        if (r.contains(t.getCoordsD())) {
+                            ts.setPointD(false);
+                            removed=true;
+                        }
+                    }
+                    if(!ts.getPointA() && !ts.getPointB() && !ts.getPointC() && !ts.getPointD()){
+                        _turnoutSelection.remove(t);
+                        removed = true;
+                        break;
+                    }
+               } else {
+                    _turnoutSelection.remove(t);
+                    removed = true;
+                    break;
+                }
             }
         }
-        if(!removed)
-            _turnoutSelection.add(p);
-        if (_turnoutSelection.size()==0){
+        if(!removed){
+            if(p.getVersion()==2 && ( (p.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                    || (p.getTurnoutType()==LayoutTurnout.LH_XOVER) || (p.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                Rectangle2D r = new Rectangle2D.Double(
+                    dLoc.getX() - SIZE,dLoc.getY() - SIZE,SIZE2,SIZE2);
+                if(r.contains(p.getCoordsA())){
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(p)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(p, ts);
+                    } else {
+                        ts = _turnoutSelection.get(p);
+                    }
+                    ts.setPointA(true);
+                }
+                if(r.contains(p.getCoordsB())){
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(p)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(p, ts);
+                    } else {
+                        ts = _turnoutSelection.get(p);
+                    }
+                    ts.setPointB(true);
+                }
+                
+                if(r.contains(p.getCoordsC())){
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(p)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(p, ts);
+                    } else {
+                        ts = _turnoutSelection.get(p);
+                    }
+                    ts.setPointC(true);
+                }
+                
+                if(r.contains(p.getCoordsD())){
+                    TurnoutSelection ts;
+                    if(!_turnoutSelection.containsKey(p)){
+                        ts = new TurnoutSelection();
+                        _turnoutSelection.put(p, ts);
+                    } else {
+                        ts = _turnoutSelection.get(p);
+                    }
+                    ts.setPointD(true);
+                }
+            } else {
+                _turnoutSelection.put(p, new TurnoutSelection());
+            }
+        }
+        if (_turnoutSelection.isEmpty()){
             _turnoutSelection=null;
         }
         repaint();
@@ -4180,7 +4467,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         repaint();
     }
-
+	
     public void alignSelection(boolean alignX){
         int sum = 0;
         int cnt = 0;
@@ -4211,8 +4498,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         
         if(_turnoutSelection!=null){
-            for (int i = 0; i<_turnoutSelection.size(); i++){
-                LayoutTurnout comp = _turnoutSelection.get(i);
+            for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                LayoutTurnout comp = (LayoutTurnout)entry.getKey();
                 if (alignX) {
                     sum += comp.getCoordsCenter().getX();
                 } else {
@@ -4279,8 +4566,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             }
         }
         if(_turnoutSelection!=null){
-            for (int i=0; i<_turnoutSelection.size(); i++) {
-                LayoutTurnout comp = _turnoutSelection.get(i);
+            for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                LayoutTurnout comp = (LayoutTurnout) entry.getKey();
                 if (alignX) {
                     comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
                 } else {
@@ -4385,12 +4672,39 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         // loop over all defined turnouts
         if (_turnoutSelection!=null){
-            for (int i = 0; i<_turnoutSelection.size();i++) {
-                LayoutTurnout t = _turnoutSelection.get(i);
-                Point2D center = t.getCoordsCenter();
-                t.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+            for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                LayoutTurnout t = (LayoutTurnout)entry.getKey();
+                if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                        || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                    
+                    TurnoutSelection ts = (TurnoutSelection)entry.getValue();
+                    if(ts.getPointA()){
+                        Point2D coord = t.getCoordsA();
+                        t.setCoordsA(new Point2D.Double(returnNewXPostition(e, coord.getX()),
+                                                                returnNewYPostition(e, coord.getY())));
+                    }
+                    if(ts.getPointB()){
+                        Point2D coord = t.getCoordsB();
+                        t.setCoordsB(new Point2D.Double(returnNewXPostition(e, coord.getX()),
+                                                                returnNewYPostition(e, coord.getY())));
+                    }
+                    if(ts.getPointC()){
+                        Point2D coord = t.getCoordsC();
+                        t.setCoordsC(new Point2D.Double(returnNewXPostition(e, coord.getX()),
+                                                                returnNewYPostition(e, coord.getY())));
+                    }
+                    if(ts.getPointD()){
+                        Point2D coord = t.getCoordsD();
+                        t.setCoordsD(new Point2D.Double(returnNewXPostition(e, coord.getX()),
+                                                                returnNewYPostition(e, coord.getY())));
+                    }
+                    
+                } else {
+                    Point2D center = t.getCoordsCenter();
+                    t.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
                                                                 returnNewYPostition(e, center.getY())));
                 }
+            }
         }
         if (_xingSelection!=null){
         // loop over all defined level crossings
@@ -4561,14 +4875,53 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     }
                     
                     if (_turnoutSelection!=null){
-                        for (int i = 0; i<_turnoutSelection.size();i++) {
-                            LayoutTurnout t = _turnoutSelection.get(i);
-                            Point2D center = t.getCoordsCenter();
-                            xNew = (int) center.getX()+offsetx;
-                            yNew = (int) center.getY()+offsety;
-                            if (xNew<0) xNew=0;
-                            if (yNew<0) yNew=0;
-                            t.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                        for (Map.Entry entry : _turnoutSelection.entrySet()) {
+                            LayoutTurnout t = (LayoutTurnout)entry.getKey();
+                            if(t.getVersion()==2 && ( (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) 
+                                    || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
+                                
+                                TurnoutSelection ts = (TurnoutSelection)entry.getValue();
+                                if(ts.getPointA()){
+                                    Point2D coord = t.getCoordsA();
+                                    xNew = (int) coord.getX()+offsetx;
+                                    yNew = (int) coord.getY()+offsety;
+                                    if (xNew<0) xNew=0;
+                                    if (yNew<0) yNew=0;
+                                    t.setCoordsA(new Point2D.Double(xNew,yNew));
+                                }
+                                if(ts.getPointB()){
+                                    Point2D coord = t.getCoordsB();
+                                    xNew = (int) coord.getX()+offsetx;
+                                    yNew = (int) coord.getY()+offsety;
+                                    if (xNew<0) xNew=0;
+                                    if (yNew<0) yNew=0;
+                                    t.setCoordsB(new Point2D.Double(xNew,yNew));
+                                }
+                                if(ts.getPointC()){
+                                    Point2D coord = t.getCoordsC();
+                                    xNew = (int) coord.getX()+offsetx;
+                                    yNew = (int) coord.getY()+offsety;
+                                    if (xNew<0) xNew=0;
+                                    if (yNew<0) yNew=0;
+                                    t.setCoordsC(new Point2D.Double(xNew,yNew));
+                                }
+                                if(ts.getPointD()){
+                                    Point2D coord = t.getCoordsD();
+                                    xNew = (int) coord.getX()+offsetx;
+                                    yNew = (int) coord.getY()+offsety;
+                                    if (xNew<0) xNew=0;
+                                    if (yNew<0) yNew=0;
+                                    t.setCoordsD(new Point2D.Double(xNew,yNew));
+                                }
+                                
+                            } else {
+                                Point2D center = t.getCoordsCenter();
+                                xNew = (int) center.getX()+offsetx;
+                                yNew = (int) center.getY()+offsety;
+                                if (xNew<0) xNew=0;
+                                if (yNew<0) yNew=0;
+                                t.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                            }
                         }
                     }
                     if (_xingSelection!=null){
