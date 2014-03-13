@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision:  $
+ * @version $Revision$
  */
 public class XBeeTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
