@@ -2702,6 +2702,7 @@ public class TrainBuilder extends TrainCommon {
 					+ (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
 					+ ", car load (" + car.getLoadName() + ") destination (" + car.getDestinationName() // NOI18N
 					+ ") final destination (" + car.getFinalDestinationName() + ")"); // NOI18N
+			// if car has a destination or final destination add "no load generated" message to report
 			if (car.getTrack() != null && car.getTrack().getTrackType().equals(Track.STAGING)
 					&& car.getTrack().isAddCustomLoadsAnySpurEnabled()
 					&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()))
@@ -2710,7 +2711,7 @@ public class TrainBuilder extends TrainCommon {
 								car.getFinalDestinationName() }));
 			return false; // no load generated for this car
 		}
-		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
+		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"), new Object[] {
 				car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName() }));
 		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
@@ -2820,7 +2821,7 @@ public class TrainBuilder extends TrainCommon {
 				car.setFinalDestinationTrack(null);
 				// test to see if destination is reachable by this train
 				if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null) {
-					return true; // done, car has a custom load and a destination
+					return true; // done, car has a custom load and a final destination
 				}
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackNotReachable"),
 						new Object[] { track.getLocation().getName(), track.getName(), car.getLoadName() }));
@@ -3247,7 +3248,7 @@ public class TrainBuilder extends TrainCommon {
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex, int routeEnd)
 			throws BuildFailedException {
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildFindDestinationForCar"), new Object[] {
-				car.toString(), car.getTypeName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+				car.toString(), car.getTypeName(), car.getLoadName(), (car.getLocationName() + ", " + car.getTrackName()) }));
 		int start = routeIndex; // start looking after car's current location
 		RouteLocation rld = null; // the route location destination being checked for the car
 		RouteLocation rldSave = null; // holds the best route location destination for the car
@@ -3347,12 +3348,11 @@ public class TrainBuilder extends TrainCommon {
 			// is there a track assigned for staging cars?
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null) {
 				// no need to check train and track direction into staging, already done
-				String status = car.testDestination(testDestination, terminateStageTrack); // will staging accept this
-																							// // car?
+				String status = car.testDestination(testDestination, terminateStageTrack);
 				if (status.equals(Track.OKAY)) {
 					trackTemp = terminateStageTrack;
 					destinationTemp = testDestination;
-					// only generate a new load if there aren't any other tracks available for this car
+				// only generate a new load if there aren't any other tracks available for this car
 				} else if (status.startsWith(Track.LOAD)
 						&& car.getTrack() == departStageTrack
 						&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
