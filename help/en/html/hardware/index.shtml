@@ -103,7 +103,13 @@
 		<a href="misc/DccSpecialties.shtml">Hare, Wabbit, Block Watcher or PSX family products</a>.</p>
 		<p>&nbsp;</p>
 	    </dd>
-
+	    <dt class="im">
+		<a href="http://www.digi.com/xbee">
+		<img src="http://www.digi.com/images/logo-digi-m2m.png" width="60" height="26" alt="Digi XBee"></a>
+	    </dt>
+            <dt>Digi</dt>
+            <dd><p classs="dl"><a href="XBee/index.html">General information on connecting to a Digi XBee network</a></p>
+            </dd>
 	    <dt class="im">
 		<a href="http://www.digitrax.com/">
 		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
