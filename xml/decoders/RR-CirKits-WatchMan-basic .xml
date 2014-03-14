@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008, 2013, 2014 All rights reserved -->
-<!-- $Id: RR-CirKits-WatchMan-basic.xml,v 0.01 2014/02/01 12:48:43 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-WatchMan-basic.xml,v 0.01 2014/03/13 12:48:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,11 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.12" lastUpdated="20140201"/>
+  <version author="dick@rr-cirkits.com" version="0.13" lastUpdated="20140313"/>
   <!-- Version 0.01  Working version modified from SignalMan -->
   <!-- Version 0.10  TowerMan version -->
   <!-- Version 0.11  WatchMan version -->
   <!-- Version 0.12  WatchMan version -->
+  <!-- Version 0.13  WatchMan version changed margin default-->
 
 
   <decoder>
@@ -171,7 +172,7 @@
       </variable>
       
       <!-- Margin -->
-      <variable label="margin" CV="126" mask="VVVVVVVV" default="128" item="BOD Margin" comment="Offset (Range 1-255)">
+      <variable label="margin" CV="126" mask="VVVVVVVV" default="5" item="BOD Margin" comment="Offset (Range 1-15)">
         <decVal min="0" max="15"/>
       </variable>
 
