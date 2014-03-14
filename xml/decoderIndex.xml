@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140313-0404-jake on Wed Mar 12 21:04:10 PDT 2014 $Id$-->
-  <decoderIndex version="306">
+  <!--Written by JMRI version 20140314-0158-jake on Thu Mar 13 18:58:40 PDT 2014 $Id$-->
+  <decoderIndex version="308">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5422,7 +5422,7 @@
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode" file="RR-CirKits-TowerMan-basic.xml">
         <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10" />
       </family>
-      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode" file="RR-CirKits-WatchMan-basic .xml">
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode" file="RR-CirKits-WatchMan-basic.xml">
         <model model="WatchMan" comment="8 block detector plus 8 Line I/O Driver" lowVersionID="11" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
