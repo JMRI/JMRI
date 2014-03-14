@@ -3937,9 +3937,102 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 case TURNOUT_C:
                 case TURNOUT_D:
                     addTrackSegment();
+                    if(ft.getTurnoutType()==LayoutTurnout.RH_TURNOUT || ft.getTurnoutType()==LayoutTurnout.LH_TURNOUT){
+                        rotateTurnout(ft);
+                    }
                     break;
             }
         }
+    }
+    private void rotateTurnout(LayoutTurnout t){
+        LayoutTurnout be = (LayoutTurnout)beginObject;
+        if((beginPointType==TURNOUT_A && (be.getConnectB()!=null || be.getConnectC()!=null)) ||
+            (beginPointType==TURNOUT_B && (be.getConnectA()!=null || be.getConnectC()!=null)) ||
+            (beginPointType==TURNOUT_C && (be.getConnectB()!=null || be.getConnectA()!=null))){
+            return;
+        }
+        if(be.getTurnoutType()!=LayoutTurnout.RH_TURNOUT && be.getTurnoutType()!=LayoutTurnout.LH_TURNOUT){
+            return;
+        }
+
+        double x2;
+        double y2;
+
+        Point2D c;
+        Point2D diverg;
+        
+        if(foundPointType==TURNOUT_C && beginPointType==TURNOUT_C){
+            c = t.getCoordsA();
+            diverg = t.getCoordsB();
+            x2 = be.getCoordsA().getX()-be.getCoordsB().getX();
+            y2 = be.getCoordsA().getY()-be.getCoordsB().getY();
+        } else if (foundPointType==TURNOUT_C && (beginPointType==TURNOUT_A || beginPointType==TURNOUT_B))  {
+            c = t.getCoordsCenter();
+            diverg = t.getCoordsC();
+            if(beginPointType==TURNOUT_A){
+                x2 = be.getCoordsB().getX()-be.getCoordsA().getX();
+                y2 = be.getCoordsB().getY()-be.getCoordsA().getY();
+            } else {
+                x2 = be.getCoordsA().getX()-be.getCoordsB().getX();
+                y2 = be.getCoordsA().getY()-be.getCoordsB().getY();
+            }
+        } else if (foundPointType==TURNOUT_B)  {
+            c = t.getCoordsA();
+            diverg = t.getCoordsB();
+            if(beginPointType==TURNOUT_B){
+                x2 = be.getCoordsA().getX()-be.getCoordsB().getX();
+                y2 = be.getCoordsA().getY()-be.getCoordsB().getY();
+            } else if (beginPointType==TURNOUT_A){
+                x2 = be.getCoordsB().getX()-be.getCoordsA().getX();
+                y2 = be.getCoordsB().getY()-be.getCoordsA().getY();
+            } else { //(beginPointType==TURNOUT_C){
+                x2 = be.getCoordsCenter().getX()-be.getCoordsC().getX();
+                y2 = be.getCoordsCenter().getY()-be.getCoordsC().getY();
+            }
+        } else if (foundPointType==TURNOUT_A)  {
+            c = t.getCoordsA();
+            diverg = t.getCoordsB();
+            if(beginPointType==TURNOUT_A){
+                x2 = be.getCoordsA().getX()-be.getCoordsB().getX();
+                y2 = be.getCoordsA().getY()-be.getCoordsB().getY();
+            } else if (beginPointType==TURNOUT_B){
+                x2 = be.getCoordsB().getX()-be.getCoordsA().getX();
+                y2 = be.getCoordsB().getY()-be.getCoordsA().getY();
+            } else {// (beginPointType==TURNOUT_C){
+                x2 = be.getCoordsC().getX()-be.getCoordsCenter().getX();
+                y2 = be.getCoordsC().getY()-be.getCoordsCenter().getY();
+            }
+        } else {
+            return;
+        }
+        double x = diverg.getX()-c.getX();
+        double y = diverg.getY()-c.getY();
+        double radius = Math.toDegrees(Math.atan2(y,x));
+        double eRadius = Math.toDegrees(Math.atan2(y2,x2));
+        be.rotateCoords(radius-eRadius);
+
+        Point2D conCord = be.getCoordsA();
+        Point2D tCord = t.getCoordsC();
+        
+        if(foundPointType==TURNOUT_B){
+            tCord = t.getCoordsB();
+        }
+        if(foundPointType==TURNOUT_A){
+            tCord = t.getCoordsA();
+        }
+        if(beginPointType==TURNOUT_B){
+            conCord = be.getCoordsB();
+        } else if (beginPointType==TURNOUT_C){
+            conCord = be.getCoordsC();
+        } else if (beginPointType==TURNOUT_A){
+            conCord = be.getCoordsA();
+        }
+
+        x = conCord.getX()-tCord.getX();
+        y = conCord.getY()-tCord.getY();
+        Point2D offset = new Point2D.Double(be.getCoordsCenter().getX()-x, be.getCoordsCenter().getY()-y);
+        be.setCoordsCenter(offset);
+    
     }
     
     //private ArrayList<LayoutTurnout> _turnoutSelection = null; // LayoutTurnouts

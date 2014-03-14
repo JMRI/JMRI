@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author rhwood
+ * A manager for Operations. This manager controls the Operations ShutDownTask.
+ *
+ * @author Randall Wood 2014
  */
 public final class OperationsManager {
 
@@ -37,6 +39,11 @@ public final class OperationsManager {
         this.setShutDownTask(this.getDefaultShutDownTask());
     }
 
+    /**
+     * Get the OperationsManager.
+     *
+     * @return The OperationsManager default instance.
+     */
     public static OperationsManager getInstance() {
         if (instance == null) {
             instance = new OperationsManager();
@@ -66,6 +73,13 @@ public final class OperationsManager {
         }
     }
 
+    /**
+     * Get a copy of the default operations {@link jmri.ShutDownTask}. The
+     * default ShutDownTask saves the operations state at shutdown without
+     * prompting.
+     *
+     * @return A new ShutDownTask
+     */
     public ShutDownTask getDefaultShutDownTask() {
         return new QuietShutDownTask("Save Operations State") { // NOI18N
             @Override
