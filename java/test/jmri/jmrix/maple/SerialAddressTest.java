@@ -21,12 +21,20 @@ public class SerialAddressTest extends TestCase {
 		// log4j
 		apps.tests.Log4JFixture.setUp(); 
 		// create and register the manager objects
+		
+		InputBits.mInstance = null;
+		InputBits.instance();
+		
+		jmri.util.JUnitUtil.resetInstanceManager();
+		
 		jmri.TurnoutManager l = new SerialTurnoutManager() {
+		    @Override
 			public void notifyTurnoutCreationError(String conflict,int bitNum) {}
 		};	
 		jmri.InstanceManager.setTurnoutManager(l);
 		
 		jmri.LightManager lgt = new SerialLightManager() {
+		    @Override
 			public void notifyLightCreationError(String conflict,int bitNum) {}
 		};	
 		jmri.InstanceManager.setLightManager(lgt);
