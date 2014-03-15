@@ -78,6 +78,7 @@ public class JUnitUtil {
 	public static void resetInstanceManager() {    
 		// create a new instance manager
 		new InstanceManager(){
+		    @Override
 			protected void init() {
 				root = null;
 				super.init();
