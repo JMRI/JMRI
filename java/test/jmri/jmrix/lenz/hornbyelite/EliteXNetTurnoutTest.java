@@ -60,6 +60,10 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
         // and twosensor feedback).
 	public void testEliteXNetTurnoutPropertyChange() {
 		// prepare an interface
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        t = new EliteXNetTurnout("XT",21,lnis);
+
 		// set thrown
 		try {
 			t.setCommandedState(jmri.Turnout.THROWN);
@@ -70,6 +74,7 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
                 t.setFeedbackMode(jmri.Turnout.ONESENSOR);
                 jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
                 try {
+                    s.setState(jmri.Sensor.INACTIVE);
                     t.provideFirstFeedbackSensor("IS1");
                 } catch (Exception x1) { log.error("TO exception: " +x1);
                 }

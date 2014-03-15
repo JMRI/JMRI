@@ -118,6 +118,10 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // and twosensor feedback).
     public void testXNetTurnoutPropertyChange() {
         // prepare an interface
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        t = new XNetTurnout("XT",21,lnis);
+        
         // set thrown
         try {
             t.setCommandedState(jmri.Turnout.THROWN);
@@ -126,8 +130,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
         
         t.setFeedbackMode(jmri.Turnout.ONESENSOR);
-        jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");      
         try {
+            s.setState(jmri.Sensor.INACTIVE);
             t.provideFirstFeedbackSensor("IS1");
         } catch (Exception x1) { log.error("TO exception: " +x1);
         }
@@ -140,7 +145,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     }
     
     @Override
-        public void testDispose(){
+    public void testDispose(){
         t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
         
         //is deferred to after first use
