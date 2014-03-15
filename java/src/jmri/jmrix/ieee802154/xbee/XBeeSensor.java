@@ -49,12 +49,28 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
 	systemName=id;
         String prefix = ((XBeeConnectionMemo)tc.getAdapterMemo())
                                          .getSensorManager().getSystemPrefix();
-        address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
-	// calculate the base address, the nibble, and the bit to examine
-	baseaddress = ((address) / 10);
-        pin = ((address)%10);
+
+        if(systemName.contains(":")){
+            //Address format passed is in the form of encoderAddress:input or S:sensor address
+            int seperator = systemName.indexOf(":");
+            try {
+                baseaddress = Integer.valueOf(systemName.substring(prefix.length()+1,seperator)).intValue();
+                pin = Integer.valueOf(systemName.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+            }
+        } else {
+           try{
+              address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
+	      // calculate the base address, the nibble, and the bit to examine
+	      baseaddress = ((address) / 10);
+              pin = ((address)%10);
+           } catch (NumberFormatException ex) {
+              log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+           }
+        }
         if (log.isDebugEnabled())
-        	log.debug("Created Sensor " + systemName  + 
+        	    log.debug("Created Sensor " + systemName  + 
  				  " (Address " + baseaddress + 
                                   " D" + pin +
 				  ")");
