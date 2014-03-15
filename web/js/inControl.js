@@ -569,7 +569,8 @@ var $imagesInDir = function(dir){
 
 //----------------------------------------- Error loading image
 var $errorLoadingImage = function(obj){
-	alert("Error loading image: " + obj.attr("src").split("?")[0] + "\n\nPlease check if file exists.\nIf it exists, please refresh the page.");
+	//alert("Error loading image: " + obj.attr("src").split("?")[0] + "\n\nPlease check if file exists.\nIf it exists, please refresh the page.");
+        $(obj).remove();
 }
 
 //----------------------------------------- Host resize helper
