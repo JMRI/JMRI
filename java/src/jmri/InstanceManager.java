@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Vector;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
-import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.slf4j.Logger;
@@ -36,15 +35,16 @@ import org.slf4j.LoggerFactory;
  * If a specific item is needed, e.g. one that has been constructed via
  * a complex process during startup, it should be installed with
  * {@link     InstanceManager#store}.
+ *<p>
  * If it's OK for the InstanceManager to create an object on first
  * request, have that object's class implement the 
  * {@link     InstanceManagerAutoDefault}
  * flag interface. The InstanceManager will then construct a default
- * object via the no-argument constructor when one is first needed.
+ * object via the no-argument constructor when one is first requested.
  *<p>
- * For initialization of more complex objects, see the 
+ * For initialization of more complex default objects, see the 
  * {@link InstanceInitializer} mechanism and its default implementation
- * in {@link jmri.managers.DefaultInstanceInitializer}.
+ * in {@link jmri.managers.DefaultInstanceInitializer}. 
  * 
  * <hr>
  * This file is part of JMRI.
@@ -65,12 +65,11 @@ import org.slf4j.LoggerFactory;
  */
 public class InstanceManager {
 
-    static private HashMap<Class<?>,ArrayList<Object>> managerLists;
+    static final private HashMap<Class<?>,ArrayList<Object>> managerLists = new HashMap<Class<?>,ArrayList<Object>>();
+    
     /* properties */
     public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
-    public static String COMMAND_STATION = "commandstation"; // NOI18N
     public static String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
-    public static String THROTTLE_MANAGER = "throttlemanager"; // NOI18N
     
     /**
      * Store an object of a particular type for later
@@ -94,9 +93,7 @@ public class InstanceManager {
      * @param type The class Object for the items' type.
      */
     static public <T> List<Object> getList(Class<T> type) {
-        if (managerLists!=null)
-            return managerLists.get(type);
-        return null;
+        return managerLists.get(type);
     }
     
     /**
@@ -104,7 +101,6 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(Class<T> type) {
-        if (managerLists == null) return;
         managerLists.put(type, null);
     }
     
@@ -115,7 +111,6 @@ public class InstanceManager {
      * @param type The class Object for the item's type.  
      */
     static public <T> void deregister(T item, Class<T> type){
-        if (managerLists == null) return;
         ArrayList<Object> l = managerLists.get(type);
         if(l!=null)
             l.remove(item);
@@ -131,10 +126,11 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        if (managerLists == null) return null;
+        log.debug("getDefault {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size()<1) {
             // see if can autocreate
+            log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 // yes, make sure list is present before creating object
                 if (l==null) {
@@ -143,6 +139,7 @@ public class InstanceManager {
                 }
                 try {
                     l.add(type.getConstructor((Class[])null).newInstance((Object[])null));
+                    log.debug("      auto-created default of {}", type.getName());
                 } catch (Exception e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
@@ -150,8 +147,10 @@ public class InstanceManager {
                 return (T)l.get(l.size()-1);
             } 
             // see if initializer can handle
+            log.debug("    attempt initializer create of {}", type.getName());
             T obj = (T)initializer.getDefault(type);
             if (obj != null) {
+                log.debug("      initializer created default of {}", type.getName());
                 if (l==null) {
                     l = new ArrayList<Object>();
                     managerLists.put(type, l);
@@ -207,13 +206,10 @@ public class InstanceManager {
     }
     
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
-    
-    private static synchronized void setRootInstance(){
-        if(root!=null)
-            return;
-        root = new InstanceManager();
-    }
 
+    // @TODO This constructor needs to go away, but its being used by lots of test cases in older form 
+    // - see JUnitUtil.resetInstanceManager for replacement
+    @Deprecated
     public InstanceManager() {
         init();
     }
@@ -223,20 +219,10 @@ public class InstanceManager {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification="Only used during system initialization")
     protected void init() {
-        managerLists = new  HashMap<Class<?>,ArrayList<Object>>();
-        sensorManager = new jmri.managers.ProxySensorManager();
-        turnoutManager = new jmri.managers.ProxyTurnoutManager();
-        lightManager = new jmri.managers.ProxyLightManager();
-        reporterManager = new jmri.managers.ProxyReporterManager();
+        log.debug("running default init", new Exception());
+        managerLists.clear();
     }
 
-    static private InstanceManager instance() {
-        if (root==null){
-            setRootInstance();
-        }
-        return root;
-    }
-    
     /**
      * The "root" object is the instance manager that's answering
      * requests for other instances. Protected access to allow
@@ -248,12 +234,19 @@ public class InstanceManager {
     static protected InstanceManager root;
 
 
+
+    /**
+     * Remove notification on changes to specific types
+     */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
     }
 
+    /**
+     * Register for notification on changes to specific types
+     */
     public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
         if (!listeners.contains(l)) {
@@ -261,14 +254,11 @@ public class InstanceManager {
         }
     }
     
-    /**
-     * Trigger the notification of all PropertyChangeListeners
-     */
     @SuppressWarnings("unchecked")
-	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+	protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
-        synchronized(this)
+        synchronized(InstanceManager.class)
             {
                 v = (Vector<PropertyChangeListener>) listeners.clone();
             }
@@ -276,7 +266,7 @@ public class InstanceManager {
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+            client.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
         }
     }
     
@@ -284,15 +274,52 @@ public class InstanceManager {
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
 
+    // Simplification order - for each type, starting with those not in the jmri package:
+    //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
+    //   2) Remove the setter from here, get tests to build & run
+    //   3) Remove the accessor from here, get tests to build & run
 
     /* ****************************************************************************
-     *                   Old Style Accessors - Migrated and Deprecated
-     *
-     *                     Check Jython scripts before removing
+     *                   Primary Accessors - Not Yet Deprecated
      * ****************************************************************************/
 
     /**
-     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public CommandStation commandStationInstance()  {
+        return getDefault(CommandStation.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public LightManager lightManagerInstance()  { 
+        return getDefault(LightManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public MemoryManager memoryManagerInstance()  { 
+    	return getDefault(MemoryManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SensorManager sensorManagerInstance()  { 
+        return getDefault(SensorManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+     static public TurnoutManager turnoutManagerInstance()  {
+        return getDefault(TurnoutManager.class);
+    }
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #getDefault} directly.
      */
     @Deprecated
     static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
@@ -300,38 +327,62 @@ public class InstanceManager {
     }
 
 
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public AudioManager audioManagerInstance() {
+        return getDefault(AudioManager.class);
+    }
+    
 
     /**
-     * @deprecated Since 3.7.1, use @{link #getDefault} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
      */
-    @Deprecated
     static public BlockManager blockManagerInstance()  {
-        BlockManager o = getDefault(BlockManager.class);
-        if (o != null) return o;
-        o = (BlockManager)initializer.getDefault(BlockManager.class);
-        store(o, BlockManager.class);
-        return o;
+        return getDefault(BlockManager.class);
     }
 
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public CatalogTreeManager catalogTreeManagerInstance()  {
+        return getDefault(CatalogTreeManager.class);
+    }
 
     /**
-     * Note the notification - check uses of that.
-     *
-     * @deprecated Since 3.7.1, use @{link #store} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
      */
-    @Deprecated
-    static public void setConsistManager(ConsistManager p) {
-        store(p, ConsistManager.class);
-        instance().notifyPropertyChangeListener(CONSIST_MANAGER, null, null);
-    }
+    static public ClockControl clockControlInstance() { 
+        return getDefault(ClockControl.class); 
+    }    
+
     /**
-     * @deprecated Since 3.7.1, use @{link #getDefault} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
      */
-    @Deprecated
+    static public ConditionalManager conditionalManagerInstance() { 
+        return getDefault(ConditionalManager.class); 
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public ConfigureManager configureManagerInstance() { 
+        return getDefault(ConfigureManager.class); 
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
     static public ConsistManager consistManagerInstance() { 
         return getDefault(ConsistManager.class); 
     }
 
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public LogixManager logixManagerInstance() { 
+        return getDefault(LogixManager.class); 
+    }
 
     /**
      * @deprecated Since 3.3.1, use @{link #getDefault} directly.
@@ -342,14 +393,139 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.1, use @{link #getDefault} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
      */
-    @Deprecated
     static public PowerManager powerManagerInstance()  { 
         return getDefault(PowerManager.class);
     }
+
     /**
-     * @deprecated Since 3.7.1, use @{link #getDefault} directly.
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public ProgrammerManager programmerManagerInstance()  { 
+        return getDefault(ProgrammerManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public ReporterManager reporterManagerInstance()  {
+        return getDefault(ReporterManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public RosterIconFactory rosterIconFactoryInstance()  {
+        return getDefault(RosterIconFactory.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public RouteManager routeManagerInstance()  {
+        return getDefault(RouteManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SectionManager sectionManagerInstance()  {
+        return getDefault(SectionManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public ShutDownManager shutDownManagerInstance() { 
+        return getDefault(ShutDownManager.class); 
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SignalGroupManager signalGroupManagerInstance()  {
+        return getDefault(SignalGroupManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SignalHeadManager signalHeadManagerInstance() { 
+        return getDefault(SignalHeadManager.class); 
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SignalMastManager signalMastManagerInstance()  { 
+        return getDefault(SignalMastManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SignalSystemManager signalSystemManagerInstance()  { 
+        return getDefault(SignalSystemManager.class);
+    }
+
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public SignalMastLogicManager signalMastLogicManagerInstance()  {
+        return getDefault(SignalMastLogicManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public TabbedPreferences tabbedPreferencesInstance() { 
+        return getDefault(TabbedPreferences.class); 
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public ThrottleManager throttleManagerInstance()  {
+        return getDefault(ThrottleManager.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public Timebase timebaseInstance()  {
+        return getDefault(Timebase.class);
+    }
+
+    /**
+     * Will eventually be deprecated, use @{link #getDefault} directly.
+     */
+    static public TransitManager transitManagerInstance()  {
+        return getDefault(TransitManager.class);
+    }
+
+    /* ****************************************************************************
+     *         Deprecated Accessors - removed from JMRI itself
+     * ****************************************************************************/
+
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public VSDecoderManager vsdecoderManagerInstance() {
+	    return getDefault(VSDecoderManager.class);
+    }
+
+    /* ****************************************************************************
+     *                   Old Style Setters - Deprecated, to be migrated
+     *
+     *                   Migrate JMRI uses of these, then move to next category
+     * ****************************************************************************/
+
+    /**
+     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
      */
     @Deprecated
     static public void setPowerManager(PowerManager p) {
@@ -357,18 +533,123 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.1, use @{link #getDefault} directly.
+     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
      */
     @Deprecated
-    static public ProgrammerManager programmerManagerInstance()  { 
-        return getDefault(ProgrammerManager.class);
+    static public void setConditionalManager(ConditionalManager p) {
+        store(p, ConditionalManager.class);
+        setDefault(ConditionalManager.class, p);
     }
+
     /**
-     * Note: Also provides consist manager services.
-     *
-     * @deprecated Since 3.7.1, use @{link #store} directly.
+     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault} directly.
      */
     @Deprecated
+    static public void addClockControl(ClockControl p) {
+        store(p, ClockControl.class);
+        setDefault(ClockControl.class, p);
+    }
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault} directly.
+     */
+    @Deprecated
+    static public void setTurnoutManager(TurnoutManager p) {
+        log.debug(" setTurnoutManager");
+        store(p, TurnoutManager.class);
+        setDefault(TurnoutManager.class, p);
+    }
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} directly.
+     */
+    @Deprecated
+    static public void setShutDownManager(ShutDownManager p) {
+        store(p, ShutDownManager.class);
+        setDefault(ShutDownManager.class, p);
+    }
+
+    static public void setThrottleManager(ThrottleManager p) {
+        store(p, ThrottleManager.class);
+    }
+
+  	
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} directly.
+     */
+    @Deprecated
+    static public void setSignalHeadManager(SignalHeadManager p) {
+        store(p, SignalHeadManager.class);
+        setDefault(SignalHeadManager.class, p);
+    }
+
+
+    //
+    // This updates the consist manager, which must be
+    // either built into instances of calling code or a 
+    // new service, before this can be deprecated.
+    //
+    static public void setCommandStation(CommandStation p) {
+        store(p, CommandStation.class);
+	    if(consistManagerInstance() == null || 
+            (consistManagerInstance()).getClass()==DccConsistManager.class){
+                // if there is a command station available, use
+                // the NMRA consist manager instead of the generic consist
+                // manager.
+		    setConsistManager(new NmraConsistManager());
+	    }
+    }
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault} directly.
+     */
+    @Deprecated
+    static public void setConfigureManager(ConfigureManager p) {
+        log.debug(" setConfigureManager");
+        store(p, ConfigureManager.class);
+        setDefault(ConfigureManager.class, p);
+    }
+
+    //
+    // This provides notification services, which 
+    // must be migrated before this method can be 
+    // deprecated.
+    //
+    static public void setConsistManager(ConsistManager p) {
+        store(p, ConsistManager.class);
+        notifyPropertyChangeListener(CONSIST_MANAGER, null, null);
+    }
+
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault} directly.
+     */
+    @Deprecated
+    static public void setLightManager(LightManager p) {
+        log.debug(" setLightManager");
+        store(p, LightManager.class);
+        setDefault(LightManager.class, p);
+    }
+
+    /**
+     * @deprecated Since 3.7.4, use @{link #store} directly.
+     */
+    @Deprecated
+    static public void setLogixManager(LogixManager p) {
+        store(p, LogixManager.class);
+    }
+
+    //
+    // Note: Also provides consist manager services on store operation.
+    // Do we need a new mechanism for this? Or just move this code to
+    // the 30+ classes that reference it? Or maybe have a default of the 
+    // DccConsistManager that's smarter?
+    //
+    //
+    // This provides notification services, which 
+    // must be migrated before this method can be 
+    // deprecated.
+    //
     static public void setProgrammerManager(ProgrammerManager p) {
         store(p, ProgrammerManager.class);
 
@@ -379,301 +660,45 @@ public class InstanceManager {
 		    && consistManagerInstance() == null) {
 			setConsistManager(new DccConsistManager());
 		}
-        instance().notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
+        notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
     }
 
     /**
-     * Provides a class variable default via initializer, 
-     * that function should be automated via getDefault
+     * @deprecated Since 3.7.4, use @{link #store} directly.
      */
-    static public RouteManager routeManagerInstance()  {
-        RouteManager r = getDefault(RouteManager.class);
-        if (r != null) return r;
-        r = (RouteManager)initializer.getDefault(RouteManager.class);
-        store(r, RouteManager.class);
-        return r;
+    @Deprecated
+    static public void setReporterManager(ReporterManager p) {
+        log.debug(" setReporterManager");
+        store(p, ReporterManager.class);
+        setDefault(ReporterManager.class, p);
     }
 
     /**
-     * Provides a class variable default via initializer, 
-     * that function should be automated via getDefault
+     * @deprecated Since 3.7.4, use @{link #store} directly.
      */
-    static public SignalMastManager signalMastManagerInstance()  { 
-        SignalMastManager m = getDefault(SignalMastManager.class);
-        if (m == null) {
-            m = (SignalMastManager)initializer.getDefault(SignalMastManager.class);
-            store(m, SignalMastManager.class);
-        }
-        return m;
+    @Deprecated
+    static public void setSensorManager(SensorManager p) {
+        log.debug(" setSensorManager");
+        store(p, SensorManager.class);
+        setDefault(SensorManager.class, p);
     }
 
     /**
-     * Provides a class variable default via initializer, 
-     * that function should be automated via getDefault
+     * @deprecated Since 3.7.4, use @{link #store} directly.
      */
-    static public SignalSystemManager signalSystemManagerInstance()  { 
-        SignalSystemManager m = getDefault(SignalSystemManager.class);
-        if (m == null) {
-            m = (SignalSystemManager)initializer.getDefault(SignalSystemManager.class);
-            store(m, SignalSystemManager.class);
-        }
-        return m;
+    @Deprecated
+    static public void setTabbedPreferences(TabbedPreferences p) {
+        store(p, TabbedPreferences.class);
     }
-
-    /**
-     * Provides a class variable default via initializer, 
-     * that function should be automated via getDefault
-     */
-    static public SignalGroupManager signalGroupManagerInstance()  {
-        SignalGroupManager m = getDefault(SignalGroupManager.class);
-        if (m == null) {
-            m = (SignalGroupManager)initializer.getDefault(SignalGroupManager.class);
-            store(m, SignalGroupManager.class);
-        }
-        return m;
-    }
-
-
-    /**
-     * Provides a class variable default via initializer, 
-     * that function should be automated via getDefault
-     */
-    static public SignalMastLogicManager signalMastLogicManagerInstance()  {
-        SignalMastLogicManager r = getDefault(SignalMastLogicManager.class);
-        if (r != null) return r;
-        r = (SignalMastLogicManager)initializer.getDefault(SignalMastLogicManager.class);
-        store(r, SignalMastLogicManager.class);
-        return r;
-    }
-
-    static public AudioManager audioManagerInstance() {
-        if (instance().audioManager == null) instance().audioManager = DefaultAudioManager.instance();
-        return instance().audioManager;
-    }
-    private AudioManager audioManager = null;
-    
-
-    static public CatalogTreeManager catalogTreeManagerInstance()  {
-        if (instance().catalogTreeManager == null) instance().catalogTreeManager = (CatalogTreeManager)initializer.getDefault(CatalogTreeManager.class);        
-        return instance().catalogTreeManager;
-    }
-    private CatalogTreeManager catalogTreeManager = null;
-
-
-    static public MemoryManager memoryManagerInstance()  { 
-    	if (instance().memoryManager == null) instance().memoryManager = (MemoryManager)initializer.getDefault(MemoryManager.class);
-    	return instance().memoryManager; 
-    }
-	private MemoryManager memoryManager = null;
-
-    static public SectionManager sectionManagerInstance()  {
-        if (instance().sectionManager != null) return instance().sectionManager;
-        instance().sectionManager = (SectionManager)initializer.getDefault(SectionManager.class);
-        return instance().sectionManager;
-    }
-    private SectionManager sectionManager = null;
-
-    static public Timebase timebaseInstance()  {
-        if (instance().timebase != null) return instance().timebase;
-        instance().timebase = (Timebase)initializer.getDefault(Timebase.class);
-        return instance().timebase;
-    }
-    private Timebase timebase = null;
-
-
-    static public TransitManager transitManagerInstance()  {
-        if (instance().transitManager != null) return instance().transitManager;
-        instance().transitManager = (TransitManager)initializer.getDefault(TransitManager.class);
-        return instance().transitManager;
-    }
-    private TransitManager transitManager = null;
-
-    static public VSDecoderManager vsdecoderManagerInstance() {
-	    if (instance().vsdecoderManager == null) instance().vsdecoderManager = VSDecoderManager.instance();
-	    return instance().vsdecoderManager;
-    }
-    private VSDecoderManager vsdecoderManager = null;
-
-
-
 
     /* ****************************************************************************
-     *                   Old Style Accessors - Not Migrated
+     *                   Old Style Setters - Deprecated and migrated, 
+     *                                       just here for other users
+     *
+     *                     Check Jython scripts before removing
      * ****************************************************************************/
 
-    static public ClockControl clockControlInstance()  {
-        if (instance().clockControl != null) return instance().clockControl;
-        instance().clockControl = (ClockControl)initializer.getDefault(ClockControl.class);
-        return instance().clockControl;
-    }
-	static public void addClockControl(ClockControl cc) {
-		instance().clockControl = cc;
-	}
-    private ClockControl clockControl = null;
-    
 
-    static public CommandStation commandStationInstance()  {
-        return getDefault(CommandStation.class);
-    }
-    static public void setCommandStation(CommandStation p) {
-        store(p, CommandStation.class);
-	    if(consistManagerInstance() == null || 
-            (consistManagerInstance()).getClass()==DccConsistManager.class){
-                // if there is a command station available, use
-                // the NMRA consist manager instead of the generic consist
-                // manager.
-		    setConsistManager(new NmraConsistManager());
-	    }
-        instance().notifyPropertyChangeListener(COMMAND_STATION, null, null);
-    }
-
-
-    static public ConditionalManager conditionalManagerInstance()  {
-        if (instance().conditionalManager != null) return instance().conditionalManager;
-        instance().conditionalManager = (ConditionalManager)initializer.getDefault(ConditionalManager.class);
-        return instance().conditionalManager;
-    }
-    private ConditionalManager conditionalManager = null;
-    static public void setConditionalManager(ConditionalManager p) {
-        instance().addConditionalManager(p);
-    }
-    protected void addConditionalManager(ConditionalManager p) {
-        if (p!=conditionalManager && conditionalManager!=null && log.isDebugEnabled()) log.debug("ConditionalManager instance is being replaced: "+p);
-        if (p!=conditionalManager && conditionalManager==null && log.isDebugEnabled()) log.debug("ConditionalManager instance is being installed: "+p);
-        conditionalManager = p;
-    }
-
-
-    static public ConfigureManager configureManagerInstance()  { return instance().configureManager; }
-    private ConfigureManager configureManager = null;
-    static public void setConfigureManager(ConfigureManager p) {
-        instance().addConfigureManager(p);
-    }
-    protected void addConfigureManager(ConfigureManager p) {
-        if (p!=configureManager && configureManager!=null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being replaced: "+p);
-        if (p!=configureManager && configureManager==null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being installed: "+p);
-        configureManager = p;
-    }
-
-
-    static public LightManager lightManagerInstance()  { return instance().lightManager; }
-    private LightManager lightManager = null;
-    static public void setLightManager(LightManager p) {
-        instance().addLightManager(p);
-    }
-    protected void addLightManager(LightManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().lightManager).addManager(p);
-    }
-
-
-    static public LogixManager logixManagerInstance()  {
-        if (instance().logixManager != null) return instance().logixManager;
-        instance().logixManager = (LogixManager)initializer.getDefault(LogixManager.class);
-        return instance().logixManager;
-    }
-    private LogixManager logixManager = null;
-    static public void setLogixManager(LogixManager p) {
-        instance().addLogixManager(p);
-    }
-    protected void addLogixManager(LogixManager p) {
-        if (p!=logixManager && logixManager!=null && log.isDebugEnabled()) log.debug("LogixManager instance is being replaced: "+p);
-        if (p!=logixManager && logixManager==null && log.isDebugEnabled()) log.debug("LogixManager instance is being installed: "+p);
-        logixManager = p;
-    }
-
-
-
-    static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
-    private ReporterManager reporterManager = null;
-    static public void setReporterManager(ReporterManager p) {
-        instance().addReporterManager(p);
-    }
-    protected void addReporterManager(ReporterManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().reporterManager).addManager(p);
-    }
-
-
-    static public RosterIconFactory rosterIconFactoryInstance()  { 
-    	if (instance().rosterIconFactory == null) instance().rosterIconFactory = RosterIconFactory.instance();
-    	return instance().rosterIconFactory; 
-    }
-	private RosterIconFactory rosterIconFactory = null;
-
-
-    static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
-    private SensorManager sensorManager = null;
-    static public void setSensorManager(SensorManager p) {
-        instance().addSensorManager(p);
-    }
-    protected void addSensorManager(SensorManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().sensorManager).addManager(p);
-    }
-
-
-    private ShutDownManager shutDownManager = null;
-    static public void setShutDownManager(ShutDownManager p) {
-        instance().addShutDownManager(p);
-    }
-    protected void addShutDownManager(ShutDownManager p) {
-        if (p!=shutDownManager && shutDownManager!=null && log.isDebugEnabled()) log.debug("ShutDownManager instance is being replaced: "+p);
-        if (p!=shutDownManager && shutDownManager==null && log.isDebugEnabled()) log.debug("ShutDownManager instance is being installed: "+p);
-        shutDownManager = p;
-    }
-    static public ShutDownManager shutDownManagerInstance()  {
-        return instance().shutDownManager;
-    }
-
-
-    static public SignalHeadManager signalHeadManagerInstance()  {
-        if (instance().signalHeadManager != null) return instance().signalHeadManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().signalHeadManager = (SignalHeadManager)initializer.getDefault(SignalHeadManager.class);
-        return instance().signalHeadManager;
-    }
-    private SignalHeadManager signalHeadManager = null;
-    static public void setSignalHeadManager(SignalHeadManager p) {
-        instance().addSignalHeadManager(p);
-    }
-    protected void addSignalHeadManager(SignalHeadManager p) {
-        if (p!=signalHeadManager && signalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
-        if (p!=signalHeadManager && signalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
-        signalHeadManager = p;
-    }
-
-
-    static public TabbedPreferences tabbedPreferencesInstance()  {
-        return instance().tabbedPreferencesManager;
-    }
-    private TabbedPreferences tabbedPreferencesManager = null;
-    static public void setTabbedPreferences(TabbedPreferences p) {
-        instance().addTabbedPreferences(p);
-    }
-    protected void addTabbedPreferences(TabbedPreferences p) {
-        tabbedPreferencesManager = p;
-    }
-
-
-    static public ThrottleManager throttleManagerInstance()  {
-        return getDefault(ThrottleManager.class);
-    }
-    static public void setThrottleManager(ThrottleManager p) {
-        store(p, ThrottleManager.class);
-        instance().notifyPropertyChangeListener(THROTTLE_MANAGER, null, null);
-    }
-
-
-    static public TurnoutManager turnoutManagerInstance()  { return instance().turnoutManager; }
-    private TurnoutManager turnoutManager = null;
-    static public void setTurnoutManager(TurnoutManager p) {
-        instance().addTurnoutManager(p);
-    }
-    protected void addTurnoutManager(TurnoutManager p) {
-        ((jmri.managers.AbstractProxyManager)instance().turnoutManager).addManager(p);
-    }
-
-    	
-    		
     /* *************************************************************************** */
 
     static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
