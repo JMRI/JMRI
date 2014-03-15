@@ -313,14 +313,22 @@ public class SerialAddressTest extends TestCase {
 			jmri.Sensor s2 = sMgr.newSensor("CS18014","userS14");
 			jmri.Sensor s3 = sMgr.newSensor("CS18017","userS17");
 			jmri.Sensor s4 = sMgr.newSensor("CS18012","userS12");
+            JUnitAppender.assertWarnMessage("Sensor CS18016 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18014 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18017 refers to an undefined Serial Node.");
+            JUnitAppender.assertWarnMessage("Sensor CS18012 refers to an undefined Serial Node.");
 
 			jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
 			jmri.Light lgt1 = lMgr.newLight("CL18036","userL36");
+            JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18036");
 			jmri.Light lgt2 = lMgr.newLight("CL18037","userL37");
+            JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18037");
 
 			jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
 			jmri.Turnout t2 = tMgr.newTurnout("CT18032","userT32");
+            JUnitAppender.assertWarnMessage("Turnout 'CT18032' refers to an undefined Serial Node.");
 			jmri.Turnout t1 = tMgr.newTurnout("CT18034","userT34");
+            JUnitAppender.assertWarnMessage("Turnout 'CT18034' refers to an undefined Serial Node.");
 
             Assert.assertEquals("test CS18016", "userS16", SerialAddress.getUserNameFromSystemName("CS18016") );
             Assert.assertEquals("test CS18012", "userS12", SerialAddress.getUserNameFromSystemName("CS18012") );
