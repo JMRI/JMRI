@@ -14,8 +14,12 @@ import jmri.web.server.WebServerManager;
 public class ServletUtil {
 
     private static ServletUtil instance = null;
-    public static final String UTF8 = "UTF-8";
-    public static final String APPLICATION_JSON = "application/json";
+    public static final String UTF8 = "UTF-8"; // NOI18N
+    // media types
+    public static final String APPLICATION_JSON = "application/json"; // NOI18N
+    public static final String APPLICATION_XML = "application/xml"; // NOI18N
+    public static final String IMAGE_PNG = "image/png"; // NOI18N
+    public static final String TEXT_HTML = "text/html"; // NOI18N
 
     public String getRailroadName(boolean inComments) {
         if (inComments) {
