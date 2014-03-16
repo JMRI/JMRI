@@ -25,6 +25,26 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists",s);
     }
 
+    public void testCtorAddressPinName() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeSensor s = new XBeeSensor("ABCS123:4","XBee Sensor Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtorHexNodeAddress() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setSensorManager(new XBeeSensorManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeSensor s = new XBeeSensor("ABCSABCD:4","XBee Sensor Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
 	// from here down is testing infrastructure
 
 	public XBeeSensorTest(String s) {

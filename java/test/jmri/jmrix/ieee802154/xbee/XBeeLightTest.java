@@ -25,6 +25,26 @@ public class XBeeLightTest extends TestCase {
         Assert.assertNotNull("exists",s);
     }
 
+    public void testCtorEncoderPinName() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setLightManager(new XBeeLightManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeLight s = new XBeeLight("ABCL123:4","XBee Light Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtorHexNodeAddress() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setLightManager(new XBeeLightManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeLight s = new XBeeLight("ABCLABCD:4","XBee Light Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
 	// from here down is testing infrastructure
 
 	public XBeeLightTest(String s) {
