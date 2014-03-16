@@ -35,7 +35,7 @@ import java.util.List;
  * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2014
  * @version $Revision$
  */
 public class PrintLocationsAction extends AbstractAction {
@@ -118,7 +118,9 @@ public class PrintLocationsAction extends AbstractAction {
 			s = padOutString(location.getName(), Control.max_len_string_location_name) + TAB + "  "
 					+ Integer.toString(location.getLength()) + TAB
 					+ Integer.toString(location.getUsedLength()) + TAB
-					+ Integer.toString(location.getNumberRS()) + TAB + TAB + TAB
+					+ Integer.toString(location.getNumberRS()) + TAB 
+					+ Integer.toString(location.getNumberCars()) + TAB 
+					+ Integer.toString(location.getNumberEngines()) + TAB
 					+ Integer.toString(location.getPickupRS()) + TAB + Integer.toString(location.getDropRS())
 					+ NEW_LINE;
 			writer.write(s);
