@@ -81,7 +81,6 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             //Implement table cell tool tips.
             public String getToolTipText(MouseEvent e) {
                 try {
-                    log.info(getValueAt(rowAtPoint(e.getPoint()), -1).toString());
                     return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
                 } catch (RuntimeException e1) {
                     //catch null pointer exception if mouse is over an empty line
