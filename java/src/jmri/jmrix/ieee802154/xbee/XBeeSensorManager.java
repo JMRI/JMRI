@@ -41,7 +41,16 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // XBee specific methods
 
     public Sensor createNewSensor(String systemName, String userName) {
-        return new XBeeSensor(systemName, userName,tc);
+        XBeeNode curNode = (XBeeNode) tc.getNodeFromAddress(
+                      addressFromSystemName(systemName));
+        int pin = pinFromSystemName(systemName);
+        if(curNode.getPinAssigned(pin)) {
+           curNode.setPinBean(pin,new XBeeSensor(systemName, userName,tc));
+           return (XBeeSensor) curNode.getPinBean(pin);
+        } else {
+           log.debug("Failed to create sensor " + systemName);
+           return null;
+        }
     }
 
     // ctor has to register for XBee events
@@ -100,37 +109,76 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
     
-    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    // for now, set this to false. multiple additions currently works
+    // partially, but not for all possible cases.
+    public boolean allowMultipleAdditions(String systemName) { return false;  }
     
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException{
+        int encoderAddress = addressFromSystemName(prefix + typeLetter() +curAddress);
+        int input = pinFromSystemName(prefix +typeLetter() + curAddress);
+       
+        if(encoderAddress <0 )
+           throw new JmriException("Hardware Address passed should be a number");
+        return prefix+typeLetter()+encoderAddress+":"+input;
+    }
+
+    private int addressFromSystemName(String systemName) {
         int encoderAddress = 0;
         int input = 0;
         int iName = 0;
-        
-        if(curAddress.contains(":")){
-            //Address format passed is in the form of encoderAddress:input or T:sensor address
-            int seperator = curAddress.indexOf(":");
+
+        if(systemName.contains(":")){
+            //Address format passed is in the form of encoderAddress:input or L:light address
+            int seperator = systemName.indexOf(":");
             try {
-                encoderAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
-                input = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
-            } catch (NumberFormatException ex) { 
-                log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
-                throw new JmriException("Hardware Address passed should be a number");
+                encoderAddress = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1,seperator)).intValue();
+                input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                return -1;
             }
-            iName = ((encoderAddress)*10)+input;  // TODO: This will work fine for Series 1.  May not work For series 2 (can't represent address 10 and 11 on these nodes unambiguously in base 10.. i.e. is sensor 111 sensor 1 on node 11 or sensor 11 on node 1?).  Since the side effect value of iName is used in getNextValidAddress, this is an issue that needs to be addressed in a more general manner (probably not just for XBee connections).
-        } else {
-            //Entered in using the old format
-            try {
-                iName = Integer.parseInt(curAddress);
-            } catch (NumberFormatException ex) { 
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                throw new JmriException("Hardware Address passed should be a number");
+         } else {
+            try{
+                iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
+                encoderAddress = iName/10;
+                input = iName % 10;
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                return -1;
             }
         }
-        
-        return prefix+typeLetter()+iName;
+        return encoderAddress;
     }
+    private int pinFromSystemName(String systemName) {
+        int encoderAddress = 0;
+        int input = 0;
+        int iName = 0;
+
+        if(systemName.contains(":")){
+            //Address format passed is in the form of encoderAddress:input or L:light address
+            int seperator = systemName.indexOf(":");
+            try {
+                encoderAddress = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1,seperator)).intValue();
+                input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                return -1;
+            }
+         } else {
+            try{
+                iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
+                encoderAddress = iName/10;
+                input = iName % 10;
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                return -1;
+            }
+        }
+        return input;
+    }
+
+
     
     static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 

@@ -33,7 +33,16 @@ public class XBeeLightManager extends AbstractLightManager {
     public boolean allowMultipleAdditions(String systemName) { return false;  }
 
     public Light createNewLight(String systemName, String userName) {
-        return new XBeeLight(systemName, userName,tc);
+        XBeeNode curNode = (XBeeNode) tc.getNodeFromAddress(
+                      addressFromSystemName(systemName));
+        int pin = pinFromSystemName(systemName);
+        if(curNode.getPinAssigned(pin)) {
+           curNode.setPinBean(pin,new XBeeLight(systemName, userName,tc));
+           return (XBeeLight) curNode.getPinBean(pin);
+        } else {
+           log.debug("failed to create light " +systemName);
+           return null;
+        }
     }
 
     /**
@@ -42,10 +51,13 @@ public class XBeeLightManager extends AbstractLightManager {
      *      else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName){
+         return(addressFromSystemName(systemName)>=0);
+    }
+
+    private int addressFromSystemName(String systemName) {
         int encoderAddress = 0;
         int input = 0;
         int iName = 0;
-
 
         if(systemName.contains(":")){
             //Address format passed is in the form of encoderAddress:input or L:light address
@@ -55,17 +67,47 @@ public class XBeeLightManager extends AbstractLightManager {
                 input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
-                return false;
+                return -1;
             }
          } else {
             try{
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
+                encoderAddress = iName/10;
+                input = iName % 10;
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " Hardware Address to a number");
-                return false;
+                return -1;
             }
         }
-        return true;
+        return encoderAddress;
+    }
+
+    private int pinFromSystemName(String systemName) {
+        int encoderAddress = 0;
+        int input = 0;
+        int iName = 0;
+
+        if(systemName.contains(":")){
+            //Address format passed is in the form of encoderAddress:input or L:light address
+            int seperator = systemName.indexOf(":");
+            try {
+                encoderAddress = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1,seperator)).intValue();
+                input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                return -1;
+            }
+         } else {
+            try{
+                iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
+                encoderAddress = iName/10;
+                input = iName % 10;
+            } catch (NumberFormatException ex) {
+                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                return -1;
+            }
+        }
+        return input;
     }
 
     /**

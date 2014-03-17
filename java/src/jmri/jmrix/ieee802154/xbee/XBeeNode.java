@@ -9,6 +9,9 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 
+import jmri.NamedBean;
+import java.util.HashMap;
+
 /**
  * Implementation of a node for XBee networks.
  * <p>
@@ -29,12 +32,15 @@ import jmri.jmrix.ieee802154.IEEE802154Node;
 public class XBeeNode extends IEEE802154Node {
 
     private String Identifier;
-    
+    private HashMap<Integer,NamedBean> pinObjects=null;  
+
+
     /**
      * Creates a new instance of XBeeNode
      */
     public XBeeNode() {
          Identifier="";
+         pinObjects = new HashMap<Integer,NamedBean>(); 
     }
 
     public XBeeNode(byte pan[],byte user[], byte global[]) {
@@ -42,9 +48,8 @@ public class XBeeNode extends IEEE802154Node {
         Identifier="";
         if(log.isDebugEnabled()) log.debug("Created new node with panId: " +
                                 pan + " userId: " + user + " and GUID: " + global);
+         pinObjects = new HashMap<Integer,NamedBean>(); 
     }
-
-
    
     /**
      * Create the needed Initialization packet (AbstractMRMessage) for this node.
@@ -84,6 +89,42 @@ public class XBeeNode extends IEEE802154Node {
      */
     public void setIdentifier(String id){ Identifier=id; }
     public String getIdentifier(){ return Identifier; }
+
+   /**
+    *  Set the bean associated with the specified pin
+    *  @param pin is the XBee pin assigned.
+    *  @param bean is the bean we are attempting to add.
+    *  @return true if bean added, false if previous assignment exists.
+    **/
+    public boolean setPinBean(int pin, NamedBean bean){
+       if(pinObjects.containsKey(pin)) {
+          log.error("Pin {} already Assigned to object {}",pin,pinObjects.get(pin));
+          return false; 
+       } else {
+          pinObjects.put(pin,bean);
+       }
+       return true;
+    }
+
+   /**
+    *  Get the bean associated with the specified pin
+    *  @param pin is the XBee pin assigned.
+    *  @return the bean assigned to the pin, or null if
+    *          no bean is assigned.
+    **/ 
+    public NamedBean getPinBean(int pin){
+         return pinObjects.get(pin);
+    }
+
+   /**
+    *  Ask if a specified pin is assigned to a bean.
+    *  @param pin is the XBee pin assigned.
+    *  @return true if the pin has a bean assigned to it, false otherwise.
+    **/ 
+    public boolean getPinAssigned(int pin){
+      return (!pinObjects.containsKey(pin));
+    }
+
 
     private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }
