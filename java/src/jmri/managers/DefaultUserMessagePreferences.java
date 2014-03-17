@@ -1354,7 +1354,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         }
         
         if (file.exists()) {
-            log.debug("start load user pref file");
+            log.debug("start load user pref file: "+file.getPath());
             try {
                 jmri.InstanceManager.configureManagerInstance().load(file, true);
             } catch (jmri.JmriException e) {
