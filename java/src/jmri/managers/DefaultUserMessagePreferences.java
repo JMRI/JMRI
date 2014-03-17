@@ -2,28 +2,31 @@
 
 package jmri.managers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.UserPreferencesManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
-import java.awt.Point;
-import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.List;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Vector;
-import java.util.Hashtable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Enumeration;
-import java.lang.reflect.Method;
-
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import jmri.ShutDownTask;
+import jmri.UserPreferencesManager;
+import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -545,9 +548,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
             {
                 v = (Vector<PropertyChangeListener>) listeners.clone();
             }
-        if (log.isDebugEnabled()) log.debug("notify "+v.size()
-                                            +" listeners about property "
-                                            +property);
+        log.debug("notify {} listeners about property {}" ,v.size(), property);
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
@@ -1354,7 +1355,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         }
         
         if (file.exists()) {
-            log.debug("start load user pref file: "+file.getPath());
+            log.debug("start load user pref file: {}", file.getPath());
             try {
                 jmri.InstanceManager.configureManagerInstance().load(file, true);
             } catch (jmri.JmriException e) {
