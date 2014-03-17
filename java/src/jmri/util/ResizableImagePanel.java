@@ -1,7 +1,12 @@
 package jmri.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -9,14 +14,17 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-
-import jmri.util.iharder.dnd.*;
-
-import java.io.*;
-import java.awt.*;
-
-import javax.swing.*;
-import javax.imageio.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import jmri.util.iharder.dnd.FileDrop;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class extending JPanels to have a image display in a panel, supports:
@@ -211,13 +219,13 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     	}
     	else
     		_imagePath = s;
-    	if (log.isDebugEnabled()) log.debug("Image path is now : "+_imagePath);
+    	log.debug("Image path is now : {}", _imagePath);
         try {
             image = ImageIO.read(new File(_imagePath));
             if (myMouseAdapter!=null)
             	myMouseAdapter.removeMenuItem.setEnabled(true);
         } catch (Exception ex) {
-        	if (log.isDebugEnabled()) log.debug(_imagePath + " is not a valid image file, exception: " + ex);
+        	log.debug("{} is not a valid image file, exception: ", _imagePath, ex);
         	image = null;
             scaledImage = null;
         }
@@ -317,7 +325,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     			int newH = (int)getSize().getHeight();
     			int new0x = 0;
     			int new0y = 0;
-    			if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+newW+"x"+newH);
+    			log.debug("Actually resizing image {} to {}x{}", this.getImagePath(), newW, newH);
     			scaledImage = new BufferedImage(newW, newH,  image.getType() == 0? BufferedImage.TYPE_INT_ARGB : image.getType());  
     			Graphics2D g = scaledImage.createGraphics();
     			g.setBackground(getBackground());

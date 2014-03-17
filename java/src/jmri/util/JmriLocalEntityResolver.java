@@ -30,62 +30,60 @@ import org.xml.sax.InputSource;
  */
 public class JmriLocalEntityResolver implements EntityResolver {
     public InputSource resolveEntity (String publicId, String systemId) {
-        if (log.isDebugEnabled()) log.debug("-- got entity request "+systemId);
+        log.debug("-- got entity request {}", systemId);
         
         // find local file first
         try {
             URI uri = new URI(systemId);
             InputStream stream;
-            if (log.isDebugEnabled()) log.debug("systemId: "+systemId);
+            log.debug("systemId: {}", systemId);
             String scheme = uri.getScheme();
             String source = uri.getSchemeSpecificPart();
             String path = uri.getPath();
 
-            if (log.isDebugEnabled()) log.debug("scheme: "+scheme);
-            if (log.isDebugEnabled()) log.debug("source: "+source);
-            if (log.isDebugEnabled()) log.debug("path: "+path);
+            log.debug("scheme: {}", scheme);
+            log.debug("source: {}", source);
+            log.debug("path: {}", path);
 
             // figure out which form we have
             if (scheme.equals("http")) {
                 // type 3 - find local file if we can
                 String filename = path.substring(1);  // drop leading slash
-                if (log.isDebugEnabled()) {
-                    log.debug("http finds filename: " + filename);
-                }
+                log.debug("http finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
-                    log.debug("did not find local type 3 DTD file: " + filename);
+                    log.debug("did not find local type 3 DTD file: {}", filename);
                     // try to find on web
                     return null;  // tell parser to use default, which is to find on web
                 }
             } else if (path != null && path.startsWith("../DTD")) {
                 // type 1
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
-                if (log.isDebugEnabled()) log.debug("starts with ../DTD finds filename: "+filename);
+                log.debug("starts with ../DTD finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
-                    log.error("did not find type 1 DTD file: "+filename);
+                    log.error("did not find type 1 DTD file: {}", filename);
                     return null;
                 }
             } else if (path != null && path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
-                if (log.isDebugEnabled()) log.debug("doesn't contain / finds filename: "+filename);
+                log.debug("doesn't contain / finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
-                    log.error("did not find type 2 entity file: "+filename);
+                    log.error("did not find type 2 entity file: {}", filename);
                     return null;
                 }
             } else if (scheme.equals("file")) {
                 if (path != null ) {
                     // still looking for a local file, this must be absolute or full relative path
-                    if (log.isDebugEnabled()) log.debug("scheme file finds path: "+path);
+                    log.debug("scheme file finds path: {}", path);
                     // now we see if we've got a valid path
                     stream = FileUtil.findInputStream(path);
                     if (stream != null) {
@@ -110,9 +108,9 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             } else if (backIndex > 0 && forIndex >= backIndex) {
                                 realSeparator = "/";
                             }
-                            log.debug(" forIndex " + forIndex + " backIndex " + backIndex);
+                            log.debug(" forIndex {} backIndex {}", forIndex, backIndex);
                         }
-                        log.debug("File.separator " + File.separator + " realSeparator " + realSeparator);
+                        log.debug("File.separator {} realSeparator {}", File.separator, realSeparator);
                         // end special case
                         if (path.lastIndexOf(realSeparator + "DTD" + realSeparator) >= 0) {
                             if (log.isDebugEnabled()) {
@@ -130,9 +128,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             path = modifiedPath;
                         }
                         stream = FileUtil.findInputStream(path);
-                        if (log.isDebugEnabled()) {
-                            log.debug("attempting : " + path);
-                        }
+                        log.debug("attempting : {}", path);
                         if (stream != null) {
                             return new InputSource(stream);
                         } else {

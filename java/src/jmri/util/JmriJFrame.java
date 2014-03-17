@@ -2,8 +2,15 @@
 
 package jmri.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -12,19 +19,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import jmri.beans.Beans;
 import jmri.beans.BeanInterface;
+import jmri.beans.Beans;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JFrame extended for common JMRI use.
@@ -168,9 +170,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 			if ((reuseFrameSavedPosition)
 					&& (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
 							.getWindowLocation(windowFrameRef).getY() >= screen.getHeight())))) {
-				if (log.isDebugEnabled())
-					log.debug("setFrameLocation 1st clause sets \"" + getTitle() + "\" location to "
-							+ prefsMgr.getWindowLocation(windowFrameRef));
+				log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
 				this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
 			}
 			/*
@@ -179,13 +179,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 			if ((reuseFrameSavedSized)
 					&& (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
 							windowFrameRef).getHeight() == 0.0)))) {
-				if (log.isDebugEnabled())
-					log.debug("setFrameLocation 2nd clause sets \"" + getTitle() + "\" preferredSize to "
-							+ prefsMgr.getWindowSize(windowFrameRef));
+				log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
 				this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
-				if (log.isDebugEnabled())
-					log.debug("setFrameLocation 2nd clause sets \"" + getTitle() + "\" size to "
-							+ prefsMgr.getWindowSize(windowFrameRef));
+				log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
 				this.setSize(prefsMgr.getWindowSize(windowFrameRef));
 			}
 
@@ -198,8 +194,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 				if (j.getClass().getName().equals(this.getClass().getName()) && (j.getExtendedState() != ICONIFIED)
 						&& (j.isVisible()) && j.getTitle().equals(getTitle())) {
 					if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
-						if (log.isDebugEnabled())
-							log.debug("setFrameLocation 3rd clause calls offSetFrameOnScreen(" + j + ")");
+						log.debug("setFrameLocation 3rd clause calls offSetFrameOnScreen({})", j);
 						offSetFrameOnScreen(j);
 					}
 				}
@@ -227,8 +222,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 				refNo++;
 			}
 		}
-		if (log.isDebugEnabled())
-			log.debug("Created windowFrameRef: " + ref);
+		log.debug("Created windowFrameRef: {}", ref);
 		windowFrameRef = ref;
 
 	}
@@ -251,54 +245,44 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 		Dimension dim = getMaximumSize();
 		int width = this.getPreferredSize().width;
 		int height = this.getPreferredSize().height;
-		if (log.isDebugEnabled())
-			log.debug("reSizeToFitOnScreen of \"" + getTitle() + "\" starts with maximum size " + dim);
-		if (log.isDebugEnabled())
-			log.debug("reSizeToFitOnScreen starts with preferred height " + height + " width " + width);
-		if (log.isDebugEnabled())
-			log.debug("reSizeToFitOnScreen starts with location " + getX() + "," + getY());
+		log.debug("reSizeToFitOnScreen of \"{}\" starts with maximum size ", getTitle(), dim);
+		log.debug("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
+		log.debug("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
 
 		if ((width + this.getX()) >= dim.getWidth()) {
 			// not fit in width, try to move position left
 			int offsetX = (width + this.getX()) - (int) dim.getWidth(); // pixels too large
-			if (log.isDebugEnabled())
-				log.debug("reSizeToFitScreen moves \"" + getTitle() + "\" left " + offsetX + " pixels");
+			log.debug("reSizeToFitScreen moves \"{}\" left {} pixels", getTitle(), offsetX);
 			int positionX = this.getX() - offsetX;
 			if (positionX < 0) {
-				if (log.isDebugEnabled())
-					log.debug("reSizeToFitScreen sets \"" + getTitle() + "\" X to zero");
+				log.debug("reSizeToFitScreen sets \"{}\" X to zero", getTitle());
 				positionX = 0;
 			}
 			this.setLocation(positionX, this.getY());
 			// try again to see if it doesn't fit
 			if ((width + this.getX()) >= dim.getWidth()) {
 				width = width - (int) ((width + this.getX()) - dim.getWidth());
-				if (log.isDebugEnabled())
-					log.debug("reSizeToFitScreen sets \"" + getTitle() + "\" width to " + width);
+				log.debug("reSizeToFitScreen sets \"{}\" width to {}", getTitle(), width);
 			}
 		}
 		if ((height + this.getY()) >= dim.getHeight()) {
 			// not fit in height, try to move position up
 			int offsetY = (height + this.getY()) - (int) dim.getHeight(); // pixels too large
-			if (log.isDebugEnabled())
-				log.debug("reSizeToFitScreen moves \"" + getTitle() + "\" up " + offsetY + " pixels");
+			log.debug("reSizeToFitScreen moves \"{}\" up {} pixels", getTitle(), offsetY);
 			int positionY = this.getY() - offsetY;
 			if (positionY < 0) {
-				if (log.isDebugEnabled())
-					log.debug("reSizeToFitScreen sets \"" + getTitle() + "\" Y to zero");
+				log.debug("reSizeToFitScreen sets \"{}\" Y to zero", getTitle());
 				positionY = 0;
 			}
 			this.setLocation(this.getX(), positionY);
 			// try again to see if it doesn't fit
 			if ((height + this.getY()) >= dim.getHeight()) {
 				height = height - (int) ((height + this.getY()) - dim.getHeight());
-				if (log.isDebugEnabled())
-					log.debug("reSizeToFitScreen sets \"" + getTitle() + "\" height to " + height);
+				log.debug("reSizeToFitScreen sets \"{}\" height to {}", getTitle(), height);
 			}
 		}
 		this.setSize(width, height);
-		if (log.isDebugEnabled())
-			log.debug("reSizeToFitOnScreen sets height " + height + " width " + width);
+		log.debug("reSizeToFitOnScreen sets height {} width {}", height, width);
 
 	}
 
@@ -367,7 +351,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 		// modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
 		AbstractAction act = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				// if (log.isDebugEnabled()) log.debug("keystroke requested close window "+JmriJFrame.this.getTitle());
+				// log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
 				JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
 						java.awt.event.WindowEvent.WINDOW_CLOSING));
 			}
@@ -521,21 +505,17 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 					}
 
 				// calculate size as screen size minus space needed for offsets
-				if (log.isDebugEnabled())
-					log.debug("getMaximumSize returns normally " + (screen.width - widthInset) + ","
-							+ (screen.height - heightInset));
+				log.debug("getMaximumSize returns normally {},{}", (screen.width - widthInset), (screen.height - heightInset));
 				return new Dimension(screen.width - widthInset, screen.height - heightInset);
 
 			} catch (NoSuchMethodError e) {
 				Dimension screen = getToolkit().getScreenSize();
-				if (log.isDebugEnabled())
-					log.debug("getMaximumSize returns approx due to failure " + screen.width + "," + screen.height);
+				log.debug("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
 				return new Dimension(screen.width, screen.height - 45); // approximate this...
 			}
 		} catch (Exception e2) {
 			// failed completely, fall back to standard method
-			if (log.isDebugEnabled())
-				log.debug("getMaximumSize returns super due to failure " + super.getMaximumSize());
+			log.debug("getMaximumSize returns super due to failure {}", super.getMaximumSize());
 			return super.getMaximumSize();
 		}
 	}
@@ -549,8 +529,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 		Dimension screen = getMaximumSize();
 		int width = Math.min(super.getPreferredSize().width, screen.width);
 		int height = Math.min(super.getPreferredSize().height, screen.height);
-		if (log.isDebugEnabled())
-			log.debug("getPreferredSize \"" + getTitle() + "\" returns width " + width + " height " + height);
+		log.debug("getPreferredSize \"{}\" returns width {} height {}", getTitle(), width, height);
 		return new Dimension(width, height);
 	}
 
@@ -613,7 +592,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
 	public void addNotify() {
 		super.addNotify();
-		// log.debug("addNotify window ("+getTitle()+")");
+		// log.debug("addNotify window ({})", getTitle());
 		if (mShown)
 			return;
 		// resize frame to account for menubar
@@ -806,7 +785,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 					p.setWindowSize(windowFrameRef, super.getPreferredSize());
 			}
 		}
-		log.debug("dispose \"" + getTitle() + "\"");
+		log.debug("dispose \"{}\"", getTitle());
 		if (windowInterface != null) {
 			windowInterface.dispose();
 		}
