@@ -519,7 +519,7 @@ public class InstanceManager {
     }
 
     /* ****************************************************************************
-     *                   Old Style Setters - Deprecated, to be migrated
+     *                   Old Style Setters - To be migrated
      *
      *                   Migrate JMRI uses of these, then move to next category
      * ****************************************************************************/
@@ -550,14 +550,14 @@ public class InstanceManager {
         setDefault(ClockControl.class, p);
     }
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault} directly.
-     */
-    @Deprecated
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
-        store(p, TurnoutManager.class);
-        setDefault(TurnoutManager.class, p);
+        ((jmri.managers.AbstractProxyManager)getDefault(TurnoutManager.class)).addManager(p);
+        //store(p, TurnoutManager.class);
     }
 
     /**
@@ -621,14 +621,14 @@ public class InstanceManager {
     }
 
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault} directly.
-     */
-    @Deprecated
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
-        store(p, LightManager.class);
-        setDefault(LightManager.class, p);
+        ((jmri.managers.AbstractProxyManager)getDefault(LightManager.class)).addManager(p);
+        //store(p, LightManager.class);
     }
 
     /**
@@ -663,24 +663,24 @@ public class InstanceManager {
         notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
     }
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
-     */
-    @Deprecated
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, ReporterManager.class)
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
-        store(p, ReporterManager.class);
-        setDefault(ReporterManager.class, p);
+        ((jmri.managers.AbstractProxyManager)getDefault(ReporterManager.class)).addManager(p);
+        //store(p, ReporterManager.class);
     }
 
-    /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
-     */
-    @Deprecated
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, SensorManager.class)
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
-        store(p, SensorManager.class);
-        setDefault(SensorManager.class, p);
+        ((jmri.managers.AbstractProxyManager)getDefault(SensorManager.class)).addManager(p);
+        //store(p, SensorManager.class);
     }
 
     /**
