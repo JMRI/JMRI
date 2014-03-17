@@ -73,8 +73,8 @@
     <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH1" userName="Double">
       <systemName>IH1</systemName>
       <userName>Double</userName>
-      <turnoutname defines="green" />
-      <turnoutname defines="red" />
+      <turnoutname defines="green">51</turnoutname>
+      <turnoutname defines="red">52</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH10" userName="Virtual 10">
       <systemName>IH10</systemName>
@@ -124,10 +124,10 @@
     <signalhead class="jmri.implementation.configurexml.QuadOutputSignalHeadXml" systemName="IH6" userName="Quad">
       <systemName>IH6</systemName>
       <userName>Quad</userName>
-      <turnoutname defines="green" />
-      <turnoutname defines="yellow" />
-      <turnoutname defines="red" />
-      <turnoutname defines="lunar" />
+      <turnoutname defines="green">41</turnoutname>
+      <turnoutname defines="yellow">42</turnoutname>
+      <turnoutname defines="red">43</turnoutname>
+      <turnoutname defines="lunar">44</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml" systemName="IH7" userName="Single">
       <systemName>IH7</systemName>
