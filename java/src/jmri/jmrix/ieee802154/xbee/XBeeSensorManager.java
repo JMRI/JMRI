@@ -44,7 +44,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         XBeeNode curNode = (XBeeNode) tc.getNodeFromAddress(
                       addressFromSystemName(systemName));
         int pin = pinFromSystemName(systemName);
-        if(curNode.getPinAssigned(pin)) {
+        if(!curNode.getPinAssigned(pin)) {
            curNode.setPinBean(pin,new XBeeSensor(systemName, userName,tc));
            return (XBeeSensor) curNode.getPinBean(pin);
         } else {

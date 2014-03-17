@@ -10,10 +10,16 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import jmri.NamedBean;
 
 /**
  * Frame for user configuration of XBee nodes
@@ -30,7 +36,10 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     private XBeeTrafficController xtc=null;
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(rb.getString("ButtonDiscover"));
     private javax.swing.JComboBox nodeIdentifierField = new javax.swing.JComboBox();
+    protected JTable assignmentTable = null;
+    protected TableModel assignmentListModel = null;
 
+    protected JPanel assignmentPanel = null;
 	
     /**
      * Constructor method
@@ -79,6 +88,20 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         panel1.add(panel12);
 
         contentPane.add(panel1);			
+
+        // Set up the pin assignment table
+       
+                        assignmentPanel = new JPanel();
+                        assignmentPanel.setLayout(new BoxLayout(assignmentPanel, BoxLayout.Y_AXIS));
+                        assignmentListModel = new AssignmentTableModel();        
+                        assignmentTable = new JTable(assignmentListModel);
+                        assignmentTable.setRowSelectionAllowed(false);
+                        assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300,350));
+                        JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
+                        assignmentPanel.add(assignmentScrollPane,BorderLayout.CENTER);
+
+        contentPane.add(assignmentPanel);
+
 
         // Set up the notes panel
         JPanel panel3 = new JPanel();
@@ -437,10 +460,12 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         int addr = -1;
         try 
         {
-            addr = Integer.parseInt((String)nodeAddrField.getSelectedItem());
+            addr = Integer.parseInt((String)nodeAddrField.getSelectedItem(),16);
         }
         catch (Exception e)
         {
+            log.debug("nodeAddrField Contains \"{}\"",
+                       (String)nodeAddrField.getSelectedItem());
             statusText1.setText(rb.getString("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -476,7 +501,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
        nodeAddr64Field.removeAllItems();
        for(int i=0;i<xtc.getNumNodes();i++){
            current=(XBeeNode) xtc.getNode(i);
-           nodeAddrField.insertItemAt(current.getNodeAddress(),i);
+           nodeAddrField.insertItemAt(""+current.getNodeAddress(),i);
            nodeAddr64Field.insertItemAt(jmri.util.StringUtil.hexStringFromBytes(current.getGlobalAddress()),i);
            nodeIdentifierField.insertItemAt(current.getIdentifier(),i);
        }
@@ -489,9 +514,92 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     // Update the display when the selected node changes.
     @Override
     protected void nodeSelected(){
+       int nodeAddress = readNodeAddress();
        nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
        nodeIdentifierField.setSelectedIndex(nodeAddrField.getSelectedIndex());
+       if(nodeAddress >= 0) {
+          ((AssignmentTableModel)assignmentListModel).setNode((XBeeNode)xtc.getNodeFromAddress(nodeAddress));
+       } else {
+          log.error("No Node Selected");
+       }
     }
+
+    /**
+     * Set up table for displaying bit assignments
+     */
+    public class AssignmentTableModel extends AbstractTableModel
+    {
+
+        private XBeeNode curNode = null;
+
+        public static final int BIT_COLUMN = 0;
+        public static final int SYSNAME_COLUMN = 1;
+        public static final int USERNAME_COLUMN = 2;
+
+        private String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
+                rb.getString("HeadingSystemName"),
+                rb.getString("HeadingUserName")};
+
+        private String free = rb.getString("AssignmentFree");
+        private int curRow = -1;
+
+        public void setNode(XBeeNode node){
+            curNode=node;
+            fireTableDataChanged();
+        }
+
+        public void initTable(JTable assignmentTable){
+           TableColumnModel assignmentColumnModel = assignmentTable.getColumnModel();
+           TableColumn bitColumn = assignmentColumnModel.getColumn(BIT_COLUMN);
+           bitColumn.setMinWidth(20);
+           bitColumn.setMaxWidth(40);
+           bitColumn.setResizable(true);
+           TableColumn sysColumn = assignmentColumnModel.getColumn(SYSNAME_COLUMN);
+           sysColumn.setMinWidth(75);
+           sysColumn.setMaxWidth(100);
+           sysColumn.setResizable(true);
+           TableColumn userColumn = assignmentColumnModel.getColumn(USERNAME_COLUMN);
+           userColumn.setMinWidth(90);
+           userColumn.setMaxWidth(450);
+           userColumn.setResizable(true);
+        }
+
+
+        public String getColumnName(int c) {return assignmentTableColumnNames[c];}
+        public Class<?> getColumnClass(int c) {
+            if(c==BIT_COLUMN) return Integer.class;
+            else return String.class;
+        }
+        public boolean isCellEditable(int r,int c) {return false;}
+        public int getColumnCount () {return 3;}
+        public int getRowCount () {return 8;}
+        public Object getValueAt (int r,int c) {
+            Integer pin = new Integer(r);
+            try {
+               switch( c ) {
+                  case BIT_COLUMN:
+                       return pin;
+                  case SYSNAME_COLUMN:
+                       if(curNode.getPinAssigned(pin))
+                          return curNode.getPinBean(pin).getSystemName();
+                       else return free; 
+                  case USERNAME_COLUMN:
+                       if(curNode.getPinAssigned(pin))
+                          return curNode.getPinBean(pin).getUserName();
+                       else return ""; 
+                  default: return "";
+               }
+            } catch( java.lang.NullPointerException npe) {
+               log.debug("Caught NPE getting pin assignment for pin {}",pin);
+               return "";
+            }
+        }
+
+        public void setValueAt(Object type,int r,int c) {
+                        // nothing is stored here
+        }
+   }
+
 
 
     static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());

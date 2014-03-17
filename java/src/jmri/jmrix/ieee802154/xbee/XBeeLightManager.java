@@ -36,7 +36,7 @@ public class XBeeLightManager extends AbstractLightManager {
         XBeeNode curNode = (XBeeNode) tc.getNodeFromAddress(
                       addressFromSystemName(systemName));
         int pin = pinFromSystemName(systemName);
-        if(curNode.getPinAssigned(pin)) {
+        if(!curNode.getPinAssigned(pin)) {
            curNode.setPinBean(pin,new XBeeLight(systemName, userName,tc));
            return (XBeeLight) curNode.getPinBean(pin);
         } else {

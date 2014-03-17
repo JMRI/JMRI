@@ -122,7 +122,7 @@ public class XBeeNode extends IEEE802154Node {
     *  @return true if the pin has a bean assigned to it, false otherwise.
     **/ 
     public boolean getPinAssigned(int pin){
-      return (!pinObjects.containsKey(pin));
+      return (pinObjects.containsKey(pin));
     }
 
 
