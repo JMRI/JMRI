@@ -2,8 +2,12 @@
 package jmri.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -280,6 +284,24 @@ public class FileUtilTest extends TestCase {
         FileUtil.copy(FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf")), file);
         FileUtil.delete(file);
         Assert.assertFalse(file.exists());
+    }
+
+    public void testAppendTextToFile() throws IOException {
+        File file = File.createTempFile("FileUtilTest", null);
+        String text = "jmri.util.FileUtil#appendTextToFile";
+        FileUtil.appendTextToFile(file, text);
+        // Java 7 equivalent for following code
+        // List<String> lines = Files.readAllLines(Paths.get(path), encoding);
+        // Assert.assertEquals(text, lines.get(0));
+        FileInputStream stream = new FileInputStream(file);
+        try {
+            FileChannel fc = stream.getChannel();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            // test appends newline because appendTextToFile() method uses println() to append to file
+            Assert.assertEquals(text + "\n", StandardCharsets.UTF_8.decode(bb).toString());
+        } finally {
+            stream.close();
+        }
     }
 
     // from here down is testing infrastructure

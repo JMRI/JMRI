@@ -2,13 +2,9 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,11 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import jmri.jmrit.operations.FileHelper;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of the name and directory of an Excel program used for switch lists.
@@ -47,7 +44,7 @@ public class SetupExcelProgramSwitchListFrame extends OperationsFrame {
 		// row 1
 		JPanel pDirectoryName = new JPanel();
 		pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Directory")));
-		pDirectoryName.add(new JLabel(FileHelper.getOperationsFile(TrainCustomSwitchList.getDirectoryName()).getPath()));
+		pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomSwitchList.getDirectoryName()).getPath()));
 
 		JPanel pFileName = new JPanel();
 		pFileName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("FileName")));

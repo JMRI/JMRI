@@ -1,11 +1,8 @@
 package jmri.jmrit.operations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -14,6 +11,8 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores the operation setup using xml files.
@@ -101,6 +100,7 @@ public class OperationsXml extends XmlFile {
 
 	public String getDefaultOperationsFilename() {
 		return getFileLocation() + getOperationsDirectoryName() + File.separator + getOperationsFileName();
+		//return OperationsManager.getInstance().getPath(getOperationsFileName());
 	}
 
 	public static void setOperationsDirectoryName(String name) {
@@ -127,7 +127,7 @@ public class OperationsXml extends XmlFile {
 	 * Absolute path to location of Operations files.
 	 * <P>
 	 * Default is in the user's files path, but can be set to anything.
-	 * 
+	 *
 	 * @see jmri.util.FileUtil#getUserFilesPath()
 	 */
 	public static String getFileLocation() {
