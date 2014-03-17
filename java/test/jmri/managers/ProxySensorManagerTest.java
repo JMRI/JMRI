@@ -1,4 +1,4 @@
-// ProxyLightManagerTest.java
+// ProxySensorManagerTest.java
 
 package jmri.managers;
 
@@ -9,16 +9,16 @@ import jmri.*;
 import junit.framework.*;
 
 /**
- * Test the ProxyLightManager
- * @author			Bob Jacobsen    2003, 2006, 2008
+ * Test the ProxySensorManager
+ * @author			Bob Jacobsen    2003, 2006, 2008, 2014
  * @version	$Revision$
  */
 
-public class ProxyLightManagerTest extends TestCase {
+public class ProxySensorManagerTest extends TestCase {
 
-	public String getSystemName(int i) { return "JL"+i; }
+	public String getSystemName(int i) { return "JS"+i; }
 
-	protected LightManager l = null;	// holds objects under test
+	protected SensorManager l = null;	// holds objects under test
 
 	static protected boolean listenerResult = false;
 	protected class Listen implements PropertyChangeListener {
@@ -31,9 +31,9 @@ public class ProxyLightManagerTest extends TestCase {
 		l.dispose();  // all we're really doing here is making sure the method exists
 	}
 
-	public void testLightPutGet() {
+	public void testPutGet() {
 		// create
-		Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
+		Sensor t = l.newSensor(getSystemName(getNumToTest1()), "mine");
 		// check
 		Assert.assertTrue("real object returned ", t != null);
 		Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
@@ -42,7 +42,7 @@ public class ProxyLightManagerTest extends TestCase {
 
 	public void testDefaultSystemName() {
 		// create
-		Light t = l.provideLight(""+getNumToTest1());
+		Sensor t = l.provideSensor(""+getNumToTest1());
 		// check
 		Assert.assertTrue("real object returned ", t != null);
 		Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -50,61 +50,61 @@ public class ProxyLightManagerTest extends TestCase {
 
 	public void testSingleObject() {
 		// test that you always get the same representation
-		Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");
+		Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
 		Assert.assertTrue("t1 real object returned ", t1 != null);
 		Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
 		Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
-		Light t2 = l.newLight(getSystemName(getNumToTest1()), "mine");
+		Sensor t2 = l.newSensor(getSystemName(getNumToTest1()), "mine");
 		Assert.assertTrue("t2 real object returned ", t2 != null);
 		// check
 		Assert.assertTrue("same new ", t1 == t2);
 	}
 
 	public void testMisses() {
-		// try to get nonexistant lights
+		// try to get nonexistant objects
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}
 	
 	public void testUpperLower() {
-		Light t = l.provideLight(""+getNumToTest2());
+		Sensor t = l.provideSensor(""+getNumToTest2());
 		String name = t.getSystemName();
-		Assert.assertNull(l.getLight(name.toLowerCase()));
+		Assert.assertNull(l.getSensor(name.toLowerCase()));
 	}
 
 	public void testRename() {
-		// get light
-		Light t1 = l.newLight(getSystemName(getNumToTest1()), "before");
+		// get 
+		Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
 		Assert.assertNotNull("t1 real object ", t1);
 		t1.setUserName("after");
-		Light t2 = l.getByUserName("after");
+		Sensor t2 = l.getByUserName("after");
 		Assert.assertEquals("same object", t1, t2);
 		Assert.assertEquals("no old object", null, l.getByUserName("before"));
 	}
 	
 	public void testTwoNames() {
-        Light il211 = l.provideLight("IL211");
-        Light jl211 = l.provideLight("JL211");
+        Sensor jl212 = l.provideSensor("JS212");
+        Sensor jl211 = l.provideSensor("JS211");
        
-        Assert.assertNotNull(il211);
+        Assert.assertNotNull(jl212);
         Assert.assertNotNull(jl211);
-        Assert.assertTrue(il211 != jl211);
+        Assert.assertTrue(jl212 != jl211);
 	}
     
 
 	public void testDefaultNotInternal() {
-        Light lut = l.provideLight("211");
+        Sensor lut = l.provideSensor("211");
         
         Assert.assertNotNull(lut);
-        Assert.assertEquals("JL211", lut.getSystemName());
+        Assert.assertEquals("JS211", lut.getSystemName());
 	}
     
 	public void testProvideUser() {
-        Light l1 = l.provideLight("211");
+        Sensor l1 = l.provideSensor("211");
         l1.setUserName("user 1");
-        Light l2 = l.provideLight("user 1");
-        Light l3 = l.getLight("user 1");
+        Sensor l2 = l.provideSensor("user 1");
+        Sensor l3 = l.getSensor("user 1");
         
         Assert.assertNotNull(l1);
         Assert.assertNotNull(l2);
@@ -113,32 +113,32 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertEquals(l3, l2);
         Assert.assertEquals(l1, l3);
         
-        Light l4 = l.getLight("JLuser 1");
+        Sensor l4 = l.getSensor("JLuser 1");
         Assert.assertNull(l4);
 	}
     
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
         
-        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
         
-        Assert.assertTrue(InstanceManager.getDefault(LightManager.class) instanceof ProxyLightManager);
+        Assert.assertTrue(InstanceManager.getDefault(SensorManager.class) instanceof ProxySensorManager);
         
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
         
-        InternalLightManager m = new InternalLightManager() {
+        InternalSensorManager m = new InternalSensorManager() {
             public String getSystemPrefix() { return "J"; }
         };
-        InstanceManager.setLightManager(m);
+        InstanceManager.setSensorManager(m);
         
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL2"));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"));
     }
     
 	/**
-	 * Number of light to test.  
+	 * Number of unit to test.  
 	 * Made a separate method so it can be overridden in 
 	 * subclasses that do or don't support various numbers
 	 */
@@ -147,19 +147,19 @@ public class ProxyLightManagerTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public ProxyLightManagerTest(String s) {
+    public ProxySensorManagerTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ProxyLightManagerTest.class.getName()};
+        String[] testCaseName = {"-noloading", ProxySensorManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(ProxyLightManagerTest.class);
+        TestSuite suite = new TestSuite(ProxySensorManagerTest.class);
         return suite;
     }
 
@@ -167,14 +167,14 @@ public class ProxyLightManagerTest extends TestCase {
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
         // create and register the manager object
-        l = new InternalLightManager() {
+        l = new InternalSensorManager() {
             public String getSystemPrefix() { return "J"; }
         };
-        jmri.InstanceManager.setLightManager(l);
+        jmri.InstanceManager.setSensorManager(l);
     }
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static Logger log = Logger.getLogger(ProxyLightManagerTest.class.getName());
+    static Logger log = Logger.getLogger(ProxySensorManagerTest.class.getName());
 
 }
