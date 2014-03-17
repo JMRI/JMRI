@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.Setup;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -182,7 +181,7 @@ public class WebServerPreferences extends Bean {
                 }
             }
             if (file.createNewFile()) {
-                log.debug("Creating new Web Server prefs file: " + fileName);
+                log.debug("Creating new Web Server prefs file: {}", fileName);
             }
         } catch (IOException ea) {
             log.error("Could not create Web Server preferences file.");

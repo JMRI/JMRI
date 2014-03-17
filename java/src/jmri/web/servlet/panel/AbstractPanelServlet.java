@@ -53,9 +53,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("Handling GET request for " + request.getRequestURI());
-        }
+        log.debug("Handling GET request for {}", request.getRequestURI());
         if (request.getRequestURI().endsWith("/")) {
             listPanels(request, response);
         } else {

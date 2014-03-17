@@ -316,18 +316,14 @@ public class RosterServlet extends HttpServlet {
             if (pWidth < width) {
                 width = pWidth;
             }
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @maxWidth: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @maxWidth: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (request.getParameter("minWidth") != null) {
             pWidth = Integer.parseInt(request.getParameter("minWidth"));
             if (pWidth > width) {
                 width = pWidth;
             }
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @minWidth: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @minWidth: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (request.getParameter("width") != null) {
             width = Integer.parseInt(request.getParameter("width"));
@@ -335,43 +331,31 @@ public class RosterServlet extends HttpServlet {
         if (width != image.getWidth()) {
             height = (int) (height * (1.0 * width / image.getWidth()));
             pHeight = height;
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @adjusting height: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @adjusting height: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (request.getParameter("maxHeight") != null) {
             pHeight = Integer.parseInt(request.getParameter("maxHeight"));
             if (pHeight < height) {
                 height = pHeight;
             }
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @maxHeight: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @maxHeight: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (request.getParameter("minHeight") != null) {
             pHeight = Integer.parseInt(request.getParameter("minHeight"));
             if (pHeight > height) {
                 height = pHeight;
             }
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @minHeight: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @minHeight: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (request.getParameter("height") != null) {
             height = Integer.parseInt(request.getParameter("height"));
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @height: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @height: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
         if (height != image.getHeight() && width == image.getWidth()) {
             width = (int) (width * (1.0 * height / image.getHeight()));
-            if (log.isDebugEnabled()) {
-                log.debug(fname + " @adjusting width: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-            }
+            log.debug("{} @adjusting width: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         }
-        if (log.isDebugEnabled()) {
-            log.debug(fname + " @responding: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
-        }
+        log.debug("{} @responding: width: {}, pWidth: {}, height: {}, pHeight: {}", fname, width, pWidth, height, pHeight);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         if (height != image.getHeight() || width != image.getWidth()) {
             BufferedImage resizedImage = new BufferedImage(width, height, image.getType());

@@ -33,9 +33,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
     @Override
     protected String getXmlPanel(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting " + getPanelType() + " for " + name);
-        }
+        log.debug("Getting {} for {}", getPanelType(), name);
         try {
             LayoutEditor editor = (LayoutEditor) getEditor(name);
             Element panel = new Element("panel");
@@ -68,9 +66,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             // include positionable elements
             List<Positionable> contents = editor.getContents();
-            if (log.isDebugEnabled()) {
-                log.debug("N positionable elements: " + contents.size());
-            }
+            log.debug("N positionable elements: {}", contents.size());
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
@@ -99,9 +95,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             // include PositionablePoints
             int num = editor.pointList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N positionablepoint elements: " + num);
-            }
+            log.debug("N positionablepoint elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.pointList.get(i);
@@ -155,15 +149,11 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     num++;
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("N layoutblock elements: " + num);
-            }
+            log.debug("N layoutblock elements: {}", num);
 
             // include LevelXings
             num = editor.xingList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N levelxing elements: " + num);
-            }
+            log.debug("N levelxing elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.xingList.get(i);
@@ -179,9 +169,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             }
             // include LayoutTurnouts
             num = editor.turnoutList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N layoutturnout elements: " + num);
-            }
+            log.debug("N layoutturnout elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.turnoutList.get(i);
@@ -198,9 +186,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             // include TrackSegments
             num = editor.trackList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N tracksegment elements: " + num);
-            }
+            log.debug("N tracksegment elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.trackList.get(i);
@@ -216,9 +202,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             }
             // include LayoutSlips
             num = editor.slipList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N layoutSlip elements: " + num);
-            }
+            log.debug("N layoutSlip elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.slipList.get(i);
@@ -234,9 +218,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             }
             // include LayoutTurntables
             num = editor.turntableList.size();
-            if (log.isDebugEnabled()) {
-                log.debug("N turntable elements: " + num);
-            }
+            log.debug("N turntable elements: {}", num);
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     Object sub = editor.turntableList.get(i);
