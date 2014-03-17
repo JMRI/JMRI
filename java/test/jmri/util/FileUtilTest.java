@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -298,7 +298,7 @@ public class FileUtilTest extends TestCase {
             FileChannel fc = stream.getChannel();
             MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
             // test appends newline because appendTextToFile() method uses println() to append to file
-            Assert.assertEquals(text + "\n", StandardCharsets.UTF_8.decode(bb).toString());
+            Assert.assertEquals(text + "\n", Charset.forName("UTF-8").decode(bb).toString());
         } finally {
             stream.close();
         }
