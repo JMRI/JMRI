@@ -315,13 +315,30 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         chooser.setFileView(new ProfileFileView());
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            ProfileManager.defaultManager().addSearchPath(chooser.getSelectedFile());
-            searchPaths.setSelectedValue(chooser.getSelectedFile(), true);
+            try {
+                ProfileManager.defaultManager().addSearchPath(chooser.getSelectedFile());
+                searchPaths.setSelectedValue(chooser.getSelectedFile(), true);
+            } catch (IOException ex) {
+                log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage", chooser.getSelectedFile().getPath(), ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnAddSearchPathActionPerformed
 
     private void btnRemoveSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnRemoveSearchPathActionPerformed
-        ProfileManager.defaultManager().removeSearchPath((File) searchPaths.getSelectedValue());
+        File path = (File) searchPaths.getSelectedValue();
+        try {
+            ProfileManager.defaultManager().removeSearchPath(path);
+        } catch (IOException ex) {
+            log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
+                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
 
     private void searchPathsValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_searchPathsValueChanged
