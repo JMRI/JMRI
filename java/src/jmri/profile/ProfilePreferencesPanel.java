@@ -391,10 +391,12 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 JOptionPane.CANCEL_OPTION
         );
         if (result == JOptionPane.OK_OPTION) {
-            // TODO: confirm desire to delete profile
             if (!FileUtil.delete(deletedProfile.getPath())) {
-                // TODO: notify user that profile directory could not be deleted
                 log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
+                        JOptionPane.ERROR_MESSAGE);
             }
             ProfileManager.defaultManager().removeProfile(deletedProfile);
             log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
@@ -416,7 +418,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 profilesTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                // TODO: Display error dialog - selected file is not a profile directory
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage", chooser.getSelectedFile().getPath()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage"),
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnOpenExistingProfileActionPerformed
