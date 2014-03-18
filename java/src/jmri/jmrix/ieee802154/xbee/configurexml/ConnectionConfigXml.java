@@ -33,7 +33,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Write out the SerialNode objects too
      * @param e Element being extended
      */
-    protected void extendElenent(Element e) {
+    @Override
+    protected void extendElement(Element e) {
         XBeeConnectionMemo xcm; 
         try {
         xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
