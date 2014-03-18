@@ -24,7 +24,7 @@ public class ProfileFileView extends FileView {
 
     @Override
     public Boolean isTraversable(File f) {
-        if (f.isDirectory() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
+        if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
             return false;
         }
         return null;
@@ -32,10 +32,9 @@ public class ProfileFileView extends FileView {
 
     @Override
     public Icon getIcon(File f) {
-        if (f.isDirectory() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
+        if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
             return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
-        } else {
-            return null;
         }
+        return null;
     }
 }
