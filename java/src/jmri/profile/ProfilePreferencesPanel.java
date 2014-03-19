@@ -342,7 +342,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
 
     private void searchPathsValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_searchPathsValueChanged
-        if (searchPaths.getSelectedValue().equals(new File(FileUtil.getPreferencesPath()))) {
+        if (searchPaths.getSelectedValue() == null || searchPaths.getSelectedValue().equals(new File(FileUtil.getPreferencesPath()))) {
             this.btnRemoveSearchPath.setEnabled(false);
         } else {
             this.btnRemoveSearchPath.setEnabled(true);
