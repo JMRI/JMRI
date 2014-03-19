@@ -6,12 +6,16 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileView;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author rhwood
  */
 public class ProfileFileView extends FileView {
+
+    private static final Logger log = LoggerFactory.getLogger(ProfileFileView.class);
 
     @Override
     public String getDescription(File f) {
@@ -24,16 +28,24 @@ public class ProfileFileView extends FileView {
 
     @Override
     public Boolean isTraversable(File f) {
-        if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
-            return false;
+        try {
+            if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
+                return false;
+            }
+        } catch (NullPointerException ex) {
+            log.debug("Unable to list contents of {}", f.getPath());
         }
-        return null;
+        return true;
     }
 
     @Override
     public Icon getIcon(File f) {
-        if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
-            return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
+        try {
+            if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
+                return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
+            }
+        } catch (NullPointerException ex) {
+            log.debug("Unable to list contents of {}", f.getPath());
         }
         return null;
     }
