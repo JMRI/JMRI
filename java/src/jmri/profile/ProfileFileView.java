@@ -33,6 +33,7 @@ public class ProfileFileView extends FileView {
                 return false;
             }
         } catch (NullPointerException ex) {
+            // this is most likely caused by virtual folders like Networks in Windows 7
             log.debug("Unable to list contents of {}", f.getPath());
         }
         return true;
@@ -40,12 +41,8 @@ public class ProfileFileView extends FileView {
 
     @Override
     public Icon getIcon(File f) {
-        try {
-            if (f.isDirectory() && f.canRead() && Arrays.asList(f.list()).contains(Profile.PROPERTIES)) {
-                return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
-            }
-        } catch (NullPointerException ex) {
-            log.debug("Unable to list contents of {}", f.getPath());
+        if (!isTraversable(f)) {
+            return new ImageIcon(FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/jmri16x16.gif")); // NOI18N
         }
         return null;
     }
