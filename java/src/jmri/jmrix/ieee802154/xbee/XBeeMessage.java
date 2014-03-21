@@ -110,7 +110,17 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
           return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest(address,"D" + pin, on?onValue:offValue));
       }
 
-
+      public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress16 address, int[] payload) {
+          return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest16(address,payload));
    }
 
+      public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress64 address, int[] payload) {
+          return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest64(address,payload));
+   }
+
+      public static XBeeMessage getZNetTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress64 address, int[] payload) {
+          return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest64(address,payload));
+   }
+
+}
 /* @(#)XBeeMessage.java */
