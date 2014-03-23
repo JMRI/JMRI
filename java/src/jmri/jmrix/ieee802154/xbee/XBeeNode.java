@@ -9,6 +9,9 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 
+import com.rapplogic.xbee.api.XBeeAddress16;
+import com.rapplogic.xbee.api.XBeeAddress64;
+
 import jmri.NamedBean;
 import java.util.HashMap;
 
@@ -81,6 +84,28 @@ public class XBeeNode extends IEEE802154Node {
      * needed processing.
      */
     public void resetTimeout(AbstractMRMessage m) { return; }
+
+    /*
+     *  Convert the 16 bit user address to an XBeeAddress16 object.
+     */
+    public XBeeAddress16 getXBeeAddress16(){
+       return new XBeeAddress16(getUserAddress()[0],
+                                getUserAddress()[1]);
+    }
+
+    /*
+     *  Convert the 64 bit address to an XBeeAddress64 object.
+     */
+    public XBeeAddress64 getXBeeAddress64(){
+       return new XBeeAddress64(getGlobalAddress()[0],
+                                getGlobalAddress()[1],
+                                getGlobalAddress()[2],
+                                getGlobalAddress()[3],
+                                getGlobalAddress()[4],
+                                getGlobalAddress()[5],
+                                getGlobalAddress()[6],
+                                getGlobalAddress()[7]);
+    }
 
 
     /**
