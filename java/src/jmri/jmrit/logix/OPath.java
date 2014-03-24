@@ -218,9 +218,11 @@ public class OPath extends jmri.Path  {
             (_fromPortal==null?"":" from portal "+_fromPortal.getName())+
             (_toPortal==null?"":" to portal "+ _toPortal.getName());
     }
-    
+
+    /**
+     * override to disallow duplicate setting
+     */
     public void addSetting(BeanSetting t) {
-    	// add check for duplicate setting
         Iterator<BeanSetting> iter = getSettings().iterator();
         while (iter.hasNext()) {
         	BeanSetting bs = iter.next();
@@ -232,7 +234,10 @@ public class OPath extends jmri.Path  {
 		super.addSetting(t);
     }
     
-/* Not necessary, but this is what would define "equal" Paths for OBlocks  
+    /**
+     * Override to indicate logical equality for use as paths in OBlocks.
+     * 
+     */
     public boolean equals(OPath path) {
     	if (_fromPortal!=null && !_fromPortal.equals(path.getFromPortal())) {
     		return false;
@@ -255,7 +260,7 @@ public class OPath extends jmri.Path  {
         	}
         }
     	return true;
-    }*/
+    }
        
     static Logger log = LoggerFactory.getLogger(OPath.class.getName());
 }
