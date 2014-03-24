@@ -138,7 +138,11 @@ Finally, connect a USB cable between the PR3 and your computer.</p>
     CVs for some decoders, including many sound decoders, when 
     the power supply is a 12VDC or 14VDC power supply.  Some users 
     repot that using a 18 VDC regulated power supply enables them 
-    to reliably read sound decoder CVs via the PR3 programming track.</p>
+    to reliably read sound decoder CVs via the PR3 programming track.
+    <strong>Do this at your own risk!</strong>  <EM>Current Digitrax 
+    documentation for the PR3 defines a maximum input voltage of 15 Volts DC, 
+    where previously the maximum voltage was listed as 20 Volts DC.  Use of 
+    input voltages higher than 15 Volts DC could damage the PR3 hardware.</EM></p>
 
 <h3>Recommended setup</h3>
 <p>

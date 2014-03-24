@@ -348,8 +348,14 @@ PR3 instead.<br>
                         programming hardware.</li>
                     <li>Some PR3 users report that the PR3 programming track can 
                         successfully read and program sound decoders when the PR3 is 
-                        powered using an 18VDC power supply instead of a lower-voltage
-                        power supply such as the PS12 or PS14.</li>
+                        powered using an 18 Volts DC power supply instead of a 
+                        lower-voltage power supply such as the PS12 or PS14. 
+                        <strong>Do this at your own risk!</strong>  <EM>Current 
+                        Digitrax documentation for the PR3 defines a maximum 
+                        input voltage of 15 Volts DC, where previously the 
+                        maximum voltage was listed as 20 Volts DC.  Use of input 
+                        voltages higher than 15 Volts DC could damage the PR3 
+                        hardware.</EM></li>
                 </ul>
                 
             </li>
@@ -435,6 +441,11 @@ PR3 instead.<br>
             <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> for 
             background, ideas, and suggestions for implementing a standalone 
             LocoNet.</p>
+        <p>Some more recent Digitrax command stations will refuse to accept switch
+            commands when track power is turned off.  This can result in a "storm" 
+            of repeated switch messages on LocoNet if track power is off when switch
+            messages are sent.  This problem can be avoided by ensuring that track
+            power is on when switch messages can be sent.</p>
 </ul>
 
 <h2><a name="Support">Support</a></h2>
@@ -498,7 +509,7 @@ hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
             <li><a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Download Sounds</a></li>
         </ul>
     </li>
-    <li>Other
+    <li>Other LocoNet-related information and features
         <ul>
             <li><a href="Addressing.shtml">JMRI addressing</a> of LocoNet&reg; turnouts, 
                 sensors and transponding zones</li>
