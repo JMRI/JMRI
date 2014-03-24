@@ -195,10 +195,7 @@ public class WarrantTableAction extends AbstractAction {
     synchronized protected static void writetoLog(String text) {
     	if (_log!=null) {
     		_log.writeLn(text);
-    	} else {
-    		log.error("Op Session log cannot write \""+text+"\"");
-    	}
-    	
+    	}    	
     }
     
     private static void setupWarrantTable() {

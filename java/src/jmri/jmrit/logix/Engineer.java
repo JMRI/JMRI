@@ -140,6 +140,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     setSensor(ts.getBlockName(), ts.getValue());
                 } else if (command.equals("WAIT SENSOR")) {
                     getSensor(ts.getBlockName(), ts.getValue());
+                } else if (command.equals("START TRACKER")) {
+                	_warrant.startTracker();
                 } else if (command.equals("RUN WARRANT")) {
                     runWarrant(ts);
                 } else if (_runOnET && command.equals("NOOP")) {
@@ -538,9 +540,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Wait for Sensor state event 
-     * @param sensorName
-     * @param action
+     * @param Throttle setting
      */
     private void runWarrant(ThrottleSetting ts) {
     	Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant(ts.getBlockName());

@@ -476,6 +476,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         return 0;
     }
+    
+    protected void startTracker() {
+    	TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
+    }
 
     protected void stopWarrant() {
         _delayStart = false;
@@ -528,7 +532,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     {
         if(_debug) log.debug("setRunMode("+mode+")  _runMode= "+_runMode+" for warrant= "+getDisplayName());
         String msg = null;
-        int oldMode = _runMode;
         if (_runMode!=MODE_NONE) {
         	msg = getRunModeMessage();
             log.error(msg);
@@ -586,8 +589,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
              	startupWarrant();            	 
              }
         }
-        _runMode = mode;
-        firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
         if(_debug) log.debug("Exit setRunMode()  _runMode= "+_runMode+", msg= "+msg);
         return msg;
     }	// end setRunMode
@@ -651,6 +652,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 	}
                     break;
             }
+            return ret;
         } else {
             synchronized(_engineer) { 
                 oldIndex = _engineer.getRunState();
@@ -659,8 +661,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         _engineer.setHalt(true);
                         break;
                     case RESUME:
-                        _engineer.setHalt(false);
-                        moveIntoNextBlock();
+                    	ret = moveIntoNextBlock();
+                        if (ret) {
+                            _engineer.setHalt(false);
+                        }
                         break;
                     case RETRY:
                     	retryBlocKWaiting();
@@ -671,7 +675,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 }
             }
         }
-        firePropertyChange("controlChange", Integer.valueOf(oldIndex), Integer.valueOf(idx));
+        if (ret) {
+            firePropertyChange("controlChange", Integer.valueOf(oldIndex), Integer.valueOf(idx));        	
+        }
         return ret;
     }
 
@@ -721,8 +727,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // getNextSpeed() calls allocateNextBlock() who will set _stoppingBlock, if necessary
         // do before starting throttle commands in engineer
         if (_engineer!=null) {
+            firePropertyChange("runMode", MODE_NONE, Integer.valueOf(_runMode));
             _currentSpeed = getNextSpeed();		// will modify _currentSpeed, if necessary
             _engineer.rampSpeedTo(_currentSpeed, 0);        	
+        } else {
+        	_runMode = MODE_NONE;
         }
     }
 
@@ -876,8 +885,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         int state = block.getState();
         if ((state & OBlock.DARK) != 0) {
             msg = Bundle.getMessage("BlockDark", block.getDisplayName());
-         } else if ((state & OBlock.OCCUPIED) == 0) {
+        } else if ((state & OBlock.OCCUPIED) == 0) {
             msg = Bundle.getMessage("warnStart", getTrainId(), block.getDisplayName());
+        } else {
+        	// check if tracker is on this train
+        	TrackerTableAction.stopTrackerIn(block);
         }
     	return msg;
     }
@@ -1119,10 +1131,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return true if OK to move
      */
     private boolean moveIntoNextBlock() {
+        OBlock block = getBlockAt(_idxCurrentOrder);
+        if ((block.getState() & OBlock.OCCUPIED)==0) {
+            firePropertyChange("blockChange", block, null);                        	
+        	return false;
+        }
     	// getNextSpeed() calls allocateNextBlock(getBlockOrderAt(_idxCurrentOrder+1))
-        String nextSpeed = getNextSpeed();        	
-        float len = getBlockAt(_idxCurrentOrder).getLengthIn();
-        if ("Stop".equals(nextSpeed) && 0<len && len<6) {
+        String nextSpeed = getNextSpeed();
+        float len = block.getLengthIn();
+        if ("Stop".equals(nextSpeed) && len<6) {
         	nextSpeed = "EStop";
         }
         if (_engineer!=null) {

@@ -277,15 +277,7 @@ public class Tracker {
     	return _occupies;
     }
     
-    protected void stopTracking() {
-    	List<OBlock> range = getRange();
-    	Iterator<OBlock> iter = range.iterator();
-    	while (iter.hasNext()) {
-    		removeBlock(iter.next());
-    	}
-    }
-    
-    private void removeBlock(OBlock b) {
+    protected void removeBlock(OBlock b) {
 		if (_trainName.equals(b.getValue())) {
     		b.setValue(null);
         	b.setState(b.getState() & ~OBlock.RUNNING);

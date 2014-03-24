@@ -492,7 +492,7 @@ public class WarrantFrame extends WarrantRoute {
                 try {
                     Float.parseFloat(_throttleFactorBox.getText());
                 } catch (NumberFormatException nfe) {
-                	showWarning("MustBeFloat");
+                	showWarning(Bundle.getMessage("MustBeFloat"));
                     _throttleFactorBox.setText("1.0");
                 }
             }
@@ -659,7 +659,7 @@ public class WarrantFrame extends WarrantRoute {
     private void insertRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-        	showWarning("selectRow");
+        	showWarning(Bundle.getMessage("selectRow"));
             return;
         }
         _throttleCommands.add(row, new ThrottleSetting(0, null, null, null));
@@ -669,14 +669,14 @@ public class WarrantFrame extends WarrantRoute {
     private void deleteRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-        	showWarning("selectRow");
+        	showWarning(Bundle.getMessage("selectRow"));
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
         if (cmd!=null) {
         	String c = cmd.getCommand();
             if (c!=null && c.trim().toUpperCase().equals("NOOP")) {
-            	showWarning("cannotDeleteNoop");
+            	showWarning(Bundle.getMessage("cannotDeleteNoop"));
                 return;
             }
             long time = cmd.getTime();
@@ -1383,6 +1383,8 @@ public class WarrantFrame extends WarrantRoute {
                         ts.setCommand("Wait Sensor");
                     } else if ("RUN WARRANT".equals(cmd)) {
                         ts.setCommand("Run Warrant");                    	
+                    } else if ("START TRACKER".equals(cmd)) {
+                        ts.setCommand("Start Tracker");                    	
                     } else {
                         msg = Bundle.getMessage("badCommand", (String)value); 
                     }

@@ -73,6 +73,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	// Session persistent defaults for NX warrants
 	static boolean _defaultEStop = false;
 	static boolean _defaultHaltStart = false;
+	static boolean _defaultAddTracker = false;
 	static String _defaultSearchdepth = "15";
 	static String _defaultSpeed = "0.5";
 	static String _defaultIntervalTime = "4.0";
