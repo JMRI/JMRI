@@ -50,6 +50,8 @@
   <version author="Dave Heap" version="14" lastUpdated="20140107"/>
   <!-- ver15 changed all indexed CVs to new form -->
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+  <!-- ver16 fixed incorrect bell rates -->
+  <version author="Dave Heap" version="16" lastUpdated="20140324"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Big Boy 4-8-8-4" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
@@ -261,11 +263,11 @@
       </variable>
       <variable label="Bell" CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
         <enumVal>
-          <enumChoice choice="Fast">
-            <choice>Fast</choice>
-          </enumChoice>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
+          </enumChoice>
+          <enumChoice choice="Fast">
+            <choice>Fast</choice>
           </enumChoice>
         </enumVal>
         <label>Bell</label>
