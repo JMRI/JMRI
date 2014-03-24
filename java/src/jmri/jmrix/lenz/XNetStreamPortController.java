@@ -16,7 +16,7 @@ import java.io.DataOutputStream;
  * @author			Paul Bender    Copyright (C) 2004,2010,2014
  * @version			$Revision$
  */
-public class XNetStreamPortController extends jmri.jmrix.StreamPortController implements XNetPortController {
+public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
     private DataInputStream input;
     private DataOutputStream output;
