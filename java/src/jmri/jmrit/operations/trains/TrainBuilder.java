@@ -2641,7 +2641,10 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"), new Object[] {
 				car.toString(), car.getLoadName() }));
-		if (!routeToSpurFound) {
+		if (routeToSpurFound) {
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"), new Object[] {
+				car.toString(), car.getLocationName(), car.getTrackName() }));
+		} else {
 			// try and send car to staging
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrySendCarToStaging"),
 					new Object[] { car.toString(), car.getLoadName() }));
