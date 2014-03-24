@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140315-2139-jake on Sat Mar 15 15:39:43 MDT 2014 $Id$-->
-  <decoderIndex version="310">
+  <!--Written by JMRI version 20140324-0917-heap on Mon Mar 24 20:17:32 EST 2014 $Id$-->
+  <decoderIndex version="320">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1873,14 +1873,14 @@
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
         <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
           <protocols>
@@ -1890,26 +1890,26 @@
           </protocols>
         </model>
         <model model="LokPilot DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
         <model model="LokPilot Micro V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
           <protocols>
@@ -1919,34 +1919,34 @@
           </protocols>
         </model>
         <model model="LokPilot Micro DCC V4.0" numOuts="105" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, Next18" -->
         </model>
         <model model="LokPilot Fx V4.0" numOuts="105" numFns="32" extFnsESU="yes" productID="LPfxV4">
-          <output name="65" label="not/used" />
-          <output name="66" label="not/used" />
-          <output name="67" label="not/used" />
-          <output name="68" label="not/used" />
-          <output name="69" label="not/used" />
-          <output name="70" label="not/used" />
-          <output name="71" label="not/used" />
-          <output name="72" label="not/used" />
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="65" label="not|used" />
+          <output name="66" label="not|used" />
+          <output name="67" label="not|used" />
+          <output name="68" label="not|used" />
+          <output name="69" label="not|used" />
+          <output name="70" label="not|used" />
+          <output name="71" label="not|used" />
+          <output name="72" label="not|used" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, 21MTC" -->
           <protocols>
@@ -1956,14 +1956,14 @@
           </protocols>
         </model>
         <model model="LokPilot XL V4.0" numOuts="105" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
-          <output name="97" label="not/used" />
-          <output name="98" label="not/used" />
-          <output name="99" label="not/used" />
-          <output name="100" label="not/used" />
-          <output name="101" label="not/used" />
-          <output name="102" label="not/used" />
-          <output name="103" label="not/used" />
-          <output name="105" label="Virtual/Drv Snd" />
+          <output name="97" label="not|used" />
+          <output name="98" label="not|used" />
+          <output name="99" label="not|used" />
+          <output name="100" label="not|used" />
+          <output name="101" label="not|used" />
+          <output name="102" label="not|used" />
+          <output name="103" label="not|used" />
+          <output name="105" label="Virtual|Drv Snd" />
           <size length="55" width="25" height="10" units="mm" />
           <!-- connector="screw terminals" -->
           <protocols>
