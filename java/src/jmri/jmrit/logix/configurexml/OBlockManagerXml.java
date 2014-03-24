@@ -367,8 +367,7 @@ public class OBlockManagerXml // extends XmlFile
                 log.error("load: block \""+sysName+"\" failed to add path \""+
                           paths.get(j).getName()+"\" in block \""+block.getSystemName()+"\"");
             }
-        }
-    	
+        }  	
     }
     
     Portal loadPortal(Element elem) {
@@ -537,21 +536,28 @@ public class OBlockManagerXml // extends XmlFile
 
         List<Element> settings = elem.getChildren("setting");
         if (log.isDebugEnabled()) log.debug("Path ("+pName+") has "+settings.size()+" settings.");
+        java.util.HashSet<String> turnouts = new java.util.HashSet<String>();
+        int dups = 0;
         for (int i=0; i<settings.size(); i++) {
             Element setElem = settings.get(i);
             int setting = 0;
             try {
                 setting = setElem.getAttribute("set").getIntValue();
             } catch (org.jdom.DataConversionException e) {
-                log.error("Could not parse setting attribute for path ("+pName+
+                log.error("Could not parse 'set' attribute for path ("+pName+
                           ") block ("+block.getSystemName()+")");
             }
             String sysName = setElem.getAttribute("turnout").getValue();
-            Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout(sysName);
-
-            BeanSetting bs = new BeanSetting(to, sysName, setting);
-            path.addSetting(bs);
+            if (!turnouts.contains(sysName)) {
+            	Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout(sysName);
+            	turnouts.add(sysName);
+                BeanSetting bs = new BeanSetting(to, sysName, setting);
+                path.addSetting(bs);
+            } else {
+            	dups++;
+            }
         }
+        if (dups>0) log.warn(dups+" duplicate settings not loaded for path \""+pName+"\"");
         return path;
     }
     
