@@ -175,6 +175,8 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
 		if (train.isServiceAllCarsWithFinalDestinationsEnabled())
 			addLine(buildReport, FIVE, Bundle.getMessage("ServiceAllCars"));
+		if (train.isSendCarsWithCustomLoadsToStagingEnabled())
+			addLine(buildReport, FIVE, Bundle.getMessage("SendCustomToStaging"));
 		if (train.isBuildConsistEnabled())
 			addLine(buildReport, FIVE, Bundle.getMessage("BuildConsist"));
 		addLine(buildReport, ONE, BLANK_LINE); // add line
@@ -2553,7 +2555,7 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()) || car.getDestination() != null
 				|| car.getFinalDestination() != null)
-			return routeToSpurFound; // no schedule found for this car
+			return false; // no schedule found for this car
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"),
 				new Object[] { car.toString(), car.getTypeName(), car.getLoadName(),
 						car.getLocationName() + ", " + car.getTrackName() }));
@@ -2641,7 +2643,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"), new Object[] {
 				car.toString(), car.getLoadName() }));
-		if (routeToSpurFound) {
+		if (routeToSpurFound && !train.isSendCarsWithCustomLoadsToStagingEnabled()) {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"), new Object[] {
 				car.toString(), car.getLocationName(), car.getTrackName() }));
 		} else {

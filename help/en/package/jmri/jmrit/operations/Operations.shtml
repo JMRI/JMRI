@@ -1445,6 +1445,12 @@
     location, which can be staging. However, if there's an alternate track specified, the program will only
     move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
 
+   <P>
+    You can have the program ignore the alternate track car holding feature described above by
+    enabling the <A HREF="#SendCustomToStaging">Send cars with custom load to staging</A> option for
+    a train.
+   </P>
+
    <P>Another feature of using an alternate track for cars with custom loads but without a final
     destination, is that the program will try and forward some number of cars to the spur demanding
     that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
@@ -2610,7 +2616,7 @@
    and the horsepower of the locomotives.
    <P>
     You can also on a per train basis, ask the program to dynamically construct the consist for the
-    train. See <A HREF="#BuildlocoConsist">Build loco consist from single locos if needed</A> under
+    train. See <A HREF="#BuildlocoConsist">Build loco consist from single locos</A> under
     the <A HREF="#TrainBuildOptions">Train Build Options</A> for more information.
    </P>
 
@@ -2703,8 +2709,19 @@
    operators as this option can and will increase the number of trains needed to move the car to its
    final destination.
    
+   <A NAME="SendCustomToStaging"></A>
+   <H4>Send cars with custom loads to staging</H4>
+
+   When the "Send cars with custom loads to staging" is selected, the program will attempt to send a
+   car with a custom load, but without a final destination, to staging when the program finds all of
+   the spurs with schedules full. The program will also send a car to staging if it finds the routes
+   servicing the spurs with schedules have interim yard or C/I tracks that are also full. This option
+   tends to increase car movement to staging by ignoring the
+   <A HREF="#AlternateTrack">Alternate Track</A> feature for a spur where the program would normally
+   hold a car at its current location when all spurs with schedules were full. 
+   
    <A NAME="BuildlocoConsist"></A>
-   <H4>Build loco consist from single locos if needed</H4>
+   <H4>Build loco consist from single locos</H4>
 
    This option when selected will dynamically build a locomotive consist for you using locos that
    aren't in a consist. For example, say you request a consist of three locomotives in the edit

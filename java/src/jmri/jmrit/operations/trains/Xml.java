@@ -71,6 +71,7 @@ public class Xml {
 	static final String ALLOW_RETURN = "allowReturn"; // NOI18N
 	static final String SERVICE_ALL = "serviceAll"; // NOI18N
 	static final String BUILD_CONSIST = "buildConsist"; // NOI18N
+	static final String SEND_CUSTOM_STAGING = "sendCustomStaging"; // NOI18N
 	
 	static final String BUILT = "built"; // NOI18N
 	static final String BUILD = "build"; // NOI18N

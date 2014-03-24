@@ -72,6 +72,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _allowCarsReturnStaging = false; // when true allow cars to return to staging if necessary
 	protected boolean _serviceAllCarsWithFinalDestinations = false; // when true, service cars with final destinations
 	protected boolean _buildConsist = false; // when true, build a consist for this train using single locomotives
+	protected boolean _sendCarsWithCustomLoadsToStaging = false; // when true, send cars to staging if spurs full
 	protected Route _route = null;
 	protected Track _departureTrack; // the departure track from staging
 	protected Track _terminationTrack; // the termination track into staging
@@ -2454,6 +2455,19 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 
+	public boolean isSendCarsWithCustomLoadsToStagingEnabled() {
+		return _sendCarsWithCustomLoadsToStaging;
+	}
+
+	public void setSendCarsWithCustomLoadsToStagingEnabled(boolean enable) {
+		boolean old = _sendCarsWithCustomLoadsToStaging;
+		_sendCarsWithCustomLoadsToStaging = enable;
+		if (old != enable) {
+			setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old ? "true" : "false", // NOI18N
+					enable ? "true" : "false"); // NOI18N
+		}
+	}
+
 	protected void setBuilt(boolean built) {
 		boolean old = _built;
 		_built = built;
@@ -3329,6 +3343,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_serviceAllCarsWithFinalDestinations = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.BUILD_CONSIST)) != null)
 			_buildConsist = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.SEND_CUSTOM_STAGING)) != null)
+			_sendCarsWithCustomLoadsToStaging = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.BUILT)) != null)
 			_built = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.BUILD)) != null)
@@ -3531,6 +3547,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		e.setAttribute(Xml.ALLOW_RETURN, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.ALLOW_THROUGH_CARS, isAllowThroughCarsEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.SERVICE_ALL, isServiceAllCarsWithFinalDestinationsEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.SEND_CUSTOM_STAGING, isSendCarsWithCustomLoadsToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILD_CONSIST, isBuildConsistEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILT, isBuilt() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILD, isBuildEnabled() ? Xml.TRUE : Xml.FALSE);

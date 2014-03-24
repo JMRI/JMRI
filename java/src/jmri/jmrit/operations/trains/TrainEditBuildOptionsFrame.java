@@ -120,6 +120,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JCheckBox allowLocalMovesCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalMoves"));
 	JCheckBox allowThroughCarsCheckBox = new JCheckBox(Bundle.getMessage("AllowThroughCars"));
 	JCheckBox serviceAllCarsCheckBox = new JCheckBox(Bundle.getMessage("ServiceAllCars"));
+	JCheckBox sendCustomStagngCheckBox = new JCheckBox(Bundle.getMessage("SendCustomToStaging"));
 	JCheckBox buildConsistCheckBox = new JCheckBox(Bundle.getMessage("BuildConsist"));
 
 	// text field
@@ -205,7 +206,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addItemLeft(pOption, allowLocalMovesCheckBox, 1, 1);
 		addItemLeft(pOption, allowThroughCarsCheckBox, 0, 2);
 		addItemLeft(pOption, serviceAllCarsCheckBox, 1, 2);
-		addItemLeft(pOption, buildConsistCheckBox, 0, 3);
+		addItemLeft(pOption, sendCustomStagngCheckBox, 0, 3);
+		addItemLeft(pOption, buildConsistCheckBox, 1, 3);
 		pOption.setMaximumSize(new Dimension(2000, 250));
 
 		returnStagingCheckBox.setEnabled(false); // only enable if train departs and returns to same staging loc
@@ -388,6 +390,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
 			allowThroughCarsCheckBox.setSelected(_train.isAllowThroughCarsEnabled());
 			serviceAllCarsCheckBox.setSelected(_train.isServiceAllCarsWithFinalDestinationsEnabled());
+			sendCustomStagngCheckBox.setSelected(_train.isSendCarsWithCustomLoadsToStagingEnabled());
 			buildConsistCheckBox.setSelected(_train.isBuildConsistEnabled());
 			sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { _train.getTrainTerminatesName() }));
@@ -733,6 +736,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
 		_train.setAllowThroughCarsEnabled(allowThroughCarsCheckBox.isSelected());
 		_train.setServiceAllCarsWithFinalDestinationsEnabled(serviceAllCarsCheckBox.isSelected());
+		_train.setSendCarsWithCustomLoadsToStagingEnabled(sendCustomStagngCheckBox.isSelected());
 		_train.setBuildConsistEnabled(buildConsistCheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
