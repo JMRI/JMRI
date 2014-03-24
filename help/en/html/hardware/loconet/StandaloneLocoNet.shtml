@@ -15,7 +15,6 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
-<link rel="stylesheet" type="text/css" href="../../../../../web/css/default.css" media="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
 	MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
@@ -45,6 +44,8 @@
         </UL></LI>
         <LI><A href="#railsyncgen">LocoNet RailSync Signal "Generation"</A>
         <UL>
+            <LI><a href="#hwdctorailsync">Some commercial hardware which can provide 
+                DC power to the LocoNet RailSync wires</a></LI>
             <LI><a href="#rspowersupply">RailSync power from a DC power supply</a></li>
             <LI><A href="#rsfromdtcs">RailSync from a Digitrax command station</A></LI>
             <LI><A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>
@@ -186,11 +187,17 @@ useful.</p>
     <tr align="center"><td>Team Digital SIC24/SIC24AD/SRC8/SRC16</td><td></td><td></td>
         <td>Required</td><td></td>
     </tr>
-    <tr align="center"><td>RR-Cirkits TC-64</td><td></td><td>Required for power **</td>
+    <tr align="center"><td>RR-CirKits TC-64</td><td></td><td>Required for power **</td>
         <td>Required</td><td></td>
     </tr>
-    <tr align="center"><td>RR-Cirkits LNCP</td><td></td><td></td>
+    <tr align="center"><td>RR-CirKits LNCP</td><td></td><td></td>
         <td>Required</td><td></td>
+    </tr>
+    <tr align="center"><td>RR-CirKits LocoNet-Terminator</td><td></td>
+        <td>Can provide DC power</td><td>Can provide Termination</td><td></td>
+    </tr>
+    <tr align="center"><td>RR-CirKits SSB-Gateway</td><td></td>
+        <td>Can provide DC power</td><td>Can provide Termination</td><td></td>
     </tr>
     <tr align="center"><td>Logic Rail Technologies LocoNet Fast Clock</td><td></td><td></td>
         <td>Required</td><td>Required, can provide</td>
@@ -315,6 +322,16 @@ useful.</p>
                     Consult your LocoBuffer documentation to determine whether your
                     hardware can provide LocoNet Data signal termination.</p>
             </LI>
+            <LI><strong>RR-CirKits LocoNet-Terminator</strong>
+                <p>This device may be configured to provide LocoNet Data Signal 
+                    termination.  It may also be configured to provide DC power 
+                    on the RailSync wires.</p>
+            </LI>
+            <LI><strong>RR-CirKits SSB-Gateway</strong>
+                <p>This device may be configured to provide LocoNet Data Signal 
+                    termination.  It may also be configured to provide DC power 
+                    on the RailSync wires.</p>
+            </LI>
         </UL>
         <H3><A name="diyhwdataterm">Do-it-yourself LocoNet Data Signal Termination</A></H3>
         <p>A Do-it-yourself LocoNet Data Signal Termination will typically be 
@@ -366,6 +383,22 @@ useful.</p>
             at 12VDC is sufficient.  In other cases, one or more LocoNet device 
             requires an accurate representation of the DCC track signal on the 
             standalone LocoNet cable.</p>        
+        <H3><A name="hwdctorailsync">Some commercial hardware which can provide 
+                DC power to the LocoNet RailSync wires</A></H3>
+        <UL>
+            <LI><strong>RR-CirKits LocoNet-Terminator</strong>
+                <p>This device may be configured to provide DC power on the 
+                    RailSync wires.  It may also be configured to provide LocoNet 
+                    Data Signal termination.</p>
+            </LI>
+            <LI><strong>RR-CirKits SSB-Gateway</strong>
+                <p>This device may be configured to provide DC power on the 
+                    RailSync wires.  It may also be configured to provide LocoNet 
+                    Data Signal termination.</p>
+            </LI>
+        </UL>
+
+                
         <H3><a name="rspowersupply">RailSync power from a DC power supply</a></h3>
             <p>For cases where the standalone LocoNet does need to provide power to 
             the RailSync lines but does <strong>not</strong> need to provide a low-power version
@@ -586,18 +619,21 @@ useful.</p>
     <H2><A name="se8csigwodtcs">SE8C signaling without a Digitrax command station</A></H2>
         <p>The diagram below shows a possible implementation of a standalone LocoNet 
             for computer-controlled signaling using Digitrax SE8C boards.  The example
-            assumes that detection information is not gathered from BDL168 boards
-            (and not from another LocoNet device type which requires a copy of 
-            the DCC track signal on the standalone LocoNet RailSync+/- wires).  Because 
-            the standalone LocoNet does not require active RailSync+/- signals, 
-            there is no need for a connection to the booster track outputs.  But 
-            the LocoBuffer-USB requires RailSync power when it is in its LocoNet 
-            termination mode, so a RailSync power supply is shown.</p>
+            assumes that any detection information on the standalone LocoNet is 
+            not gathered from a device connected to the standalone LocoNet which 
+            would require a copy of the DCC track signal on the standalone 
+            LocoNet RailSync+/- wires.  Because this standalone LocoNet does not 
+            require active RailSync+/- signals, there is no need for a connection 
+            to the booster track outputs.  But the LocoBuffer-USB requires 
+            RailSync power when it is in its LocoNet termination mode, so a 
+            RailSync power supply is shown.</p>
+        <p>The RailSync power could be supplied by a do-it-yourself supply as 
+            described in <a href="#rspowersupply">RailSync power from a DC power 
+            supply</a> above, or via a commercial device which can supply DC power
+            to the Standalone LocoNet RailSync wires, such as the RR-CirKits 
+            LocoNet-Terminator or SSB-Gateway products.</p>
         <img src="images/StandaloneLocoNetSignallingNet.jpg" 
              alt="Image showing a Standalone Loconet for SE8C signalling only">
-        <p>In the diagram above, the RailSync Power Supply is implemented as 
-            described in <a href="#rspowersupply">RailSync power from a DC power 
-                supply</a>.</p>
 <H1><a name="acknowledgments">Acknowledgments</a></H1>
     <p>Among others, Elmer McKay and Dick Bronson have provided significant
             input to the content of this page.  Thank you!</p>
@@ -605,8 +641,8 @@ useful.</p>
 
 <p>Information and support for Digitrax products may be found at 
     <a href="http://www.digitrax.com/">the Digitrax website</a>.</p>
-<p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, and 
-    other products by RR-CirKits may be found at 
+<p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, LocoNet-Terminator,
+    SSB-Gateway, and other products by RR-CirKits may be found at 
     <a href="http://www.rr-cirkits.com/">the RR-Cirkits website</a>.</p>
 <p>Information and support for products from Team Digital may be found at
     <a href="http://www.teamdigital1.com/">the Team Digital website</a>.</p>
