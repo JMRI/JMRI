@@ -89,10 +89,18 @@ public class PositionableShape extends PositionableJComponent
     	return _transform;
     }
     public void setWidth(int w) {
-    	_width = w;
+    	if (w>SIZE) {
+    		_width = w;
+    	} else {
+    		_width = SIZE;
+    	}
     }
     public void setHeight(int h) {
-    	_height = h;
+    	if (h>SIZE) {
+    		_height = h;
+    	} else {
+    		_height = SIZE;
+    	}    	
     }
     @Override
     public int getHeight() {
@@ -200,11 +208,16 @@ public class PositionableShape extends PositionableJComponent
             r.x=0;
             r.y=0;
        		g2d.draw(r);
+            Color halftone = new Color(Editor.HIGHLIGHT_COLOR.getRed(),Editor.HIGHLIGHT_COLOR.getGreen(),
+            		Editor.HIGHLIGHT_COLOR.getBlue(),Editor.HIGHLIGHT_COLOR.getAlpha()/2);
+       		g2d.fill(r);
         	for (int i=0; i<_handles.length; i++) {
-        		g2d.setColor(Color.RED);
-        		g2d.fill(_handles[i]);
-                g2d.setColor(Editor.HIGHLIGHT_COLOR);
-           		g2d.draw(_handles[i]);
+        		if (_handles[i]!=null) {
+            		g2d.setColor(Color.RED);
+            		g2d.fill(_handles[i]);
+                    g2d.setColor(Editor.HIGHLIGHT_COLOR);
+               		g2d.draw(_handles[i]);        			
+        		}
         	}
         }
     }
@@ -236,8 +249,8 @@ public class PositionableShape extends PositionableJComponent
     	} else {
         	r = super.getBounds();    		
     	}
-    	_width = r.width;
-    	_height = r.height;
+    	setWidth(r.width);
+    	setHeight(r.height);
         setSize(r.width, r.height);
     }
     
@@ -410,13 +423,17 @@ public class PositionableShape extends PositionableJComponent
     
     protected void drawHandles() {
     	_handles = new Rectangle[4];
-    	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);
-    	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
-    	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
-    	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);
+       	if (_width>2*SIZE) {
+        	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
+        	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);    		       		
+       	}
+       	if (_height>2*SIZE) {
+        	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);       		
+        	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
+       	}
     }
     
-    protected Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
+    public Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
  	   	 if (_transform!=null) {
  	   		 java.awt.geom.AffineTransform t = _transform.createInverse();
  	   		 float[] pt = new float[2];
@@ -447,7 +464,7 @@ public class PositionableShape extends PositionableJComponent
    	   			 return;
        	   	 }
        	   	 for (int i=0; i<_handles.length; i++) {
-       	   		 if (_handles[i].contains(pt.x, pt.y)) {
+       	   		 if (_handles[i]!=null && _handles[i].contains(pt.x, pt.y)) {
        	   			 _hitIndex=i;
        	   		 }       	   		 
        	   	 }
