@@ -452,7 +452,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     
     /**
      * Read node address and check for legal range
-     *     If successful, a node address in the range 0-127 is returned.
+     *     If successful, a node address is returned.
      *     If not successful, -1 is returned and an appropriate error
      *          message is placed in statusText1.
      */
@@ -467,13 +467,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             log.debug("nodeAddrField Contains \"{}\"",
                        (String)nodeAddrField.getSelectedItem());
             statusText1.setText(rb.getString("Error5"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
-        if ( (addr < 0) || (addr > 127) ) {
-            statusText1.setText(rb.getString("Error6"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
