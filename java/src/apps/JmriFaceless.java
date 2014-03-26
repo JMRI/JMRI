@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriFaceless extends apps.AppsBase {
 
-    private static final Logger log = LoggerFactory.getLogger(JmriFaceless.class);
+    //private static final Logger log = LoggerFactory.getLogger(JmriFaceless.class);
 
     public JmriFaceless(String[] args) {
         super("JmriFaceless", "JmriFacelessConfig3.xml", args);

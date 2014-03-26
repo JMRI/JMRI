@@ -191,18 +191,18 @@ public class SerialAddressTest extends TestCase {
 	public void testGetUserNameFromSystemName() {
 			jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
 			// create 4 new sensors
-			jmri.Sensor s1 = sMgr.newSensor("KS16","userS16");
-			jmri.Sensor s2 = sMgr.newSensor("KS014","userS14");
-			jmri.Sensor s3 = sMgr.newSensor("KS17","userS17");
-			jmri.Sensor s4 = sMgr.newSensor("KS12","userS12");
+			sMgr.newSensor("KS16","userS16");
+			sMgr.newSensor("KS014","userS14");
+			sMgr.newSensor("KS17","userS17");
+			sMgr.newSensor("KS12","userS12");
 
 			jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
-			jmri.Light lgt1 = lMgr.newLight("KL36","userL36");
-			jmri.Light lgt2 = lMgr.newLight("KL037","userL37");
+			lMgr.newLight("KL36","userL36");
+			lMgr.newLight("KL037","userL37");
 
 			jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
-			jmri.Turnout t2 = tMgr.newTurnout("KT32","userT32");
-			jmri.Turnout t1 = tMgr.newTurnout("KT34","userT34");
+			tMgr.newTurnout("KT32","userT32");
+			tMgr.newTurnout("KT34","userT34");
 
             Assert.assertEquals("test KS16", "userS16", SerialAddress.getUserNameFromSystemName("KS16") );
             Assert.assertEquals("test KS12", "userS12", SerialAddress.getUserNameFromSystemName("KS12") );
