@@ -606,7 +606,7 @@
    the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
    
    <A NAME="AllowCarsToReturnToStaging"></A>
-   <H4>Allow cars to return to staging if needed</H4>
+   <H4>Allow cars to return to staging</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
@@ -2667,7 +2667,7 @@
    in the train's route (terminal). Useful if you don't want your cars picked up and set out at
    various locations in your train's route.
 
-   <H4>Allow cars to return to staging if needed</H4>
+   <H4>Allow cars to return to staging</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars

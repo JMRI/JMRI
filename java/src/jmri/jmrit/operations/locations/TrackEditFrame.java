@@ -628,8 +628,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			trackLength = Integer.parseInt(length);
 			if (length.length() > Control.max_len_string_track_length_name) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackMustBeLessThan"),
-						new Object[] { Math.pow(10, Control.max_len_string_track_length_name) }), Bundle
-						.getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
+						new Object[] { Math.pow(10, Control.max_len_string_track_length_name),
+								Setup.getLengthUnit().toLowerCase() }), Bundle.getMessage("ErrorTrackLength"),
+						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		} catch (NumberFormatException e) {

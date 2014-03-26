@@ -220,7 +220,11 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			}
 			// confirm that length is a number and less than 10000 feet
 			try {
-				Integer.parseInt(addItem);
+				int length = Integer.parseInt(addItem);
+				if (length < 0) {
+					log.error("engine length has to be a positive number");
+					return;
+				}
 				if (addItem.length() > Control.max_len_string_length_name) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(
 							Bundle.getMessage("engineAttribute"),
