@@ -617,7 +617,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
         for (int i = 0; i<nValues-1; i++) {
-            int value = _cvMap.get(cvList[i]+1).getValue();
+            int value = _cvMap.get(cvList[i+1]).getValue();
             _cvMap.get(cvList[i]).setValue(value);
         }
         enforceEndPointsMfx();
