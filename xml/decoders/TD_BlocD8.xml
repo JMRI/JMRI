@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
 <!-- $Id: TD_BlocD8.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20101101"/>
-  <!-- Version 1 inital release -->
+  <!-- Version 1 initial release -->
   <!-- Version 1.1 release correct input 4 secondary address -->
   <!-- Version 1.2 release correct input 5 primary address and default output state -->
   <!-- and added unoccupied delay time CVs -->

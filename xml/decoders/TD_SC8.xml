@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
 <!-- $Id: TD_SC8_V16.xml,v 1.3 2010/05/10 03:38:52 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20120221"/>
-  <!-- Version 1 inital release 2/18/11-->
+  <!-- Version 1 initial release 2/18/11-->
   <!-- Version 1.1 release 3/14/11 corrected ops mode enable and speed to position-->
   <!-- Version 1.2 release 2/21/12 corrected CV28 options and added startup delay-->
   <decoder>
