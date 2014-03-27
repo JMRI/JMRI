@@ -2729,7 +2729,7 @@
    <A HREF="#TrainRequires">Optional train requirements</A>. The program when building a train, will
    first search for a consist of three locos that meet the type, model and road requirements for the
    train. If the program can't find a three loco consist, it will attempt to find three
-   non-consisted loco that meet the train's requirements. For some operators, they only want certain
+   non-consisted locos that meet the train's requirements. For some operators, they only want certain
    locomotive models consisted together. To meet this goal, use the "Type" feature for a locomotive,
    and create types of locomotives that you want consisted. Then assign these types to the locos
    that you want the program to consider when creating a consist. You would then restrict your train
