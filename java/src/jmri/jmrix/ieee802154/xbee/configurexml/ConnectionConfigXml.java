@@ -36,32 +36,38 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void extendElement(Element e) {
         XBeeConnectionMemo xcm; 
+        XBeeTrafficController xtc;
         try {
-        xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+           xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+           xtc=(XBeeTrafficController)xcm.getTrafficController();
         } catch(NullPointerException npe) {
           // The adapter doesn't have a memo, so no nodes can be defined.
           return;
         }
-        XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
-        XBeeNode node = (XBeeNode) xtc.getNode(0);
-        int index = 1;
-        while (node != null) {
-            // add node as an element
-            Element n = new Element("node");
-            n.setAttribute("name",""+node.getNodeAddress());
-            e.addContent(n);
-            // add parameters to the node as needed
-            n.addContent(makeParameter("address", ""+
+        try{
+           XBeeNode node = (XBeeNode) xtc.getNode(0);
+           int index = 1;
+           while (node != null) {
+               // add node as an element
+               Element n = new Element("node");
+               n.setAttribute("name",""+node.getNodeAddress());
+               e.addContent(n);
+               // add parameters to the node as needed
+               n.addContent(makeParameter("address", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getUserAddress())));
-            n.addContent(makeParameter("PAN", ""+
+               n.addContent(makeParameter("PAN", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getPANAddress())));
-            n.addContent(makeParameter("GUID", ""+
+               n.addContent(makeParameter("GUID", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getGlobalAddress())));
-            n.addContent(makeParameter("name", node.getIdentifier()));
+               n.addContent(makeParameter("name", node.getIdentifier()));
 
-            // look for the next node
-            node = (XBeeNode) xtc.getNode(index);
-            index ++;
+               // look for the next node
+               node = (XBeeNode) xtc.getNode(index);
+               index ++;
+           }
+        } catch(java.lang.NullPointerException npe2) {
+          // no nodes defined.
+          return;
         }
     }
 
