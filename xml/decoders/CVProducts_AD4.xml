@@ -31,11 +31,11 @@
         <splitVal highCV="9"/>
         <label>Card Address</label>
       </variable>
-      <variable label="Turnout_Address_Low" CV="1" mask="XXVVVVVV">
+      <variable item="Turnout_Address_Low" CV="1" mask="XXVVVVVV">
         <splitVal highCV="9" factor="4" offset="-3"/>
         <label>Turnout_Address_Low</label>
       </variable>
-      <variable label="Turnout_Address_High" item="Short Address" CV="1" mask="XXVVVVVV">
+      <variable item="Turnout_Address_High" CV="1" mask="XXVVVVVV">
         <splitVal highCV="9" factor="4"/>
         <label>Turnout_Address_High</label>
       </variable>

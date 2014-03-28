@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       
-  <version author="BjÃ¸rn Kvisli bjorn.kvisli@gmail.com"   version="1" lastUpdated="20121012"/>
+  <version author="Bjørn Kvisli bjorn.kvisli@gmail.com"   version="1" lastUpdated="20121012"/>
     <decoder>
     <family name="ARNOLD Digital" mfg="Arnold - Rivarossi" highVersionID="1" lowVersionID="255" comment="Arnold loco decoder">
       <model model="81220"></model>
@@ -24,10 +24,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <variable label="Maximum Speed (0-255):" CV="5" item="Vhigh" default="255" >
         <decVal min="0" max="255"/>
       </variable>
-      <variable label="Undocumented" CV="7" >
+      <variable label="Undocumented CV7" CV="7" >
 	<decVal/>
       </variable>
-      <variable label="Undocumented" CV="8">
+      <variable label="Undocumented CV8" CV="8">
 	<decVal/>
       </variable>
       <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">

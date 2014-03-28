@@ -125,7 +125,7 @@
         </enumVal>
         <label>DC Brake Control Mode</label>
       </variable>
-      <variable label="Feedback Reference" CV="53" default="42" item="Dither option" tooltip="Determines the back EMF supplied by the motor at Max speed. The more efficient the motor the higher this value should be. 0-63 default=42.">
+      <variable label="Feedback Reference" CV="53" default="42" item="EMF Control Reference" tooltip="Determines the back EMF supplied by the motor at Max speed. The more efficient the motor the higher this value should be. 0-63 default=42.">
         <decVal min="0" max="63"/>
         <label>Feedback Reference</label>
       </variable>

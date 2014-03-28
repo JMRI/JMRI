@@ -511,10 +511,6 @@
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 5 active</label>
       </variable>
-      <variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="5" item="Output 5 options">
-        <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
-        <label>Output 5 connected to</label>
-      </variable>
       <variable label="Output 6 effect generated" CV="125" mask="XXVVVVXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 6 effect generated</label>
