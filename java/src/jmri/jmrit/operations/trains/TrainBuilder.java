@@ -162,6 +162,17 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
 		else
 			addLine(buildReport, FIVE, Bundle.getMessage("BuildModeNormal"));
+		// warn if car routing is disabled
+		if (!Setup.isCarRoutingEnabled()) {
+			addLine(buildReport, FIVE, Bundle.getMessage("RoutingDisabled"));
+		} else {
+			if (Setup.isCarRoutingViaYardsEnabled())
+				addLine(buildReport, FIVE, Bundle.getMessage("RoutingViaYardsEnabled"));
+			if (Setup.isOnlyActiveTrainsEnabled())
+				addLine(buildReport, FIVE, Bundle.getMessage("OnlySelectedTrains"));
+			if (Setup.isCheckCarDestinationEnabled())
+				addLine(buildReport, FIVE, Bundle.getMessage("CheckCarDestination"));
+		}
 		if (train.isBuildTrainNormalEnabled())
 			addLine(buildReport, FIVE, Bundle.getMessage("NormalModeWhenBuilding"));
 		if (train.isSendCarsToTerminalEnabled())
