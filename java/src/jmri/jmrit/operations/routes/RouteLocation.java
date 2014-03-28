@@ -462,7 +462,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("route location (" + getName() + ") id (" + getId() + ") sees property change "
-					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
 			if (_location != null)
 				_location.removePropertyChangeListener(this);

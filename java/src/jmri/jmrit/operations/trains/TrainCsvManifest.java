@@ -44,7 +44,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
 					true); // NOI18N
 		} catch (IOException e) {
 			log.error("Can not open CSV manifest file: "+file.getName());

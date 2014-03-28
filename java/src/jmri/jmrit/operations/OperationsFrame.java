@@ -336,8 +336,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected synchronized void createShutDownTask(){
             OperationsManager.getInstance().setShutDownTask(
                     new SwingShutDownTask("Operations Train Window Check", // NOI18N
-                            Bundle.getMessage("PromptQuitWindowNotWritten"), // NOI18N
-                            Bundle.getMessage("PromptSaveQuit"), // NOI18N
+                            Bundle.getMessage("PromptQuitWindowNotWritten"),
+                            Bundle.getMessage("PromptSaveQuit"),
                             this) {
                         @Override
                         public boolean checkPromptNeeded() {

@@ -2665,8 +2665,10 @@ public class TrainBuilder extends TrainCommon {
 				if (locations.contains(track.getLocation()))
 					continue;
 				String status = track.accepts(car);
-				if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
+				if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+					log.debug("Staging track ({}) can't accept car ({})", track.getName(), car.toString());
 					continue;
+				}
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingCanAcceptLoad"),
 						new Object[] { track.getLocation(), track.getName(), car.getLoadName() }));
 				// try to send car to staging
@@ -2809,7 +2811,7 @@ public class TrainBuilder extends TrainCommon {
 			int rnd = (int) (Math.random() * tracks.size());
 			Track track = tracks.get(rnd);
 			tracks.remove(track);
-			log.debug("Staging track ({}, {})", track.getLocation().getName(), track.getName());
+			log.debug("Try staging track ({}, {})", track.getLocation().getName(), track.getName());
 			// find a staging track that isn't at the departure or terminal
 			if (track.getLocation() == departLocation)
 				continue;
@@ -3613,8 +3615,10 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack) {
 		if (stageTrack == null || !stageTrack.getTrackType().equals(Track.STAGING)
-				|| !stageTrack.acceptsTypeName(car.getTypeName()) || !stageTrack.acceptsRoadName(car.getRoadName()))
+				|| !stageTrack.acceptsTypeName(car.getTypeName()) || !stageTrack.acceptsRoadName(car.getRoadName())) {
+			log.debug("Track doesn't service car");
 			return false;
+		}
 		// Departing and returning to same location in staging?
 		if (!train.isAllowReturnToStagingEnabled() && !car.isCaboose() && !car.hasFred() && !car.isPassenger()
 				&& splitString(car.getLocationName()).equals(splitString(stageTrack.getLocation().getName()))) {
@@ -3626,8 +3630,10 @@ public class TrainBuilder extends TrainCommon {
 		// remove the default names
 		loads.remove(CarLoads.instance().getDefaultEmptyName());
 		loads.remove(CarLoads.instance().getDefaultLoadName());
-		if (loads.size() == 0)
+		if (loads.size() == 0) {
+			log.debug("No custom loads for staging track {}", stageTrack.getName());
 			return false;
+		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackLoadStaging"),
 				new Object[] { car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(),
 						car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName() }));
@@ -3853,7 +3859,7 @@ public class TrainBuilder extends TrainCommon {
 		while (numberLocos < Setup.getMaxNumberEngines()) {
 			if (!getEngines(1, train.getEngineModel(), train.getEngineRoad(), rl, rld)) {
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
-						new Object[] { "additional", rl.getName(), rld.getName() }));
+						new Object[] { Bundle.getMessage("additional"), rl.getName(), rld.getName() }));
 			}
 			numberLocos++;
 			int currentHp = train.getTrainHorsePower(rlNeedHp);

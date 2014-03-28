@@ -760,9 +760,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	public String getMRStatus() {
 		switch (this._statusCode) {
 		case Train.CODE_PARTIAL_BUILT:
-			return this._statusCode + "||" + this.getNumberCarsRequested();
+			return this._statusCode + "||" + this.getNumberCarsRequested(); // NOI18N
 		case Train.CODE_TERMINATED:
-			return this._statusCode + "||" + this.getTerminationDate();
+			return this._statusCode + "||" + this.getTerminationDate(); // NOI18N
 		default:
 			return Integer.toString(this._statusCode);
 		}
