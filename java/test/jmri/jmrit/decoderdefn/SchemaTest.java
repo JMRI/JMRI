@@ -35,15 +35,32 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
         validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
     }
 
-    public void testRealFiles() {
+    public void testPartDirectories() {
         java.io.File dir = new java.io.File("xml/decoders/");
         java.io.File[] files = dir.listFiles();
+        for (int i=0; i<files.length; i++) {
+            if (files[i].isDirectory() && !files[i].isHidden()) {
+                System.out.println(files[i].getPath());
+                validateDirectory(files[i].getPath());
+            }
+        }
+    }
+    
+    public void testRealFiles() {
+        validateDirectory("xml/decoders/");
+    }
+    
+    void validateDirectory(String name) {
+        java.io.File dir = new java.io.File(name);
+        java.io.File[] files = dir.listFiles();
+        if (files == null) return;
         for (int i=0; i<files.length; i++) {
             if (files[i].getName().endsWith("xml")) {
                 validate(files[i]);
             }
         }
     }
+    
     // from here down is testing infrastructure
 
     public SchemaTest(String s) {
