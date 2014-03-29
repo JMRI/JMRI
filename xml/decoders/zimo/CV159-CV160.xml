@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
     <enumVal>
       <enumChoice choice="Standard on/off function output">

@@ -17,7 +17,7 @@
 <!-- version 1 - for Unified Software -->
 
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <variable label="Decoder ID" item="decoderID" CV="249" default="0" readOnly="yes">
         <decVal/>
         <label>Decoder ID</label>

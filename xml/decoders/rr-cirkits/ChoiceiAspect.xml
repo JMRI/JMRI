@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- Indexed aspect choices for DCC mode signals -->
-<ienumVal>
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice=" 0-Stop"/>
   <ienumChoice choice=" 1-Take Siding"/>
   <ienumChoice choice=" 2-Stop-Orders"/>

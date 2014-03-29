@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
 <!-- Port choices for LocoNet Input - Output -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="input"/>
   <enumChoice choice="output"/>
 </enumVal>

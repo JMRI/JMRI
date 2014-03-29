@@ -7,7 +7,7 @@
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
  <!-- March 2014 - F20-F28 are in CV674-698 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable label="Volume on Key F20" CV="674" item="Zimo Sound Setting 22">
     <decVal/>

@@ -6,7 +6,7 @@
 <!-- CV's 739-768 control volume and sound choices of individual sounds -->
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable label="Switch triggered sound S1" CV="739" item="Zimo Sound Setting 51">
     <decVal/>

@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1, Mark Waters - for Unified Software -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Max drive Time after signal loss" CV="153" item="Packet Time-out Value" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>

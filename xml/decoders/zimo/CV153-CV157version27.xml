@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Max drive Time after signal loss" CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- modified from the standard Sound Levels pane to cope with more values -->
 <!-- and provide headings suitable for Zimo chips -->
-<pane name="Zimo Sound Levels">
+<pane name="Zimo Sound Levels" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <row>
     <column>
       <label label=" "/>

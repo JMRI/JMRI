@@ -18,7 +18,7 @@
 
 <!-- Panes to show Logic -->
 
-     <pane name="Logic B">
+     <pane name="Logic B" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <row>
         <column>

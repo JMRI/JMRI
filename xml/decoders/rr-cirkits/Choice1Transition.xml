@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- mode choices for LocoNet Transitions -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="No Primary Message"/>
   <enumChoice choice="on Positive Edge"/>
   <enumChoice choice="on Negative Edge"/>

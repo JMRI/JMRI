@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
 <!-- Panes to show I/O lines -->
-<pane name="I/O-1 A">
+<pane name="I/O-1 A" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>

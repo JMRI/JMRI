@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
 <!-- function output choices when moving -->
-<ienumVal>
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="None" value="0"/>
   <ienumChoice choice="Horn" value="1" 							include="1115,1123,1127,1130,1132"/>
   <ienumChoice choice="Whistle" value="1" 						include="3104"/>

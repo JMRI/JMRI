@@ -17,7 +17,7 @@
 <!-- version 1 - for Unified Software -->
 
 
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
     <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>

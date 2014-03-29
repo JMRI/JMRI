@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- standard model number definition ivariables-->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- CV 56.254 About Quantum Decoder -->
   <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" comment="QSI" item="CV56.254.4">
     <indexedVal/>

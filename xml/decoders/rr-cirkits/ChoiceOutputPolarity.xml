@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- Polarity choices for LocoNet Output Transitions -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="send normal"/>
   <enumChoice choice="send inverted"/>
   <enumChoice choice=" N/A . . . . ."/>

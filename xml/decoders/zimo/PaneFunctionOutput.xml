@@ -4,7 +4,7 @@
 <!-- version 1.1 15 Aug 11 JES
                  - added Dim function output 10-12
 -->
-<pane name="Function Output">
+<pane name="Function Output" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>

@@ -17,7 +17,7 @@
 <!-- version 1 - for Unified Software -->
 
 
-<pane name="Chuff Rate">
+<pane name="Chuff Rate" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
 		<label label="Must have JMRI 3.3.6 or later."/>
 		<label label="   "/>
