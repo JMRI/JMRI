@@ -351,11 +351,6 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99" default="1">
-        <shortAddressVal/>
-        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
-        <label>Ops Mode Address</label>
-      </variable>
       <!-- Begin input variable definition -->
       <variable label="Address" CV="35" mask="VVVVVVVV" item="PA1" default="1">
         <splitVal highCV="36" max="7" upperMask="XXXXVVVV"/>
