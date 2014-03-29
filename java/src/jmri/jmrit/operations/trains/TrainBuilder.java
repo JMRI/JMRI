@@ -1854,6 +1854,21 @@ public class TrainBuilder extends TrainCommon {
 						.format(Bundle.getMessage("buildCarRoutingBegins"), new Object[] { car.toString(),
 								car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName(),
 								car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+				// does the car have a final destination track that is willing to service the car?
+				if (car.getFinalDestinationTrack() != null) {
+					String status = car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+					if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
+								new Object[] { car.getFinalDestination().getName(),
+										car.getFinalDestinationTrack().getName(), car.toString(), car.getLoadName(),
+										status }));
+						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+						log.debug("Removing car ({}) from list", car.toString());
+						_carList.remove(car);
+						_carIndex--;
+						continue;
+					}
+				}
 				if (!Router.instance().setDestination(car, _train, _buildReport)) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNotAbleToSetDestination"),
 							new Object[] { car.toString(), Router.instance().getStatus() }));
