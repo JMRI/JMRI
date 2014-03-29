@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - selection from ESU_LokSoundV3_5.xml -->
 <!-- function choices for selection matrix -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="OFF/ON"/>
 
   <enumChoice choice="Acceleration on/off">

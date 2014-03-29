@@ -1,4 +1,4 @@
-  <pane name="Function Outputs">
+  <pane name="Function Outputs" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <separator/>
         <display item="ESU V4 Function Output 1 effect generated"/>
