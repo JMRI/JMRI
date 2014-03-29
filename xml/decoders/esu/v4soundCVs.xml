@@ -66,9 +66,6 @@
         <decVal/>
       </variable>
       <!-- Indexed variables -->
-      <variable label="Sound Slot 1 Volume" CV="16.1.259" default="128" item="Sound Volume 1">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.260" mask="XXXXXXXV" item="Sound Drive 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -77,9 +74,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.262" default="128" item="Sound Max Speed 1">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 2 Volume" CV="16.1.267" default="128" item="Sound Volume 2">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.268" mask="XXXXXXXV" item="Sound Drive 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -90,9 +84,6 @@
       <variable label="Max sound playback speed" CV="16.1.270" default="128" item="Sound Max Speed 2">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 3 Volume" CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.276" mask="XXXXXXXV" item="Sound Drive 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -101,9 +92,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.278" default="128" item="Sound Max Speed 3">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 4 Volume" CV="16.1.283" default="128" item="Sound Volume 4">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.284" mask="XXXXXXXV" item="Sound Drive 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -114,9 +102,6 @@
       <variable label="Max sound playback speed" CV="16.1.286" default="128" item="Sound Max Speed 4">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 5 Volume" CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.292" mask="XXXXXXXV" item="Sound Drive 5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -125,9 +110,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.294" default="128" item="Sound Max Speed 5">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 6 Volume" CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.300" mask="XXXXXXXV" item="Sound Drive 6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -138,9 +120,6 @@
       <variable label="Max sound playback speed" CV="16.1.302" default="128" item="Sound Max Speed 6">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 7 Volume" CV="16.1.307" default="128" item="Sound Volume 7">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.308" mask="XXXXXXXV" item="Sound Drive 7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -149,9 +128,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.310" default="128" item="Sound Max Speed 7">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 8 Volume" CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.316" mask="XXXXXXXV" item="Sound Drive 8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -162,9 +138,6 @@
       <variable label="Max sound playback speed" CV="16.1.318" default="128" item="Sound Max Speed 8">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 9 Volume" CV="16.1.323" default="128" item="Sound Volume 9">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.324" mask="XXXXXXXV" item="Sound Drive 9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -173,9 +146,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.326" default="128" item="Sound Max Speed 9">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 10 Volume" CV="16.1.331" default="128" item="Sound Volume 10">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.332" mask="XXXXXXXV" item="Sound Drive 10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -186,9 +156,6 @@
       <variable label="Max sound playback speed" CV="16.1.334" default="128" item="Sound Max Speed 10">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 11 Volume" CV="16.1.339" default="128" item="Sound Volume 11">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.340" mask="XXXXXXXV" item="Sound Drive 11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -197,9 +164,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.342" default="128" item="Sound Max Speed 11">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 12 Volume" CV="16.1.347" default="128" item="Sound Volume 12">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.348" mask="XXXXXXXV" item="Sound Drive 12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -210,9 +174,6 @@
       <variable label="Max sound playback speed" CV="16.1.350" default="128" item="Sound Max Speed 12">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 13 Volume" CV="16.1.355" default="128" item="Sound Volume 13">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.356" mask="XXXXXXXV" item="Sound Drive 13">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -221,9 +182,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.358" default="128" item="Sound Max Speed 13">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 14 Volume" CV="16.1.363" default="128" item="Sound Volume 14">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.364" mask="XXXXXXXV" item="Sound Drive 14">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -234,9 +192,6 @@
       <variable label="Max sound playback speed" CV="16.1.366" default="128" item="Sound Max Speed 14">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 15 Volume" CV="16.1.371" default="128" item="Sound Volume 15">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.372" mask="XXXXXXXV" item="Sound Drive 15">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -245,9 +200,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.374" default="128" item="Sound Max Speed 15">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 16 Volume" CV="16.1.379" default="128" item="Sound Volume 16">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.380" mask="XXXXXXXV" item="Sound Drive 16">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -258,9 +210,6 @@
       <variable label="Max sound playback speed" CV="16.1.382" default="128" item="Sound Max Speed 16">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 17 Volume" CV="16.1.387" default="128" item="Sound Volume 17">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.388" mask="XXXXXXXV" item="Sound Drive 17">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -269,9 +218,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.390" default="128" item="Sound Max Speed 17">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 18 Volume" CV="16.1.395" default="128" item="Sound Volume 18">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.396" mask="XXXXXXXV" item="Sound Drive 18">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -282,9 +228,6 @@
       <variable label="Max sound playback speed" CV="16.1.398" default="128" item="Sound Max Speed 18">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 19 Volume" CV="16.1.403" default="128" item="Sound Volume 19">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.404" mask="XXXXXXXV" item="Sound Drive 19">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -293,9 +236,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.406" default="128" item="Sound Max Speed 19">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 20 Volume" CV="16.1.411" default="128" item="Sound Volume 20">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.412" mask="XXXXXXXV" item="Sound Drive 20">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -306,9 +246,6 @@
       <variable label="Max sound playback speed" CV="16.1.414" default="128" item="Sound Max Speed 20">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 21 Volume" CV="16.1.419" default="128" item="Sound Volume 21">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.420" mask="XXXXXXXV" item="Sound Drive 21">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
@@ -317,9 +254,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.422" default="128" item="Sound Max Speed 21">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 22 Volume" CV="16.1.427" default="128" item="Sound Volume 22">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.428" mask="XXXXXXXV" item="Sound Drive 22">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -341,9 +275,6 @@
       </variable>
       <variable label="Max sound playback speed" CV="16.1.438" default="128" item="Sound Max Speed 23">
         <decVal/>
-      </variable>
-      <variable label="Sound Slot 24 Volume" CV="16.1.443" default="128" item="Sound Volume 24">
-        <decVal max="128"/>
       </variable>
       <variable label="Requires Drive Sound" CV="16.1.444" mask="XXXXXXXV" item="Sound Drive 24">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
