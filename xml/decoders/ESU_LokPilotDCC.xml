@@ -720,7 +720,7 @@
         <decVal/>
         <label>Brightness AUX2</label>
       </variable>
-      <variable label="Output Configuration AUX2" item="Output 4 effect generated" CV="63" default="0" mask="XVVVXXXX">
+      <variable label="Output Configuration AUX2" item="Output 4 behavior" CV="63" default="0" mask="XVVVXXXX">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
