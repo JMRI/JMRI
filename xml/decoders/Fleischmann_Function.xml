@@ -169,7 +169,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Function F5" CV="39" default="8" item="Shunt on/off">
+      <variable label="Function F5" CV="39" default="8" item="Function F5">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

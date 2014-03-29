@@ -129,85 +129,85 @@
           <enumChoice choice="Reversed"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
+      <variable CV="21" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
+      <variable CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
+      <variable CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F4">
+      <variable CV="21" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F4">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F5">
+      <variable CV="21" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F5">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" minOut="3" item="Consist Address Active For F6">
+      <variable CV="21" mask="XXVXXXXX" minOut="3" item="Consist Address Active For F6">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" minOut="3" item="Consist Address Active For F7">
+      <variable CV="21" mask="XVXXXXXX" minOut="3" item="Consist Address Active For F7">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" minOut="3" item="Consist Address Active For F8">
+      <variable CV="21" mask="VXXXXXXX" minOut="3" item="Consist Address Active For F8">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For F1">
+      <variable CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For FL in Reverse" CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For F2">
+      <variable CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F9" CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F3">
+      <variable CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F9">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F10" CV="21" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F4">
+      <variable CV="21" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F10">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F11" CV="21" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F5">
+      <variable CV="21" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F11">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Active For F12" CV="21" mask="XXVXXXXX" minOut="3" item="Consist Address Active For F6">
+      <variable mask="XXVXXXXX" minOut="3" item="Consist Address Active For F12">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>

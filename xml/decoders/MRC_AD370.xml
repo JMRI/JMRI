@@ -101,10 +101,6 @@
         </enumVal>
         <label>Advanced Consist direction</label>
       </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh">
-        <decVal max="255"/>
-        <label>Max Volts</label>
-      </variable>
       <variable label="Light Effect Setting" CV="64" item="Output 1 effect generated" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Special Effect">
