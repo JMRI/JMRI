@@ -2185,7 +2185,7 @@
         </enumVal>
         <label>F4(r)7</label>
       </variable>
-      <variable label="F4(r)8" CV="168" mask="VXXXXXXX" item="F4(r)7" minOut="8">
+      <variable label="F4(r)8" CV="168" mask="VXXXXXXX" item="F4(r)8" minOut="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3186,7 +3186,7 @@
         </enumVal>
         <label>F10(r)2</label>
       </variable>
-      <variable label="F10(r)3" CV="204" mask="XXXXXVXX" item="F10(r)2" minOut="3">
+      <variable label="F10(r)3" CV="204" mask="XXXXXVXX" item="F10(r)3" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
