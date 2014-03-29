@@ -79,11 +79,11 @@
         <splitVal highCV="20" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 2 Address</label>
       </variable>
-      <variable label="Route 3 Address" CV="21" mask="VVVVVVVV" item="Route 1 Address" default="00" tooltip="Range 1-2040">
+      <variable label="Route 3 Address" CV="21" mask="VVVVVVVV" item="Route 3 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="22" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 3 Address</label>
       </variable>
-      <variable label="Route 4 Address" CV="23" mask="VVVVVVVV" item="Route 2 Address" default="00" tooltip="Range 1-2040">
+      <variable label="Route 4 Address" CV="23" mask="VVVVVVVV" item="Route 4 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="24" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 4 Address</label>
       </variable>

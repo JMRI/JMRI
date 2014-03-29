@@ -184,7 +184,7 @@
         </enumVal>
         <label>F0(f) controls output 2</label>
       </variable>
-      <variable label="F0(f) controls output 3" CV="33" mask="XXXXXVXX" item="FL(f) controls output 2" default="0" minOut="2" minFn="0">
+      <variable label="F0(f) controls output 3" CV="33" mask="XXXXXVXX" item="FL(f) controls output 3" default="0" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -217,7 +217,7 @@
         </enumVal>
         <label>F0(r) controls output 2</label>
       </variable>
-      <variable label="F0(r) controls output 3" CV="34" mask="XXXXXVXX" item="FL(r) controls output 2" default="0" minOut="2" minFn="0">
+      <variable label="F0(r) controls output 3" CV="34" mask="XXXXXVXX" item="FL(r) controls output 3" default="0" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>

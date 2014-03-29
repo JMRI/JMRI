@@ -147,42 +147,6 @@
           <enumChoice choice="Respond to consist address"/>
         </enumVal>
       </variable>
-      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
-      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only"/>
-          <enumChoice choice="Respond to consist address"/>
-        </enumVal>
-      </variable>
       <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
         <decVal max="127"/>
       </variable>

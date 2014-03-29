@@ -96,7 +96,7 @@
         </enumVal>
       </variable>
       <!-- CV 14 -->
-      <variable label="F9-F15 Mapping on DC-not used" CV="14" default="1" item="Mapping" tooltip="(0 -255) default=1">
+      <variable item="F9-F15 Mapping on DC-not used" CV="14" default="1" tooltip="(0 -255) default=1">
         <decVal min="0" max="255"/>
       </variable>
       <!-- CV 17 -->
@@ -160,7 +160,7 @@
         </enumVal>
       </variable>
       <!-- CV 22 -->
-      <variable label="F9-F15 Mapping on UM-not used" CV="22" default="0" item="Mapping" tooltip="(0 -255) default=0">
+      <variable item="F9-F15 Mapping on UM-not used" CV="22" default="0" tooltip="(0 -255) default=0">
         <decVal min="0" max="255"/>
       </variable>
       <!-- CV 29 -->

@@ -194,7 +194,7 @@
         <decVal max="3"/>
         <label>Coupling Volume</label>
       </variable>
-      <variable label="Auto Ditchlight flash" CV="63" item="Global lighting option 1" tooltip="" default="1">
+      <variable label="Auto Ditchlight flash" CV="63" item="Global lighting option 4" tooltip="" default="1">
         <enumVal>
           <enumChoice choice="Disable" value="0">
             <choice>Disable</choice>

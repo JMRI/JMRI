@@ -257,7 +257,7 @@
         <label>Coupling Fire Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake Release Volume" CV="120" item="Sound Setting 13" default="3" tooltip="Brake Release Volume, range 0-3" comment="Range 0-3">
+      <variable label="Brake Release Volume" CV="120" item="Sound Setting 14" default="3" tooltip="Brake Release Volume, range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake Release Volume</label>
         <comment>Range 0-3</comment>

@@ -80,7 +80,7 @@
         </enumVal>
         <label>Loco can operate on conventional DC</label>
       </variable>
-      <variable label="Pulse Width for Motor Control" CV="49" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-3">
+      <variable label="Pulse Width for Motor Control" CV="49" mask="XXXXVVVV" item="Motor Option 1" default="0" comment="Range 0-3">
         <enumVal>
           <enumChoice choice="0 ">
             <choice>0 </choice>
@@ -98,7 +98,7 @@
         <label>Pulse Width for Motor Control</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-3">
+      <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor Option 2" default="0" comment="Range 0-3">
         <enumVal>
           <enumChoice choice="0 ">
             <choice>0 </choice>

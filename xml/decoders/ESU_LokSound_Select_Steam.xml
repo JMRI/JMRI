@@ -338,6 +338,21 @@
       <variable label="Cylinder Cocks volume" CV="16.1.395" default="128" item="Sound Volume 18">
         <decVal max="128"/>
       </variable>
+      <variable label="Sound Slot 19 Volume" CV="16.1.403" default="128" item="Sound Volume 19">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Sound Slot 20 Volume" CV="16.1.411" default="128" item="Sound Volume 20">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Sound Slot 21 Volume" CV="16.1.419" default="128" item="Sound Volume 21">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Sound Slot 22 Volume" CV="16.1.427" default="128" item="Sound Volume 22">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Sound Slot 23 Volume" CV="16.1.435" default="128" item="Sound Volume 23">
+        <decVal max="128"/>
+      </variable>
       <variable label="Steam Hissing volume" CV="16.1.443" default="99" item="Sound Volume 24">
         <decVal max="128"/>
       </variable>
