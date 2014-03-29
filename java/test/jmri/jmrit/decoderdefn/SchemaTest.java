@@ -40,7 +40,6 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
         java.io.File[] files = dir.listFiles();
         for (int i=0; i<files.length; i++) {
             if (files[i].isDirectory() && !files[i].isHidden()) {
-                System.out.println(files[i].getPath());
                 validateDirectory(files[i].getPath());
             }
         }
