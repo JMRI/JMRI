@@ -18,15 +18,11 @@
 <!-- for more details.                                                      -->
 
 
-    <!-- need variable -->
-    
     <!-- not yet in proper Venetian blind form -->
     <!-- needs to share the pane type with programmer definition -->
     
-    <!-- need documentation, etc -->
-
-    <!-- need attribute restrictions -->
-    <!-- need attribute defaults -->
+    <!-- needs more attribute restrictions -->
+    <!-- needs attribute defaults -->
     
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -123,8 +119,8 @@
       </xs:element>
 
       <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
-        <xs:unique name="variableLabelAttribute2">
-          <xs:annotation><xs:documentation>Insist that the variable label attribute is unique</xs:documentation></xs:annotation>
+        <xs:unique name="UniqueVariableItemAttribute2">
+          <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
           <xs:selector xpath=".//variable"/> 
           <xs:field xpath="@item"/>           
           <xs:field xpath="@include"/>           
@@ -155,12 +151,12 @@
       little files that are XIncluded into primary decoder files.
       </xs:documentation>
     </xs:annotation>
-    <xs:unique name="variableLabelAttribute3">
-      <xs:annotation><xs:documentation>Insist that the variable label attribute is unique</xs:documentation></xs:annotation>
+    <xs:unique name="UniqueVariableItemAttribute3">
+      <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
       <xs:selector xpath=".//variable"/> 
       <xs:field xpath="@item"/>           
-      <xs:field xpath="@include"/>           
-      <xs:field xpath="@exclude"/>           
+      <xs:field xpath="@include"/> <!-- Duplicates are OK so long as include, exclude only get one. -->      
+      <xs:field xpath="@exclude"/> <!-- This isn't quite right, but it's a start -->
     </xs:unique>
   </xs:element>
 
@@ -357,8 +353,8 @@
         <xs:sequence minOccurs="0" maxOccurs="unbounded">
           <xs:element name="variables" type="VariablesType" minOccurs="0" maxOccurs="unbounded" >
             <xs:annotation><xs:documentation>Can be nested to make it possible to include groups</xs:documentation></xs:annotation>
-            <xs:unique name="variableLabelAttribute1">
-              <xs:annotation><xs:documentation>Insist that the variable label attribute is unique</xs:documentation></xs:annotation>
+            <xs:unique name="UniqueVariableItemAttribute1">
+              <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
               <xs:selector xpath=".//variable"/> 
               <xs:field xpath="@item"/>           
               <xs:field xpath="@include"/>           
@@ -405,10 +401,10 @@
                 <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
                 <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
               </xs:sequence>
-              <xs:attribute name="label" type="xs:string" use="required"/>
+              <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="default" type="xs:int"/>
               <xs:attribute name="comment" type="xs:string"/>
-              <xs:attribute name="item" type="xs:string"/>
+              <xs:attribute name="item" type="xs:string" use="required"/>
               <xs:attribute name="minFn" type="xs:int"/>
               <xs:attribute name="minOut" type="xs:int"/>
               <xs:attribute name="inOptions" type="xs:string"/>
@@ -577,7 +573,7 @@
               <xs:attribute name="writeOnly" type="yesNoType" default="no" />
               <xs:attribute name="default" type="xs:string"/>
               <xs:attribute name="comment" type="xs:string"/>
-              <xs:attribute name="item" type="xs:string"/>
+              <xs:attribute name="item" type="xs:string"/><!-- should be use="required" !!! -->
               <xs:attribute name="minFn" type="xs:int"/>
               <xs:attribute name="minOut" type="xs:int"/>
               <xs:attribute name="inOptions" type="xs:string"/>
@@ -601,7 +597,7 @@
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="indexedPairVal" >
-                    <xs:complexType>
+                      <xs:complexType>
                         <xs:attribute name="highCVname" type="xs:string"/>
                         <xs:attribute name="min" type="xs:string"/>
                         <xs:attribute name="max" type="xs:string"/>
@@ -611,13 +607,13 @@
                         <xs:attribute name="comment" type="xs:string"/>
                         <xs:attribute name="upperMask" type="xs:string"/>
                         <xs:attribute name="order" default="lowFirst">
-                            <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
-                            <xs:simpleType>
-                              <xs:restriction base="xs:string">
-                                <xs:enumeration value="lowFirst"/>
-                                <xs:enumeration value="highFirst"/>
-                              </xs:restriction>
-                            </xs:simpleType>
+                          <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="lowFirst"/>
+                              <xs:enumeration value="highFirst"/>
+                            </xs:restriction>
+                          </xs:simpleType>
                         </xs:attribute>    
                       </xs:complexType>
                     </xs:element>
