@@ -75,7 +75,7 @@
           <enumChoice choice="Active"/>
         </enumVal>
       </variable>
-      <variable label="Feedback Reference" CV="53" default="42" item="Dither option" tooltip="Determines the back EMF supplied by the motor at Max speed. The more efficient the motor the higher this value should be. 0-63 default=42.">
+      <variable label="Feedback Reference" CV="53" default="42" item="EMF Control Reference" tooltip="Determines the back EMF supplied by the motor at Max speed. The more efficient the motor the higher this value should be. 0-63 default=42.">
         <decVal min="0" max="63"/>
       </variable>
       <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects, range 0-63">
