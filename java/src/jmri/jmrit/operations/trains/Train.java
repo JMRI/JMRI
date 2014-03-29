@@ -1406,6 +1406,19 @@ public class Train implements java.beans.PropertyChangeListener {
 			length = car.getKernel().getTotalLength();
 		Route route = getRoute();
 		if (route != null) {
+			// determine if the car's location and destination is serviced by this train
+			if (route.getLastLocationByName(car.getLocationName()) == null) {
+				if (addToReport)
+					TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("trainNotThisLocation"), new Object[] { getName(), car.getLocationName() }));
+				return false;
+			}
+			if (car.getDestination() != null && route.getLastLocationByName(car.getDestinationName()) == null) {
+				if (addToReport)
+					TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("trainNotThisLocation"), new Object[] { getName(), car.getDestinationName() }));
+				return false;
+			}
 			List<RouteLocation> rLocations = route.getLocationsBySequenceList();
 			for (int j = 0; j < rLocations.size(); j++) {
 				RouteLocation rLoc = rLocations.get(j);
@@ -1608,6 +1621,9 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
+		if (debugFlag)
+			log.debug("Train ({}) can't service car ({}) from ({}, {})", getName(), car.toString(), car
+					.getLocationName(), car.getTrackName());
 		return false;
 	}
 

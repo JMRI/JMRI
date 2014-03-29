@@ -2576,6 +2576,12 @@ public class TrainBuilder extends TrainCommon {
 			Track track = tracks.get(i);
 			if (car.getTrack() == track || track.getSchedule() == null)
 				continue;
+			if (!car.getTrack().acceptsDestination(track.getLocation())) {
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
+						new Object[] { track.getLocation().getName() + ", " + track.getName(),
+								car.getTrackName() }));
+				continue;
+			}
 			if (!train.isAllowLocalMovesEnabled()
 					&& splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))) {
 				log.debug("Skipping track ({}), it would require a local move", track.getName()); // NOI18N
@@ -2675,6 +2681,12 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				if (locations.contains(track.getLocation()))
 					continue;
+				if (!car.getTrack().acceptsDestination(track.getLocation())) {
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
+							new Object[] { track.getLocation().getName() + ", " + track.getName(),
+									car.getTrackName() }));
+					continue;
+				}
 				String status = track.accepts(car);
 				if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
 					log.debug("Staging track ({}) can't accept car ({})", track.getName(), car.toString());
