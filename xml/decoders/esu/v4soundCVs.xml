@@ -264,9 +264,6 @@
       <variable label="Max sound playback speed" CV="16.1.430" default="128" item="Sound Max Speed 22">
         <decVal/>
       </variable>
-      <variable label="Sound Slot 23 Volume" CV="16.1.435" default="128" item="Sound Volume 23">
-        <decVal max="128"/>
-      </variable>
       <variable label="Requires Drive Sound" CV="16.1.436" mask="XXXXXXXV" item="Sound Drive 23">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
