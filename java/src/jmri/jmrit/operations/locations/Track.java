@@ -73,7 +73,7 @@ public class Track {
 	protected int _scheduleCount = 0; // the number of times the item has been delivered
 	protected int _reservedInRoute = 0; // length of cars in route to this track
 	protected int _reservationFactor = 100; // percentage of track space for cars in route
-	protected int _mode = MATCH;
+	protected int _mode = MATCH;	// default is match mode
 
 	// drop options
 	protected String _dropOption = ANY; // controls which route or train can set out cars
@@ -1594,7 +1594,7 @@ public class Track {
 		if (!getTrackType().equals(SPUR))
 			return OKAY;
 		log.debug("Track (" + getName() + ") has schedule (" + getScheduleName() + ") mode "
-				+ getScheduleMode());
+				+ getScheduleMode() + (getScheduleMode() == SEQUENTIAL? " Sequential" : " Match")); // NOI18N
 
 		ScheduleItem si = getCurrentScheduleItem();
 		if (si == null) {
@@ -1687,10 +1687,10 @@ public class Track {
 		}
 		// a car has a schedule id if the schedule was in match mode
 		if (!car.getScheduleId().equals("")) {
-			log.debug("Car (" + car.toString() + ") has schedule id " + car.getScheduleId());
+			String id = car.getScheduleId();	// save id for error message
+			log.debug("Car ({}) has schedule id {}", car.toString(), car.getScheduleId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
-				String id = car.getScheduleId();	// save id for error message
 				ScheduleItem si = sch.getItemById(id);
 				car.setScheduleId("");
 				if (si != null) {
