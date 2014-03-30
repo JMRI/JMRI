@@ -228,18 +228,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             }
             String famComment = decoders.get(i).getFamilyComment();
             String verString = decoders.get(i).getVersionsAsString();
-            String hoverText = "";
-            if (famComment == "" || famComment == null) {
-                if (verString != "") {
-                    hoverText = "CV7=" + verString;
-                }
-            } else {
-                if (verString == "") {
-                    hoverText = famComment;
-                } else {
-                    hoverText = famComment + "  CV7=" + verString;
-                }
-            }
             if (familyElement == null || (!family.equals(familyElement.toString()) && !familyNameNode.containsKey(family))) {
                 // need new family node - is there only one model? Expect the
                 // family element, plus the model element, so check i+2
@@ -251,7 +239,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     // normal here; insert the new family element & exit
                     log.debug("normal family update case: " + family);
                     familyElement = new DecoderTreeNode(family,
-                            hoverText,
+                            getHoverText(verString, famComment),
                             decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     familyNameNode.put(family, familyElement);
@@ -265,7 +253,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     }
                     family = decoders.get(i + 1).getModel();
                     familyElement = new DecoderTreeNode(family,
-                            hoverText,
+                            getHoverText(verString, famComment),
                             decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     familyNameNode.put(family, familyElement);
@@ -278,8 +266,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                 if (familyNameNode.containsKey(family)) {
                     familyElement = familyNameNode.get(family);
                 }
+                String modelComment = decoders.get(i).getModelComment();
                 DecoderTreeNode decoderNameNode = new DecoderTreeNode(model,
-                        hoverText,
+                        getHoverText(verString, modelComment),
                         decoders.get(i).titleString());
                 decoderNameNode.setShowable(decoder.getShowable());
                 dModel.insertNodeInto(decoderNameNode, familyElement, familyElement.getChildCount());
@@ -287,6 +276,26 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }  // end of loop over decoders       
     }
 
+    /**
+     * Provide tooltip text:  Decoder comment, with CV version info, formatted as best we can
+     * @param verString version string, typically from (decoder).getVersionsAsString()
+     */
+    String getHoverText(String verString, String comment) {
+        if (comment == "" || comment == null) {
+            if (verString != "") {
+                return "CV7=" + verString;
+            } else {
+                return "";
+            }
+        } else {
+            if (verString == "") {
+                return comment;
+            } else {
+                return comment + "  CV7=" + verString;
+            }
+        }    
+   }
+    
     @SuppressWarnings("unchecked")
     public void resetSelections() {
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
