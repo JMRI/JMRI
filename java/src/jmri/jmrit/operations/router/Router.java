@@ -119,8 +119,8 @@ public class Router extends TrainCommon {
 		// schedule.
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 		if (!_status.equals(Track.OKAY)) {
-			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextDestFailed"), new Object[] {
-					car.getFinalDestinationName(), car.getFinalDestinationTrackName(), car.toString(), _status }));
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"), new Object[] {
+				car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(), _status }));
 			return false;
 		}
 		// check to see if car will move to destination using a single train
@@ -224,11 +224,11 @@ public class Router extends TrainCommon {
 	/**
 	 * A single train can service the car.  Provide various messages to build report detailing which train
 	 * can service the car.  Also checks to see if the needs to go the alternate track or yard track if the
-	 * car's final destination track is full.
+	 * car's final destination track is full. Returns false if car is stuck in staging.
 	 * @param testTrain
 	 * @param car
 	 * @param clone
-	 * @return always returns true.
+	 * @return true for all cases except if car is departing staging and is stuck there.
 	 */
 	private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone) {
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"), new Object[] {
@@ -299,12 +299,20 @@ public class Router extends TrainCommon {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSendCarToYard"),
 							new Object[] { car.toString(), track.getName(), dest.getName() }));
 					return true; // car is going to a yard
+				} else {
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotUseYard"),
+							new Object[] { track.getName(), status }));
 				}
 			}
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNoYardTracks"), new Object[] {
 					dest.getName(), car.toString() }));
 		}
 		car.setDestination(null, null);
+		if (car.getTrack().getTrackType().equals(Track.STAGING)) {
+			log.debug("Car ({}) departing staging, single train can't deliver car to ({}, {})", car.toString(), clone
+					.getDestinationName(), clone.getDestinationTrackName());
+			return false;	// try 2 or more trains
+		}
 		return true; // able to route, but not able to set the car's destination
 	}
 

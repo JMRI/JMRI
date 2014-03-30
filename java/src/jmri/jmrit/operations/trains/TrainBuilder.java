@@ -1867,11 +1867,11 @@ public class TrainBuilder extends TrainCommon {
 							addLine(_buildReport, ONE, MessageFormat.format(
 									Bundle.getMessage("buildErrorCarStageDest"), new Object[] { car.toString() }));
 						} else {
-							addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 							log.debug("Removing car ({}) from list", car.toString());
 							_carList.remove(car);
 							_carIndex--;
 						}
+						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 						continue;
 					}
 				}
@@ -2684,9 +2684,10 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"), new Object[] {
 				car.toString(), car.getLoadName() }));
-		if (routeToSpurFound && !_train.isSendCarsWithCustomLoadsToStagingEnabled()) {
-			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"), new Object[] {
-				car.toString(), car.getLocationName(), car.getTrackName() }));
+		if (routeToSpurFound && !_train.isSendCarsWithCustomLoadsToStagingEnabled()
+				&& car.getLocation().getLocationOps() != Location.STAGING) {
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"),
+					new Object[] { car.toString(), car.getLocationName(), car.getTrackName() }));
 		} else {
 			// try and send car to staging
 			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrySendCarToStaging"),
