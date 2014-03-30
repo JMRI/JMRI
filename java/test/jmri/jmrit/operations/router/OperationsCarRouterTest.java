@@ -1423,6 +1423,11 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BA 3 load","", c3.getNextLoadName());
 		Assert.assertEquals("Car BB 4 load","", c4.getNextLoadName());
 		
+		// check car's location
+		Assert.assertEquals("Car BA 3 location", "Acton Interchange", c3.getTrackName());
+		Assert.assertEquals("Car BB 4 location", "Acton Interchange", c4.getTrackName());
+
+		
 		ActonToBedfordTrain.build();
 		ActonToBedfordTrain.terminate();
 		
@@ -1470,6 +1475,10 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BA 3 load","", c3.getNextLoadName());
 		Assert.assertEquals("Car BB 4 load","", c4.getNextLoadName());
 		
+		// check car's location
+		Assert.assertEquals("Car BA 3 location", "Clinton Siding 1", c3.getTrackName());
+		Assert.assertEquals("Car BB 4 location", "Clinton Interchange", c4.getTrackName());
+		
 		ClintonToDanburyTrain.build();
 		ClintonToDanburyTrain.terminate();
 		
@@ -1492,6 +1501,10 @@ public class OperationsCarRouterTest extends TestCase {
 		// check next loads
 		Assert.assertEquals("Car BA 3 load","", c3.getNextLoadName());
 		Assert.assertEquals("Car BB 4 load","", c4.getNextLoadName());
+		
+		// check car's location
+		Assert.assertEquals("Car BA 3 location", "Danbury Siding 2", c3.getTrackName());
+		Assert.assertEquals("Car BB 4 location", "Danbury Siding 1", c4.getTrackName());
 		
 		DanburyToEssexTrain.build();
 		
@@ -1538,6 +1551,10 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BA 3 has wait", 0, c3.getNextWait());
 		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getNextWait());
 		
+		// check car's location
+		Assert.assertEquals("Car BA 3 location", "Essex Siding 1", c3.getTrackName());
+		Assert.assertEquals("Car BB 4 location", "Essex Interchange", c4.getTrackName());
+		
 		EssexToFoxboroTrain.build();
 		
 		// confirm that only BB 4 is in train, BA 3 has wait = 1
@@ -1567,7 +1584,11 @@ public class OperationsCarRouterTest extends TestCase {
 		// check wait
 		Assert.assertEquals("Car BA 3 has no wait", 0, c3.getWait());
 		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getWait());
-	
+		
+		// check car's location
+		Assert.assertEquals("Car BA 3 location", "Essex Siding 1", c3.getTrackName());
+		Assert.assertEquals("Car BB 4 location", "Foxboro Siding 1", c4.getTrackName());
+
 		EssexToFoxboroTrain.build();
 		// confirm that only BA 3 is in train
 		Assert.assertEquals("Car BA 3 in train", EssexToFoxboroTrain, c3.getTrain());
