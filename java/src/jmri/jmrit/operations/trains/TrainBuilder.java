@@ -2587,14 +2587,17 @@ public class TrainBuilder extends TrainCommon {
 						car.getLocationName() + ", " + car.getTrackName() }));
 		List<Track> tracks = locationManager.getTracksByMoves(Track.SPUR);
 		log.debug("Found {} spurs", tracks.size());
+		List<Location> locations = new ArrayList<Location>(); // locations not reachable
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
 			if (car.getTrack() == track || track.getSchedule() == null)
 				continue;
+			if (locations.contains(track.getLocation()))
+				continue;
 			if (!car.getTrack().acceptsDestination(track.getLocation())) {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
-						new Object[] { track.getLocation().getName() + ", " + track.getName(),
-								car.getTrackName() }));
+						new Object[] { track.getLocation().getName(), car.getTrackName() }));
+				locations.add(track.getLocation());
 				continue;
 			}
 			if (!_train.isAllowLocalMovesEnabled()
@@ -2684,8 +2687,6 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { car.toString(), car.getLoadName() }));
 			tracks = locationManager.getTracks(Track.STAGING);
 			log.debug("Found {} staging tracks", tracks.size());
-			// list of locations that can't be reached by the router
-			List<Location> locations = new ArrayList<Location>();
 			while (tracks.size() > 0) {
 				// pick a track randomly
 				int rnd = (int) (Math.random() * tracks.size());
@@ -2696,10 +2697,12 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				if (locations.contains(track.getLocation()))
 					continue;
+				if (_terminateStageTrack != null && track.getLocation() == _terminateLocation && track != _terminateStageTrack)
+					continue; // ignore other staging tracks at terminus 
 				if (!car.getTrack().acceptsDestination(track.getLocation())) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
-							new Object[] { track.getLocation().getName() + ", " + track.getName(),
-									car.getTrackName() }));
+							new Object[] { track.getLocation().getName(), car.getTrackName() }));
+					locations.add(track.getLocation());
 					continue;
 				}
 				String status = track.accepts(car);
