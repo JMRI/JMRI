@@ -11,12 +11,10 @@
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  
- *  TODO: change le panel xml to only send systemnames (occupancy sensors are sending usernames)
- *  TODO: address false positive touch screen
- *  TODO: improve error notification when panel and/or server goes away
+ *  TODO: show error notification or grey-out panel when panel and/or server goes away
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: update drawn track on occupancy and state changes (color, width)
+ *  TODO: update drawn track on color and width changes
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
@@ -40,10 +38,10 @@ var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layo
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gCtx;  		//persistent context of canvas layer   
 var $gDashArray = [12, 12]; //on,off of dashed lines
-var DOWNEVENT;  	//either mousedown or touchstart, based on device
-var UPEVENT;    	//either mouseup or touchend, based on device
+var	DOWNEVENT = 'touchstart mousedown';  //check both touch and mouse events
+var  UPEVENT         = 'touchend mouseup';
 var SIZE = 3;  		//default factor for circles
-var UNKNOWN = '1';  //constants to match JMRI state names
+var UNKNOWN = '0';  //constants to match JSON Server state names
 var ACTIVE = '2';
 var CLOSED = '2';
 var INACTIVE = '4';
@@ -154,13 +152,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                     case "icon" :
                         switch ($widget.widgetType) {
                             case "positionablelabel" :
-                                $widget['icon1'] = $(this).find('icon').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                                 $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icon').attr('scale');
                                 break;
                             case "linkinglabel" :
-                                $widget['icon1'] = $(this).find('icon').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                                 $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('icon').attr('scale');
@@ -171,14 +169,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                             case "indicatortrackicon" :
-                                $widget['icon1'] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                                $widget['icon2'] = $widget.icon1;
-                                $widget['icon4'] = $widget.icon1;
-                                $widget['icon8'] = $widget.icon1;
-                                $widget['iconOccupied1'] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
-                                $widget['iconOccupied2'] = $widget.iconOccupied1;
-                                $widget['iconOccupied4'] = $widget.iconOccupied1;
-                                $widget['iconOccupied8'] = $widget.iconOccupied1;
+                                $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
+                                $widget['icon2'] = $widget['icon' + UNKNOWN];
+                                $widget['icon4'] = $widget['icon' + UNKNOWN];
+                                $widget['icon8'] = $widget['icon' + UNKNOWN];
+                                $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
+                                $widget['iconOccupied2'] = $widget['iconOccupied' + UNKNOWN];
+                                $widget['iconOccupied4'] = $widget['iconOccupied' + UNKNOWN];
+                                $widget['iconOccupied8'] = $widget['iconOccupied' + UNKNOWN];
                                 $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                                 $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                                 $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
@@ -192,11 +190,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['name'] = $(this).find('turnout').text();
                                 ; //normalize name
                                 $widget.jsonType = 'turnout'; // JSON object type
-                                $widget['icon1'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
                                 $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
                                 $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
-                                $widget['iconOccupied1'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
+                                $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
                                 $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
                                 $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
                                 $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
@@ -216,7 +214,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "turnouticon" :
                                 $widget['name'] = $widget.turnout; //normalize name
                                 $widget.jsonType = "turnout"; // JSON object type
-                                $widget['icon1'] = $(this).find('icons').find('unknown').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
                                 $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
                                 $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
@@ -231,7 +229,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "sensoricon" :
                                 $widget['name'] = $widget.sensor; //normalize name
                                 $widget.jsonType = "sensor"; // JSON object type
-                                $widget['icon1'] = $(this).find('unknown').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
                                 $widget['icon2'] = $(this).find('active').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
@@ -281,14 +279,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                $widget['state'] = "Clear"; //set the default to a likely icon
+                                $widget['state'] = "Unknown"; //set the default to match JMRI
                                 jmri.getSignalMast($widget["systemName"]);
                                 break;
                             case "multisensoricon" :
                                 //create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
                                 //  set up siblings array so each widget can also set state of the others
                                 $widget.jsonType = "sensor"; // JSON object type
-                                $widget['icon1'] = $(this).find('unknown').attr('url');
+                                $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
                                 $widget['icon4'] = $(this).find('inactive').attr('url');
                                 $widget['icon8'] = $(this).find('inconsistent').attr('url');
                                 $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
@@ -322,7 +320,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         }
                                         systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
                                         $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
-                                        $widget['icon1'] = "/web/images/transparent_1x1.png";
+                                        $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
                                         $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
                                         $widget['icon8'] = "/web/images/transparent_1x1.png";
                                         $widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
@@ -345,12 +343,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['name'] = $widget.sensor; //normalize name
                                 $widget.jsonType = "sensor"; // JSON object type
                                 //set each state's text
-                                $widget['text1'] = $(this).find('unknownText').attr('text');
+                                $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text');
                                 $widget['text2'] = $(this).find('activeText').attr('text');
                                 $widget['text4'] = $(this).find('inactiveText').attr('text');
                                 $widget['text8'] = $(this).find('inconsistentText').attr('text');
                                 //set each state's css attribute array (text color, etc.)
-                                $widget['css1'] = $getTextCSSFromObj($getObjFromXML($(this).find('unknownText')[0]));
+                                $widget['css' + UNKNOWN] = $getTextCSSFromObj($getObjFromXML($(this).find('unknownText')[0]));
                                 $widget['css2'] = $getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
                                 $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
                                 $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
@@ -364,8 +362,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "locoicon" :
                             case "trainicon" :
                                 //also set the background icon for this one (additional css in .html file)
-                                $widget['icon1'] = $(this).find('icon').attr('url');
-                                $widget.styles['background-image'] = "url('" + $widget.icon1 + "')";
+                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                                $widget.styles['background-image'] = "url('" + $widget['icon' + UNKNOWN] + "')";
                                 $widget['scale'] = $(this).find('icon').attr('scale');
                                 if ($widget.scale != 1.0) {
                                     $widget.styles['background-size'] = $widget.scale * 100 + "%";
@@ -391,6 +389,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['name'] = $widget.memory; //normalize name
                                 $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
+                                $widget['state'] = $widget.memory; //use name for initial state as well
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
@@ -400,6 +399,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['name'] = $widget.memory; //normalize name
                                 $widget.jsonType = "memory"; // JSON object type
                                 $widget['text'] = $widget.memory; //use name for initial text
+                                $widget['state'] = $widget.memory; //use name for initial state as well
                                 $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
@@ -549,8 +549,10 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     //momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
     $('.clickable.momentary').bind(DOWNEVENT, function(e) {
+    	e.stopPropagation();  e.preventDefault(); //prevent double-firing (touch + click)
         sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, ACTIVE);  //send active on down
     }).bind(UPEVENT, function(e) {
+    	e.stopPropagation();  e.preventDefault(); //prevent double-firing (touch + click)
         sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
     });
 
@@ -561,22 +563,22 @@ function processPanelXML($returnedData, $success, $xhr) {
 //		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
 //	}, 3000);
 
-}
-;
+};
 
 //perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
+	e.stopPropagation();  e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
     sendElementChange($widget.jsonType, $widget.systemName, $newState);  //send new value to JMRI
     if (typeof $widget.secondturnoutname !== "undefined") {  //TODO: put this in a more logical place?
         sendElementChange($widget.jsonType, $widget.secondturnoutname, $newState);  //also send 2nd turnout
     }
-}
-;
+};
 
 //perform multisensor click-handling, bound to click event for clickable multisensor widgets.
 function $handleMultiClick(e) {
+	e.stopPropagation();  e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
     var clickX = e.pageX - $(this).parent().offset().left - this.offsetLeft;  //get click location on widget
     var clickY = e.pageY - $(this).parent().offset().top - this.offsetTop;
@@ -594,8 +596,7 @@ function $handleMultiClick(e) {
         if ($gWidgets[$widget.siblings[i]].state == ACTIVE) {
             displaying = i; //flag the current active sibling
         }
-    }
-    ;
+    };
     var next;  //determine which is the next one which should be set to active
     if (dec) {
         next = displaying - 1;
@@ -616,13 +617,12 @@ function $handleMultiClick(e) {
                 sendElementChange('sensor', $gWidgets[$widget.siblings[i]].name, INACTIVE);  //set all other siblings to inactive if not already
             }
         }
-    }
-    ;
-}
-;
+    };
+};
 
 //perform click-handling of linkinglabel widgets (3 cases: complete url or frame:<name> where name is a panel or a frame)
 function $handleLinkingLabelClick(e) {
+	e.stopPropagation();  e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
     var $url = $widget.url;
     if ($url.toLowerCase().indexOf("frame:") == 0) {
@@ -653,8 +653,7 @@ function $drawCircle($ptx, $pty, $radius, $color, $width) {
     // put color and widths back to default
     $gCtx.lineWidth = $savLineWidth;
     $gCtx.strokeStyle = $savStrokeStyle;
-}
-;
+};
 
 //draw a Tracksegment (pass in widget)
 function $drawTrackSegment($widget) {
@@ -790,7 +789,7 @@ function $drawIcon($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
     //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if (typeof $widget['icon' + $widget.state] !== "undefined") {
+    if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
                 "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
 
@@ -801,11 +800,12 @@ function $drawIcon($widget) {
             $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
             $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
         }
+    } else {
+        if (window.console)
+        	console.log("ERROR: image not defined for " + $widget.widgetType + " " +$widget.id+", state=" + $widget.state+", occ=" +$widget.occupancystate);
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
-
-}
-;
+};
 
 //draw a LevelXing (pass in widget)
 function $drawLevelXing($widget) {
@@ -1212,7 +1212,12 @@ var $setWidgetPosition = function(e) {
 var $reDrawIcon = function($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
+    if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) {
+    	$('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
+    } else {
+    	if (window.console)
+    		console.log("ERROR: image not defined for " + $widget.widgetType + " " +$widget.id+", state=" + $widget.state+", occ=" +$widget.occupancystate);
+    }
 };
 
 //set new value for widget, showing proper icon, return widgets changed
@@ -1220,7 +1225,7 @@ var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value
         if (window.console)
-            console.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
+            console.log("setting "+$id+" for "+$widget.jsonType+" "+$widget.name+", '" + $widget.state+ "' --> '"+$newState+"'");
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
@@ -1231,7 +1236,7 @@ var $setWidgetState = function($id, $newState) {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
                     } else {
-                        $('div#' + $id).text($newState);  //set memory text to new value from server
+                    		$('div#' + $id).text($newState);  //set memory text to new value from server
                     }
                 } else {
                     if (typeof $widget['text' + $newState] !== "undefined") {
@@ -1249,6 +1254,9 @@ var $setWidgetState = function($id, $newState) {
                 break;
         }
         $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
+//    } else {
+//        if (window.console)
+//            console.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
     }
 };
 
@@ -1351,8 +1359,7 @@ var $getNextState = function($widget) {
                         if (window.console)
                             console.log('key: ' + k + " first=" + $firstState);
                     }
-                }
-                ;
+                };
                 if (typeof $nextState == "undefined")
                     $nextState = $firstState;  //if still not set, start over
         } //end of switch 
@@ -1408,12 +1415,11 @@ var requestPanelXML = function(panelName) {
 
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
-    for (k in $widget) {
-        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
-            $("<img src='" + $widget[k] + "'/>");
-        }
-    }
-    ;
+	for (k in $widget) {
+		if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
+			$("<img src='" + $widget[k] + "'/>");
+		}
+	};
 };
 
 //determine widget "family" for broadly grouping behaviors
@@ -1495,23 +1501,21 @@ var $drawAllIconWidgets = function() {
 function updateWidgets(systemName, state) {
     if (systemNames[systemName]) {
         $.each(systemNames[systemName], function(index, widgetId) {
-            console.log("setting state of " + widgetId + " (" + systemName + ") to " + state);
             $setWidgetState(widgetId, state);
         });
     }
 }
 
 function updateOccupancy(occupancyName, state) {
-    if (occupancyNames[occupancyName]) {
+	if (occupancyNames[occupancyName]) {
+		if (window.console)
+			console.log("setting occupancies for sensor"+ occupancyName + " to " + state);
         $.each(occupancyNames[occupancyName], function(index, widgetId) {
-            console.log("setting occupancy of " + widgetId + " (" + occupancyName + ")");
             $widget = $gWidgets[widgetId];
             if ($widget.blockname) {
                 $gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
             }
             $gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
-            if (window.console)
-                console.log("redraw " + $widget.widgetType + " " + $widget.name + " for " + $widget.occupancysensor);
             switch ($widget.widgetType) {
                 case 'layoutturnout' :
                     $drawTurnout($widget);
@@ -1625,20 +1629,6 @@ $(document).ready(function() {
         });
         $("#panel-list").addClass("hidden").removeClass("show");
         $("#panel-area").addClass("show").removeClass("hidden");
-        //set up events based on browser's support for touch events
-        // is this still needed?
-        var $is_touch_device = 'ontouchstart' in document.documentElement;
-        if ($is_touch_device) {
-            if (window.console)
-                console.log("touch events enabled");
-            DOWNEVENT = 'touchstart';
-            UPEVENT = 'touchend';
-        } else {
-            if (window.console)
-                console.log("mouse events enabled");
-            DOWNEVENT = 'mousedown';
-            UPEVENT = 'mouseup';
-        }
 
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
