@@ -1,0 +1,22 @@
+#! /bin/csh
+
+#
+# Put JMRI decoder file(s) in normal form.
+#
+#*) If there's no item attribute, create from the label attribute
+#*) Create a label element with default language if none present.
+#*) Removing redundant label attributes from variable elements:   
+#*) Standardize layout of the content
+#
+# Output is sent to a (created, if need be) tmp subdirectory in the wd, using the
+# same file names.
+#
+# Known to work on Mac OS X, expected to work on Linux, Windows situation not clear.
+#
+#  Bob Jacobsen 3/2014
+# 
+mkdir tmp
+
+foreach x ( $* )
+cat $x | xsltproc decoderLabelToItem.xsl - | xsltproc decoderAddLabelElement.xsl - | xsltproc decoderSuppressRedundantLabel.xsl - | xmllint -format - > tmp/$x:t
+end
