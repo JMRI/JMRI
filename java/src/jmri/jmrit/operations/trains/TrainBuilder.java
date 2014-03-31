@@ -878,7 +878,7 @@ public class TrainBuilder extends TrainCommon {
 				return true; // done
 			} else {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropEngineToTrack"),
-						new Object[] { engine.toString(), terminateTrack.getName(), status }));
+						new Object[] { engine.toString(), terminateTrack.getName(), status, terminateTrack.getTrackTypeName() }));
 			}
 			// find a destination track for this engine
 		} else {
@@ -898,7 +898,7 @@ public class TrainBuilder extends TrainCommon {
 					return true; // done
 				} else {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropEngineToTrack"),
-							new Object[] { engine.toString(), track.getName(), status }));
+							new Object[] { engine.toString(), track.getName(), status, track.getTrackTypeName() }));
 				}
 			}
 			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotDropEngToDest"),
@@ -3122,9 +3122,9 @@ public class TrainBuilder extends TrainCommon {
 						addCarToTrain(car, rl, rld, _terminateStageTrack);
 						return true;
 					} else {
-						addLine(_buildReport, SEVEN, MessageFormat.format(
-								Bundle.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										_terminateStageTrack.getName(), status }));
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
+								_terminateStageTrack.getName(), status, _terminateStageTrack.getTrackTypeName() }));
 						continue;
 					}
 					// no staging at this location, now find a destination track this this car
@@ -3177,13 +3177,14 @@ public class TrainBuilder extends TrainCommon {
 							} else {
 								addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										testTrack.getAlternateTrack().getName(), altStatus }));
+										testTrack.getAlternateTrack().getName(), altStatus,
+										testTrack.getTrackTypeName() }));
 							}
 						}
 						if (!status.equals(Track.OKAY)) {
 							addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 									.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-									testTrack.getName(), status }));
+									testTrack.getName(), status, testTrack.getTrackTypeName() }));
 							continue;
 						}
 						addCarToTrain(car, rl, rld, testTrack);
@@ -3215,7 +3216,8 @@ public class TrainBuilder extends TrainCommon {
 							} else if (!status.equals(Track.OKAY)) {
 								addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										car.getDestinationTrackName(), status }));
+										car.getDestinationTrackName(), status,
+										car.getDestinationTrack().getTrackTypeName() }));
 							}
 						}
 					}
@@ -3417,14 +3419,15 @@ public class TrainBuilder extends TrainCommon {
 						trackTemp = _terminateStageTrack;
 						destinationTemp = testDestination;
 					} else {
-						addLine(_buildReport, SEVEN, MessageFormat.format(
-								Bundle.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										_terminateStageTrack.getName(), status }));
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
+								_terminateStageTrack.getName(), status, _terminateStageTrack.getTrackTypeName() }));
 						continue; // failed to create load
 					}
-				} else {
+			} else {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
-							new Object[] { car.toString(), _terminateStageTrack.getName(), status }));
+							new Object[] { car.toString(), _terminateStageTrack.getName(), status,
+									_terminateStageTrack.getTrackTypeName() }));
 					continue;
 				}
 				// no staging track assigned, start track search
@@ -3502,7 +3505,7 @@ public class TrainBuilder extends TrainCommon {
 					if (!status.equals(Track.OKAY)) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(
 								Bundle.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
-										testTrack.getName(), status }));
+										testTrack.getName(), status, testTrack.getTrackTypeName() }));
 						continue;
 					}
 					// No local moves from spur to spur
@@ -3730,7 +3733,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			car.setLoadName(oldLoad); // restore load and report failure
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
-					new Object[] { car.toString(), stageTrack.getName(), status }));
+					new Object[] { car.toString(), stageTrack.getName(), status, stageTrack.getTrackTypeName() }));
 		}
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildUnableNewLoadStaging"), new Object[] {
 				car.toString(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName() }));

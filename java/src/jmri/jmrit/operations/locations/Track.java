@@ -263,15 +263,35 @@ public class Track {
 		return _name;
 	}
 
+	/**
+	 * Gets the track type
+	 * @return Track.SPUR Track.YARD Track.INTERCHANGE or Track.STAGING
+	 */
 	public String getTrackType() {
 		return _trackType;
 	}
 	
+	/**
+	 * Sets the track type, spur, interchange, yard, staging
+	 * @param type Track.SPUR Track.YARD Track.INTERCHANGE Track.STAGING
+	 */
 	public void setTrackType(String type) {
 		String old = _trackType;
 		_trackType = type;
 		if (!old.equals(type))
 			setDirtyAndFirePropertyChange(TRACK_TYPE_CHANGED_PROPERTY, old, type);
+	}
+	
+	public String getTrackTypeName() {
+		if (getTrackType().equals(Track.SPUR))
+			return Bundle.getMessage("Spur").toLowerCase();
+		if (getTrackType().equals(Track.YARD))
+			return Bundle.getMessage("Yard").toLowerCase();
+		if (getTrackType().equals(Track.INTERCHANGE))
+			return Bundle.getMessage("Class/Interchange");	// this is an abbreviation
+		if (getTrackType().equals(Track.STAGING))
+			return Bundle.getMessage("Staging").toLowerCase();
+		return ("unknown");
 	}
 
 	@Deprecated // as of 10/27/2013 version 3.5.5
@@ -641,6 +661,11 @@ public class Track {
 
 	List<String> _typeList = new ArrayList<String>();
 
+	/**
+	 * Returns all of the rolling stock type names serviced by this track.
+	 * 
+	 * @return rolling stock type names
+	 */
 	public String[] getTypeNames() {
 		String[] types = new String[_typeList.size()];
 		for (int i = 0; i < _typeList.size(); i++)
