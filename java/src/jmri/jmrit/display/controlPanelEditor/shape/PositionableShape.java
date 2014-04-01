@@ -208,8 +208,6 @@ public class PositionableShape extends PositionableJComponent
             r.x=0;
             r.y=0;
        		g2d.draw(r);
-            Color halftone = new Color(Editor.HIGHLIGHT_COLOR.getRed(),Editor.HIGHLIGHT_COLOR.getGreen(),
-            		Editor.HIGHLIGHT_COLOR.getBlue(),Editor.HIGHLIGHT_COLOR.getAlpha()/2);
        		g2d.fill(r);
         	for (int i=0; i<_handles.length; i++) {
         		if (_handles[i]!=null) {

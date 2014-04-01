@@ -3851,7 +3851,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                             || (t.getTurnoutType()==LayoutTurnout.LH_XOVER) || (t.getTurnoutType()==LayoutTurnout.RH_XOVER))){
                             amendSelectionGroup((LayoutTurnout)foundObject, dLoc);
                         }
-                    
+                    //$FALL-THROUGH$
                     default: break;
                 }
             } else {
