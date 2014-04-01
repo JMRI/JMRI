@@ -11,6 +11,12 @@
             </column>
         </row>
         <fnmapping/>
+        <row>
+            <label label=" "/>
+        </row>
+        <row>
+            <display item="Function Map Option 1"/>
+        </row>
     </column>
 </pane>
 

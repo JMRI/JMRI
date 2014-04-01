@@ -21,6 +21,8 @@
     <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
     <!-- for more details.                                                      -->
 
+		<version author="Dave Heap" 
+			version="12" lastUpdated="20140401"/>
 		<version author="Jack Shall lcrr@bellsouth.net" 
 			version="11" lastUpdated="20100819"/>
 		<version author="Jack Shall jack745@bellsouth.net" 
@@ -36,6 +38,7 @@
    <!-- Version 9 - add explicit EMF Enable to fix TCS confusion			-->
    <!-- Version 10 - added four additional lighting options					-->
    <!-- Version 11 - added additional lighting options to functions 3 and 4	-->
+   <!-- Version 12 - added Function Map Option 1 to Function Map pane	-->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -708,6 +711,8 @@
 		<definition item="F12 controls output 12" CV="46" mask="XXVXXXXX" />
 		<definition item="F12 controls output 13" CV="46" mask="XVXXXXXX" />
 		<definition item="F12 controls output 14" CV="46" mask="VXXXXXXX" />
+		
+		<definition item="Function Map Option 1" />
 		
 	</definitiongroup>
 

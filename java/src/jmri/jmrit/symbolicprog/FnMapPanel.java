@@ -139,20 +139,35 @@ public class FnMapPanel extends JPanel {
         
         for (int iFn = 0; iFn < numFn; iFn++) {
             for (int iOut = 0; iOut < numOut; iOut++) {
-                // find the variable using the output label
-                String name = fnList[iFn]+" controls output "+outName[iOut];
-                int iVar = _varModel.findVarIndex(name);
-                if (iVar>=0) {
-                    if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
-                    varsUsed.add(Integer.valueOf(iVar));
-                    JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
-                    VariableValue var = _varModel.getVariable(iVar);
-                    j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
-                    int row = firstFn+iFn;
-                    int column = firstOut+iOut;
-                    saveAt(row, column, j);
+                // find the variable using the output number or label
+                // include an (alt) variant to enable Tsunami function exchange definitions
+                String nameBase = fnList[iFn]+" controls output ";
+                String[] names;
+                if ( outName[iOut].equals(Integer.toString(iOut+1)) ) {
+                    names = new String[] {nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
                 } else {
-                    if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+                    names = new String[] {nameBase+(iOut+1),nameBase+(iOut+1)+"(alt)",
+                        nameBase+outName[iOut],nameBase+outName[iOut]+"(alt)"};
+                }
+//                 log.info("\n      ");
+//                 log.info("      searching output "+(iOut+1)+":");
+                for (String name : names) {
+                    int iVar = _varModel.findVarIndex(name);
+                    if (iVar>=0) {
+//                         log.info("Found "+name);
+                        if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
+                        varsUsed.add(Integer.valueOf(iVar));
+                        JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
+                        VariableValue var = _varModel.getVariable(iVar);
+                        j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
+                        int row = firstFn+iFn;
+                        int column = firstOut+iOut;
+                        saveAt(row, column, j);
+//                         labelAt(row, column, (PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask())));
+                    } else {
+//                         log.info("      "+name+" not found");
+                        if (log.isDebugEnabled()) log.debug("Did not find var: "+name);
+                    }
                 }
             }
         }
