@@ -61,10 +61,10 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     {
     }
    
-    static Logger log = LoggerFactory.getLogger(XNetSerialPortController.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetStreamPortController.class.getName());
 
 
 }
 
 
-/* @(#)XNetSerialPortController.java */
+/* @(#)XNetStreamPortController.java */
