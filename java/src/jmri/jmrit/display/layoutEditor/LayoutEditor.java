@@ -106,6 +106,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     //private jmri.TurnoutManager tm = null;
 	private LayoutEditor thisPanel = null;
 	private JPanel topEditBar = null;
+    private JScrollPane topEditBarScroll = null;
+    private JPanel topEditBarContainer = null;
 	private JPanel helpBar = null;
 	protected boolean skipIncludedTurnout = false;
     public ArrayList<PositionableLabel> backgroundImage = new ArrayList<PositionableLabel>();  // background images
@@ -624,9 +626,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         iconFrame.pack();
 
 		topEditBar.add(top4);
-        contentPane.add(topEditBar);
-        topEditBar.setVisible(false);
-
+        topEditBarScroll = new JScrollPane(topEditBar);
+        topEditBarContainer = new JPanel();
+        topEditBarContainer.setLayout(new BoxLayout(topEditBarContainer, BoxLayout.Y_AXIS));
+        topEditBarContainer.add(topEditBarScroll);
+        contentPane.add(topEditBarContainer);
+        topEditBarContainer.setVisible(false);
+        
         // set to full screen
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenDim.height-120;
@@ -635,7 +641,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
-        topEditBar.setSize(screenDim.width, topEditBar.getPreferredSize().height);
+        
+        topEditBarContainer.setMinimumSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
+        topEditBarContainer.setPreferredSize(new Dimension(screenDim.width, topEditBarScroll.getPreferredSize().height));
+        
         super.setDefaultToolTip(new ToolTip(null,0,0,new Font("SansSerif", Font.PLAIN, 12),
                                                      Color.black, new Color(215, 225, 255), Color.black));
 		// setup help bar
@@ -6688,7 +6697,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public void setAllEditable(boolean editable) {
     	int restoreScroll = _scrollState;
         super.setAllEditable(editable);
-        topEditBar.setVisible(editable);
+        topEditBarContainer.setVisible(editable);
         setShowHidden(editable);
         if (editable) {
         	setScroll(SCROLL_BOTH);
