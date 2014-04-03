@@ -41,6 +41,7 @@ public class Xml {
 	static final String PREVIOUS_SCHEDULE_ID = "previousScheduleId"; // NOI18N
 	static final String RWE_DEST_ID = "rweDestId"; // NOI18N
 	static final String RWE_DEST_TRACK_ID = "rweDestTrackId"; // NOI18N
+	static final String RWE_LOAD = "rweLoad"; // NOI18N
 	
 	// CarManager.java
 	static final String OPTIONS = "options"; // NOI18N

@@ -13,7 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 /**
  * Represents a car on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014
  * @version $Revision$
  */
 public class Car extends RollingStock {
@@ -29,10 +29,10 @@ public class Car extends RollingStock {
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
-//	protected int _order = 0; // track service ordering
 
 	protected Location _rweDestination = null; // return when empty destination
 	protected Track _rweDestTrack = null; // return when empty track
+	protected String _rweLoad = carLoads.getDefaultEmptyName();
 
 	// schedule items
 	protected String _scheduleId = ""; // the schedule id assigned to this car
@@ -69,6 +69,7 @@ public class Car extends RollingStock {
 		car.setColor(_color);
 		car.setLength(_length);
 		car.setLoadName(_load);
+		car.setReturnWhenEmptyLoadName(_rweLoad);
 		car.setNumber(_number);
 		car.setOwner(_owner);
 		car.setRoadName(_road);
@@ -129,6 +130,17 @@ public class Car extends RollingStock {
 	public String getLoad() {
 		return getLoadName();
 	}
+	
+	public void setReturnWhenEmptyLoadName(String load) {
+		String old = _rweLoad;
+		_rweLoad = load;
+		if (!old.equals(load))
+			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+	}
+
+	public String getReturnWhenEmptyLoadName() {
+		return _rweLoad;
+	}
 
 	/**
 	 * Gets the car load's priority.
@@ -153,6 +165,10 @@ public class Car extends RollingStock {
 		return _loadGeneratedByStaging;
 	}
 
+	/**
+	 * Used to keep track of which item in a schedule was used for this car.
+	 * @param id
+	 */
 	public void setScheduleId(String id) {
 		// log.debug("set schedule id ("+id+") for car ("+toString()+")");
 		String old = _scheduleId;
@@ -518,15 +534,10 @@ public class Car extends RollingStock {
 			if (!status.equals(Track.OKAY))
 				return status;
 		}
-		// update final destination and load only when car reaches destination and was in train
+		// done?
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
-		// set service order for LIFO and FIFO tracks
-//		if (destinationTrack != null && !destinationTrack.getServiceOrder().equals(Track.NORMAL))
-//			setOrder(destinationTrack.getMoves());
-//		else
-//			setOrder(0);
-		// update load when car reaches a spur
+		// car was in a train and has been dropped off, update load, RWE could set a new final destination
 		loadNext(destinationTrack);
 		return status;
 	}
@@ -536,16 +547,18 @@ public class Car extends RollingStock {
 		// update wait count
 		setWait(getNextWait());
 		setNextWait(0);
+		// arrived at spur?
 		if (destTrack != null && destTrack.getTrackType().equals(Track.SPUR)) {
+			// arriving at spur with a schedule?
 			if (!getNextLoadName().equals("")) {
 				setLoadName(getNextLoadName());
 				setNextLoadName("");
-				// is the next load default empty? Check for car return when empty
-				if (getLoadName().equals(carLoads.getDefaultEmptyName()) && getFinalDestination() == null)
-					setLoadEmpty();
+				// RWE load and no destination?
+				if (getLoadName().equals(getReturnWhenEmptyLoadName()) && getFinalDestination() == null)
+					setReturnWhenEmpty();
 				return;
 			}
-			// if car doesn't have a schedule load, flip load status
+			// if car doesn't have a custom load, flip load status
 			if (getLoadName().equals(carLoads.getDefaultEmptyName()))
 				setLoadName(carLoads.getDefaultLoadName());
 			else
@@ -569,21 +582,34 @@ public class Car extends RollingStock {
 				// remove this car's final destination if it has one
 				setFinalDestination(null);
 				setFinalDestinationTrack(null);
-				// note that RWE sets the car's final destination
-				setLoadEmpty();
+				// car arriving into staging with the RWE load?
+				if (getLoadName().equals(getReturnWhenEmptyLoadName()))
+					setLoadName(carLoads.getDefaultEmptyName());
+				else
+					// note that RWE sets the car's final destination
+					setLoadEmpty();
 			}
 		}
 	}
 
+	/**
+	 * Sets the car's load to empty, triggers RWE load and destination if enabled.
+	 */
 	private void setLoadEmpty() {
-		setLoadName(carLoads.getDefaultEmptyName());
+		if (!getLoadName().equals(getReturnWhenEmptyLoadName())) {
+			setLoadName(getReturnWhenEmptyLoadName());
+			setReturnWhenEmpty();
+		}
+	}
+	
+	private void setReturnWhenEmpty() {
 		if (getReturnWhenEmptyDestination() != null) {
 			setFinalDestination(getReturnWhenEmptyDestination());
 			if (getReturnWhenEmptyDestTrack() != null) {
 				setFinalDestinationTrack(getReturnWhenEmptyDestTrack());
 			}
-			log.debug("Car (" + toString() + ") has return when empty destination ("
-					+ getFinalDestinationName() + ", " + getFinalDestinationTrackName() + ")");
+			log.debug("Car ({}) has return when empty destination ({}, {}) load {}", toString(),
+					getFinalDestinationName(), getFinalDestinationTrackName(), getLoadName());
 		}
 	}
 
@@ -687,9 +713,9 @@ public class Car extends RollingStock {
 		if (_rweDestination != null && (a = e.getAttribute(Xml.RWE_DEST_TRACK_ID)) != null) {
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
-//		if ((a = e.getAttribute(Xml.ORDER)) != null) {
-//			_order = Integer.parseInt(a.getValue());
-//		}
+		if ((a = e.getAttribute(Xml.RWE_LOAD)) != null) {
+			_rweLoad = a.getValue();
+		}
 		addPropertyChangeListeners();
 	}
 
@@ -757,10 +783,10 @@ public class Car extends RollingStock {
 			if (getReturnWhenEmptyDestTrack() != null)
 				e.setAttribute(Xml.RWE_DEST_TRACK_ID, getReturnWhenEmptyDestTrack().getId());
 		}
-//		if (getOrder() != 0) {
-//			e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
-//		}
-
+		if (!getReturnWhenEmptyLoadName().equals(carLoads.getDefaultEmptyName())) {
+			e.setAttribute(Xml.RWE_LOAD, getReturnWhenEmptyLoadName());
+		}
+		
 		return e;
 	}
 

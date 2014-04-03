@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or interchange track.
  * 
- * @author Daniel Boudreau
+ * @author Daniel Boudreau Copyright (C) 2008 - 2014
  * @version $Revision$
  */
 public class Track {
@@ -1712,7 +1712,7 @@ public class Track {
 		}
 		// a car has a schedule id if the schedule was in match mode
 		if (!car.getScheduleId().equals("")) {
-			String id = car.getScheduleId();	// save id for error message
+			String id = car.getScheduleId();
 			log.debug("Car ({}) has schedule id {}", car.toString(), car.getScheduleId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
@@ -1772,6 +1772,13 @@ public class Track {
 		return OKAY;
 	}
 
+	/**
+	 * Loads the car's with a final destination which is the ship address for the schedule item. Also sets the next load
+	 * and wait count that will kick in when the car arrives at the spur with this schedule.
+	 * 
+	 * @param scheduleItem
+	 * @param car
+	 */
 	private void loadNext(ScheduleItem scheduleItem, Car car) {
 		if (scheduleItem == null) {
 			log.debug("schedule item is null!, id " + getScheduleId());
@@ -1789,7 +1796,7 @@ public class Track {
 
 		log.debug("Car (" + car.toString() + ") type (" + car.getTypeName() + ") next load (" + car.getNextLoadName()
 				+ ") final destination (" + car.getFinalDestinationName() + ", " + car.getFinalDestinationTrackName() // NOI18N
-				+ ") next wait: " + car.getWait()); // NOI18N
+				+ ") next wait: " + car.getNextWait()); // NOI18N
 		// set all cars in kernel to the next load
 		car.updateKernel();
 	}
