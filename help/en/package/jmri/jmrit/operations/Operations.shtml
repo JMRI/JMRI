@@ -2174,10 +2174,13 @@
 
    <P>Use the "Location" set of field to place the car on the layout. Use the "Auto" checkbox to
     show valid tracks for a given location. You can also optionally enter the location and track
-    that you want the car to return to when the car's load status becomes empty. Note that manually
-    changing the load status to empty will not cause the Return When Empty (RWE) destination to
-    become active, only when the car is set out by the program will the RWE destination become
-    active.</P>
+    that you want the car to return to when the car's load status becomes empty. You can also
+    replace the car's default empty load with one from the load combo box. Only custom loads that
+    are type "Empty" are shown in the combo box.</P>
+    
+   <P>Note that manually changing the load status to empty will not cause the Return When Empty
+    (RWE) destination to become active, only when the car is set out by the program will the RWE
+    destination become active.</P>
 
    <P>You can also change the car's load, or create new ones by using the "Edit" button.</P>
 
