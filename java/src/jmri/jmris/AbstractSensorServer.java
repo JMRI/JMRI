@@ -86,7 +86,7 @@ abstract public class AbstractSensorServer {
 
     public void dispose() {
         for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
-            InstanceManager.memoryManagerInstance().getMemory(sensor.getKey()).removePropertyChangeListener(sensor.getValue());
+            InstanceManager.sensorManagerInstance().getSensor(sensor.getKey()).removePropertyChangeListener(sensor.getValue());
         }
         this.sensors.clear();
     }
