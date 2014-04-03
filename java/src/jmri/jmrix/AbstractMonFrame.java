@@ -33,7 +33,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Abstract base class for Frames displaying communications monitor information
- * @author	Bob Jacobsen   Copyright (C) 2001, 2003
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2014
  * @version	$Revision$
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
@@ -75,10 +75,10 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-    String rawDataCheck = this.getClass().getName()+".RawData";
-    String timeStampCheck = this.getClass().getName()+".TimeStamp";
-    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
-    String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String rawDataCheck = this.getClass().getName()+".RawData"; // NOI18N
+    String timeStampCheck = this.getClass().getName()+".TimeStamp"; // NOI18N
+    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop"; // NOI18N
+    String autoScrollCheck = this.getClass().getName()+".AutoScroll"; // NOI18N
     jmri.UserPreferencesManager p;
 
     // for locking
@@ -97,20 +97,20 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         // the following code sets the frame's initial state
 
-        clearButton.setText("Clear screen");
+        clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
         clearButton.setVisible(true);
-        clearButton.setToolTipText("Clear monitoring history");
+        clearButton.setToolTipText(Bundle.getMessage("TooltipClearMonHistory")); // NOI18N
 
-        freezeButton.setText("Freeze screen");
+        freezeButton.setText(Bundle.getMessage("ButtonFreezeScreen")); // NOI18N
         freezeButton.setVisible(true);
-        freezeButton.setToolTipText("Stop display scrolling");
+        freezeButton.setToolTipText(Bundle.getMessage("TooltipStopScroll")); // NOI18N
 
-        enterButton.setText("Add Message");
+        enterButton.setText(Bundle.getMessage("ButtonAddMessage")); // NOI18N
         enterButton.setVisible(true);
-        enterButton.setToolTipText("Add a text message to the log");
+        enterButton.setToolTipText(Bundle.getMessage("TooltipAddMessage")); // NOI18N
 
         monTextPane.setVisible(true);
-        monTextPane.setToolTipText("Command and reply monitoring information appears here");
+        monTextPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
         monTextPane.setEditable(false);
 
         // Add document listener to scroll to end when modified if required
@@ -137,7 +137,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
             }
         });
 
-        entryField.setToolTipText("Enter text here, then click button to include it in log");
+        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane")); // NOI18N
 
         // fix a width for current character set
         JTextField t = new JTextField(80);
@@ -148,38 +148,38 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         jScrollPane1.setPreferredSize(new Dimension(x, y));
         jScrollPane1.setVisible(true);
 
-        startLogButton.setText("Start logging");
+        startLogButton.setText(Bundle.getMessage("ButtonStartLogging")); // NOI18N
         startLogButton.setVisible(true);
-        startLogButton.setToolTipText("start logging to file");
+        startLogButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); // NOI18N
 
-        stopLogButton.setText("Stop logging");
+        stopLogButton.setText(Bundle.getMessage("ButtonStopLogging")); // NOI18N
         stopLogButton.setVisible(true);
-        stopLogButton.setToolTipText("Stop logging to file");
+        stopLogButton.setToolTipText(Bundle.getMessage("TooltipStopLogging")); // NOI18N
 
-        rawCheckBox.setText("Show raw data");
+        rawCheckBox.setText(Bundle.getMessage("ButtonShowRaw")); // NOI18N
         rawCheckBox.setVisible(true);
-        rawCheckBox.setToolTipText("If checked, show the raw traffic in hex");
+        rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
         rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
 
-        timeCheckBox.setText("Show timestamps");
+        timeCheckBox.setText(Bundle.getMessage("ButtonShowTimestamps")); // NOI18N
         timeCheckBox.setVisible(true);
-        timeCheckBox.setToolTipText("If checked, show timestamps before each message");
+        timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
         
-        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
-        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
 
-        autoScrollCheckBox.setText("Auto scroll");
+        autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
         autoScrollCheckBox.setVisible(true);
-        autoScrollCheckBox.setToolTipText("If checked, always scroll to the latest log entry");
+        autoScrollCheckBox.setToolTipText(Bundle.getMessage("TooltipAutoScroll")); // NOI18N
         autoScrollCheckBox.setSelected(!p.getSimplePreferenceState(autoScrollCheck));
 
-        openFileChooserButton.setText("Choose log file");
+        openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
-        openFileChooserButton.setToolTipText("Click here to select a new output log file");
+        openFileChooserButton.setToolTipText(Bundle.getMessage("TooltipChooseLogFile")); // NOI18N
 
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -262,7 +262,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         });
 
         // set file chooser to a default
-        logFileChooser.setSelectedFile(new File("monitorLog.txt"));
+        logFileChooser.setSelectedFile(new File("monitorLog.txt")); // NOI18N
 
         // connect to data source
         init();
@@ -285,7 +285,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
      * show their own help page if desired.
      */
     protected void addHelpMenu() {
-        addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
+        addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true); // NOI18N
     }
 
     public void nextLine(String line, String raw) {
@@ -296,12 +296,12 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
         // display the timestamp if requested
         if ( timeCheckBox.isSelected() ) {
-            sb.append(df.format(new Date())).append( ": " ) ;
+            sb.append(df.format(new Date())).append( ": " ) ; // NOI18N
         }
 
         // display the raw data if requested
         if ( rawCheckBox.isSelected() ) {
-            sb.append( '[' ).append(raw).append( "]  " );
+            sb.append( '[' ).append(raw).append( "]  " ); // NOI18N
         }
 
         // display decoded data
@@ -359,7 +359,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
     }
 
-    String newline = System.getProperty("line.separator");
+    String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
@@ -408,7 +408,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     }
 
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText()+"\n", "");
+        nextLine(entryField.getText()+"\n", ""); // NOI18N
     }
     
     public synchronized String getFrameText() {
