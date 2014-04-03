@@ -1601,6 +1601,14 @@ $(document).ready(function() {
         $("#panel-area").addClass("hidden").removeClass("show");
     } else {
         jmri = $.JMRI({
+            didReconnect: function() {
+                // if a reconnect is triggered, reload the page - it is the
+                // simplest method to refresh every object in the panel
+                if (window.console) {
+                    console.log("Reloading at reconnect");
+                }
+                location.reload(false);
+            },
             light: function(name, state, data) {
                 updateWidgets(name, state);
             },
