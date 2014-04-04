@@ -553,7 +553,9 @@
 
    There are two build train options, normal and aggressive. It is recommended that you select
    normal when you first begin using the program. Normal builds guarantee that when a car is
-   delivered (set out) by a train that there will be track space available for the car.
+   delivered (set out) by a train that there will be track space available for the car. Normal mode
+   prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
+   using the the train reset function.
 
    <P>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -563,6 +565,28 @@
     movements. The net effect is that more cars are moved within a given train. Aggressive also
     tends to deliver cars to all of the available spurs. The smaller the spur, yard, or interchange
     the more likely that the program will assign cars to that track.</P>
+
+   <P>One serious consideration when using aggressive mode is that you can cause your tracks to
+    be overloaded by selectively resetting your trains. Here's a simple example showing how to
+    overload a track using the aggressive mode. Say you have two trains that will service the same
+    track. The track has several cars on it, you build the first train and the manifest shows to
+    pull all of the cars from the track. You now build a second train, the program finds that the
+    track will be vacated by the first train, so it schedules new cars to be placed onto the track
+    by the second train. You later decide that you don't want to run the first train, and reset the
+    train. Now the original cars on still sitting on the track, and you now run and terminate the
+    second train. The program will deliver the new cars, while the old cars are still sitting there,
+    which unfortunately will overload the track.</P>
+
+   <P>To avoid overloading in aggressive mode, do not use the train reset after you've built or
+    terminated other trains. However, if you need to reset a train, you should also reset all of the
+    trains built after the train that you want to reset, or live with possible track overloading.
+    And never reset a train built before a train that you've already terminated. Normal mode will
+    never overload a track, so you might consider using this mode if you find yourself having to
+    reset trains. The recommendation is not to use train reset in aggressive mode once you've built
+    or terminated additional trains. And if you do reset a train, there isn't a guarantee that
+    building the train again will pull the same cars, each train build can be different depending on
+    what the work the other built trains do.</P>
+
    <P>Note that once you've built a train, the build option can not be changed until all trains
     are terminated or reset.</P>
 
