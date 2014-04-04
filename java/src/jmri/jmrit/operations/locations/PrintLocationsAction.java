@@ -144,8 +144,7 @@ public class PrintLocationsAction extends AbstractAction {
 			if (spurs.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("SpurName") + NEW_LINE);
-				for (int k = 0; k < spurs.size(); k++) {
-					Track spur = spurs.get(k);
+				for (Track spur : spurs) {
 					writer.write(getTrackString(spur));
 					numberCars += spur.getNumberCars();
 					numberEngines += spur.getNumberEngines();
@@ -163,11 +162,11 @@ public class PrintLocationsAction extends AbstractAction {
 				}
 			}
 
-			List<Track> stagings = location.getTrackByNameList(Track.STAGING);
-			if (stagings.size() > 0) {
+			List<Track> stagingTracks = location.getTrackByNameList(Track.STAGING);
+			if (stagingTracks.size() > 0) {
 				// header
 				writer.write(SPACE + Bundle.getMessage("StagingName") + NEW_LINE);
-				for (Track staging : stagings) {
+				for (Track staging : stagingTracks) {
 					writer.write(getTrackString(staging));
 					numberCars += staging.getNumberCars();
 					numberEngines += staging.getNumberEngines();
@@ -186,7 +185,7 @@ public class PrintLocationsAction extends AbstractAction {
 				Integer.toString(numberRS), Integer.toString(numberCars), Integer.toString(numberEngines) })
 				+ NEW_LINE;
 		writer.write(s);
-		// are there trains in route, then some cars and engines not counted!
+		// are there trains en route, then some cars and engines not counted!
 		if (numberRS != numberCars + numberEngines) {
 			s = MessageFormat.format(Bundle.getMessage("NoteRSMsg"), new Object[] { Integer.toString(numberRS
 					- (numberCars + numberEngines)) })

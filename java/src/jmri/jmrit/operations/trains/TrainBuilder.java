@@ -2013,8 +2013,7 @@ public class TrainBuilder extends TrainCommon {
 			List<Car> kCars = car.getKernel().getCars();
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"), new Object[] {
 					car.toString(), car.getKernelName(), kCars.size() }));
-			for (int i = 0; i < kCars.size(); i++) {
-				Car kCar = kCars.get(i);
+			for (Car kCar : kCars) {
 				if (kCar == car)
 					continue;
 				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarKernelAssignedDest"),
@@ -2027,6 +2026,7 @@ public class TrainBuilder extends TrainCommon {
 				kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
 				kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
 			}
+			car.updateKernel();
 		}
 		// warn if car's load wasn't generated out of staging
 		if (!_train.acceptsLoad(car.getLoadName(), car.getTypeName())) {
@@ -3133,8 +3133,7 @@ public class TrainBuilder extends TrainCommon {
 					addLine(_buildReport, SEVEN, MessageFormat
 							.format(Bundle.getMessage("buildSearchForTrack"), new Object[] { tracks.size(),
 									car.getDestinationName(), car.toString(), car.getLoadName() }));
-					for (int s = 0; s < tracks.size(); s++) {
-						Track testTrack = tracks.get(s);
+					for (Track testTrack : tracks) {
 						// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 						// dropping to the same track isn't allowed
 						if (testTrack == car.getTrack()) {
@@ -3159,19 +3158,21 @@ public class TrainBuilder extends TrainCommon {
 									testTrack.getLocation().getName(), testTrack.getName(),
 									testTrack.getAlternateTrack().getName() }));
 							String altStatus = car.testDestination(car.getDestination(), testTrack.getAlternateTrack());
+							// A car with a custom load sent to a spur will get a status with "CUSTOM" and "LOAD" embedded,
+							// if the spur doesn't have a schedule. Must use contains to determine if both are in the
+							// status message.
+							// The following code allows the alternate track to be a spur that doesn't have a schedule.
+							// TODO most of the other code only allows a yard or interchange track to be the alternate.
 							if (altStatus.equals(Track.OKAY)
-							// "CUSTOM" and "LOAD" are in the status message if spur, must use contains
-							// the following code allows the alternate track to be a spur TODO other code only yard or
-							// interchange is correct
 									|| (altStatus.contains(Track.CUSTOM) && altStatus.contains(Track.LOAD))) {
 								addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildUseAlternateTrack"), new Object[] { car.toString(),
 										testTrack.getAlternateTrack().getName() }));
-								addCarToTrain(car, rl, rld, testTrack.getAlternateTrack());
-								// and forward the car to the original destination
+								// forward the car to the original destination
 								car.setFinalDestination(car.getDestination());
 								car.setFinalDestinationTrack(testTrack);
 								car.setNextLoadName(car.getLoadName());
+								addCarToTrain(car, rl, rld, testTrack.getAlternateTrack());
 								testTrack.setMoves(testTrack.getMoves() + 1); // bump the number of moves
 								return true;
 							} else {
@@ -3456,8 +3457,6 @@ public class TrainBuilder extends TrainCommon {
 							&& !car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
 						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSpurScheduleLoad"),
 								new Object[] { testTrack.getName(), car.getLoadName() }));
-						// is car part of kernel?
-						car.updateKernel();
 						addCarToTrain(car, rl, rld, testTrack);
 						return true;
 					}
@@ -3494,7 +3493,6 @@ public class TrainBuilder extends TrainCommon {
 										.getMessage("buildAddingScheduleLoad"), new Object[] { si.getReceiveLoadName(),
 										car.toString() }));
 								car.setLoadGeneratedFromStaging(true);
-								car.updateKernel();
 								addCarToTrain(car, rl, rld, testTrack);
 								return true;
 							}

@@ -1014,6 +1014,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
 			_blocking = Integer.parseInt(a.getValue());
 		}
+		// check for rolling stock without a track assignment
+		if (getLocation() != null && getTrack() == null && getTrain() == null)
+			log.warn("Rollingstock ({}) at ({}) doesn't have a track assignment", toString(), getLocationName());
 		addPropertyChangeListeners();
 	}
 
