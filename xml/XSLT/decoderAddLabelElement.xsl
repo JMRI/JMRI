@@ -35,14 +35,14 @@
 <xsl:output method="xml" encoding="ISO-8859-1"/>
 
 <!--specific template match for variable element with default-language label element -->
-    <xsl:template match="variable[label[not(@xml:lang)]]">
+    <xsl:template match="variable[label[not(@xml:lang)]]" priority="5">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
       </xsl:copy>
     </xsl:template>
 
 <!--specific template match for variable element with no label element but with label attribute present-->
-    <xsl:template match="variable[@label]">
+    <xsl:template match="variable[@label]" priority="4">
       <xsl:copy>
         <xsl:apply-templates select="@*|*[not(self::label[not(@xml:lang)])]" />
         <xsl:element name="label"><xsl:value-of select="@label"/></xsl:element>
@@ -50,7 +50,7 @@
     </xsl:template>
 
 <!--specific template match for variable element without label attribute or label element; item attribute assumed present -->
-    <xsl:template match="variable">
+    <xsl:template match="variable" priority="3">
       <xsl:copy>
         <xsl:apply-templates select="@*|*[not(self::label[not(@xml:lang)])]" />
         <xsl:element name="label"><xsl:value-of select="@item"/></xsl:element>
