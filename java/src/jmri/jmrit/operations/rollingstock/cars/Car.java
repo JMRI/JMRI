@@ -3,7 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
-import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -462,16 +461,14 @@ public class Car extends RollingStock {
 	 */
 	public void updateKernel() {
 		if (getKernel() != null && getKernel().isLead(this)) {
-			List<Car> cars = getKernel().getCars();
-			for (int i = 0; i < cars.size(); i++) {
-				Car c = cars.get(i);
-				c.setFinalDestination(getFinalDestination());
-				c.setFinalDestinationTrack(getFinalDestinationTrack());
-				c.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-				if (CarLoads.instance().containsName(c.getTypeName(), getLoadName()))
-					c.setLoadName(getLoadName());
-				if (CarLoads.instance().containsName(c.getTypeName(), getNextLoadName()))
-					c.setNextLoadName(getNextLoadName());
+			for (Car car : getKernel().getCars()) {
+				car.setFinalDestination(getFinalDestination());
+				car.setFinalDestinationTrack(getFinalDestinationTrack());
+				car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+				if (CarLoads.instance().containsName(car.getTypeName(), getLoadName()))
+					car.setLoadName(getLoadName());
+				if (CarLoads.instance().containsName(car.getTypeName(), getNextLoadName()))
+					car.setNextLoadName(getNextLoadName());
 			}
 		}
 	}
