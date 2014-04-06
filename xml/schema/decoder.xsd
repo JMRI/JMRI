@@ -392,6 +392,8 @@
               <xs:attribute name="minFn" type="xs:int"/>
               <xs:attribute name="minOut" type="xs:int"/>
               <xs:attribute name="inOptions" type="xs:string"/>
+              <xs:attribute name="include" type="xs:string" default=""/>
+              <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
           </xs:element>
       
@@ -548,21 +550,20 @@
                     </xs:complexType>
                   </xs:element>
                 </xs:choice>
-                <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                </xs:element>
-                <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
-                  <xs:annotation><xs:documentation>Provide an internationalized tooltip text</xs:documentation></xs:annotation>
-                </xs:element>
-                <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
-                  <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
-                </xs:element>
-                <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-                  <xs:annotation><xs:documentation>
-                  Qualifies whether this variable will appear in the interface, depending
-                  on the value in other variables.
-                  </xs:documentation></xs:annotation>
-                </xs:element>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+                  </xs:element>
+                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Qualifies whether this variable will appear in the interface, depending
+                    on the value in other variables.
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                </xs:sequence>
               </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="CV" type="cvNameType"/>
