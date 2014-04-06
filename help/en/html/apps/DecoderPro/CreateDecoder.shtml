@@ -75,13 +75,17 @@ what has not.
 <dt class=left>File contents: XML Header </dt>
 <dd>
 <p>You'll see something like this at the top of the file (the examples are from the <a
-HREF="../../../../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
+HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> file):
 
 <p class=example>
-&lt;?xml version="1.0"?&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id$ --&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
+<code><pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;
+&lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;
+&lt;!-- $Id$ --&gt;
+...
+&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;
+</pre></code>
 </p>
 
 <p>Don't mess with these lines; they describe the format of the file.
@@ -209,8 +213,9 @@ extra "s") element. An example:</p>
 
 <p class=example>
 &lt;variables&gt;<BR>
-  &nbsp;&nbsp;&lt;variable label="Short Address" CV="1" item="Primary Address" default="03"&gt;<BR>
+  &nbsp;&nbsp;&lt;variable CV="1" item="Primary Address" default="03"&gt;<BR>
     &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Short Address&lt;/label&gt;<BR>
   &nbsp;&nbsp;&lt;/variable&gt;<BR>
   <BR>
   &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<BR>
@@ -232,7 +237,7 @@ different order.</p>
 <li><dfn>label</dfn> - The name for this variable. This is generally what
 the decoder manufacturer calls this item, even if other manufacturers or the
 NMRA use a different name for similar things.
-<li><dfn>item</dfn> - An alternative, 'standard' name. See the
+<li><dfn>item</dfn> - The 'standard' name for this variable. See the
 <A HREF="Programmer.shtml#id">discussion on the programmer definition page</a> 
 for more information on this.  Generally, look at the Comprehensive programmer
 to find something similar, and use the "name" attribute of that.
@@ -251,12 +256,17 @@ decoder back to its defaults.
 </ul>
 
 <p>(There are a few more, which we'll leave for the advanced section below)</p>
+<p>The "label" element provides a human-comfortable name for this variable. This is generally what
+the decoder manufacturer calls this item, even if other manufacturers or the
+NMRA use a different name for similar things. It's optional, in which case the "item"
+value will be used to label it when it's presented to the user.
+
 </dd>
 
-<dt class=left> File contents: Creating new Variable names</dt>
+<dt class=left> File contents: Creating new Variable definitions</dt>
 <dd>
 <p>You can also define new variables. A good starting point is to
-copy a similar definition, change its name to a new value, and then
+copy a similar definition, change its item name to a new value, and then
 edit its contents.</p>
 
 <p> To define how the new variable is displayed and editted, you
@@ -275,7 +285,7 @@ omit them, values from 0 to 255 are allowed.
 this from another file, or from this example:</p>
 
 <p class=example>
-&lt;variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<BR>
+&lt;variable item=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;longAddressVal/&gt;<BR>
 &lt;/variable&gt;
 </p>
@@ -285,7 +295,7 @@ element for the speed table.  Optional attributes are:  "entries", "min", "max" 
 "mfx" (when true enables the M&auml;rklin mfx&reg; style speed table).  Example:</p>
 
 <p class=example>
-&lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>
+&lt;variable item=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;speedTableVal/&gt;<BR>
 &lt;/variable&gt;
 </p>
@@ -294,7 +304,7 @@ element for the speed table.  Optional attributes are:  "entries", "min", "max" 
 choice". These are represented by a enumVariable element. Example:
 
 <p class=example>
-&lt;variable name=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<BR>
+&lt;variable item=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;enumVal&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Off&quot;/&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;On&quot;/&gt;<BR>
