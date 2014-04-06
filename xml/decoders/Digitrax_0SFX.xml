@@ -693,7 +693,7 @@
       </display>
       <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
         <tooltip>Set this decoder's unique locking ID number</tooltip>
-         <tooltip xml:lang="it">Imposta Codice Blocco di questo Decoder</tooltip>
+        <tooltip xml:lang="it">Imposta Codice Blocco di questo Decoder</tooltip>
       </display>
       <display item="Sound Project Author ID"/>
       <display item="Sound Project ID"/>
