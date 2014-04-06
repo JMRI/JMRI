@@ -32,28 +32,29 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added German, French</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
       <revremark>Initial release</revremark>
     </revision>
   </revhistory>
-  <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
     <enumVal>
       <enumChoice choice="Use Vstart Vmid Vmax">
         <choice>Use Vstart Vmid Vmax</choice>
-		<choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
-		<choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
+        <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
+        <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
-		<choice xml:lang="fr">Utiliser tableau de vitesse</choice>
-		<choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
+        <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
+        <choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
-	<label xml:lang="fr">Tableau de vitesse</label>
-	<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+    <label xml:lang="fr">Tableau de vitesse</label>
+    <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+    <label xml:lang="it">Speed Table Definition</label>
   </variable>
 </variables>

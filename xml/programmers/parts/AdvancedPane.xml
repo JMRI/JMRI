@@ -1,51 +1,56 @@
-<?xml version="1.0"?>
-<pane name="Advanced" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Advanced" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Avançat</name>
-    <column>
-        <display item="Advanced Ack" tooltip="Enable advanced acknowledgment"/>
-        <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it"/>
-    </column>
-    <column>
-        <label label="      "/>
-    </column>
-    <column>
-        <display item="Advanced Group 1 Option 1"/>
-        <display item="Advanced Group 1 Option 2"/>
-        <display item="Advanced Group 1 Option 3"/>
-        <display item="Advanced Group 1 Option 4"/>
-        <display item="Advanced Group 1 Option 5"/>
-        <display item="Advanced Group 1 Option 6"/>
-        <display item="Advanced Group 1 Option 7"/>
-        <display item="Advanced Group 1 Option 8"/>
-        <display item="Advanced Group 1 Option 9"/>
-        <display item="Advanced Group 1 Option 10"/>
-        <display item="Advanced Group 1 Option 11"/>
-        <display item="Advanced Group 1 Option 12"/>
-    </column>
-    <column>
-        <label label="      "/>
-    </column>
-    <column>
-        <display item="Advanced Group 2 Option 1" format="checkbox"/>
-        <display item="Advanced Group 2 Option 2" format="checkbox"/>
-        <display item="Advanced Group 2 Option 3" format="checkbox"/>
-        <display item="Advanced Group 2 Option 4" format="checkbox"/>
-        <display item="Advanced Group 2 Option 5" format="checkbox"/>
-        <display item="Advanced Group 2 Option 6" format="checkbox"/>
-        <display item="Advanced Group 2 Option 7" format="checkbox"/>
-        <display item="Advanced Group 2 Option 8" format="checkbox"/>
-        <display item="Advanced Group 2 Option 9" format="checkbox"/>
-        <display item="Advanced Group 2 Option 10" format="checkbox"/>
-        <label label="      "/>
-        <display item="Advanced Group 2 Option 11" format="checkbox"/>
-        <display item="Advanced Group 2 Option 12" format="checkbox"/>
-        <display item="Advanced Group 2 Option 13" format="checkbox"/>
-        <display item="Advanced Group 2 Option 14" format="checkbox"/>
-        <display item="Advanced Group 2 Option 15" format="checkbox"/>
-        <display item="Advanced Group 2 Option 16" format="checkbox"/>
-        <display item="Advanced Group 2 Option 17" format="checkbox"/>
-        <display item="Advanced Group 2 Option 18" format="checkbox"/>
-        <display item="Advanced Group 2 Option 19" format="checkbox"/>
-        <display item="Advanced Group 2 Option 20" format="checkbox"/>
-    </column>
+  <column>
+    <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
+      <tooltip xml:lang="it">Enable advanced acknowledgment</tooltip>
+    </display>
+    <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it">
+      <tooltip xml:lang="it">The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it</tooltip>
+    </display>
+  </column>
+  <column>
+    <label label="      "/>
+  </column>
+  <column>
+    <display item="Advanced Group 1 Option 1"/>
+    <display item="Advanced Group 1 Option 2"/>
+    <display item="Advanced Group 1 Option 3"/>
+    <display item="Advanced Group 1 Option 4"/>
+    <display item="Advanced Group 1 Option 5"/>
+    <display item="Advanced Group 1 Option 6"/>
+    <display item="Advanced Group 1 Option 7"/>
+    <display item="Advanced Group 1 Option 8"/>
+    <display item="Advanced Group 1 Option 9"/>
+    <display item="Advanced Group 1 Option 10"/>
+    <display item="Advanced Group 1 Option 11"/>
+    <display item="Advanced Group 1 Option 12"/>
+  </column>
+  <column>
+    <label label="      "/>
+  </column>
+  <column>
+    <display item="Advanced Group 2 Option 1" format="checkbox"/>
+    <display item="Advanced Group 2 Option 2" format="checkbox"/>
+    <display item="Advanced Group 2 Option 3" format="checkbox"/>
+    <display item="Advanced Group 2 Option 4" format="checkbox"/>
+    <display item="Advanced Group 2 Option 5" format="checkbox"/>
+    <display item="Advanced Group 2 Option 6" format="checkbox"/>
+    <display item="Advanced Group 2 Option 7" format="checkbox"/>
+    <display item="Advanced Group 2 Option 8" format="checkbox"/>
+    <display item="Advanced Group 2 Option 9" format="checkbox"/>
+    <display item="Advanced Group 2 Option 10" format="checkbox"/>
+    <label label="      "/>
+    <display item="Advanced Group 2 Option 11" format="checkbox"/>
+    <display item="Advanced Group 2 Option 12" format="checkbox"/>
+    <display item="Advanced Group 2 Option 13" format="checkbox"/>
+    <display item="Advanced Group 2 Option 14" format="checkbox"/>
+    <display item="Advanced Group 2 Option 15" format="checkbox"/>
+    <display item="Advanced Group 2 Option 16" format="checkbox"/>
+    <display item="Advanced Group 2 Option 17" format="checkbox"/>
+    <display item="Advanced Group 2 Option 18" format="checkbox"/>
+    <display item="Advanced Group 2 Option 19" format="checkbox"/>
+    <display item="Advanced Group 2 Option 20" format="checkbox"/>
+  </column>
+  <name xml:lang="it">Advanced</name>
 </pane>

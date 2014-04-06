@@ -4,17 +4,16 @@
 ]>
 <!-- $Id$ -->
 
-<!-- Process a JMRI decoder file, adding a label element (with specific     -->
-<!-- language) based on the label (preferred) or item attribute             -->
+<!-- Process a JMRI decoder or progrmmer file, adding a name element (with specific     -->
+<!-- language) based on the name attribute             -->
 
 <!-- Provide the two-character language code in the ENTITY line above.      -->
 
 <!-- You should normalize the decoder file before using this tool.          -->
-<!-- See the decoderLabelToItem.xsl template.                               -->
 
-<!-- Note: Existing specific-language label elements are not replaced.      -->
+<!-- Note: Existing specific-language name elements are not replaced.      -->
 
-<!-- xsltproc decoderAddI18N.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
+<!-- xsltproc xml/XSLT/decoderAddI18nName.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
 
 <!-- This file is part of JMRI.  Copyright 2009-2014.                       -->
 <!--                                                                        -->
@@ -33,34 +32,22 @@
     xmlns:db="http://docbook.org/ns/docbook"
     >
 
-<xsl:output method="xml" encoding="ISO-8859-1"/>
+<xsl:output method="xml" encoding="utf-8"/>
 
-<!--specific template match for variable element with specific-language label element -->
-    <xsl:template match="variable[label[@xml:lang = '&target;']]" priority="5">
+<!--specific template match for pane element with specific-language name element -->
+    <xsl:template match="pane[name[@xml:lang = '&target;']]" priority="5">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
-        <xsl:element name="tag1"/> <!-- debug -->
       </xsl:copy>
     </xsl:template>
 
-<!--specific template match for variable element with no label element but with label attribute present-->
-    <xsl:template match="variable[@label]" priority="4">
+<!--specific template match for pane element with no name element but with name attribute present-->
+    <xsl:template match="pane[@name]" priority="4">
       <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::label[@xml:lang = '&target;'])]" />
-        <xsl:element name="label">
+        <xsl:apply-templates select="@*|*[not(self::name[@xml:lang = '&target;'])]" />
+        <xsl:element name="name">
           <xsl:attribute name="xml:lang">&target;</xsl:attribute>
-          <xsl:value-of select="@label"/>
-        </xsl:element>
-      </xsl:copy>
-    </xsl:template>
-
-<!--specific template match for variable element without label attribute or label element; item attribute assumed present -->
-    <xsl:template match="variable" priority="3">
-      <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::label[@xml:lang = '&target;'])]" />
-        <xsl:element name="label">
-          <xsl:attribute name="xml:lang">&target;</xsl:attribute>
-          <xsl:value-of select="@item"/>
+          <xsl:value-of select="@name"/>
         </xsl:element>
       </xsl:copy>
     </xsl:template>

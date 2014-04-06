@@ -1,244 +1,297 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pane name="Analog Controls" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Analog Controls" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Control Analògic</name>
   <name xml:lang="it">Controlli Analogici</name>
-    <column>
-        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-            <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
-            <tooltip xml:lang="it">Determina se una locomotiva può funzionare in CC</tooltip>
-        </display>
-        <display item="Analog (DC) Mode" tooltip="Determines whether loco can operate on conventional DC current"/>
-        <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed"/>
-        <display item="Analog Vhigh" tooltip="Sets the analog input voltage at which the motor reaches programmed maximum speed"/>
-        <display item="Analog (AC) Mode" tooltip="Determines whether loco can operate on conventional AC current"/>
-        <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed"/>
-        <display item="Analog (AC) Vhigh" tooltip="Sets the analog AC input voltage at which the motor reaches programmed maximum speed"/>
-        <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-        <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-        <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-        <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-        <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-        <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero">
-            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
-        </display>
-    </column>
-    <column>
-        <display item="Analog Mode Function Status - FL" format="checkbox"    tooltip="Sets the status of function FL when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ FL quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ FL(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - FL(r)" format="checkbox" tooltip="Sets the status of function FL(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ FL(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F0" format="checkbox"    tooltip="Sets the status of function F0 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F0 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F0(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F0(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F0(r)" format="checkbox" tooltip="Sets the status of function F0(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F0(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F1" format="checkbox"    tooltip="Sets the status of function F1 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F1 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F1(f)" format="checkbox" tooltip="Sets the status of function F1(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F1(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F1(r)" format="checkbox" tooltip="Sets the status of function F1(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F1(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F2" format="checkbox"    tooltip="Sets the status of function F2 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F2 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F2(f)" format="checkbox" tooltip="Sets the status of function F2(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F2(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F2(r)" format="checkbox" tooltip="Sets the status of function F2(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F2(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F3" format="checkbox"    tooltip="Sets the status of function F3 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F3 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F3(f)" format="checkbox" tooltip="Sets the status of function F3(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F3(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F3(r)" format="checkbox" tooltip="Sets the status of function F3(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F3(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F4" format="checkbox"    tooltip="Sets the status of function F4 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F4 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F4(f)" format="checkbox" tooltip="Sets the status of function F4(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F4(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F4(r)" format="checkbox" tooltip="Sets the status of function F4(r)) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F4(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F5" format="checkbox"    tooltip="Sets the status of function F5 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F5 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F5(f)" format="checkbox" tooltip="Sets the status of function F5(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F5(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F5(r)" format="checkbox" tooltip="Sets the status of function F5(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F5(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F6" format="checkbox"    tooltip="Sets the status of function F6 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F6 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F6(f)" format="checkbox" tooltip="Sets the status of function F6(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F6(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F6(r)" format="checkbox" tooltip="Sets the status of function F6(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F6(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F7" format="checkbox"    tooltip="Sets the status of function F7 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F7 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F7(f)" format="checkbox" tooltip="Sets the status of function F7(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F7(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F7(r)" format="checkbox" tooltip="Sets the status of function F7(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F7(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F8" format="checkbox"    tooltip="Sets the status of function F8 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F8 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F8(f)" format="checkbox" tooltip="Sets the status of function F8(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F8(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F8(r)" format="checkbox" tooltip="Sets the status of function F8(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F8(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-    </column>
-    <column>
-        <display item="Analog Mode Function Status - F9" format="checkbox"    tooltip="Sets the status of function F9 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F9 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F9(f)" format="checkbox" tooltip="Sets the status of function F9(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F9(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F9(r)" format="checkbox" tooltip="Sets the status of function F9(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F9(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F10" format="checkbox"    tooltip="Sets the status of function F10 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F10 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F10(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F10(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F10(r)" format="checkbox" tooltip="Sets the status of function F10(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F10(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F11" format="checkbox"    tooltip="Sets the status of function F11 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F11 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F11(f)" format="checkbox" tooltip="Sets the status of function F11(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F11(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F11(r)" format="checkbox" tooltip="Sets the status of function F11(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F11(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F12" format="checkbox"    tooltip="Sets the status of function F12 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F12 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F12(f)" format="checkbox" tooltip="Sets the status of function F12(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F12(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F12(r)" format="checkbox" tooltip="Sets the status of function F12(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F12(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F13" format="checkbox"    tooltip="Sets the status of function F13 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F13 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F13(f)" format="checkbox" tooltip="Sets the status of function F13(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F13(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F13(r)" format="checkbox" tooltip="Sets the status of function F13(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F13(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F14" format="checkbox"    tooltip="Sets the status of function F14 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F14 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F14(f)" format="checkbox" tooltip="Sets the status of function F14(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F14(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F14(r)" format="checkbox" tooltip="Sets the status of function F14(r)) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F14(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F15" format="checkbox"    tooltip="Sets the status of function F15 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F15 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F15(f)" format="checkbox" tooltip="Sets the status of function F15(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F15(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F15(r)" format="checkbox" tooltip="Sets the status of function F15(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F15(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F16" format="checkbox"    tooltip="Sets the status of function F16 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F16 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F16(f)" format="checkbox" tooltip="Sets the status of function F16(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F16(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F16(r)" format="checkbox" tooltip="Sets the status of function F16(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F16(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F17" format="checkbox"    tooltip="Sets the status of function F17 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F17 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F17(f)" format="checkbox" tooltip="Sets the status of function F17(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F17(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F17(r)" format="checkbox" tooltip="Sets the status of function F17(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F17(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-        <display item="Analog Mode Function Status - F18" format="checkbox"    tooltip="Sets the status of function F18 when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F18 quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F18(f)" format="checkbox" tooltip="Sets the status of function F18(f) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F18(f) quan es condueixi en analÚgic</tooltip>
-        </display>
-        <display item="Analog Mode Function Status - F18(r)" format="checkbox" tooltip="Sets the status of function F18(r) when the unit is operating in analog power mode">
-            <tooltip xml:lang="ca">Estableix si funcionar‡ F18(r) quan es condueixi en analÚgic</tooltip>
-        </display>
-
-    </column>
+  <column>
+    <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+      <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
+      <tooltip xml:lang="it">Determina se una locomotiva può funzionare in CC</tooltip>
+    </display>
+    <display item="Analog (DC) Mode" tooltip="Determines whether loco can operate on conventional DC current">
+      <tooltip xml:lang="it">Determines whether loco can operate on conventional DC current</tooltip>
+    </display>
+    <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed">
+      <tooltip xml:lang="it">Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed</tooltip>
+    </display>
+    <display item="Analog Vhigh" tooltip="Sets the analog input voltage at which the motor reaches programmed maximum speed">
+      <tooltip xml:lang="it">Sets the analog input voltage at which the motor reaches programmed maximum speed</tooltip>
+    </display>
+    <display item="Analog (AC) Mode" tooltip="Determines whether loco can operate on conventional AC current">
+      <tooltip xml:lang="it">Determines whether loco can operate on conventional AC current</tooltip>
+    </display>
+    <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed">
+      <tooltip xml:lang="it">Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed</tooltip>
+    </display>
+    <display item="Analog (AC) Vhigh" tooltip="Sets the analog AC input voltage at which the motor reaches programmed maximum speed">
+      <tooltip xml:lang="it">Sets the analog AC input voltage at which the motor reaches programmed maximum speed</tooltip>
+    </display>
+    <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+    <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+    <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+    <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+    <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+    <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero">
+      <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+      <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>
+    </display>
+  </column>
+  <column>
+    <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ FL quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function FL when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ FL(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function FL(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - FL(r)" format="checkbox" tooltip="Sets the status of function FL(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ FL(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function FL(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F0" format="checkbox" tooltip="Sets the status of function F0 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F0 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F0 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F0(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F0(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F0(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F0(r)" format="checkbox" tooltip="Sets the status of function F0(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F0(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F0(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F1" format="checkbox" tooltip="Sets the status of function F1 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F1 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F1 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F1(f)" format="checkbox" tooltip="Sets the status of function F1(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F1(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F1(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F1(r)" format="checkbox" tooltip="Sets the status of function F1(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F1(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F1(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F2" format="checkbox" tooltip="Sets the status of function F2 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F2 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F2 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F2(f)" format="checkbox" tooltip="Sets the status of function F2(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F2(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F2(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F2(r)" format="checkbox" tooltip="Sets the status of function F2(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F2(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F2(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F3" format="checkbox" tooltip="Sets the status of function F3 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F3 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F3 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F3(f)" format="checkbox" tooltip="Sets the status of function F3(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F3(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F3(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F3(r)" format="checkbox" tooltip="Sets the status of function F3(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F3(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F3(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F4" format="checkbox" tooltip="Sets the status of function F4 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F4 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F4 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F4(f)" format="checkbox" tooltip="Sets the status of function F4(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F4(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F4(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F4(r)" format="checkbox" tooltip="Sets the status of function F4(r)) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F4(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F4(r)) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F5" format="checkbox" tooltip="Sets the status of function F5 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F5 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F5 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F5(f)" format="checkbox" tooltip="Sets the status of function F5(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F5(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F5(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F5(r)" format="checkbox" tooltip="Sets the status of function F5(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F5(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F5(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F6" format="checkbox" tooltip="Sets the status of function F6 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F6 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F6 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F6(f)" format="checkbox" tooltip="Sets the status of function F6(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F6(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F6(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F6(r)" format="checkbox" tooltip="Sets the status of function F6(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F6(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F6(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F7" format="checkbox" tooltip="Sets the status of function F7 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F7 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F7 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F7(f)" format="checkbox" tooltip="Sets the status of function F7(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F7(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F7(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F7(r)" format="checkbox" tooltip="Sets the status of function F7(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F7(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F7(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F8" format="checkbox" tooltip="Sets the status of function F8 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F8 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F8 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F8(f)" format="checkbox" tooltip="Sets the status of function F8(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F8(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F8(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F8(r)" format="checkbox" tooltip="Sets the status of function F8(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F8(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F8(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+  </column>
+  <column>
+    <display item="Analog Mode Function Status - F9" format="checkbox" tooltip="Sets the status of function F9 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F9 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F9 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F9(f)" format="checkbox" tooltip="Sets the status of function F9(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F9(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F9(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F9(r)" format="checkbox" tooltip="Sets the status of function F9(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F9(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F9(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F10" format="checkbox" tooltip="Sets the status of function F10 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F10 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F10 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F10(f)" format="checkbox" tooltip="Sets the status of function F10(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F10(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F10(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F10(r)" format="checkbox" tooltip="Sets the status of function F10(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F10(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F10(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F11" format="checkbox" tooltip="Sets the status of function F11 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F11 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F11 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F11(f)" format="checkbox" tooltip="Sets the status of function F11(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F11(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F11(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F11(r)" format="checkbox" tooltip="Sets the status of function F11(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F11(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F11(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F12" format="checkbox" tooltip="Sets the status of function F12 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F12 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F12 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F12(f)" format="checkbox" tooltip="Sets the status of function F12(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F12(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F12(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F12(r)" format="checkbox" tooltip="Sets the status of function F12(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F12(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F12(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F13" format="checkbox" tooltip="Sets the status of function F13 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F13 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F13 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F13(f)" format="checkbox" tooltip="Sets the status of function F13(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F13(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F13(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F13(r)" format="checkbox" tooltip="Sets the status of function F13(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F13(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F13(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F14" format="checkbox" tooltip="Sets the status of function F14 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F14 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F14 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F14(f)" format="checkbox" tooltip="Sets the status of function F14(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F14(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F14(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F14(r)" format="checkbox" tooltip="Sets the status of function F14(r)) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F14(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F14(r)) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F15" format="checkbox" tooltip="Sets the status of function F15 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F15 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F15 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F15(f)" format="checkbox" tooltip="Sets the status of function F15(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F15(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F15(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F15(r)" format="checkbox" tooltip="Sets the status of function F15(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F15(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F15(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F16" format="checkbox" tooltip="Sets the status of function F16 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F16 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F16 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F16(f)" format="checkbox" tooltip="Sets the status of function F16(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F16(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F16(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F16(r)" format="checkbox" tooltip="Sets the status of function F16(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F16(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F16(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F17" format="checkbox" tooltip="Sets the status of function F17 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F17 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F17 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F17(f)" format="checkbox" tooltip="Sets the status of function F17(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F17(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F17(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F17(r)" format="checkbox" tooltip="Sets the status of function F17(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F17(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F17(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F18" format="checkbox" tooltip="Sets the status of function F18 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F18 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F18 when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F18(f)" format="checkbox" tooltip="Sets the status of function F18(f) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F18(f) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F18(f) when the unit is operating in analog power mode</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F18(r)" format="checkbox" tooltip="Sets the status of function F18(r) when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F18(r) quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Sets the status of function F18(r) when the unit is operating in analog power mode</tooltip>
+    </display>
+  </column>
 </pane>

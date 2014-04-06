@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE xslt [
+<!ENTITY target "it">
+]>
 <!-- $Id$ -->
 
-<!-- Process a JMRI decoder file, adding a label element (with default     -->
-<!-- language) based on the label (preferred) or item attribute            -->
+<!-- Process a JMRI decoder file, adding a label element (with specific     -->
+<!-- language) based on the label (preferred) or item attribute             -->
 
-<!-- Note: An existing default-language label element is not replaced.     -->
+<!-- Provide the two-character language code in the ENTITY line above.      -->
 
-<!-- xsltproc decoderAddLabelElement.xsl 0NMRA.xml | diff - 0NMRA.xml      -->
+<!-- You should normalize the decoder file before using this tool.          -->
+<!-- See the decoderLabelToItem.xsl template.                               -->
 
-<!-- The sequence of operations to normalize a decoder file is -->
-<!--  decoderLabelToItem.xsl                                   -->
-<!--  decoderAddLabelElement.xsl                               -->
-<!--  decoderSuppressRedundantLabel.xsl                        -->
-<!--  xmllint -format                                          -->
+<!-- Note: Existing specific-language label elements are not replaced.      -->
 
+<!-- xsltproc xml/XSLT/decoderAddI18nLabel.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
 
 <!-- This file is part of JMRI.  Copyright 2009-2014.                       -->
 <!--                                                                        -->
@@ -34,8 +35,8 @@
 
 <xsl:output method="xml" encoding="utf-8"/>
 
-<!--specific template match for variable element with default-language label element -->
-    <xsl:template match="variable[label[not(@xml:lang)]]" priority="5">
+<!--specific template match for variable element with specific-language label element -->
+    <xsl:template match="variable[label[@xml:lang = '&target;']]" priority="5">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
       </xsl:copy>
@@ -44,16 +45,22 @@
 <!--specific template match for variable element with no label element but with label attribute present-->
     <xsl:template match="variable[@label]" priority="4">
       <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::label[not(@xml:lang)])]" />
-        <xsl:element name="label"><xsl:value-of select="@label"/></xsl:element>
+        <xsl:apply-templates select="@*|*[not(self::label[@xml:lang = '&target;'])]" />
+        <xsl:element name="label">
+          <xsl:attribute name="xml:lang">&target;</xsl:attribute>
+          <xsl:value-of select="@label"/>
+        </xsl:element>
       </xsl:copy>
     </xsl:template>
 
 <!--specific template match for variable element without label attribute or label element; item attribute assumed present -->
     <xsl:template match="variable" priority="3">
       <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::label[not(@xml:lang)])]" />
-        <xsl:element name="label"><xsl:value-of select="@item"/></xsl:element>
+        <xsl:apply-templates select="@*|*[not(self::label[@xml:lang = '&target;'])]" />
+        <xsl:element name="label">
+          <xsl:attribute name="xml:lang">&target;</xsl:attribute>
+          <xsl:value-of select="@item"/>
+        </xsl:element>
       </xsl:copy>
     </xsl:template>
 

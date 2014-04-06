@@ -28,7 +28,7 @@
     xmlns:db="http://docbook.org/ns/docbook"
     >
 
-<xsl:output method="xml" encoding="ISO-8859-1"/>
+<xsl:output method="xml" encoding="utf-8"/>
 
 <!--specific template match for variable element with item already present-->
     <xsl:template match="variable[@item]">

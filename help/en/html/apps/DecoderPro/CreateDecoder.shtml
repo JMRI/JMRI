@@ -260,7 +260,9 @@ decoder back to its defaults.
 the decoder manufacturer calls this item, even if other manufacturers or the
 NMRA use a different name for similar things. It's optional, in which case the "item"
 value will be used to label it when it's presented to the user.
-
+<p>The "comment" element let you provide additional information
+to the user.  For example, a tooltip made from the comment text is provided when the user hovers their
+cursor over the variable on the screen. 
 </dd>
 
 <dt class=left> File contents: Creating new Variable definitions</dt>

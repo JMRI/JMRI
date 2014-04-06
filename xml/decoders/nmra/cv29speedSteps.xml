@@ -32,14 +32,14 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added French and German translations</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
       <revremark>Initial release</revremark>
     </revision>
   </revhistory>
-  <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+  <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
     <enumVal>
       <enumChoice choice="14">
         <choice>14</choice>
@@ -49,7 +49,8 @@
       </enumChoice>
     </enumVal>
     <label>Speed Steps</label>
-	<label xml:lang="fr">Pas de vitesse</label>
-	<label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="fr">Pas de vitesse</label>
+    <label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="it">Speed Step Mode</label>
   </variable>
 </variables>

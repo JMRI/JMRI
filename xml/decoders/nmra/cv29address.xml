@@ -32,28 +32,29 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added French and German translations</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
       <revremark>Initial release</revremark>
     </revision>
   </revhistory>
-  <variable label="Address Format" CV="29" mask="XXVXXXXX">
+  <variable item="Address Format" CV="29" mask="XXVXXXXX">
     <enumVal>
       <enumChoice choice="One byte (short) address">
         <choice xml:lang="it">1 byte (ind.Corto)</choice>
-		<choice xml:lang="fr">1 byte (adresse courte)</choice>
-		<choice xml:lang="de">1 byte (Basisadresse)</choice>
+        <choice xml:lang="fr">1 byte (adresse courte)</choice>
+        <choice xml:lang="de">1 byte (Basisadresse)</choice>
       </enumChoice>
       <enumChoice choice="Two byte (extended) address">
         <choice xml:lang="it">2 byte (ind.Esteso)</choice>
-		<choice xml:lang="fr">2 byte (adresse étendue)</choice>
-		<choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
+        <choice xml:lang="fr">2 byte (adresse étendue)</choice>
+        <choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Formato Indirizzo</label>
     <label xml:lang="fr">Format d'Adresse</label>
-	<label xml:lang="de">Adresse Format</label>
+    <label xml:lang="de">Adresse Format</label>
+    <label>Address Format</label>
   </variable>
 </variables>

@@ -32,7 +32,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added German, corrected French</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2010-03-12</date>
       <authorinitials>BJ</authorinitials>
@@ -45,16 +45,18 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Acceleration Rate" CV="3" item="Accel">
+  <variable CV="3" item="Accel">
     <decVal max="31"/>
     <label xml:lang="it">Accellerazione</label>
     <label xml:lang="fr">Accélération</label>
-	<label xml:lang="de">Beschleunigungszeit</label>
+    <label xml:lang="de">Beschleunigungszeit</label>
+    <label>Acceleration Rate</label>
   </variable>
-  <variable label="Deceleration Rate" CV="4" item="Decel">
+  <variable CV="4" item="Decel">
     <decVal max="31"/>
     <label xml:lang="it">Decellerazione</label>
     <label xml:lang="fr">Décélération</label>
-	<label xml:lang="de">Bremszeit</label>
+    <label xml:lang="de">Bremszeit</label>
+    <label>Deceleration Rate</label>
   </variable>
 </variables>

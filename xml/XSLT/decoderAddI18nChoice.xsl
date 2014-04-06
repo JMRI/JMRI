@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE xslt [
+<!ENTITY target "it">
+]>
 <!-- $Id$ -->
 
-<!-- Process a JMRI decoder file, removing the label attribute from a       -->
-<!-- variable element if an item attribute or default-language label        -->
-<!-- element exists. (The content of the element is not checked)            -->
+<!-- Process a JMRI decoder file, adding a choice element (with specific    -->
+<!-- language) based on the existing choice attribute                         -->
 
-<!-- xsltproc decoderSuppressRedundantLabel.xsl 0NMRA.xml | diff - 0NMRA.xml  -->
+<!-- Provide the two-character language code in the ENTITY line above.      -->
 
-<!-- The sequence of operations to normalize a decoder file is -->
-<!--  decoderLabelToItem.xsl                                   -->
-<!--  decoderAddLabelElement.xsl                               -->
-<!--  decoderSuppressRedundantLabel.xsl                        -->
-<!--  xmllint -format                                          -->
+<!-- You should normalize the decoder file before using this tool.          -->
 
+<!-- Note: Existing specific-language choice elements are not replaced.     -->
+
+<!-- xsltproc xml/XSLT/decoderAddI18nChoice.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
 
 <!-- This file is part of JMRI.  Copyright 2009-2014.                       -->
 <!--                                                                        -->
@@ -33,24 +34,21 @@
 
 <xsl:output method="xml" encoding="utf-8"/>
 
-<!--specific template match for variable element with label/item match -->
-    <xsl:template match="variable[@item=@label]">
-      <xsl:copy>
-        <xsl:apply-templates select="@*[local-name() != 'label']|node()" />
-      </xsl:copy>
-    </xsl:template>
-
-<!--specific template match for variable element with default-language label element -->
-    <xsl:template match="variable[label[not(@xml:lang)]]">
-      <xsl:copy>
-        <xsl:apply-templates select="@*[local-name() != 'label']|node()" />
-      </xsl:copy>
-    </xsl:template>
-
-<!--specific template match for variable element without match-->
-    <xsl:template match="variable">
+<!--specific template match for enumChoice element with specific-language choice element -->
+    <xsl:template match="enumChoice[choice[@xml:lang = '&target;']]" priority="5">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
+      </xsl:copy>
+    </xsl:template>
+
+<!--specific template match for enumChoice element with no choice element but with choice attribute present-->
+    <xsl:template match="enumChoice[@comment]" priority="4">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|*[not(self::choice[@xml:lang = '&target;'])]" />
+        <xsl:element name="choice">
+          <xsl:attribute name="xml:lang">&target;</xsl:attribute>
+          <xsl:value-of select="@choice"/>
+        </xsl:element>
       </xsl:copy>
     </xsl:template>
 
