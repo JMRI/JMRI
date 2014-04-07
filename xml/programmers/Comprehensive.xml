@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,46 +11,40 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-    
-    <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
-    <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
-    <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
-    <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
-    <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
-    <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
-    <version version="17" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090525"/>
-    <version version="18" author="Peter Ulvestad" lastUpdated="20090904"/>
-    <version version="19" author="Bob Jacobsen" lastUpdated="20091001"/>
-    <version version="20" author="Bob Jacobsen" lastUpdated="20091005"/>
-
-<!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
-<!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 5 - modify format, add tooltips (Jack Shall) -->
-<!-- Version 6 - added CV25 to Speed Control pane - wsthompson@earthlink.net -->
-<!-- Version 8 - added CV25 to Speed Control pane -->
-<!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
-<!-- Version 9 - added Analog pane wsthompson@earthlink.net -->
-<!-- Version 11 - updated tooltip for Decoder Version -->
-<!-- Version 12 - added sound group 3  -->
-<!-- Version 13 - two panes for speed control -->
-<!-- Version 14 - added EMF fields to Motor pane and more sound options-->
-<!-- Version 15 - added EMF enable to fix TCS confusion -->
-<!-- Version 16 - added four more lighting options to Lights pane, -->
-<!--              very minor format change in Motor pane, -->
-<!--              Fixed tool tips for "Analog Mode Function Status" items -->
-<!-- Version 17 - Modified format of Analog Controls pane to 3 columns. Modified spaces -->
-<!--              from Sound Levels pane so columns align when equally populated. Added "buffer" -->
-<!--              labels to Advanced pane to create spaces between columns. -->
-<!-- Version 18 - Modified 'Basic Speed Control pane for decoders that use CV6  -->
-<!--              to select speed curve when using CV2 and 5. Moved Forward and Reverse trims to  -->
-<!--              'Speed Table' pane as they are only used with speed tables. -->
-<!-- Version 19 - Don't show function label, roster media tabs -->
-<!-- Version 19 - Use XInclude -->
-
-    <programmer 
-            decoderFilePanes="yes" showEmptyPanes="default"
-            showFnLanelPane="no" showRosterMediaPane="no">
-    
+  <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
+  <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
+  <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
+  <version version="14" author="Jos Wils wilsjos@orcon.net.nz" lastUpdated="20080625"/>
+  <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
+  <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
+  <version version="17" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090525"/>
+  <version version="18" author="Peter Ulvestad" lastUpdated="20090904"/>
+  <version version="19" author="Bob Jacobsen" lastUpdated="20091001"/>
+  <version version="20" author="Bob Jacobsen" lastUpdated="20091005"/>
+  <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
+  <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
+  <!-- Version 6 - added CV25 to Speed Control pane - wsthompson@earthlink.net -->
+  <!-- Version 8 - added CV25 to Speed Control pane -->
+  <!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
+  <!-- Version 9 - added Analog pane wsthompson@earthlink.net -->
+  <!-- Version 11 - updated tooltip for Decoder Version -->
+  <!-- Version 12 - added sound group 3  -->
+  <!-- Version 13 - two panes for speed control -->
+  <!-- Version 14 - added EMF fields to Motor pane and more sound options-->
+  <!-- Version 15 - added EMF enable to fix TCS confusion -->
+  <!-- Version 16 - added four more lighting options to Lights pane, -->
+  <!--              very minor format change in Motor pane, -->
+  <!--              Fixed tool tips for "Analog Mode Function Status" items -->
+  <!-- Version 17 - Modified format of Analog Controls pane to 3 columns. Modified spaces -->
+  <!--              from Sound Levels pane so columns align when equally populated. Added "buffer" -->
+  <!--              labels to Advanced pane to create spaces between columns. -->
+  <!-- Version 18 - Modified 'Basic Speed Control pane for decoders that use CV6  -->
+  <!--              to select speed curve when using CV2 and 5. Moved Forward and Reverse trims to  -->
+  <!--              'Speed Table' pane as they are only used with speed tables. -->
+  <!-- Version 19 - Don't show function label, roster media tabs -->
+  <!-- Version 19 - Use XInclude -->
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <!-- all panes -->
     <xi:include href="http://jmri.org/xml/programmers/parts/BasicPane.xml"/>
     <xi:include href="http://jmri.org/xml/programmers/parts/MotorPane.xml"/>
@@ -65,15 +58,5 @@
     <xi:include href="http://jmri.org/xml/programmers/parts/SoundPane.xml"/>
     <xi:include href="http://jmri.org/xml/programmers/parts/SoundLevelsPane.xml"/>
     <xi:include href="http://jmri.org/xml/programmers/parts/CVsPane.xml"/>
-
-    </programmer>
-
+  </programmer>
 </programmer-config>
-
-
-
-
-
- 	  	 
-
- 	  	 

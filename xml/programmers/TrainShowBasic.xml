@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -11,200 +10,192 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-<!-- $Id$ -->
-          <!--version author="Joe Ellis, based on Comprehensive Programmer"/-->
-		<version author="Mark Gurries, Bob Jacobsen" 
-					version="5" lastUpdated="20031205"/>
-
-      <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
-      <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
-
-<programmer decoderFilePanes="yes">
-
-	<pane name="Basic">
-		<column>
-			<dccaddress />
-			<label label=" "/>
-			<display item="Short Address"
-				tooltip="Sets the Primary (short) address" />
-			<display item="Long Address"
-				tooltip="Sets the Extended (long) address" />
-			<display item="Address Format"
-				tooltip="Determines whether loco will use short or long
-				address" />
-			<label label=" "/>
-			<display item="Locomotive Direction"
-				tooltip="Sets the relative direction of the loco when told
-	               to move forward" />
-			<display item="Speed Step Mode"
-				tooltip="Sets the speed step mode for headlight control" />
-			<display item="Analog (DC) Operation"
-				tooltip="Determines whether loco can operate on conventional
-			     DC current (enables Power Source Conversion)" />
-		</column>
-	</pane>
-	
-	
-	
-	<pane name="Motor">
-		<column>
-			<display item="Kick Start"
-				tooltip="Provides an initial higher voltage spike to loco 
-				to overcome starting friction" />
-			<display item="Accel"
-				tooltip="Sets the acceleration rate (delay)" />
-			<display item="Decel"
-				tooltip="Sets the deceleration rate (delay)" />
-		</column>
-	</pane>
-	
-
-	<pane name="Speed Control">
-		<column>
-			<row>
-				<column>
-					<label label=" "/>
-					<display item="Speed Table Definition" 
-						format="offradiobutton" label=""/>
-					<label label=" "/>
-				</column>
-			</row>
-			<row>
-				<column>
-					<display item="Vstart"
-						tooltip="Sets the starting voltage at 
-						throttle speed step 1" />
-					<display item="Vmid"
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh"
-						tooltip="Sets the maximum voltage at full
-						throttle" />
-				</column>
-				<column>
-					<display item="Vstart" format="hslider" label=""
-						tooltip="Sets the starting voltage at 
-						throttle speed step 1" />
-					<display item="Vmid" format="hslider" label=""
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh" format="hslider" label=""
-						tooltip="Sets the maximum voltage at full
-						throttle" />
-				</column>
-			</row>
-			<row>
-				<column>
-					<label label=" "/>
-					<display item="Forward Trim"
-						tooltip="Fine tune the forward voltage levels" />
-					<label label=" "/>
-				</column>
-				<column>
-					<label label="     "/>
-				</column>
-				<column>
-					<label label=" "/>
-					<display item="Reverse Trim"
-						tooltip="Fine tune the reverse voltage levels" />
-					<label label=" "/>
-				</column>
-			</row>
-			<separator/>
-			<row>
-				<column>
-					<display item="Speed Table Definition" 
-						format="onradiobutton" layout="above" label=""/>
-					<display item="Speed Table" layout="above"/>
-					<label label=" "/>
-				</column>
-			</row>
-		</column>
-	</pane>
-	
-	
-
-	<pane name="Consist">
-		<column>
-			<row>
-				<column>
-					<display item="Consist Address"
-						tooltip="Sets the multiple unit (consist) 
-						address" />
-					<display item="Consist Direction"
-						tooltip="Sets the relative direction of the 
-						loco when consist is told to move forward" />
-				</column>
-				<column>
-					<label label="   "/>
-				</column>
-
-			</row>
-			<label label=" "/>
-
-			<separator/>
-
-			<label label=" "/>			
-			<label label="Will decoder respond to function 
-			requests at consist address?"/>
-			<label label=" "/>
-			<display item="Consist Address Active For FL in Forward"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For FL in Reverse"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F0"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F1"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F2"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F3"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F4"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F5"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F6"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F7"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F8"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F9"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F10"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F11"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-			<display item="Consist Address Active For F12"
-				tooltip="Determines whether the function will respond 
-				to the consist address" />
-		</column>
-	</pane>
-	
-	
-	<pane name="CVs">
-		<column>
-			<cvtable/>
-		</column>
-	</pane>
-
-</programmer>
+  <!-- $Id$ -->
+  <!--version author="Joe Ellis, based on Comprehensive Programmer"/-->
+  <version author="Mark Gurries, Bob Jacobsen" version="5" lastUpdated="20031205"/>
+  <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
+  <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
+  <programmer decoderFilePanes="yes">
+    <pane name="Basic">
+      <column>
+        <dccaddress/>
+        <label label=" "/>
+        <display item="Short Address" tooltip="Sets the Primary (short) address">
+          <tooltip xml:lang="it">Sets the Primary (short) address</tooltip>
+        </display>
+        <display item="Long Address" tooltip="Sets the Extended (long) address">
+          <tooltip xml:lang="it">Sets the Extended (long) address</tooltip>
+        </display>
+        <display item="Address Format" tooltip="Determines whether loco will use short or long     address">
+          <tooltip xml:lang="it">Determines whether loco will use short or long     address</tooltip>
+        </display>
+        <label label=" "/>
+        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told                 to move forward">
+          <tooltip xml:lang="it">Sets the relative direction of the loco when told                 to move forward</tooltip>
+        </display>
+        <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
+          <tooltip xml:lang="it">Sets the speed step mode for headlight control</tooltip>
+        </display>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional         DC current (enables Power Source Conversion)">
+          <tooltip xml:lang="it">Determines whether loco can operate on conventional         DC current (enables Power Source Conversion)</tooltip>
+        </display>
+      </column>
+      <name xml:lang="it">Basic</name>
+    </pane>
+    <pane name="Motor">
+      <column>
+        <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco      to overcome starting friction">
+          <tooltip xml:lang="it">Provides an initial higher voltage spike to loco      to overcome starting friction</tooltip>
+        </display>
+        <display item="Accel" tooltip="Sets the acceleration rate (delay)">
+          <tooltip xml:lang="it">Sets the acceleration rate (delay)</tooltip>
+        </display>
+        <display item="Decel" tooltip="Sets the deceleration rate (delay)">
+          <tooltip xml:lang="it">Sets the deceleration rate (delay)</tooltip>
+        </display>
+      </column>
+      <name xml:lang="it">Motor</name>
+    </pane>
+    <pane name="Speed Control">
+      <column>
+        <row>
+          <column>
+            <label label=" "/>
+            <display item="Speed Table Definition" format="offradiobutton" label=""/>
+            <label label=" "/>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="Vstart" tooltip="Sets the starting voltage at        throttle speed step 1">
+              <tooltip xml:lang="it">Sets the starting voltage at        throttle speed step 1</tooltip>
+            </display>
+            <display item="Vmid" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="it">Sets the voltage at mid throttle</tooltip>
+            </display>
+            <display item="Vhigh" tooltip="Sets the maximum voltage at full       throttle">
+              <tooltip xml:lang="it">Sets the maximum voltage at full       throttle</tooltip>
+            </display>
+          </column>
+          <column>
+            <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at        throttle speed step 1">
+              <tooltip xml:lang="it">Sets the starting voltage at        throttle speed step 1</tooltip>
+            </display>
+            <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
+              <tooltip xml:lang="it">Sets the voltage at mid throttle</tooltip>
+            </display>
+            <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full       throttle">
+              <tooltip xml:lang="it">Sets the maximum voltage at full       throttle</tooltip>
+            </display>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label label=" "/>
+            <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+              <tooltip xml:lang="it">Fine tune the forward voltage levels</tooltip>
+            </display>
+            <label label=" "/>
+          </column>
+          <column>
+            <label label="     "/>
+          </column>
+          <column>
+            <label label=" "/>
+            <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+              <tooltip xml:lang="it">Fine tune the reverse voltage levels</tooltip>
+            </display>
+            <label label=" "/>
+          </column>
+        </row>
+        <separator/>
+        <row>
+          <column>
+            <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
+            <display item="Speed Table" layout="above"/>
+            <label label=" "/>
+          </column>
+        </row>
+      </column>
+      <name xml:lang="it">Speed Control</name>
+    </pane>
+    <pane name="Consist">
+      <column>
+        <row>
+          <column>
+            <display item="Consist Address" tooltip="Sets the multiple unit (consist)        address">
+              <tooltip xml:lang="it">Sets the multiple unit (consist)        address</tooltip>
+            </display>
+            <display item="Consist Direction" tooltip="Sets the relative direction of the        loco when consist is told to move forward">
+              <tooltip xml:lang="it">Sets the relative direction of the        loco when consist is told to move forward</tooltip>
+            </display>
+          </column>
+          <column>
+            <label label="   "/>
+          </column>
+        </row>
+        <label label=" "/>
+        <separator/>
+        <label label=" "/>
+        <label label="Will decoder respond to function     requests at consist address?">
+          <label xml:lang="it">Will decoder respond to function     requests at consist address?</label>
+        </label>
+        <label label=" "/>
+        <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For FL in Reverse" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F0" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F1" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F2" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F3" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F4" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F5" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F6" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F7" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F8" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F9" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F10" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F11" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+        <display item="Consist Address Active For F12" tooltip="Determines whether the function will respond      to the consist address">
+          <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
+        </display>
+      </column>
+      <name xml:lang="it">Consist</name>
+    </pane>
+    <pane name="CVs">
+      <column>
+        <cvtable/>
+      </column>
+      <name xml:lang="it">CVs</name>
+    </pane>
+  </programmer>
 </programmer-config>
-
-

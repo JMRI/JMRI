@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -11,91 +10,109 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-<!-- $Id$ -->
-		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
-
-<!-- A very basic programmer, containing only the most important few CVs -->
-
-<programmer decoderFilePanes="no">
-
-	<pane name="Decoder Address" nameFmt="item">
-		<column>
-			<label label="Using a dccAddress element"/>
-	 		<dccaddress/>
-			<separator/>
-
-			<label label="As two numbers and mode selection"/>
-			<display item="Short Address"/>
-			<display item="Long Address"/>
-			<display item="Address Format"/>
-			<separator/>
-
-			<label label="As two numbers and checkbox"/>
-			<display item="Short Address"/>
-			<display item="Long Address"/>
-			<display item="Address Format" format="checkbox"/>
-			<separator/>
-
-			<label label="As two numbers and radiobuttons"/>
-			<row>
-				<column><display item="Short Address"/></column>
-				<column><display item="Address Format" format="offradiobutton" label=""/></column>
-			</row>
-			<row>
-				<column><display item="Long Address"/></column>
-				<column><display item="Address Format" format="onradiobutton" label=""/></column>
-			</row>
-			<separator/>
-
-		</column>
-	</pane>
-
-	<pane name="Enums" nameFmt="item">
-		<column>		
-			<label label="Default form"/>
-			<display item="Speed Table Definition" layout="left"/>
-			<separator/>
-			
-			<label label="As a checkbox, 1 if checked"/>
-			<display item="Speed Table Definition" format="checkbox"  layout="left"/>
-			<separator/>
-			
-			<label label="As a set of radiobuttons"/>
-			<display item="Speed Table Definition" format="radiobuttons"  layout="left"/>
-			<separator/>
-			
-			<label label="As a radio button, 1 (on) if selected"/>
-			<display item="Speed Table Definition" format="onradiobutton"  layout="left"/>
-			<separator/>
-			
-			<label label="As a radio button, 0 (off) if selected"/>
-			<display item="Speed Table Definition" format="offradiobutton"  layout="left"/>
-			<separator/>
-
-			<label label="As a radio button, using just the state label"/>
-			<display item="Speed Table Definition" format="onradiobutton" 
-					label="" layout="left"/>
-			<separator/>
-		</column>
-	</pane>
-
-	<pane name="Values" nameFmt="item">
-		<column>		
-			<label label="Default form"/>
-			<display item="Short Address" layout="left"/>
-			<separator/>
-			
-			<label label="As a horizontal slider"/>
-			<display item="Short Address" layout="left" format="hslider"/>
-		</column>
-
-		<column>	
-			<label label="As a vertical slider"/>
-			<display item="Short Address" layout="left" format="vslider"/>
-		</column>
-	</pane>
-
-</programmer>
+  <!-- $Id$ -->
+  <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
+  <!-- A very basic programmer, containing only the most important few CVs -->
+  <programmer decoderFilePanes="no">
+    <pane name="Decoder Address" nameFmt="item">
+      <column>
+        <label label="Using a dccAddress element">
+          <label xml:lang="it">Using a dccAddress element</label>
+        </label>
+        <dccaddress/>
+        <separator/>
+        <label label="As two numbers and mode selection">
+          <label xml:lang="it">As two numbers and mode selection</label>
+        </label>
+        <display item="Short Address"/>
+        <display item="Long Address"/>
+        <display item="Address Format"/>
+        <separator/>
+        <label label="As two numbers and checkbox">
+          <label xml:lang="it">As two numbers and checkbox</label>
+        </label>
+        <display item="Short Address"/>
+        <display item="Long Address"/>
+        <display item="Address Format" format="checkbox"/>
+        <separator/>
+        <label label="As two numbers and radiobuttons">
+          <label xml:lang="it">As two numbers and radiobuttons</label>
+        </label>
+        <row>
+          <column>
+            <display item="Short Address"/>
+          </column>
+          <column>
+            <display item="Address Format" format="offradiobutton" label=""/>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="Long Address"/>
+          </column>
+          <column>
+            <display item="Address Format" format="onradiobutton" label=""/>
+          </column>
+        </row>
+        <separator/>
+      </column>
+      <name xml:lang="it">Decoder Address</name>
+    </pane>
+    <pane name="Enums" nameFmt="item">
+      <column>
+        <label label="Default form">
+          <label xml:lang="it">Default form</label>
+        </label>
+        <display item="Speed Table Definition" layout="left"/>
+        <separator/>
+        <label label="As a checkbox, 1 if checked">
+          <label xml:lang="it">As a checkbox, 1 if checked</label>
+        </label>
+        <display item="Speed Table Definition" format="checkbox" layout="left"/>
+        <separator/>
+        <label label="As a set of radiobuttons">
+          <label xml:lang="it">As a set of radiobuttons</label>
+        </label>
+        <display item="Speed Table Definition" format="radiobuttons" layout="left"/>
+        <separator/>
+        <label label="As a radio button, 1 (on) if selected">
+          <label xml:lang="it">As a radio button, 1 (on) if selected</label>
+        </label>
+        <display item="Speed Table Definition" format="onradiobutton" layout="left"/>
+        <separator/>
+        <label label="As a radio button, 0 (off) if selected">
+          <label xml:lang="it">As a radio button, 0 (off) if selected</label>
+        </label>
+        <display item="Speed Table Definition" format="offradiobutton" layout="left"/>
+        <separator/>
+        <label label="As a radio button, using just the state label">
+          <label xml:lang="it">As a radio button, using just the state label</label>
+        </label>
+        <display item="Speed Table Definition" format="onradiobutton" label="" layout="left"/>
+        <separator/>
+      </column>
+      <name xml:lang="it">Enums</name>
+    </pane>
+    <pane name="Values" nameFmt="item">
+      <column>
+        <label label="Default form">
+          <label xml:lang="it">Default form</label>
+        </label>
+        <display item="Short Address" layout="left"/>
+        <separator/>
+        <label label="As a horizontal slider">
+          <label xml:lang="it">As a horizontal slider</label>
+        </label>
+        <display item="Short Address" layout="left" format="hslider"/>
+      </column>
+      <column>
+        <label label="As a vertical slider">
+          <label xml:lang="it">As a vertical slider</label>
+        </label>
+        <display item="Short Address" layout="left" format="vslider"/>
+      </column>
+      <name xml:lang="it">Values</name>
+    </pane>
+  </programmer>
 </programmer-config>

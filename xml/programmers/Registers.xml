@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -11,38 +10,28 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-<!-- $Id$ -->
-		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
-
-<!-- A very basic programmer, containing only the variables that -->
-<!-- register-mode decoders have. -->
-
-<programmer decoderFilePanes="no">
-
-	<pane name="Basic" nameFmt="item">
-		<column>
-
-	 		<display item="Short Address" label="Short Address"/>
-			<label label=" "/>
-
-			<display item="Analog (DC) Operation"/>
-			<display item="Speed Step Mode"/>
-			<display item="Locomotive Direction"/>
-			<label label=" "/>
-
-	 		<display item="Vstart"/>
-			<label label=" "/>
-
-	 		<display item="Accel"/>
-			<label label=" "/>
-
-	 		<display item="Decel"/>
-			<label label=" "/>
-
-		</column>
-	</pane>
-
-</programmer>
+  <!-- $Id$ -->
+  <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
+  <!-- A very basic programmer, containing only the variables that -->
+  <!-- register-mode decoders have. -->
+  <programmer decoderFilePanes="no">
+    <pane name="Basic" nameFmt="item">
+      <column>
+        <display item="Short Address" label="Short Address"/>
+        <label label=" "/>
+        <display item="Analog (DC) Operation"/>
+        <display item="Speed Step Mode"/>
+        <display item="Locomotive Direction"/>
+        <label label=" "/>
+        <display item="Vstart"/>
+        <label label=" "/>
+        <display item="Accel"/>
+        <label label=" "/>
+        <display item="Decel"/>
+        <label label=" "/>
+      </column>
+      <name xml:lang="it">Basic</name>
+    </pane>
+  </programmer>
 </programmer-config>
