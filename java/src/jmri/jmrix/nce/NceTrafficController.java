@@ -4,9 +4,10 @@ package jmri.jmrix.nce;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.CommandStation;
 import jmri.JmriException;
-
+import jmri.NmraPacket;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -52,7 +53,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * CommandStation implementation
      */
     public void sendPacket(byte[] packet,int count) {
-        NceMessage m = NceMessage.sendPacketMessage(this, packet);
+        NceMessage m;
+    	if (NmraPacket.isAccSignalDecoderPkt(packet)) {
+    		// intercept NMRA signal cmds
+    		int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
+    		int aspect = packet[2];
+    		m = NceMessage.createAccySignalMacroMessage(this, 5, addr, aspect);
+    	} else {
+            m = NceMessage.sendPacketMessage(this, packet);
+    	}
 	    this.sendNceMessage(m, null);
     }
     

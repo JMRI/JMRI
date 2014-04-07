@@ -42,6 +42,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	public static final int READ_REG_CMD = 0xA7;		//NCE read register command
 	public static final int WRITE_DIR_CV_CMD = 0xA8;	//NCE write CV direct command
 	public static final int READ_DIR_CV_CMD = 0xA9;		//NCE read CV direct command
+	public static final int	SEND_ACC_SIG_MACRO_CMD = 0xAD;	// NCE send NMRA aspect command
 
 	// The following commands are not supported by the NCE USB  
 	
@@ -50,6 +51,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	public static final int SENDn_BYTES_CMD = 0x90;		//NCE send 3 to 6 bytes (0x9n, n = 3-6) command
 	public static final int QUEUEn_BYTES_CMD = 0xA0;	//NCE queue 3 to 6 bytes (0xAn, n = 3-6) command
 
+	// The following command are only NCE USB commands
+	
+	public static final int	WRITE_ACC_SIG_OP_CV_CMD = 0xAF;	//NCE USB write accessory CV
+	
 	// some constants
 	
     protected static final int NCE_PAGED_CV_TIMEOUT=20000;
@@ -389,7 +394,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage sendPacketMessage(NceTrafficController tc, byte[] bytes, int retries) {
     	// this command isn't supported by the NCE USB
     	if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE){
-    		log.error("attempt to send unsupported sendPacketMessage to NCE USB");
+    		log.error("attempt to send unsupported sendPacketMessage to NCE USB cmd: 0x" + Integer.toHexString(SENDn_BYTES_CMD + bytes.length));
 			return null;
     	}
 		if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
@@ -495,7 +500,22 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             return m;
         }
     }
-    
+
+    public static NceMessage createAccySignalMacroMessage(NceTrafficController tc, int op, int addr, int data) {
+        if (tc.getCommandOptions() < NceTrafficController.OPTION_2004)
+            log.error("Attempt to send NCE command to EPROM built before 2004");
+        NceMessage m = new NceMessage(5);
+        m.setBinary(true);
+        m.setReplyLen(1);
+        m.setTimeout(SHORT_TIMEOUT);
+        m.setOpCode(SEND_ACC_SIG_MACRO_CMD);
+        m.setElement(1, (addr >> 8) & 0xFF);
+        m.setElement(2, addr & 0xFF);
+        m.setElement(3, op);
+        m.setElement(4, data);
+        return m;
+    }
+
     static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
 }
 
