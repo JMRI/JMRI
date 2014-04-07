@@ -432,7 +432,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     
                 }
     
-                pickProgrammerMode(programming);
+                if (programming != null) pickProgrammerMode(programming);
                 
             } else {
                 log.error("Can't set programming mode, no programmer instance");
