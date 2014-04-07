@@ -78,14 +78,12 @@ what has not.
 HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> file):
 
 <p class=example>
-<code><pre>
-&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;
-&lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;
-&lt;!-- $Id$ --&gt;
-...
-&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;
-</pre></code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;<BR>
+&lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<BR>
+&lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;<BR>
+&lt;!-- $Id$ --&gt;<BR>
+...<BR>
+&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<BR>
 </p>
 
 <p>Don't mess with these lines; they describe the format of the file.
