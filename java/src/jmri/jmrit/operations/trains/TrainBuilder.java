@@ -2156,16 +2156,22 @@ public class TrainBuilder extends TrainCommon {
 		if (track != null)
 			serviceTrainDir = serviceTrainDir & track.getTrainDirections();
 
-		// is this a car going to alternate track?
-		if ((rld.getTrainDirection() & serviceTrainDir) > 0 && rs != null && Car.class.isInstance(rs)) {
+		// is this a car going to alternate track?  Check to see if direct move from alternate to FD track is possible
+		if ((rld.getTrainDirection() & serviceTrainDir) > 0 && rs != null && track != null
+				&& (track.getTrainDirections() & serviceTrainDir) > 0 && Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
-			if (car.getFinalDestinationTrack() != null
-					&& track == car.getFinalDestinationTrack().getAlternateTrack()
-					&& (rld.getTrainDirection() & serviceTrainDir & car.getFinalDestinationTrack().getTrainDirections()) == 0) {
+			if (car.getFinalDestinationTrack() != null && track == car.getFinalDestinationTrack().getAlternateTrack()
+					&& (track.getTrainDirections() & car.getFinalDestinationTrack().getTrainDirections()) == 0) {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
 						new Object[] { rs.toString(), rld.getTrainDirectionString() }));
-				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
-						new Object[] { car.getFinalDestinationTrack().getName() }));
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain4"),
+						new Object[] {
+								car.getFinalDestinationTrack().getName(),
+								formatStringToCommaSeparated(Setup.getDirectionStrings(car.getFinalDestinationTrack()
+										.getTrainDirections())),
+								car.getFinalDestinationTrack().getAlternateTrack().getName(),
+								formatStringToCommaSeparated(Setup.getDirectionStrings(car.getFinalDestinationTrack()
+										.getAlternateTrack().getTrainDirections())) }));
 				return false;
 			}
 		}
@@ -2637,6 +2643,17 @@ public class TrainBuilder extends TrainCommon {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
 							new Object[] { track.getLocation().getName(), track.getName(),
 									track.getAlternateTrack().getName() }));
+					// check to see if alternate and track are configured properly
+					if (!_train.isLocalSwitcher() && (track.getTrainDirections() & track.getAlternateTrack().getTrainDirections()) == 0) {
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildCanNotDropRsUsingTrain4"), new Object[] {
+								track.getName(),
+								formatStringToCommaSeparated(Setup.getDirectionStrings(track.getTrainDirections())),
+								track.getAlternateTrack().getName(),
+								formatStringToCommaSeparated(Setup.getDirectionStrings(track.getAlternateTrack()
+										.getTrainDirections())), }));
+						continue;
+					}
 				}
 			}
 

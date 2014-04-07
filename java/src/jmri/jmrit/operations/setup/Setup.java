@@ -144,10 +144,14 @@ public class Setup {
 	public static final String NO_DEST_TRACK = "NO_DEST_TRACK"; // NOI18N
 	public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
 
-	public static final String BLACK = Bundle.getMessage("Black"); // the supported pick up and set out colors
-	public static final String BLUE = Bundle.getMessage("Blue");
-	public static final String GREEN = Bundle.getMessage("Green");
+	// the supported colors for printed text
+	public static final String BLACK = Bundle.getMessage("Black"); 
 	public static final String RED = Bundle.getMessage("Red");
+	public static final String ORANGE = Bundle.getMessage("Orange");
+	public static final String YELLOW = Bundle.getMessage("Yellow");	
+	public static final String GREEN = Bundle.getMessage("Green");
+	public static final String BLUE = Bundle.getMessage("Blue");
+	public static final String GRAY = Bundle.getMessage("Gray");	
 
 	// Unit of Length
 	public static final String FEET = Bundle.getMessage("Feet");
@@ -1201,32 +1205,30 @@ public class Setup {
 	}
 
 	public static Color getPickupColor() {
-		if (pickupColor.equals(BLUE))
-			return Color.blue;
-		if (pickupColor.equals(GREEN))
-			return Color.green;
-		if (pickupColor.equals(RED))
-			return Color.red;
-		return Color.black; // default
+		return getColor(pickupColor);
 	}
 
 	public static Color getDropColor() {
-		if (dropColor.equals(BLUE))
-			return Color.blue;
-		if (dropColor.equals(GREEN))
-			return Color.green;
-		if (dropColor.equals(RED))
-			return Color.red;
-		return Color.black; // default
+		return getColor(dropColor);
 	}
 
 	public static Color getLocalColor() {
-		if (localColor.equals(BLUE))
+		return getColor(localColor);
+	}
+	
+	private static Color getColor(String color) {
+		if (color.equals(BLUE))
 			return Color.blue;
-		if (localColor.equals(GREEN))
+		if (color.equals(GREEN))
 			return Color.green;
-		if (localColor.equals(RED))
+		if (color.equals(RED))
 			return Color.red;
+		if (color.equals(ORANGE))
+			return Color.orange;
+		if (color.equals(GRAY))
+			return Color.gray;
+		if (color.equals(YELLOW))
+			return Color.yellow;
 		return Color.black; // default
 	}
 
@@ -1374,9 +1376,12 @@ public class Setup {
 	public static JComboBox getPrintColorComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem(BLACK);
-		box.addItem(BLUE);
-		box.addItem(GREEN);
 		box.addItem(RED);
+		box.addItem(ORANGE);
+		box.addItem(YELLOW);
+		box.addItem(GREEN);
+		box.addItem(BLUE);
+		box.addItem(GRAY);	
 		return box;
 	}
 
@@ -1480,6 +1485,27 @@ public class Setup {
 		default:
 			return "unknown"; // NOI18N
 		}
+	}
+	
+	/**
+	 * Converts binary direction to a set of String directions
+	 * 
+	 * @param directions
+	 *            EAST, WEST, NORTH, SOUTH
+	 * @return String[] representation of a set of directions
+	 */
+	public static String[] getDirectionStrings(int directions) {
+		String[] dir = new String[4];
+		int i = 0;
+		if ((directions & EAST) > 0)
+			dir[i++] = EAST_DIR;
+		if ((directions & WEST) > 0)
+			dir[i++] = WEST_DIR;
+		if ((directions & NORTH) > 0)
+			dir[i++] = NORTH_DIR;
+		if ((directions & SOUTH) > 0)
+			dir[i++] = SOUTH_DIR;		
+		return dir;
 	}
 
 	/**

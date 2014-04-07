@@ -1219,8 +1219,9 @@ public class TrainCommon {
 	 */
 	public static String formatStringToCommaSeparated(String[] array) {
 		StringBuffer sbuf = new StringBuffer("");
-		for (int i = 0; i < array.length; i++) {
-			sbuf = sbuf.append(array[i] + ", ");
+		for (String s : array) {
+			if (s != null)
+				sbuf = sbuf.append(s + ", ");
 		}
 		if (sbuf.length() > 2)
 			sbuf.setLength(sbuf.length() - 2); // remove trailing separators
