@@ -12,61 +12,66 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - for Unified Software -->
-
-
-<pane name="Sound Options" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<column>
-		<row>
-			<column>
-				<label label="   "/>
-				<label label="Must have JMRI 3.3.6 or later."/>
-				<label label="   "/>
-				<label label="******************************************************************"/>
-				<label label="* Programming order is critical, must write full sheet only, do NOT write changes. *"/>
-				<label label="******************************************************************"/>
-				<label label="   "/>
-			</column>
-		</row>
-		<row>
-			<column>
-				<display item="Random Sound 1 enable" format="checkbox"/>
-				<display item="Random Sound 2 enable" format="checkbox" />
-				<display item="Random Sound 3 enable" format="checkbox" />
-				<display item="Random Sound 4 enable" format="checkbox" />
-				<display item="Cam enable early" format="checkbox" />
-				<display item="Rod clank enable" format="checkbox" />
-				<display item="Idling sound enable" format="checkbox" />
-				<display item="Layout sound enable" format="checkbox" />
-				<display item="Forward whistles enable" format="checkbox" />
-				<display item="Reverse whistles enable" format="checkbox" />
-				<display item="Stop whistles enable" format="checkbox" />
-				<display item="Direction change enable" format="checkbox" />
-			</column>
-			<column>
-				<display item="Cam enable" format="checkbox" />
-				<display item="Mute on startup" format="checkbox" />
-				<display item="Articulated chuff descync" format="checkbox" />
-				<display item="Rotate Whistle Audio Feedback" format="checkbox" />
-				<display item="Light Mode/Sound Mode Audio Feedback" format="checkbox" />
-				<display item="Audio Auto Shutoff Timer" format="checkbox" />
-			</column>
-		</row>
-		<row>
-			<column>
-				<label label="   "/>
-				<display item="Default Whistle Set Upper" label=""/>
-				<display item="Default Whistle Set" />
-			</column>
-		</row>
-		<row>
-			<column>
-				<label label="   "/>
-				<display item="Steam locomotive upper" label=""/>
-				<display item="Steam locomotive type" />
-			</column>
-		</row>
-	</column>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Sound Options" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <label label="   "/>
+        <label label="Must have JMRI 3.3.6 or later.">
+          <label xml:lang="it">Must have JMRI 3.3.6 or later.</label>
+        </label>
+        <label label="   "/>
+        <label label="******************************************************************">
+          <label xml:lang="it">******************************************************************</label>
+        </label>
+        <label label="* Programming order is critical, must write full sheet only, do NOT write changes. *">
+          <label xml:lang="it">* Programming order is critical, must write full sheet only, do NOT write changes. *</label>
+        </label>
+        <label label="******************************************************************">
+          <label xml:lang="it">******************************************************************</label>
+        </label>
+        <label label="   "/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Random Sound 1 enable" format="checkbox"/>
+        <display item="Random Sound 2 enable" format="checkbox"/>
+        <display item="Random Sound 3 enable" format="checkbox"/>
+        <display item="Random Sound 4 enable" format="checkbox"/>
+        <display item="Cam enable early" format="checkbox"/>
+        <display item="Rod clank enable" format="checkbox"/>
+        <display item="Idling sound enable" format="checkbox"/>
+        <display item="Layout sound enable" format="checkbox"/>
+        <display item="Forward whistles enable" format="checkbox"/>
+        <display item="Reverse whistles enable" format="checkbox"/>
+        <display item="Stop whistles enable" format="checkbox"/>
+        <display item="Direction change enable" format="checkbox"/>
+      </column>
+      <column>
+        <display item="Cam enable" format="checkbox"/>
+        <display item="Mute on startup" format="checkbox"/>
+        <display item="Articulated chuff descync" format="checkbox"/>
+        <display item="Rotate Whistle Audio Feedback" format="checkbox"/>
+        <display item="Light Mode/Sound Mode Audio Feedback" format="checkbox"/>
+        <display item="Audio Auto Shutoff Timer" format="checkbox"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label="   "/>
+        <display item="Default Whistle Set Upper" label=""/>
+        <display item="Default Whistle Set"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label="   "/>
+        <display item="Steam locomotive upper" label=""/>
+        <display item="Steam locomotive type"/>
+      </column>
+    </row>
+  </column>
+  <name xml:lang="it">Sound Options</name>
 </pane>

@@ -12,30 +12,38 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - for Unified Software -->
-
-
-<pane name="Volume Level 0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<column>
-		<row>
-			<column>
-				<label label="   "/>
-				<label label="Must have JMRI 3.3.6 or later."/>
-				<label label="   "/>
-				<label label="To set individual sound volume to level 0"/>
-				<label label="Pick sound group (high byte) first then from list of sounds of just that group"/>
-				<label label="Then press Write full sheet"/>
-				<label label="Repeat for other sounds"/>
-				<label label="To change to different volume level, choose different Volume Level tab"/>
-				<label label="   "/>
-				<display item="Volume Level 0" />
-				<display item="Volume Level 0 0" label=""/>
-				<display item="Volume Level 0 1" label="" />
-				<display item="Volume Level 0 255" label="" />
-			</column>
-		</row>
-	</column>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Volume Level 0" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <label label="   "/>
+        <label label="Must have JMRI 3.3.6 or later.">
+          <label xml:lang="it">Must have JMRI 3.3.6 or later.</label>
+        </label>
+        <label label="   "/>
+        <label label="To set individual sound volume to level 0">
+          <label xml:lang="it">To set individual sound volume to level 0</label>
+        </label>
+        <label label="Pick sound group (high byte) first then from list of sounds of just that group">
+          <label xml:lang="it">Pick sound group (high byte) first then from list of sounds of just that group</label>
+        </label>
+        <label label="Then press Write full sheet">
+          <label xml:lang="it">Then press Write full sheet</label>
+        </label>
+        <label label="Repeat for other sounds">
+          <label xml:lang="it">Repeat for other sounds</label>
+        </label>
+        <label label="To change to different volume level, choose different Volume Level tab">
+          <label xml:lang="it">To change to different volume level, choose different Volume Level tab</label>
+        </label>
+        <label label="   "/>
+        <display item="Volume Level 0"/>
+        <display item="Volume Level 0 0" label=""/>
+        <display item="Volume Level 0 1" label=""/>
+        <display item="Volume Level 0 255" label=""/>
+      </column>
+    </row>
+  </column>
+  <name xml:lang="it">Volume Level 0</name>
 </pane>
-

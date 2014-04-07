@@ -17,9 +17,9 @@
 <!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<ienumChoice choice="Westinghouse 2 Stage" value="121" />
-	<ienumChoice choice="Westinghouse Cross Compound" value="122" />
-	<ienumChoice choice="Westinghouse Single Stage" value="123" />
-	<ienumChoice choice="Westinghouse Single Stage" value="125" />
-	<ienumChoice choice="Westinghouse Single Stage" value="124" />
+  <ienumChoice choice="Westinghouse 2 Stage" value="121"/>
+  <ienumChoice choice="Westinghouse Cross Compound" value="122"/>
+  <ienumChoice choice="Westinghouse Single Stage" value="123"/>
+  <ienumChoice choice="Westinghouse Single Stage" value="125"/>
+  <ienumChoice choice="Westinghouse Single Stage" value="124"/>
 </ienumVal>
