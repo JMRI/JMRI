@@ -156,7 +156,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
          }
         // shut down
-        abort();
+        _warrant.stopWarrant();
     }
 
     private void setStep(int step) {
@@ -368,7 +368,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.warn("Throttle release and cancel threw: "+e);
             }
         }
-        _warrant.stopWarrant();
         if (log.isDebugEnabled()) log.debug("Engineer shut down. warrant "+_warrant.getDisplayName());
     }
 

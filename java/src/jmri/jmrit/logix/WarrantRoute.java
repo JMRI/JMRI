@@ -292,17 +292,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             	OBlock block = o.getBlock();
             	blockBox.setText(block.getDisplayName());
              	setPathBox(block);
-                if (location==Location.DEST) {
-                	setPathName(o.getEntryName());           	
-                } else if (location==Location.ORIGIN){
-                	setPathName(o.getExitName());           	
-                }
                 setPortalBox(o);
                 if (location==Location.DEST) {
-                	setPortalName(o.getEntryPortal().getName());           	
+                	setPortalName(o.getEntryName());           	
                 } else if (location==Location.ORIGIN){
-                	setPortalName(o.getExitPortal().getName());           	
+                	setPortalName(o.getExitName());           	
                 }
+            	setPathName(o.getPathName());           	
         	}
          }
         protected BlockOrder getOrder() {

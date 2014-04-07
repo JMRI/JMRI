@@ -78,10 +78,17 @@ public class TrackerTableAction extends AbstractAction {
     	_frame.stopTrain(t);
     }
     static public void stopTrackerIn(OBlock block) {
-    	if (_frame==null) {
-        	_frame = new TableFrame();    		
-    	}
-    	_frame.stopTrackerIn(block);
+    	Iterator<Tracker> iter = _trackerList.iterator();
+    	while (iter.hasNext()) {
+    		Tracker t = iter.next();
+    		if (t.getBlocksOccupied().contains(block)) {
+    			if (_frame==null) {
+    				_frame = new TableFrame();    		
+    			}
+    			_frame.stopTrain(t);    			
+    			return;
+    		}
+    	}	    	
     }
     
     /**
@@ -590,17 +597,6 @@ public class TrackerTableAction extends AbstractAction {
 			}
 	    }
 	    
-	    protected void stopTrackerIn(OBlock block) {
-	    	Iterator<Tracker> iter = _trackerList.iterator();
-	    	while (iter.hasNext()) {
-	    		Tracker t = iter.next();
-	    		if (t.getBlocksOccupied().contains(block)) {
-	    			stopTrain(t);
-	    			return;
-	    		}
-	    	}	    	
-	    }
-	    		
 	    protected void stopTrain(Tracker t) {
 	    	List<OBlock> list = t.getRange();
 			removeBlockListeners(list, t);

@@ -266,7 +266,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     /**
      * This block shares a turnout (e.g. a crossover) with another block.  Typically
-     *  one JMRI turnout driving two switches where each switch is in a digfferent block.
+     *  one JMRI turnout driving two switches where each switch is in a different block.
      * @param key a path in this block
      * @param block another block
      * @param path a path in that block sharing a turnout with key
@@ -314,7 +314,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 			return true;
     	}
     }
-    protected String checkSharedTO() {
+    private String checkSharedTO() {
     	List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);
     	if (blockList!=null) {
     		Iterator<HashMap<OBlock, List<OPath>>> iter = blockList.iterator();
