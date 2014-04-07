@@ -592,7 +592,7 @@
     trains or you want to build and run your train in any order. The recommendation is not to use
     train reset in aggressive mode once you've built or terminated additional trains. And if you do
     reset a train, there isn't a guarantee that building the train again will pull the same cars,
-    each train build can be different depending on what the work the other built trains do.</P>
+    each train build can be different depending on the car movements created by the other trains.</P>
 
    <P>Note that once you've built a train, the build option can not be changed until all trains
     are terminated or reset.</P>
