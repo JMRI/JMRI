@@ -200,6 +200,9 @@ public class ActiveTrain {
 		mStarted = true;
 		mStatus = RUNNING;
 		setStatus(WAITING);
+        if(mAutoActiveTrain!=null && DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALMAST){
+            mAutoActiveTrain.setupNewCurrentSignal();
+        }
 	}
     public jmri.Transit getTransit() { 
 		return mTransit; 
