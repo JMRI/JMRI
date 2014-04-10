@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -154,7 +155,10 @@ public class Setup {
 	public static final String FEET = Bundle.getMessage("Feet");
 	public static final String METER = Bundle.getMessage("Meter");
 
-        public static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, LOCATION, DESTINATION, COMMENT};
+        public static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL,
+            OWNER, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE};
+        public static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER,
+            LOCATION, DESTINATION, COMMENT};
 
 	private static int scale = HO_SCALE; // Default scale
 	private static int ratio = HO_RATIO;
@@ -322,7 +326,7 @@ public class Setup {
 		if (enabled && !autoBackup)
 			try {
 				new AutoBackup().autoBackup();
-			} catch (Exception ex) {
+			} catch (IOException ex) {
 				log.debug("Autobackup after setting AutoBackup flag true", ex);
 			}
 
@@ -1398,24 +1402,9 @@ public class Setup {
 	public static JComboBox getCarMessageComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
-		box.addItem(ROAD);
-		box.addItem(NUMBER);
-		box.addItem(TYPE);
-		box.addItem(LENGTH);
-		box.addItem(LOAD);
-		box.addItem(HAZARDOUS);
-		box.addItem(COLOR);
-		box.addItem(KERNEL);
-		box.addItem(OWNER);
-		box.addItem(LOCATION);
-		box.addItem(DESTINATION);
-		box.addItem(DEST_TRACK);
-		box.addItem(FINAL_DEST);
-		box.addItem(FINAL_DEST_TRACK);
-		box.addItem(COMMENT);
-		box.addItem(DROP_COMMENT);
-		box.addItem(PICKUP_COMMENT);
-		box.addItem(RWE);
+                for (String attribute : Setup.carAttributes) {
+                    box.addItem(attribute);
+                }
 		if (isTabEnabled())
 			box.addItem(TAB);
 		return box;
