@@ -258,7 +258,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     }
     
     private void convertIcons() {
-        _parent.convertIcons();
+        _parent.convertIcons(_parent._editor.getSelectionGroup());
         this.toFront();
     }
 
