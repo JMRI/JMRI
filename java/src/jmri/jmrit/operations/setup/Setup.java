@@ -3,14 +3,11 @@ package jmri.jmrit.operations.setup;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JComboBox;
-
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.web.server.WebServerManager;
-
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,6 +153,8 @@ public class Setup {
 	// Unit of Length
 	public static final String FEET = Bundle.getMessage("Feet");
 	public static final String METER = Bundle.getMessage("Meter");
+
+        public static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, LOCATION, DESTINATION, COMMENT};
 
 	private static int scale = HO_SCALE; // Default scale
 	private static int ratio = HO_RATIO;
@@ -1388,16 +1387,9 @@ public class Setup {
 	public static JComboBox getEngineMessageComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
-		box.addItem(ROAD);
-		box.addItem(NUMBER);
-		box.addItem(TYPE);
-		box.addItem(MODEL);
-		box.addItem(LENGTH);
-		box.addItem(CONSIST);
-		box.addItem(OWNER);
-		box.addItem(LOCATION);
-		box.addItem(DESTINATION);
-		box.addItem(COMMENT);
+                for (String attribute : Setup.engineAttributes) {
+                    box.addItem(attribute);
+                }
 		if (isTabEnabled())
 			box.addItem(TAB);
 		return box;
