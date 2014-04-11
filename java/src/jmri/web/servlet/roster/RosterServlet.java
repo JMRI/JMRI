@@ -214,12 +214,12 @@ public class RosterServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @param list A list of {@link jmri.jmrit.roster.RosterEntry} objects
+     * @param filter
+     * @param groups
      * @throws ServletException
      * @throws IOException
      */
     void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
-        List<RosterEntry> list = null;
         ServletUtil.getHelper().setNonCachingHeaders(response);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         if (JSON.JSON.equals(request.getParameter("format"))) { // NOI18N
