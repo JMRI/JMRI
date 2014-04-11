@@ -171,7 +171,7 @@ public class OperationsServlet extends HttpServlet {
             }
         } else {
             data = this.mapper.createObjectNode();
-            ((ObjectNode) data).put("format", (String) request.getParameter("format"));
+            ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
             if (!data.path(LOCATION).isMissingNode()) {
