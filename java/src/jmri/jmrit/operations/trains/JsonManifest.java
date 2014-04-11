@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import jmri.jmris.json.JSON;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonManifest extends TrainCommon {
 
-    protected final Properties strings = new Properties();
     protected final Locale locale = Locale.getDefault();
     protected final Train train;
     protected String resourcePrefix;
@@ -232,6 +231,10 @@ public class JsonManifest extends TrainCommon {
         }
         ObjectNode node = this.mapper.createObjectNode();
         for (String attribute : Setup.carAttributes) {
+            if (this.isComplexCarAttribute(attribute)) {
+                node.put(attribute, this.getComplexCarAttribute(car, attribute));
+                continue;
+            }
             node.put(attribute, getCarAttribute(car, attribute, PICKUP, !LOCAL));
         }
         log.debug("Picking up car {}", node);
@@ -241,6 +244,10 @@ public class JsonManifest extends TrainCommon {
     public ObjectNode jsonDropCar(Car car, boolean isLocal) {
         ObjectNode node = this.mapper.createObjectNode();
         for (String attribute : Setup.carAttributes) {
+            if (this.isComplexCarAttribute(attribute)) {
+                node.put(attribute, this.getComplexCarAttribute(car, attribute));
+                continue;
+            }
             node.put(attribute, getCarAttribute(car, attribute, !PICKUP, isLocal));
         }
         node.put("isLocal", isLocal);
@@ -261,8 +268,12 @@ public class JsonManifest extends TrainCommon {
 
     private ObjectNode addSearchForCar(Car car) {
         ObjectNode node = this.mapper.createObjectNode();
-        for (String string : Setup.carAttributes) {
-            node.put(string, getCarAttribute(car, string, !PICKUP, !LOCAL));
+        for (String attribute : Setup.carAttributes) {
+            if (this.isComplexCarAttribute(attribute)) {
+                node.put(attribute, this.getComplexCarAttribute(car, attribute));
+                continue;
+            }
+            node.put(attribute, getCarAttribute(car, attribute, !PICKUP, !LOCAL));
         }
         return node;
     }
@@ -295,6 +306,26 @@ public class JsonManifest extends TrainCommon {
         return node;
     }
 
+    private boolean isComplexCarAttribute(String attribute) {
+        return (attribute.equals(Setup.RWE) || attribute.equals(Setup.FINAL_DEST_TRACK));
+    }
+
+    private JsonNode getComplexCarAttribute(Car car, String attribute) {
+        ObjectNode node = this.mapper.createObjectNode();
+        if (attribute.equals(Setup.RWE)) {
+            if (!car.getReturnWhenEmptyDestName().equals("")) {
+                node.put("returnWhenEmptyDestinationName", car.getReturnWhenEmptyDestinationName());
+                node.put("returnWhenEmptyDestTrackName", car.getReturnWhenEmptyDestTrackName());
+            }
+        } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
+            if (!car.getFinalDestinationName().equals("")) {
+                node.put("finalDestinationName", car.getFinalDestinationName());
+                node.put("finalDestinationTrackName", car.getFinalDestinationTrackName());
+            }
+        }
+        return node;
+    }
+
     private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.LOAD)) {
             return (car.isCaboose() || car.isPassenger()) ? "" : StringEscapeUtils.escapeHtml4(car.getLoadName()); // NOI18N
@@ -306,26 +337,8 @@ public class JsonManifest extends TrainCommon {
             return car.getPickupComment();
         } else if (attribute.equals(Setup.KERNEL)) {
             return car.getKernelName();
-        } else if (attribute.equals(Setup.RWE)) {
-            if (!car.getReturnWhenEmptyDestName().equals("")) {
-                return String.format(locale, strings.getProperty("RWE"),
-                        StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestinationName())),
-                        StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestTrackName())));
-            }
-            return ""; // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST)) {
-            if (!car.getFinalDestinationName().equals("")) {
-                return String.format(locale, strings.getProperty("FinalDestination"),
-                        StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())));
-            }
-            return "";
-        } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
-            if (!car.getFinalDestinationName().equals("")) {
-                return String.format(locale, strings.getProperty("FinalDestinationWithTrack"),
-                        StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())),
-                        StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationTrackName())));
-            }
-            return "";
+            return car.getFinalDestinationName();
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
