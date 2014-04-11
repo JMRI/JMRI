@@ -85,7 +85,8 @@ public class TrainCommon {
 	 * @param rl
 	 * @param orientation
 	 */
-	protected void pickupEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl, String orientation) {
+	protected void pickupEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl,
+			String orientation) {
 		for (int i = 0; i < engineList.size(); i++) {
 			Engine engine = (Engine) engineList.get(i);
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
@@ -571,8 +572,7 @@ public class TrainCommon {
 		dropCar(fileOut, car, buf, messageFormat, isLocal, Setup.getManifestOrientation());
 	}
 
-	public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
-			boolean isManifest) {
+	public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
 		int count = countPickupUtilityCars(carList, car, rl, rld, isManifest);
 		if (count == 0)
 			return null;
@@ -586,7 +586,7 @@ public class TrainCommon {
 		}
 		return buf.toString();
 	}
-	
+
 	public int countPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
 			boolean isManifest) {
 		// list utility cars by type, track, length, and load
@@ -618,7 +618,7 @@ public class TrainCommon {
 		}
 		return buf.toString();
 	}
-	
+
 	public int countSetoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
 		// list utility cars by type, track, length, and load
 		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
@@ -994,19 +994,25 @@ public class TrainCommon {
 			return " " + tabString(car.getKernelName(), Control.max_len_string_attibute);
 		else if (attribute.equals(Setup.RWE)) {
 			if (!car.getReturnWhenEmptyDestName().equals(""))
-				return " " + Bundle.getMessage("RWE") + " " + splitString(car.getReturnWhenEmptyDestinationName())
-						+ " (" + splitString(car.getReturnWhenEmptyDestTrackName()) + ")";
+				return " "
+						+ tabString(Bundle.getMessage("RWE") + " "
+								+ splitString(car.getReturnWhenEmptyDestinationName()) + " ,"
+								+ splitString(car.getReturnWhenEmptyDestTrackName()),
+								Control.max_len_string_location_name + Control.max_len_string_track_name);
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " " + TrainManifestText.getStringFinalDestination() + " "
-						+ splitString(car.getFinalDestinationName());
+				return " "
+						+ tabString(TrainManifestText.getStringFinalDestination() + " "
+								+ splitString(car.getFinalDestinationName()), Control.max_len_string_location_name);
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " " + TrainManifestText.getStringFinalDestination() + " "
-						+ splitString(car.getFinalDestinationName()) + ", "
-						+ splitString(car.getFinalDestinationTrackName());
+				return " "
+						+ tabString(TrainManifestText.getStringFinalDestination() + " "
+								+ splitString(car.getFinalDestinationName()) + ", "
+								+ splitString(car.getFinalDestinationTrackName()), Control.max_len_string_location_name
+								+ Control.max_len_string_track_name);
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
@@ -1020,8 +1026,7 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.ROAD))
 			return " " + tabString(rs.getRoadName(), CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)) {
-			String[] type = rs.getTypeName().split("-"); // second half of string
-															// can be anything
+			String[] type = rs.getTypeName().split("-"); // second half of string can be anything
 			return " " + tabString(type[0], CarTypes.instance().getCurMaxNameLength());
 		} else if (attribute.equals(Setup.LENGTH))
 			return " " + tabString(rs.getLength() + LENGTHABV, CarLengths.instance().getCurMaxNameLength());
@@ -1029,20 +1034,30 @@ public class TrainCommon {
 			return " " + tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
 			if (rs.getTrack() != null)
-				return " " + TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName());
+				return " "
+						+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName()),
+								Control.max_len_string_track_name);
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal)
-			return " " + TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName());
+			return " "
+					+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName()),
+							Control.max_len_string_location_name);
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
-				return " " + TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName());
+				return " "
+						+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()),
+								Control.max_len_string_location_name);
 			else
 				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
 		} else if (attribute.equals(Setup.DESTINATION) && !isPickup)
-			return " " + TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName());
+			return " "
+					+ tabString(TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName()),
+							Control.max_len_string_track_name);
 		else if (attribute.equals(Setup.DEST_TRACK))
-			return " " + TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()) + ", "
-					+ splitString(rs.getDestinationTrackName());
+			return " "
+					+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()) + ", "
+							+ splitString(rs.getDestinationTrackName()), Control.max_len_string_location_name
+							+ Control.max_len_string_track_name);
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
@@ -1062,7 +1077,6 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)
 				|| attribute.equals(Setup.NO_LOCATION))
 			return "";
-		// tab?
 		else if (attribute.equals(Setup.TAB))
 			return " " + tabString("", Setup.getTabLength());
 		return " (" + Bundle.getMessage("ErrorPrintOptions") + ") "; // maybe user changed locale
@@ -1108,10 +1122,10 @@ public class TrainCommon {
 				+ h + ":" + m + " " + AM_PM;
 		return date;
 	}
-	
+
 	/**
-	 * Returns a double in minutes representing the string date. Date string has to be in the order: Month / day / year hour:minute
-	 * AM_PM
+	 * Returns a double in minutes representing the string date. Date string has to be in the order: Month / day / year
+	 * hour:minute AM_PM
 	 * 
 	 * @param date
 	 * @return double in minutes
@@ -1119,30 +1133,30 @@ public class TrainCommon {
 	public double convertStringDateToDouble(String date) {
 		double dateToDouble = 0;
 		try {
-//			log.debug("Convert date: " + date);
+			// log.debug("Convert date: " + date);
 			String[] breakdownDate = date.split("/");
-//			log.debug("Month: " + breakdownDate[0]);
+			// log.debug("Month: " + breakdownDate[0]);
 			// convert month to minutes
-			dateToDouble += 60*24*31*Integer.parseInt(breakdownDate[0]);
-//			log.debug("Day: " + breakdownDate[1]);
-			dateToDouble += 60*24*Integer.parseInt(breakdownDate[1]);
+			dateToDouble += 60 * 24 * 31 * Integer.parseInt(breakdownDate[0]);
+			// log.debug("Day: " + breakdownDate[1]);
+			dateToDouble += 60 * 24 * Integer.parseInt(breakdownDate[1]);
 			String[] breakDownYear = breakdownDate[2].split(" ");
-//			log.debug("Year: " + breakDownYear[0]);
-			dateToDouble += 60*24*365*Integer.parseInt(breakDownYear[0]);
+			// log.debug("Year: " + breakDownYear[0]);
+			dateToDouble += 60 * 24 * 365 * Integer.parseInt(breakDownYear[0]);
 			String[] breakDownTime = breakDownYear[1].split(":");
-//			log.debug("Hour: " + breakDownTime[0]);
-			dateToDouble += 60*Integer.parseInt(breakDownTime[0]);
-//			log.debug("Minute: " + breakDownTime[1]);
+			// log.debug("Hour: " + breakDownTime[0]);
+			dateToDouble += 60 * Integer.parseInt(breakDownTime[0]);
+			// log.debug("Minute: " + breakDownTime[1]);
 			dateToDouble += Integer.parseInt(breakDownTime[1]);
 			if (breakDownYear.length > 2) {
 				log.debug("AM_PM: " + breakDownYear[2]);
 				if (breakDownYear[2].equals(Bundle.getMessage("PM")))
-					dateToDouble += 60*12;
+					dateToDouble += 60 * 12;
 			}
 		} catch (NumberFormatException e) {
 			log.error("Not able to convert date: " + date + " to double");
 		}
-//		log.debug("Double: "+dateToDouble);
+		// log.debug("Double: "+dateToDouble);
 		return dateToDouble;
 	}
 
@@ -1229,4 +1243,4 @@ public class TrainCommon {
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(TrainCommon.class.getName());
-    }
+}
