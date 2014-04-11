@@ -1194,7 +1194,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null)+", name= "+_trainNameBox.getText());
+        if (log.isDebugEnabled()) log.debug("warrant saved _train "+_train+", name= "+_trainNameBox.getText());
 
         if (_create) {
             InstanceManager.getDefault(WarrantManager.class).register(_warrant);
@@ -1220,7 +1220,6 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void close() {
-    	stopRunTrain();
     	WarrantTableAction.closeWarrantFrame(this);    		
     }
 

@@ -458,9 +458,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         key = "reRetry";
                         break;
                     case Warrant.ABORT:
-                    	if (_engineer.getCurrentCommandIndex()>=_commands.size()-1) {
-                    		_engineer = null;
-                    		return Bundle.getMessage("endOfScript");
+                    	if (_engineer!=null) {
+                        	if (_engineer.getCurrentCommandIndex()>=_commands.size()-1) {
+                        		_engineer = null;
+                        		return Bundle.getMessage("endOfScript");
+                        	}
                     	}
                         return Bundle.getMessage("Aborted", _trainName);
                     case Warrant.WAIT_FOR_CLEAR:
@@ -521,7 +523,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _student.dispose();
             _student = null;
         }
-        if (_engineer!=null && _engineer.getRunState() != Warrant.ABORT) {
+        if (_engineer!=null && _engineer.getRunState() != ABORT) {
         	_engineer.abort();
         	_engineer = null;
         }

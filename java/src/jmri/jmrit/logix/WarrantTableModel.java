@@ -408,7 +408,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 }
                 break;
             case EDIT_COLUMN:
-                WarrantTableAction.openWarrantFrame(w.getDisplayName());
+                openWarrantFrame(w);
                 break;
             case DELETE_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -424,6 +424,32 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             _frame.setStatusText(msg, Color.red, true);
         }
         fireTableRowsUpdated(row, row);
+    }
+    
+    private void openWarrantFrame(Warrant warrant) {
+    	if (WarrantTableAction._openFrame!=null) {
+    		WarrantTableAction._openFrame.dispose();
+    	}
+    	WarrantTableAction._openFrame = null;
+        for (int i=0; i<_warList.size(); i++) {
+        	if (warrant.equals(_warList.get(i)))  {
+            	WarrantTableAction._openFrame = new WarrantFrame(warrant);
+            	break;
+            }
+        }
+        if (WarrantTableAction._openFrame ==null) {
+            for (int i=0; i<_warNX.size(); i++) {
+            	if (warrant.equals(_warList.get(i)))  {
+                	WarrantTableAction._openFrame = new WarrantFrame(warrant);
+                	break;
+                }
+            }
+        if (WarrantTableAction._openFrame!=null) {
+        	WarrantTableAction._openFrame = new WarrantFrame(warrant);
+            WarrantTableAction._openFrame.setVisible(true);
+            WarrantTableAction._openFrame.toFront();        	
+            }
+        }
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {

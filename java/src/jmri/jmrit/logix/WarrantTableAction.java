@@ -66,7 +66,7 @@ public class WarrantTableAction extends AbstractAction {
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
-    private static WarrantFrame _openFrame;
+    protected static WarrantFrame _openFrame;
     protected static NXFrame _nxFrame;
     private static OpSessionLog	_log;
     static ShutDownTask 	_shutDownTask;
