@@ -595,6 +595,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         		 _dccAddress = address;
         	 }
         }
+        // set mode before setStoppingBlock and callback to notifyThrottleFound are called
+        _runMode = mode;
         getBlockAt(0)._entryTime = System.currentTimeMillis();        	
          _tempRunBlind = runBlind;
         if (!_delayStart) {
@@ -1155,24 +1157,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         		_stoppingBlock.getDisplayName()+"\"");
     }
 
-    /**
-     * check that it is safe to go into the next block
-     * 
-     * @return true if OK to move
-     */
-    private void retryBlocKWaiting() {
-    	if (_stoppingBlock!=null && (_stoppingBlock.getState() & OBlock.UNOCCUPIED)==0) {
-    		checkStoppingBlock();
-    	}
-    	if (_shareTOBlock!=null && (_shareTOBlock.getState() & OBlock.UNOCCUPIED)==0) {
-    		checkShareTOBlock();
-    	}
-    	if (_stoppingBlock==null && _shareTOBlock==null) {
-            // notify engineer of control point
-            _engineer.rampSpeedTo(getNextSpeed(), 0);
-            return;
-    	}
-    }
     private boolean moveIntoNextBlock() {
         OBlock block = getBlockAt(_idxCurrentOrder);
         if ((block.getState() & OBlock.OCCUPIED)==0) {
@@ -1342,20 +1326,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	 */ 
             firePropertyChange("blockRelease", null, block);
             for (int i=idx; i>-1; i--) {
+            	boolean dealloc = true;
             	OBlock prevBlock = getBlockAt(i);
-        		boolean dealloc = true;
-        		for (int j=idx+1; j<_orders.size(); j++) {
-        			if (!prevBlock.equals(getBlockAt(j))) {
-                    	prevBlock.setValue(null);
-                    	prevBlock.deAllocate(this);
-//       				dealloc = false;
- //       				break;
+        		for (int j=i+1; j<_orders.size(); j++) {
+        			if (prevBlock.equals(getBlockAt(j))) {
+        				dealloc = false;
         			}
         		}
-/*        		if (dealloc) {
-                	prevBlock.deAllocate(this);
+        		if (dealloc) {
                 	prevBlock.setValue(null);
-        		}*/
+                	prevBlock.deAllocate(this);        			
+        		}
             }
         } else if (idx==_idxCurrentOrder) {
             // Train not visible if current block goes inactive

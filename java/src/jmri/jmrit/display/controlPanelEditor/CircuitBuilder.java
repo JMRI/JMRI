@@ -1108,7 +1108,7 @@ public class CircuitBuilder  {
     	for (int i=0; i<iconList.size(); i++) {
     		list.add(iconList.get(i));
     	}
-        if (list!=null && list.size()>0) {
+        if (list.size()>0) {
             TargetPane targetPane = (TargetPane)_editor.getTargetPanel();           
             targetPane.setHighlightColor(_highlightColor);
             
