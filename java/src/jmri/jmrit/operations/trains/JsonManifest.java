@@ -192,7 +192,6 @@ public class JsonManifest extends TrainCommon {
                     continue;
                 }
                 if (car.getRouteDestination() == location && car.getDestinationTrack() != null) {
-                    boolean local = isLocalMove(car);
                     if (car.isUtility()) {
                         setouts.add(setoutUtilityCars(carList, car, location, isManifest));
                     } else {
