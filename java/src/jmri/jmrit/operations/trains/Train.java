@@ -2704,19 +2704,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if print successful.
 	 */
 	public boolean printManifest(boolean isPreview) {
-		if (isModified()) {
-			new TrainManifest(this);
-                        try {
-                            new JsonManifest(this).build();
-                        } catch (IOException ex) {
-                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-                        }
-			if (Setup.isGenerateCsvManifestEnabled())
-				new TrainCsvManifest(this);
-		}
-		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
-		if (!file.exists()) {
-			log.warn("Manifest file missing for train " + getName());
+		File file = createCSVManifestFile();
+		if (file == null || !file.exists()) {
+			log.warn("Manifest file missing for train {}", getName());
 			return false;
 		}
 		if (isPreview && Setup.isManifestEditorEnabled()) {
@@ -2739,44 +2729,21 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	public boolean openFile() {
-		if (isModified()) {
-			new TrainManifest(this);
-                        try {
-                            new JsonManifest(this).build();
-                        } catch (IOException ex) {
-                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-                        }
-			if (Setup.isGenerateCsvManifestEnabled())
-				new TrainCsvManifest(this);
-		}
-		File file = TrainManagerXml.instance().getTrainCsvManifestFile(getName());
-		if (!file.exists()) {
-			log.warn("CSV manifest file missing for train " + getName());
+		File file = createCSVManifestFile();
+		if (file == null || !file.exists()) {
+			log.warn("CSV manifest file missing for train {}", getName());
 			return false;
 		}
-
 		TrainUtilities.openDesktop(file);
-
 		return true;
 	}
 
 	public boolean runFile() {
-		if (isModified()) {
-			new TrainManifest(this);
-                        try {
-                            new JsonManifest(this).build();
-                        } catch (IOException ex) {
-                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-                        }
-			if (Setup.isGenerateCsvManifestEnabled())
-				new TrainCsvManifest(this);
-		}
-		File file = TrainManagerXml.instance().getTrainCsvManifestFile(getName());
-		if (!file.exists()) {
-			log.warn("CSV manifest file missing for train " + getName());
+		File file = createCSVManifestFile();
+		if (file == null || !file.exists()) {
+			log.warn("CSV manifest file missing for train {}", getName());
 			return false;
 		}
-
 		// Set up to process the CSV file by the external Manifest program
 		TrainCustomManifest.addCVSFile(file);
 		if (!TrainCustomManifest.process()) {
@@ -2788,18 +2755,17 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 			return false;
 		}
-
 		return true;
 	}
 
 	public File createCSVManifestFile() {
 		if (isModified()) {
 			new TrainManifest(this);
-                        try {
-                            new JsonManifest(this).build();
-                        } catch (IOException ex) {
-                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-                        }
+			try {
+				new JsonManifest(this).build();
+			} catch (IOException ex) {
+				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+			}
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
@@ -2808,7 +2774,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.warn("CSV manifest file was not created for train " + getName());
 			return null;
 		}
-
 		return file;
 	}
 
