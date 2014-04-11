@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -2705,6 +2706,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean printManifest(boolean isPreview) {
 		if (isModified()) {
 			new TrainManifest(this);
+                        try {
+                            new JsonManifest(this).build();
+                        } catch (IOException ex) {
+                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                        }
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
@@ -2735,6 +2741,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean openFile() {
 		if (isModified()) {
 			new TrainManifest(this);
+                        try {
+                            new JsonManifest(this).build();
+                        } catch (IOException ex) {
+                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                        }
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
@@ -2752,6 +2763,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean runFile() {
 		if (isModified()) {
 			new TrainManifest(this);
+                        try {
+                            new JsonManifest(this).build();
+                        } catch (IOException ex) {
+                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                        }
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
@@ -2779,6 +2795,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public File createCSVManifestFile() {
 		if (isModified()) {
 			new TrainManifest(this);
+                        try {
+                            new JsonManifest(this).build();
+                        } catch (IOException ex) {
+                            log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                        }
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}

@@ -2,18 +2,17 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
-
+import jmri.jmrit.operations.OperationsManager;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.util.FileUtil;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores trains using xml files. Also stores various train parameters managed by the TrainManager.
@@ -167,7 +166,19 @@ public class TrainManagerXml extends OperationsXml {
 				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
-	/**
+        public File getJsonManifestFile(String name) {
+            return new File(defaultJsonManifestFilename(name));
+        }
+
+        public File createJsonManifestFile(String name) {
+            return createFile(defaultJsonManifestFilename(name), false); // don't backup
+        }
+
+        public String defaultJsonManifestFilename(String name) {
+            return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + ".json"; // NOI18N
+        }
+
+        /**
 	 * Store the switch list for a location
 	 */
 	public File createSwitchListFile(String name) {

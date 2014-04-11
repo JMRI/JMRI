@@ -538,6 +538,12 @@ public class TrainBuilder extends TrainCommon {
 
 		// now make manifest
 		new TrainManifest(_train);
+                try {
+                    new JsonManifest(_train).build();
+                } catch (IOException ex) {
+                    log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
+                    throw new BuildFailedException(ex);
+                }
 		if (Setup.isGenerateCsvManifestEnabled())
 			new TrainCsvManifest(_train);
 		// now create and place train icon
@@ -4019,6 +4025,10 @@ class BuildFailedException extends Exception {
 		super(s);
 	}
 
+        public BuildFailedException(Exception ex) {
+            super(ex);
+        }
+        
 	public String getExceptionType() {
 		return type;
 	}
