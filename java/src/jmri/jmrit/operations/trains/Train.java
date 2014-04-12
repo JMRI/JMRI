@@ -2704,8 +2704,18 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if print successful.
 	 */
 	public boolean printManifest(boolean isPreview) {
-		File file = createCSVManifestFile();
-		if (file == null || !file.exists()) {
+		if (isModified()) {
+			new TrainManifest(this);
+			try {
+				new JsonManifest(this).build();
+			} catch (IOException ex) {
+				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+			}
+			if (Setup.isGenerateCsvManifestEnabled())
+				new TrainCsvManifest(this);
+		}
+		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
+		if (!file.exists()) {
 			log.warn("Manifest file missing for train {}", getName());
 			return false;
 		}
