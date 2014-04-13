@@ -41,7 +41,7 @@ being replaced by &amp;quot;.
 <p>
 For example:
 <pre>
-   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&amp;gt;
+   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
 </pre>
 After the XML is read, the contents of that label will be displayed from the text in the "label" attribute, which is:
 <pre>

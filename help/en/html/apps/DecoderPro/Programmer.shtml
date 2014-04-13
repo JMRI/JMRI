@@ -110,6 +110,11 @@ There are a number of elements you can use to get the programmer
 formatted exactly the way you want:
 <ul>
 <li><dfn>label</dfn> - Add text to a pane.
+<li><dfn>soundlabel</dfn> - Add a soundlabel (from the decoder definition file) to a pane. It has a one attribute:
+<ul>
+<li><dfn>num</dfn> - (Required)
+This is the number of the sound label to be presented.
+</ul>
 <li><dfn>separator</dfn> - Add a separator line to a pane.  If included
 in a column, this will be a horizontal separator line.  If
 included in a row, it will be a vertical line.
