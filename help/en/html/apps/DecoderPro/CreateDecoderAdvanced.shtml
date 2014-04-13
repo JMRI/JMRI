@@ -137,19 +137,34 @@ attributes that can be added to the old (not the new) definition to facilitate t
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
 </pre></code>
 
-The user selects "Update decoder definitions" from the Debug Menu, and 
-all existing roster entries what point a decoder definitions with replacementModel and/or
-replacementFamily defined will be updated to those replacements.
+When the user selects "Update decoder definitions" from the Debug Menu,  
+all their existing roster entries that use a decoder definition with replacementModel and/or
+replacementFamily defined will be updated to the specified replacement decoder definition
+instead.  This lets people keep using their old, comfortable decoder definition (the old
+file remains in JMRI) until they decide to move forward to a new one.
 <p>
-The model element "show" attribute can also be used to
-move new users to new definitions while leaving older definitions
-available people already using them. Its possible values are:
+The model element "show" attribute helps ensure that new users
+starts with the new definition.
+Its possible values are:
 <ul>
 <li>"yes" (default) - the traditional behavior, always show this model and the family it contains
 <li>"no" - never show this model, even if it matches a possible selection.
             Used for legacy (old) definitions that have been replaced with newer ones.
 <li>"maybe" - only show if it matches a (possible) automatic identification.
 </ul>
+
+To create a completely new definition for an existing model:
+<ol>
+<li>Decide where you want the new model defined.  It has to have either a new model 
+name, a new family name (new file) or both.
+<li>Create your definition.
+<li>Add "replacementModel" and "replacementFamily" attributes to the old definition.
+<li>Generally, set the "show" attribute in the old definition to "no".  The only exception to this
+is when some users will want to select the old definition still for a new decoder, perhaps
+because automatic identification can tell the uses of the old definition from the new one.
+(E.g. you're splitting the old definition into two parts because a new subversion locomotive
+exists)
+</ol>
 
 <h3>Programming Capabilities</h3>
 
