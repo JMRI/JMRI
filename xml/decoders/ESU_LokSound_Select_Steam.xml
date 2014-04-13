@@ -100,6 +100,29 @@
         <functionlabel num="18" lockable="false">Cylinder Cocks</functionlabel>
         <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
       </functionlabels>
+      <soundlabels>
+        <soundlabel num="1">Chuff Right volume</soundlabel>
+        <soundlabel num="2">Chuff Left volume</soundlabel>
+        <soundlabel num="3">Whistle volume</soundlabel>
+        <soundlabel num="4">Bell volume</soundlabel>
+        <soundlabel num="5">Coupler volume</soundlabel>
+        <soundlabel num="6">Dynamo volume</soundlabel>
+        <soundlabel num="7">Air Pump volume</soundlabel>
+        <soundlabel num="8">Blower volume</soundlabel>
+        <soundlabel num="9">Injector volume</soundlabel>
+        <soundlabel num="10">Crossing Comm volume</soundlabel>
+        <soundlabel num="11">Railclack volume</soundlabel>
+        <soundlabel num="12">Brake Set/Release volume</soundlabel>
+        <soundlabel num="13">Sanding Valve volume</soundlabel>
+        <soundlabel num="14">Oil Burner volume</soundlabel>
+        <soundlabel num="15">Coal Shoveling volume</soundlabel>
+        <soundlabel num="16">Short Whistle volume</soundlabel>
+        <soundlabel num="17">Johnson Bar volume</soundlabel>
+        <soundlabel num="18">Cylinder Cocks volume</soundlabel>
+        <soundlabel num="24">Steam Hissing volume</soundlabel>
+        <soundlabel num="25">Random sounds</soundlabel>
+        <soundlabel num="26">Automatic brake sound</soundlabel>
+      </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -282,79 +305,6 @@
           </enumChoice>
         </enumVal>
         <label>Brake Squeal</label>
-      </variable>
-      <!-- Volumes -->
-      <variable label="Chuff Right volume" CV="16.1.259" default="99" item="Sound Volume 1">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Chuff Left volume" CV="16.1.267" default="99" item="Sound Volume 2">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Whistle volume" CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Bell volume" CV="16.1.283" default="99" item="Sound Volume 4">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Coupler volume" CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Dynamo volume" CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Air Pump volume" CV="16.1.307" default="128" item="Sound Volume 7">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Blower volume" CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Injector volume" CV="16.1.323" default="128" item="Sound Volume 9">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Crossing Comm volume" CV="16.1.331" default="128" item="Sound Volume 10">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Railclack volume" CV="16.1.339" default="60" item="Sound Volume 11">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Brake Set/Release volume" CV="16.1.347" default="128" item="Sound Volume 12">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sanding Valve volume" CV="16.1.355" default="128" item="Sound Volume 13">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Oil Burner volume" CV="16.1.363" default="128" item="Sound Volume 14">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Coal Shoveling volume" CV="16.1.371" default="80" item="Sound Volume 15">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Short Whistle volume" CV="16.1.379" default="128" item="Sound Volume 16">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Johnson Bar volume" CV="16.1.387" default="80" item="Sound Volume 17">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Cylinder Cocks volume" CV="16.1.395" default="128" item="Sound Volume 18">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 19 Volume" CV="16.1.403" default="128" item="Sound Volume 19">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 20 Volume" CV="16.1.411" default="128" item="Sound Volume 20">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 21 Volume" CV="16.1.419" default="128" item="Sound Volume 21">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 22 Volume" CV="16.1.427" default="128" item="Sound Volume 22">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 23 Volume" CV="16.1.435" default="128" item="Sound Volume 23">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Steam Hissing volume" CV="16.1.443" default="99" item="Sound Volume 24">
-        <decVal max="128"/>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>

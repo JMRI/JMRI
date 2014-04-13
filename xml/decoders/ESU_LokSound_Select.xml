@@ -156,6 +156,26 @@
         <functionlabel num="20" lockable="false">Short Horn</functionlabel>
         <functionlabel num="21" lockable="false">pop Valve</functionlabel>
       </functionlabels>
+      <soundlabels>
+        <soundlabel num="1">Diesel volume</soundlabel>
+        <soundlabel num="3">Airhorn volume</soundlabel>
+        <soundlabel num="4">Bell volume</soundlabel>
+        <soundlabel num="5">Coupler volume</soundlabel>
+        <soundlabel num="6">Dynamic Brake volume</soundlabel>
+        <soundlabel num="7">Air Compressor volume</soundlabel>
+        <soundlabel num="8">Radiator Fan volume</soundlabel>
+        <soundlabel num="9">Detector volume</soundlabel>
+        <soundlabel num="10">Crossing Comm volume</soundlabel>
+        <soundlabel num="11">Railclack volume</soundlabel>
+        <soundlabel num="12">Brake Set/Release volume</soundlabel>
+        <soundlabel num="13">Sanding Valve volume</soundlabel>
+        <soundlabel num="14">Short Air Let Off volume</soundlabel>
+        <soundlabel num="15">Pop Valve volume</soundlabel>
+        <soundlabel num="16">Short Airhorn volume</soundlabel>
+        <soundlabel num="25">Random sounds</soundlabel>
+        <soundlabel num="26">Automatic brake sound</soundlabel>
+        <soundlabel num="27">Gear shift sound</soundlabel>
+      </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -491,79 +511,6 @@
           </enumChoice>
         </enumVal>
         <label>Brake Squeal</label>
-      </variable>
-      <!-- Volumes -->
-      <variable label="Diesel volume" CV="16.1.259" default="99" item="Sound Volume 1">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 2 Volume" CV="16.1.267" default="128" item="Sound Volume 2">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Airhorn volume" CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Bell volume" CV="16.1.283" default="99" item="Sound Volume 4">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Coupler volume" CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Dynamic Brake volume" CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Air Compressor volume" CV="16.1.307" default="100" item="Sound Volume 7">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Radiator Fan volume" CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Detector volume" CV="16.1.323" default="128" item="Sound Volume 9">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Crossing Comm volume" CV="16.1.331" default="128" item="Sound Volume 10">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Railclack volume" CV="16.1.339" default="128" item="Sound Volume 11">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Brake Set/Release volume" CV="16.1.347" default="128" item="Sound Volume 12">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sanding Valve volume" CV="16.1.355" default="128" item="Sound Volume 13">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Short Air Let Off volume" CV="16.1.363" default="128" item="Sound Volume 14">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Pop Valve volume" CV="16.1.371" default="128" item="Sound Volume 15">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Short Airhorn volume" CV="16.1.379" default="128" item="Sound Volume 16">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 17 Volume" CV="16.1.387" default="128" item="Sound Volume 17">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 18 Volume" CV="16.1.395" default="128" item="Sound Volume 18">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 19 Volume" CV="16.1.403" default="128" item="Sound Volume 19">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 20 Volume" CV="16.1.411" default="128" item="Sound Volume 20">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 21 Volume" CV="16.1.419" default="128" item="Sound Volume 21">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 22 Volume" CV="16.1.427" default="128" item="Sound Volume 22">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 23 Volume" CV="16.1.435" default="128" item="Sound Volume 23">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 24 Volume" CV="16.1.443" default="128" item="Sound Volume 24">
-        <decVal max="128"/>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>

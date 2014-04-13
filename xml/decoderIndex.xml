@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140324-0917-heap on Mon Mar 24 20:17:32 EST 2014 $Id$-->
-  <decoderIndex version="320">
+  <!--Written by JMRI version 20140413-0554-heap on Sun Apr 13 15:54:35 EST 2014 $Id$-->
+  <decoderIndex version="368">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2049,6 +2049,17 @@
         <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
+        <model model="LokSound V4.0 Test" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="99999">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+          <functionlabels>
+            <functionlabel num="7" lockable="true">Model Function Override 7 and 11</functionlabel>
+            <functionlabel num="11" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="25">Override 15 and 27</soundlabel>
+            <soundlabel num="27" />
+          </soundlabels>
+        </model>
         <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
@@ -2096,6 +2107,11 @@
           <functionlabel num="25" lockable="true" />
           <functionlabel num="26" lockable="true" />
         </functionlabels>
+        <soundlabels>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27">Gear shift sound</soundlabel>
+        </soundlabels>
       </family>
       <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" file="ESU_LokSoundXLV3_5.xml">
         <model model="LokSoundXL Version 3.5" numOuts="8" numFns="12" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
@@ -2235,6 +2251,26 @@
           <functionlabel num="20" lockable="false">Short Horn</functionlabel>
           <functionlabel num="21" lockable="false">pop Valve</functionlabel>
         </functionlabels>
+        <soundlabels>
+          <soundlabel num="1">Diesel volume</soundlabel>
+          <soundlabel num="3">Airhorn volume</soundlabel>
+          <soundlabel num="4">Bell volume</soundlabel>
+          <soundlabel num="5">Coupler volume</soundlabel>
+          <soundlabel num="6">Dynamic Brake volume</soundlabel>
+          <soundlabel num="7">Air Compressor volume</soundlabel>
+          <soundlabel num="8">Radiator Fan volume</soundlabel>
+          <soundlabel num="9">Detector volume</soundlabel>
+          <soundlabel num="10">Crossing Comm volume</soundlabel>
+          <soundlabel num="11">Railclack volume</soundlabel>
+          <soundlabel num="12">Brake Set/Release volume</soundlabel>
+          <soundlabel num="13">Sanding Valve volume</soundlabel>
+          <soundlabel num="14">Short Air Let Off volume</soundlabel>
+          <soundlabel num="15">Pop Valve volume</soundlabel>
+          <soundlabel num="16">Short Airhorn volume</soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27">Gear shift sound</soundlabel>
+        </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
         <model model="LokSound Select Big Boy 4-8-8-4" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
@@ -2283,6 +2319,29 @@
           <functionlabel num="18" lockable="false">Cylinder Cocks</functionlabel>
           <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
         </functionlabels>
+        <soundlabels>
+          <soundlabel num="1">Chuff Right volume</soundlabel>
+          <soundlabel num="2">Chuff Left volume</soundlabel>
+          <soundlabel num="3">Whistle volume</soundlabel>
+          <soundlabel num="4">Bell volume</soundlabel>
+          <soundlabel num="5">Coupler volume</soundlabel>
+          <soundlabel num="6">Dynamo volume</soundlabel>
+          <soundlabel num="7">Air Pump volume</soundlabel>
+          <soundlabel num="8">Blower volume</soundlabel>
+          <soundlabel num="9">Injector volume</soundlabel>
+          <soundlabel num="10">Crossing Comm volume</soundlabel>
+          <soundlabel num="11">Railclack volume</soundlabel>
+          <soundlabel num="12">Brake Set/Release volume</soundlabel>
+          <soundlabel num="13">Sanding Valve volume</soundlabel>
+          <soundlabel num="14">Oil Burner volume</soundlabel>
+          <soundlabel num="15">Coal Shoveling volume</soundlabel>
+          <soundlabel num="16">Short Whistle volume</soundlabel>
+          <soundlabel num="17">Johnson Bar volume</soundlabel>
+          <soundlabel num="18">Cylinder Cocks volume</soundlabel>
+          <soundlabel num="24">Steam Hissing volume</soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+        </soundlabels>
       </family>
       <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_Roco_10745_old.xml">
         <model model="Roco 10745 old" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
@@ -3811,8 +3870,8 @@
           <functionlabel num="10" lockable="false">Door</functionlabel>
         </functionlabels>
       </family>
-      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="7" highVersionID="255" type="locomotive" file="Mistral_GOLD_V7.xml">
-        <model model="GOLD V7" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="7" highVersionID="255" file="Mistral_GOLD_V7.xml">
+        <model model="GOLD V7" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Engine</functionlabel>
@@ -11740,6 +11799,9 @@
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
         <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SHD2.xml">
+        <model model="SHD2" lowVersionID="1" comment="SHD2 is a DCC Signal decoder" />
+      </family>
       <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" />
       </family>
@@ -11764,8 +11826,14 @@
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC16.xml">
         <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus" />
       </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC162.xml">
+        <model model="SRC162" lowVersionID="1" comment="SRC162 is a stationary decoder with serial bus" />
+      </family>
       <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way" file="TD_SRC8.xml">
         <model model="SRC8" lowVersionID="12" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_Servette.xml">
+        <model model="Servette" lowVersionID="1" comment="Servette is a stationary decoder, but it can be programmed in the usual way" />
       </family>
       <family name="Quad-LN" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address." file="TamValleyDepot_QuadLn.xml">
         <model model="Quad-LN" comment="4 Servo Driver" lowVersionID="5" />

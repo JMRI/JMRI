@@ -41,7 +41,7 @@ public class PaneProgPaneTest extends TestCase {
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
                 public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
             };
         assertNotNull("exists", p );
@@ -65,7 +65,7 @@ public class PaneProgPaneTest extends TestCase {
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
                 public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
                 { varCount++; }
             };
@@ -108,7 +108,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
         // test by invoking
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
         assertEquals("variable list length", 2, p.varList.size());
         assertEquals("1st variable index ", Integer.valueOf(1), p.varList.get(0));
         assertEquals("2nd variable index ", Integer.valueOf(0), p.varList.get(1));
@@ -148,7 +148,7 @@ public class PaneProgPaneTest extends TestCase {
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
 
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
 
         p.resetCv(2, 20);
         p.resetCv(3, 30);
@@ -210,7 +210,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
 //        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
 
         p.resetCv(2, -1);
         p.resetCv(3, -1);
@@ -289,7 +289,7 @@ public class PaneProgPaneTest extends TestCase {
             .addContent( new Element("decVal"));
         varModel.setRow(row++, el3);
 
-        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
 
         // start actual testing
         Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true,false));

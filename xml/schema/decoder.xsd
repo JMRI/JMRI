@@ -256,6 +256,8 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
+            <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
           </xs:sequence>
           <xs:attribute name="model" type="xs:string" use="required"/>
           <xs:attribute name="show" type="yesNoMaybeType" default="yes" >
@@ -312,21 +314,10 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+
+      <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
       
-      <xs:element name="functionlabels" minOccurs="0" maxOccurs="1">
-        <xs:complexType><xs:sequence>
-          <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
-            <xs:complexType>
-              <xs:simpleContent>
-                <xs:extension base="xs:string">
-                  <xs:attribute name="num" type="xs:string"/>
-                  <xs:attribute name="lockable" type="xs:string"/>
-                </xs:extension>
-              </xs:simpleContent>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence></xs:complexType>
-      </xs:element>
+      <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
       
       <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
@@ -339,6 +330,35 @@
     <xs:attribute name="highVersionID" type="xs:int" />
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
+  </xs:complexType>
+      
+  <xs:complexType name="functionlabelsType">
+    <xs:sequence>
+      <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="num" type="xs:string"/>
+              <xs:attribute name="lockable" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="soundlabelsType">
+    <xs:sequence>
+      <xs:element name="soundlabel" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="num" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="VariablesType">

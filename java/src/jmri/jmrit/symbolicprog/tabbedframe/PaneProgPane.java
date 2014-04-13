@@ -22,6 +22,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
@@ -68,6 +69,7 @@ public class PaneProgPane extends javax.swing.JPanel
     IndexedCvTableModel _indexedCvModel;
     protected VariableTableModel _varModel;
     protected PaneContainer container;
+    protected RosterEntry rosterEntry;
         
     boolean _cvTable;
     
@@ -98,16 +100,17 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param icvModel Already existing TableModel containing the Indexed CV definitions
      * @param varModel Already existing TableModel containing the variable definitions
      * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
+     * @param pRosterEntry The current roster entry, used to get sound labels.
      */
     @SuppressWarnings("unchecked")
-	public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
 
-            
         container = parent;
         mName = name;
         _cvModel = cvModel;
         _indexedCvModel = icvModel;
         _varModel = varModel;
+        rosterEntry = pRosterEntry;
         
         // when true a cv table with compare was loaded into pane
         _cvTable = false;
@@ -1224,6 +1227,10 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = GridBagConstraints.REMAINDER;
                 makeLabel(e, c, g, cs);
             }
+            else if (name.equals("soundlabel")) {
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                makeSoundLabel(e, c, g, cs);
+            }
             else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);
             }
@@ -1316,6 +1323,39 @@ public class PaneProgPane extends javax.swing.JPanel
         
         qa.processModifierElements(e, _varModel);
     }
+
+    /**
+     * Create sound label from Element
+     */
+    protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num")));
+//         final JLabel l = new JLabel(rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num"))));
+        final JLabel l = new JLabel(labelText);
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add label: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
+    }
     
     /**
      * Create a single row from the JDOM column Element
@@ -1360,6 +1400,10 @@ public class PaneProgPane extends javax.swing.JPanel
             else if (name.equals("label")) { // its  a label
                 cs.gridheight = GridBagConstraints.REMAINDER;
                 makeLabel(e, c, g, cs);
+            }
+            else if (name.equals("soundlabel")) { // its  a sound label
+                cs.gridheight = GridBagConstraints.REMAINDER;
+                makeSoundLabel(e, c, g, cs);
             }
             else if (name.equals("cvtable")) {
                 makeCvTable(cs, g, c);

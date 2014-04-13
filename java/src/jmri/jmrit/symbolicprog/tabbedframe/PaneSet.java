@@ -167,17 +167,17 @@ public class PaneSet {
         for (Element e : paneList) {
             // load each pane
             String name = e.getAttribute("name").getValue();
-            newPane( name, e, modelElem);
+            newPane( name, e, modelElem, r);
         }
     }
 
     /**
      * Create a single pane from a "pane" element in programmer or decoder definition
      */
-    public void newPane(String name, Element pane, Element modelElem) {
+    public void newPane(String name, Element pane, Element modelElem, RosterEntry r) {
         if (log.isDebugEnabled()) log.debug("newPane "+name);
         // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(container, name, pane, cvModel, iCvModel, variableModel, modelElem);
+        PaneProgPane p = new PaneProgPane(container, name, pane, cvModel, iCvModel, variableModel, modelElem, r);
 
         // and remember it for programming
         paneList.add(p);

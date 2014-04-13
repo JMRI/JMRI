@@ -171,7 +171,7 @@ public class FnMapPanelESU extends JPanel {
                     varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
                     VariableValue var = _varModel.getVariable(iVar);
-                    j.setToolTipText(PaneProgPane.addCvDescription(null, var.getCvDescription(), var.getMask()));
+                    j.setToolTipText(PaneProgPane.addCvDescription("Row "+Integer.toString(iRow+1)+", "+outName[iOut]+" "+outLabel[iOut], var.getCvDescription(), var.getMask()));
                     saveAt(currentRow, currentCol++, j);
                     outIsUsed[iOut] = true;
                 } else {

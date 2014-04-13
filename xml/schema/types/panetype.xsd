@@ -148,6 +148,7 @@
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
@@ -161,6 +162,7 @@
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
@@ -183,6 +185,18 @@
       </xs:element>
     </xs:sequence>
     <xs:attribute name="label" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:complexType name="SoundLabelType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+    </xs:sequence>
+    <xs:attribute name="num" type="xs:integer"/>
   </xs:complexType>
   
   <xs:complexType name="DisplayType">

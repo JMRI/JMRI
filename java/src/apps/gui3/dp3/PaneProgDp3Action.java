@@ -614,7 +614,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     class ThisProgPane extends PaneProgPane{
         
         public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem){
-            super(parent, name, pane, cvModel, icvModel, varModel, modelElem);
+            super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
             bottom.remove(readChangesButton);
             bottom.remove(writeChangesButton);
             writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite"));

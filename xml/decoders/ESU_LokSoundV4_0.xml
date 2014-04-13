@@ -55,6 +55,17 @@
       <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
+      <model model="LokSound V4.0 Test" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="99999">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+        <functionlabels>
+          <functionlabel num="7" lockable="true">Model Function Override 7 and 11</functionlabel>
+          <functionlabel num="11"/>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="25">Override 15 and 27</soundlabel>
+          <soundlabel num="27"/>
+        </soundlabels>
+      </model>
       <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
@@ -102,6 +113,11 @@
         <functionlabel num="25" lockable="true"/>
         <functionlabel num="26" lockable="true"/>
       </functionlabels>
+      <soundlabels>
+        <soundlabel num="25">Random sounds</soundlabel>
+        <soundlabel num="26">Automatic brake sound</soundlabel>
+        <soundlabel num="27">Gear shift sound</soundlabel>
+      </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -125,79 +141,6 @@
         <decVal max="15"/>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
-      <!-- Don't have custom sound definitions for below yet -->
-      <variable label="Sound Slot 1 Volume" CV="16.1.259" default="128" item="Sound Volume 1">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 2 Volume" CV="16.1.267" default="128" item="Sound Volume 2">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 3 Volume" CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 4 Volume" CV="16.1.283" default="128" item="Sound Volume 4">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 5 Volume" CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 6 Volume" CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 7 Volume" CV="16.1.307" default="128" item="Sound Volume 7">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 8 Volume" CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 9 Volume" CV="16.1.323" default="128" item="Sound Volume 9">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 10 Volume" CV="16.1.331" default="128" item="Sound Volume 10">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 11 Volume" CV="16.1.339" default="128" item="Sound Volume 11">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 12 Volume" CV="16.1.347" default="128" item="Sound Volume 12">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 13 Volume" CV="16.1.355" default="128" item="Sound Volume 13">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 14 Volume" CV="16.1.363" default="128" item="Sound Volume 14">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 15 Volume" CV="16.1.371" default="128" item="Sound Volume 15">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 16 Volume" CV="16.1.379" default="128" item="Sound Volume 16">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 17 Volume" CV="16.1.387" default="128" item="Sound Volume 17">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 18 Volume" CV="16.1.395" default="128" item="Sound Volume 18">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 19 Volume" CV="16.1.403" default="128" item="Sound Volume 19">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 20 Volume" CV="16.1.411" default="128" item="Sound Volume 20">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 21 Volume" CV="16.1.419" default="128" item="Sound Volume 21">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 22 Volume" CV="16.1.427" default="128" item="Sound Volume 22">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 23 Volume" CV="16.1.435" default="128" item="Sound Volume 23">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sound Slot 24 Volume" CV="16.1.443" default="128" item="Sound Volume 24">
-        <decVal max="128"/>
-      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>

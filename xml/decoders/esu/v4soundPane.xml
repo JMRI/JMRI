@@ -45,16 +45,16 @@
         <display item="Sound Steam Chuffs Secondary Trigger" format="hslider" layout="above"/>
       </row>
       <separator/>
-        <label label="Automatic Brake Sound"/>
-        <label label=" "/>
+        <soundlabel num="26"/>
+        <label label="    "/>
       <row>
         <display item="Sound Brake On" layout="above" label=""/>
         <label label=""/>
-        <display item="Sound Brake On" format="hslider" layout="above"/>
+        <display item="Sound Brake On" format="hslider" layout="above" label="Sound on threshold"/>
         <label label="        "/>
         <display item="Sound Brake Off" layout="above" label=""/>
         <label label=""/>
-        <display item="Sound Brake Off" format="hslider" layout="above"/>
+        <display item="Sound Brake Off" format="hslider" layout="above" label="Sound off threshold"/>
       </row>
       <row>
         <display item="Sound Volume Brake" layout="above" label=""/>
@@ -70,16 +70,16 @@
         <display item="Sound Max Speed Brake" format="hslider" layout="above"/>
       </row>
       <separator/>
-        <label label="Random Sounds"/>
-        <label label=" "/>
+        <soundlabel num="25"/>
+        <label label="    "/>
       <row>
         <display item="Sound Random Min" layout="above" label=""/>
         <label label=""/>
-        <display item="Sound Random Min" format="hslider" layout="above"/>
+        <display item="Sound Random Min" format="hslider" layout="above" label="Shortest interval between sounds"/>
         <label label="        "/>
         <display item="Sound Random Max" layout="above" label=""/>
         <label label=""/>
-        <display item="Sound Random Max" format="hslider" layout="above"/>
+        <display item="Sound Random Max" format="hslider" layout="above" label="Longest interval between sounds"/>
       </row>
       <row>
         <display item="Sound Volume Random" layout="above" label=""/>
@@ -95,8 +95,8 @@
         <display item="Sound Max Speed Random" format="hslider" layout="above"/>
       </row>
       <separator/>
-        <label label="Gear Shift Sound"/>
-        <label label=" "/>
+        <soundlabel num="27"/>
+        <label label="    "/>
       <row>
         <display item="Sound Volume Gear Shift" layout="above" label=""/>
         <label label=""/>
@@ -121,6 +121,8 @@
         <label label=" "/>
       <separator/>
       <row>
+        <soundlabel num="1"/>
+        <label label="    "/>
         <display item="Sound Volume 1" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 1" format="hslider" layout="above"/>
@@ -135,6 +137,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="2"/>
+        <label label="    "/>
         <display item="Sound Volume 2" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 2" format="hslider" layout="above"/>
@@ -149,6 +153,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="3"/>
+        <label label="    "/>
         <display item="Sound Volume 3" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 3" format="hslider" layout="above"/>
@@ -163,6 +169,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="4"/>
+        <label label="    "/>
         <display item="Sound Volume 4" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 4" format="hslider" layout="above"/>
@@ -177,6 +185,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="5"/>
+        <label label="    "/>
         <display item="Sound Volume 5" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 5" format="hslider" layout="above"/>
@@ -191,6 +201,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="6"/>
+        <label label="    "/>
         <display item="Sound Volume 6" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 6" format="hslider" layout="above"/>
@@ -205,6 +217,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="7"/>
+        <label label="    "/>
         <display item="Sound Volume 7" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 7" format="hslider" layout="above"/>
@@ -219,6 +233,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="8"/>
+        <label label="    "/>
         <display item="Sound Volume 8" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 8" format="hslider" layout="above"/>
@@ -233,6 +249,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="9"/>
+        <label label="    "/>
         <display item="Sound Volume 9" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 9" format="hslider" layout="above"/>
@@ -247,6 +265,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="10"/>
+        <label label="    "/>
         <display item="Sound Volume 10" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 10" format="hslider" layout="above"/>
@@ -261,6 +281,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="11"/>
+        <label label="    "/>
         <display item="Sound Volume 11" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 11" format="hslider" layout="above"/>
@@ -275,6 +297,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="12"/>
+        <label label="    "/>
         <display item="Sound Volume 12" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 12" format="hslider" layout="above"/>
@@ -289,6 +313,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="13"/>
+        <label label="    "/>
         <display item="Sound Volume 13" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 13" format="hslider" layout="above"/>
@@ -303,6 +329,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="14"/>
+        <label label="    "/>
         <display item="Sound Volume 14" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 14" format="hslider" layout="above"/>
@@ -317,6 +345,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="15"/>
+        <label label="    "/>
         <display item="Sound Volume 15" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 15" format="hslider" layout="above"/>
@@ -331,6 +361,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="16"/>
+        <label label="    "/>
         <display item="Sound Volume 16" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 16" format="hslider" layout="above"/>
@@ -345,6 +377,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="17"/>
+        <label label="    "/>
         <display item="Sound Volume 17" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 17" format="hslider" layout="above"/>
@@ -359,6 +393,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="18"/>
+        <label label="    "/>
         <display item="Sound Volume 18" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 18" format="hslider" layout="above"/>
@@ -373,6 +409,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="19"/>
+        <label label="    "/>
         <display item="Sound Volume 19" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 19" format="hslider" layout="above"/>
@@ -387,6 +425,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="20"/>
+        <label label="    "/>
         <display item="Sound Volume 20" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 20" format="hslider" layout="above"/>
@@ -401,6 +441,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="21"/>
+        <label label="    "/>
         <display item="Sound Volume 21" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 21" format="hslider" layout="above"/>
@@ -415,6 +457,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="22"/>
+        <label label="    "/>
         <display item="Sound Volume 22" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 22" format="hslider" layout="above"/>
@@ -429,6 +473,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="23"/>
+        <label label="    "/>
         <display item="Sound Volume 23" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 23" format="hslider" layout="above"/>
@@ -443,6 +489,8 @@
       </row>
       <separator/>
       <row>
+        <soundlabel num="24"/>
+        <label label="    "/>
         <display item="Sound Volume 24" layout="above" label=""/>
         <label label=""/>
         <display item="Sound Volume 24" format="hslider" layout="above"/>
