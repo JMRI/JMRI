@@ -1238,8 +1238,8 @@ public class Track {
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
-			if (!acceptsDestination(car.getFinalDestination())
-					&& getLocation() != car.getFinalDestination()) {
+			if (!acceptsDestination(car.getFinalDestination())) {
+//					&& getLocation() != car.getFinalDestination()) { // 4/14/2014 I can't remember why this was needed
 				return DESTINATION + " (" + car.getFinalDestinationName() + ") "
 						+ MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
 			}
