@@ -16,6 +16,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.SystemType;
 import jmri.Application;
 import java.util.Arrays;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * <p>Provide a graphical representation of the ESU mapping table.
@@ -113,7 +114,7 @@ public class FnMapPanelESU extends JPanel {
     final String[] outLabel = new String[maxOut];
     final boolean[] outIsUsed = new boolean[maxOut];
                                            
-    public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model) {
+    public FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model, RosterEntry rosterEntry) {
         if (log.isDebugEnabled()) log.debug("ESU Function map starts");
         _varModel = v;
         
@@ -160,18 +161,33 @@ public class FnMapPanelESU extends JPanel {
                 // find the variable using the output label
                 String name = "ESU Function Row "+Integer.toString(iRow+1)+" Column "+Integer.toString(iOut+1);
                 int iVar = _varModel.findVarIndex(name);
+                String fullColumnName = null;
                 if (iVar>=0) {
-                // column labels
+                    if ( outName[iOut].equals("SS") ) {
+                        try {
+                            fullColumnName = rosterEntry.getSoundLabel(Integer.valueOf(outLabel[iOut]));
+                        } catch (Exception e) {}
+                    } else if ( outName[iOut].startsWith("F") && ( outLabel[iOut].equalsIgnoreCase("on") || outLabel[iOut].equalsIgnoreCase("off") ) ) {
+                        try {
+                            fullColumnName = rosterEntry.getFunctionLabel(Integer.valueOf(outName[iOut].substring(1))) ;
+                        } catch (Exception e) {}
+                    }
+                    if ( fullColumnName != null ) {
+                        fullColumnName = outName[iOut]+" "+outLabel[iOut] + " (" + fullColumnName + ")";
+                    } else {
+                        fullColumnName = outName[iOut]+" "+outLabel[iOut];
+                    }
+                    // column labels
                     if (iRow == 0) {
-                        labelAt( outputNumRow,   currentCol, outName[iOut]);
-                        labelAt( outputLabelRow, currentCol, outLabel[iOut]);
-                        labelAt( firstRow+numRows, currentCol, String.valueOf(iOut+1));
+                        labelAt( outputNumRow,   currentCol, outName[iOut], fullColumnName);
+                        labelAt( outputLabelRow, currentCol, outLabel[iOut], fullColumnName);
+                        labelAt( firstRow+numRows, currentCol, String.valueOf(iOut+1), ("Column "+String.valueOf(iOut+1)+", "+fullColumnName));
                     }
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
                     varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
                     VariableValue var = _varModel.getVariable(iVar);
-                    j.setToolTipText(PaneProgPane.addCvDescription("Row "+Integer.toString(iRow+1)+", "+outName[iOut]+" "+outLabel[iOut], var.getCvDescription(), var.getMask()));
+                    j.setToolTipText(PaneProgPane.addCvDescription(("Row "+Integer.toString(iRow+1)+", "+fullColumnName), var.getCvDescription(), var.getMask()));
                     saveAt(currentRow, currentCol++, j);
                     outIsUsed[iOut] = true;
                 } else {
@@ -233,8 +249,13 @@ public class FnMapPanelESU extends JPanel {
     }
     
     void labelAt(int row, int column, String name) {
+        this.labelAt(row, column, name, null);
+    }
+
+    void labelAt(int row, int column, String name, String toolTip) {
         if (row<0 || column<0) return;
         JLabel t = new JLabel(" "+name+" ");
+        if ( toolTip != null ) t.setToolTipText(toolTip);
         saveAt(row, column, t);
     }
     

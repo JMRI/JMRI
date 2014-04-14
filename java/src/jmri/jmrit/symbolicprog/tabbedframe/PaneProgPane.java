@@ -1531,7 +1531,7 @@ public class PaneProgPane extends javax.swing.JPanel
         try { if (a!=null) extFnsESU = (a.getValue()).equalsIgnoreCase("yes");}
         catch (Exception ex) {log.error("error handling decoder's extFnsESU value");}        
         if (extFnsESU) {
-            FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem);
+            FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry);
             fnMapListESU.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
             g.setConstraints(l, cs);
