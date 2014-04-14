@@ -25,6 +25,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -363,27 +364,34 @@ public class PositionableShape extends PositionableJComponent
      * @param pName Used as a system/user name to lookup the sensor object
      */
 	public void setControlSensor(String pName, boolean hide, int level) {
-        if (pName==null || pName.trim().length()==0) {
-        	setControlSensorHandle(null);
-            return;
+		NamedBeanHandle<Sensor> senHandle = null;
+		String msg = null;
+		if (pName==null || pName.trim().length()==0) {
+        	msg = Bundle.getMessage("badSensorName", pName);
         }
         _saveLevel = getDisplayLevel();
-        if (InstanceManager.sensorManagerInstance()!=null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
-            	setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                _doHide = hide;
-            	_changeLevel = level;                	
-                if (_changeLevel<=0) {
-                	_changeLevel=1;            	
+        if (msg==null) {
+            if (InstanceManager.sensorManagerInstance()!=null) {
+                Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
+                senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
+                if (sensor != null) {
+                    _doHide = hide;
+                	_changeLevel = level;                	
+                    if (_changeLevel<=0) {
+                    	_changeLevel = getDisplayLevel();           	
+                    }
+                } else {
+                	msg = Bundle.getMessage("badSensorName", pName);
                 }
-                sensor.addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");            
             } else {
-                log.error("PositionalShape Control Sensor '"+pName+"' not available, shape won't see changes");
-            }
-        } else {
-            log.error("No SensorManager for this protocol, block icons won't see changes");
+                msg = "No SensorManager for this protocol, shape cannot acquire a sensor.";
+            }       	
         }
+        if (msg!=null) {
+        	JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
+        			JOptionPane.INFORMATION_MESSAGE);
+        }
+    	setControlSensorHandle(senHandle);
     }
     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
         if (_controlSensor != null) {
@@ -392,6 +400,9 @@ public class PositionableShape extends PositionableJComponent
         	setVisible(true);
         }
         _controlSensor = senHandle;
+        if (_controlSensor!=null) {
+        	getControlSensor().addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
+        }
     }
     public Sensor getControlSensor() {
         if (_controlSensor==null) {
