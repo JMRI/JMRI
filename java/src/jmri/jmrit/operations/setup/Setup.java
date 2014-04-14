@@ -115,6 +115,7 @@ public class Setup {
 	public static final String LENGTH = Bundle.getMessage("Length");
 	public static final String LOAD = Bundle.getMessage("Load");
 	public static final String COLOR = Bundle.getMessage("Color");
+	public static final String TRACK = Bundle.getMessage("Track");
 	public static final String DESTINATION = Bundle.getMessage("Destination");
 	public static final String DEST_TRACK = Bundle.getMessage("DestAndTrack");
 	public static final String FINAL_DEST = Bundle.getMessage("FinalDestination");
@@ -155,10 +156,11 @@ public class Setup {
 	public static final String FEET = Bundle.getMessage("Feet");
 	public static final String METER = Bundle.getMessage("Meter");
 
-        public static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL,
-            OWNER, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE};
-        public static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER,
-            LOCATION, DESTINATION, COMMENT};
+	public static final String[] carAttributes = { ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, OWNER,
+			TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
+			PICKUP_COMMENT, RWE };
+	public static final String[] engineAttributes = { ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+			LOCATION, DESTINATION, COMMENT };
 
 	private static int scale = HO_SCALE; // Default scale
 	private static int ratio = HO_RATIO;

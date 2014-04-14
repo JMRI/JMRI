@@ -1032,7 +1032,7 @@ public class TrainCommon {
 			return " " + tabString(rs.getLength() + LENGTHABV, CarLengths.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COLOR))
 			return " " + tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
-		else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
+		else if ((attribute.equals(Setup.LOCATION) || attribute.equals(Setup.TRACK)) && (isPickup || isLocal)) {
 			if (rs.getTrack() != null)
 				return " "
 						+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName()),
@@ -1049,7 +1049,7 @@ public class TrainCommon {
 								Control.max_len_string_location_name);
 			else
 				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
-		} else if (attribute.equals(Setup.DESTINATION) && !isPickup)
+		} else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup)
 			return " "
 					+ tabString(TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName()),
 							Control.max_len_string_track_name);

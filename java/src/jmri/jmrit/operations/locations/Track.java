@@ -1603,21 +1603,16 @@ public class Track {
 		// does car already have this destination?
 		if (car.getDestinationTrack() == this)
 			return OKAY;
+		// only spurs can have a schedule
+		if (!getTrackType().equals(SPUR))
+			return OKAY;
 		if (getScheduleId().equals("")) {
 			// does car have a scheduled load?
 			if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 					|| car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))
 				return OKAY; // no
-			// can't place a car with a scheduled load at a spur
-			else if (!getTrackType().equals(SPUR))
-				return OKAY;
-			else
-				return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD,
-						car.getLoadName() });
+			return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
 		}
-		// only spurs can have a schedule
-		if (!getTrackType().equals(SPUR))
-			return OKAY;
 		log.debug("Track (" + getName() + ") has schedule (" + getScheduleName() + ") mode "
 				+ getScheduleMode() + (getScheduleMode() == SEQUENTIAL? " Sequential" : " Match")); // NOI18N
 

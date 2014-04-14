@@ -134,8 +134,8 @@ public class Router extends TrainCommon {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindTrain"),
 						new Object[] { car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
 								car.getFinalDestinationTrackName() }));
-				_status = STATUS_NO_TRAINS;
-				return false; // maybe next time
+//				_status = STATUS_NO_TRAINS;
+//				return false; // maybe next time
 			}
 			if (_addtoReport)
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterBeginTwoTrain"),

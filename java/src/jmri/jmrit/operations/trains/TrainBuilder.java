@@ -1900,6 +1900,15 @@ public class TrainBuilder extends TrainCommon {
 						log.debug("Skipping car ({}) no car destination", car.toString()); // NOI18N
 						addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 						continue;
+					} else {
+						// if departing staging try and find a destination for this car
+						if (car.getDestination() == null && car.getTrack() == _departStageTrack
+								&& _terminateStageTrack != null) {
+							log.debug(
+									"Car ({}) departing staging with final destination ({}) but no destination, try staging",
+									car.toString(), car.getFinalDestinationName());
+							findDestinationAndTrack(car, rl, _train.getTrainTerminatesRouteLocation());
+						}
 					}
 				}
 			}
