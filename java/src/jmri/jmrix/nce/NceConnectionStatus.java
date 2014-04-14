@@ -48,6 +48,7 @@ public class NceConnectionStatus implements NceListener {
 	private static final int ERROR5_STATE = 20; // Wrong NCE System, detected Power Cab
 	private static final int ERROR6_STATE = 21; // Wrong NCE System, detected Smart Booster SB3
 	private static final int ERROR7_STATE = 22; // Wrong NCE System, detected Power Pro
+	private static final int ERROR8_STATE = 23; // Wrong NCE System, detected SB5
 
 	private int epromState = INIT_STATE; // Eprom state
 	private boolean epromChecked = false;
@@ -84,18 +85,26 @@ public class NceConnectionStatus implements NceListener {
 	//
 	// NOTE: The USB port can not read CS memory, unless greater than 7.* version
 
-	private static final int VV_USB = 6; // Revision of USB EPROM VV.MM.mm = 6.3.x
+	private static final int VV_USB_V6 = 6; // Revision of USB EPROM VV.MM.mm = 6.3.x
 	private static final int VV_USB_V7 = 7; // 2012 revision of USB EPROM VV.MM.mm = 7.3.x
 	private static final int MM_USB = 3;
-	private static final int mm_USB_PwrCab = 0; // PowerCab
-	private static final int mm_USB_SB3 = 1; // SB3
-	private static final int mm_USB_PH = 2; // PH-Pro or PH-10
-
+	// V6 flavors
+	private static final int mm_USB_V6_PwrCab = 0;	// PowerCab
+	private static final int mm_USB_V6_SB3 = 1;	// SB3
+	private static final int mm_USB_V6_PH = 2;		// PH-Pro or PH-10
 	// Future releases by NCE (Not used by JMRI yet!)
-
-	private static final int mm_USB_ALL = 3; // All systems, not currently used
-	private static final int mm_USB_PC161 = 4; // Future use, PowerCab 1.61, not currently used
-	private static final int mm_USB_SB161 = 5; // Future use, SB3 1.61, not currently used
+	private static final int mm_USB_V6_ALL = 3;		// All systems, not currently used
+	private static final int mm_USB_V6_PC161 = 4;	// Future use, PowerCab 1.61, not currently used
+	private static final int mm_USB_V6_SB161 = 5;	// Future use, SB3 1.61, not currently used
+	// V7 flavors
+	private static final int mm_USB_V7_PC_128_A = 0;	// PowerCab with 1.28c
+	private static final int mm_USB_V7_SB5_165_A = 1;	// SB5 with 1.65
+	private static final int mm_USB_V7_SB5_165_B = 2;	// SB5 with 1.65
+	private static final int mm_USB_V7_PC_165 = 3;		// PowerCab with 1.65
+	private static final int mm_USB_V7_PC_128_B = 4;	// PowerCab with 1.28c
+	private static final int mm_USB_V7_SB3 = 5;			// SB3 with 1.28c
+	private static final int mm_USB_V7_PH = 6;			// PowerPro with 3.1.2007
+	private static final int mm_USB_V7_ALL = 7;			// All systems
 
 	private NceTrafficController tc = null;
 
@@ -193,8 +202,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR5_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null, "Wrong NCE System Connection selected in Preferences. "
-						+ "Change the System Connection to \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
-						+ "\" and the system to \"Power Cab\".", "Error", JOptionPane.ERROR_MESSAGE);
+						+ "The System Connection \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
+						+ "\" should change the system to \"Power Cab\".", "Error", JOptionPane.ERROR_MESSAGE);
 			epromState = NORMAL_STATE;
 			return null;
 		}
@@ -202,8 +211,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR6_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null, "Wrong NCE System Connection selected in Preferences. "
-						+ "Change the System Connection to \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
-						+ "\" and the system to \"Smart Booster SB3\".", "Error", JOptionPane.ERROR_MESSAGE);
+						+ "The System Connection \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
+						+ "\" should change the system to \"Smart Booster SB3\".", "Error", JOptionPane.ERROR_MESSAGE);
 			epromState = NORMAL_STATE;
 			return null;
 		}
@@ -211,8 +220,17 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR7_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null, "Wrong NCE System Connection selected in Preferences. "
-						+ "Change the System Connection to \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
-						+ "\" and the system to \"Power Pro\".", "Error", JOptionPane.ERROR_MESSAGE);
+						+ "The System Connection \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
+						+ "\" should change the system to \"Power Pro\".", "Error", JOptionPane.ERROR_MESSAGE);
+			epromState = NORMAL_STATE;
+			return null;
+		}
+		
+		if (epromState == ERROR8_STATE) {
+			if (JOptPane_ERROR_MESSAGES_ENABLED)
+				JOptionPane.showMessageDialog(null, "Wrong NCE System Connection selected in Preferences. "
+						+ "The System Connection \"" + jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME
+						+ "\" should change the system to \"SB5\".", "Error", JOptionPane.ERROR_MESSAGE);
 			epromState = NORMAL_STATE;
 			return null;
 		}
@@ -297,20 +315,40 @@ public class NceConnectionStatus implements NceListener {
 					epromState = ERROR4_STATE;
 				}
 
-			// Check for USB 6.3.x or 7.3.x
-			if ((VV == VV_USB || VV == VV_USB_V7) && MM == MM_USB) {
+			// Check for USB 6.3.x
+			if (VV == VV_USB_V6 && MM == MM_USB) {
 				// USB detected, check to see if user preferences are correct
-				if (mm == mm_USB_PwrCab && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
+				if (mm == mm_USB_V6_PwrCab && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
 					log.error("System Connection is incorrect, detected USB connected to a PowerCab");
 					epromState = ERROR5_STATE;
 				}
-				if (mm == mm_USB_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
+				if (mm == mm_USB_V6_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
 					log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
 					epromState = ERROR6_STATE;
 				}
-				if (mm == mm_USB_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+				if (mm == mm_USB_V6_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
 					log.error("System Connection is incorrect, detected USB connected to a Power Pro");
 					epromState = ERROR7_STATE;
+				}
+			}
+			// Check for USB 7.3.x
+			if (VV == VV_USB_V7 && MM == MM_USB) {
+				// USB V7 detected, check to see if user preferences are correct
+				if (((mm == mm_USB_V7_PC_128_A) || (mm == mm_USB_V7_PC_128_B)) && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
+					log.error("System Connection is incorrect, detected USB connected to a PowerCab");
+					epromState = ERROR5_STATE;
+				}
+				if (mm == mm_USB_V7_SB3 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB3) {
+					log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
+					epromState = ERROR6_STATE;
+				}
+				if (mm == mm_USB_V7_PH && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+					log.error("System Connection is incorrect, detected USB connected to a Power Pro");
+					epromState = ERROR7_STATE;
+				}
+				if (((mm == mm_USB_V7_SB5_165_A) || (mm == mm_USB_V7_SB5_165_B)) && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_SB5) {
+					log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB5");
+					epromState = ERROR8_STATE;
 				}
 			}
 
