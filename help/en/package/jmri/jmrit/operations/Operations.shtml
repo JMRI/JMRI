@@ -139,8 +139,9 @@
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
       <LI><A HREF="#Timetable">Timetable</A></LI>
+      <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
       <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
-      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>   
+      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
       <LI><A HREF="#TrainStatus">Train Status</A></LI>  
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
@@ -717,12 +718,15 @@
    
    <A NAME="ManifestOptions"></A>
    <H3>Options</H3>
+   
+   <H4>Generate CSV Manifests</H4>
 
-   If you want to create your own custom manifest using a comma separated value (.csv) file, select
-   this option. You can use a program like Excel to create a manifest to your liking. You can find
-   the manifest files in the operations directory in a directory called "csvManifests". Each line of
-   the file starts with a two or three letter code, followed by the code's description, and then any
-   parameters associated with the code. Here's a list of the current codes and descriptions:
+   If you want to create your own <A HREF="#SetupExcelProgram">custom
+    manifest</A> using a comma separated value (.csv) file, select this option. You can use a
+   program like Excel to create a manifest to your liking. You can find the manifest files in the
+   operations directory in a directory called "csvManifests". Each line of the file starts with a
+   two or three letter code, followed by the code's description, and then any parameters associated
+   with the code. Here's a list of the current codes and descriptions:
    <P></P>
    <table>
     <tr>
@@ -886,6 +890,8 @@
     You can find some examples of custom manifests at <A
      HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A>
    </P>
+   
+   <H4>Generate CSV Switch Lists</H4>
 
    <P>You can also generate custom switch lists using a comma separated value (.csv) files. You
     can find the switch list files in the operations directory in a directory called
@@ -954,6 +960,8 @@
      <td>End Switch List</td>
     </tr>
    </table>
+   
+   <H4>Enable Value Fields</H4>
 
    <P>There are two other options, "Enable Value Fields" and "Enable Radio Frequency
     Identification (RFID) Fields". You can use these fields to enter the value or cost of your
@@ -2598,13 +2606,14 @@
     train's manifest or build report.</p>
 
    <P>
-    If you select the "Generate CSV Manifest" from the <A HREF="#ManifestOptions">Options</A> window
-    found under "Tools" in the Settings or Trains window, two additional checkboxes will appear
-    labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
-    train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
-    allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
-    the function button for a built train becomes "Run". Pressing a train's "Run" button will start
-    the Excel program configured by the "Setup Excel Program (Manifest Creator)" window found in the
+    If you select the "Generate CSV Manifest" from the
+    <A HREF="#ManifestOptions">Options</A> window found under "Tools" in the Settings or Trains
+    window, two additional checkboxes will appear labeled "Open" and "Run". If the "Open" checkbox
+    is selected the "Function" button for a built train will become "Open" rather than "Print" or
+    "Preview". Pressing a train's "Open" button will allow you to examine the train's comma
+    separated value file. If you select the "Run" checkbox, the function button for a built train
+    becomes "Run". Pressing a train's "Run" button will start the Excel program configured by the
+    <A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A> window found in the
     Trains "Tools" menu .
    </P>
 
@@ -3061,8 +3070,22 @@
    <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
     files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
    directory. You can of course create your own program and also place it in the csvManifest
-   directory. 
-   
+   directory.
+
+   <P>
+    To enable the creation of the comma separated value (CSV) files needed for an external Excel program
+    see <a HREF="#ManifestOptions">Options</a> "Generate CSV Manifests".
+   </P>
+
+   <P>
+    You can also create custom switch lists. Install the program "MC4JMRI.xls" in the
+    JMRI/operations/csvSwitchList directory. You can configure the name of the Excel program by
+    opening the "Switch List by Location" window using the "Switch List" button at the bottom of the
+    "Trains" window. Then under "Tools" in the "Switch List by Location" window, select "Setup Excel
+    Program (Manifest Creator)". You must also enable the creation of CSV switch list files, see
+    <a HREF="#ManifestOptions">Options</a> "Generate CSV Switch Lists".
+   </P>
+
    <A NAME="SwitcherService"></A>
    <H3>Switcher Service</H3>
 
