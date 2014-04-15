@@ -212,14 +212,14 @@ public class JsonManifest extends TrainCommon {
     }
 
     public ObjectNode jsonPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
-        if (this.countUtilityCars(Setup.carAttributes, carList, car, rl, rld, PICKUP) == 0) {
+        if (this.countUtilityCars(Setup.getCarAttributes(), carList, car, rl, rld, PICKUP) == 0) {
             return null; // already printed out this car type
         }
         return pickUpCar(car);
     }
 
     protected ObjectNode setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
-        if (countUtilityCars(Setup.carAttributes, carList, car, rl, null, !PICKUP) == 0) {
+        if (countUtilityCars(Setup.getCarAttributes(), carList, car, rl, null, !PICKUP) == 0) {
             return null; // already printed out this car type
         }
         return jsonDropCar(car, isLocalMove(car));
@@ -230,7 +230,7 @@ public class JsonManifest extends TrainCommon {
             return null; // print nothing local move, see dropCar
         }
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -243,7 +243,7 @@ public class JsonManifest extends TrainCommon {
 
     public ObjectNode jsonDropCar(Car car, boolean isLocal) {
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -268,7 +268,7 @@ public class JsonManifest extends TrainCommon {
 
     private ObjectNode addSearchForCar(Car car) {
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -283,7 +283,7 @@ public class JsonManifest extends TrainCommon {
         for (RollingStock engine : engines) {
             if (engine.getRouteDestination().equals(location)) {
                 ObjectNode object = this.mapper.createObjectNode();
-                for (String attribute : Setup.engineAttributes) {
+                for (String attribute : Setup.getEngineAttributes()) {
                     object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
                 }
                 node.add(object);
@@ -297,7 +297,7 @@ public class JsonManifest extends TrainCommon {
         for (RollingStock engine : engines) {
             if (engine.getRouteLocation().equals(location) && !engine.getTrackName().equals("")) {
                 ObjectNode object = this.mapper.createObjectNode();
-                for (String attribute : Setup.engineAttributes) {
+                for (String attribute : Setup.getEngineAttributes()) {
                     object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
                 }
                 node.add(object);
