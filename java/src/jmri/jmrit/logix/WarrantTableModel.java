@@ -70,27 +70,28 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         _frame = frame;
         _manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
         _manager.addPropertyChangeListener(this);   // for adds and deletes
+        _warList = new ArrayList<Warrant>();
         _warNX = new ArrayList<Warrant>();
     }
 
-    public void init() {
-        if (_warList != null) {
-            for (int i=0; i<_warList.size(); i++) {
-                _warList.get(i).removePropertyChangeListener(this);
-            }
-        }
+    /**
+     * Preserve current listeners so that there is no gap to miss a propertyChange
+     */
+    public synchronized void init() {
+    	ArrayList<Warrant> tempList = new ArrayList<Warrant>();
         List <String> systemNameList = _manager.getSystemNameList();
-        _warList = new ArrayList <Warrant> (systemNameList.size());
-
         Iterator <String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            _warList.add(_manager.getBySystemName(iter.next()));
+            Warrant w =_manager.getBySystemName(iter.next());
+            if (!_warList.contains(w)) {		// new warrant
+                w.addPropertyChangeListener(this);
+            }
+        	tempList.add(w);
         }
-        // add name change listeners
-        for (int i=0; i<_warList.size(); i++) {
-            _warList.get(i).addPropertyChangeListener(this);
+        for (int i=0; i<_warNX.size(); i++) {
+        	tempList.add(_warNX.get(i));        	
         }
-        if (log.isDebugEnabled()) log.debug("_warList has "+_warList.size()+" warrants");
+        _warList = tempList;
     }
     
     public void addNXWarrant(Warrant w) {
