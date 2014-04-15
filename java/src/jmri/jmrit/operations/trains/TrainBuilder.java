@@ -538,12 +538,15 @@ public class TrainBuilder extends TrainCommon {
 
 		// now make manifest
 		new TrainManifest(_train);
-                try {
-                    new JsonManifest(_train).build();
-                } catch (IOException ex) {
-                    log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
-                    throw new BuildFailedException(ex);
-                }
+		try {
+			new JsonManifest(_train).build();
+		} catch (IOException ex) {
+			log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
+// DAB 4/15/2014 JsonManifest throws an exception when a new user profile has been created.
+// Not sure why the JSON manifest failing to complete should prevent the reset of the program
+// from working properly.
+//			throw new BuildFailedException(ex);
+		}
 		if (Setup.isGenerateCsvManifestEnabled())
 			new TrainCsvManifest(_train);
 		// now create and place train icon
