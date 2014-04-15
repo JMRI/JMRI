@@ -538,15 +538,27 @@ public class TrainBuilder extends TrainCommon {
 
 		// now make manifest
 		new TrainManifest(_train);
-		try {
-			new JsonManifest(_train).build();
-		} catch (IOException ex) {
-			log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
+//		try {
+//			new JsonManifest(_train).build();
+//		} catch (IOException ex) {
+//			log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
+//			throw new BuildFailedException(ex);
 // DAB 4/15/2014 JsonManifest throws an exception when a new user profile has been created.
 // Not sure why the JSON manifest failing to complete should prevent the reset of the program
 // from working properly.
-//			throw new BuildFailedException(ex);
-		}
+// Here's the trace:
+//			2014-04-15 19:32:10,518 ptionhandler.UncaughtExceptionHandler ERROR - Unhandled Exception: java.lang.NoClassDefFoundError: org/apache/commons/lang3/StringEscapeUtils [Build Train]
+//					java.lang.NoClassDefFoundError: org/apache/commons/lang3/StringEscapeUtils
+//						at jmri.jmrit.operations.trains.JsonManifest.getRollingStockAttribute(JsonManifest.java:360)
+//						at jmri.jmrit.operations.trains.JsonManifest.getEngineAttribute(JsonManifest.java:353)
+//						at jmri.jmrit.operations.trains.JsonManifest.pickupEngines(JsonManifest.java:301)
+//						at jmri.jmrit.operations.trains.JsonManifest.getLocations(JsonManifest.java:114)
+//						at jmri.jmrit.operations.trains.JsonManifest.build(JsonManifest.java:59)
+//						at jmri.jmrit.operations.trains.TrainBuilder.build(TrainBuilder.java:542)
+//						at jmri.jmrit.operations.trains.TrainBuilder.build(TrainBuilder.java:98)
+//						at jmri.jmrit.operations.trains.Train.build(Train.java:2599)			
+//			
+//		}
 		if (Setup.isGenerateCsvManifestEnabled())
 			new TrainCsvManifest(_train);
 		// now create and place train icon
