@@ -144,22 +144,22 @@ public class Setup {
 	public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
 
 	// the supported colors for printed text
-	public static final String BLACK = Bundle.getMessage("Black"); 
+	public static final String BLACK = Bundle.getMessage("Black");
 	public static final String RED = Bundle.getMessage("Red");
 	public static final String ORANGE = Bundle.getMessage("Orange");
-	public static final String YELLOW = Bundle.getMessage("Yellow");	
+	public static final String YELLOW = Bundle.getMessage("Yellow");
 	public static final String GREEN = Bundle.getMessage("Green");
 	public static final String BLUE = Bundle.getMessage("Blue");
-	public static final String GRAY = Bundle.getMessage("Gray");	
+	public static final String GRAY = Bundle.getMessage("Gray");
 
 	// Unit of Length
 	public static final String FEET = Bundle.getMessage("Feet");
 	public static final String METER = Bundle.getMessage("Meter");
 
-	public static final String[] carAttributes = { ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, OWNER,
+	private static final String[] carAttributes = { ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, OWNER,
 			TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
 			PICKUP_COMMENT, RWE };
-	public static final String[] engineAttributes = { ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+	private static final String[] engineAttributes = { ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
 			LOCATION, DESTINATION, COMMENT };
 
 	private static int scale = HO_SCALE; // Default scale
@@ -236,7 +236,6 @@ public class Setup {
 	private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
 	private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
 	private static boolean buildReportAlwaysPreviewEnabled = false; // when true use text editor to view build report
-	
 
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false; // when true, append engine number to train name
@@ -1032,6 +1031,10 @@ public class Setup {
 		return maxLength;
 	}
 
+	public static String[] getEngineAttributes() {
+		return engineAttributes.clone();
+	}
+
 	public static String[] getPickupEngineMessageFormat() {
 		return pickupEngineMessageFormat.clone();
 	}
@@ -1048,6 +1051,10 @@ public class Setup {
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropEngineMessageFormat(String[] format) {
 		dropEngineMessageFormat = format;
+	}
+
+	public static String[] getCarAttributes() {
+		return carAttributes.clone();
 	}
 
 	public static String[] getPickupCarMessageFormat() {
@@ -1220,7 +1227,7 @@ public class Setup {
 	public static Color getLocalColor() {
 		return getColor(localColor);
 	}
-	
+
 	private static Color getColor(String color) {
 		if (color.equals(BLUE))
 			return Color.blue;
@@ -1386,16 +1393,16 @@ public class Setup {
 		box.addItem(YELLOW);
 		box.addItem(GREEN);
 		box.addItem(BLUE);
-		box.addItem(GRAY);	
+		box.addItem(GRAY);
 		return box;
 	}
 
 	public static JComboBox getEngineMessageComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
-                for (String attribute : Setup.engineAttributes) {
-                    box.addItem(attribute);
-                }
+		for (String attribute : getEngineAttributes()) {
+			box.addItem(attribute);
+		}
 		if (isTabEnabled())
 			box.addItem(TAB);
 		return box;
@@ -1404,9 +1411,9 @@ public class Setup {
 	public static JComboBox getCarMessageComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem(NONE);
-                for (String attribute : Setup.carAttributes) {
-                    box.addItem(attribute);
-                }
+		for (String attribute : getCarAttributes()) {
+			box.addItem(attribute);
+		}
 		if (isTabEnabled())
 			box.addItem(TAB);
 		return box;
@@ -1469,7 +1476,7 @@ public class Setup {
 			return "unknown"; // NOI18N
 		}
 	}
-	
+
 	/**
 	 * Converts binary direction to a set of String directions
 	 * 
@@ -1487,7 +1494,7 @@ public class Setup {
 		if ((directions & NORTH) > 0)
 			dir[i++] = NORTH_DIR;
 		if ((directions & SOUTH) > 0)
-			dir[i++] = SOUTH_DIR;		
+			dir[i++] = SOUTH_DIR;
 		return dir;
 	}
 
@@ -1753,7 +1760,7 @@ public class Setup {
 			String name = a.getValue();
 			if (log.isDebugEnabled())
 				log.debug("railroadName: " + name);
-			railroadName = name;	// don't set the dirty bit
+			railroadName = name; // don't set the dirty bit
 		}
 		if (operations.getChild(Xml.SETTINGS) != null) {
 			if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {
