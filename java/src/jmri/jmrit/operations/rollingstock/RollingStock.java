@@ -551,6 +551,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		// first perform a code check
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
+		if (destination != null && !destination.acceptsTypeName(getTypeName()))
+			return Track.TYPE + " (" + getTypeName() + ")";
 		if (destination == null || track == null)
 			return Track.OKAY;
 		return track.accepts(this);
