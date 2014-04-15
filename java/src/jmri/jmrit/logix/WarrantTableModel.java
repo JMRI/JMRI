@@ -81,13 +81,21 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     	ArrayList<Warrant> tempList = new ArrayList<Warrant>();
         List <String> systemNameList = _manager.getSystemNameList();
         Iterator <String> iter = systemNameList.iterator();
+        // copy over warrants still listed
         while (iter.hasNext()) {
             Warrant w =_manager.getBySystemName(iter.next());
             if (!_warList.contains(w)) {		// new warrant
                 w.addPropertyChangeListener(this);
+            } else {
+            	_warList.remove(w);
             }
-        	tempList.add(w);
+        	tempList.add(w);	// add old or any new warrants
         }
+        // remove listeners from any deleted warrants
+        for (int i=0; i<_warList.size(); i++) {
+        	_warList.get(i).removePropertyChangeListener(this);
+        }
+        // add in current temporary NX warrants
         for (int i=0; i<_warNX.size(); i++) {
         	tempList.add(_warNX.get(i));        	
         }
