@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,10 @@ public class JsonManifest extends TrainCommon {
         this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
+    public File getFile() {
+        return TrainManagerXml.instance().getJsonManifestFile(this.train.getName());
+    }
+
     public void build() throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(JSON.LOCATIONS, this.getLocations());
@@ -63,7 +68,6 @@ public class JsonManifest extends TrainCommon {
         // build manifest
         ArrayNode locations = this.mapper.createArrayNode();
 
-        //StringBuilder builder = new StringBuilder(); // uncomment to commit without breaking everything
         List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
 
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
