@@ -30,6 +30,7 @@ function getTrains(group) {
                         window.open("/web/webThrottle.html?loconame=" + $(this).parent().data("id"), $(this).parent().data("address")).focus();
                     }
                 });
+                $(".roster-entry td").css("cursor","pointer");
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
             $("#trains-options").removeClass("hidden").addClass("show");
