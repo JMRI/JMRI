@@ -197,7 +197,7 @@ public class RosterServlet extends HttpServlet {
         } else if (type.equals("file")) {
             ServletUtil.getHelper().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.APPLICATION_XML); // NOI18N
         } else if (type.equals("throttle")) {
-            ServletUtil.getHelper().writeFile(response, new File(FileUtil.getUserFilesPath(), "trottle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
+            ServletUtil.getHelper().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
         } else {
             // don't know what to do
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
