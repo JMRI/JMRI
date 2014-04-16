@@ -30,12 +30,12 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class LocoIcon extends PositionableLabel {
 
-    public static final String WHITE = "White";		//loco background colors
-    public static final String GREEN = "Green";
-    public static final String GRAY = "Gray";
-    public static final String RED = "Red";
-    public static final String BLUE = "Blue";
-    public static final String YELLOW = "Yellow";
+    public static final String WHITE = Bundle.getMessage("White");		//loco background colors
+    public static final String GREEN = Bundle.getMessage("Green");
+    public static final String GRAY = Bundle.getMessage("Gray");
+    public static final String RED = Bundle.getMessage("Red");
+    public static final String BLUE = Bundle.getMessage("Blue");
+    public static final String YELLOW = Bundle.getMessage("Yellow");
     
     public static final Color COLOR_BLUE = new Color(40, 140, 255);
     
