@@ -2706,11 +2706,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean printManifest(boolean isPreview) {
 		if (isModified()) {
 			new TrainManifest(this);
-//			try {
-//				new JsonManifest(this).build();
-//			} catch (IOException ex) {
-//				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-//			}
+			try {
+				new JsonManifest(this).build();
+			} catch (IOException ex) {
+				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+			}
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
@@ -2771,11 +2771,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	public File createCSVManifestFile() {
 		if (isModified()) {
 			new TrainManifest(this);
-//			try {
-//				new JsonManifest(this).build();
-//			} catch (IOException ex) {
-//				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
-//			}
+			try {
+				new JsonManifest(this).build();
+			} catch (IOException ex) {
+				log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+			}
 			if (Setup.isGenerateCsvManifestEnabled())
 				new TrainCsvManifest(this);
 		}
