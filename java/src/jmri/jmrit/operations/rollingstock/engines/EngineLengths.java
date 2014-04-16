@@ -51,7 +51,7 @@ public class EngineLengths {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] lengths = LENGTHS.split("%%"); // NOI18N
+			String[] lengths = LENGTHS.split(","); // NOI18N
 			for (int i = 0; i < lengths.length; i++)
 				list.add(lengths[i]);
 		}

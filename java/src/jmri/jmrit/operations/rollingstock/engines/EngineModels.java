@@ -75,7 +75,7 @@ public class EngineModels {
 
 	public String[] getNames() {
 		if (_list.size() == 0) {
-			String[] types = MODELS.split("%%"); // NOI18N
+			String[] types = MODELS.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				_list.add(types[i]);
 		}
@@ -173,11 +173,11 @@ public class EngineModels {
 	}
 
 	private void loadDefaults() {
-		String[] models = MODELS.split("%%"); // NOI18N
-		String[] hps = HORSEPOWER.split("%%"); // NOI18N
-		String[] lengths = ENGINELENGTHS.split("%%"); // NOI18N
-		String[] types = ENGINETYPES.split("%%"); // NOI18N
-		String[] weights = ENGINEWEIGHTS.split("%%"); // NOI18N
+		String[] models = MODELS.split(","); // NOI18N
+		String[] hps = HORSEPOWER.split(","); // NOI18N
+		String[] lengths = ENGINELENGTHS.split(","); // NOI18N
+		String[] types = ENGINETYPES.split(","); // NOI18N
+		String[] weights = ENGINEWEIGHTS.split(","); // NOI18N
 		if (models.length != hps.length || models.length != lengths.length
 				|| models.length != types.length || models.length != weights.length) {
 			log.error("Defaults do not have the right number of items, " + "models="

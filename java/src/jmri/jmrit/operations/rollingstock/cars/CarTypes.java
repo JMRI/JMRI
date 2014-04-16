@@ -58,9 +58,9 @@ public class CarTypes {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] types = TYPES.split("%%"); // NOI18N
+			String[] types = TYPES.split(","); // NOI18N
 			if (Setup.getCarTypes().equals(Setup.AAR))
-				types = ARR_TYPES.split("%%"); // NOI18N
+				types = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				list.add(types[i]);
 		}
@@ -86,8 +86,8 @@ public class CarTypes {
 	 * list
 	 */
 	public void changeDefaultNames(String type) {
-		String[] convert = CONVERT_TYPES.split("%%"); // NOI18N
-		String[] types = TYPES.split("%%"); // NOI18N
+		String[] convert = CONVERT_TYPES.split(","); // NOI18N
+		String[] types = TYPES.split(","); // NOI18N
 		if (convert.length != types.length) {
 			log.error(
 					"Properties file doesn't have equal length conversion strings, carTypeNames {}, carTypeConvert {}",
@@ -100,7 +100,7 @@ public class CarTypes {
 				replaceName(convert[i], types[i]);
 			}
 			// remove AAR types
-			String[] aarTypes = ARR_TYPES.split("%%"); // NOI18N
+			String[] aarTypes = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < aarTypes.length; i++)
 				list.remove(aarTypes[i]);
 			// add descriptive types
@@ -117,7 +117,7 @@ public class CarTypes {
 			for (int i = 0; i < types.length; i++)
 				list.remove(types[i]);
 			// add AAR types
-			types = ARR_TYPES.split("%%"); // NOI18N
+			types = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++) {
 				if (!list.contains(types[i]))
 					list.add(types[i]);
