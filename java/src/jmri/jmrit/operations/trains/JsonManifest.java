@@ -41,7 +41,6 @@ public class JsonManifest extends TrainCommon {
 
     protected final Locale locale = Locale.getDefault();
     protected final Train train;
-    protected String resourcePrefix;
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final static Logger log = LoggerFactory.getLogger(Manifest.class);
@@ -50,7 +49,6 @@ public class JsonManifest extends TrainCommon {
         this.train = train;
         this.cars = 0;
         this.emptyCars = 0;
-        this.resourcePrefix = "Manifest";
         this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
