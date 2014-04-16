@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import javax.swing.JComboBox;
+
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.web.server.WebServerManager;
+
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,17 +121,17 @@ public class Setup {
 	public static final String COLOR = Bundle.getMessage("Color");
 	public static final String TRACK = Bundle.getMessage("Track");
 	public static final String DESTINATION = Bundle.getMessage("Destination");
-	public static final String DEST_TRACK = Bundle.getMessage("DestAndTrack");
-	public static final String FINAL_DEST = Bundle.getMessage("FinalDestination");
-	public static final String FINAL_DEST_TRACK = Bundle.getMessage("FinalDestAndTrack");
+	public static final String DEST_TRACK = Bundle.getMessage("Dest&Track");
+	public static final String FINAL_DEST = Bundle.getMessage("Final_Dest");
+	public static final String FINAL_DEST_TRACK = Bundle.getMessage("FD&Track");
 	public static final String LOCATION = Bundle.getMessage("Location");
 	public static final String CONSIST = Bundle.getMessage("Consist");
 	public static final String KERNEL = Bundle.getMessage("Kernel");
 	public static final String OWNER = Bundle.getMessage("Owner");
 	public static final String RWE = Bundle.getMessage("RWE");
 	public static final String COMMENT = Bundle.getMessage("Comment");
-	public static final String DROP_COMMENT = Bundle.getMessage("DropComment");
-	public static final String PICKUP_COMMENT = Bundle.getMessage("PickupComment");
+	public static final String DROP_COMMENT = Bundle.getMessage("SetOut_Msg");
+	public static final String PICKUP_COMMENT = Bundle.getMessage("PickUp_Msg");
 	public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
 	public static final String NONE = " "; // none has be a character or a space
 	public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
@@ -1188,6 +1192,8 @@ public class Setup {
 				format[i] = NO_DEST_TRACK;
 			else if (format[i].equals(LOCATION))
 				format[i] = NO_LOCATION;
+			else if (format[i].equals(TRACK))
+				format[i] = NO_LOCATION;
 		}
 		return format;
 	}
@@ -1558,51 +1564,22 @@ public class Setup {
 		values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
-		values.setAttribute(Xml.PREFIX, getPickupEnginePrefix());
-		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < pickupEngineMessageFormat.length; i++) {
-			buf.append(pickupEngineMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
-
+		storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
+		
 		e.addContent(values = new Element(Xml.DROP_ENG_FORMAT));
-		values.setAttribute(Xml.PREFIX, getDropEnginePrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < dropEngineMessageFormat.length; i++) {
-			buf.append(dropEngineMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getDropEnginePrefix(), getDropEngineMessageFormat());
 
 		e.addContent(values = new Element(Xml.PICKUP_CAR_FORMAT));
-		values.setAttribute(Xml.PREFIX, getPickupCarPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < pickupCarMessageFormat.length; i++) {
-			buf.append(pickupCarMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getPickupCarPrefix(), getPickupCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.DROP_CAR_FORMAT));
-		values.setAttribute(Xml.PREFIX, getDropCarPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < dropCarMessageFormat.length; i++) {
-			buf.append(dropCarMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getDropCarPrefix(), getDropCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.LOCAL_FORMAT));
-		values.setAttribute(Xml.PREFIX, getLocalPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < localMessageFormat.length; i++) {
-			buf.append(localMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getLocalPrefix(), getLocalMessageFormat());
 
 		e.addContent(values = new Element(Xml.MISSING_CAR_FORMAT));
-		buf = new StringBuffer();
-		for (int i = 0; i < missingCarMessageFormat.length; i++) {
-			buf.append(missingCarMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, "", getMissingCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST));
 		values.setAttribute(Xml.SAME_AS_MANIFEST, isSwitchListFormatSameAsManifest() ? Xml.TRUE : Xml.FALSE);
@@ -1611,28 +1588,13 @@ public class Setup {
 		values.setAttribute(Xml.PAGE_MODE, isSwitchListPagePerTrainEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
-		values.setAttribute(Xml.PREFIX, getSwitchListPickupCarPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < switchListPickupCarMessageFormat.length; i++) {
-			buf.append(switchListPickupCarMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getSwitchListPickupCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_DROP_CAR_FORMAT));
-		values.setAttribute(Xml.PREFIX, getSwitchListDropCarPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < switchListDropCarMessageFormat.length; i++) {
-			buf.append(switchListDropCarMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getSwitchListDropCarPrefix(), getSwitchListDropCarMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_LOCAL_FORMAT));
-		values.setAttribute(Xml.PREFIX, getSwitchListLocalPrefix());
-		buf = new StringBuffer();
-		for (int i = 0; i < switchListLocalMessageFormat.length; i++) {
-			buf.append(switchListLocalMessageFormat[i] + ",");
-		}
-		values.setAttribute(Xml.SETTING, buf.toString());
+		storeXmlMessageFormat(values, getSwitchListLocalPrefix(), getSwitchListLocalMessageFormat());
 
 		e.addContent(values = new Element(Xml.PANEL));
 		values.setAttribute(Xml.NAME, getPanelName());
@@ -1744,10 +1706,18 @@ public class Setup {
 				: Xml.FALSE);
 		return e;
 	}
+	
+	private static void storeXmlMessageFormat(Element values, String prefix, String[] messageFormat) {
+		values.setAttribute(Xml.PREFIX, prefix);
+		StringBuffer buf = new StringBuffer();
+		stringToKeyConversion(messageFormat);
+		for (String attibute : messageFormat) {
+			buf.append(attibute + ",");
+		}
+		values.setAttribute(Xml.SETTING, buf.toString());
+	}
 
 	public static void load(Element e) {
-		// if (log.isDebugEnabled()) jmri.jmrit.XmlFile.dumpElement(e);
-
 		if (e.getChild(Xml.OPERATIONS) == null) {
 			log.debug("operation setup values missing");
 			return;
@@ -1910,9 +1880,9 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("pickupEngFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setPickupEngineMessageFormat(format);
+				String[] keys = setting.split(",");
+				keyToStringConversion(keys);
+				setPickupEngineMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.DROP_ENG_FORMAT) != null) {
@@ -1922,9 +1892,9 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("dropEngFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setDropEngineMessageFormat(format);
+				String[] keys = setting.split(",");
+				keyToStringConversion(keys);
+				setDropEngineMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.PICKUP_CAR_FORMAT) != null) {
@@ -1934,10 +1904,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("pickupCarFormat: " + setting);
-				String[] format = setting.split(",");
-				replaceOldFormat(format);
-				fixLocaleBug(format);
-				setPickupCarMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setPickupCarMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.DROP_CAR_FORMAT) != null) {
@@ -1947,10 +1917,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("dropCarFormat: " + setting);
-				String[] format = setting.split(",");
-				replaceOldFormat(format);
-				fixLocaleBug(format);
-				setDropCarMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setDropCarMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.LOCAL_FORMAT) != null) {
@@ -1960,9 +1930,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("localFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setLocalMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setLocalMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.MISSING_CAR_FORMAT) != null) {
@@ -1970,9 +1941,9 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("missingCarFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setMissingCarMessageFormat(format);
+				String[] keys = setting.split(",");
+				keyToStringConversion(keys);
+				setMissingCarMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST) != null) {
@@ -2008,9 +1979,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("switchListpickupCarFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setSwitchListPickupCarMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setSwitchListPickupCarMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_DROP_CAR_FORMAT) != null) {
@@ -2020,9 +1992,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("switchListDropCarFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setSwitchListDropCarMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setSwitchListDropCarMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_LOCAL_FORMAT) != null) {
@@ -2032,9 +2005,10 @@ public class Setup {
 				String setting = a.getValue();
 				if (log.isDebugEnabled())
 					log.debug("switchListLocalFormat: " + setting);
-				String[] format = setting.split(",");
-				fixLocaleBug(format);
-				setSwitchListLocalMessageFormat(format);
+				String[] keys = setting.split(",");
+				replaceOldFormat(keys);
+				keyToStringConversion(keys);
+				setSwitchListLocalMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.PANEL) != null) {
@@ -2498,25 +2472,64 @@ public class Setup {
 		}
 	}
 
-	// replace old pickup and drop message format
+	// replace old pickup and drop message keys
 	// Change happened from 2.11.3 to 2.11.4
+	// 4/16/2014
+	// replace three keys that have spaces in the text
 	private static void replaceOldFormat(String[] format) {
 		for (int i = 0; i < format.length; i++) {
 			if (format[i].equals("Pickup Msg")) // NOI18N
 				format[i] = PICKUP_COMMENT;
-			if (format[i].equals("Drop Msg")) // NOI18N
+			else if (format[i].equals("Drop Msg")) // NOI18N
 				format[i] = DROP_COMMENT;
+			// three keys with spaces that need conversion
+			if (format[i].equals("PickUp Msg")) // NOI18N
+				format[i] = "PickUp_Msg"; // NOI18N 
+			else if (format[i].equals("SetOut Msg")) // NOI18N
+				format[i] = "SetOut_Msg"; // NOI18N
+			else if (format[i].equals("Final Dest")) // NOI18N
+				format[i] = "Final_Dest"; // NOI18N 
 		}
 	}
 
-	// bogus fix for change in locale US to and from UK
-	// TODO code needs to change, should be saving tag and not actual string
-	private static void fixLocaleBug(String[] format) {
-		for (int i = 0; i < format.length; i++) {
-			if (ROAD.equals("Road") && format[i].equals("Railway")) // NOI18N
-				format[i] = ROAD;
-			else if (ROAD.equals("Railway") && format[i].equals("Road")) // NOI18N
-				format[i] = ROAD;
+	
+	/**
+	 * Converts the xml key to the proper locale text
+	 * @param keys
+	 */
+	private static void keyToStringConversion(String[] keys) {
+		for (int i = 0; i < keys.length; i++) {
+			if (keys[i].equals(" "))
+				continue;
+			try {
+				keys[i] = Bundle.getMessage(keys[i]);
+			} catch (Exception e) {
+					log.debug("Key {}: ({}) not found", i, keys[i]);
+			}
+		}
+	}
+	
+	
+	private static final String[] attributtes = { "Road", "Number", "Type", "Model", "Length", "Load", "Color",
+			"Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Owner",
+			"RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab" };
+	/**
+	 * Converts the strings into English tags for xml storage
+	 * @param strings
+	 */
+	private static void stringToKeyConversion(String[] strings) {
+		Locale locale = Locale.ROOT;
+		for (int i = 0; i < strings.length; i++) {
+			String old = strings[i];
+			if (old.equals(" "))
+				continue;
+			for (String attribute : attributtes) {
+				if (strings[i].equals(Bundle.getMessage(attribute))) {
+					strings[i] = Bundle.getMessage(locale, attribute);
+					break;
+				}
+			}
+//			log.debug("Converted {} to {}", old, strings[i]);
 		}
 	}
 
