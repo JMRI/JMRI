@@ -97,8 +97,34 @@ public class XBeeNodeManager implements XBeeListener {
           node.setGlobalAddress(ad64b);
           node.setIdentifier(nd.getNodeIdentifier());
        }
-    }
+    } else {
+      // check to see if the node sending this message is one we know
+      // about.  If not, add it to the list of nodes.
+     com.rapplogic.xbee.api.XBeeAddress xaddr = ((com.rapplogic.xbee.api.wpan.RxBaseResponse)response).getSourceAddress();
+     int address;
+     if(xaddr instanceof com.rapplogic.xbee.api.XBeeAddress16) 
+        address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr).get16BitValue();
+     else return; // we don't handle the 64 bit address for now.
 
+     XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+     if(node==null) {
+         // the node does not exist, we're adding a new one.
+         node=(XBeeNode)xtc.newNode();
+         // register the node with the traffic controller
+         xtc.registerNode(node); 
+         // update the node information.
+         node.setNodeAddress(address);
+         int ad16i[]=xaddr.getAddress();
+         byte ad16b[]=node.getUserAddress();
+         for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
+         node.setUserAddress(ad16b); 
+         //int ad64i[]=response.getNodeAddress64().getAddress();
+         //byte ad64b[]=node.getGlobalAddress();
+         //for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
+         //node.setGlobalAddress(ad64b);
+         //node.setIdentifier(nd.getNodeIdentifier());
+      }
+    }
   } 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeNodeManager.class.getName());
