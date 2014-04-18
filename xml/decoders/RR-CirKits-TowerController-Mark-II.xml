@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008, 2014 All rights reserved -->
-<!-- $Id: RR-CirKits-TowerController-Mark-II.xml,v 0.11 2014/01/27 12:48:43 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TowerController-Mark-II.xml,v 0.12 2014/04/17 15:05:17 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,10 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.11" lastUpdated="20140127"/>
+  <version author="dick@rr-cirkits.com" version="0.12" lastUpdated="20140417"/>
   <!-- Version 0.01  Working version modified from TowerMan -->
   <!-- Version 0.10  TowerController-Mark-II version -->
   <!-- Version 0.11  TowerController-Mark-II version -->
+  <!-- Version 0.12  TowerController-Mark-II Change to OPs mode only -->
 
 
   <decoder>
@@ -29,13 +30,13 @@
         <shortAddressVal/>
       </variable>
 
-      <variable label="Firmware Version" CV="7" readOnly="yes" item="Firmware Version" default="1">
+      <variable label="Firmware Version" CV="7" readOnly="yes" item="Firmware Version" default="11">
         <decVal/>
       </variable>
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer ID" default="87">
         <decVal/>
       </variable>
-      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="0" comment="TowerController Mark-II ID=24">
+      <variable label="Hardware ID" CV="9" readOnly="yes" item="Hardware ID" default="24" comment="TowerController Mark-II ID=24">
         <decVal/>
       </variable>
 		<variable label="Extended Address" CV="17" default="9999" item="Long Address" comment="5 digit address (Range 00001-16383)">
@@ -189,7 +190,7 @@
         <splitVal highCV="130" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PA1 Output-Input" CV="131" mask="XVXXXXXX">
+      <variable label="PA1 Output-Input" CV="131" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -316,13 +317,13 @@
       </variable>
 
       <!-- Input #2 -->
-      <variable label="PA2 Base Address" CV="137" mask="VVVVVVVV" default="0">
+      <variable label="PA2 Base Address" CV="137" mask="VVVVVVVV" default="1">
         <splitVal highCV="138" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA2 Mode" CV="138" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA2 Output-Input" CV="139" mask="XVXXXXXX">
+      <variable label="PA2 Output-Input" CV="139" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA2 Input Direction" CV="139" mask="VXXXXXXX">
@@ -442,13 +443,13 @@
       </variable>
 
       <!-- Input #3 -->
-      <variable label="PA3 Base Address" CV="145" mask="VVVVVVVV" default="0">
+      <variable label="PA3 Base Address" CV="145" mask="VVVVVVVV" default="2">
         <splitVal highCV="146" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA3 Mode" CV="146" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA3 Output-Input" CV="147" mask="XVXXXXXX">
+      <variable label="PA3 Output-Input" CV="147" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA3 Input Direction" CV="147" mask="VXXXXXXX">
@@ -568,13 +569,13 @@
       </variable>
 
       <!-- Input #4 -->
-      <variable label="PA4 Base Address" CV="153" mask="VVVVVVVV" default="0">
+      <variable label="PA4 Base Address" CV="153" mask="VVVVVVVV" default="3">
         <splitVal highCV="154" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA4 Mode" CV="154" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA4 Output-Input" CV="155" mask="XVXXXXXX">
+      <variable label="PA4 Output-Input" CV="155" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA4 Input Direction" CV="155" mask="VXXXXXXX">
@@ -694,11 +695,11 @@
       </variable>
 
       <!-- Input #5 -->
-      <variable label="PA5 Base Address" CV="161" mask="VVVVVVVV" default="0">
+      <variable label="PA5 Base Address" CV="161" mask="VVVVVVVV" default="4">
         <splitVal highCV="162" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PA5 Output-Input" CV="163" mask="XVXXXXXX">
+      <variable label="PA5 Output-Input" CV="163" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -825,13 +826,13 @@
       </variable>
 
       <!-- Input #6 -->
-      <variable label="PA6 Base Address" CV="169" mask="VVVVVVVV" default="0">
+      <variable label="PA6 Base Address" CV="169" mask="VVVVVVVV" default="5">
         <splitVal highCV="170" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA6 Mode" CV="170" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA6 Output-Input" CV="171" mask="XVXXXXXX">
+      <variable label="PA6 Output-Input" CV="171" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA6 Input Direction" CV="171" mask="VXXXXXXX">
@@ -951,13 +952,13 @@
       </variable>
 
       <!-- Input #7 -->
-      <variable label="PA7 Base Address" CV="177" mask="VVVVVVVV" default="0">
+      <variable label="PA7 Base Address" CV="177" mask="VVVVVVVV" default="6">
         <splitVal highCV="178" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA7 Mode" CV="178" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA7 Output-Input" CV="179" mask="XVXXXXXX">
+      <variable label="PA7 Output-Input" CV="179" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA7 Input Direction" CV="179" mask="VXXXXXXX">
@@ -1077,13 +1078,13 @@
       </variable>
 
       <!-- Input #8 -->
-      <variable label="PA8 Base Address" CV="185" mask="VVVVVVVV" default="0">
+      <variable label="PA8 Base Address" CV="185" mask="VVVVVVVV" default="7">
         <splitVal highCV="186" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PA8 Mode" CV="186" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PA8 Output-Input" CV="187" mask="XVXXXXXX">
+      <variable label="PA8 Output-Input" CV="187" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PA8 Input Direction" CV="187" mask="VXXXXXXX">
@@ -1203,11 +1204,11 @@
       </variable>
 
       <!-- Input #9 -->
-      <variable label="PB1 Base Address" CV="193" mask="VVVVVVVV" default="0">
+      <variable label="PB1 Base Address" CV="193" mask="VVVVVVVV" default="8">
         <splitVal highCV="194" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PB1 Output-Input" CV="195" mask="XVXXXXXX">
+      <variable label="PB1 Output-Input" CV="195" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -1334,13 +1335,13 @@
       </variable>
 
       <!-- Input #10 -->
-      <variable label="PB2 Base Address" CV="201" mask="VVVVVVVV" default="0">
+      <variable label="PB2 Base Address" CV="201" mask="VVVVVVVV" default="9">
         <splitVal highCV="202" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB2 Mode" CV="202" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB2 Output-Input" CV="203" mask="XVXXXXXX">
+      <variable label="PB2 Output-Input" CV="203" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB2 Input Direction" CV="203" mask="VXXXXXXX">
@@ -1460,13 +1461,13 @@
       </variable>
 
       <!-- Input #11 -->
-      <variable label="PB3 Base Address" CV="209" mask="VVVVVVVV" default="0">
+      <variable label="PB3 Base Address" CV="209" mask="VVVVVVVV" default="10">
         <splitVal highCV="210" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB3 Mode" CV="210" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB3 Output-Input" CV="211" mask="XVXXXXXX">
+      <variable label="PB3 Output-Input" CV="211" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB3 Input Direction" CV="211" mask="VXXXXXXX">
@@ -1586,13 +1587,13 @@
       </variable>
 
       <!-- Input #12 -->
-      <variable label="PB4 Base Address" CV="217" mask="VVVVVVVV" default="0">
+      <variable label="PB4 Base Address" CV="217" mask="VVVVVVVV" default="11">
         <splitVal highCV="218" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB4 Mode" CV="218" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB4 Output-Input" CV="219" mask="XVXXXXXX">
+      <variable label="PB4 Output-Input" CV="219" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB4 Input Direction" CV="219" mask="VXXXXXXX">
@@ -1712,11 +1713,11 @@
       </variable>
 
       <!-- Input #13 -->
-      <variable label="PB5 Base Address" CV="225" mask="VVVVVVVV" default="0">
+      <variable label="PB5 Base Address" CV="225" mask="VVVVVVVV" default="12">
         <splitVal highCV="226" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PB5 Output-Input" CV="227" mask="XVXXXXXX">
+      <variable label="PB5 Output-Input" CV="227" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -1843,13 +1844,13 @@
       </variable>
 
       <!-- Input #14 -->
-      <variable label="PB6 Base Address" CV="233" mask="VVVVVVVV" default="0">
+      <variable label="PB6 Base Address" CV="233" mask="VVVVVVVV" default="13">
         <splitVal highCV="234" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB6 Mode" CV="234" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB6 Output-Input" CV="235" mask="XVXXXXXX">
+      <variable label="PB6 Output-Input" CV="235" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB6 Input Direction" CV="235" mask="VXXXXXXX">
@@ -1969,13 +1970,13 @@
       </variable>
 
       <!-- Input #15 -->
-      <variable label="PB7 Base Address" CV="241" mask="VVVVVVVV" default="0">
+      <variable label="PB7 Base Address" CV="241" mask="VVVVVVVV" default="14">
         <splitVal highCV="242" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB7 Mode" CV="242" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB7 Output-Input" CV="243" mask="XVXXXXXX">
+      <variable label="PB7 Output-Input" CV="243" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB7 Input Direction" CV="243" mask="VXXXXXXX">
@@ -2095,13 +2096,13 @@
       </variable>
 
       <!-- Input #16 -->
-      <variable label="PB8 Base Address" CV="249" mask="VVVVVVVV" default="0">
+      <variable label="PB8 Base Address" CV="249" mask="VVVVVVVV" default="15">
         <splitVal highCV="250" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PB8 Mode" CV="250" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PB8 Output-Input" CV="251" mask="XVXXXXXX">
+      <variable label="PB8 Output-Input" CV="251" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PB8 Input Direction" CV="251" mask="VXXXXXXX">
@@ -2221,11 +2222,11 @@
       </variable>
 
       <!-- Input #17 -->
-      <variable label="PC1 Base Address" CV="257" mask="VVVVVVVV" default="0">
+      <variable label="PC1 Base Address" CV="257" mask="VVVVVVVV" default="16">
         <splitVal highCV="258" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PC1 Output-Input" CV="259" mask="XVXXXXXX">
+      <variable label="PC1 Output-Input" CV="259" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -2352,13 +2353,13 @@
       </variable>
 
       <!-- Input #18 -->
-      <variable label="PC2 Base Address" CV="265" mask="VVVVVVVV" default="0">
+      <variable label="PC2 Base Address" CV="265" mask="VVVVVVVV" default="17">
         <splitVal highCV="266" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC2 Mode" CV="266" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC2 Output-Input" CV="267" mask="XVXXXXXX">
+      <variable label="PC2 Output-Input" CV="267" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC2 Input Direction" CV="267" mask="VXXXXXXX">
@@ -2478,13 +2479,13 @@
       </variable>
 
       <!-- Input #19 -->
-      <variable label="PC3 Base Address" CV="273" mask="VVVVVVVV" default="0">
+      <variable label="PC3 Base Address" CV="273" mask="VVVVVVVV" default="18">
         <splitVal highCV="274" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC3 Mode" CV="274" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC3 Output-Input" CV="275" mask="XVXXXXXX">
+      <variable label="PC3 Output-Input" CV="275" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC3 Input Direction" CV="275" mask="VXXXXXXX">
@@ -2604,13 +2605,13 @@
       </variable>
 
       <!-- Input #20 -->
-      <variable label="PC4 Base Address" CV="281" mask="VVVVVVVV" default="0">
+      <variable label="PC4 Base Address" CV="281" mask="VVVVVVVV" default="19">
         <splitVal highCV="282" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC4 Mode" CV="282" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC4 Output-Input" CV="283" mask="XVXXXXXX">
+      <variable label="PC4 Output-Input" CV="283" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC4 Input Direction" CV="283" mask="VXXXXXXX">
@@ -2730,11 +2731,11 @@
       </variable>
 
       <!-- Input #21 -->
-      <variable label="PC5 Base Address" CV="289" mask="VVVVVVVV" default="0">
+      <variable label="PC5 Base Address" CV="289" mask="VVVVVVVV" default="20">
         <splitVal highCV="290" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PC5 Output-Input" CV="291" mask="XVXXXXXX">
+      <variable label="PC5 Output-Input" CV="291" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -2861,13 +2862,13 @@
       </variable>
 
       <!-- Input #22 -->
-      <variable label="PC6 Base Address" CV="297" mask="VVVVVVVV" default="0">
+      <variable label="PC6 Base Address" CV="297" mask="VVVVVVVV" default="21">
         <splitVal highCV="298" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC6 Mode" CV="298" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC6 Output-Input" CV="299" mask="XVXXXXXX">
+      <variable label="PC6 Output-Input" CV="299" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC6 Input Direction" CV="299" mask="VXXXXXXX">
@@ -2987,13 +2988,13 @@
       </variable>
 
       <!-- Input #23 -->
-      <variable label="PC7 Base Address" CV="305" mask="VVVVVVVV" default="0">
+      <variable label="PC7 Base Address" CV="305" mask="VVVVVVVV" default="22">
         <splitVal highCV="306" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC7 Mode" CV="306" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC7 Output-Input" CV="307" mask="XVXXXXXX">
+      <variable label="PC7 Output-Input" CV="307" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC7 Input Direction" CV="307" mask="VXXXXXXX">
@@ -3113,13 +3114,13 @@
       </variable>
 
       <!-- Input #24 -->
-      <variable label="PC8 Base Address" CV="313" mask="VVVVVVVV" default="0">
+      <variable label="PC8 Base Address" CV="313" mask="VVVVVVVV" default="23">
         <splitVal highCV="314" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PC8 Mode" CV="314" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PC8 Output-Input" CV="315" mask="XVXXXXXX">
+      <variable label="PC8 Output-Input" CV="315" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PC8 Input Direction" CV="315" mask="VXXXXXXX">
@@ -3239,11 +3240,11 @@
       </variable>
 
       <!-- Input #25 -->
-      <variable label="PD1 Base Address" CV="321" mask="VVVVVVVV" default="0">
+      <variable label="PD1 Base Address" CV="321" mask="VVVVVVVV" default="24">
         <splitVal highCV="322" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PD1 Output-Input" CV="323" mask="XVXXXXXX">
+      <variable label="PD1 Output-Input" CV="323" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -3370,13 +3371,13 @@
       </variable>
 
       <!-- Input #26 -->
-      <variable label="PD2 Base Address" CV="329" mask="VVVVVVVV" default="0">
+      <variable label="PD2 Base Address" CV="329" mask="VVVVVVVV" default="25">
         <splitVal highCV="330" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD2 Mode" CV="330" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD2 Output-Input" CV="331" mask="XVXXXXXX">
+      <variable label="PD2 Output-Input" CV="331" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD2 Input Direction" CV="331" mask="VXXXXXXX">
@@ -3496,13 +3497,13 @@
       </variable>
 
       <!-- Input #27 -->
-      <variable label="PD3 Base Address" CV="337" mask="VVVVVVVV" default="0">
+      <variable label="PD3 Base Address" CV="337" mask="VVVVVVVV" default="26">
         <splitVal highCV="338" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD3 Mode" CV="338" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD3 Output-Input" CV="339" mask="XVXXXXXX">
+      <variable label="PD3 Output-Input" CV="339" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD3 Input Direction" CV="339" mask="VXXXXXXX">
@@ -3622,13 +3623,13 @@
       </variable>
 
       <!-- Input #28 -->
-      <variable label="PD4 Base Address" CV="345" mask="VVVVVVVV" default="0">
+      <variable label="PD4 Base Address" CV="345" mask="VVVVVVVV" default="27">
         <splitVal highCV="346" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD4 Mode" CV="346" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD4 Output-Input" CV="347" mask="XVXXXXXX">
+      <variable label="PD4 Output-Input" CV="347" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD4 Input Direction" CV="347" mask="VXXXXXXX">
@@ -3748,11 +3749,11 @@
       </variable>
 
       <!-- Input #29 -->
-      <variable label="PD5 Base Address" CV="353" mask="VVVVVVVV" default="0">
+      <variable label="PD5 Base Address" CV="353" mask="VVVVVVVV" default="28">
         <splitVal highCV="354" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PD5 Output-Input" CV="355" mask="XVXXXXXX">
+      <variable label="PD5 Output-Input" CV="355" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -3879,13 +3880,13 @@
       </variable>
 
       <!-- Input #30 -->
-      <variable label="PD6 Base Address" CV="361" mask="VVVVVVVV" default="0">
+      <variable label="PD6 Base Address" CV="361" mask="VVVVVVVV" default="29">
         <splitVal highCV="362" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD6 Mode" CV="362" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD6 Output-Input" CV="363" mask="XVXXXXXX">
+      <variable label="PD6 Output-Input" CV="363" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD6 Input Direction" CV="363" mask="VXXXXXXX">
@@ -4005,13 +4006,13 @@
       </variable>
 
       <!-- Input #31 -->
-      <variable label="PD7 Base Address" CV="369" mask="VVVVVVVV" default="0">
+      <variable label="PD7 Base Address" CV="369" mask="VVVVVVVV" default="30">
         <splitVal highCV="370" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD7 Mode" CV="370" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD7 Output-Input" CV="371" mask="XVXXXXXX">
+      <variable label="PD7 Output-Input" CV="371" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD7 Input Direction" CV="371" mask="VXXXXXXX">
@@ -4131,13 +4132,13 @@
       </variable>
 
       <!-- Input #32 -->
-      <variable label="PD8 Base Address" CV="377" mask="VVVVVVVV" default="0">
+      <variable label="PD8 Base Address" CV="377" mask="VVVVVVVV" default="31">
         <splitVal highCV="378" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PD8 Mode" CV="378" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PD8 Output-Input" CV="379" mask="XVXXXXXX">
+      <variable label="PD8 Output-Input" CV="379" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PD8 Input Direction" CV="379" mask="VXXXXXXX">
@@ -4257,11 +4258,11 @@
       </variable>
 
       <!-- Input #33 -->
-      <variable label="PE1 Base Address" CV="385" mask="VVVVVVVV" default="0">
+      <variable label="PE1 Base Address" CV="385" mask="VVVVVVVV" default="32">
         <splitVal highCV="386" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PE1 Output-Input" CV="387" mask="XVXXXXXX">
+      <variable label="PE1 Output-Input" CV="387" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -4388,13 +4389,13 @@
       </variable>
 
       <!-- Input #34 -->
-      <variable label="PE2 Base Address" CV="393" mask="VVVVVVVV" default="0">
+      <variable label="PE2 Base Address" CV="393" mask="VVVVVVVV" default="33">
         <splitVal highCV="394" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE2 Mode" CV="394" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE2 Output-Input" CV="395" mask="XVXXXXXX">
+      <variable label="PE2 Output-Input" CV="395" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE2 Input Direction" CV="395" mask="VXXXXXXX">
@@ -4514,13 +4515,13 @@
       </variable>
 
       <!-- Input #35 -->
-      <variable label="PE3 Base Address" CV="401" mask="VVVVVVVV" default="0">
+      <variable label="PE3 Base Address" CV="401" mask="VVVVVVVV" default="34">
         <splitVal highCV="402" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE3 Mode" CV="402" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE3 Output-Input" CV="403" mask="XVXXXXXX">
+      <variable label="PE3 Output-Input" CV="403" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE3 Input Direction" CV="403" mask="VXXXXXXX">
@@ -4640,13 +4641,13 @@
       </variable>
 
       <!-- Input #36 -->
-      <variable label="PE4 Base Address" CV="409" mask="VVVVVVVV" default="0">
+      <variable label="PE4 Base Address" CV="409" mask="VVVVVVVV" default="35">
         <splitVal highCV="410" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE4 Mode" CV="410" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE4 Output-Input" CV="411" mask="XVXXXXXX">
+      <variable label="PE4 Output-Input" CV="411" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE4 Input Direction" CV="411" mask="VXXXXXXX">
@@ -4766,11 +4767,11 @@
       </variable>
 
       <!-- Input #37 -->
-      <variable label="PE5 Base Address" CV="417" mask="VVVVVVVV" default="0">
+      <variable label="PE5 Base Address" CV="417" mask="VVVVVVVV" default="36">
         <splitVal highCV="418" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PE5 Output-Input" CV="419" mask="XVXXXXXX">
+      <variable label="PE5 Output-Input" CV="419" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -4897,13 +4898,13 @@
       </variable>
 
       <!-- Input #38 -->
-      <variable label="PE6 Base Address" CV="425" mask="VVVVVVVV" default="0">
+      <variable label="PE6 Base Address" CV="425" mask="VVVVVVVV" default="37">
         <splitVal highCV="426" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE6 Mode" CV="426" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE6 Output-Input" CV="427" mask="XVXXXXXX">
+      <variable label="PE6 Output-Input" CV="427" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE6 Input Direction" CV="427" mask="VXXXXXXX">
@@ -5023,13 +5024,13 @@
       </variable>
 
       <!-- Input #39 -->
-      <variable label="PE7 Base Address" CV="433" mask="VVVVVVVV" default="0">
+      <variable label="PE7 Base Address" CV="433" mask="VVVVVVVV" default="38">
         <splitVal highCV="434" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE7 Mode" CV="434" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE7 Output-Input" CV="435" mask="XVXXXXXX">
+      <variable label="PE7 Output-Input" CV="435" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE7 Input Direction" CV="435" mask="VXXXXXXX">
@@ -5149,13 +5150,13 @@
       </variable>
 
       <!-- Input #40 -->
-      <variable label="PE8 Base Address" CV="441" mask="VVVVVVVV" default="0">
+      <variable label="PE8 Base Address" CV="441" mask="VVVVVVVV" default="39">
         <splitVal highCV="442" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PE8 Mode" CV="442" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PE8 Output-Input" CV="443" mask="XVXXXXXX">
+      <variable label="PE8 Output-Input" CV="443" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PE8 Input Direction" CV="443" mask="VXXXXXXX">
@@ -5275,11 +5276,11 @@
       </variable>
 
       <!-- Input #41 -->
-      <variable label="PF1 Base Address" CV="449" mask="VVVVVVVV" default="0">
+      <variable label="PF1 Base Address" CV="449" mask="VVVVVVVV" default="40">
         <splitVal highCV="450" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PF1 Output-Input" CV="451" mask="XVXXXXXX">
+      <variable label="PF1 Output-Input" CV="451" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -5406,13 +5407,13 @@
       </variable>
 
       <!-- Input #42 -->
-      <variable label="PF2 Base Address" CV="457" mask="VVVVVVVV" default="0">
+      <variable label="PF2 Base Address" CV="457" mask="VVVVVVVV" default="41">
         <splitVal highCV="458" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF2 Mode" CV="458" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF2 Output-Input" CV="459" mask="XVXXXXXX">
+      <variable label="PF2 Output-Input" CV="459" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF2 Input Direction" CV="459" mask="VXXXXXXX">
@@ -5532,13 +5533,13 @@
       </variable>
 
       <!-- Input #11 -->
-      <variable label="PF3 Base Address" CV="465" mask="VVVVVVVV" default="0">
+      <variable label="PF3 Base Address" CV="465" mask="VVVVVVVV" default="42">
         <splitVal highCV="466" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF3 Mode" CV="466" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF3 Output-Input" CV="467" mask="XVXXXXXX">
+      <variable label="PF3 Output-Input" CV="467" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF3 Input Direction" CV="467" mask="VXXXXXXX">
@@ -5658,13 +5659,13 @@
       </variable>
 
       <!-- Input #44 -->
-      <variable label="PF4 Base Address" CV="473" mask="VVVVVVVV" default="0">
+      <variable label="PF4 Base Address" CV="473" mask="VVVVVVVV" default="43">
         <splitVal highCV="474" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF4 Mode" CV="474" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF4 Output-Input" CV="475" mask="XVXXXXXX">
+      <variable label="PF4 Output-Input" CV="475" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF4 Input Direction" CV="475" mask="VXXXXXXX">
@@ -5784,11 +5785,11 @@
       </variable>
 
       <!-- Input #45 -->
-      <variable label="PF5 Base Address" CV="481" mask="VVVVVVVV" default="0">
+      <variable label="PF5 Base Address" CV="481" mask="VVVVVVVV" default="44">
         <splitVal highCV="482" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PF5 Output-Input" CV="483" mask="XVXXXXXX">
+      <variable label="PF5 Output-Input" CV="483" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -5915,13 +5916,13 @@
       </variable>
 
       <!-- Input #46 -->
-      <variable label="PF6 Base Address" CV="489" mask="VVVVVVVV" default="0">
+      <variable label="PF6 Base Address" CV="489" mask="VVVVVVVV" default="45">
         <splitVal highCV="490" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF6 Mode" CV="490" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF6 Output-Input" CV="491" mask="XVXXXXXX">
+      <variable label="PF6 Output-Input" CV="491" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF6 Input Direction" CV="491" mask="VXXXXXXX">
@@ -6041,13 +6042,13 @@
       </variable>
 
       <!-- Input #47 -->
-      <variable label="PF7 Base Address" CV="497" mask="VVVVVVVV" default="0">
+      <variable label="PF7 Base Address" CV="497" mask="VVVVVVVV" default="46">
         <splitVal highCV="498" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF7 Mode" CV="498" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF7 Output-Input" CV="499" mask="XVXXXXXX">
+      <variable label="PF7 Output-Input" CV="499" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF7 Input Direction" CV="499" mask="VXXXXXXX">
@@ -6167,13 +6168,13 @@
       </variable>
 
       <!-- Input #48 -->
-      <variable label="PF8 Base Address" CV="505" mask="VVVVVVVV" default="0">
+      <variable label="PF8 Base Address" CV="505" mask="VVVVVVVV" default="47">
         <splitVal highCV="506" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PF8 Mode" CV="506" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PF8 Output-Input" CV="507" mask="XVXXXXXX">
+      <variable label="PF8 Output-Input" CV="507" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PF8 Input Direction" CV="507" mask="VXXXXXXX">
@@ -6293,11 +6294,11 @@
       </variable>
 
       <!-- Input #49 -->
-      <variable label="PG1 Base Address" CV="513" mask="VVVVVVVV" default="0">
+      <variable label="PG1 Base Address" CV="513" mask="VVVVVVVV" default="48">
         <splitVal highCV="514" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PG1 Output-Input" CV="515" mask="XVXXXXXX">
+      <variable label="PG1 Output-Input" CV="515" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -6424,13 +6425,13 @@
       </variable>
 
       <!-- Input #50 -->
-      <variable label="PG2 Base Address" CV="521" mask="VVVVVVVV" default="0">
+      <variable label="PG2 Base Address" CV="521" mask="VVVVVVVV" default="49">
         <splitVal highCV="522" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG2 Mode" CV="522" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG2 Output-Input" CV="523" mask="XVXXXXXX">
+      <variable label="PG2 Output-Input" CV="523" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG2 Input Direction" CV="523" mask="VXXXXXXX">
@@ -6550,13 +6551,13 @@
       </variable>
 
       <!-- Input #51 -->
-      <variable label="PG3 Base Address" CV="529" mask="VVVVVVVV" default="0">
+      <variable label="PG3 Base Address" CV="529" mask="VVVVVVVV" default="50">
         <splitVal highCV="530" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG3 Mode" CV="530" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG3 Output-Input" CV="531" mask="XVXXXXXX">
+      <variable label="PG3 Output-Input" CV="531" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG3 Input Direction" CV="531" mask="VXXXXXXX">
@@ -6676,13 +6677,13 @@
       </variable>
 
       <!-- Input #52 -->
-      <variable label="PG4 Base Address" CV="537" mask="VVVVVVVV" default="0">
+      <variable label="PG4 Base Address" CV="537" mask="VVVVVVVV" default="51">
         <splitVal highCV="538" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG4 Mode" CV="538" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG4 Output-Input" CV="539" mask="XVXXXXXX">
+      <variable label="PG4 Output-Input" CV="539" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG4 Input Direction" CV="539" mask="VXXXXXXX">
@@ -6802,11 +6803,11 @@
       </variable>
 
       <!-- Input #53 -->
-      <variable label="PG5 Base Address" CV="545" mask="VVVVVVVV" default="0">
+      <variable label="PG5 Base Address" CV="545" mask="VVVVVVVV" default="52">
         <splitVal highCV="546" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PG5 Output-Input" CV="547" mask="XVXXXXXX">
+      <variable label="PG5 Output-Input" CV="547" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -6933,13 +6934,13 @@
       </variable>
 
       <!-- Input #54 -->
-      <variable label="PG6 Base Address" CV="553" mask="VVVVVVVV" default="0">
+      <variable label="PG6 Base Address" CV="553" mask="VVVVVVVV" default="53">
         <splitVal highCV="554" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG6 Mode" CV="554" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG6 Output-Input" CV="555" mask="XVXXXXXX">
+      <variable label="PG6 Output-Input" CV="555" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG6 Input Direction" CV="555" mask="VXXXXXXX">
@@ -7059,13 +7060,13 @@
       </variable>
 
       <!-- Input #55 -->
-      <variable label="PG7 Base Address" CV="561" mask="VVVVVVVV" default="0">
+      <variable label="PG7 Base Address" CV="561" mask="VVVVVVVV" default="54">
         <splitVal highCV="562" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG7 Mode" CV="562" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG7 Output-Input" CV="563" mask="XVXXXXXX">
+      <variable label="PG7 Output-Input" CV="563" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG7 Input Direction" CV="563" mask="VXXXXXXX">
@@ -7185,13 +7186,13 @@
       </variable>
 
       <!-- Input #56 -->
-      <variable label="PG8 Base Address" CV="569" mask="VVVVVVVV" default="0">
+      <variable label="PG8 Base Address" CV="569" mask="VVVVVVVV" default="55">
         <splitVal highCV="570" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PG8 Mode" CV="570" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PG8 Output-Input" CV="571" mask="XVXXXXXX">
+      <variable label="PG8 Output-Input" CV="571" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PG8 Input Direction" CV="571" mask="VXXXXXXX">
@@ -7311,11 +7312,11 @@
       </variable>
 
       <!-- Input #57 -->
-      <variable label="PH1 Base Address" CV="577" mask="VVVVVVVV" default="0">
+      <variable label="PH1 Base Address" CV="577" mask="VVVVVVVV" default="56">
         <splitVal highCV="578" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PH1 Output-Input" CV="579" mask="XVXXXXXX">
+      <variable label="PH1 Output-Input" CV="579" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -7441,14 +7442,14 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
-      <!-- Input #26 -->
-      <variable label="PH2 Base Address" CV="585" mask="VVVVVVVV" default="0">
+      <!-- Input #58 -->
+      <variable label="PH2 Base Address" CV="585" mask="VVVVVVVV" default="57">
         <splitVal highCV="586" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH2 Mode" CV="586" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH2 Output-Input" CV="587" mask="XVXXXXXX">
+      <variable label="PH2 Output-Input" CV="587" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH2 Input Direction" CV="587" mask="VXXXXXXX">
@@ -7568,13 +7569,13 @@
       </variable>
 
       <!-- Input #59 -->
-      <variable label="PH3 Base Address" CV="593" mask="VVVVVVVV" default="0">
+      <variable label="PH3 Base Address" CV="593" mask="VVVVVVVV" default="58">
         <splitVal highCV="594" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH3 Mode" CV="594" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH3 Output-Input" CV="595" mask="XVXXXXXX">
+      <variable label="PH3 Output-Input" CV="595" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH3 Input Direction" CV="595" mask="VXXXXXXX">
@@ -7694,13 +7695,13 @@
       </variable>
 
       <!-- Input #60 -->
-      <variable label="PH4 Base Address" CV="601" mask="VVVVVVVV" default="0">
+      <variable label="PH4 Base Address" CV="601" mask="VVVVVVVV" default="59">
         <splitVal highCV="602" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH4 Mode" CV="602" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH4 Output-Input" CV="603" mask="XVXXXXXX">
+      <variable label="PH4 Output-Input" CV="603" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH4 Input Direction" CV="603" mask="VXXXXXXX">
@@ -7819,12 +7820,12 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
 
-      <!-- Input #62 -->
-      <variable label="PH5 Base Address" CV="609" mask="VVVVVVVV" default="0">
+      <!-- Input #61 -->
+      <variable label="PH5 Base Address" CV="609" mask="VVVVVVVV" default="60">
         <splitVal highCV="610" upperMask="XXXXVVVV" offset="1"/>
       </variable>
 
-      <variable label="PH5 Output-Input" CV="611" mask="XVXXXXXX">
+      <variable label="PH5 Output-Input" CV="611" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
 
@@ -7951,13 +7952,13 @@
       </variable>
 
       <!-- Input #62 -->
-      <variable label="PH6 Base Address" CV="617" mask="VVVVVVVV" default="0">
+      <variable label="PH6 Base Address" CV="617" mask="VVVVVVVV" default="61">
         <splitVal highCV="618" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH6 Mode" CV="618" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH6 Output-Input" CV="619" mask="XVXXXXXX">
+      <variable label="PH6 Output-Input" CV="619" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH6 Input Direction" CV="619" mask="VXXXXXXX">
@@ -8077,13 +8078,13 @@
       </variable>
 
       <!-- Input #63 -->
-      <variable label="PH7 Base Address" CV="625" mask="VVVVVVVV" default="0">
+      <variable label="PH7 Base Address" CV="625" mask="VVVVVVVV" default="62">
         <splitVal highCV="626" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH7 Mode" CV="626" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH7 Output-Input" CV="627" mask="XVXXXXXX">
+      <variable label="PH7 Output-Input" CV="627" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH7 Input Direction" CV="627" mask="VXXXXXXX">
@@ -8203,13 +8204,13 @@
       </variable>
 
       <!-- Input #64 -->
-      <variable label="PH8 Base Address" CV="633" mask="VVVVVVVV" default="0">
+      <variable label="PH8 Base Address" CV="633" mask="VVVVVVVV" default="63">
         <splitVal highCV="634" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="PH8 Mode" CV="634" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
-      <variable label="PH8 Output-Input" CV="635" mask="XVXXXXXX">
+      <variable label="PH8 Output-Input" CV="635" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
       </variable>
       <variable label="PH8 Input Direction" CV="635" mask="VXXXXXXX">
@@ -16391,7 +16392,7 @@
       <row>
         <column>
       	<label label=" "/>
-            	<label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            	<label label="&lt;html&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;JMRI 3.7.4 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
            <qualifier>
            <variableref>Hardware ID</variableref>
            <relation>ne</relation>
@@ -16408,8 +16409,7 @@
           </display>
         </column>
         <column>
-            <label label="  The unit address may only be changed in Service Mode."/>
-            <label label="  The new unit address will be active upon exit of Service Mode."/>
+            <label label="  A new unit address will only be active after power cycling the TC Mark II."/>
         </column>
       </row>
       <row>
@@ -16491,7 +16491,7 @@
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>10</value>
+              <value>11</value>
             </qualifier>
           </label>
           </column>
@@ -16500,8 +16500,8 @@
       <row>
         <column>
           <label label=" "/>
-          <label label="Use DecoderPro Version 3.7 or later."/>
-          <label label="Decoder File Version: 0.11"/>
+          <label label="For use with DecoderPro Version 3.7.4 or later."/>
+          <label label="Decoder File Version: 0.12"/>
         </column>
       </row>
     </column>
