@@ -1002,22 +1002,26 @@ public class TrainCommon {
 				return " "
 						+ tabString(Bundle.getMessage("RWE") + " "
 								+ splitString(car.getReturnWhenEmptyDestinationName()) + " ,"
-								+ splitString(car.getReturnWhenEmptyDestTrackName()),
-								locationManager.getMaxLocationAndTrackNameLength());
+								+ splitString(car.getReturnWhenEmptyDestTrackName()), locationManager
+								.getMaxLocationAndTrackNameLength()
+								+ Bundle.getMessage("RWE").length());
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
 				return " "
 						+ tabString(TrainManifestText.getStringFinalDestination() + " "
-								+ splitString(car.getFinalDestinationName()), locationManager.getMaxLocationNameLength());
+								+ splitString(car.getFinalDestinationName()), locationManager
+								.getMaxLocationNameLength()
+								+ TrainManifestText.getStringFinalDestination().length());
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
 			if (!car.getFinalDestinationName().equals(""))
 				return " "
 						+ tabString(TrainManifestText.getStringFinalDestination() + " "
 								+ splitString(car.getFinalDestinationName()) + ", "
-								+ splitString(car.getFinalDestinationTrackName()),
-								locationManager.getMaxLocationAndTrackNameLength());
+								+ splitString(car.getFinalDestinationTrackName()), locationManager
+								.getMaxLocationAndTrackNameLength()
+								+ TrainManifestText.getStringFinalDestination().length());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
@@ -1041,28 +1045,29 @@ public class TrainCommon {
 			if (rs.getTrack() != null)
 				return " "
 						+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName()),
-								locationManager.getMaxTrackNameLength());
+								locationManager.getMaxTrackNameLength() + TrainManifestText.getStringFrom().length());
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal)
 			return " "
 					+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName()),
-							locationManager.getMaxLocationNameLength());
+							locationManager.getMaxLocationNameLength() + TrainManifestText.getStringFrom().length());
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
 				return " "
 						+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()),
-								locationManager.getMaxLocationNameLength());
+								locationManager.getMaxLocationNameLength() + TrainManifestText.getStringDest().length());
 			else
 				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
 		} else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup)
 			return " "
 					+ tabString(TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName()),
-							locationManager.getMaxTrackNameLength());
+							locationManager.getMaxTrackNameLength() + TrainManifestText.getStringTo().length());
 		else if (attribute.equals(Setup.DEST_TRACK))
 			return " "
 					+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()) + ", "
 							+ splitString(rs.getDestinationTrackName()), locationManager
-							.getMaxLocationAndTrackNameLength());
+							.getMaxLocationAndTrackNameLength()
+							+ TrainManifestText.getStringDest().length());
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
