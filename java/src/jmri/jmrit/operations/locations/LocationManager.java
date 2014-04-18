@@ -54,9 +54,14 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		_id = 0;
 	}
 
-	protected Hashtable<String, Location> _locationHashTable = new Hashtable<String, Location>(); // stores known
-																									// Location
-																									// instances by id
+	protected Hashtable<String, Location> _locationHashTable = new Hashtable<String, Location>();
+
+	/**
+	 * @return Number of locations
+	 */
+	public int getNumberOfLocations() {
+		return _locationHashTable.size();
+	}
 
 	/**
 	 * @return requested Location object or null if none exists
@@ -92,8 +97,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			location = new Location(Integer.toString(_id), name);
 			Integer oldSize = Integer.valueOf(_locationHashTable.size());
 			_locationHashTable.put(location.getId(), location);
-			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-					Integer.valueOf(_locationHashTable.size()));
+			firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 		}
 		return location;
 	}
@@ -108,8 +112,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		int id = Integer.parseInt(location.getId());
 		if (id > _id)
 			_id = id;
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-				Integer.valueOf(_locationHashTable.size()));
+		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 	}
 
 	/**
@@ -121,8 +124,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		location.dispose();
 		Integer oldSize = Integer.valueOf(_locationHashTable.size());
 		_locationHashTable.remove(location.getId());
-		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-				Integer.valueOf(_locationHashTable.size()));
+		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
 	}
 
 	/**
@@ -179,6 +181,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Gets an unsorted list of all locations.
+	 * 
 	 * @return All locations.
 	 */
 	public List<Location> getList() {
@@ -189,7 +192,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Returns all tracks of type
 	 * 
@@ -242,7 +245,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
 		return moveList;
 	}
-	
+
 	public void resetMoves() {
 		List<Location> locations = getList();
 		for (Location loc : locations) {
@@ -269,7 +272,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
 	}
 
-
 	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
 		List<Location> locs = getList();
 		for (Location loc : locs) {
@@ -284,15 +286,15 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 							track.addLoadName(newLoadName);
 					}
 					// adjust combination car type and load name
-	   				String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
-    				if (splitLoad.length > 1) {
-    					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
-    						track.deleteLoadName(loadNames[k]);
-    						if (newLoadName != null) {
-    							track.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
-    						}
-    					}
-    				}
+					String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+					if (splitLoad.length > 1) {
+						if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
+							track.deleteLoadName(loadNames[k]);
+							if (newLoadName != null) {
+								track.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
+							}
+						}
+					}
 				}
 				// now adjust ship load names
 				loadNames = track.getShipLoadNames();
@@ -303,20 +305,64 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 							track.addShipLoadName(newLoadName);
 					}
 					// adjust combination car type and load name
-	   				String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
-    				if (splitLoad.length > 1) {
-    					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
-    						track.deleteShipLoadName(loadNames[k]);
-    						if (newLoadName != null) {
-    							track.addShipLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
-    						}
-    					}
-    				}
+					String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+					if (splitLoad.length > 1) {
+						if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
+							track.deleteShipLoadName(loadNames[k]);
+							if (newLoadName != null) {
+								track.addShipLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
+							}
+						}
+					}
 				}
 			}
 		}
 	}
-	
+
+	protected int _maxLocationNameLength = 0;
+	protected int _maxTrackNameLength = 0;
+	protected int _maxLocationAndTrackNameLength = 0;
+
+	public int getMaxLocationNameLength() {
+		calculateMaxNameLengths();
+		return _maxLocationNameLength;
+	}
+
+	public int getMaxTrackNameLength() {
+		calculateMaxNameLengths();
+		return _maxTrackNameLength;
+	}
+
+	public int getMaxLocationAndTrackNameLength() {
+		calculateMaxNameLengths();
+		return _maxLocationAndTrackNameLength;
+	}
+
+	private void calculateMaxNameLengths() {
+		if (_maxLocationNameLength != 0) // only do this once
+			return;
+		String maxTrackName = "";
+		String maxLocationName = "";
+		String maxLocationAndTrackName = "";
+		for (Track track : getTracks(null)) {
+			if (track.getName().length() > _maxTrackNameLength) {
+				maxTrackName = track.getName();
+				_maxTrackNameLength = track.getName().length();
+			}
+			if (track.getLocation().getName().length() > _maxLocationNameLength) {
+				maxLocationName = track.getLocation().getName();
+				_maxLocationNameLength = track.getLocation().getName().length();
+			}
+			if (track.getLocation().getName().length() + track.getName().length() > _maxLocationAndTrackNameLength) {
+				maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
+				_maxLocationAndTrackNameLength = track.getLocation().getName().length() + track.getName().length();
+			}
+		}
+		log.info("Max track name ({}) length {}", maxTrackName, _maxTrackNameLength);
+		log.info("Max location name ({}) length {}", maxLocationName, _maxLocationNameLength);
+		log.info("Max location and track name ({}) length {}", maxLocationAndTrackName, _maxLocationAndTrackNameLength);
+	}
+
 	public void load(Element root) {
 		if (root.getChild(Xml.LOCATIONS) != null) {
 			@SuppressWarnings("unchecked")
@@ -326,9 +372,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			for (int i = 0; i < l.size(); i++) {
 				register(new Location(l.get(i)));
 			}
-		} 
+		}
 	}
-	
+
 	public void store(Element root) {
 		Element values;
 		root.addContent(values = new Element(Xml.LOCATIONS));
@@ -344,15 +390,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: "
-				+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
-	}
-
-	/**
-	 * @return Number of locations
-	 */
-	public int getNumberOfLocations() {
-		return _locationHashTable.size();
+		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue()
+				+ " new: " + e.getNewValue()); // NOI18N
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -371,8 +410,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = LoggerFactory.getLogger(LocationManager.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
 
 }
 

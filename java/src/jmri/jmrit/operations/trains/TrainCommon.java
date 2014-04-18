@@ -9,8 +9,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.swing.JLabel;
+
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -28,6 +31,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +53,7 @@ public class TrainCommon {
 
 	CarManager carManager = CarManager.instance();
 	EngineManager engineManager = EngineManager.instance();
+	LocationManager locationManager = LocationManager.instance();
 
 	// for manifests
 	protected int cars = 0;
@@ -998,21 +1003,21 @@ public class TrainCommon {
 						+ tabString(Bundle.getMessage("RWE") + " "
 								+ splitString(car.getReturnWhenEmptyDestinationName()) + " ,"
 								+ splitString(car.getReturnWhenEmptyDestTrackName()),
-								Control.max_len_string_location_name + Control.max_len_string_track_name);
+								locationManager.getMaxLocationAndTrackNameLength());
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
 				return " "
 						+ tabString(TrainManifestText.getStringFinalDestination() + " "
-								+ splitString(car.getFinalDestinationName()), Control.max_len_string_location_name);
+								+ splitString(car.getFinalDestinationName()), locationManager.getMaxLocationNameLength());
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
 			if (!car.getFinalDestinationName().equals(""))
 				return " "
 						+ tabString(TrainManifestText.getStringFinalDestination() + " "
 								+ splitString(car.getFinalDestinationName()) + ", "
-								+ splitString(car.getFinalDestinationTrackName()), Control.max_len_string_location_name
-								+ Control.max_len_string_track_name);
+								+ splitString(car.getFinalDestinationTrackName()),
+								locationManager.getMaxLocationAndTrackNameLength());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
@@ -1036,28 +1041,28 @@ public class TrainCommon {
 			if (rs.getTrack() != null)
 				return " "
 						+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName()),
-								Control.max_len_string_track_name);
+								locationManager.getMaxTrackNameLength());
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal)
 			return " "
 					+ tabString(TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName()),
-							Control.max_len_string_location_name);
+							locationManager.getMaxLocationNameLength());
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
 				return " "
 						+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()),
-								Control.max_len_string_location_name);
+								locationManager.getMaxLocationNameLength());
 			else
 				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
 		} else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup)
 			return " "
 					+ tabString(TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName()),
-							Control.max_len_string_track_name);
+							locationManager.getMaxTrackNameLength());
 		else if (attribute.equals(Setup.DEST_TRACK))
 			return " "
 					+ tabString(TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()) + ", "
-							+ splitString(rs.getDestinationTrackName()), Control.max_len_string_location_name
-							+ Control.max_len_string_track_name);
+							+ splitString(rs.getDestinationTrackName()), locationManager
+							.getMaxLocationAndTrackNameLength());
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
