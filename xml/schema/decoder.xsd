@@ -292,12 +292,13 @@
                 <xs:enumeration value="PluX16"/>
                 <xs:enumeration value="PluX22"/>
                 <xs:enumeration value="NEM651"/>
-                <xs:enumeration value="NEM651"/>
+                <xs:enumeration value="NEM652"/>
                 <xs:enumeration value="Wires/NEM651"/>
                 <xs:enumeration value="Wires/NEM652"/>
                 <xs:enumeration value="Wires/NEM651/NEM652"/>
                 <xs:enumeration value="16pin"/>
                 <xs:enumeration value="21pin"/>
+                <xs:enumeration value="DropIn"/>
                 <xs:enumeration value="other"/>
               </xs:restriction>
             </xs:simpleType>
