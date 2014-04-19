@@ -28,6 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -980,7 +981,7 @@ public class TrainCommon {
 	// @param pickup true when rolling stock is being picked up
 	private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
 		if (attribute.equals(Setup.MODEL))
-			return " " + tabString(engine.getModel(), Control.max_len_string_attibute);
+			return " " + tabString(engine.getModel(), EngineModels.instance().getCurMaxNameLength());
 		if (attribute.equals(Setup.CONSIST))
 			return " " + tabString(engine.getConsistName(), Control.max_len_string_attibute);
 		return getRollingStockAttribute(engine, attribute, isPickup, false);
