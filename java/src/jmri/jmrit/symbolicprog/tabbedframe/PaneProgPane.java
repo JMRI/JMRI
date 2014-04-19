@@ -2031,18 +2031,20 @@ public class PaneProgPane extends javax.swing.JPanel
                }
            }
 
+            final int TABLE_COLS = 3; 
+
             // index over CVs
             if (cvList.size() > 0){
 //            Check how many Cvs there are to print
               int cvCount = cvList.size();
               w.setFontStyle(Font.BOLD); //set font to Bold
               // print a simple heading
-              s = "         Value               Value               Value               Value";
+              s = "                 Value                       Value                       Value";
               w.write(s, 0, s.length());
               w.writeBorders();
               s = "\n";
               w.write(s,0,s.length());
-              s = "   CV   Dec Hex        CV   Dec Hex        CV   Dec Hex        CV   Dec Hex";
+            s = "            CV  Dec Hex                 CV  Dec Hex                 CV  Dec Hex";
               w.write(s, 0, s.length());
               w.writeBorders();
               s = "\n";
@@ -2050,69 +2052,64 @@ public class PaneProgPane extends javax.swing.JPanel
               w.setFontStyle(0); //set font back to Normal
               //           }
               /*create an array to hold CV/Value strings to allow reformatting and sorting
-                Same size as the table drawn above (4 columns*tableHeight; heading rows
+                Same size as the table drawn above (TABLE_COLS columns*tableHeight; heading rows
                 not included). Use the count of how many CVs there are to determine the number
-                of table rows required.  Add one more row if the divison into 4 columns
+                of table rows required.  Add one more row if the divison into TABLE_COLS columns
                 isn't even.
                */
-              int tableHeight = cvCount/4;
-              if (cvCount%4 > 0) tableHeight++;
-              String[] cvStrings = new String[4 * tableHeight];
+              int tableHeight = cvCount/TABLE_COLS;
+              if (cvCount%TABLE_COLS > 0) tableHeight++;
+              String[] cvStrings = new String[TABLE_COLS * tableHeight];
 
               //blank the array
               for (int j = 0; j < cvStrings.length; j++)
                 cvStrings[j] = "";
 
                 // get each CV and value
-              int i = 0;
-              for (int cvNum : cvList) {
-                CvValue cv = _cvModel.getCvByRow(cvNum);
+                int i = 0;
+                for (int cvNum : cvList) {
+                    CvValue cv = _cvModel.getCvByRow(cvNum);
 
-                int value = cv.getValue();
+                    int value = cv.getValue();
 
-                //convert and pad numbers as needed
-                String numString = cv.number();
-                String valueString = Integer.toString(value);
-                String valueStringHex = Integer.toHexString(value).toUpperCase();
-                if (value < 16)
-                  valueStringHex = "0" + valueStringHex;
-                for (int j = 1; j < 3; j++) {
-                  if (numString.length() < 3)
-                    numString = " " + numString;
+                    //convert and pad numbers as needed
+                    String numString = String.format("%12s",cv.number());
+                    String valueString = Integer.toString(value);
+                    String valueStringHex = Integer.toHexString(value).toUpperCase();
+                    if (value < 16)
+                      valueStringHex = "0" + valueStringHex;
+                    for (int j = 1; j < 3; j++) {
+                      if (valueString.length() < 3)
+                        valueString = " " + valueString;
+                    }
+                    //Create composite string of CV and its decimal and hex values
+                    s = "  " + numString + "  " + valueString + "  " + valueStringHex +
+                        " ";
+
+                    //populate printing array - still treated as a single column
+                    cvStrings[i] = s;
+                    i++;
                 }
-                for (int j = 1; j < 3; j++) {
-                  if (valueString.length() < 3)
-                    valueString = " " + valueString;
-                }
-                //Create composite string of CV and its decimal and hex values
-                s = "  " + numString + "   " + valueString + "  " + valueStringHex +
-                    " ";
 
-                //populate printing array - still treated as a single column
-                cvStrings[i] = s;
-                i++;
-              }
                 //sort the array in CV order (just the members with values)
                 String temp;
                 boolean swap = false;
                 do {
-                  swap = false;
-                  for (i = 0; i < _cvModel.getRowCount() - 1; i++) {
-                    if (Integer.parseInt(cvStrings[i + 1].substring(2, 5).trim()) <
-                        Integer.parseInt(cvStrings[i].substring(2, 5).trim())) {
-                      temp = cvStrings[i + 1];
-                      cvStrings[i + 1] = cvStrings[i];
-                      cvStrings[i] = temp;
-                      swap = true;
+                    swap = false;
+                    for (i = 0; i < _cvModel.getRowCount() - 1; i++) {
+                        if ( PrintCvAction.cvSortOrderVal(cvStrings[i + 1].substring(0,15).trim()) < PrintCvAction.cvSortOrderVal(cvStrings[i].substring(0,15).trim()) ) {
+                            temp = cvStrings[i + 1];
+                            cvStrings[i + 1] = cvStrings[i];
+                            cvStrings[i] = temp;
+                            swap = true;
+                        }
                     }
-                  }
-                }
-                while (swap == true);
+                } while (swap == true);
 
                 //Print the array in four columns
                 for (i = 0; i < tableHeight; i++) {
                   s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
-                      tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3];
+                      tableHeight * 2];
                   w.write(s, 0, s.length());
                  w.writeBorders();
                  s = "\n";
