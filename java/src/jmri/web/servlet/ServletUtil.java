@@ -57,6 +57,13 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(context, "active"); // NOI18N
+        if (WebServerManager.getWebServerPreferences().allowRemoteConfig()) {
+            navBar = navBar.replace("config-enabled-only", "show");
+            navBar = navBar.replace("config-disabled-only", "hidden");
+        } else {
+            navBar = navBar.replace("config-enabled-only", "hidden");
+            navBar = navBar.replace("config-disabled-only", "show");
+        }
         return navBar;
     }
 

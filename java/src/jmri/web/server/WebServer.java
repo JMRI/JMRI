@@ -118,6 +118,9 @@ public final class WebServer implements LifeCycle.Listener {
                     holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
                 } else if (services.getProperty(path).equals("redirectHandler")) { // NOI18N
                     servletContext.addServlet("jmri.web.servlet.RedirectionServlet", ""); // NOI18N
+                } else if (services.getProperty(path).startsWith("jmri.web.servlet.config.ConfigServlet") && !this.preferences.allowRemoteConfig()) {
+                    // if not allowRemoteConfig, use DenialServlet for any path configured to use ConfigServlet
+                    servletContext.addServlet("jmri.web.servlet.DenialServlet", "/*");
                 } else {
                     servletContext.addServlet(services.getProperty(path), "/*"); // NOI18N
                 }
