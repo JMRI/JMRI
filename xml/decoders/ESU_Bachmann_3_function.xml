@@ -15,9 +15,11 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ian Birchenough@talktalk.netJeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
   <version author="Alain Carasso" version="1.1" lastUpdated="20101020"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20140330"/>
+  <!-- Version 2 - Added long address and switched several items to "Includes", corrected default values (Peter Ulvestad) -->
   <decoder>
     <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH">
-      <model model="EZ 3 function decoder (36-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
+      <model model="EZ Command 3 function decoder (36-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
         <output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
         <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
         <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
@@ -26,42 +28,22 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
         <decVal min="1" max="63"/>
       </variable>
-      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 1-63">
-        <decVal min="1" max="63"/>
+      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 0-63">
+        <decVal min="0" max="63"/>
       </variable>
-      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63">
-        <decVal min="1" max="64"/>
+      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 0-63">
+        <decVal min="0" max="63"/>
       </variable>
-      <variable label="Maximum Speed" CV="5" default="63" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-63">
-        <decVal min="1" max="63"/>
-      </variable>
-      <variable label="Software Version Number" CV="7" default="88" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-      </variable>
-      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
-        <enumVal>
-          <enumChoice choice="Normal direction of travel"/>
-          <enumChoice choice="Reverse direction of travel"/>
-        </enumVal>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128"/>
-        </enumVal>
-      </variable>
-      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only"/>
-          <enumChoice choice="Digital + Analog Operation"/>
-        </enumVal>
+      <variable label="Maximum Speed" CV="5" default="42" item="Vhigh" tooltip="Maximum speed of locomotive, range 0-63">
+        <decVal min="0" max="63"/>
       </variable>
       <variable label="BEMF control" CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
         <enumVal>

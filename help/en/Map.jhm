@@ -796,6 +796,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildingTrains" url="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SendCustomToStaging" url="package/jmri/jmrit/operations/Operations.shtml#SendCustomToStaging"/>
+
 <mapID target="manual.3-4_DecoderPro.Start_DCC_Hardware" url="manual/3-4_DecoderPro/Start_DCC_Hardware.shtml"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Ops_TripThruOperations_Top" url="manual/JMRI_2-12_Manual/Ops_TripThruOperations.shtml#Top"/>
@@ -2630,6 +2632,8 @@
 
 <mapID target="manual.3-6_DecoderPro.Main_Throttle_menubar" url="manual/3-6_DecoderPro/Main_Throttle_menubar.shtml"/>
 
+<mapID target="html.hardware.XBee.index" url="html/hardware/XBee/index.shtml"/>
+
 <mapID target="package.jmri.jmrix.jinput.treemodel.TreeFrame" url="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml"/>
 
 <mapID target="manual.3-4_DecoderPro3.Main_NCE_ClockMon" url="manual/3-4_DecoderPro3/Main_NCE.shtml#ClockMon"/>
@@ -3871,6 +3875,8 @@
 <mapID target="manual.3-0_DecoderPro.Main_Roster_Export" url="manual/3-0_DecoderPro/Main_Roster.shtml#Export"/>
 
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame_Other Tabs" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneOpsProgFrame.shtml#Other Tabs"/>
+
+<mapID target="html.hardware.loconet.StandaloneLocoNet_hwdctorailsync" url="html/hardware/loconet/StandaloneLocoNet.shtml#hwdctorailsync"/>
 
 <mapID target="manual.3-2_DecoderPro.Adv_FunctionLabel" url="manual/3-2_DecoderPro/Adv_FunctionLabel.shtml"/>
 

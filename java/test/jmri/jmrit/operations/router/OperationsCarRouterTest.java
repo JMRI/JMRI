@@ -600,6 +600,17 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonToBedfordTrain.setLoadOption(Train.ALL_LOADS);
 		Assert.assertTrue("Try routing with train that that does service load Tools", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
+		
+		// don't allow Bedford to service Flat
+		c4.setDestination(null, null);	// clear previous destination
+		c4.setFinalDestination(Bedford);
+		Bedford.deleteTypeName("Flat");
+		Assert.assertFalse("Try routing with Bedford that does not service Flat", router.setDestination(c4, null, null));
+		Assert.assertEquals("Check car's destination", "", c4.getDestinationName());
+		Assert.assertTrue("Router status", router.getStatus().startsWith(Track.TYPE));
+		
+		// restore Bedford can service Flat
+		Bedford.addTypeName("Flat");
 
 		// now test by modifying the route
 		rlActon.setPickUpAllowed(false);		

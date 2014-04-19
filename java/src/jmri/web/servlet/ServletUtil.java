@@ -1,5 +1,7 @@
 package jmri.web.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
@@ -55,6 +57,13 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(context, "active"); // NOI18N
+        if (WebServerManager.getWebServerPreferences().allowRemoteConfig()) {
+            navBar = navBar.replace("config-enabled-only", "show");
+            navBar = navBar.replace("config-disabled-only", "hidden");
+        } else {
+            navBar = navBar.replace("config-enabled-only", "hidden");
+            navBar = navBar.replace("config-disabled-only", "show");
+        }
         return navBar;
     }
 
@@ -72,5 +81,24 @@ public class ServletUtil {
         response.setDateHeader("Expires", now.getTime()); // NOI18N
         response.setHeader("Cache-control", "no-cache, no-store"); // NOI18N
         response.setHeader("Pragma", "no-cache"); // NOI18N
+    }
+
+    public void writeFile(HttpServletResponse response, File file, String contentType) throws IOException {
+        if (file.exists()) {
+            if (file.canRead()) {
+                response.setContentType(contentType);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentLength((int) file.length());
+                FileInputStream fileInputStream = new FileInputStream(file);
+                int bytes;
+                while ((bytes = fileInputStream.read()) != -1) {
+                    response.getOutputStream().write(bytes);
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 }

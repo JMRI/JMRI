@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,6 @@ public class JsonManifest extends TrainCommon {
 
     protected final Locale locale = Locale.getDefault();
     protected final Train train;
-    protected String resourcePrefix;
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final static Logger log = LoggerFactory.getLogger(Manifest.class);
@@ -50,8 +50,11 @@ public class JsonManifest extends TrainCommon {
         this.train = train;
         this.cars = 0;
         this.emptyCars = 0;
-        this.resourcePrefix = "Manifest";
         this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
+
+    public File getFile() {
+        return TrainManagerXml.instance().getJsonManifestFile(this.train.getName());
     }
 
     public void build() throws IOException {
@@ -65,7 +68,6 @@ public class JsonManifest extends TrainCommon {
         // build manifest
         ArrayNode locations = this.mapper.createArrayNode();
 
-        //StringBuilder builder = new StringBuilder(); // uncomment to commit without breaking everything
         List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
 
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
@@ -212,14 +214,14 @@ public class JsonManifest extends TrainCommon {
     }
 
     public ObjectNode jsonPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
-        if (this.countUtilityCars(Setup.carAttributes, carList, car, rl, rld, PICKUP) == 0) {
+        if (this.countUtilityCars(Setup.getCarAttributes(), carList, car, rl, rld, PICKUP) == 0) {
             return null; // already printed out this car type
         }
         return pickUpCar(car);
     }
 
     protected ObjectNode setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
-        if (countUtilityCars(Setup.carAttributes, carList, car, rl, null, !PICKUP) == 0) {
+        if (countUtilityCars(Setup.getCarAttributes(), carList, car, rl, null, !PICKUP) == 0) {
             return null; // already printed out this car type
         }
         return jsonDropCar(car, isLocalMove(car));
@@ -230,7 +232,7 @@ public class JsonManifest extends TrainCommon {
             return null; // print nothing local move, see dropCar
         }
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -243,7 +245,7 @@ public class JsonManifest extends TrainCommon {
 
     public ObjectNode jsonDropCar(Car car, boolean isLocal) {
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -268,7 +270,7 @@ public class JsonManifest extends TrainCommon {
 
     private ObjectNode addSearchForCar(Car car) {
         ObjectNode node = this.mapper.createObjectNode();
-        for (String attribute : Setup.carAttributes) {
+        for (String attribute : Setup.getCarAttributes()) {
             if (this.isComplexCarAttribute(attribute)) {
                 node.put(attribute, this.getComplexCarAttribute(car, attribute));
                 continue;
@@ -283,7 +285,7 @@ public class JsonManifest extends TrainCommon {
         for (RollingStock engine : engines) {
             if (engine.getRouteDestination().equals(location)) {
                 ObjectNode object = this.mapper.createObjectNode();
-                for (String attribute : Setup.engineAttributes) {
+                for (String attribute : Setup.getEngineAttributes()) {
                     object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
                 }
                 node.add(object);
@@ -297,7 +299,7 @@ public class JsonManifest extends TrainCommon {
         for (RollingStock engine : engines) {
             if (engine.getRouteLocation().equals(location) && !engine.getTrackName().equals("")) {
                 ObjectNode object = this.mapper.createObjectNode();
-                for (String attribute : Setup.engineAttributes) {
+                for (String attribute : Setup.getEngineAttributes()) {
                     object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
                 }
                 node.add(object);

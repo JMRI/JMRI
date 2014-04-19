@@ -56,7 +56,7 @@ public class CarColors {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] colors = COLORS.split("%%");	// NOI18N
+			String[] colors = COLORS.split(",");	// NOI18N
 			for (int i = 0; i < colors.length; i++)
 				list.add(colors[i]);
 		}

@@ -53,7 +53,7 @@ public class CarRoads {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] roads = ROADS.split("%%"); // NOI18N
+			String[] roads = ROADS.split(","); // NOI18N
 			for (int i = 0; i < roads.length; i++)
 				list.add(roads[i]);
 		}

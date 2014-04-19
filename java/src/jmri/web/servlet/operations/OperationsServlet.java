@@ -18,6 +18,7 @@ import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
@@ -140,6 +141,8 @@ public class OperationsServlet extends HttpServlet {
                     manifest.getLocations()
             ));
             train.setModified(false);
+        } else if (JSON.JSON.equals(request.getParameter("format"))) {
+            ServletUtil.getHelper().writeFile(response, new JsonManifest(train).getFile(), ServletUtil.APPLICATION_JSON);
         } else {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),

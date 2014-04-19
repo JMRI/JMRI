@@ -38,7 +38,7 @@ public class Router extends TrainCommon {
 	protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
 	protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
 	protected static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
-	protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
+//	protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
 	protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
 	private String _status = "";
@@ -119,8 +119,14 @@ public class Router extends TrainCommon {
 		// schedule.
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 		if (!_status.equals(Track.OKAY)) {
-			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"), new Object[] {
-				car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(), _status }));
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
+					new Object[] {
+							car.toString(),
+							car.getFinalDestinationName(),
+							car.getFinalDestinationTrackName(),
+							_status,
+							(car.getFinalDestinationTrack() == null ? Bundle.getMessage("RouterDestination") : car
+									.getFinalDestinationTrack().getTrackTypeName()) }));
 			return false;
 		}
 		// check to see if car will move to destination using a single train
@@ -244,7 +250,12 @@ public class Router extends TrainCommon {
 			return true; // done, car has new destination
 		}
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"), new Object[] {
-				car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(), _status }));
+				car.toString(),
+				clone.getDestinationName(),
+				clone.getDestinationTrackName(),
+				_status,
+				(clone.getDestinationTrack() == null ? Bundle.getMessage("RouterDestination") : clone
+						.getDestinationTrack().getTrackTypeName()) }));
 		// check to see if an alternative track was specified
 		if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Track.SCHEDULE))
 				&& clone.getDestinationTrack() != null && clone.getDestinationTrack().getAlternateTrack() != null
@@ -372,7 +383,8 @@ public class Router extends TrainCommon {
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
 				if (_addtoReportVeryDetailed)
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), status }));
+							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), status,
+									track.getTrackTypeName() }));
 				continue;
 			}
 			if (debugFlag)
@@ -457,7 +469,8 @@ public class Router extends TrainCommon {
 				if (_status.startsWith(Track.LENGTH)) {
 					// if the issue is length at the interim track, add message to build report
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), _status }));
+							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), _status,
+									track.getTrackTypeName() }));
 					continue;
 				}
 				if (_status.equals(Track.OKAY)) {
@@ -705,7 +718,8 @@ public class Router extends TrainCommon {
 			_status = car.setDestination(track.getLocation(), track);
 		if (!_status.equals(Track.OKAY)) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
-					new Object[] { car.toString(), track.getLocation().getName(), track.getName(), _status }));
+					new Object[] { car.toString(), track.getLocation().getName(), track.getName(), _status,
+							track.getTrackTypeName() }));
 			if (_status.startsWith(Track.LENGTH)) {
 				return false;
 			}

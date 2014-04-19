@@ -24,6 +24,8 @@ import javax.swing.*;
  */
 public class PrintCvAction  extends AbstractAction {
 
+    final int TABLE_COLS = 3; 
+    
     public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {
         super(actionName);
         mModel = pModel;
@@ -42,8 +44,7 @@ public class PrintCvAction  extends AbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    
-        
+            
     public void printInfoSection(HardcopyWriter w) {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
@@ -78,8 +79,8 @@ public class PrintCvAction  extends AbstractAction {
 
             //Initialize some variables to define the CV table size
             int cvCount = mModel.getRowCount();
-            int tableLeft = 1, tableRight = 65, tableTopRow = 0, tableBottomRow = 0, tableHeight = cvCount/4;
-            if (cvCount%4 > 0) tableHeight++;
+            int tableLeft = 1, tableRight = TABLE_COLS*24+1, tableTopRow = 0, tableBottomRow = 0, tableHeight = cvCount/TABLE_COLS;
+            if (cvCount%TABLE_COLS > 0) tableHeight++;
 
             /*Start drawing the table of CVs. Set up the table with 4 columns of CV/Value
              pairs and Draw the table borders and lines.  Each column width is
@@ -99,7 +100,7 @@ public class PrintCvAction  extends AbstractAction {
             tableBottomRow = tableTopRow + tableHeight + 2;
 
             //Draw vertical lines for columns
-            for (int i=1; i<66; i=i+16){
+            for (int i=1; i<76; i=i+24){
               writer.write(tableTopRow,i,tableBottomRow,i);
             }
 
@@ -109,9 +110,9 @@ public class PrintCvAction  extends AbstractAction {
 
             writer.setFontStyle(1);  //set font to Bold
             // print a simple heading
-            s = "         Value           Value           Value           Value\n";
+            s = "                 Value                   Value                   Value\n";
             writer.write(s, 0, s.length());
-            s = "   CV   Dec Hex    CV   Dec Hex    CV   Dec Hex    CV   Dec Hex\n";
+            s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
             writer.write(s, 0, s.length());
             writer.setFontStyle(0); //set font back to Normal
 
@@ -119,7 +120,7 @@ public class PrintCvAction  extends AbstractAction {
             //Same size as the table drawn above (4 columns*tableHeight; heading rows
             //not included
 
-            String[] cvStrings= new String[4*tableHeight];
+            String[] cvStrings= new String[TABLE_COLS*tableHeight];
 
             //blank the array
             for (int i=0; i < cvStrings.length; i++) cvStrings[i] = "";
@@ -130,41 +131,39 @@ public class PrintCvAction  extends AbstractAction {
                 int value = cv.getValue();
 
                 //convert and pad numbers as needed
-                String numString = cv.number();
+                String numString = String.format("%12s",cv.number());
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
-                if (value<16) valueStringHex = "0"+ valueStringHex;
-                for (int j=1; j<3; j++){
-                  if (numString.length() < 3) numString = " "+numString;
-                }
-                for (int j=1; j<3; j++) {
-                  if (valueString.length() < 3) valueString = " "+ valueString;
+                if (value < 16)
+                  valueStringHex = "0" + valueStringHex;
+                for (int j = 1; j < 3; j++) {
+                  if (valueString.length() < 3) valueString = " " + valueString;
                 }
                 //Create composite string of CV and its decimal and hex values
-                s = "  " + numString + "   " + valueString + "  " + valueStringHex + " ";
+                s = "  " + numString + "  " + valueString + "  " + valueStringHex + " ";
 
                 //populate printing array - still treated as a single column
                 cvStrings[i] =  s;
             }
+
             //sort the array in CV order (just the members with values)
             String temp;
-            boolean swap=false;
+            boolean swap = false;
             do {
-            swap=false;
-            for (int i=0; i < mModel.getRowCount()-1; i++){
-              if (Integer.parseInt(cvStrings[i+1].substring(2,5).trim())<Integer.parseInt(cvStrings[i].substring(2,5).trim())) {
-                temp=cvStrings[i+1];
-                cvStrings[i+1]=cvStrings[i];
-                cvStrings[i]=temp;
-                swap=true;
-              }
-            }
-            }
-            while (swap==true);
+                swap = false;
+                for (int i = 0; i < mModel.getRowCount() - 1; i++) {
+                    if ( cvSortOrderVal(cvStrings[i + 1].substring(0,15).trim()) < cvSortOrderVal(cvStrings[i].substring(0,15).trim()) ) {
+                        temp = cvStrings[i + 1];
+                        cvStrings[i + 1] = cvStrings[i];
+                        cvStrings[i] = temp;
+                    swap = true;
+                    }
+                }
+            } while (swap == true);
 
-            //Print the array in four columns
-            for (int i=0; i < tableHeight; i++){
-              s=cvStrings[i]+cvStrings[i+tableHeight]+cvStrings[i+tableHeight*2]+cvStrings[i+tableHeight*3]+"\n";
+            //Print the array in three columns
+            for (int i = 0; i < tableHeight; i++) {
+              s = cvStrings[i] + cvStrings[i + tableHeight] + cvStrings[i + tableHeight * 2] + "\n";
               writer.write(s, 0, s.length());
             }
             //write an extra character to work around the
@@ -182,6 +181,21 @@ public class PrintCvAction  extends AbstractAction {
         }
 
         writer.close();
+    }
+
+    /**
+     * Returns a representation of a CV name as a long integer sort order value.
+     * The value itself is not meaningful, but is used in comparisons when sorting.
+     */
+    public static long cvSortOrderVal(String cvName) {
+        final int MAX_CVMNUM_SPACE = 1200;
+        
+        String[] cvNumStrings = cvName.split("\\.");
+        long sortVal = 0;
+        for (int i=0; i < (cvNumStrings.length); i++) {
+            sortVal = (sortVal * MAX_CVMNUM_SPACE) + Integer.parseInt(cvNumStrings[i]);
+        }
+        return sortVal;
     }
 
     static Logger log = LoggerFactory.getLogger(PrintCvAction.class.getName());

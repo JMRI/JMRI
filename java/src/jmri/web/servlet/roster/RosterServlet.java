@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -36,7 +35,6 @@ import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.APPLICATION_XML;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.TEXT_HTML;
 import static jmri.web.servlet.ServletUtil.UTF8;
@@ -197,9 +195,9 @@ public class RosterServlet extends HttpServlet {
         } else if (type.equals("icon")) {
             this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
         } else if (type.equals("file")) {
-            this.doFile(request, response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName())); // NOI18N
+            ServletUtil.getHelper().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.APPLICATION_XML); // NOI18N
         } else if (type.equals("throttle")) {
-            this.doFile(request, response, new File(FileUtil.getUserFilesPath(), "trottle" + File.separator + id + ".xml")); // NOI18N
+            ServletUtil.getHelper().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
         } else {
             // don't know what to do
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -374,25 +372,5 @@ public class RosterServlet extends HttpServlet {
         response.setContentLength(baos.size());
         response.getOutputStream().write(baos.toByteArray());
         response.getOutputStream().close();
-    }
-
-    private void doFile(HttpServletRequest request, HttpServletResponse response, File file) throws IOException {
-        log.debug("Getting roster file {}", file.getPath());
-        if (file.exists()) {
-            if (file.canRead()) {
-                response.setContentType(APPLICATION_XML);
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.setContentLength((int) file.length());
-                FileInputStream fileInputStream = new FileInputStream(file);
-                int bytes;
-                while ((bytes = fileInputStream.read()) != -1) {
-                    response.getOutputStream().write(bytes);
-                }
-            } else {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            }
-        } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
     }
 }
