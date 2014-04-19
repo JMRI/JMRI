@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages locations.
  * 
  * @author Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
  * @version $Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
@@ -225,15 +225,10 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		List<Track> trackList = getTracks(type);
 		// now re-sort
 		List<Track> moveList = new ArrayList<Track>();
-		boolean locAdded = false;
-		Track track;
-		Track trackOut;
-		for (int i = 0; i < trackList.size(); i++) {
-			locAdded = false;
-			track = trackList.get(i);
+		for (Track track : trackList) {
+			boolean locAdded = false;
 			for (int j = 0; j < moveList.size(); j++) {
-				trackOut = moveList.get(j);
-				if (track.getMoves() < trackOut.getMoves()) {
+				if (track.getMoves() < moveList.get(j).getMoves()) {
 					moveList.add(j, track);
 					locAdded = true;
 					break;
@@ -256,9 +251,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
 		box.addItem("");
-		List<Location> locs = getLocationsByNameList();
-		for (int i = 0; i < locs.size(); i++) {
-			box.addItem(locs.get(i));
+		for (Location loc : getLocationsByNameList()) {
+			box.addItem(loc);
 		}
 		return box;
 	}
@@ -266,9 +260,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
 		box.addItem("");
-		List<Location> locs = getLocationsByNameList();
-		for (int i = 0; i < locs.size(); i++) {
-			box.addItem(locs.get(i));
+		for (Location loc : getLocationsByNameList()) {
+			box.addItem(loc);
 		}
 	}
 
@@ -278,18 +271,17 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			// now adjust tracks
 			List<Track> tracks = loc.getTrackList();
 			for (Track track : tracks) {
-				String[] loadNames = track.getLoadNames();
-				for (int k = 0; k < loadNames.length; k++) {
-					if (loadNames[k].equals(oldLoadName)) {
+				for (String loadName : track.getLoadNames()) {
+					if (loadName.equals(oldLoadName)) {
 						track.deleteLoadName(oldLoadName);
 						if (newLoadName != null)
 							track.addLoadName(newLoadName);
 					}
 					// adjust combination car type and load name
-					String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+					String[] splitLoad = loadName.split(CarLoad.SPLIT_CHAR);
 					if (splitLoad.length > 1) {
 						if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
-							track.deleteLoadName(loadNames[k]);
+							track.deleteLoadName(loadName);
 							if (newLoadName != null) {
 								track.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
 							}
@@ -297,18 +289,17 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 					}
 				}
 				// now adjust ship load names
-				loadNames = track.getShipLoadNames();
-				for (int k = 0; k < loadNames.length; k++) {
-					if (loadNames[k].equals(oldLoadName)) {
+				for (String loadName : track.getShipLoadNames()) {
+					if (loadName.equals(oldLoadName)) {
 						track.deleteShipLoadName(oldLoadName);
 						if (newLoadName != null)
 							track.addShipLoadName(newLoadName);
 					}
 					// adjust combination car type and load name
-					String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+					String[] splitLoad = loadName.split(CarLoad.SPLIT_CHAR);
 					if (splitLoad.length > 1) {
 						if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
-							track.deleteShipLoadName(loadNames[k]);
+							track.deleteShipLoadName(loadName);
 							if (newLoadName != null) {
 								track.addShipLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
 							}
@@ -366,11 +357,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public void load(Element root) {
 		if (root.getChild(Xml.LOCATIONS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
+			List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
 			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " locations");
-			for (int i = 0; i < l.size(); i++) {
-				register(new Location(l.get(i)));
+				log.debug("readFile sees " + locs.size() + " locations");
+			for (Element loc : locs) {
+				register(new Location(loc));
 			}
 		}
 	}
