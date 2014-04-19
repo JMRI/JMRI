@@ -46,16 +46,16 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown context-config">
-                    <a href="/config" class="dropdown-toggle config-enabled-only" data-toggle="dropdown">Preferences <b class="caret"></b></a>
+                    <a href="/config" class="dropdown-toggle" data-toggle="dropdown">Preferences <b class="caret"></b></a>
                     <ul id="navbar-config" class="dropdown-menu">
-                        <!-- should we ever have personal preferences, this is where they belong
-                        <li class="dropdown-header">Personal Preferences</li>
-                        <li class="disabled"><a href="#">No Personal Preferences</a></li>
+                        <li class="dropdown-header"><span id="font-size-value" class="badge pull-right"></span>Font size</li>
+                        <li><a href="#" id="font-size-smaller" style="font-size: smaller">Smaller</a></li>
+                        <li><a href="#" id="font-size-larger" style="font-size: larger">Larger</a></li>
                         <!-- divider and header for system preferences, should personal preferences be supported
                         <li class="divider"></li>
                         <li class="dropdown-header">System Preferences</li>
-                        -->
                         <li class="config-disabled-only disabled"><a href="#">System Preferences Disabled</a></li>
+                        -->
                     </ul>
                 </li>
                 <li class="dropdown">
