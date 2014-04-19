@@ -1557,6 +1557,9 @@ function listPanels() {
                     }
                 });
                 // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
+            } else {
+                $("#activity-alert").addClass("hidden").removeClass("show");
+                $("#warning-no-panels").addClass("show").removeClass("hidden");
             }
         }
     });
