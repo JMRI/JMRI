@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -1090,8 +1091,12 @@ public class TrainCommon {
 				|| attribute.equals(Setup.NO_LOCATION))
 			return "";
 		else if (attribute.equals(Setup.TAB))
-			return " " + tabString("", Setup.getTabLength());
-		return " (" + Bundle.getMessage("ErrorPrintOptions") + ") "; // maybe user changed locale
+			return tabString("", Setup.getTab1Length());
+		else if (attribute.equals(Setup.TAB2))
+			return tabString("", Setup.getTab2Length());
+		else if (attribute.equals(Setup.TAB3))
+			return tabString("", Setup.getTab3Length());
+		return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[] { attribute }); // something isn't right!
 	}
 
 	public static String getDate(boolean isModelYear) {

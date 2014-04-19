@@ -4,7 +4,10 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -33,7 +36,9 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 	// check boxes
 
 	// text field
-	JTextField tabTextField = new JTextField(4);
+	JTextField tab1TextField = new JTextField(2);
+	JTextField tab2TextField = new JTextField(2);
+	JTextField tab3TextField = new JTextField(2);
 
 	// text area
 
@@ -50,15 +55,26 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 
 		// row 1 font type and size
 		JPanel p1 = new JPanel();
-		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 
 		JPanel pTab = new JPanel();
-		pTab.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab")));
-		pTab.add(tabTextField);
-
-		tabTextField.setText(Integer.toString(Setup.getTabLength()));
-
+		pTab.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab1")));
+		pTab.add(tab1TextField);
 		p1.add(pTab);
+
+		JPanel pTab2 = new JPanel();
+		pTab2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab2")));
+		pTab2.add(tab2TextField);
+		p1.add(pTab2);
+
+		JPanel pTab3 = new JPanel();
+		pTab3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab3")));
+		pTab3.add(tab3TextField);
+		p1.add(pTab3);
+
+		tab1TextField.setText(Integer.toString(Setup.getTab1Length()));
+		tab2TextField.setText(Integer.toString(Setup.getTab2Length()));
+		tab3TextField.setText(Integer.toString(Setup.getTab3Length()));
 
 		// add tool tips
 		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
@@ -78,18 +94,23 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
 
-		pack();
-		setVisible(true);
+		initMinimumSize(new Dimension(Control.smallPanelWidth, Control.mediumPanelHeight));
 	}
 
 	// Save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
 
-			Setup.setTablength(Integer.parseInt(tabTextField.getText()));
+			try {
+				Setup.setTab1length(Integer.parseInt(tab1TextField.getText()));
+				Setup.setTab2length(Integer.parseInt(tab2TextField.getText()));
+				Setup.setTab3length(Integer.parseInt(tab3TextField.getText()));
+			} catch (Exception e) {
+				log.error("Tab wasn't a number");
+			}
 
 			OperationsSetupXml.instance().writeOperationsFile();
-			
+
 			// recreate all train manifests
 			TrainManager.instance().setTrainsModified();
 
@@ -98,6 +119,5 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		}
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(OperationsSetupFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 }

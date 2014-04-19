@@ -135,6 +135,8 @@ public class Setup {
 	public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
 	public static final String NONE = " "; // none has be a character or a space
 	public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
+	public static final String TAB2 = Bundle.getMessage("Tab2");
+	public static final String TAB3 = Bundle.getMessage("Tab3");
 	public static final String BOX = " [ ] "; // NOI18N
 
 	// these are for the utility printing when using tabs
@@ -228,7 +230,9 @@ public class Setup {
 	private static String iconTerminateColor = "";
 
 	private static boolean tab = false; // when true, tab out manifest and switch lists
-	private static int tabCharLength = Control.max_len_string_attibute;
+	private static int tab1CharLength = Control.max_len_string_attibute;
+	private static int tab2CharLength = 6; // arbitrary lengths
+	private static int tab3CharLength = 8;
 	private static boolean twoColumnFormat = false; // when true, use two columns for work at a location
 	private static boolean manifestEditorEnabled = false; // when true use text editor to view build report
 	private static boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
@@ -897,12 +901,28 @@ public class Setup {
 		tab = enable;
 	}
 
-	public static int getTabLength() {
-		return tabCharLength;
+	public static int getTab1Length() {
+		return tab1CharLength;
 	}
 
-	public static void setTablength(int length) {
-		tabCharLength = length;
+	public static void setTab1length(int length) {
+		tab1CharLength = length;
+	}
+
+	public static int getTab2Length() {
+		return tab2CharLength;
+	}
+
+	public static void setTab2length(int length) {
+		tab2CharLength = length;
+	}
+
+	public static int getTab3Length() {
+		return tab3CharLength;
+	}
+
+	public static void setTab3length(int length) {
+		tab3CharLength = length;
 	}
 
 	public static boolean isTwoColumnFormatEnabled() {
@@ -1409,8 +1429,11 @@ public class Setup {
 		for (String attribute : getEngineAttributes()) {
 			box.addItem(attribute);
 		}
-		if (isTabEnabled())
+		if (isTabEnabled()) {
 			box.addItem(TAB);
+			box.addItem(TAB2);
+			box.addItem(TAB3);
+		}
 		return box;
 	}
 
@@ -1420,8 +1443,11 @@ public class Setup {
 		for (String attribute : getCarAttributes()) {
 			box.addItem(attribute);
 		}
-		if (isTabEnabled())
+		if (isTabEnabled()) {
 			box.addItem(TAB);
+			box.addItem(TAB2);
+			box.addItem(TAB3);
+		}
 		return box;
 	}
 
@@ -1565,7 +1591,7 @@ public class Setup {
 
 		e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
 		storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
-		
+
 		e.addContent(values = new Element(Xml.DROP_ENG_FORMAT));
 		storeXmlMessageFormat(values, getDropEnginePrefix(), getDropEngineMessageFormat());
 
@@ -1618,7 +1644,9 @@ public class Setup {
 
 		e.addContent(values = new Element(Xml.TAB));
 		values.setAttribute(Xml.ENABLED, isTabEnabled() ? Xml.TRUE : Xml.FALSE);
-		values.setAttribute(Xml.LENGTH, Integer.toString(getTabLength()));
+		values.setAttribute(Xml.LENGTH, Integer.toString(getTab1Length()));
+		values.setAttribute(Xml.TAB2_LENGTH, Integer.toString(getTab2Length()));
+		values.setAttribute(Xml.TAB3_LENGTH, Integer.toString(getTab3Length()));
 
 		e.addContent(values = new Element(Xml.MANIFEST));
 		values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1706,7 +1734,7 @@ public class Setup {
 				: Xml.FALSE);
 		return e;
 	}
-	
+
 	private static void storeXmlMessageFormat(Element values, String prefix, String[] messageFormat) {
 		values.setAttribute(Xml.PREFIX, prefix);
 		StringBuffer buf = new StringBuffer();
@@ -2090,8 +2118,20 @@ public class Setup {
 			if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.LENGTH)) != null) {
 				String length = a.getValue();
 				if (log.isDebugEnabled())
-					log.debug("tab length: " + length);
-				setTablength(Integer.parseInt(length));
+					log.debug("tab 1 length: " + length);
+				setTab1length(Integer.parseInt(length));
+			}
+			if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB2_LENGTH)) != null) {
+				String length = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("tab 2 length: " + length);
+				setTab2length(Integer.parseInt(length));
+			}
+			if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB3_LENGTH)) != null) {
+				String length = a.getValue();
+				if (log.isDebugEnabled())
+					log.debug("tab 3 length: " + length);
+				setTab3length(Integer.parseInt(length));
 			}
 		}
 		if ((operations.getChild(Xml.MANIFEST) != null)) {
@@ -2484,17 +2524,17 @@ public class Setup {
 				format[i] = DROP_COMMENT;
 			// three keys with spaces that need conversion
 			if (format[i].equals("PickUp Msg")) // NOI18N
-				format[i] = "PickUp_Msg"; // NOI18N 
+				format[i] = "PickUp_Msg"; // NOI18N
 			else if (format[i].equals("SetOut Msg")) // NOI18N
 				format[i] = "SetOut_Msg"; // NOI18N
 			else if (format[i].equals("Final Dest")) // NOI18N
-				format[i] = "Final_Dest"; // NOI18N 
+				format[i] = "Final_Dest"; // NOI18N
 		}
 	}
 
-	
 	/**
 	 * Converts the xml key to the proper locale text
+	 * 
 	 * @param keys
 	 */
 	private static void keyToStringConversion(String[] keys) {
@@ -2504,17 +2544,18 @@ public class Setup {
 			try {
 				keys[i] = Bundle.getMessage(keys[i]);
 			} catch (Exception e) {
-					log.debug("Key {}: ({}) not found", i, keys[i]);
+				log.debug("Key {}: ({}) not found", i, keys[i]);
 			}
 		}
 	}
-	
-	
+
 	private static final String[] attributtes = { "Road", "Number", "Type", "Model", "Length", "Load", "Color",
 			"Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Owner",
 			"RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab" };
+
 	/**
 	 * Converts the strings into English tags for xml storage
+	 * 
 	 * @param strings
 	 */
 	private static void stringToKeyConversion(String[] strings) {
@@ -2529,7 +2570,7 @@ public class Setup {
 					break;
 				}
 			}
-//			log.debug("Converted {} to {}", old, strings[i]);
+			// log.debug("Converted {} to {}", old, strings[i]);
 		}
 	}
 

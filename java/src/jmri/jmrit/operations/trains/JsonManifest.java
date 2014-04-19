@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import jmri.jmris.json.JSON;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -22,6 +25,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.web.servlet.operations.Manifest;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -388,10 +392,11 @@ public class JsonManifest extends TrainCommon {
         } else if (attribute.equals(Setup.NONE) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)
-                || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.TAB)) { // attrbiutes that don't print
+                || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.TAB)
+                || attribute.equals(Setup.TAB2) || attribute.equals(Setup.TAB3)) { // attributes that don't print
             return "";
         }
-        return Bundle.getMessage(locale, "ErrorPrintOptions"); // the operations code insanely stores what should be NOI18N information in localized manners, so this can easily be triggered
+        return MessageFormat.format(Bundle.getMessage(locale, "ErrorPrintOptions"), new Object[] { attribute }); // something is isn't right!
     }
 
     protected ArrayNode getTrackComments(RouteLocation location, List<Car> cars) {

@@ -503,10 +503,11 @@ public class Manifest extends TrainCommon {
         } else if (attribute.equals(Setup.NONE) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)
-                || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.TAB)) { // attrbiutes that don't print
+                || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.TAB)
+                || attribute.equals(Setup.TAB2) || attribute.equals(Setup.TAB3)) { // attributes that don't print
             return "";
         }
-        return Bundle.getMessage(locale, "ErrorPrintOptions"); // the operations code insanely stores what should be NOI18N information in localized manners, so this can easily be triggered
+        return Bundle.getMessage(locale, "ErrorPrintOptions"); // something is isn't right!
     }
 
     protected String getTrackComments(RouteLocation location, List<Car> cars) {

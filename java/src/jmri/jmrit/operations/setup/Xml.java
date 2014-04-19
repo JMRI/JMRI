@@ -117,6 +117,8 @@ public class Xml {
 	static final String LOCAL_COLOR = "localColor"; // NOI18N
 	
 	static final String TAB = "tab"; // NOI18N
+	static final String TAB2_LENGTH = "tab2Length"; // NOI18N
+	static final String TAB3_LENGTH = "tab3Length"; // NOI18N
 	static final String ENABLED = "enabled"; // NOI18N
 	
 	static final String COLUMN_FORMAT = "columnFormat"; // NOI18N
