@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -979,7 +981,7 @@ public class TrainCommon {
 	// @param pickup true when rolling stock is being picked up
 	private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
 		if (attribute.equals(Setup.MODEL))
-			return " " + tabString(engine.getModel(), Control.max_len_string_attibute);
+			return " " + tabString(engine.getModel(), EngineModels.instance().getCurMaxNameLength());
 		if (attribute.equals(Setup.CONSIST))
 			return " " + tabString(engine.getConsistName(), Control.max_len_string_attibute);
 		return getRollingStockAttribute(engine, attribute, isPickup, false);
@@ -1090,8 +1092,12 @@ public class TrainCommon {
 				|| attribute.equals(Setup.NO_LOCATION))
 			return "";
 		else if (attribute.equals(Setup.TAB))
-			return " " + tabString("", Setup.getTabLength());
-		return " (" + Bundle.getMessage("ErrorPrintOptions") + ") "; // maybe user changed locale
+			return tabString("", Setup.getTab1Length());
+		else if (attribute.equals(Setup.TAB2))
+			return tabString("", Setup.getTab2Length());
+		else if (attribute.equals(Setup.TAB3))
+			return tabString("", Setup.getTab3Length());
+		return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[] { attribute }); // something isn't right!
 	}
 
 	public static String getDate(boolean isModelYear) {

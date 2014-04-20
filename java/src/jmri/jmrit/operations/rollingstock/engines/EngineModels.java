@@ -4,9 +4,11 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
@@ -45,6 +47,8 @@ public class EngineModels {
 	protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<String, String>();
 
+	private static final int MIN_NAME_LENGTH = 4;
+	
 	public EngineModels() {
 	}
 
@@ -99,6 +103,7 @@ public class EngineModels {
 		if (_list.contains(model))
 			return;
 		_list.add(0, model);
+		_maxNameLength = 0; // reset maximum name length
 		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, _list.size() - 1, _list.size());
 	}
 
@@ -106,6 +111,7 @@ public class EngineModels {
 		if (!_list.contains(model))
 			return;
 		_list.remove(model);
+		_maxNameLength = 0; // reset maximum name length
 		firePropertyChange(ENGINEMODELS_CHANGED_PROPERTY, _list.size() + 1, _list.size());
 	}
 
@@ -170,6 +176,26 @@ public class EngineModels {
 	 */
 	public String getModelWeight(String model) {
 		return _engineWeightHashTable.get(model);
+	}
+	
+	private int _maxNameLength = 0;
+
+	/**
+	 * Get the maximum character length of a engine model when printing on a manifest or switch list.
+	 * 
+	 * @return the maximum character length of a engine model
+	 */
+	public int getCurMaxNameLength() {
+		if (_maxNameLength == 0) {
+			String[] models = getNames();
+			int length = MIN_NAME_LENGTH;
+			for (String modelName : models) {
+				if (modelName.length() > length)
+					length = modelName.length();
+			}
+			_maxNameLength = length;
+		}
+		return _maxNameLength;
 	}
 
 	private void loadDefaults() {

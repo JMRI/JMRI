@@ -42,6 +42,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
            xtc=(XBeeTrafficController)xcm.getTrafficController();
         } catch(NullPointerException npe) {
           // The adapter doesn't have a memo, so no nodes can be defined.
+          if(log.isDebugEnabled())
+             log.debug("No memo defined; no nodes to save.");
           return;
         }
         try{
@@ -71,12 +73,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
     }
 
-	protected Element makeParameter(String name, String value) {
+    protected Element makeParameter(String name, String value) {
     	Element p = new Element("parameter");
        	p.setAttribute("name",name);
         p.addContent(value);
         return p;
-	}
+    }
 
     protected void getInstance() {
         adapter = new XBeeAdapter();
@@ -107,7 +109,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // Trigger initialization of this Node to reflect these parameters
             XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
             XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
-            xtc.registerNode(node);
+        xtc.registerNode(node);
         }
     }
 

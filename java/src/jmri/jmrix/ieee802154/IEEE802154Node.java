@@ -38,6 +38,7 @@ public abstract class IEEE802154Node extends AbstractNode{
         panaddress=pan;
         useraddress=user;
         globaladdress=global;
+        setNodeAddress((user[0]<<8)+user[1]);
     }
    
     protected byte panaddress[]={0,0}; // default pan address to 0
