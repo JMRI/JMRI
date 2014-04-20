@@ -4,12 +4,16 @@ package jmri.jmrix.ieee802154.xbee;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.Sensor;
 import jmri.JmriException;
 
 import com.rapplogic.xbee.api.ApiId;
+import com.rapplogic.xbee.api.XBeeAddress;
 import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
+import com.rapplogic.xbee.api.XBeeResponse;
+import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
 
 /**
  * Manage the XBee specific Sensor implementation.
@@ -62,44 +66,55 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // listen for sensors, creating them as needed
     public void reply(XBeeReply l) {
-	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
+    	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
 
-        com.rapplogic.xbee.api.XBeeResponse response=l.getXBeeResponse();
+    	com.rapplogic.xbee.api.XBeeResponse response=l.getXBeeResponse();
 
-        if (response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-           com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
+    	if (response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
+    		com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
 
-           for (int i=0;i<=8;i++) {
-                if( ioSample.isDigitalEnabled(i)) {
-                   if(log.isDebugEnabled()) log.debug("DIO"+i + "enabled as sensor");
-                   // Sensor name is prefix followed by 16 bit address
-                   // followed by the bit number.
-                   provideSensor(prefix +typeLetter() + ((XBeeAddress16)ioSample.getSourceAddress()).get16BitValue() + "" + i);
-                }
-           }
-        } else if(response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
-           com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample =
-           (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
+    		for (int i=0;i<=8;i++) {
+    			if( ioSample.isDigitalEnabled(i)) {
+    				// Sensor name is prefix followed by 16 bit address
+    				// followed by the bit number.
+    				String sName = prefix + typeLetter() + ((XBeeAddress16)ioSample.getSourceAddress()).get16BitValue() + ":" + i;
+    				XBeeSensor s = (XBeeSensor) getSensor(sName);
+    				if (s == null) {
+    					s = (XBeeSensor) provideSensor(sName);
+    					s.reply(l);
+        				if(log.isDebugEnabled()) log.debug("DIO " +  sName + " enabled as sensor");
+    				}
+    			}
+    		}
+    	} else if(response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
+    		com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample =
+    				(com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
 
-           // series 2 xbees can go up to 12.  We'll leave it at 8 like
-           // the series 1 xbees to start with.
-           for (int i=0;i<=8;i++) {
-                if( ioSample.isDigitalEnabled(i)) {
-                   if(log.isDebugEnabled()) log.debug("DIO"+i + "enabled as sensor");
-                   // Sensor name is prefix followed by 16 bit address
-                   // followed by the bit number.
-                   provideSensor(prefix +typeLetter() + 
-                       ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress16() + i);
-                }
-           }
-        } else {
-           // not what we expected
-           log.debug("Ignoring mystery packet " + response.toString());
-        }
+    		// series 2 xbees can go up to 12.  We'll leave it at 8 like
+    		// the series 1 xbees to start with.
+    		for (int i=0;i<=7;i++) {
+    			if( ioSample.isDigitalEnabled(i)) {
+    				// Sensor name is prefix followed by 16 bit address
+    				// followed by the bit number.
+    				XBeeAddress16 xBeeAddr = ioSample.getRemoteAddress16();
+    				int addr = ((xBeeAddr.getMsb() << 8) & 0xff00) + xBeeAddr.getLsb();
+    				String sName = prefix + typeLetter() + addr + ":" + i;
+    				XBeeSensor s = (XBeeSensor) getSensor(sName);
+    				if (s == null) {
+    					s = (XBeeSensor) provideSensor(sName);
+						s.reply(l);
+        				if(log.isDebugEnabled()) log.debug("DIO " +  sName + " enabled as sensor");
+    				}
+    			}
+    		}
+    	} else {
+    		// not what we expected
+    		log.debug("Ignoring mystery packet " + response.toString());
+    	}
 
     }
 
-    // listen for the messages to the XBee  
+	// listen for the messages to the XBee  
     public void message(XBeeMessage l) {
     }
 
@@ -148,8 +163,10 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 return -1;
             }
         }
+        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress + " pin " + input);
         return encoderAddress;
     }
+    
     private int pinFromSystemName(String systemName) {
         int encoderAddress = 0;
         int input = 0;
@@ -175,6 +192,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 return -1;
             }
         }
+        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
         return input;
     }
 
