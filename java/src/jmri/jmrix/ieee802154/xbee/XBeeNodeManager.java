@@ -97,57 +97,13 @@ public class XBeeNodeManager implements XBeeListener {
           node.setGlobalAddress(ad64b);
           node.setIdentifier(nd.getNodeIdentifier());
        }
-    } else {
-      if(response instanceof com.rapplogic.xbee.api.wpan.RxBaseResponse ) {
-         // check to see if the node sending this message is one we know
-         // about.  If not, add it to the list of nodes.
-         com.rapplogic.xbee.api.XBeeAddress xaddr=((com.rapplogic.xbee.api.wpan.RxBaseResponse)response).getSourceAddress();
-        int address;
-        if(xaddr instanceof com.rapplogic.xbee.api.XBeeAddress16) {
-           address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr).get16BitValue();
-           XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
-           if(node==null) {
-               // the node does not exist, we're adding a new one.
-               node=(XBeeNode)xtc.newNode();
-               // register the node with the traffic controller
-               xtc.registerNode(node); 
-               // update the node information.
-               node.setNodeAddress(address);
-               int ad16i[]=xaddr.getAddress();
-               byte ad16b[]=node.getUserAddress();
-               for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
-               node.setUserAddress(ad16b); 
-           }
-        } else { // this is a 64 bit address.
-         // there isn't currently a way to look nodes up by the
-         // 64 bit address, so see if we can find it from the 16 bit address.
-         //address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
-         //XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
-         XBeeNode node = null;
-         if(node==null) {
-            // the node does not exist, we're adding a new one.
-            node=(XBeeNode)xtc.newNode();
-            // register the node with the traffic controller
-            xtc.registerNode(node); 
-            // update the node information.
-            //node.setNodeAddress(address);
-            //int ad16i[]=xaddr16.getAddress();
-            //byte ad16b[]=node.getUserAddress();
-            //for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
-            //node.setUserAddress(ad16b); 
-            int ad64i[]=xaddr.getAddress();
-            byte ad64b[]=node.getGlobalAddress();
-            for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
-            node.setGlobalAddress(ad64b);
-         }
-        }
-      } else {
-         // can't cast the message to RxBaseResponse, try ZNetRxBaseREsponse
-         com.rapplogic.xbee.api.XBeeAddress64 xaddr64 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress64();
-         com.rapplogic.xbee.api.XBeeAddress16 xaddr16 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress16();
-         // there isn't currently a way to look nodes up by the
-         // 64 bit address, so see if we can find it from the 16 bit address.
-         int address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
+    } else if(response instanceof com.rapplogic.xbee.api.wpan.RxBaseResponse ) {
+      // check to see if the node sending this message is one we know
+      // about.  If not, add it to the list of nodes.
+      com.rapplogic.xbee.api.XBeeAddress xaddr=((com.rapplogic.xbee.api.wpan.RxBaseResponse)response).getSourceAddress();
+      int address;
+      if(xaddr instanceof com.rapplogic.xbee.api.XBeeAddress16) {
+         address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr).get16BitValue();
          XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
          if(node==null) {
             // the node does not exist, we're adding a new one.
@@ -156,15 +112,57 @@ public class XBeeNodeManager implements XBeeListener {
             xtc.registerNode(node); 
             // update the node information.
             node.setNodeAddress(address);
-            int ad16i[]=xaddr16.getAddress();
+            int ad16i[]=xaddr.getAddress();
             byte ad16b[]=node.getUserAddress();
             for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
             node.setUserAddress(ad16b); 
-            int ad64i[]=xaddr64.getAddress();
-            byte ad64b[]=node.getGlobalAddress();
-            for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
-            node.setGlobalAddress(ad64b);
          }
+      } else { // this is a 64 bit address.
+        // there isn't currently a way to look nodes up by the
+        // 64 bit address, so see if we can find it from the 16 bit address.
+        //address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
+        //XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+        XBeeNode node = null;
+        if(node==null) {
+          // the node does not exist, we're adding a new one.
+          node=(XBeeNode)xtc.newNode();
+          // register the node with the traffic controller
+          xtc.registerNode(node); 
+          // update the node information.
+          //node.setNodeAddress(address);
+          //int ad16i[]=xaddr16.getAddress()
+          //byte ad16b[]=node.getUserAddress();
+          //for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
+          //node.setUserAddress(ad16b); 
+          int ad64i[]=xaddr.getAddress();
+          byte ad64b[]=node.getGlobalAddress();
+          for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
+          node.setGlobalAddress(ad64b);
+        }
+      }
+    } else if(response instanceof com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse ) {
+      // can't cast the message to RxBaseResponse, try ZNetRxBaseREsponse
+      com.rapplogic.xbee.api.XBeeAddress64 xaddr64 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress64();
+      com.rapplogic.xbee.api.XBeeAddress16 xaddr16 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress16();
+      // there isn't currently a way to look nodes up by the
+      // 64 bit address, so see if we can find it from the 16 bit address.
+      int address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
+      XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+      if(node==null) {
+        // the node does not exist, we're adding a new one.
+        node=(XBeeNode)xtc.newNode();
+        // register the node with the traffic controller
+        xtc.registerNode(node); 
+        // update the node information.
+        node.setNodeAddress(address);
+        int ad16i[]=xaddr16.getAddress();
+        byte ad16b[]=node.getUserAddress();
+        for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
+        node.setUserAddress(ad16b); 
+        int ad64i[]=xaddr64.getAddress();
+        byte ad64b[]=node.getGlobalAddress();
+        for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
+        node.setGlobalAddress(ad64b);
       }
     }
   } 
