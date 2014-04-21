@@ -51,13 +51,16 @@ public class XBeeNodeManager implements XBeeListener {
           atResponse.getValue().length > 0){
           WpanNodeDiscover nd = WpanNodeDiscover.parse((AtCommandResponse)response);
           if(log.isDebugEnabled()) log.debug("Node Discover is " +nd);
-          int address=nd.getNodeAddress16().get16BitValue();
-          XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+          XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(nd.getNodeAddress16().getAddress());
           if(node==null) {
-             // the node does not exist, we're adding a new one.
-             node=(XBeeNode)xtc.newNode();
-             // register the node with the traffic controller
-             xtc.registerNode(node); 
+             // try looking up the node using the 64 bit address
+             node=(XBeeNode)xtc.getNodeFromAddress(nd.getNodeAddress64().getAddress());
+             if(node==null) {
+                // the node does not exist, we're adding a new one.
+                node=(XBeeNode)xtc.newNode();
+                // register the node with the traffic controller
+                xtc.registerNode(node);
+             } 
           }
 
           // update the node information.
@@ -76,13 +79,14 @@ public class XBeeNodeManager implements XBeeListener {
           atResponse.getValue().length > 0){
           ZBNodeDiscover nd = ZBNodeDiscover.parse((AtCommandResponse)response);
           if(log.isDebugEnabled()) log.debug("Node Discover is " +nd);
-          int address=nd.getNodeAddress16().get16BitValue();
-          XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+          // 16 bit addresses may be assigned by the coordinator in series
+          // 2 nodes, so only look up the 64 bit address.
+          XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(nd.getNodeAddress64().getAddress());
           if(node==null) {
              // the node does not exist, we're adding a new one.
              node=(XBeeNode)xtc.newNode();
              // register the node with the traffic controller
-             xtc.registerNode((jmri.jmrix.AbstractNode)node); 
+             xtc.registerNode((jmri.jmrix.AbstractNode)node);
           }
 
           // update the node information.
@@ -101,28 +105,22 @@ public class XBeeNodeManager implements XBeeListener {
       // check to see if the node sending this message is one we know
       // about.  If not, add it to the list of nodes.
       com.rapplogic.xbee.api.XBeeAddress xaddr=((com.rapplogic.xbee.api.wpan.RxBaseResponse)response).getSourceAddress();
-      int address;
       if(xaddr instanceof com.rapplogic.xbee.api.XBeeAddress16) {
-         address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr).get16BitValue();
-         XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+         XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(xaddr.getAddress());
          if(node==null) {
             // the node does not exist, we're adding a new one.
             node=(XBeeNode)xtc.newNode();
             // register the node with the traffic controller
             xtc.registerNode(node); 
             // update the node information.
-            node.setNodeAddress(address);
+            node.setNodeAddress(((com.rapplogic.xbee.api.XBeeAddress16)xaddr).get16BitValue());
             int ad16i[]=xaddr.getAddress();
             byte ad16b[]=node.getUserAddress();
             for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
             node.setUserAddress(ad16b); 
          }
       } else { // this is a 64 bit address.
-        // there isn't currently a way to look nodes up by the
-        // 64 bit address, so see if we can find it from the 16 bit address.
-        //address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
-        //XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
-        XBeeNode node = null;
+        XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(xaddr.getAddress());
         if(node==null) {
           // the node does not exist, we're adding a new one.
           node=(XBeeNode)xtc.newNode();
@@ -144,17 +142,14 @@ public class XBeeNodeManager implements XBeeListener {
       // can't cast the message to RxBaseResponse, try ZNetRxBaseREsponse
       com.rapplogic.xbee.api.XBeeAddress64 xaddr64 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress64();
       com.rapplogic.xbee.api.XBeeAddress16 xaddr16 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse)response).getRemoteAddress16();
-      // there isn't currently a way to look nodes up by the
-      // 64 bit address, so see if we can find it from the 16 bit address.
-      int address=((com.rapplogic.xbee.api.XBeeAddress16)xaddr16).get16BitValue();
-      XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(address);
+      XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(xaddr64.getAddress());
       if(node==null) {
         // the node does not exist, we're adding a new one.
         node=(XBeeNode)xtc.newNode();
         // register the node with the traffic controller
         xtc.registerNode(node); 
         // update the node information.
-        node.setNodeAddress(address);
+        node.setNodeAddress(xaddr16.get16BitValue());
         int ad16i[]=xaddr16.getAddress();
         byte ad16b[]=node.getUserAddress();
         for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
