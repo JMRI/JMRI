@@ -127,11 +127,6 @@ public class XBeeNodeManager implements XBeeListener {
           // register the node with the traffic controller
           xtc.registerNode(node); 
           // update the node information.
-          //node.setNodeAddress(address);
-          //int ad16i[]=xaddr16.getAddress()
-          //byte ad16b[]=node.getUserAddress();
-          //for(int i=0;i<2;i++)ad16b[i]=(byte)ad16i[i];
-          //node.setUserAddress(ad16b); 
           int ad64i[]=xaddr.getAddress();
           byte ad64b[]=node.getGlobalAddress();
           for(int i=0;i<8;i++)ad64b[i]=(byte)ad64i[i];
