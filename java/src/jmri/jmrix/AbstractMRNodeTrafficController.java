@@ -38,7 +38,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int minNode = -1;
     protected int maxNode = -1;
 
-    private volatile int numNodes = 0;  // Incremented as Serial Nodes are created and registered
+    protected volatile int numNodes = 0;  // Incremented as Serial Nodes are created and registered
                                         // Corresponds to next available address in nodeArray
     private AbstractNode[] nodeArray;
     private boolean[] mustInit;
