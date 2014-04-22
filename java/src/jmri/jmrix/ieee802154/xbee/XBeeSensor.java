@@ -22,8 +22,12 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
     private boolean statusRequested=false;
 
-    private int address;
     private int baseaddress; /* The XBee Address */
+    private String NodeIdentifier; /* This is a string representation of
+                                      the XBee address in the system name
+                                      It may be an address or it may be
+                                      the NodeIdentifier string stored in
+                                      the NI parameter on the node.*/
     private int pin;         /* Which DIO pin does this sensor represent. */
     private String systemName;
 
@@ -54,16 +58,16 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
             //Address format passed is in the form of encoderAddress:input or S:sensor address
             int seperator = systemName.indexOf(":");
             try {
-                baseaddress = Integer.valueOf(systemName.substring(prefix.length()+1,seperator)).intValue();
+                NodeIdentifier = systemName.substring(prefix.length()+1,seperator);
                 pin = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
             }
         } else {
            try{
-              address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
-	      // calculate the base address, the nibble, and the bit to examine
-	      baseaddress = ((address) / 10);
+              NodeIdentifier = systemName.substring(prefix.length()+1,id.length()-1);
+              int address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
+	      // calculate the pin to examine
               pin = ((address)%10);
            } catch (NumberFormatException ex) {
               log.debug("Unable to convert " + systemName + " Hardware Address to a number");
@@ -71,8 +75,8 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
         }
         if (log.isDebugEnabled())
         	    log.debug("Created Sensor " + systemName  + 
- 				  " (Address " + baseaddress + 
-                                  " D" + pin +
+ 				  " (NodeIdentifier " + NodeIdentifier +
+                                  " ,D" + pin +
 				  ")");
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
@@ -103,11 +107,17 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
         com.rapplogic.xbee.api.XBeeResponse response=l.getXBeeResponse();
 
-        if (response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-           // This message is an IO response with a 16 bit address.
+        if (response.getApiId() == ApiId.RX_64_IO_RESPONSE ||
+            response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
+           // This message is an IO response.
            com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
-                                               
-            if(baseaddress==((XBeeAddress16)ioSample.getSourceAddress()).get16BitValue()) {
+
+            int address[]=ioSample.getSourceAddress().getAddress();
+            byte baddr[]=new byte[address.length];
+            for(int i=0;i<address.length;i++)
+                baddr[i]=(byte)address[i];
+                             
+            if(NodeIdentifier.equals(jmri.util.StringUtil.hexStringFromBytes(baddr))) {
              for (com.rapplogic.xbee.api.wpan.IoSample sample: ioSample.getSamples()) {          
                 if( sample.isDigitalOn(pin) ^ _inverted) {
                    setOwnState(Sensor.ACTIVE);
@@ -115,22 +125,16 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                 else setOwnState(Sensor.INACTIVE);
              }
           }
-        } else if (response.getApiId() == ApiId.RX_64_IO_RESPONSE) {
-           // This message is an IO response with a 64 bit address.
-           com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
-                                               
-            //if(baseaddress==((XBeeAddress64)ioSample.getSourceAddress()).get16BitValue()) {
-            // for (com.rapplogic.xbee.api.wpan.IoSample sample: ioSample.getSamples()) {          
-            //    if( sample.isDigitalOn(pin) ^ _inverted) {
-            //       setOwnState(Sensor.ACTIVE);
-            //    }
-            //    else setOwnState(Sensor.INACTIVE);
-           //  }
-          //}
         } else if(response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
            com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample = 
            (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
-           if(baseaddress==ioSample.getRemoteAddress16().get16BitValue()) {
+
+            int address[]=ioSample.getRemoteAddress64().getAddress();
+            byte baddr[]=new byte[address.length];
+            for(int i=0;i<address.length;i++)
+                baddr[i]=(byte)address[i];
+
+            if(NodeIdentifier.equals(jmri.util.StringUtil.hexStringFromBytes(baddr))) {
               if( ioSample.isDigitalOn(pin) ^ _inverted) {
                   setOwnState(Sensor.ACTIVE);
               }
@@ -157,12 +161,6 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
         super.dispose();
         tc.removeXBeeListener(this);
     }
-
-    // package protected routine to get the Sensor Number
-    int getNumber() { return address; }
-
-    // package protected routine to get the Sensor Base Address
-    int getBaseAddress() { return baseaddress; }
 
     static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());
 

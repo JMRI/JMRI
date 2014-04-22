@@ -49,6 +49,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                       addressFromSystemName(systemName));
         int pin = pinFromSystemName(systemName);
         if(curNode !=null && !curNode.getPinAssigned(pin)) {
+           log.debug("Adding sensor to pin " + pin );
            curNode.setPinBean(pin,new XBeeSensor(systemName, userName,tc));
            return (XBeeSensor) curNode.getPinBean(pin);
         } else {
@@ -70,14 +71,21 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     	com.rapplogic.xbee.api.XBeeResponse response=l.getXBeeResponse();
 
-    	if (response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
+    	if (response.getApiId() == ApiId.RX_64_IO_RESPONSE ||
+            response.getApiId() == ApiId.RX_16_IO_RESPONSE ) {
     		com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
+
+                int address[]=ioSample.getSourceAddress().getAddress();
+                byte baddr[]=new byte[address.length];
+                for(int i=0;i<address.length;i++)
+                   baddr[i]=(byte)address[i];
 
     		for (int i=0;i<=8;i++) {
     			if( ioSample.isDigitalEnabled(i)) {
     				// Sensor name is prefix followed by 16 bit address
     				// followed by the bit number.
-    				String sName = prefix + typeLetter() + ((XBeeAddress16)ioSample.getSourceAddress()).get16BitValue() + ":" + i;
+    				String sName = prefix + typeLetter() + 
+                                  jmri.util.StringUtil.hexStringFromBytes(baddr) + ":" + i;
     				XBeeSensor s = (XBeeSensor) getSensor(sName);
     				if (s == null) {
     					s = (XBeeSensor) provideSensor(sName);
@@ -96,9 +104,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     			if( ioSample.isDigitalEnabled(i)) {
     				// Sensor name is prefix followed by 16 bit address
     				// followed by the bit number.
-    				XBeeAddress16 xBeeAddr = ioSample.getRemoteAddress16();
-    				int addr = ((xBeeAddr.getMsb() << 8) & 0xff00) + xBeeAddr.getLsb();
-    				String sName = prefix + typeLetter() + addr + ":" + i;
+    				XBeeAddress64 xBeeAddr = ioSample.getRemoteAddress64();
+    				String sName = prefix + typeLetter() + xBeeAddr + ":" + i;
     				XBeeSensor s = (XBeeSensor) getSensor(sName);
     				if (s == null) {
     					s = (XBeeSensor) provideSensor(sName);
@@ -130,40 +137,25 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException{
-        int encoderAddress = addressFromSystemName(prefix + typeLetter() +curAddress);
+        String encoderAddress = addressFromSystemName(prefix + typeLetter() +curAddress);
         int input = pinFromSystemName(prefix +typeLetter() + curAddress);
        
-        if(encoderAddress <0 )
-           throw new JmriException("Hardware Address passed should be a number");
+        if(encoderAddress == "" )
+           throw new JmriException("I unable to determine hardware address");
         return prefix+typeLetter()+encoderAddress+":"+input;
     }
 
-    private int addressFromSystemName(String systemName) {
-        int encoderAddress = 0;
-        int input = 0;
-        int iName = 0;
+    private String addressFromSystemName(String systemName) {
+        String encoderAddress;
 
         if(systemName.contains(":")){
-            //Address format passed is in the form of encoderAddress:input or L:light address
+            //Address format passed is in the form of encoderAddress:input or S:light address
             int seperator = systemName.indexOf(":");
-            try {
-                encoderAddress = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1,seperator)).intValue();
-                input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
-            } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
-                return -1;
-            }
+            encoderAddress = systemName.substring(getSystemPrefix().length()+1,seperator);
          } else {
-            try{
-                iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
-                encoderAddress = iName/10;
-                input = iName % 10;
-            } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
-                return -1;
-            }
+            encoderAddress=systemName.substring(getSystemPrefix().length()+1,systemName.length()-1);
         }
-        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress + " pin " + input);
+        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
         return encoderAddress;
     }
     
@@ -176,7 +168,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                encoderAddress = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1,seperator)).intValue();
                 input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
@@ -185,7 +176,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
          } else {
             try{
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
-                encoderAddress = iName/10;
                 input = iName % 10;
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " Hardware Address to a number");
@@ -195,8 +185,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
         return input;
     }
-
-
     
     static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
