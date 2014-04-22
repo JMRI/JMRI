@@ -104,6 +104,10 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
           return new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("HV"));
       }
 
+      public static XBeeMessage getFirmwareVersionRequest(){
+          return new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("VR"));
+      }
+
       public static XBeeMessage getRemoteDoutMessage(com.rapplogic.xbee.api.XBeeAddress16 address, int pin, boolean on) {
           int onValue[]={0x5};
           int offValue[]={0x4};
