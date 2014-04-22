@@ -49,7 +49,7 @@ public class XBeeNodeManager implements XBeeListener {
        AtCommandResponse atResponse = (AtCommandResponse) response;
        if(xtc.isSeries1() && atResponse.getCommand().equals("ND") && atResponse.getValue()!=null &&
           atResponse.getValue().length > 0){
-          WpanNodeDiscover nd = WpanNodeDiscover.parse((AtCommandResponse)response);
+          WpanNodeDiscover nd = WpanNodeDiscover.parse(atResponse);
           if(log.isDebugEnabled()) log.debug("Node Discover is " +nd);
           XBeeNode node=(XBeeNode)xtc.getNodeFromAddress(nd.getNodeAddress16().getAddress());
           if(node==null) {
