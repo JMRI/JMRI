@@ -69,7 +69,7 @@ public class XBeeLight extends AbstractLight{
         }
         xbeeAddress=new com.rapplogic.xbee.api.XBeeAddress16((baseaddress&0xff00) >> 8, (baseaddress&0x00ff) );
         if (log.isDebugEnabled())
-                log.debug("Created Sensor " + systemName  +
+                log.debug("Created Light " + systemName  +
                                   " (Address " + baseaddress +
                                   " D" + pin +
                                   ")");
