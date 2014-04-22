@@ -344,6 +344,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     private com.rapplogic.xbee.api.HardwareVersion.RadioType series=com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN;
 
     private void setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType type){
+    	series = type;
  }
 
     // if we are using Series 1 XBees, use wpan classes from the XBee API library
