@@ -22,13 +22,13 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
     private boolean statusRequested=false;
 
-    private int baseaddress; /* The XBee Address */
     private String NodeIdentifier; /* This is a string representation of
                                       the XBee address in the system name
                                       It may be an address or it may be
                                       the NodeIdentifier string stored in
                                       the NI parameter on the node.*/
     private int pin;         /* Which DIO pin does this sensor represent. */
+    private XBeeNode node = null; // Which node does this belong too.
     private String systemName;
 
     protected XBeeTrafficController tc = null;
@@ -59,6 +59,15 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
             int seperator = systemName.indexOf(":");
             try {
                 NodeIdentifier = systemName.substring(prefix.length()+1,seperator);
+                if((node=(XBeeNode)tc.getNodeFromName(NodeIdentifier))==null)
+                    if( (node = (XBeeNode) tc.getNodeFromAddress(NodeIdentifier)) == null )
+                       try {
+                          node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(NodeIdentifier));
+                       } catch(java.lang.NumberFormatException nfe) {
+                          // if there was a number format exception, we couldn't
+                          // find the node.
+                          node = null;
+                       }
                 pin = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
@@ -67,6 +76,7 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
            try{
               NodeIdentifier = systemName.substring(prefix.length()+1,id.length()-1);
               int address = Integer.parseInt(id.substring(prefix.length()+1,id.length()));
+              node=(XBeeNode)tc.getNodeFromAddress(address/10);
 	      // calculate the pin to examine
               pin = ((address)%10);
            } catch (NumberFormatException ex) {
@@ -113,11 +123,9 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
            com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
 
             int address[]=ioSample.getSourceAddress().getAddress();
-            byte baddr[]=new byte[address.length];
-            for(int i=0;i<address.length;i++)
-                baddr[i]=(byte)address[i];
+            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
                              
-            if(NodeIdentifier.equals(jmri.util.StringUtil.hexStringFromBytes(baddr))) {
+            if(node.equals(sourcenode)) {
              for (com.rapplogic.xbee.api.wpan.IoSample sample: ioSample.getSamples()) {          
                 if( sample.isDigitalOn(pin) ^ _inverted) {
                    setOwnState(Sensor.ACTIVE);
@@ -130,11 +138,9 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
            (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
 
             int address[]=ioSample.getRemoteAddress64().getAddress();
-            byte baddr[]=new byte[address.length];
-            for(int i=0;i<address.length;i++)
-                baddr[i]=(byte)address[i];
-
-            if(NodeIdentifier.equals(jmri.util.StringUtil.hexStringFromBytes(baddr))) {
+            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
+                             
+            if(node.equals(sourcenode)) {
               if( ioSample.isDigitalOn(pin) ^ _inverted) {
                   setOwnState(Sensor.ACTIVE);
               }

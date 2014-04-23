@@ -150,6 +150,38 @@ public class XBeeNode extends IEEE802154Node {
       return (pinObjects.containsKey(pin));
     }
 
+    /**
+     * Get the prefered name for this XBee Node.
+     * @return the Identifier string if it is not blank
+     *         then a string representation of the bytes of the 
+     *         16 bit address if it is not a broadcast address. 
+     *         Otherwise return the 64 bit GUID.
+     **/
+    public String getPreferedName() {
+         if(!Identifier.equals("")) { 
+             return Identifier;
+         } else if(!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST)) &&
+                 !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+                 return jmri.util.StringUtil.hexStringFromBytes(useraddress);
+         } else {
+            return jmri.util.StringUtil.hexStringFromBytes(globaladdress);
+         }
+      
+    }
+
+    /**
+     * Get the prefered transmit address for this XBee Node.
+     * @return the 16 bit address if it is not a broadcast address. 
+     *         Otherwise return the 64 bit GUID.
+     **/
+    public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {
+         if(!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST)) &&
+                 !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+                 return getXBeeAddress16();
+         } else {
+            return getXBeeAddress64();
+         }
+    }  
 
     private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }

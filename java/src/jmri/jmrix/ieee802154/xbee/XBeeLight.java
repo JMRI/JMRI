@@ -16,11 +16,18 @@ import jmri.Light;
 
 public class XBeeLight extends AbstractLight{
 
+
+    private String NodeIdentifier; /* This is a string representation of
+                                      the XBee address in the system name
+                                      It may be an address or it may be
+                                      the NodeIdentifier string stored in
+                                      the NI parameter on the node.*/
+    private XBeeNode node = null; // Which node does this belong too.    
+
     private int address;
     private int baseaddress; /* The XBee Address */
     private int pin;         /* Which DIO pin does this light represent. */
     private String systemName;
-    private com.rapplogic.xbee.api.XBeeAddress16 xbeeAddress;
 
     protected XBeeTrafficController tc = null;
 
@@ -52,36 +59,41 @@ public class XBeeLight extends AbstractLight{
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                baseaddress = Integer.valueOf(systemName.substring(prefix.length()+1,seperator)).intValue();
+                NodeIdentifier = systemName.substring(prefix.length()+1,seperator);
+                if((node=(XBeeNode)tc.getNodeFromName(NodeIdentifier))==null)
+                    if((node = (XBeeNode) tc.getNodeFromAddress(NodeIdentifier))== null )
+                       try {
+                          node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(NodeIdentifier));
+                       } catch(java.lang.NumberFormatException nfe) {
+                         // if there was a number format exception, we couldn't
+                         // find the node.
+                         node = null;
+                       }
                 pin = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
             }
         } else {
            try{
+              NodeIdentifier = systemName.substring(prefix.length()+1,id.length()-1);
               address = Integer.parseInt(systemName.substring(prefix.length()+1));
-              // calculate the base address, the nibble, and the bit to examine
-              baseaddress = ((address) / 10);
+              node=(XBeeNode)tc.getNodeFromAddress(address/10);
+              // calculate the pin to use. 
               pin = ((address)%10);
            } catch (NumberFormatException ex) {
               log.debug("Unable to convert " + systemName + " Hardware Address to a number");
            }
         }
-        xbeeAddress=new com.rapplogic.xbee.api.XBeeAddress16((baseaddress&0xff00) >> 8, (baseaddress&0x00ff) );
         if (log.isDebugEnabled())
                 log.debug("Created Light " + systemName  +
-                                  " (Address " + baseaddress +
+                                  " (NodeIdentifier " + NodeIdentifier +
                                   " D" + pin +
                                   ")");
-        // Finally, request the current state from the layout.
-        //this.requestUpdateFromLayout();
-        //tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
-        // tc.addXBeeListener(this);
     }
 
     protected void doNewState(int oldState, int newState) {
        // get message 
-       XBeeMessage message=XBeeMessage.getRemoteDoutMessage(xbeeAddress,pin,newState==Light.ON);
+       XBeeMessage message=XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(),pin,newState==Light.ON);
        // send the message
        tc.sendXBeeMessage(message,null);
     }

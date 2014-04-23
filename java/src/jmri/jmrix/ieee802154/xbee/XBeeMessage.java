@@ -108,10 +108,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
           return new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("VR"));
       }
 
-      public static XBeeMessage getRemoteDoutMessage(com.rapplogic.xbee.api.XBeeAddress16 address, int pin, boolean on) {
+      public static XBeeMessage getRemoteDoutMessage(com.rapplogic.xbee.api.XBeeAddress address, int pin, boolean on) {
           int onValue[]={0x5};
           int offValue[]={0x4};
-          return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest(address,"D" + pin, on?onValue:offValue));
+          if(address instanceof com.rapplogic.xbee.api.XBeeAddress16)
+             return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress16)address,"D" + pin, on?onValue:offValue));
+          else return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress64)address,"D" + pin, on?onValue:offValue));
       }
 
       public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress16 address, int[] payload) {
@@ -123,7 +125,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
    }
 
       public static XBeeMessage getZNetTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress64 address, int[] payload) {
-          return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest64(address,payload));
+          return new XBeeMessage(new com.rapplogic.xbee.api.zigbee.ZNetTxRequest(address,payload));
    }
 
 }

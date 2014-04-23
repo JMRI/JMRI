@@ -380,6 +380,23 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         firmwareVersion[1]=version[1];
     }
 
+   /**
+    * Public method to identify an XBeeNode from its node identifier
+    * @param Name the node identifier search string.
+    * @return the node if found, or null otherwise.
+    */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromName(String Name) {
+        log.debug("getNodeFromName called with " +Name);
+        for (int i=0; i<numNodes; i++) {
+            XBeeNode node = (XBeeNode)getNode(i);
+            if(node.getIdentifier().equals(Name))
+               return node;
+        }
+        return (null);
+   }
+
+
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeTrafficController.class.getName());
 
 

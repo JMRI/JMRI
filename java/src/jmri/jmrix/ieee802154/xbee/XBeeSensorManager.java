@@ -45,8 +45,17 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // XBee specific methods
 
     public Sensor createNewSensor(String systemName, String userName) {
-        XBeeNode curNode = (XBeeNode) tc.getNodeFromAddress(
-                      addressFromSystemName(systemName));
+        XBeeNode curNode = null;
+        String name = addressFromSystemName(systemName);
+        if( (curNode = (XBeeNode) tc.getNodeFromName(name)) == null )
+             if( (curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null)
+               try {
+                   curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
+               } catch(java.lang.NumberFormatException nfe) {
+                 // if there was a number format exception, we couldn't
+                 // find the node.
+                 curNode = null;
+               }
         int pin = pinFromSystemName(systemName);
         if(curNode !=null && !curNode.getPinAssigned(pin)) {
            log.debug("Adding sensor to pin " + pin );
@@ -76,16 +85,14 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     		com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
 
                 int address[]=ioSample.getSourceAddress().getAddress();
-                byte baddr[]=new byte[address.length];
-                for(int i=0;i<address.length;i++)
-                   baddr[i]=(byte)address[i];
+                XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
 
     		for (int i=0;i<=8;i++) {
     			if( ioSample.isDigitalEnabled(i)) {
     				// Sensor name is prefix followed by 16 bit address
     				// followed by the bit number.
     				String sName = prefix + typeLetter() + 
-                                  jmri.util.StringUtil.hexStringFromBytes(baddr) + ":" + i;
+                                  node.getPreferedName() + ":" + i;
     				XBeeSensor s = (XBeeSensor) getSensor(sName);
     				if (s == null) {
     					s = (XBeeSensor) provideSensor(sName);
@@ -97,15 +104,18 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     	} else if(response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
     		com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample =
     				(com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
+                
+    	        XBeeAddress64 xBeeAddr = ioSample.getRemoteAddress64();
+                XBeeNode node = (XBeeNode) tc.getNodeFromAddress(xBeeAddr.getAddress());
 
     		// series 2 xbees can go up to 12.  We'll leave it at 8 like
     		// the series 1 xbees to start with.
     		for (int i=0;i<=7;i++) {
     			if( ioSample.isDigitalEnabled(i)) {
-    				// Sensor name is prefix followed by 16 bit address
+    				// Sensor name is prefix followed by NI/address
     				// followed by the bit number.
-    				XBeeAddress64 xBeeAddr = ioSample.getRemoteAddress64();
-    				String sName = prefix + typeLetter() + xBeeAddr + ":" + i;
+    				String sName = prefix + typeLetter() +
+                                  node.getPreferedName() + ":" + i;
     				XBeeSensor s = (XBeeSensor) getSensor(sName);
     				if (s == null) {
     					s = (XBeeSensor) provideSensor(sName);
@@ -160,7 +170,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
     
     private int pinFromSystemName(String systemName) {
-        int encoderAddress = 0;
         int input = 0;
         int iName = 0;
 
@@ -182,7 +191,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 return -1;
             }
         }
-        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
+        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to pin number" + input);
         return input;
     }
     
