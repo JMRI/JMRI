@@ -1733,7 +1733,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[] {
-					rl.getName(), _reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
+					rl.getName(), rl.getId(), _reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
 			addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
@@ -3093,7 +3093,7 @@ public class TrainBuilder extends TrainCommon {
 			return true; // done
 		}
 		if (car.getRouteLocation() != null) {
-			// The following code should not be executed, this should not occur if train was reset before a build!
+			// The following code should never execute if train was reset before a build!
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
 					new Object[] { car.toString() }));
 		}
@@ -3104,8 +3104,6 @@ public class TrainBuilder extends TrainCommon {
 			rld = _routeList.get(k);
 			// if car can be picked up later at same location, skip
 			if (checkForLaterPickUp(rl, rld, car)) {
-				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarHasSecond"), new Object[] {
-						car.toString(), car.getLocationName() }));
 				break;
 			}
 			if (!rld.getName().equals(car.getDestinationName()))
@@ -3128,7 +3126,7 @@ public class TrainBuilder extends TrainCommon {
 			// are drops allows at this location?
 			if (!rld.isDropAllowed()) {
 				addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildRouteNoDropsStop"),
-						new Object[] { _train.getRoute().getName(), rld.getName(), locCount }));
+						new Object[] { _train.getRoute().getName(), rld.getName(), rld.getId(), locCount }));
 				continue;
 			}
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
@@ -3246,7 +3244,7 @@ public class TrainBuilder extends TrainCommon {
 									&& checkDropTrainDirection(car, rld, car.getDestinationTrack())) {
 								addCarToTrain(car, rl, rld, car.getDestinationTrack());
 								return true;
-							} else if (!status.equals(Track.OKAY)) {
+							} else {
 								addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
 										car.getDestinationTrackName(), status,
@@ -3682,6 +3680,8 @@ public class TrainBuilder extends TrainCommon {
 				return false;
 			}
 			log.debug("Car ({}) can be picked up later!", car.toString());
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterOkay"),
+					new Object[] { car.toString(), rld.getName(), rld.getId() }));
 			return true;
 		}
 		return false;

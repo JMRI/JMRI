@@ -29,7 +29,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -104,8 +103,8 @@ public class TrainCommon {
 	private void pickupEngine(PrintWriter file, Engine engine, String orientation) {
 		StringBuffer buf = new StringBuffer(tabString(Setup.getPickupEnginePrefix(), Setup.getManifestPrefixLength()));
 		String[] format = Setup.getPickupEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			String s = getEngineAttribute(engine, format[i], PICKUP);
+		for (String attribute : format) {
+			String s = getEngineAttribute(engine, attribute, PICKUP);
 			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -134,8 +133,8 @@ public class TrainCommon {
 	private void dropEngine(PrintWriter file, Engine engine, String orientation) {
 		StringBuffer buf = new StringBuffer(tabString(Setup.getDropEnginePrefix(), Setup.getManifestPrefixLength()));
 		String[] format = Setup.getDropEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			String s = getEngineAttribute(engine, format[i], !PICKUP);
+		for (String attribute : format) {
+			String s = getEngineAttribute(engine, attribute, !PICKUP);
 			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -153,8 +152,8 @@ public class TrainCommon {
 	 */
 	public String pickupEngine(Engine engine) {
 		StringBuilder builder = new StringBuilder();
-		for (String s : Setup.getPickupEngineMessageFormat()) {
-			builder.append(getEngineAttribute(engine, s, PICKUP));
+		for (String attribute : Setup.getPickupEngineMessageFormat()) {
+			builder.append(getEngineAttribute(engine, attribute, PICKUP));
 		}
 		return builder.toString();
 	}
@@ -167,8 +166,8 @@ public class TrainCommon {
 	 */
 	public String dropEngine(Engine engine) {
 		StringBuilder builder = new StringBuilder();
-		for (String s : Setup.getDropEngineMessageFormat()) {
-			builder.append(getEngineAttribute(engine, s, !PICKUP));
+		for (String attribute : Setup.getDropEngineMessageFormat()) {
+			builder.append(getEngineAttribute(engine, attribute, !PICKUP));
 		}
 		return builder.toString();
 	}
@@ -188,8 +187,7 @@ public class TrainCommon {
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = routeList.get(j);
-				for (int k = 0; k < carList.size(); k++) {
-					Car car = carList.get(k);
+				for (Car car : carList) {
 					if (Setup.isSortByTrackEnabled()
 							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 						continue;
@@ -212,8 +210,7 @@ public class TrainCommon {
 					}
 				}
 			}
-			for (int j = 0; j < carList.size(); j++) {
-				Car car = carList.get(j);
+			for (Car car : carList) {
 				if (Setup.isSortByTrackEnabled()
 						&& !splitString(track.getName()).equals(splitString(car.getDestinationTrackName())))
 					continue;
@@ -384,8 +381,8 @@ public class TrainCommon {
 	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation) {
 		if (isLocalMove(car))
 			return; // print nothing local move, see dropCar
-		for (int i = 0; i < format.length; i++) {
-			String s = getCarAttribute(car, format[i], PICKUP, !LOCAL);
+		for (String attribute : format) {
+			String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
 			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -410,8 +407,8 @@ public class TrainCommon {
 		String[] format = Setup.getPickupCarMessageFormat();
 		if (!isManifest)
 			format = Setup.getSwitchListPickupCarMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			String s = getCarAttribute(car, format[i], PICKUP, !LOCAL);
+		for (String attribute : format) {
+			String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -464,8 +461,8 @@ public class TrainCommon {
 
 	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean isLocal,
 			String orientation) {
-		for (int i = 0; i < format.length; i++) {
-			String s = getCarAttribute(car, format[i], !PICKUP, isLocal);
+		for (String attribute : format) {
+			String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
 			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -490,11 +487,11 @@ public class TrainCommon {
 		String[] format = Setup.getDropCarMessageFormat();
 		if (!isManifest)
 			format = Setup.getSwitchListDropCarMessageFormat();
-		for (int i = 0; i < format.length; i++) {
+		for (String attribute : format) {
 			// TODO the Setup.Location doesn't work correctly for the conductor
 			// window
 			// therefore we use the local true to disable it.
-			String s = getCarAttribute(car, format[i], !PICKUP, LOCAL);
+			String s = getCarAttribute(car, attribute, !PICKUP, LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -513,8 +510,8 @@ public class TrainCommon {
 		String[] format = Setup.getLocalMessageFormat();
 		if (!isManifest)
 			format = Setup.getSwitchListLocalMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			String s = getCarAttribute(car, format[i], !PICKUP, LOCAL);
+		for (String attribute : format) {
+			String s = getCarAttribute(car, attribute, !PICKUP, LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -537,14 +534,14 @@ public class TrainCommon {
 	protected void pickupUtilityCars(PrintWriter fileOut, List<Car> carList, Car car, RouteLocation rl,
 			RouteLocation rld, boolean isManifest) {
 		// list utility cars by type, track, length, and load
-		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
+		String[] format = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
-			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
+			format = Setup.getSwitchListPickupUtilityCarMessageFormat();
+		int count = countUtilityCars(format, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
 		pickUpCar(fileOut, car, new StringBuffer(tabString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())
-				+ " " + padString(Integer.toString(count), utilityCarCountFieldSize)), messageFormat, Setup
+				+ " " + padString(Integer.toString(count), utilityCarCountFieldSize)), format, Setup
 				.getManifestOrientation());
 	}
 
@@ -561,34 +558,34 @@ public class TrainCommon {
 			boolean isManifest) {
 		boolean isLocal = isLocalMove(car);
 		StringBuffer buf = new StringBuffer(tabString(Setup.getDropCarPrefix(), Setup.getManifestPrefixLength()));
-		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+		String[] format = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
 			buf = new StringBuffer(tabString(Setup.getLocalPrefix(), Setup.getManifestPrefixLength()));
-			messageFormat = Setup.getLocalUtilityCarMessageFormat();
+			format = Setup.getLocalUtilityCarMessageFormat();
 		} else if (isLocal && !isManifest) {
 			buf = new StringBuffer(tabString(Setup.getSwitchListLocalPrefix(), Setup.getSwitchListPrefixLength()));
-			messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+			format = Setup.getSwitchListLocalUtilityCarMessageFormat();
 		} else if (!isLocal && !isManifest) {
 			buf = new StringBuffer(tabString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
-			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+			format = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		}
-		int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
+		int count = countUtilityCars(format, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
 		buf.append(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
-		dropCar(fileOut, car, buf, messageFormat, isLocal, Setup.getManifestOrientation());
+		dropCar(fileOut, car, buf, format, isLocal, Setup.getManifestOrientation());
 	}
 
 	public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
 		int count = countPickupUtilityCars(carList, car, rl, rld, isManifest);
 		if (count == 0)
 			return null;
-		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
+		String[] format = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
-			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
+			format = Setup.getSwitchListPickupUtilityCarMessageFormat();
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
-		for (int i = 0; i < messageFormat.length; i++) {
-			String s = getCarAttribute(car, messageFormat[i], PICKUP, !LOCAL);
+		for (String attribute : format) {
+			String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -597,30 +594,30 @@ public class TrainCommon {
 	public int countPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
 			boolean isManifest) {
 		// list utility cars by type, track, length, and load
-		String[] messageFormat = Setup.getPickupUtilityCarMessageFormat();
+		String[] format = Setup.getPickupUtilityCarMessageFormat();
 		if (!isManifest)
-			messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		return countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
+			format = Setup.getSwitchListPickupUtilityCarMessageFormat();
+		return countUtilityCars(format, carList, car, rl, rld, PICKUP);
 	}
 
 	public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
 		// list utility cars by type, track, length, and load
-		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+		String[] format = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
-			messageFormat = Setup.getLocalUtilityCarMessageFormat();
+			format = Setup.getLocalUtilityCarMessageFormat();
 		} else if (isLocal && !isManifest) {
-			messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+			format = Setup.getSwitchListLocalUtilityCarMessageFormat();
 		} else if (!isLocal && !isManifest) {
-			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+			format = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		}
-		int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
+		int count = countUtilityCars(format, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return null;
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), utilityCarCountFieldSize));
-		for (int i = 0; i < messageFormat.length; i++) {
+		for (String attribute : format) {
 			// TODO the Setup.Location doesn't work correctly for the conductor
 			// window, therefore we use the local true to disable it.
-			String s = getCarAttribute(car, messageFormat[i], !PICKUP, LOCAL);
+			String s = getCarAttribute(car, attribute, !PICKUP, LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -628,22 +625,22 @@ public class TrainCommon {
 
 	public int countSetoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
 		// list utility cars by type, track, length, and load
-		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+		String[] format = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
-			messageFormat = Setup.getLocalUtilityCarMessageFormat();
+			format = Setup.getLocalUtilityCarMessageFormat();
 		} else if (isLocal && !isManifest) {
-			messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+			format = Setup.getSwitchListLocalUtilityCarMessageFormat();
 		} else if (!isLocal && !isManifest) {
-			messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+			format = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		}
-		return countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
+		return countUtilityCars(format, carList, car, rl, null, !PICKUP);
 	}
 
 	/**
 	 * Scans the car list for utility cars that have the same attributes as the car provided. Returns 0 if this car type
 	 * has already been processed, otherwise the number of cars with the same attribute.
 	 * 
-	 * @param messageFormat
+	 * @param format
 	 * @param carList
 	 * @param car
 	 * @param rl
@@ -651,13 +648,13 @@ public class TrainCommon {
 	 * @param isPickup
 	 * @return 0 if the car type has already been processed
 	 */
-	protected int countUtilityCars(String[] messageFormat, List<Car> carList, Car car, RouteLocation rl,
+	protected int countUtilityCars(String[] format, List<Car> carList, Car car, RouteLocation rl,
 			RouteLocation rld, boolean isPickup) {
 		int count = 0;
 		// figure out if the user wants to show the car's length
-		boolean showLength = showUtilityCarLength(messageFormat);
+		boolean showLength = showUtilityCarLength(format);
 		// figure out if the user want to show the car's loads
-		boolean showLoad = showUtilityCarLoad(messageFormat);
+		boolean showLoad = showUtilityCarLoad(format);
 		boolean showLocation = false;
 		boolean showDestination = false;
 		String[] carType = car.getTypeName().split("-");
@@ -665,13 +662,13 @@ public class TrainCommon {
 		// Note for car pick up: type, id, track name. For set out type, track name, id.
 		if (isPickup) {
 			carAttributes = carType[0] + car.getRouteLocationId() + splitString(car.getTrackName());
-			showDestination = showUtilityCarDestination(messageFormat);
+			showDestination = showUtilityCarDestination(format);
 			if (showDestination)
 				carAttributes = carAttributes + car.getRouteDestinationId();
 		} else {
 			// set outs and local moves
 			carAttributes = carType[0] + splitString(car.getDestinationTrackName()) + car.getRouteDestinationId();
-			showLocation = showUtilityCarLocation(messageFormat);
+			showLocation = showUtilityCarLocation(format);
 			if (showLocation && car.getTrack() != null)
 				carAttributes = carAttributes + car.getRouteLocationId();
 		}
@@ -683,8 +680,7 @@ public class TrainCommon {
 		if (!utilityCarTypes.contains(carAttributes)) {
 			utilityCarTypes.add(carAttributes); // don't do this type again
 			// determine how many cars of this type
-			for (int i = 0; i < carList.size(); i++) {
-				Car c = carList.get(i);
+			for (Car c : carList) {
 				if (!c.isUtility())
 					continue;
 				String[] cType = c.getTypeName().split("-");
@@ -766,14 +762,14 @@ public class TrainCommon {
 	private static void printLine(PrintWriter file, String level, String string) {
 		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), Setup.MONOSPACED);
 		if (string.length() > lineLengthMax) {
-			String[] s = string.split(SPACE);
+			String[] words = string.split(SPACE);
 			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < s.length; i++) {
-				if (sb.length() + s[i].length() < lineLengthMax) {
-					sb.append(s[i] + SPACE);
+			for (String word : words) {
+				if (sb.length() + word.length() < lineLengthMax) {
+					sb.append(word + SPACE);
 				} else {
 					file.println(level + "- " + sb.toString());
-					sb = new StringBuffer(s[i] + SPACE);
+					sb = new StringBuffer(word + SPACE);
 				}
 			}
 			string = sb.toString();
@@ -798,11 +794,8 @@ public class TrainCommon {
 		// look for sequential locations
 		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName()))
 				&& car.getTrain() != null && car.getTrain().getRoute() != null) {
-			Route route = car.getTrain().getRoute();
-			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			boolean foundRl = false;
-			for (int i = 0; i < routeList.size(); i++) {
-				RouteLocation rl = routeList.get(i);
+			for (RouteLocation rl : car.getTrain().getRoute().getLocationsBySequenceList()) {
 				if (foundRl) {
 					if (splitString(car.getRouteDestination().getName()).equals(splitString(rl.getName()))) {
 						// user can specify the "same" location two more more times in a row
@@ -866,14 +859,14 @@ public class TrainCommon {
 	}
 
 	private void makeNewLine(PrintWriter file, String string, String orientation) {
-		String[] s = string.split(SPACE);
+		String[] words = string.split(SPACE);
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < s.length; i++) {
-			if (checkStringLength(sb.toString() + s[i], orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
-				sb.append(s[i] + SPACE);
+		for (String word : words) {
+			if (checkStringLength(sb.toString() + word, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
+				sb.append(word + SPACE);
 			} else {
 				addLine(file, sb.toString());
-				sb = new StringBuffer(s[i] + SPACE);
+				sb = new StringBuffer(word + SPACE);
 			}
 		}
 		addLine(file, sb.toString());
@@ -912,8 +905,7 @@ public class TrainCommon {
 
 	// returns true if there's work at location
 	protected boolean isThereWorkAtLocation(List<Car> carList, List<RollingStock> engList, RouteLocation rl) {
-		for (int i = 0; i < carList.size(); i++) {
-			Car car = carList.get(i);
+		for (Car car : carList) {
 			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
 				return true;
 		}
@@ -933,27 +925,23 @@ public class TrainCommon {
 	 * @return true if the train has work at the location
 	 */
 	public static boolean isThereWorkAtLocation(Train train, Location location) {
-		CarManager carManager = CarManager.instance();
-		List<RollingStock> carList = carManager.getList(train);
-		for (int i = 0; i < carList.size(); i++) {
-			Car car = (Car) carList.get(i);
-			if ((car.getRouteLocation() != null && car.getTrack() != null && TrainCommon.splitString(
-					car.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
-					|| (car.getRouteDestination() != null && TrainCommon.splitString(
-							car.getRouteDestination().getName()).equals(TrainCommon.splitString(location.getName()))))
-				return true;
-		}
-		EngineManager engineManager = EngineManager.instance();
-		List<RollingStock> engList = engineManager.getList(train);
-		for (int i = 0; i < engList.size(); i++) {
-			Engine eng = (Engine) engList.get(i);
-			if ((eng.getRouteLocation() != null && eng.getTrack() != null && TrainCommon.splitString(
-					eng.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
-					|| (eng.getRouteDestination() != null && TrainCommon.splitString(
-							eng.getRouteDestination().getName()).equals(TrainCommon.splitString(location.getName()))))
+		if (isThereWorkAtLocation(train, location, CarManager.instance().getList(train)))
+			return true;
+		if (isThereWorkAtLocation(train, location, EngineManager.instance().getList(train)))
+			return true;
+		return false;
+	}
+	
+	private static boolean isThereWorkAtLocation(Train train, Location location, List<RollingStock> list) {
+		for (RollingStock rs : list) {
+			if ((rs.getRouteLocation() != null && rs.getTrack() != null && TrainCommon.splitString(
+					rs.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
+					|| (rs.getRouteDestination() != null && TrainCommon.splitString(
+							rs.getRouteDestination().getName()).equals(TrainCommon.splitString(location.getName()))))
 				return true;
 		}
 		return false;
+
 	}
 
 	protected void addCarsLocationUnknown(PrintWriter file, boolean isManifest) {
@@ -963,17 +951,15 @@ public class TrainCommon {
 			return; // no cars to search for!
 		newLine(file);
 		newLine(file, Setup.getMiaComment(), isManifest);
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = cars.get(i);
+		for (Car car : cars)
 			addSearchForCar(file, car);
-		}
 	}
 
 	private void addSearchForCar(PrintWriter file, Car car) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getMissingCarMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			buf.append(getCarAttribute(car, format[i], false, false));
+		for (String attribute : format) {
+			buf.append(getCarAttribute(car, attribute, false, false));
 		}
 		addLine(file, buf.toString());
 	}
@@ -1097,7 +1083,9 @@ public class TrainCommon {
 			return tabString("", Setup.getTab2Length());
 		else if (attribute.equals(Setup.TAB3))
 			return tabString("", Setup.getTab3Length());
-		return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[] { attribute }); // something isn't right!
+		return MessageFormat.format(Bundle.getMessage("ErrorPrintOptions"), new Object[] { attribute }); // something
+																											// isn't
+																											// right!
 	}
 
 	public static String getDate(boolean isModelYear) {
