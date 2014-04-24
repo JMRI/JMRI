@@ -75,10 +75,22 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         panel11.add(new JLabel(rb.getString("LabelNodeAddress64")+" "));
         panel11.add(nodeAddr64Field);
         nodeAddr64Field.setToolTipText(rb.getString("TipNodeAddress64"));
+        nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                nodeAddrField.setSelectedIndex(nodeAddr64Field.getSelectedIndex());
+            }
+        });
         panel11.add(new JLabel(rb.getString("LabelNodeIdentifier")+" "));
         panel11.add(nodeIdentifierField);
         nodeIdentifierField.setToolTipText(rb.getString("TipNodeIdentifier"));
 
+        nodeIdentifierField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+               nodeAddrField.setSelectedIndex(nodeIdentifierField.getSelectedIndex());
+            }
+        });
         JPanel panel12 = new JPanel();
         panel12.setLayout(new FlowLayout());
 
