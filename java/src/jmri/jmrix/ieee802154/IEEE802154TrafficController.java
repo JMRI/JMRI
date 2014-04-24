@@ -246,6 +246,34 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
         }
         return (null);
     }
+
+    /**
+     *  Public method to delete a node by the string representation
+     *  of it's address.
+     */
+     public synchronized void deleteNode(String nodeAddress) {
+        // find the serial node
+        int index = 0;
+        for (int i=0; i<numNodes; i++) {
+            if (nodeArray[i] == getNodeFromAddress(nodeAddress)) {
+                index = i;
+            }
+        }
+        if (index==curSerialNodeIndex) {
+            log.warn("Deleting the serial node active in the polling loop");
+        }
+        // Delete the node from the node list
+        numNodes --;
+        if (index<numNodes) {
+            // did not delete the last node, shift
+            for (int j=index; j<numNodes; j++) {
+                nodeArray[j] = nodeArray[j+1];
+            }
+        }
+        nodeArray[numNodes] = null;
+    }
+
+
  
     static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 

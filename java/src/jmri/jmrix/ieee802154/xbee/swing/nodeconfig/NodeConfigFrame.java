@@ -224,12 +224,12 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      */        
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
-        int nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        String nodeAddress = readNodeAddress();
+        if (nodeAddress.equals("") ) return;
         // get a XBeeNode corresponding to this node address if one exists
         curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            statusText1.setText(rb.getString("Error1")+Integer.toString(nodeAddress)+
+            statusText1.setText(rb.getString("Error1")+nodeAddress+
                         rb.getString("Error2"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -257,9 +257,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         resetNotes();
         changedNode = true;
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackAdd")+" "+
-                                    Integer.toString(nodeAddress));
+        statusText1.setText(rb.getString("FeedBackAdd")+" "+ nodeAddress);
         errorInStatus1 = true;
+        initAddressBoxes();
     }
 
     /**
@@ -268,6 +268,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     public void discoverButtonActionPerformed() {
         // call the node discovery code in the node manager.
         ((XBeeConnectionMemo)xtc.getAdapterMemo()).getXBeeNodeManager().startNodeDiscovery();
+        initAddressBoxes();
     }
 
     /**
@@ -275,8 +276,8 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      */        
     public void editButtonActionPerformed() {
         // Find XBee Node address
-        nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        String nodeAddress = readNodeAddress();
+        if (nodeAddress.equals("") ) return;
         // get the XBeeNode corresponding to this node address
         curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -299,43 +300,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         statusText1.setText(editStatus1);
         statusText2.setText(editStatus2);
         statusText3.setText(editStatus3);
-    }
-
-    /**
-     * Method to handle delete button 
-     */        
-    public void deleteButtonActionPerformed() {
-        // Find XBee Node address
-        int nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
-        // get the XBeeNode corresponding to this node address
-        curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
-        // confirm deletion with the user
-        if ( javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                this,rb.getString("ConfirmDelete1")+"\n"+
-                    rb.getString("ConfirmDelete2"),rb.getString("ConfirmDeleteTitle"),
-                        javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                            javax.swing.JOptionPane.WARNING_MESSAGE) ) {
-            // delete this node
-            xtc.deleteNode(nodeAddress);
-            // provide user feedback
-            resetNotes();
-            statusText1.setText(rb.getString("FeedBackDelete")+" "+
-                                    Integer.toString(nodeAddress));
-            errorInStatus1 = true;
-            changedNode = true;
-	}
-        else {
-            // reset as needed
-            resetNotes();
-        }
     }
 
     /**
@@ -390,8 +354,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         statusText2.setText(stdStatus2);
         statusText3.setText(stdStatus3);
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackUpdate")+" "+
-                                    Integer.toString(nodeAddress));
+        statusText1.setText(rb.getString("FeedBackUpdate")+" "+ readNodeAddress());
         errorInStatus1 = true;
     }
 
@@ -468,11 +431,13 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      *     If not successful, -1 is returned and an appropriate error
      *          message is placed in statusText1.
      */
-    private int readNodeAddress() {
-        int addr = -1;
+    private String readNodeAddress() {
+        String addr = "";
         try 
         {
-            addr = Integer.parseInt((String)nodeAddrField.getSelectedItem(),16);
+            addr = (String) nodeAddrField.getSelectedItem();
+            if(addr.equals("FF FE ") || addr.equals("FF FF "))
+               addr = (String) nodeAddr64Field.getSelectedItem();
         }
         catch (Exception e)
         {
@@ -482,7 +447,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
-            return -1;
+            return "";
         }
         return (addr);
     }
@@ -501,28 +466,23 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         // Initilize the drop down box for the address lists.
     @Override
     protected void initAddressBoxes() {
+       super.initAddressBoxes();
        XBeeNode current=null;
-       nodeAddrField.removeAllItems();
-       nodeAddr64Field.removeAllItems();
+       nodeIdentifierField.removeAllItems();
        for(int i=0;i<xtc.getNumNodes();i++){
            current=(XBeeNode) xtc.getNode(i);
-           nodeAddrField.insertItemAt(""+current.getNodeAddress(),i);
-           nodeAddr64Field.insertItemAt(jmri.util.StringUtil.hexStringFromBytes(current.getGlobalAddress()),i);
            nodeIdentifierField.insertItemAt(current.getIdentifier(),i);
        }
-       nodeAddrField.insertItemAt("",0);
-       nodeAddrField.setEditable(true);
-       nodeAddr64Field.insertItemAt("",0);
        nodeIdentifierField.insertItemAt("",0);
     }
 
     // Update the display when the selected node changes.
     @Override
     protected void nodeSelected(){
-       int nodeAddress = readNodeAddress();
+       String nodeAddress = readNodeAddress();
        nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
        nodeIdentifierField.setSelectedIndex(nodeAddrField.getSelectedIndex());
-       if(nodeAddress >= 0) {
+       if(!(nodeAddress.equals(""))) {
           ((AssignmentTableModel)assignmentListModel).setNode((XBeeNode)xtc.getNodeFromAddress(nodeAddress));
        } else {
           log.error("No Node Selected");

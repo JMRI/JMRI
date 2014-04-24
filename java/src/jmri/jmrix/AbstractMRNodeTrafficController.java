@@ -40,7 +40,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
 
     protected volatile int numNodes = 0;  // Incremented as Serial Nodes are created and registered
                                         // Corresponds to next available address in nodeArray
-    private AbstractNode[] nodeArray;
+    protected AbstractNode[] nodeArray;
     private boolean[] mustInit;
     
     /**
@@ -113,7 +113,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /** 
      * Working variable for keeping track of the active node, if any.
      */
-    int curSerialNodeIndex = 0;
+    protected int curSerialNodeIndex = 0;
 
     /**
      *  Public method to delete a Serial node by node address
