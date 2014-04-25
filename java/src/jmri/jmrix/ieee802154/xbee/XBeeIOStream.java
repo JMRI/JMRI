@@ -116,7 +116,6 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
         if( response instanceof RxResponse16) { 
             RxResponse16 rx = (RxResponse16) response;
             if(!rx.getSourceAddress().equals(nodeAddress16)) return;
-            //outpipe.write(rx.getData(),0,rx.getData().length); 
             int data[]=rx.getData();
             log.debug("Received {}",data);
             for(int i =0; i<data.length;i++)
@@ -124,7 +123,6 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
         }else if( response instanceof RxResponse64 ) {
             RxResponse64 rx = (RxResponse64) response;
             if(!rx.getSourceAddress().equals(nodeAddress64)) return;
-            //outpipe.write(rx.getData(),0,rx.getData().length); 
             int data[]=rx.getData();
             log.debug("Received {}",data);
             for(int i =0; i<data.length;i++)
@@ -133,7 +131,6 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
             ZNetRxResponse rx = (ZNetRxResponse) response;
             if ( !rx.getRemoteAddress16().equals(nodeAddress16) &&
                  !rx.getRemoteAddress64().equals(nodeAddress64)) return;
-            //outpipe.write(rx.getData(),0,rx.getData().length); 
             int data[]=rx.getData();
             log.debug("Received {}",data);
             for(int i =0; i<data.length;i++)
@@ -190,7 +187,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
              // to the correct XBee.
              if(xtc.isSeries1()){
                 // create a series 1 message for the data.
-                msg = XBeeMessage.getRemoteTransmissionRequest(node.getXBeeAddress64(), dataArray);
+                msg = XBeeMessage.getRemoteTransmissionRequest(node.getPreferedTransmitAddress(), dataArray);
              } else {
                 // create a series 2 (ZNet) message for the data.
                 msg = XBeeMessage.getZNetTransmissionRequest(node.getXBeeAddress64(), dataArray);
