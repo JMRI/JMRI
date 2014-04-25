@@ -205,8 +205,8 @@
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="gridx" type="xs:string" />
-    <xs:attribute name="gridy" type="xs:string" />
+    <xs:attribute name="gridx" type="xs:string" use="required" />
+    <xs:attribute name="gridy" type="xs:string" use="required" />
     <xs:attribute name="gridwidth" type="xs:string" />
     <xs:attribute name="gridheight" type="xs:string" />
     <xs:attribute name="weightx" type="xs:double" />
