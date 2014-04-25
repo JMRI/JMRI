@@ -151,6 +151,7 @@
       <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
@@ -165,11 +166,56 @@
       <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="GridType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="gridx" type="xs:string" />
+    <xs:attribute name="gridy" type="xs:string" />
+    <xs:attribute name="gridwidth" type="xs:string" />
+    <xs:attribute name="gridheight" type="xs:string" />
+    <xs:attribute name="weightx" type="xs:double" />
+    <xs:attribute name="weighty" type="xs:double" />
+    <xs:attribute name="anchor" type="xs:string" />
+    <xs:attribute name="fill" type="xs:string" />
+    <xs:attribute name="insets" type="xs:string" />
+    <xs:attribute name="ipadx" type="xs:integer" />
+    <xs:attribute name="ipady" type="xs:integer" />
+  </xs:complexType>
+  
+  <xs:complexType name="GridItemType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="gridx" type="xs:string" />
+    <xs:attribute name="gridy" type="xs:string" />
+    <xs:attribute name="gridwidth" type="xs:string" />
+    <xs:attribute name="gridheight" type="xs:string" />
+    <xs:attribute name="weightx" type="xs:double" />
+    <xs:attribute name="weighty" type="xs:double" />
+    <xs:attribute name="anchor" type="xs:string" />
+    <xs:attribute name="fill" type="xs:string" />
+    <xs:attribute name="insets" type="xs:string" />
+    <xs:attribute name="ipadx" type="xs:integer" />
+    <xs:attribute name="ipady" type="xs:integer" />
   </xs:complexType>
   
   <xs:complexType name="LabelType">

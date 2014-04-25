@@ -1,7 +1,7 @@
   <pane name="Read Me - IMPORTANT" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label=" "/>
-      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.4 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
       <label label=" "/>
       <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;"/>
       <label label=" "/>
