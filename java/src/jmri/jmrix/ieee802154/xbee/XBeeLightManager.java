@@ -131,6 +131,34 @@ public class XBeeLightManager extends AbstractLightManager {
         return (true);
     }
 
+    @Override
+    public void deregister(jmri.NamedBean s){
+       super.deregister(s);
+       // remove the specified sensor from the associated XBee pin.
+       String systemName = s.getSystemName();
+       String name = addressFromSystemName(systemName);
+       int pin = pinFromSystemName(systemName);
+       XBeeNode curNode;
+       if( (curNode = (XBeeNode) tc.getNodeFromName(name)) == null )
+             if( (curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null)
+               try {
+                   curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
+               } catch(java.lang.NumberFormatException nfe) {
+                 // if there was a number format exception, we couldn't
+                 // find the node.
+                 curNode = null;
+               }
+        if(curNode !=null ) {
+           if( curNode.removePinBean(pin,s) )
+               log.debug("Removing sensor from pin " + pin );
+           else
+               log.debug("Failed to removing sensor from pin " + pin );
+        }
+
+    }
+
+
+
     static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
 
 }

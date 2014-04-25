@@ -108,12 +108,38 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
           return new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("VR"));
       }
 
+      /*
+       * Get an XBee Message requesting an digital output pin be turned on or off.
+       * @param address XBee Address of the node.  This can be either 
+                16 bit or 64 bit.
+       * @param pin the DIO Pin on the XBee to use.
+       * @param on boolean value stating whether or not the pin should be turned
+       *        on (true) or off (false)
+       */
       public static XBeeMessage getRemoteDoutMessage(com.rapplogic.xbee.api.XBeeAddress address, int pin, boolean on) {
           int onValue[]={0x5};
           int offValue[]={0x4};
           if(address instanceof com.rapplogic.xbee.api.XBeeAddress16)
              return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress16)address,"D" + pin, on?onValue:offValue));
           else return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress64)address,"D" + pin, on?onValue:offValue));
+      }
+
+      /*
+       * Get an XBee Message requesting the status of a digital IO pin.
+       * @param address XBee Address of the node.  This can be either 
+                16 bit or 64 bit.
+       * @param pin the DIO Pin on the XBee to use.
+       */
+      public static XBeeMessage getRemoteDoutMessage(com.rapplogic.xbee.api.XBeeAddress address, int pin) {
+          if(address instanceof com.rapplogic.xbee.api.XBeeAddress16)
+             return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress16)address,"D" + pin));
+          else return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress64)address,"D" + pin));
+      }
+
+      public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress address, int[] payload){
+         if (address instanceof com.rapplogic.xbee.api.XBeeAddress16)
+            return getRemoteTransmissionRequest((com.rapplogic.xbee.api.XBeeAddress16) address, payload);
+         else return getRemoteTransmissionRequest((com.rapplogic.xbee.api.XBeeAddress64) address, payload);
       }
 
       public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress16 address, int[] payload) {

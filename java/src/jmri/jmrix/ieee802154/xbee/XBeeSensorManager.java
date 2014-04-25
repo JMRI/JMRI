@@ -14,11 +14,14 @@ import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
+import com.rapplogic.xbee.api.RemoteAtResponse;
 
 /**
  * Manage the XBee specific Sensor implementation.
  *
- * System names are "XSnnn", where nnn is the sensor number without padding.
+ * System names are "ZSnnn", where nnn is the sensor number without padding.
+ * or "ZSstring:pin", where string is a node address and pin is the io pin
+ * used.
  *
  * @author			Paul Bender Copyright (C) 2003-2010
  * @version			$Revision$
@@ -88,17 +91,10 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
 
     		for (int i=0;i<=8;i++) {
-    			if( ioSample.isDigitalEnabled(i)) {
-    				// Sensor name is prefix followed by 16 bit address
-    				// followed by the bit number.
-    				String sName = prefix + typeLetter() + 
-                                  node.getPreferedName() + ":" + i;
-    				XBeeSensor s = (XBeeSensor) getSensor(sName);
-    				if (s == null) {
-    					s = (XBeeSensor) provideSensor(sName);
-    					s.reply(l);
-        				if(log.isDebugEnabled()) log.debug("DIO " +  sName + " enabled as sensor");
-    				}
+    			if( !node.getPinAssigned(i) &&
+                            ioSample.isDigitalEnabled(i)) {
+                              // request pin direction.
+                              tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(),i),this);
     			}
     		}
     	} else if(response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
@@ -111,19 +107,36 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     		// series 2 xbees can go up to 12.  We'll leave it at 8 like
     		// the series 1 xbees to start with.
     		for (int i=0;i<=7;i++) {
-    			if( ioSample.isDigitalEnabled(i)) {
-    				// Sensor name is prefix followed by NI/address
-    				// followed by the bit number.
-    				String sName = prefix + typeLetter() +
-                                  node.getPreferedName() + ":" + i;
-    				XBeeSensor s = (XBeeSensor) getSensor(sName);
-    				if (s == null) {
-    					s = (XBeeSensor) provideSensor(sName);
-						s.reply(l);
-        				if(log.isDebugEnabled()) log.debug("DIO " +  sName + " enabled as sensor");
-    				}
+    			if( !node.getPinAssigned(i) && 
+                            ioSample.isDigitalEnabled(i)) {
+                            // request pin direction.
+                              tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(),i),this);
     			}
     		}
+        } else if(response instanceof RemoteAtResponse ) {
+               RemoteAtResponse atResp = (RemoteAtResponse)response;
+               // check to see if this is a Dx responsponse.
+               for(int i=0;i<7;i++){
+                  String cmd = "D" + i;
+                  if(atResp.getCommand().equals(cmd)) {
+                      // check the data to see if it is 3 (digital input).
+                      if(atResp.getValue().length >0 && 
+                         atResp.getValue()[0] == 0x03) {
+                         // create the sensor.
+    	                 XBeeNode node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
+                         // Sensor name is prefix followed by NI/address
+                         // followed by the bit number.
+                         String sName = prefix + typeLetter() +
+                                        node.getPreferedName() + ":" + i;
+                         XBeeSensor s = (XBeeSensor) getSensor(sName);
+                         if (s == null) {
+                             s = (XBeeSensor) provideSensor(sName);
+                             if(log.isDebugEnabled()) 
+                                log.debug("DIO " +  sName + " enabled as sensor");
+                         }
+                      }
+                  }
+               }
     	} else {
     		// not what we expected
     		log.debug("Ignoring mystery packet " + response.toString());
@@ -194,6 +207,33 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to pin number" + input);
         return input;
     }
+
+    @Override
+    public void deregister(jmri.NamedBean s){
+       super.deregister(s);
+       // remove the specified sensor from the associated XBee pin.
+       String systemName = s.getSystemName();
+       String name = addressFromSystemName(systemName);
+       int pin = pinFromSystemName(systemName);
+       XBeeNode curNode;
+       if( (curNode = (XBeeNode) tc.getNodeFromName(name)) == null )
+             if( (curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null)
+               try {
+                   curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
+               } catch(java.lang.NumberFormatException nfe) {
+                 // if there was a number format exception, we couldn't
+                 // find the node.
+                 curNode = null;
+               }
+        if(curNode !=null ) {
+           if( curNode.removePinBean(pin,s) )
+               log.debug("Removing sensor from pin " + pin );
+           else 
+               log.debug("Failed to removing sensor from pin " + pin );
+        } 
+ 
+    }
+
     
     static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 

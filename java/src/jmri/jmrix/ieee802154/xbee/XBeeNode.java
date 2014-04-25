@@ -132,6 +132,21 @@ public class XBeeNode extends IEEE802154Node {
     }
 
    /**
+    *  Remove the bean associated with the specified pin
+    *  @param pin is the XBee pin assigned.
+    *  @param bean is the bean we are attempting to remove.
+    *  @return true if bean removed, false if specified bean was not 
+    *          assigned to the pin.
+    **/
+    public boolean removePinBean(int pin, NamedBean bean){
+       if(bean == getPinBean(pin)) {
+          pinObjects.remove(pin);
+          return true;
+       }
+       return false;
+    }
+
+   /**
     *  Get the bean associated with the specified pin
     *  @param pin is the XBee pin assigned.
     *  @return the bean assigned to the pin, or null if
