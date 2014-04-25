@@ -1,7 +1,7 @@
   <pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0" gridheight="REMAINDER" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
           <label label="Master Controls"/>
         </griditem>
         <griditem gridx="1" gridy="0" gridwidth="REMAINDER" anchor="LINE_START">
@@ -56,7 +56,7 @@
           <display item="Sound Brake Off" layout="above" label=""/>
           <display item="Sound Brake Off" format="hslider" layout="above" label="Sound off threshold"/>
         </griditem>
-        <griditem gridx="0" gridy="0" gridheight="REMAINDER" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
           <soundlabel num="26"/>
         </griditem>
         <griditem  gridx="1" gridy="1">
@@ -85,7 +85,7 @@
           <display item="Sound Random Max" layout="above" label=""/>
           <display item="Sound Random Max" format="hslider" layout="above" label="Max interval between sounds"/>
         </griditem>
-        <griditem gridx="0" gridy="0" gridheight="REMAINDER" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
           <soundlabel num="25"/>
         </griditem>
         <griditem  gridx="1" gridy="1">
@@ -106,7 +106,7 @@
       </grid>
       <separator/>
       <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
           <soundlabel num="27"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="0">
@@ -127,7 +127,7 @@
       </grid>
       <separator/>
       <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0">
+        <griditem gridx="0" gridy="0" weightx="1">
           <column>
             <label label="Sound Slots"/>
             <label label=" "/>
@@ -141,7 +141,7 @@
       </grid>
       <separator/>
       <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
           <soundlabel num="1"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="1">
@@ -159,7 +159,7 @@
           <display item="Sound Max Speed 1" layout="above" label=""/>
           <display item="Sound Max Speed 1" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="2" anchor="LINE_END">
+        <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
           <soundlabel num="2"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="2">
@@ -177,7 +177,7 @@
           <display item="Sound Max Speed 2" layout="above" label=""/>
           <display item="Sound Max Speed 2" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="3" anchor="LINE_END">
+        <griditem gridx="0" gridy="3" weightx="1" anchor="LINE_END">
           <soundlabel num="3"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="3">
@@ -195,7 +195,7 @@
           <display item="Sound Max Speed 3" layout="above" label=""/>
           <display item="Sound Max Speed 3" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="4" anchor="LINE_END">
+        <griditem gridx="0" gridy="4" weightx="1" anchor="LINE_END">
           <soundlabel num="4"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="4">
@@ -213,7 +213,7 @@
           <display item="Sound Max Speed 4" layout="above" label=""/>
           <display item="Sound Max Speed 4" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="5" anchor="LINE_END">
+        <griditem gridx="0" gridy="5" weightx="1" anchor="LINE_END">
           <soundlabel num="5"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="5">
@@ -231,7 +231,7 @@
           <display item="Sound Max Speed 5" layout="above" label=""/>
           <display item="Sound Max Speed 5" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="6" anchor="LINE_END">
+        <griditem gridx="0" gridy="6" weightx="1" anchor="LINE_END">
           <soundlabel num="6"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="6">
@@ -249,7 +249,7 @@
           <display item="Sound Max Speed 6" layout="above" label=""/>
           <display item="Sound Max Speed 6" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="7" anchor="LINE_END">
+        <griditem gridx="0" gridy="7" weightx="1" anchor="LINE_END">
           <soundlabel num="7"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="7">
@@ -267,7 +267,7 @@
           <display item="Sound Max Speed 7" layout="above" label=""/>
           <display item="Sound Max Speed 7" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="8" anchor="LINE_END">
+        <griditem gridx="0" gridy="8" weightx="1" anchor="LINE_END">
           <soundlabel num="8"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="8">
@@ -285,7 +285,7 @@
           <display item="Sound Max Speed 8" layout="above" label=""/>
           <display item="Sound Max Speed 8" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="9" anchor="LINE_END">
+        <griditem gridx="0" gridy="9" weightx="1" anchor="LINE_END">
           <soundlabel num="9"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="9">
@@ -303,7 +303,7 @@
           <display item="Sound Max Speed 9" layout="above" label=""/>
           <display item="Sound Max Speed 9" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="10" anchor="LINE_END">
+        <griditem gridx="0" gridy="10" weightx="1" anchor="LINE_END">
           <soundlabel num="10"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="10">
@@ -321,7 +321,7 @@
           <display item="Sound Max Speed 10" layout="above" label=""/>
           <display item="Sound Max Speed 10" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="11" anchor="LINE_END">
+        <griditem gridx="0" gridy="11" weightx="1" anchor="LINE_END">
           <soundlabel num="11"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="11">
@@ -339,7 +339,7 @@
           <display item="Sound Max Speed 11" layout="above" label=""/>
           <display item="Sound Max Speed 11" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="12" anchor="LINE_END">
+        <griditem gridx="0" gridy="12" weightx="1" anchor="LINE_END">
           <soundlabel num="12"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="12">
@@ -357,7 +357,7 @@
           <display item="Sound Max Speed 12" layout="above" label=""/>
           <display item="Sound Max Speed 12" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="13" anchor="LINE_END">
+        <griditem gridx="0" gridy="13" weightx="1" anchor="LINE_END">
           <soundlabel num="13"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="13">
@@ -375,7 +375,7 @@
           <display item="Sound Max Speed 13" layout="above" label=""/>
           <display item="Sound Max Speed 13" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="14" anchor="LINE_END">
+        <griditem gridx="0" gridy="14" weightx="1" anchor="LINE_END">
           <soundlabel num="14"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="14">
@@ -393,7 +393,7 @@
           <display item="Sound Max Speed 14" layout="above" label=""/>
           <display item="Sound Max Speed 14" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="15" anchor="LINE_END">
+        <griditem gridx="0" gridy="15" weightx="1" anchor="LINE_END">
           <soundlabel num="15"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="15">
@@ -411,7 +411,7 @@
           <display item="Sound Max Speed 15" layout="above" label=""/>
           <display item="Sound Max Speed 15" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="16" anchor="LINE_END">
+        <griditem gridx="0" gridy="16" weightx="1" anchor="LINE_END">
           <soundlabel num="16"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="16">
@@ -429,7 +429,7 @@
           <display item="Sound Max Speed 16" layout="above" label=""/>
           <display item="Sound Max Speed 16" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="17" anchor="LINE_END">
+        <griditem gridx="0" gridy="17" weightx="1" anchor="LINE_END">
           <soundlabel num="17"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="17">
@@ -447,7 +447,7 @@
           <display item="Sound Max Speed 17" layout="above" label=""/>
           <display item="Sound Max Speed 17" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="18" anchor="LINE_END">
+        <griditem gridx="0" gridy="18" weightx="1" anchor="LINE_END">
           <soundlabel num="18"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="18">
@@ -465,7 +465,7 @@
           <display item="Sound Max Speed 18" layout="above" label=""/>
           <display item="Sound Max Speed 18" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="19" anchor="LINE_END">
+        <griditem gridx="0" gridy="19" weightx="1" anchor="LINE_END">
           <soundlabel num="19"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="19">
@@ -483,7 +483,7 @@
           <display item="Sound Max Speed 19" layout="above" label=""/>
           <display item="Sound Max Speed 19" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="20" anchor="LINE_END">
+        <griditem gridx="0" gridy="20" weightx="1" anchor="LINE_END">
           <soundlabel num="20"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="20">
@@ -501,7 +501,7 @@
           <display item="Sound Max Speed 20" layout="above" label=""/>
           <display item="Sound Max Speed 20" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="21" anchor="LINE_END">
+        <griditem gridx="0" gridy="21" weightx="1" anchor="LINE_END">
           <soundlabel num="21"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="21">
@@ -519,7 +519,7 @@
           <display item="Sound Max Speed 21" layout="above" label=""/>
           <display item="Sound Max Speed 21" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="22" anchor="LINE_END">
+        <griditem gridx="0" gridy="22" weightx="1" anchor="LINE_END">
           <soundlabel num="22"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="22">
@@ -537,7 +537,7 @@
           <display item="Sound Max Speed 22" layout="above" label=""/>
           <display item="Sound Max Speed 22" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="23" anchor="LINE_END">
+        <griditem gridx="0" gridy="23" weightx="1" anchor="LINE_END">
           <soundlabel num="23"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="23">
@@ -555,7 +555,7 @@
           <display item="Sound Max Speed 23" layout="above" label=""/>
           <display item="Sound Max Speed 23" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="24" anchor="LINE_END">
+        <griditem gridx="0" gridy="24" weightx="1" anchor="LINE_END">
           <soundlabel num="24"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="24">
