@@ -127,7 +127,7 @@
       </grid>
       <separator/>
       <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0" weightx="1">
+        <griditem gridx="0" gridy="0">
           <column>
             <label label="Sound Slots"/>
             <label label=" "/>
