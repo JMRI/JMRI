@@ -72,7 +72,7 @@ public class JsonManifest extends TrainCommon {
         // build manifest
         ArrayNode locations = this.mapper.createArrayNode();
 
-        List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
+        List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
 
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
@@ -284,13 +284,13 @@ public class JsonManifest extends TrainCommon {
         return node;
     }
 
-    protected ArrayNode dropEngines(List<RollingStock> engines, RouteLocation location) {
+    protected ArrayNode dropEngines(List<Engine> engines, RouteLocation location) {
         ArrayNode node = this.mapper.createArrayNode();
-        for (RollingStock engine : engines) {
+        for (Engine engine : engines) {
             if (engine.getRouteDestination().equals(location)) {
                 ObjectNode object = this.mapper.createObjectNode();
                 for (String attribute : Setup.getEngineAttributes()) {
-                    object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
+                    object.put(attribute, getEngineAttribute(engine, attribute, true));
                 }
                 node.add(object);
             }
@@ -298,13 +298,13 @@ public class JsonManifest extends TrainCommon {
         return node;
     }
 
-    protected ArrayNode pickupEngines(List<RollingStock> engines, RouteLocation location) {
+    protected ArrayNode pickupEngines(List<Engine> engines, RouteLocation location) {
         ArrayNode node = this.mapper.createArrayNode();
-        for (RollingStock engine : engines) {
+        for (Engine engine : engines) {
             if (engine.getRouteLocation().equals(location) && !engine.getTrackName().equals("")) {
                 ObjectNode object = this.mapper.createObjectNode();
                 for (String attribute : Setup.getEngineAttributes()) {
-                    object.put(attribute, getEngineAttribute((Engine) engine, attribute, true));
+                    object.put(attribute, getEngineAttribute(engine, attribute, true));
                 }
                 node.add(object);
             }

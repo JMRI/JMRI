@@ -706,17 +706,17 @@ public class OperationsEnginesTest extends TestCase {
         Assert.assertEquals("6th engine in list by train", e1, engineList.get(5));
 
         // now get engines by specific train
-        engineList = manager.getByTrainList(t1);
-        Assert.assertEquals("Number of Engines in t1", 1, engineList.size());
-        Assert.assertEquals("1st engine in list by t1", e1, engineList.get(0));
-        engineList = manager.getByTrainList(t3);
-        Assert.assertEquals("Number of Engines in t3", 3, engineList.size());
-        Assert.assertEquals("1st engine in list by t3", e5, engineList.get(0));
-        Assert.assertEquals("2nd engine in list by t3", e2, engineList.get(1));
-        Assert.assertEquals("3rd engine in list by t3", e3, engineList.get(2));
+        List<Engine> engineList2 = manager.getByTrainBlockingList(t1);
+        Assert.assertEquals("Number of Engines in t1", 1, engineList2.size());
+        Assert.assertEquals("1st engine in list by t1", e1, engineList2.get(0));
+        engineList2 = manager.getByTrainBlockingList(t3);
+        Assert.assertEquals("Number of Engines in t3", 3, engineList2.size());
+        Assert.assertEquals("1st engine in list by t3", e5, engineList2.get(0));
+        Assert.assertEquals("2nd engine in list by t3", e2, engineList2.get(1));
+        Assert.assertEquals("3rd engine in list by t3", e3, engineList2.get(2));
                     
         // how many engines available?
-        List<Engine> engineList2 = manager.getAvailableTrainList(t1);
+        engineList2 = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Engines available for t1", 1, engineList2.size());
         Assert.assertEquals("1st engine in list available for t1", e1, engineList2.get(0));
 

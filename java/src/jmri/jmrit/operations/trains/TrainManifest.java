@@ -10,12 +10,14 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +66,7 @@ public class TrainManifest extends TrainCommon {
 		if (!train.getComment().equals(""))
 			newLine(fileOut, train.getComment());
 
-		List<RollingStock> engineList = engineManager.getByTrainList(train);
+		List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 
 		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
 			newLine(fileOut, train.getRoute().getComment());

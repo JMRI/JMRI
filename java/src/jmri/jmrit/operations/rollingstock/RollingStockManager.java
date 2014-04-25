@@ -5,6 +5,7 @@ package jmri.jmrit.operations.rollingstock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.trains.Train;
 
 import java.util.Enumeration;

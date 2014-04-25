@@ -15,8 +15,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -116,7 +116,7 @@ public class TrainSwitchLists extends TrainCommon {
 			int stops = 1;
 			boolean trainDone = false;
 			// get engine and car lists
-			List<RollingStock> engineList = engineManager.getByTrainList(train);
+			List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 			List<Car> carList = carManager.getByTrainDestinationList(train);
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			// does the train stop once or more at this location?

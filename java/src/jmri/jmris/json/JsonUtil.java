@@ -1308,7 +1308,7 @@ public class JsonUtil {
     static private ArrayNode getEnginesForTrain(Locale locale, Train train) {
         ArrayNode elan = mapper.createArrayNode();
         EngineManager engineManager = EngineManager.instance();
-        List<RollingStock> engineList = engineManager.getByTrainList(train);
+        List<Engine> engineList = engineManager.getByTrainBlockingList(train);
         for (int k = 0; k < engineList.size(); k++) {
             elan.add(getEngine(locale, engineList.get(k).getId()).get(DATA)); //add each engine's data to the engineList array
         }

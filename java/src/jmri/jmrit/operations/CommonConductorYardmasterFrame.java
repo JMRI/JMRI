@@ -317,9 +317,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	
 	protected void updateLocoPanes(RouteLocation rl) {
 		// check for locos
-		List<RollingStock> engList = engManager.getByTrainList(_train);
-		for (int k = 0; k < engList.size(); k++) {
-			Engine engine = (Engine) engList.get(k);
+		List<Engine> engList = engManager.getByTrainBlockingList(_train);
+		for (Engine engine : engList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
 				locoPane.setVisible(true);
 				rollingStock.add(engine);
@@ -353,10 +352,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
 			List<Car> carList = carManager.getByTrainDestinationList(_train);
 			// block pick ups by destination
-			for (int j = 0; j < routeList.size(); j++) {
-				RouteLocation rld = routeList.get(j);
-				for (int k = 0; k < carList.size(); k++) {
-					Car car = carList.get(k);
+			for (RouteLocation rld : routeList) {
+				for (Car car : carList) {
 					// determine if car is a pick up from the right track
 					if (car.getTrack() != null
 							&& (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
@@ -395,8 +392,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				}
 			}
 			// set outs
-			for (int j = 0; j < carList.size(); j++) {
-				Car car = carList.get(j);
+			for (Car car : carList) {
 				if (!car.getTrackName().equals("")
 						&& car.getDestinationTrack() != null
 						&& (!Setup.isSortByTrackEnabled() || car.getDestinationTrack().getName().equals(track.getName()))
@@ -527,9 +523,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	}
 
 	protected void removePropertyChangeListerners() {
-		for (int i = 0; i < rollingStock.size(); i++) {
-			rollingStock.get(i).removePropertyChangeListener(this);
-		}
+		for (RollingStock rs : rollingStock)
+			rs.removePropertyChangeListener(this);
 		rollingStock.clear();
 	}
 

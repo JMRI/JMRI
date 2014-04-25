@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -83,7 +82,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
 				continue; // already printed this train
 			List<Car> carList = carManager.getByTrainDestinationList(train);
-			List<RollingStock> enginesList = engineManager.getByTrainList(train);
+			List<Engine> enginesList = engineManager.getByTrainBlockingList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
@@ -153,8 +152,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = (Engine) enginesList.get(j);
+					for (Engine engine : enginesList) {
 						if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
 							fileOutCsvEngine(fileOut, engine, PL);
 					}
@@ -179,8 +177,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						}
 					}
 
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = (Engine) enginesList.get(j);
+					for (Engine engine : enginesList) {
 						if (engine.getRouteDestination() == rl)
 							fileOutCsvEngine(fileOut, engine, SL);
 					}

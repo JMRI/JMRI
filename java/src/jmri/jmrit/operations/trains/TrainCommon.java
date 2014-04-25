@@ -65,10 +65,9 @@ public class TrainCommon {
 	protected boolean pickupCars;
 	protected boolean dropCars;
 
-	protected void blockLocosTwoColumn(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl,
+	protected void blockLocosTwoColumn(PrintWriter fileOut, List<Engine> engineList, RouteLocation rl,
 			boolean isManifest) {
-		for (int k = 0; k < engineList.size(); k++) {
-			Engine engine = (Engine) engineList.get(k);
+		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
 				newLine(fileOut, pickupEngine(engine).trim(), isManifest);
 			}
@@ -91,10 +90,9 @@ public class TrainCommon {
 	 * @param rl
 	 * @param orientation
 	 */
-	protected void pickupEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl,
+	protected void pickupEngines(PrintWriter fileOut, List<Engine> engineList, RouteLocation rl,
 			String orientation) {
-		for (int i = 0; i < engineList.size(); i++) {
-			Engine engine = (Engine) engineList.get(i);
+		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
 				pickupEngine(fileOut, engine, orientation);
 		}
@@ -122,9 +120,8 @@ public class TrainCommon {
 	 * @param rl
 	 * @param orientation
 	 */
-	protected void dropEngines(PrintWriter fileOut, List<RollingStock> engineList, RouteLocation rl, String orientation) {
-		for (int i = 0; i < engineList.size(); i++) {
-			Engine engine = (Engine) engineList.get(i);
+	protected void dropEngines(PrintWriter fileOut, List<Engine> engineList, RouteLocation rl, String orientation) {
+		for (Engine engine : engineList) {
 			if (engine.getRouteDestination() == rl)
 				dropEngine(fileOut, engine, orientation);
 		}
@@ -904,13 +901,12 @@ public class TrainCommon {
 	}
 
 	// returns true if there's work at location
-	protected boolean isThereWorkAtLocation(List<Car> carList, List<RollingStock> engList, RouteLocation rl) {
+	protected boolean isThereWorkAtLocation(List<Car> carList, List<Engine> engList, RouteLocation rl) {
 		for (Car car : carList) {
 			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
 				return true;
 		}
-		for (int i = 0; i < engList.size(); i++) {
-			Engine eng = (Engine) engList.get(i);
+		for (Engine eng : engList) {
 			if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl)
 				return true;
 		}

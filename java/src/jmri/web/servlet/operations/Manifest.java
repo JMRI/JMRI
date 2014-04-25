@@ -58,7 +58,7 @@ public class Manifest extends TrainCommon {
         // build manifest
 
         StringBuilder builder = new StringBuilder();
-        List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
+        List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
 
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
@@ -379,11 +379,11 @@ public class Manifest extends TrainCommon {
         return "";
     }
 
-    protected String dropEngines(List<RollingStock> engines, RouteLocation location) {
+    protected String dropEngines(List<Engine> engines, RouteLocation location) {
         StringBuilder builder = new StringBuilder();
-        for (RollingStock engine : engines) {
+        for (Engine engine : engines) {
             if (engine.getRouteDestination().equals(location)) {
-                builder.append(dropEngine((Engine) engine));
+                builder.append(dropEngine(engine));
             }
         }
         return String.format(strings.getProperty("EnginesList"), builder.toString());
@@ -399,11 +399,11 @@ public class Manifest extends TrainCommon {
         return String.format(locale, strings.getProperty(this.resourcePrefix + "DropEngine"), builder.toString());
     }
 
-    protected String pickupEngines(List<RollingStock> engines, RouteLocation location) {
+    protected String pickupEngines(List<Engine> engines, RouteLocation location) {
         StringBuilder builder = new StringBuilder();
-        for (RollingStock engine : engines) {
+        for (Engine engine : engines) {
             if (engine.getRouteLocation().equals(location) && !engine.getTrackName().equals("")) {
-                builder.append(pickupEngine((Engine) engine));
+                builder.append(pickupEngine(engine));
             }
         }
         return String.format(locale, strings.getProperty("EnginesList"), builder.toString());
