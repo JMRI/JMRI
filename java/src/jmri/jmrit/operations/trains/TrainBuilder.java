@@ -1766,8 +1766,10 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
 			throws BuildFailedException {
-		if (_reqNumOfMoves <= 0)
+		if (_reqNumOfMoves <= 0) {
+			_carIndex = 0;	// see reportCarsNotMoved(rl, percent)
 			return;
+		}
 		boolean messageFlag = true;
 		_success = false;
 		for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {

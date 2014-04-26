@@ -304,6 +304,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		moveButton.setEnabled(true);
 		setButton.setEnabled(false);
 		isSetMode = false;
+		setButtonText();
 	}
 
 	protected void selectCheckboxes(boolean enable) {
@@ -348,10 +349,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+		List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
+		List<Car> carList = carManager.getByTrainDestinationList(_train);
 		for (Track track : tracks) {
-			List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
-			List<Car> carList = carManager.getByTrainDestinationList(_train);
-			// block pick ups by destination
 			for (RouteLocation rld : routeList) {
 				for (Car car : carList) {
 					// determine if car is a pick up from the right track
