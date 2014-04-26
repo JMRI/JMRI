@@ -106,7 +106,12 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     protected AbstractMRMessage pollMessage() {
-       return null;
+       if(numNodes <= 0 ) return null;
+       XBeeMessage msg = null;
+       if(getNode(curSerialNodeIndex).getSensorsActive())
+          msg = XBeeMessage.getForceSampleMessage(((XBeeNode)getNode(curSerialNodeIndex)).getPreferedTransmitAddress());
+       curSerialNodeIndex = (curSerialNodeIndex + 1) % numNodes;
+       return msg;
     }
     @Override
     protected AbstractMRListener pollReplyHandler() {

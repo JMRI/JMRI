@@ -135,6 +135,17 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
              return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress16)address,"D" + pin));
           else return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress64)address,"D" + pin));
       }
+ 
+     /*
+       * Get an XBee Message requesting an IO sample from the node.
+       * @param address XBee Address of the node.  This can be either 
+                16 bit or 64 bit.
+       */
+      public static XBeeMessage getForceSampleMessage(com.rapplogic.xbee.api.XBeeAddress address) {
+          if(address instanceof com.rapplogic.xbee.api.XBeeAddress16)
+             return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress16)address,"IS"));
+          else return new XBeeMessage( new com.rapplogic.xbee.api.RemoteAtRequest((com.rapplogic.xbee.api.XBeeAddress64)address,"IS"));
+      }
 
       public static XBeeMessage getRemoteTransmissionRequest(com.rapplogic.xbee.api.XBeeAddress address, int[] payload){
          if (address instanceof com.rapplogic.xbee.api.XBeeAddress16)

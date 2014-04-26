@@ -69,7 +69,11 @@ public class XBeeNode extends IEEE802154Node {
      * Are there sensors present, and hence this node will need to be polled?
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
-    public boolean getSensorsActive() {return false;} //TODO
+    public boolean getSensorsActive() {
+	for( Object bean: pinObjects.values() ) 
+            if( bean instanceof XBeeSensor) return true;
+        return false;
+    }
     
     /**
      * Deal with a timeout in the transmission controller.

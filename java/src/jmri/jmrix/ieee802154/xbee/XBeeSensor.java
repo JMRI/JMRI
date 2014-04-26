@@ -10,6 +10,11 @@ import jmri.Sensor;
 import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
+import com.rapplogic.xbee.api.RemoteAtResponse;
+import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
+import com.rapplogic.xbee.api.wpan.IoSample;
+import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
+import com.rapplogic.xbee.util.IntArrayInputStream;
 
 /**
  * Extend jmri.AbstractSensor for XBee connections.
@@ -120,13 +125,13 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
         if (response.getApiId() == ApiId.RX_64_IO_RESPONSE ||
             response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
            // This message is an IO response.
-           com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample)response;
+           RxResponseIoSample ioSample = (RxResponseIoSample)response;
 
             int address[]=ioSample.getSourceAddress().getAddress();
             XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
                              
             if(node.equals(sourcenode)) {
-             for (com.rapplogic.xbee.api.wpan.IoSample sample: ioSample.getSamples()) {          
+             for (IoSample sample: ioSample.getSamples()) {          
                 if( sample.isDigitalOn(pin) ^ _inverted) {
                    setOwnState(Sensor.ACTIVE);
                 }
@@ -149,7 +154,44 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
               // not what we expected
               log.debug("Ignoring mystery packet " + response.toString());
            }
+        } else if(response instanceof RemoteAtResponse ) {
+            RemoteAtResponse atResp = (RemoteAtResponse) response;
+            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
+            if(node.equals(sourcenode)) {
+               if(atResp.getCommand().equals("IS")) {
+                  try {
+                     ZNetRxIoSampleResponse ioSample = ZNetRxIoSampleResponse.parseIsSample(atResp);
+                     if( ioSample.isDigitalOn(pin) ^ _inverted) {
+                        setOwnState(Sensor.ACTIVE);
+                     }
+                     else setOwnState(Sensor.INACTIVE);
+                  } catch(java.io.IOException ioe) {
+                     // parse error, wrong format.
+                     log.debug("Caught IOException parsing IS packet");
+                  } catch(java.lang.IllegalStateException ise) {
+                     // is this a series 1 packet?
+                     log.debug("Caught IllegalStateException parsing IS packet");
+                     try {
+                         RxResponseIoSample rxSample = new RxResponseIoSample();
+                         int sampleSize = atResp.getValue()[0];
+                         rxSample.setChannelIndicator1(atResp.getValue()[1]);
+                         rxSample.setChannelIndicator2(atResp.getValue()[2]);
+			 IoSample sample = new IoSample(rxSample);
+                         sample.setDioMsb(atResp.getValue()[3]);
+                         sample.setDioLsb(atResp.getValue()[4]);
+                         if( sample.isDigitalOn(pin) ^ _inverted) {
+                             setOwnState(Sensor.ACTIVE);
+                         }
+                         else setOwnState(Sensor.INACTIVE);
+                     } catch(java.lang.Exception e) {
+                        // no recovery at this point.
+                        log.debug("Caught too many exceptions parsing IS packet, no recovery possible");
+                     }
+                  }
+               }
+            }
         }
+
         return;
     }
 
