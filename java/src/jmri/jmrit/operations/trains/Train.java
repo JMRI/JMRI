@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import javax.swing.JOptionPane;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsXml;
@@ -38,6 +40,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1465,13 +1468,23 @@ public class Train implements java.beans.PropertyChangeListener {
 										.acceptsDestination(car.getDestination()))) {
 							// found a destination, now check destination track
 							if (car.getDestinationTrack() != null) {
-								if (((car.getDestinationTrack().getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher())
-										|| !car.getDestinationTrack().acceptsDropTrain(this)) {
+								if ((car.getDestinationTrack().getTrainDirections() & rldest.getTrainDirection()) == 0
+										&& !isLocalSwitcher()) {
+									if (addToReport) {
+										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+												.getMessage("buildCanNotDropRsUsingTrain"), new Object[] {
+												car.toString(), rldest.getTrainDirectionString() }));
+										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+												.getMessage("buildCanNotDropRsUsingTrain2"), new Object[] { car
+												.getDestinationTrackName() }));
+									}
+									continue;
+								}
+								if (!car.getDestinationTrack().acceptsDropTrain(this)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-												.getMessage("trainCanNotDeliverToTrack"), new Object[] { getName(),
-												car.toString(), car.getDestinationTrackName(),
-												car.getDestinationName(), rLocations.get(k) }));
+												.getMessage("buildCanNotDropCarTrain"), new Object[] {
+												car.toString(), getName(), car.getDestinationTrackName() }));
 									continue;
 								}
 							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
@@ -1499,9 +1512,25 @@ public class Train implements java.beans.PropertyChangeListener {
 								String status = "";
 								List<Track> tracks = rldest.getLocation().getTrackList();
 								for (Track track : tracks) {
-									if (((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher())
-											|| !track.acceptsDropTrain(this))
+									if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0
+											&& !isLocalSwitcher()) {
+										if (addToReport) {
+											TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+													.getMessage("buildCanNotDropRsUsingTrain"), new Object[] {
+													car.toString(), rldest.getTrainDirectionString() }));
+											TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+													.getMessage("buildCanNotDropRsUsingTrain2"), new Object[] { track
+													.getName() }));
+										}
 										continue;
+									}
+									if (!track.acceptsDropTrain(this)) {
+										if (addToReport)
+											TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+													.getMessage("buildCanNotDropCarTrain"), new Object[] {
+													car.toString(), getName(), track.getName() }));
+										continue;
+									}
 									// will the track accept this car?
 									status = track.accepts(car);
 									if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
@@ -1519,7 +1548,7 @@ public class Train implements java.beans.PropertyChangeListener {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("trainCanNotDeliverNoTracks"), new Object[] { getName(),
-												car.toString(), car.getDestinationName() }));
+												car.toString(), car.getDestinationName(), rldest.getId() }));
 									continue;
 								}
 							}

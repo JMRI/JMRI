@@ -129,6 +129,22 @@ public class Router extends TrainCommon {
 									.getFinalDestinationTrack().getTrackTypeName()) }));
 			return false;
 		}
+		if (clone.getDestination() != null && clone.getDestinationTrack() == null) {
+			// determine if there's a track that can service the car
+			String status = "";
+			for (Track track : clone.getDestination().getTrackList()) {
+				status = track.accepts(clone);
+				if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
+					log.debug("Track ({}) will accept car ({})", track.getName(), car.toString());
+					break;
+				}
+			}
+			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNoTracks"),
+						new Object[] { clone.getDestinationName(), car.toString() }));
+				return false;
+			}
+		}
 		// check to see if car will move to destination using a single train
 		if (checkForSingleTrain(car, clone)) {
 			return true;	// a single train can service this car
