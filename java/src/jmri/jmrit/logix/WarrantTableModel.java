@@ -63,7 +63,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     private ArrayList <Warrant>       _warList;
     private ArrayList <Warrant>       _warNX;	// temporary warrants appended to table
     static Color myGreen = new Color(0, 100, 0);
-    static Color myGold = new Color(255, 150, 0);
+    static Color myGold = new Color(200, 100, 0);
 
     public WarrantTableModel(WarrantTableFrame frame) {
         super();
@@ -102,10 +102,23 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         _warList = tempList;
     }
     
+    protected void haltAllTrains() {
+    	Iterator<Warrant> iter = _warList.iterator();
+    	while (iter.hasNext()) {
+    		iter.next().controlRunTrain(Warrant.HALT);
+    	}
+    	iter = _warNX.iterator();
+    	while (iter.hasNext()) {
+    		iter.next().controlRunTrain(Warrant.HALT);
+    	}
+    	fireTableDataChanged();
+    }
+    
     public void addNXWarrant(Warrant w) {
     	_warList.add(w);
     	_warNX.add(w);
     	w.addPropertyChangeListener(this);
+    	fireTableDataChanged();
     }
     public void removeNXWarrant(Warrant w) {
     	w.removePropertyChangeListener(this);
@@ -421,9 +434,9 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                 break;
             case DELETE_COLUMN:
                 if (w.getRunMode() == Warrant.MODE_NONE) {
-                    _manager.deregister(w);
+                	removeNXWarrant(w);
+                	_manager.deregister(w);
                     w.dispose();
-                } else {
                 }
                 break;
         }
@@ -478,7 +491,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                     	|| (property.equals("controlChange") &&e.getNewValue()==Integer.valueOf(Warrant.ABORT))
                     	)) {
                     	removeNXWarrant(bean);                       	
-                        try {
+                        try {		// TableSorter needs time to get its row count updated
                             Thread.sleep(50);
                             fireTableRowsDeleted(i, i);
                             Thread.sleep(50);                        	
@@ -521,7 +534,8 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	} else if (newMode==Warrant.MODE_NONE) {
             		if (oldMode!=Warrant.MODE_NONE) {
             			OBlock block = bean.getCurrentBlockOrder().getBlock();
-            			if ((block.getState() & OBlock.OCCUPIED)>0) {
+            			int state = block.getState(); 
+            			if ((state & OBlock.OCCUPIED)>0 || (state & OBlock.DARK)>0) {
                         	_frame.setStatusText(Bundle.getMessage("warrantEnd", bean.getTrainName(),
                         			bean.getDisplayName(), block.getDisplayName()), myGreen, true);
             			} else {
@@ -530,8 +544,9 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             			}
             		}
             	} else {
-                	_frame.setStatusText(Bundle.getMessage("modeChange", bean.getTrainName(), bean.getDisplayName(),
-                			Bundle.getMessage(Warrant.MODES[oldMode]), Bundle.getMessage(Warrant.MODES[newMode])), myGold, true);
+                	_frame.setStatusText(Bundle.getMessage("modeChange", bean.getTrainName(), 
+                			bean.getDisplayName(), Bundle.getMessage(Warrant.MODES[oldMode]), 
+                			Bundle.getMessage(Warrant.MODES[newMode])), myGold, true);
             	}
         	} else if (e.getPropertyName().equals("controlChange")){
                	int runState = ((Integer)e.getOldValue()).intValue();
@@ -540,12 +555,14 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
             	if (runState<0) {
             		stateStr = Bundle.getMessage(Warrant.MODES[-runState]);
             	} else {
-            		stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState], bean.getCurrentBlockOrder().getBlock().getDisplayName());            		
+            		stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState], 
+            				bean.getCurrentBlockOrder().getBlock().getDisplayName());            		
             	}
-            	_frame.setStatusText(Bundle.getMessage("controlChange", bean.getTrainName(), bean.getDisplayName(),
+            	_frame.setStatusText(Bundle.getMessage("controlChange", bean.getTrainName(),
             			stateStr, Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])), myGold, true);
             } else if (e.getPropertyName().equals("throttleFail")) {
-            	_frame.setStatusText(Bundle.getMessage("ThrottleFail", bean.getTrainName(), e.getNewValue()), Color.red, true);               	                		                	
+            	_frame.setStatusText(Bundle.getMessage("ThrottleFail", bean.getTrainName(), 
+            			e.getNewValue()), Color.red, true);               	                		                	
             }
         }
         if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+

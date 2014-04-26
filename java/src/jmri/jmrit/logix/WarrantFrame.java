@@ -1007,12 +1007,22 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     protected void stopRunTrain() {
-    	if (_warrant!=null) {
-        	_warrant.deAllocate();
-            _warrant.stopWarrant();
-            _warrant.removePropertyChangeListener(this);    		
-    	}
         if (_learnThrottle!=null) {
+        	// if last block is dark and previous block has not been exited, we must assume train
+        	// has entered the last block now that the user is terminating the recording.
+           	List<BlockOrder> orders = getOrders();
+           	OBlock lastBlock = orders.get(orders.size()-1).getBlock();
+        	OBlock currentBlock = _warrant.getCurrentBlockOrder().getBlock();
+        	if (!lastBlock.equals(currentBlock)) {
+        		if ((lastBlock.getState() & OBlock.DARK) != 0 && 
+        				currentBlock.equals(orders.get(orders.size()-2).getBlock())) {
+                    setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());                    		       			
+        		} else {
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock), 
+                    		Bundle.getMessage("WarningTitle"), 
+                            JOptionPane.WARNING_MESSAGE);        			
+        		}
+        	}
         	if (_learnThrottle.getSpeedSetting()>0.0) {
                 _learnThrottle.setSpeedSetting(-0.5F);
                 _learnThrottle.setSpeedSetting(0.0F);        		
@@ -1020,6 +1030,11 @@ public class WarrantFrame extends WarrantRoute {
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
+    	if (_warrant!=null) {
+        	_warrant.deAllocate();
+            _warrant.stopWarrant();
+            _warrant.removePropertyChangeListener(this);    		
+    	}
         _statusBox.setText(Bundle.getMessage("LearningStop"));
     }
     
@@ -1094,7 +1109,7 @@ public class WarrantFrame extends WarrantRoute {
     	String bName = Bundle.getMessage("NoBlock");
     	BlockOrder bo = _warrant.getCurrentBlockOrder();
     	if (bo!=null) {
-    		OBlock block = _warrant.getCurrentBlockOrder().getBlock();
+    		OBlock block = bo.getBlock();
     		if (block!=null) {
     			bName = block.getDisplayName();
     		}
