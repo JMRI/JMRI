@@ -110,7 +110,7 @@ public abstract class AppsBase {
          * work in the background if the file doesn't exist then we do not
          * initialize it
          */
-        if (preferenceFileExists) {
+        if (preferenceFileExists && System.getProperty("java.awt.headless","false").equals("true")) {
             r = new Runnable() {
 
                 public void run() {
