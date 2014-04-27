@@ -53,6 +53,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
              return true;
          if (type.equals(jmri.LightManager.class))
              return true;
+         if (type.equals(jmri.TurnoutManager.class))
+             return true;
         return false; // nothing, by default
     }
     
@@ -68,6 +70,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
              return (T)getSensorManager();
         if (T.equals(jmri.LightManager.class))
              return (T)getLightManager();
+        if (T.equals(jmri.TurnoutManager.class))
+             return (T)getTurnoutManager();
         return null; // nothing, by default
     }
 
@@ -94,6 +98,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         jmri.InstanceManager.setSensorManager(getSensorManager());
  	setLightManager(new XBeeLightManager(cont,getSystemPrefix()));
         jmri.InstanceManager.setLightManager(getLightManager());
+ 	setTurnoutManager(new XBeeTurnoutManager(cont,getSystemPrefix()));
+        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
 
     }
 
@@ -135,6 +141,20 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     }
 
     private LightManager lightManager=null;
+
+    /*
+     * Provides access to the Turnout Manager for this particular connection.
+     * NOTE: Turnout manager defaults to NULL
+     */
+    public TurnoutManager getTurnoutManager(){
+        return turnoutManager;
+
+    }
+    public void setTurnoutManager(TurnoutManager s){
+         turnoutManager = s;
+    }
+
+    private TurnoutManager turnoutManager=null;
 
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
