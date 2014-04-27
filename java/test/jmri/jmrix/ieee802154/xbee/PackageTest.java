@@ -39,6 +39,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XBeeSensorTest.class));
         suite.addTest(new TestSuite(XBeeLightManagerTest.class));
         suite.addTest(new TestSuite(XBeeLightTest.class));
+        suite.addTest(new TestSuite(XBeeTurnoutManagerTest.class));
+        suite.addTest(new TestSuite(XBeeTurnoutTest.class));
         return suite;
     }
 
