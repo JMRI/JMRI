@@ -194,19 +194,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                         e.getAttribute("item").getValue() :
                         null);
         // as a special case, if no item, use label
-        if (item == null) {
-            item = e.getAttribute("label").getValue();
-            log.debug("no item attribute for \""+item+"\"");
+        if (item == null ) {
+            item = name;
+            log.debug("no item attribute, used label \""+name+"\"");
         }
         // as a special case, if no label, use item
         if (name == null) {
             name = item;
-            log.debug("no label attribute for \""+item+"\"");
+            log.debug("no label attribute, used item attribute \""+item+"\"");
         }
         
-        String comment = null;
-        if (e.getAttribute("comment") != null)
-            comment = e.getAttribute("comment").getValue();
+        String comment = LocaleSelector.getAttribute(e, "comment");
+
         String CV = "";
         if (e.getAttribute("CV") != null)
             CV = e.getAttribute("CV").getValue();
@@ -376,9 +375,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         String item = ( e.getAttribute("item")!=null ?
                         e.getAttribute("item").getValue() :
                         null);
-        String comment = null;
-        if (e.getAttribute("comment") != null)
-            comment = e.getAttribute("comment").getValue();
+        String comment = LocaleSelector.getAttribute(e, "comment");
+
         int piVal = Integer.valueOf(e.getAttribute("PI").getValue()).intValue();
         int siVal = ( e.getAttribute("SI") != null ?
                       Integer.valueOf(e.getAttribute("SI").getValue()).intValue() :
@@ -831,10 +829,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
-    public void newDecVariableValue(String name, String CV, String mask,
+    /**
+     * Programmatically create a new DecVariableValue from parameters
+     */
+    public void newDecVariableValue(String name, String CV, String comment, String mask,
                                     boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly) {
         setFileDirty(true);
-        String comment = "";
+
         int minVal = 0;
         int maxVal = 255;
         _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
