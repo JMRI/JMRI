@@ -117,8 +117,13 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             //Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = systemName.indexOf(":");
             int seperator2 = systemName.indexOf(":",seperator+1);
+            int len = systemName.length();
             try {
-                input = Integer.valueOf(systemName.substring(seperator+1,seperator2)).intValue();
+            	if ((seperator2 >= 0) && (seperator2 <= len)) {
+                    input = Integer.valueOf(systemName.substring(seperator+1,seperator2)).intValue();
+            	} else {
+                    input = Integer.valueOf(systemName.substring(seperator+1,len)).intValue();
+            	}
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;
