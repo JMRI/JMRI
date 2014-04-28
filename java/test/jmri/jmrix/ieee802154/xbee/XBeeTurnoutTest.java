@@ -21,7 +21,7 @@ public class XBeeTurnoutTest extends TestCase {
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCS1234","XBee Turnout Test",tc); 
+        XBeeTurnout s = new XBeeTurnout("ABCT1234","XBee Turnout Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
@@ -31,7 +31,17 @@ public class XBeeTurnoutTest extends TestCase {
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCS123:4","XBee Turnout Test",tc); 
+        XBeeTurnout s = new XBeeTurnout("ABCT123:4","XBee Turnout Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtorAddress2PinName() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeTurnout s = new XBeeTurnout("ABCT123:4:5","XBee Turnout Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
@@ -41,7 +51,17 @@ public class XBeeTurnoutTest extends TestCase {
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCSABCD:4","XBee Turnout Test",tc); 
+        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4","XBee Turnout Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtor16BitHexNodeAddress2pin() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4:5","XBee Turnout Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
@@ -51,7 +71,17 @@ public class XBeeTurnoutTest extends TestCase {
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCSAB CD:4","XBee Turnout Test",tc); 
+        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4","XBee Turnout Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtor16BitHexStringNodeAddress2pin() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4:5","XBee Turnout Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
@@ -61,7 +91,17 @@ public class XBeeTurnoutTest extends TestCase {
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
         tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCS00 13 A2 00 40 A0 4D 2D:4","XBee Turnout Test",tc); 
+        XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4","XBee Turnout Test",tc); 
+        Assert.assertNotNull("exists",s);
+    }
+
+    public void testCtor64BitHexStringNodeAddress2pin() {
+        XBeeTrafficController tc = new XBeeTrafficController();
+        XBeeConnectionMemo memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setTurnoutManager(new XBeeTurnoutManager(tc,"ABC"));
+        tc.setAdapterMemo(memo);
+        XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4:5","XBee Turnout Test",tc); 
         Assert.assertNotNull("exists",s);
     }
 
