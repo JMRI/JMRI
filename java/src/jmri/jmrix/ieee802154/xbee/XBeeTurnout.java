@@ -70,7 +70,7 @@ public class XBeeTurnout extends AbstractTurnout{
                          // find the node.
                          node = null;
                        }
-                pin = Integer.valueOf(systemName.substring(seperator+1,seperator2)).intValue();
+                pin = Integer.valueOf(systemName.substring(seperator+1,seperator2>0?seperator2:systemName.length())).intValue();
                 if( seperator2 > 0 )
                    pin2 = Integer.valueOf(systemName.substring(seperator2+1)).intValue();
             } catch (NumberFormatException ex) {
