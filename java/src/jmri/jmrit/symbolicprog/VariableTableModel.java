@@ -757,9 +757,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // back to general processing
         // add tooltip text if present
         {
-            Attribute a;
-            if ((a = LocaleSelector.getAttribute(e,"tooltip")) != null) {
-                v.setToolTipText(a.getValue());
+            String t;
+            if ((t = LocaleSelector.getAttribute(e,"tooltip")) != null) {
+                v.setToolTipText(t);
             }
         }
     }
