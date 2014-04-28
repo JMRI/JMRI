@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 /**
- * Action to import the CV values from a CSV file.
+ * Action to import the CV values from a CSV format file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author	Dave Heap   Copyright (C) 2014

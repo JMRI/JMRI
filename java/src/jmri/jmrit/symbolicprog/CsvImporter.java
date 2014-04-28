@@ -15,7 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Import CV values from a generic CSV list file such as that written by the CsvExportAction class.
+ * Import CV values from a generic CSV format CV list file
+ * such as those written by the CsvExportAction class.
  *
  *
  * <hr>
