@@ -157,6 +157,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // some of the names are so long, and we expect more formats
         JMenu importSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuImport"));
         fileMenu.add(importSubMenu);
+        importSubMenu.add(new CsvImportAction(SymbolicProgBundle.getMessage("MenuImportCSV"), cvModel, this));
         importSubMenu.add(new Pr1ImportAction(SymbolicProgBundle.getMessage("MenuImportPr1"), cvModel, this));
         importSubMenu.add(new LokProgImportAction(SymbolicProgBundle.getMessage("MenuImportLokProg"), cvModel, this));
 
