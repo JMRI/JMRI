@@ -214,6 +214,8 @@ extra "s") element. An example:</p>
   &nbsp;&nbsp;&lt;variable CV="1" item="Primary Address" default="03"&gt;<BR>
     &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
     &nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Short Address&lt;/label&gt;<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;comment&gt;NMRA standard form&lt;/comment&gt;<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;tooltip&gt;Digitrax systems only address 1-99&lt;/tooltip&gt;<BR>
   &nbsp;&nbsp;&lt;/variable&gt;<BR>
   <BR>
   &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<BR>
@@ -232,9 +234,6 @@ different order.</p>
 
 <p> The attributes include:
 <ul>
-<li><dfn>label</dfn> - The name for this variable. This is generally what
-the decoder manufacturer calls this item, even if other manufacturers or the
-NMRA use a different name for similar things.
 <li><dfn>item</dfn> - The 'standard' name for this variable. See the
 <A HREF="Programmer.shtml#id">discussion on the programmer definition page</a> 
 for more information on this.  Generally, look at the Comprehensive programmer
@@ -250,16 +249,18 @@ is a full byte, this attribute can be omitted.
 <li><dfn>default</dfn> - The default value for this variable. This is
 used for a new decoder, or when you want to set the
 decoder back to its defaults.
-<li><dfn>comment</dfn> - Use this for whatever you want.
 </ul>
 
 <p>(There are a few more, which we'll leave for the advanced section below)</p>
-<p>The "label" element provides a human-comfortable name for this variable. This is generally what
+<p>The "label" included element provides a human-comfortable name for this variable. This is generally what
 the decoder manufacturer calls this item, even if other manufacturers or the
 NMRA use a different name for similar things. It's optional, in which case the "item"
 value will be used to label it when it's presented to the user.
 <p>The "comment" element let you provide additional information
-to the user.  For example, a tooltip made from the comment text is provided when the user hovers their
+to future developers.  This information is visible when editing the 
+definition, but isn't provided to somebody who's just using DecoderPro.
+<p>The "tooltip" element let you provide additional information
+to the user when the user hovers their
 cursor over the variable on the screen. 
 </dd>
 
