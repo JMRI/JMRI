@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv29direction.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id: cv29table3-28.xml 22377 20143-04-24 xx:x:xxZ jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,13 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>2</revnumber>
+      <revnumber>3</revnumber>
+      <date>2014-04-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Added Italian, used Vhigh (NMRA) instead of Vmax</revremark>
+    </revision>
+    <revision>    
+        <revnumber>2</revnumber>
       <date>2013-07-31</date>
       <authorinitials>PB</authorinitials>
       <revremark>Added German, French</revremark>
@@ -41,20 +47,22 @@
   </revhistory>
   <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
     <enumVal>
-      <enumChoice choice="Use Vstart Vmid Vmax">
-        <choice>Use Vstart Vmid Vmax</choice>
+      <enumChoice choice="Use Vstart, Vmid, Vhigh">
+        <choice>Use Vstart, Vmid, Vhigh</choice>
         <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
         <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
+        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>        
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
         <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
         <choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
+        <choice xml:lang="it">Usa Tabella</choice>        
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
     <label xml:lang="fr">Tableau de vitesse</label>
     <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Speed Table Definition</label>
+    <label xml:lang="it">Usa Tabella Velocità</label>
   </variable>
 </variables>

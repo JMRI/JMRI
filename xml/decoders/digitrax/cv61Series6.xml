@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id: cv61Series6.xml 22090 2014-04-26 xx:x:xxZ jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-04-26</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial release as separate file. New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14</revremark>
+    </revision>
+    <revision>
+      <revnumber>35</revnumber>
+      <date>2014-04-06</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+    </revision>    
+  </revhistory>
+      <!-- Used an old display item, not needed anymore for Digitrax Series 6 decoders -->
+      <variable label="LED/Lamp Algorithm" item="Directional Headlights" CV="61" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+            <choice xml:lang="it">LED</choice>
+          </enumChoice>
+          <enumChoice choice="Lamp">
+            <choice>Lamp</choice>
+            <choice xml:lang="it">Lampada</choice>
+          </enumChoice>
+        </enumVal>
+        <label xml:lang="it">Algoritmo LED/Lampada</label>
+      </variable>    
+      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Digitrax Transponding</label>
+        <label xml:lang="it">Transponding Digitrax</label>
+      </variable>
+      <variable label="Split field motor" CV="61" mask="XXXXXVXX" tooltip="Not documented in Digitrax Manual 2nd Edition">
+        <enumVal>
+          <enumChoice choice="Normal DC motor">
+            <choice>Normal DC motor</choice>
+            <choice xml:lang="it">Motore Normale in CC</choice>
+          </enumChoice>
+          <enumChoice choice="Split field/AC motor">
+            <choice>Split field/AC motor</choice>
+            <choice xml:lang="it">Motore in AC</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Split field motor</label>
+        <label xml:lang="it">Motore in AC</label>
+      </variable>
+      <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Vstart/Vmid/Vfull in 128 step mode</label>
+        <label xml:lang="it">Vstart/Vmid/Vfull in modalità 128 step</label>
+      </variable>
+      <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Short-circuit protection</label>
+        <label xml:lang="it">Protezione Corto-Circuito</label>
+        <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+        <comment xml:lang="it">Funzionalità non documentata, talvolta richiesta dal supporto tecnico Digitrax</comment>
+      </variable>
+</variables>

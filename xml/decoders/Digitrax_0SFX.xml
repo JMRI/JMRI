@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010 All rights reserved -->
-<!-- $Id: Digitrax_0SFX.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
+<!-- $Id: Digitrax_0SFX.xml 17977 2014-04-27 xx:x:xxZ xxx $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="7" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="6" lastUpdated="20120515"/>
   <version author="Steve Lowens" version="5" lastUpdated="20110326"/>
   <version author="Steve Lowens" version="4" lastUpdated="20101218"/>
@@ -35,79 +36,87 @@
   <!-- For version 2.11.6                                                  -->
   <!--    Added Con-cor Zephyr decoders                                    -->
   <!--                                       Steve Lowens  05/15/2012      -->
+  <!--    Note: Con-cor decoders moved to separate file Digitrax_1SFX.xml  -->
+  <!--                                       Steve Lowens  07/03/2012      -->
+  <!--                                                                     -->
+  <!--    Version 7 (Alain Le Marchand) -                                  -->
+  <!--    Refactored with fragment files - creating new ones for Digitrax  -->
+  <!--    Added missing read-only variables CV121 to 128, CV160            -->
+  <!--        and created a new pane "Digitrax Sound Info" to display them -->
+  <!--    Added function labels + updated comments and sizes               -->
   <!--                                             -->
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
-      <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1444" comment="SDN144A0">
+      <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="2.63" width="0.37" height="0.128" units="inches"/>
       </model>
-      <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1445" comment="SDN144A1">
+      <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1445" comment="for Atlas N-Scale SD50/60">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="3.26" width="0.669" height="0.132" units="inches"/>
       </model>
-      <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
+      <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1442" comment="for Kato N-Scale P42, E8, PA1, F40 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="2.22" width="0.55" height="0.10" units="inches"/>
       </model>
-      <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" productID="1443" comment="SDN144K1E">
+      <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1443" comment="for Kato N-Scale SD40-2 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="x.x" width="x.x" height="x.x" units="inches"/>
       </model>
-      <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1441" comment="SDN144PS">
+      <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
         <output name="1" label="F0F Pad" connection="plug"/>
         <output name="2" label="F0R Pad" connection="plug"/>
         <output name="3" label="F1 Pad" connection="plug"/>
         <output name="4" label="F2 Pad" connection="plug"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="1.22" width="0.4" height="0.164" units="inches"/>
       </model>
-      <model model="SDH164D" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1641" comment="SDH164D">
+      <model model="SDH164D" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="1641" comment="HO-Scale, wired, SoundFX">
         <output name="1" label="F0F Pad" connection="solder"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <output name="5" label="F3 Pad" connection="solder"/>
         <output name="6" label="F4 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1642" comment="SDH164K1A">
+      <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1642" comment="for Kato HO-Scale AC4400 Locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <output name="5" label="F3 Pad" connection="solder"/>
         <output name="6" label="F4 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
       </model>
-      <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1643" comment="SDH164K1A">
+      <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1643" comment="for Kato HO-Scale SD38-2 locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <output name="5" label="F3 Pad" connection="solder"/>
         <output name="6" label="F4 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="3.11" width="0.64" height="0.23" units="inches"/>
       </model>
-      <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1644" comment="SDH164K1A">
+      <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1644" comment="for Kato HO-Scale F40PH Locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <output name="5" label="F3 Pad" connection="solder"/>
         <output name="6" label="F4 Pad" connection="solder"/>
-        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <size length="3.35" width="0.64" height="0.23" units="inches"/>
       </model>
       <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
         <output name="1" label="F0F Pad" connection="solder"/>
@@ -123,25 +132,92 @@
         <output name="11" label="F9 Pad" connection="solder"/>
         <output name="12" label="F10 Pad" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn seq.</functionlabel>
+          <functionlabel num="11" lockable="false">Handbrake</functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+        </functionlabels>        
       </model>
       <model model="AC4400" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1042" comment="SDH104K1A">
         <output name="1" label="LED" connection="solder"/>
         <output name="2" label="LED" connection="solder"/>
         <output name="3" label="Pad" connection="solder"/>
         <output name="4" label="Pad" connection="solder"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn seq.</functionlabel>
+          <functionlabel num="11" lockable="false">Handbrake</functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+        </functionlabels>
       </model>
       <model model="SD38-2" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1043" comment="SDH104K1B">
         <output name="1" label="LED" connection="solder"/>
         <output name="2" label="LED" connection="solder"/>
         <output name="3" label="Pad" connection="solder"/>
         <output name="4" label="Pad" connection="solder"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn seq.</functionlabel>
+          <functionlabel num="11" lockable="false">Handbrake</functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+        </functionlabels>
       </model>
       <model model="F40PH" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1044" comment="SDH104K1C">
         <output name="1" label="LED" connection="solder"/>
         <output name="2" label="LED" connection="solder"/>
         <output name="3" label="Pad" connection="solder"/>
         <output name="4" label="Pad" connection="solder"/>
+        <functionlabels>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn seq.</functionlabel>
+          <functionlabel num="11" lockable="false">Handbrake</functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+        </functionlabels>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+        <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+        <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+        <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+        <functionlabel num="10" lockable="false">Xing Gate Airhorn/Wheel Slip</functionlabel>
+        <functionlabel num="11" lockable="false">Handbrake/Greaser</functionlabel>
+        <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
@@ -175,118 +251,16 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-            <choice xml:lang="it">avanti</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-            <choice xml:lang="it">indietro</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-        <label xml:lang="it">Direzione movimento Normale</label>
-      </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice>28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-        <label xml:lang="it">Step velocità</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog conversion mode</label>
-        <label xml:lang="it">Modo Conversione Analogica</label>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use Table">
-            <choice>Use Table</choice>
-            <choice xml:lang="it">Usa Tabella</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/> 
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>       
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
-      <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Forward light F0F effect generated</label>
-        <label xml:lang="it">Luce anteriore effetto F0F</label>
-      </variable>
-      <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Forward light F0F behavior</label>
-        <label xml:lang="it">Luce anteriore funzionamento F0F</label>
-      </variable>
-      <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Reverse light F0R effect generated</label>
-        <label xml:lang="it">Luce anteriore effetto F0R</label>
-      </variable>
-      <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Reverse light F0R behavior</label>
-        <label xml:lang="it">Luce anteriore funzionamento F0R</label>
-      </variable>
-      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 1 effect generated</label>
-        <label xml:lang="it">Effetti generati Funzione 1</label>
-      </variable>
-      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 1 behavior</label>
-        <label xml:lang="it">Funzionamento Funzione 1</label>
-      </variable>
-      <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 2 effect generated</label>
-        <label xml:lang="it">Effetti generati Funzione 2</label>
-      </variable>
-      <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 2 behavior</label>
-        <label xml:lang="it">Funzionamento Funzione 2</label>
-      </variable>
-      <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-            <choice xml:lang="it">Disabilitata</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-            <choice xml:lang="it">Abilitata</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Switching speed enabled by F6</label>
-        <label xml:lang="it">Abilita velocità di Manovra con F6</label>
-      </variable>
-      <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Torque compensation</label>
-        <label xml:lang="it">Coppia di compensazione</label>
-      </variable>
-      <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Decoder Lock Feature</label>
-        <label xml:lang="it">Funzione di Blocco decore</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>      
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <!-- Sound options -->
-      <variable label="Master Volume" CV="58" item="Sound Setting 1" default="9" comment="0-15, use about 4-8">
+      <variable label="Master Volume" CV="58" item="Sound Setting 1" default="9" tooltip="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
         <label xml:lang="it">Volume principale</label>
@@ -337,58 +311,8 @@
         <label>Locomotive Sound Option</label>
         <label xml:lang="it">Opzione Suoni Loco</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Digitrax Transponding</label>
-        <label xml:lang="it">Funzione Transponding</label>
-      </variable>
-      <variable label="Split field motor" CV="61" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Normal DC motor">
-            <choice>Normal DC motor</choice>
-            <choice xml:lang="it">Tipo Motore DC</choice>
-          </enumChoice>
-          <enumChoice choice="Split field/AC motor">
-            <choice>Split field/AC motor</choice>
-            <choice xml:lang="it">Tipo Motore AC</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Split field motor</label>
-        <label xml:lang="it">Pilotaggio Motore in AC</label>
-      </variable>
-      <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Vstart/Vmid/Vfull in 128 step mode</label>
-        <label xml:lang="it">Vstart/Vmid/Vfull in modo 128 step</label>
-      </variable>
-      <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Short-circuit protection</label>
-        <label xml:lang="it">Protezione Corto-circuito</label>
-        <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
-        <comment xml:lang="it">Funzione non documentata, richiesta occasionalmente dal supporto tecnico Digitraxx</comment>
-      </variable>
-      <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
-        <decVal max="15"/>
-        <label>Lamp keep-alive voltage</label>
-        <label xml:lang="it">Tensione mantenimento Lampade</label>
-        <comment>0 is no keep-alive, use with LEDs</comment>
-        <comment xml:lang="it">0=nessuna, usare con i LED</comment>
-      </variable>
-      <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
-        <decVal max="15"/>
-        <label>FX rate adjust</label>
-        <label xml:lang="it">Aggiustamento FX</label>
-        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
-        <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
-      </variable>
-      <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
-        <decVal/>
-        <label>Ditch light hold-over time</label>
-        <label xml:lang="it">Tempo di carica Luci Ditch</label>
-        <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
-        <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
@@ -398,46 +322,39 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
-      <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 3 effect generated</label>
-        <label xml:lang="it">Funzione 3 effetti generati</label>
+      <!-- Software information - Read-only -->
+      <variable label="Software Version" CV="121" readOnly="yes" default="3" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Software Version</label>
+      </variable>       
+      <variable label="Product Type" CV="122" readOnly="yes" default="12" tooltip="12=Digitrax SFX sound decoder" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Product Type</label>
+      </variable>       
+      <variable label="Hardware Version" CV="123" readOnly="yes" default="17" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Hardware Version</label>
       </variable>
-      <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 3 behavior</label>
-        <label xml:lang="it">Funzione 3 comportamento</label>
+      <variable label="Flash Signature" CV="124" readOnly="yes" default="2" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Flash Signature</label>
+      </variable>         
+      <variable label="16KB free blocks" CV="125" readOnly="yes" default="0" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>16KB free blocks</label>
       </variable>
-      <variable label="Function 4 effect generated" CV="114" mask="XXXXVVVV" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 4 effect generated</label>
-        <label xml:lang="it">Funzione 4 effetti generati</label>
+      <variable label="FAT flags" CV="126" readOnly="yes" default="7" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>FAT flags</label>
       </variable>
-      <variable label="Function 4 behavior" CV="114" mask="VVVVXXXX" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 4 behavior</label>
-        <label xml:lang="it">Funzione 4 comportamento</label>
+      <variable label="Internal Flags" CV="127" readOnly="yes" default="0" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Internal Flags</label>
       </variable>
-      <variable label="Function 5 effect generated" CV="115" mask="XXXXVVVV" minOut="7">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 5 effect generated</label>
-        <label xml:lang="it">Funzione 5 effetti generati</label>
-      </variable>
-      <variable label="Function 5 behavior" CV="115" mask="VVVVXXXX" minOut="7">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 5 behavior</label>
-        <label xml:lang="it">Funzione 5 comportamento</label>
-      </variable>
-      <variable label="Function 6 effect generated" CV="116" mask="XXXXVVVV" minOut="8">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 6 effect generated</label>
-        <label xml:lang="it">Funzione 6 effetti generati</label>
-      </variable>
-      <variable label="Function 6 behavior" CV="116" mask="VVVVXXXX" minOut="8">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 6 behavior</label>
-        <label xml:lang="it">Funzione 6 comportamento</label>
-      </variable>
+      <variable label="IPL counter" CV="128" readOnly="yes" default="0" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>IPL counter</label>
+      </variable>      
       <!-- Sound options -->
       <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="127">
         <decVal/>
@@ -489,14 +406,14 @@
         <label>Misc Volumes (reserved)</label>
         <label xml:lang="it">Volume vari (riservata)</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="146" item="Sound Setting 10" comment="24msec counts" default="9">
+      <variable label="Bell Ring Rate" CV="146" item="Sound Setting 10" tooltip="24msec counts" default="7">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in passi da 24msec</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147" item="Sound Setting 11" default="50">
+      <variable label="Air Drier Rate" CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="2">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
@@ -593,52 +510,52 @@
         <label>Peak Speed for Auto coupler/brake on dir change</label>
         <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
       </variable>
-      <variable label="Sound Project Author ID" CV="152" default="221">
+      <variable label="Sound Project Author ID" CV="152" default="221" readOnly="yes" tooltip="0xDD(221) = Digitrax">
         <decVal/>
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="1" include="1041">
+      <variable label="Sound Project ID" CV="153" default="1" readOnly="yes" include="1041">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="2" include="1042,1642">
+      <variable label="Sound Project ID" CV="153" default="2" readOnly="yes" include="1042,1642">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="3" include="1043,1643">
+      <variable label="Sound Project ID" CV="153" default="3" readOnly="yes" include="1043,1643">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="4" include="1044,1644">
+      <variable label="Sound Project ID" CV="153" default="4" readOnly="yes" include="1044,1644">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="5" include="1441,1641">
+      <variable label="Sound Project ID" CV="153" default="5" readOnly="yes" include="1441,1641">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="25" include="1442">
+      <variable label="Sound Project ID" CV="153" default="25" readOnly="yes" include="1442">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="23" include="1443">
+      <variable label="Sound Project ID" CV="153" default="23" readOnly="yes" include="1443">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="21" include="1444">
+      <variable label="Sound Project ID" CV="153" default="21" readOnly="yes" include="1444">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" default="34" include="1445">
+      <variable label="Sound Project ID" CV="153" default="34" readOnly="yes" include="1445">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
@@ -666,6 +583,19 @@
         <label>Notching Mode</label>
         <label xml:lang="it">Modalità Notch</label>
       </variable>
+      <variable label="Horn Delay Rate" CV="156" item="Sound Setting 17" default="10">
+        <decVal/>
+        <label>Horn Delay Rate</label>
+        <label xml:lang="it">Tasso Ritardo Tromba</label>
+      </variable>
+      <!-- Read-only variables -->
+      <variable label="Variant ID" CV="160" readOnly="yes" default="4" include="1441,1442,1443,1444,1445,1641,1642,1643,1644">
+        <decVal/>
+        <label>Variant ID</label>
+      </variable>
+      <!-- highest used so far: -->
+      <!-- "Sound Option 5"     -->
+      <!-- "Sound Setting 17"   -->     
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
@@ -678,46 +608,6 @@
       </factReset>
     </resets>
   </decoder>
-  <pane name="Digitrax">
-    <column>
-      <display item="Advanced consist droop compensation for speed stabilization"/>
-      <display item="Speed Compensation Control"/>
-      <display item="Split field motor"/>
-      <display item="Vstart/Vmid/Vfull in 128 step mode"/>
-      <display item="Short-circuit protection"/>
-      <display item="Switching speed enabled by F6"/>
-      <display item="Torque compensation"/>
-      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature">
-         <tooltip>Activates Decoder Locking feature</tooltip>
-         <tooltip xml:lang="it">Attiva funzione Blocco Decoder</tooltip>
-      </display>
-      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
-        <tooltip>Set this decoder's unique locking ID number</tooltip>
-        <tooltip xml:lang="it">Imposta Codice Blocco di questo Decoder</tooltip>
-      </display>
-      <display item="Sound Project Author ID"/>
-      <display item="Sound Project ID"/>
-      <label label="  ">	
-      </label>
-      <label label="DIGITRAX SOUND DECODER NOTES: ">
-        <label xml:lang="it">NOTE DECODER SUONO DIGITRAX</label>
-      </label>
-      <label label="Sound labels and values are shown for decoders as manufactured.">
-        <label xml:lang="it">Descrizioni e valori visualizzati per decoder nuovi</label>
-      </label>
-      <label label="These labels and values may not match downloaded sound projects.">
-        <label xml:lang="it">Questi possono non corrispondere al progetto scaricato</label>
-     </label>
-      <label label="Please use the CVs pane to adjust downloaded sound projects.">
-        <label xml:lang="it">Usare pannello CV per aggiustare i suoni del progetto</label>
-      </label>
-      <label label="If your locomotive with downloaded sound file is silent,try setting CV 60=0.">
-        <label xml:lang="it">Se la loco è silenziosa con i suoni scaricati, provare  CV60=0</label>
-      </label>
-      <label label="To mute bell or horn, set the sound level = 1, not 0.">
-        <label xml:lang="it">Per silenziare la campana o la tromba impostare livello suoni=1, non 0</label>
-      </label>
-    </column>
-    <name>Digitrax</name>
-  </pane>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>  
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
 </decoder-config>

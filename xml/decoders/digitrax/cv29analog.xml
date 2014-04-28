@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id: mfgVersionId.xml 22090 2014-04-26 xx:xx:xxZ jacobsen $ -->
+<!-- $Id: cv29analog.xml 22377 2014-04-25 xx:xx:xxZ jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2012</year>
+    <year>2014</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,32 +27,17 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>34</revnumber>
-      <date>2014-04-26</date>
+      <revnumber>1</revnumber>
+      <date>2014-04-25</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Default value for Digitrax manufacturer number</revremark>
-    </revision>
-    <revision>
-      <revnumber>32</revnumber>
-      <date>2012-12-27</date>
-      <authorinitials>BJ</authorinitials>
-      <revremark>Initial release as separate file</revremark>
-    </revision>
-    <revision>
-      <revnumber>31</revnumber>
-      <date>2011-12-30</date>
-      <authorinitials>BJ</authorinitials>
-      <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+      <revremark>Created from NMRA cv29analog.xml file, for use with Digitrax</revremark>
     </revision>
   </revhistory>
-  <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-    <decVal/>
-    <label>Version ID</label>
-    <label xml:lang="it">ID Versione</label>
-  </variable>
-  <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
-    <decVal/>
-    <label>Manufacturer ID</label>
-    <label xml:lang="it">ID Costruttore</label>
+  <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Conversione Analogica</label>
+    <label xml:lang="fr">Conversion mode analogique</label>
+    <label xml:lang="ca">Analog conversion mode(ca)</label>
+    <label xml:lang="de">Analog Konversion</label>
   </variable>
 </variables>
