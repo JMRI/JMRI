@@ -148,7 +148,12 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     @Override
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
+        for (int i = 0; i<validSpeeds.length; i++ )
+            if (validSpeeds[i].equals(mBaudRate))
+                baud = validSpeedValues[i];
+
+
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -199,10 +204,27 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         jmri.jmrix.ieee802154.ActiveFlag.setActive();
     }
 
+    /**
+     * Get an array of valid baud rates. This is currently just a message
+     * saying its fixed
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
+    public String[] validBaudRates() {
+        return validSpeeds;
+    }
+
+    protected String [] validSpeeds = new String[]{"1,200 baud","2,400 baud",
+            "4,800 baud","9,600 baud","19,200 baud","38,400 baud",
+            "57,600 baud","115,200 baud"};
+    protected int [] validSpeedValues = new int[]{1200,2400,4800,9600,19200,
+                     38400,57600,115200};
+
     // methods for XBeeConnection
     public void close(){
        activeSerialPort.close();
     }
+
 
     static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
 
