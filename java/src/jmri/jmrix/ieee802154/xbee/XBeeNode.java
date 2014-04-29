@@ -37,6 +37,7 @@ public class XBeeNode extends IEEE802154Node {
     private String Identifier;
     private HashMap<Integer,NamedBean> pinObjects=null;  
     private boolean isPolled;
+    private XBeeTrafficController tc = null;
 
     /**
      * Creates a new instance of XBeeNode
@@ -55,6 +56,13 @@ public class XBeeNode extends IEEE802154Node {
          pinObjects = new HashMap<Integer,NamedBean>(); 
          isPolled = false;
     }
+
+    /*
+     * Set the traffic controller associated with this node.
+     */
+   public void setTrafficController(XBeeTrafficController controller) {
+        tc = controller;
+   }
    
     /**
      * Create the needed Initialization packet (AbstractMRMessage) for this node.
@@ -212,5 +220,17 @@ public class XBeeNode extends IEEE802154Node {
          }
     }  
 
-    private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
+   /*
+    * get the stream object associated with this node.  Create it if it does
+    * not exist.
+    */
+  public XBeeIOStream getIOStream(){
+    if(mStream == null)
+       mStream = new XBeeIOStream(this,tc);
+    return mStream; 
+  }
+
+   private XBeeIOStream mStream = null;
+
+   private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }

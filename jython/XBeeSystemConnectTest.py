@@ -32,8 +32,7 @@ class XBeeSystemConnectionTest(jmri.jmrit.automat.AbstractAutomaton) :
         self.cm = jmri.InstanceManager.getDefault(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo)
         self.tc = self.cm.getTrafficController()
         self.Xbee = self.tc.getNodeFromAddress(3) # change the address to that of a suitable node.
-        self.xbeestream = jmri.jmrix.ieee802154.xbee.XBeeIOStream(self.Xbee,self.tc)
-
+        self.xbeestream = self.XBee.getIOStream() 
         # set up an XPressNet connection as a test.
         self.xnetstreamport = jmri.jmrix.lenz.XNetStreamPortController(self.xbeestream.getInputStream(), self.xbeestream.getOutputStream(), "test")
         self.xnetstreamport.configure()

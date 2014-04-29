@@ -147,6 +147,16 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     public void receiveLoop() {
     }
 
+    /**
+     * Public method to register a node
+     */
+    @Override
+    public void registerNode(jmri.jmrix.AbstractNode node){
+      super.registerNode(node);
+      ((XBeeNode) node).setTrafficController(this);
+    }
+
+
     // XBee Packet Listener interface methods
     // NOTE: Many of the details of this function are derived
     // from the the handleOneIncomingReply() in 
