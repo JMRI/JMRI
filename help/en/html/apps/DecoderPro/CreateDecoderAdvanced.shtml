@@ -21,7 +21,7 @@
 <div id="mainContent">
 
 
-<H2>DecoderPro User Guide - Advanced Decoder Definitions</h2>
+<h1>DecoderPro User Guide - Advanced Decoder Definitions</h1>
 
 <p>This page provides information on advanced features in
 the decoder definiton
@@ -51,7 +51,9 @@ and will appear on the screen as
 <p>
 &nbsp;&nbsp;&nbsp;<strong>JMRI 3.7.2 or later is required to use this definition.</strong>
 <p>
-For more examples see HEAD/tree/trunk/jmri/xml/decoders/esu/v4infoPane.xml
+For more examples see
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4infoPane.xml" target="_blank">
+    xml/decoders/esu/v4infoPane.xml</a>.
 <p>
 This provides only HTML5 support, so if something isn't displaying as you expect, 
 see if an approach using simpler HTML will work.
@@ -188,8 +190,9 @@ To tell DecoderPro that a decoder can do this, use an element like:
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre></code>
-For an example of where to position it, etc, see the 
-<a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+For an example of where to position it etc., see the 
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+    xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 
 <h4>Indexed CV Access</h4>
@@ -209,9 +212,9 @@ If it's false, the format is PI.CV or PI.SI.CV as used by ESU.
 If both this and the "access to high CV" capabilities are present, this one
 should be listed second.
 <p>
-For an example of where to position it, etc, see the 
-<a href="http://jmri.org/xml/decoders/ESU_LokSoundV4_0.xml">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
-
+For an example of where to position it etc., see the 
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+    xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 <h3 id="conditional">Conditional Decoder Definitions</h3>
 

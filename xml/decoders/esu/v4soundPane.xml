@@ -1,3 +1,20 @@
+<!-- 
+
+This pane uses "grid" layout and attributes to control appearance. For example:
+
+    The <grid ipadx="10" ipady="10">
+        lines set a default padding for every element in the grid.
+        
+    The <griditem gridx="0" gridy="xx" weightx="1" anchor="LINE_END">
+        lines cause the leftmost grid element to expand to fill the full column width
+        (weightx="1"), effectively right-justifying the whole table and also
+        right-justifying (anchor="LINE_END") the element within this cell.
+        
+    The <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
+        lines also cause this grid element to expand to occupy the whole table
+        first column, not just the first row.
+ 
+ -->
   <pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <grid ipadx="10" ipady="10">

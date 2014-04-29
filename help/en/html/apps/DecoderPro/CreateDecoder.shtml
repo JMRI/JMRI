@@ -21,7 +21,7 @@
 <div id="mainContent">
 
 
-<H2>DecoderPro User Guide - Creating A Custom Decoder File</h2>
+<h1>DecoderPro User Guide - Creating A Custom Decoder File</h1>
 
 <p>This page provides information on how the decoder definition
 files for the DecoderPro Symbolic Programmer work and how to create a new one.</p>
