@@ -62,6 +62,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                n.addContent(makeParameter("GUID", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getGlobalAddress())));
                n.addContent(makeParameter("name", node.getIdentifier()));
+               n.addContent(makeParameter("polled", node.getPoll()?"yes":"no"));
 
                // look for the next node
                node = (XBeeNode) xtc.getNode(index);
@@ -105,6 +106,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             // create node (they register themselves)
             XBeeNode node = new XBeeNode(PAN,address,GUID);
             node.setIdentifier(Identifier);
+
+            String polled = findParmValue(n,"polled");
+            node.setPoll(polled.equals("yes"));
 
             // Trigger initialization of this Node to reflect these parameters
             XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();

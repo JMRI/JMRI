@@ -36,7 +36,7 @@ public class XBeeNode extends IEEE802154Node {
 
     private String Identifier;
     private HashMap<Integer,NamedBean> pinObjects=null;  
-
+    private boolean isPolled;
 
     /**
      * Creates a new instance of XBeeNode
@@ -44,6 +44,7 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode() {
          Identifier="";
          pinObjects = new HashMap<Integer,NamedBean>(); 
+         isPolled = false;
     }
 
     public XBeeNode(byte pan[],byte user[], byte global[]) {
@@ -52,6 +53,7 @@ public class XBeeNode extends IEEE802154Node {
         if(log.isDebugEnabled()) log.debug("Created new node with panId: " +
                                 pan + " userId: " + user + " and GUID: " + global);
          pinObjects = new HashMap<Integer,NamedBean>(); 
+         isPolled = false;
     }
    
     /**
@@ -70,10 +72,18 @@ public class XBeeNode extends IEEE802154Node {
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
     public boolean getSensorsActive() {
-	for( Object bean: pinObjects.values() ) 
-            if( bean instanceof XBeeSensor) return true;
+        if(getPoll()) {
+	   for( Object bean: pinObjects.values() ) 
+               if( bean instanceof XBeeSensor) return true;
+        }
         return false;
     }
+
+    /*
+     *  get/set the isPolled attribute;
+     */
+    public void setPoll(boolean poll){ isPolled = poll; }
+    public boolean getPoll(){ return isPolled; }
     
     /**
      * Deal with a timeout in the transmission controller.

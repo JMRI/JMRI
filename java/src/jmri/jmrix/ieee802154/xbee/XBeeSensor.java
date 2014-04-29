@@ -94,8 +94,7 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                                   " ,D" + pin +
 				  ")");
         // Finally, request the current state from the layout.
-        //this.requestUpdateFromLayout();
-        //tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
+        this.requestUpdateFromLayout();
         tc.addXBeeListener(this);
     }
 
@@ -106,6 +105,10 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
        // Request the sensor status from the XBee Node this sensor is
        // attached to.  NOTE: This requests status for all sensor inputs
        // on the device.
+       XBeeMessage msg = XBeeMessage.getForceSampleMessage(node.getPreferedTransmitAddress());
+       // send the message
+       tc.sendXBeeMessage(msg,null);
+
     }
 
     /**
