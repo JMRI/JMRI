@@ -176,7 +176,7 @@ Other attributes to control the format of the are available and are documented i
   </li>
   <li>The "insets" attribute is specified as insets="top,left,bottom,right" where "top" etc. are integers.</li>
   <li>A "griditem" can span more than one grid cell. Attributes "gridwidth" and "gridheight" control this.</li>
-  <li>By default items clump together in the centre of a container. Attributes "weightx" and "weighty" can override this.</li>
+  <li>By default grid items clump together in the centre of a container. Attribute "weightx" can override this and left/right justify.</li>
 </ul>
 </p>
 <p>
