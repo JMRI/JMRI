@@ -1,30 +1,13 @@
-<!-- 
-
-This pane uses "grid" layout and attributes to control appearance. For example:
-
-    The <grid ipadx="10" ipady="10">
-        lines set a default padding for every element in the grid.
-        
-    The <griditem gridx="0" gridy="xx" weightx="1" anchor="LINE_END">
-        lines cause the leftmost grid element to expand to fill the full column width
-        (weightx="1"), effectively right-justifying the whole table and also
-        right-justifying (anchor="LINE_END") the element within this cell.
-        
-    The <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
-        lines also cause this grid element to expand to occupy the whole table
-        first column, not just the first row.
- 
- -->
   <pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
-      <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START"> <!-- gridheight for full-depth row heading, weightx for right-justified row -->
           <label label="Master Controls"/>
         </griditem>
-        <griditem gridx="1" gridy="0" gridwidth="REMAINDER" anchor="LINE_START">
+        <griditem gridx="1" gridy="0" gridwidth="REMAINDER" anchor="LINE_START"> <!-- gridwidth for full-width row -->
           <display item="ESU V4 Extra Miscellaneous Option 7"/>
         </griditem>
-        <griditem gridx="1" gridy="1" gridwidth="REMAINDER" anchor="LINE_START">
+        <griditem gridx="1" gridy="1" gridwidth="REMAINDER" anchor="LINE_START"> <!-- gridwidth for full-width row -->
           <display item="Sound Select 1" layout="above"/>
           <display item="Sound Select 2" layout="above"/>
           <display item="Sound Select 3" layout="above"/>
@@ -64,7 +47,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
         </griditem>
       </grid>
       <separator/>
-      <grid ipadx="10" ipady="10">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
         <griditem gridx="3" gridy="0">
           <display item="Sound Brake On" layout="above" label=""/>
           <display item="Sound Brake On" format="hslider" layout="above" label="Sound on threshold"/>
@@ -73,7 +56,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Brake Off" layout="above" label=""/>
           <display item="Sound Brake Off" format="hslider" layout="above" label="Sound off threshold"/>
         </griditem>
-        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START"> <!-- gridheight for full-depth row heading, weightx for right-justified row -->
           <soundlabel num="26"/>
         </griditem>
         <griditem  gridx="1" gridy="1">
@@ -93,7 +76,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
         </griditem>
       </grid>
       <separator/>
-      <grid ipadx="10" ipady="10">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
         <griditem gridx="3" gridy="0">
           <display item="Sound Random Min" layout="above" label=""/>
           <display item="Sound Random Min" format="hslider" layout="above" label="Min interval between sounds"/>
@@ -102,7 +85,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Random Max" layout="above" label=""/>
           <display item="Sound Random Max" format="hslider" layout="above" label="Max interval between sounds"/>
         </griditem>
-        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_END">
+        <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START"> <!-- gridheight for full-depth row heading, weightx for right-justified row -->
           <soundlabel num="25"/>
         </griditem>
         <griditem  gridx="1" gridy="1">
@@ -122,8 +105,8 @@ This pane uses "grid" layout and attributes to control appearance. For example:
         </griditem>
       </grid>
       <separator/>
-      <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_START"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="27"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="0">
@@ -143,22 +126,29 @@ This pane uses "grid" layout and attributes to control appearance. For example:
         </griditem>
       </grid>
       <separator/>
-      <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="0">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="0" gridwidth="REMAINDER" anchor="LINE_START"> <!-- gridwidth for full-width heading -->
+          <label label="Sound Slots"/>
+        </griditem>
+        <griditem gridx="0" gridy="1">
+          <column> <!-- character-based indent -->
+            <label label="    "/>
+          </column>
           <column>
-            <label label="Sound Slots"/>
-            <label label=" "/>
             <label label="Due to the flexible and free-from design of LokSound Decoders, it is possible"/>
             <label label="for project designers to assign sounds to arbitrary sound slots."/>
             <label label=" "/>
             <label label="Any sound slot labels shown below are only a guide from ESU documentation and"/>
             <label label="may not be correct for the particular sound project loaded into your loco decoder."/>
+            <label label=" "/>
           </column>
         </griditem>
+        <griditem gridx="1" gridy="1" ipadx="0" weightx="1"> <!-- weightx expands column to left-justify row -->
+            <label label=""/>
+        </griditem>
       </grid>
-      <separator/>
-      <grid ipadx="10" ipady="10">
-        <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+      <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
+        <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="1"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="1">
@@ -176,7 +166,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 1" layout="above" label=""/>
           <display item="Sound Max Speed 1" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="2"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="2">
@@ -194,7 +184,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 2" layout="above" label=""/>
           <display item="Sound Max Speed 2" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="3" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="3" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="3"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="3">
@@ -212,7 +202,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 3" layout="above" label=""/>
           <display item="Sound Max Speed 3" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="4" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="4" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="4"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="4">
@@ -230,7 +220,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 4" layout="above" label=""/>
           <display item="Sound Max Speed 4" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="5" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="5" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="5"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="5">
@@ -248,7 +238,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 5" layout="above" label=""/>
           <display item="Sound Max Speed 5" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="6" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="6" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="6"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="6">
@@ -266,7 +256,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 6" layout="above" label=""/>
           <display item="Sound Max Speed 6" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="7" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="7" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="7"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="7">
@@ -284,7 +274,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 7" layout="above" label=""/>
           <display item="Sound Max Speed 7" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="8" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="8" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="8"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="8">
@@ -302,7 +292,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 8" layout="above" label=""/>
           <display item="Sound Max Speed 8" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="9" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="9" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="9"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="9">
@@ -320,7 +310,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 9" layout="above" label=""/>
           <display item="Sound Max Speed 9" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="10" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="10" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="10"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="10">
@@ -338,7 +328,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 10" layout="above" label=""/>
           <display item="Sound Max Speed 10" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="11" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="11" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="11"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="11">
@@ -356,7 +346,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 11" layout="above" label=""/>
           <display item="Sound Max Speed 11" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="12" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="12" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="12"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="12">
@@ -374,7 +364,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 12" layout="above" label=""/>
           <display item="Sound Max Speed 12" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="13" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="13" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="13"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="13">
@@ -392,7 +382,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 13" layout="above" label=""/>
           <display item="Sound Max Speed 13" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="14" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="14" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="14"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="14">
@@ -410,7 +400,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 14" layout="above" label=""/>
           <display item="Sound Max Speed 14" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="15" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="15" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="15"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="15">
@@ -428,7 +418,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 15" layout="above" label=""/>
           <display item="Sound Max Speed 15" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="16" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="16" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="16"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="16">
@@ -446,7 +436,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 16" layout="above" label=""/>
           <display item="Sound Max Speed 16" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="17" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="17" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="17"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="17">
@@ -464,7 +454,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 17" layout="above" label=""/>
           <display item="Sound Max Speed 17" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="18" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="18" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="18"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="18">
@@ -482,7 +472,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 18" layout="above" label=""/>
           <display item="Sound Max Speed 18" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="19" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="19" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="19"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="19">
@@ -500,7 +490,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 19" layout="above" label=""/>
           <display item="Sound Max Speed 19" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="20" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="20" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="20"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="20">
@@ -518,7 +508,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 20" layout="above" label=""/>
           <display item="Sound Max Speed 20" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="21" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="21" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="21"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="21">
@@ -536,7 +526,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 21" layout="above" label=""/>
           <display item="Sound Max Speed 21" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="22" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="22" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="22"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="22">
@@ -554,7 +544,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 22" layout="above" label=""/>
           <display item="Sound Max Speed 22" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="23" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="23" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="23"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="23">
@@ -572,7 +562,7 @@ This pane uses "grid" layout and attributes to control appearance. For example:
           <display item="Sound Max Speed 23" layout="above" label=""/>
           <display item="Sound Max Speed 23" format="hslider" layout="above"/>
         </griditem>
-        <griditem gridx="0" gridy="24" weightx="1" anchor="LINE_END">
+        <griditem gridx="0" gridy="24" weightx="1" anchor="LINE_END"> <!-- weightx expands column to right-justify row -->
           <soundlabel num="24"/>
         </griditem>
         <griditem gridx="RELATIVE" gridy="24">

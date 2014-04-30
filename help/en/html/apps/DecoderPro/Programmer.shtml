@@ -172,9 +172,11 @@ Other attributes to control the format of the are available and are documented i
   <li>Attributes of "griditem" apply to only that item and override any equivalent attribute of "grid".</li>
   <li>Both numeric and named constant values (as specified by the
       <a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
-          GridBagLayout Tutorial</a>) can be used.
+          documentation</a>) can be used.
   </li>
   <li>The "insets" attribute is specified as insets="top,left,bottom,right" where "top" etc. are integers.</li>
+  <li>A "griditem" can span more than one grid cell. Attributes "gridwidth" and "gridheight" control this.</li>
+  <li>By default items clump together in the centre of a container. Attributes "weightx" and "weighty" can override this.</li>
 </ul>
 </p>
 <p>
