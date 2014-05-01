@@ -45,6 +45,10 @@
     <decVal max="31"/>
     <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.262" default="31" item="ESU V4 Function Output 1 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.263" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -55,6 +59,10 @@
   <variable label="Minimum driving heat" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -110,6 +118,10 @@
     <qualifier><variableref>Headlight [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.264" default="0" item="ESU V4 Function Output 1 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Rearlight [1] Mode" CV="16.0.267" default="1" item="ESU V4 Function Output 3 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -156,6 +168,10 @@
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.270" default="31" item="ESU V4 Function Output 3 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.271" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -166,6 +182,10 @@
   <variable label="Minimum driving heat" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -221,6 +241,10 @@
     <qualifier><variableref>Rearlight [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.272" default="0" item="ESU V4 Function Output 3 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX1 [1] Mode" CV="16.0.275" default="1" item="ESU V4 Function Output 5 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -267,6 +291,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.278" default="31" item="ESU V4 Function Output 5 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.279" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -277,6 +305,10 @@
   <variable label="Minimum driving heat" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -332,6 +364,10 @@
     <qualifier><variableref>AUX1 [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.280" default="0" item="ESU V4 Function Output 5 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX2 [1] Mode" CV="16.0.283" default="1" item="ESU V4 Function Output 7 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -378,6 +414,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.286" default="31" item="ESU V4 Function Output 7 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.287" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -388,6 +428,10 @@
   <variable label="Minimum driving heat" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -443,6 +487,10 @@
     <qualifier><variableref>AUX2 [1] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.288" default="0" item="ESU V4 Function Output 7 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX3 Mode" CV="16.0.291" default="1" item="ESU V4 Function Output 9 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -489,6 +537,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.294" default="31" item="ESU V4 Function Output 9 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.295" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -499,6 +551,10 @@
   <variable label="Minimum driving heat" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -554,6 +610,10 @@
     <qualifier><variableref>AUX3 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.296" default="0" item="ESU V4 Function Output 9 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX4 Mode" CV="16.0.299" default="1" item="ESU V4 Function Output 10 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -600,6 +660,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.302" default="31" item="ESU V4 Function Output 10 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.303" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -610,6 +674,10 @@
   <variable label="Minimum driving heat" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -665,6 +733,10 @@
     <qualifier><variableref>AUX4 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.304" default="0" item="ESU V4 Function Output 10 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variables exclude="LPfxV4">
     <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU V4 Function Output 11 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -712,6 +784,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.310" default="31" item="ESU V4 Function Output 11 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.311" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -722,6 +798,10 @@
     <variable label="Minimum driving heat" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -777,6 +857,10 @@
       <qualifier><variableref>AUX5 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX5 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.312" default="0" item="ESU V4 Function Output 11 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="AUX6 Mode" CV="16.0.315" default="1" item="ESU V4 Function Output 12 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
@@ -823,6 +907,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.318" default="31" item="ESU V4 Function Output 12 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.319" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -833,6 +921,10 @@
     <variable label="Minimum driving heat" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -888,6 +980,10 @@
       <qualifier><variableref>AUX6 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX6 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.320" default="0" item="ESU V4 Function Output 12 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="AUX7 Mode" CV="16.0.323" default="1" item="ESU V4 Function Output 13 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
@@ -934,6 +1030,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.326" default="31" item="ESU V4 Function Output 13 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.327" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -944,6 +1044,10 @@
     <variable label="Minimum driving heat" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -999,6 +1103,10 @@
       <qualifier><variableref>AUX7 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX7 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.328" default="0" item="ESU V4 Function Output 13 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="AUX8 Mode" CV="16.0.331" default="1" item="ESU V4 Function Output 14 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
@@ -1045,6 +1153,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.334" default="31" item="ESU V4 Function Output 14 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.335" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -1055,6 +1167,10 @@
     <variable label="Minimum driving heat" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -1110,6 +1226,10 @@
       <qualifier><variableref>AUX8 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX8 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.336" default="0" item="ESU V4 Function Output 14 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="AUX9 Mode" CV="16.0.339" default="1" item="ESU V4 Function Output 15 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
@@ -1156,6 +1276,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.342" default="31" item="ESU V4 Function Output 15 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.343" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -1166,6 +1290,10 @@
     <variable label="Minimum driving heat" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -1221,6 +1349,10 @@
       <qualifier><variableref>AUX9 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX9 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.344" default="0" item="ESU V4 Function Output 15 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="AUX10 Mode" CV="16.0.347" default="1" item="ESU V4 Function Output 16 effect generated" mask="XXXVVVVV">
       <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
@@ -1267,6 +1399,10 @@
       <decVal max="31"/>
       <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
     </variable>
+    <variable label="Duration (speed)" CV="16.0.350" default="31" item="ESU V4 Function Output 16 Slider 17" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
     <variable label="Special Function CV 1" CV="16.0.351" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
@@ -1277,6 +1413,10 @@
     <variable label="Minimum driving heat" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 15" mask="XXXXVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+    </variable>
+    <variable label="Position A" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 18" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
     </variable>
     <variable label="Fan power" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 9" mask="XXXXVVVV">
       <decVal max="31"/>
@@ -1332,6 +1472,10 @@
       <qualifier><variableref>AUX10 Mode</variableref><relation>ge</relation><value>16</value></qualifier>
       <qualifier><variableref>AUX10 Mode</variableref><relation>le</relation><value>17</value></qualifier>
     </variable>
+    <variable label="Position B" CV="16.0.352" default="0" item="ESU V4 Function Output 16 Slider 19" mask="XXVVVVVV">
+      <decVal max="63"/>
+      <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+    </variable>
   </variables>
   <variable label="Headlight [2] Mode" CV="16.0.355" default="1" item="ESU V4 Function Output 2 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -1379,6 +1523,10 @@
     <decVal max="31"/>
     <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.358" default="31" item="ESU V4 Function Output 2 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.359" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -1389,6 +1537,10 @@
   <variable label="Minimum driving heat" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -1444,6 +1596,10 @@
     <qualifier><variableref>Headlight [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.360" default="0" item="ESU V4 Function Output 2 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Rearlight [2] Mode" CV="16.0.363" default="1" item="ESU V4 Function Output 4 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -1490,6 +1646,10 @@
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.366" default="31" item="ESU V4 Function Output 4 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.367" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -1500,6 +1660,10 @@
   <variable label="Minimum driving heat" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -1555,6 +1719,10 @@
     <qualifier><variableref>Rearlight [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.368" default="0" item="ESU V4 Function Output 4 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX1 [2] Mode" CV="16.0.371" default="1" item="ESU V4 Function Output 6 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -1601,6 +1769,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.374" default="31" item="ESU V4 Function Output 6 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.375" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -1611,6 +1783,10 @@
   <variable label="Minimum driving heat" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -1666,6 +1842,10 @@
     <qualifier><variableref>AUX1 [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
   </variable>
+  <variable label="Position B" CV="16.0.376" default="0" item="ESU V4 Function Output 6 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="AUX2 [2] Mode" CV="16.0.379" default="1" item="ESU V4 Function Output 8 effect generated" mask="XXXVVVVV">
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
   </variable>
@@ -1712,6 +1892,10 @@
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
   </variable>
+  <variable label="Duration (speed)" CV="16.0.382" default="31" item="ESU V4 Function Output 8 Slider 17" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
+  </variable>
   <variable label="Special Function CV 1" CV="16.0.383" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
@@ -1722,6 +1906,10 @@
   <variable label="Minimum driving heat" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 15" mask="XXXXVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>24</value></qualifier>
+  </variable>
+  <variable label="Position A" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 18" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
   <variable label="Fan power" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 9" mask="XXXXVVVV">
     <decVal max="31"/>
@@ -1776,5 +1964,9 @@
     <decVal/>
     <qualifier><variableref>AUX2 [2] Mode</variableref><relation>ge</relation><value>16</value></qualifier>
     <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+  </variable>
+  <variable label="Position B" CV="16.0.384" default="0" item="ESU V4 Function Output 8 Slider 19" mask="XXVVVVVV">
+    <decVal max="63"/>
+    <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
   </variable>
 </variables>

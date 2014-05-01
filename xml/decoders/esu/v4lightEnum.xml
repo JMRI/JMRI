@@ -76,9 +76,11 @@
           </enumChoice>
           <enumChoice choice="Trigger smoke chuff" value="25">
           </enumChoice>
-          <enumChoice choice="Coupler function" value="28">
-            <choice>Coupler function</choice> <!-- not in LokSoundSelect? -->
-            <choice xml:lang="it">Funzione Gancio</choice>
+          <enumChoice choice="Servo" value="27">
+          </enumChoice>
+          <enumChoice choice="Coupler" value="28">
+            <choice>Coupler</choice>
+            <choice xml:lang="it">Gancio</choice>
           </enumChoice>
           <enumChoice choice="Roco coupler" value="29">
           </enumChoice>

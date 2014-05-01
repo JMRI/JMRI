@@ -20,8 +20,10 @@
       <separator/>
       <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
       <label label=" "/>
-      <label label="LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added. Also"/>
-      <label label="many corrections and improvements since JMRI 3.7.2."/>
+      <label label="Servo Function Output has been added. Also many corrections and improvements"/>
+      <label label="since JMRI 3.7.4."/>
+      <label label=" "/>
+      <label label="LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added."/>
       <label label=" "/>
       <label label="There is now an option to import CV value list files created by LokProgrammer."/>
       <label label="(File menu when a roster entry is open.)"/>
