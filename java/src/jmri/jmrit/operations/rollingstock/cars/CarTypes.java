@@ -4,8 +4,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
@@ -178,18 +180,13 @@ public class CarTypes {
 	 */
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
-			String[] types = getNames();
-			int length = MIN_NAME_LENGTH;
-			for (int i = 0; i < types.length; i++) {
-				String type[] = types[i].split("-");
-				if (type[0].length() > length)
-					length = type[0].length();
+			maxNameLength = MIN_NAME_LENGTH;
+			for (String name : getNames()) {
+				if (name.length() > maxNameLength)
+					maxNameLength = name.length();
 			}
-			maxNameLength = length;
-			return length;
-		} else {
-			return maxNameLength;
 		}
+		return maxNameLength;
 	}
 
 	private int maxNameLengthSubType = 0;

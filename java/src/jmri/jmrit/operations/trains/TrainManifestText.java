@@ -18,6 +18,7 @@ public class TrainManifestText {
 	private static String departureTime = Bundle.getMessage("WorkDepartureTime");
 	private static String arrivalTime = Bundle.getMessage("WorkArrivalTime");
 	private static String noScheduledWorkAt = Bundle.getMessage("NoScheduledWorkAt");
+	private static String noScheduledWorkAtRouteComment = Bundle.getMessage("NoScheduledWorkAtWithRouteComment");
 	private static String departTime = Bundle.getMessage("departureTime");	// this get's appended to "no scheduled work at"
 	private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
 	private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
@@ -82,6 +83,14 @@ public class TrainManifestText {
 
 	public static void setStringNoScheduledWork(String s) {
 		noScheduledWorkAt = s;
+	}
+	
+	public static String getStringNoScheduledWorkWithRouteComment() {
+		return noScheduledWorkAtRouteComment;
+	}
+
+	public static void setStringNoScheduledWorkWithRouteComment(String s) {
+		noScheduledWorkAtRouteComment = s;
 	}
 
 	public static String getStringDepartTime() {
@@ -217,6 +226,10 @@ public class TrainManifestText {
 			e.addContent(values = new Element(Xml.NO_SCHEDULED_WORK));
 			values.setAttribute(Xml.TEXT, getStringNoScheduledWork());
 		}
+		if (!getStringNoScheduledWorkWithRouteComment().equals(Bundle.getMessage("NoScheduledWorkAtWithRouteComment"))) {
+			e.addContent(values = new Element(Xml.NO_SCHEDULED_WORK_ROUTE_COMMENT));
+			values.setAttribute(Xml.TEXT, getStringNoScheduledWorkWithRouteComment());
+		}
 		if (!getStringDepartTime().equals(Bundle.getMessage("departureTime"))) {
 			e.addContent(values = new Element(Xml.DEPART_TIME));
 			values.setAttribute(Xml.TEXT, getStringDepartTime());
@@ -310,6 +323,11 @@ public class TrainManifestText {
 		if (emts.getChild(Xml.NO_SCHEDULED_WORK) != null) {
 			if ((a = emts.getChild(Xml.NO_SCHEDULED_WORK).getAttribute(Xml.TEXT)) != null) {
 				setStringNoScheduledWork(a.getValue());
+			}
+		}
+		if (emts.getChild(Xml.NO_SCHEDULED_WORK_ROUTE_COMMENT) != null) {
+			if ((a = emts.getChild(Xml.NO_SCHEDULED_WORK_ROUTE_COMMENT).getAttribute(Xml.TEXT)) != null) {
+				setStringNoScheduledWorkWithRouteComment(a.getValue());
 			}
 		}
 		if (emts.getChild(Xml.DEPART_TIME) != null) {

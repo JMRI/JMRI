@@ -51,6 +51,8 @@ import org.slf4j.LoggerFactory;
  */
 
 public class CommonConductorYardmasterFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+	
+	protected static final String Tab = "    ";	// used to space out headers
 
 	protected Location _location = null;
 	protected Train _train = null;
@@ -239,6 +241,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		pickupPane.setVisible(false);
 		setoutPane.setVisible(false);
 		locoPane.setVisible(false);
+		pPickupLocos.setVisible(false);
+		pSetoutLocos.setVisible(false);
 		movePane.setVisible(false);
 		
 		pTrainRouteLocationComment.setVisible(false);
@@ -317,11 +321,20 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	}
 	
 	protected void updateLocoPanes(RouteLocation rl) {
+		if (Setup.isPrintHeadersEnabled()) {
+			JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
+			setLabelFont(header);
+			pPickupLocos.add(header);
+			JLabel headerDrop = new JLabel(Tab + trainCommon.getDropEngineHeader());
+			setLabelFont(headerDrop);
+			pSetoutLocos.add(headerDrop);
+		}
 		// check for locos
 		List<Engine> engList = engManager.getByTrainBlockingList(_train);
 		for (Engine engine : engList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
 				locoPane.setVisible(true);
+				pPickupLocos.setVisible(true);
 				rollingStock.add(engine);
 				engine.addPropertyChangeListener(this);
 				JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
@@ -330,6 +343,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			}
 			if (engine.getRouteDestination() == rl) {
 				locoPane.setVisible(true);
+				pSetoutLocos.setVisible(true);
 				rollingStock.add(engine);
 				engine.addPropertyChangeListener(this);
 				JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
@@ -348,6 +362,14 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	 * "rollingStock" with the prefix "p", "s" or "m" and the car's unique id.
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
+		if (Setup.isPrintHeadersEnabled()) {
+			JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest));
+			setLabelFont(header);
+			pPickups.add(header);
+			header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest));
+			setLabelFont(header);
+			pSetouts.add(header);
+		}
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
 		List<Car> carList = carManager.getByTrainDestinationList(_train);

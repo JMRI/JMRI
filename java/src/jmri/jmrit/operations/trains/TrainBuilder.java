@@ -210,8 +210,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { _train.getRoute().getName() }));
 			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			List<Track> slStage = l.getTrackByMovesList(Track.STAGING);
-			if (slStage.size() > 0 && i != 0 && i != _routeList.size() - 1) {
+			if (l.getLocationOps() == Location.STAGING && i != 0 && i != _routeList.size() - 1) {
 				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocStaging"), new Object[] { rl
 						.getName() }));
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
@@ -1690,6 +1689,11 @@ public class TrainBuilder extends TrainCommon {
 						_train.getRoute().getName(), rl.getId(), rl.getName() }));
 				continue;
 			}
+			// no pick ups from staging if at the end of the train's route
+			if (routeIndex > 0 && rl.getLocation().getLocationOps() == Location.STAGING) {
+				log.debug("No pick ups from terminus staging");
+				continue;
+			}
 			// the next check provides a build report message if there's an issue with the train direction
 			if (!checkPickUpTrainDirection(rl)) {
 				continue;
@@ -2857,12 +2861,6 @@ public class TrainBuilder extends TrainCommon {
 							car.toString(), car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName()); 
 			return false;
 		}
-		// TODO, not sure if we really need to try the terminate track, attempt to generate car load to staging was done
-		// earlier
-		// first try this train's termination track if one exists
-//		if (train.isAllowThroughCarsEnabled()
-//				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
-//			return true;
 		List<Track> tracks = locationManager.getTracks(Track.STAGING);
 		log.debug("Found {} staging tracks for load generation", tracks.size());
 		// list of locations that can't be reached by the router
@@ -2873,13 +2871,19 @@ public class TrainBuilder extends TrainCommon {
 			Track track = tracks.get(rnd);
 			tracks.remove(track);
 			log.debug("Try staging track ({}, {})", track.getLocation().getName(), track.getName());
-			// find a staging track that isn't at the departure or terminal
-			if (track.getLocation() == _departLocation)
+			// find a staging track that isn't at the departure
+			if (track.getLocation() == _departLocation && track.getLocation() != _terminateLocation) {
+				log.debug("Don't use departure location ({})", track.getLocation().getName());
 				continue;
-			if (!_train.isAllowThroughCarsEnabled() && track.getLocation() == _terminateLocation)
+			}
+			if (!_train.isAllowThroughCarsEnabled() && track.getLocation() == _terminateLocation) {
+				log.debug("Through cars to location ({}) not allowed", track.getLocation().getName());
 				continue;
-			if (locationsNotReachable.contains(track.getLocation()))
+			}
+			if (locationsNotReachable.contains(track.getLocation())) {
+				log.debug("Location ({}) not reachable", track.getLocation().getName());
 				continue;
+			}
 			// the following method sets the load generated from staging boolean
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
 				// try sending car to this destination, but not staging track
@@ -2899,6 +2903,11 @@ public class TrainBuilder extends TrainCommon {
 				locationsNotReachable.add(track.getLocation()); // couldn't route to this staging location
 			}
 		}
+		// No staging tracks reachable, try the track the train is terminating to
+		if (_train.isAllowThroughCarsEnabled()
+				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack))
+			return true;
+
 		return false;
 	}
 
@@ -3643,6 +3652,9 @@ public class TrainBuilder extends TrainCommon {
 			// don't delay adding a caboose, passenger car, or car with FRED
 			if (car.isCaboose() || car.isPassenger() || car.hasFred())
 				return false;
+			// no later pick up if car is departing staging
+			if (car.getLocation().getLocationOps() == Location.STAGING)
+				return false;
 			if (!checkPickUpTrainDirection(car, rld)) {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterDirection"),
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
@@ -3658,7 +3670,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { car.toString(), rld.getName(), rld.getId() }));
 				return false;
 			}
-			log.debug("Car ({}) can be picked up later!", car.toString());
+//			log.debug("Car ({}) can be picked up later!", car.toString());
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterOkay"),
 					new Object[] { car.toString(), rld.getName(), rld.getId() }));
 			return true;

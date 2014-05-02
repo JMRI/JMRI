@@ -406,22 +406,19 @@ public class CarLoads {
 
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
-			int length = MIN_NAME_LENGTH;
+			maxNameLength = MIN_NAME_LENGTH;
 			Enumeration<String> en = list.keys();
 			while (en.hasMoreElements()) {
 				String key = en.nextElement();
 				List<CarLoad> loads = list.get(key);
-				for (int j = 0; j < loads.size(); j++) {
-					if (loads.get(j).getName().length() > length) {
-						length = loads.get(j).getName().length();
+				for (CarLoad load : loads) {
+					if (load.getName().length() > maxNameLength) {
+						maxNameLength = load.getName().length();
 					}
 				}
 			}
-			maxNameLength = length;
-			return length;
-		} else {
-			return maxNameLength;
 		}
+		return maxNameLength;
 	}
 
 	private List<CarLoad> getSortedList(String type) {

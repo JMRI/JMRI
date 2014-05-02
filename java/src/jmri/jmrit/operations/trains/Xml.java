@@ -146,6 +146,7 @@ public class Xml {
 	static final String WORK_DEPARTURE_TIME = "workDepartureTime"; // NOI18N
 	static final String WORK_ARRIVAL_TIME = "workArrivalTime"; // NOI18N
 	static final String NO_SCHEDULED_WORK = "noScheduledWork"; // NOI18N
+	static final String NO_SCHEDULED_WORK_ROUTE_COMMENT = "noScheduledWorkRouteComment"; // NOI18N
 	static final String DEPART_TIME = "departTime"; // NOI18N
 	static final String TRAIN_DEPARTS_CARS = "trainDepartsCars"; // NOI18N
 	static final String TRAIN_DEPARTS_LOADS = "trainDepartsLoads"; // NOI18N

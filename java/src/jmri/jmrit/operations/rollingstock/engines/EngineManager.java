@@ -142,19 +142,28 @@ public class EngineManager extends RollingStockManager{
        		box.addItem(name);
     }
     
-    public List<String> getConsistNameList(){
-    	String[] arr = new String[_consistHashTable.size()];
-    	List<String> out = new ArrayList<String>();
-       	Enumeration<String> en = _consistHashTable.keys();
-       	int i=0;
-    	while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-    	}
-        jmri.util.StringUtil.sort(arr);
-        for (i=0; i<arr.length; i++) out.add(arr[i]);
-    	return out;
-    }
+	public List<String> getConsistNameList() {
+		String[] names = new String[_consistHashTable.size()];
+		List<String> out = new ArrayList<String>();
+		Enumeration<String> en = _consistHashTable.keys();
+		int i = 0;
+		while (en.hasMoreElements()) {
+			names[i++] = en.nextElement();
+		}
+		jmri.util.StringUtil.sort(names);
+		for (String name : names)
+			out.add(name);
+		return out;
+	}
+	
+	public int getConsistMaxNameLength() {
+		int maxLength = 0;
+		for (String name : getConsistNameList()) {
+			if (name.length() > maxLength)
+				maxLength = name.length();
+		}
+		return maxLength;
+	}
     
     /**
      * Sort by engine model

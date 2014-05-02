@@ -42,6 +42,7 @@ public class EditManifestTextFrame extends OperationsFrame {
 	JTextField scheduledWorkDepartureTextField = new JTextField(60);
 	JTextField scheduledWorkArrivalTextField = new JTextField(60);
 	JTextField noScheduledWorkAtTextField = new JTextField(60);
+	JTextField noScheduledWorkAtWithRouteCommentTextField = new JTextField(60);
 	JTextField departTimeTextField = new JTextField(60);
 	JTextField trainDepartsCarsTextField = new JTextField(60);
 	JTextField trainDepartsLoadsTextField = new JTextField(60);
@@ -114,6 +115,12 @@ public class EditManifestTextFrame extends OperationsFrame {
 		pNoScheduledWorkAt.add(noScheduledWorkAtTextField);
 		noScheduledWorkAtTextField.setText(TrainManifestText.getStringNoScheduledWork());
 		pManifest.add(pNoScheduledWorkAt);
+		
+		JPanel pNoScheduledWorkAtWithRouteComment = new JPanel();
+		pNoScheduledWorkAtWithRouteComment.setBorder(BorderFactory.createTitledBorder(rb.getString("NoScheduledWorkAtWithRouteComment")));
+		pNoScheduledWorkAtWithRouteComment.add(noScheduledWorkAtWithRouteCommentTextField);
+		noScheduledWorkAtWithRouteCommentTextField.setText(TrainManifestText.getStringNoScheduledWorkWithRouteComment());
+		pManifest.add(pNoScheduledWorkAtWithRouteComment);
 		
 		JPanel pDepartTime = new JPanel();
 		pDepartTime.setBorder(BorderFactory.createTitledBorder(rb.getString("departureTime")));
@@ -244,6 +251,7 @@ public class EditManifestTextFrame extends OperationsFrame {
 			scheduledWorkDepartureTextField.setText(rb.getString("WorkDepartureTime"));
 			scheduledWorkArrivalTextField.setText(rb.getString("WorkArrivalTime"));
 			noScheduledWorkAtTextField.setText(rb.getString("NoScheduledWorkAt"));
+			noScheduledWorkAtWithRouteCommentTextField.setText(rb.getString("NoScheduledWorkAtWithRouteComment"));
 			departTimeTextField.setText(rb.getString("departureTime"));
 			trainDepartsCarsTextField.setText(rb.getString("TrainDepartsCars"));
 			trainDepartsLoadsTextField.setText(rb.getString("TrainDepartsLoads"));
@@ -268,6 +276,7 @@ public class EditManifestTextFrame extends OperationsFrame {
 			TrainManifestText.setStringWorkDepartureTime(scheduledWorkDepartureTextField.getText());
 			TrainManifestText.setStringWorkArrivalTime(scheduledWorkArrivalTextField.getText());
 			TrainManifestText.setStringNoScheduledWork(noScheduledWorkAtTextField.getText());
+			TrainManifestText.setStringNoScheduledWorkWithRouteComment(noScheduledWorkAtWithRouteCommentTextField.getText());
 			TrainManifestText.setStringDepartTime(departTimeTextField.getText());
 			TrainManifestText.setStringTrainDepartsCars(trainDepartsCarsTextField.getText());
 			TrainManifestText.setStringTrainDepartsLoads(trainDepartsLoadsTextField.getText());
