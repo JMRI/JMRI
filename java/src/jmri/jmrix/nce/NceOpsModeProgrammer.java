@@ -14,6 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
+ * @author kcameron Copyright (C) 2014
  * @version			$Revision$
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
