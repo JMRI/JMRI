@@ -153,7 +153,7 @@ maintaining alignment even if a particular element is absent. There are two elem
   </ul>
   <li><dfn>griditem</dfn> - Create a grid item (within a "grid" element):</li>
   <ul>
-    <li>It must have "gridx" and "gridy" attributes.</li>
+    <li>It should have "gridx" and "gridy" attributes.</li>
     <li>It may also have one or more optional attributes.</li>
     <li>It must contain one or more elements,
       which can be any combination of any of the other elements listed above, including "row", "column", or even another "grid".</li>
@@ -177,6 +177,14 @@ Other attributes to control the format of the are available and are documented i
   <li>The "insets" attribute is specified as insets="top,left,bottom,right" where "top" etc. are integers.</li>
   <li>A "griditem" can span more than one grid cell. Attributes "gridwidth" and "gridheight" control this.</li>
   <li>By default grid items clump together in the centre of a container. Attribute "weightx" can override this and left/right justify.</li>
+  <li>It is possible in some circumstances to omit either or both of "gridx" and "gridy" from a "griditem" and
+    specify a default value in "grid". See
+    <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4fnOutPane.xml" target="_blank">
+        xml/decoders/esu/v4fnOutPane.xml</a>
+        for an example of this usage to generate a simple single-column right-aligned grid.
+        (However if you are not careful with use of this technique and/or the "RELATIVE" constant, results can be bizarre.)
+  </li>
+  <li>Unfortunately "ipadx", "ipady" and "insets" allocate space even if the enclosed display variable(s) are all unused or fail qualification.</li>
 </ul>
 </p>
 <p>
