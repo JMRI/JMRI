@@ -194,6 +194,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             	return null;
     		// not supported by USB connected to SB3 or PH
     		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+    				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+    	    				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
     				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
     			log.error("attempt to send unsupported binary command EXIT_PROG_CMD to NCE USB");
 //    			return null;
@@ -285,6 +287,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getReadRegister(NceTrafficController tc, int reg) {
 		// not supported by USB connected to SB3 or PH
 		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
 				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
 			log.error("attempt to send unsupported binary command READ_REG_CMD to NCE USB");
 			return null;
@@ -314,6 +318,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getWriteRegister(NceTrafficController tc, int reg, int val) {
 		// not supported by USB connected to SB3 or PH
 		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
 				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
 			log.error("attempt to send unsupported binary command WRITE_REG_CMD to NCE USB");
 			return null;
@@ -346,6 +352,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getReadDirectCV(NceTrafficController tc, int cv) {
 		// not supported by USB connected to SB3 or PH
 		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
 				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
 			log.error("attempt to send unsupported binary command READ_DIR_CV_CMD to NCE USB");
 			return null;
@@ -368,6 +376,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getWriteDirectCV(NceTrafficController tc, int cv, int val) {
 		// not supported by USB connected to SB3 or PH
 		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
 				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
 			log.error("attempt to send unsupported binary command WRITE_DIR_CV_CMD to NCE USB");
 			return null;
