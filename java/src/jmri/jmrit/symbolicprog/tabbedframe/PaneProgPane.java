@@ -62,6 +62,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
+ * @author    Dave Heap   Copyright (C) 2014
  * @version   $Revision$
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
