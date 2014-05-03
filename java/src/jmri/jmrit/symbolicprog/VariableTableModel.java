@@ -943,6 +943,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return false;
     }
 
+    /**
+     * Returns the (first) variable that matches a given
+     * name string.  Searches first for "item", the true name,
+     * but if none found will attempt to find a matching "label".
+     * In that case, only the default language is checked.
+     */
     public VariableValue findVar(String name) {
         for (int i=0; i<getRowCount(); i++) {
             if (name.equals(getItem(i)))  return getVariable(i);
