@@ -134,4 +134,28 @@ Eventual goal is to update schema to enforce regular structure:
     pane element:
         remove name attribute in favor of elements
         remove tooltip attribute from display element in favor of elements
-        
+       
+       
+Eventually want a constraint that qualifier variablerefs are present, but how to get that?
+Pane files don't know about the primary decoder file.  (So need it programmatic? Even then,
+matching problematic)
+
+      <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
+        <xs:unique name="UniqueVariableItemAttribute2">
+          <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
+          <xs:selector xpath=".//variable"/> 
+          <xs:field xpath="@item"/>           
+          <xs:field xpath="@include"/>           
+          <xs:field xpath="@exclude"/>           
+        </xs:unique>
+
+        <xs:keyref name="QualifierKeyRef2" refer="UniqueVariableItemAttribute2">
+          <xs:selector xpath=".//variable/qualifier"/>
+          <xs:field xpath="variableref" />
+        </xs:keyref>
+
+      </xs:element>
+
+The above doesn't work because QualifierKeyRef2 needs to have three fields.
+
+
