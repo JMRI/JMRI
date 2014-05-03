@@ -1520,7 +1520,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 List<Attribute> itemAttList = e.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
-//                 log.info("attribute list="+attList);
                 for (int j = 0; j < attList.size(); j++) {
                     Attribute attrib = attList.get(j);
                     String attribName = attrib.getName();
@@ -1585,17 +1584,20 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                 }
                 JPanel l = newGridItem(e, showStdName, modelElem);
-                panelList.add(l);
-                g.setConstraints(l, cs);
-                c.add(l);
-                cs.gridwidth = 1;
-            }
-            else { // its a mistake
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            } else { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGrid");
             }
         }
         // add glue to the bottom to allow resize
-        c.add(Box.createVerticalGlue());
+        if (c.getComponentCount() > 0) {
+            c.add(Box.createVerticalGlue());
+        }
 
         return c;
     }
@@ -1722,7 +1724,9 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // add glue to the bottom to allow resize
-        c.add(Box.createVerticalGlue());
+        if (c.getComponentCount() > 0) {
+            c.add(Box.createVerticalGlue());
+        }
 
         return c;
     }
