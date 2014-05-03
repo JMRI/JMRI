@@ -164,7 +164,7 @@ maintaining alignment even if a particular element is absent. There are two elem
 The "gridx" and "gridy" attributes of a grid item specify the location of that item within the grid.
 A value of gridx="0" puts the item in the lefmost column.
 A value of gridy="0" puts the item in the topmost row.
-Other attributes to control the format of the are available and are documented in the
+Other attributes to control the format of the grid items are available and are documented in the
 <a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
     Java&reg; GridBagLayout Tutorial</a>.
 <ul>
