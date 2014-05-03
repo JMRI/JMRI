@@ -13,22 +13,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -36,82 +32,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 1 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 1 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -141,22 +121,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -164,82 +140,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 2 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 2 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -269,22 +229,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -292,82 +248,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 3 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 3 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -397,22 +337,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -420,82 +356,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 4 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 4 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -525,22 +445,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -548,82 +464,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 5 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 5 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -653,22 +553,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -676,82 +572,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 6 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 6 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -781,22 +661,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -804,82 +680,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 7 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 7 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -909,22 +769,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -932,82 +788,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 8 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 8 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1037,22 +877,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1060,82 +896,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 9 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 9 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1165,22 +985,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1188,82 +1004,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 10 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 10 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1293,22 +1093,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1316,82 +1112,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 11 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 11 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1421,22 +1201,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1444,82 +1220,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 12 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 12 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1549,22 +1309,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1572,82 +1328,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 13 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 13 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1677,22 +1417,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1700,82 +1436,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 14 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 14 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1805,22 +1525,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1828,82 +1544,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 15 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 15 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">
@@ -1933,22 +1633,18 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 1"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 1" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 2"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 2" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 3"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 3" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 4"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 4" format="hslider" label=""/>
         </griditem>
         <griditem>
@@ -1956,82 +1652,66 @@
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 5"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 5" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 6"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 6" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 7"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 7" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 8"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 8" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 9"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 9" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 10"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 10" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 11"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 11" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 12"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 12" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 13"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 13" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 14"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 14" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 15"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 15" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 16"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 16" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 17"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 17" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 18"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 18" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 19"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 19" format="hslider" label=""/>
         </griditem>
         <griditem>
             <display item="ESU V4 Function Output 16 Slider 20"/>
-            <label label=""/>
             <display item="ESU V4 Function Output 16 Slider 20" format="hslider" label=""/>
         </griditem>
         <griditem insets="2,0,2,0">

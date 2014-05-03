@@ -1616,7 +1616,7 @@ public class PaneProgPane extends javax.swing.JPanel
         c.setLayout(g);
 
         // handle the xml definition
-        // for all elements in the column or row
+        // for all elements in the grid item
         List<Element> elemList = element.getChildren();
         if (log.isDebugEnabled()) log.debug("newGridItem starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
@@ -1859,7 +1859,7 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             col.add(l);
 
-            cs.gridx = GridBagConstraints.RELATIVE;
+            cs.gridx++;
             cs.anchor= GridBagConstraints.WEST;
             g.setConstraints(rep, cs);
             col.add(rep);
@@ -1869,7 +1869,7 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(rep, cs);
             col.add(rep);
 
-            cs.gridx = GridBagConstraints.RELATIVE;
+            cs.gridx++;
             cs.anchor= GridBagConstraints.WEST;
             g.setConstraints(l, cs);
             col.add(l);
