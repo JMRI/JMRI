@@ -52,5 +52,5 @@
     <display item="Advanced Group 2 Option 19" format="checkbox"/>
     <display item="Advanced Group 2 Option 20" format="checkbox"/>
   </column>
-  <name xml:lang="it">Advanced</name>
+  <name xml:lang="it">Avanzato</name>
 </pane>

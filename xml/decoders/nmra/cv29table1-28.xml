@@ -43,11 +43,13 @@
     <enumVal>
       <enumChoice choice="Use Start Voltage (Vstart)">
         <choice>Use Start Voltage (Vstart)</choice>
+        <choice xml:lang="it">Usa Tensione Iniziale (Vstart)</choice>
         <choice xml:lang="fr">Utiliser V démarrage (Vstart)</choice>
         <choice xml:lang="de">Anfahrspannung (Vstart) nutzen</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
+        <choice xml:lang="it">Usa Tabella Velocit\u00E0</choice>
         <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
         <choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
       </enumChoice>
@@ -55,6 +57,6 @@
     <label>Use Speed Table</label>
     <label xml:lang="fr">Tableau de vitesse</label>
     <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Speed Table Definition</label>
+    <label xml:lang="it">Definizione Tabella Velocit\u00E0</label>
   </variable>
 </variables>

@@ -47,7 +47,7 @@
   </revhistory>
   <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
     <decVal max="127"/>
-    <label xml:lang="it">Aggiustamento Accellerazione Consist</label>
+    <label xml:lang="it">Regola Accellerazione Consist</label>
     <label xml:lang="fr">Ajustement d'accélération en Unité Mutiple</label>
     <label>Consist Acceleration Adjustment</label>
   </variable>
@@ -79,7 +79,7 @@
         <choice xml:lang="fr">Ajustement positif</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
-        <choice xml:lang="it">Fattore Aggiunto</choice>
+        <choice xml:lang="it">Fattore Sottratto</choice>
         <choice xml:lang="fr">Ajustement négatif</choice>
       </enumChoice>
     </enumVal>

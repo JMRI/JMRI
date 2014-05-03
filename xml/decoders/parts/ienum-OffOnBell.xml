@@ -4,11 +4,14 @@
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <ienumChoice choice="Off">
             <choice>Off</choice>
+	               <choice xml:lang="it">Off</choice>
           </ienumChoice>
           <ienumChoice choice="On">
             <choice>On</choice>
+	               <choice xml:lang="it">On</choice>
           </ienumChoice>
           <ienumChoice choice="On with Bell">
             <choice>On with Bell</choice>
+	               <choice xml:lang="it">On con Campana</choice>
           </ienumChoice>
 </ienumVal>

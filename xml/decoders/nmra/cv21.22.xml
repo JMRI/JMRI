@@ -202,7 +202,7 @@
         <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Indirizzo Consist Attivo per FL in Avanti</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per FL-Avanti</label>
     <label xml:lang="fr">Adresse UM active pour FL en avant</label>
     <label xml:lang="de">Verbundadresse aktiv für FL vorwärts</label>
     <label>Consist Address Active For FL in Forward</label>
@@ -220,7 +220,7 @@
         <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Indirizzo Consist Attivo per FL in Indietro</label>
+    <label xml:lang="it">Indirizzo Consist Attivo per FL-Indietro</label>
     <label xml:lang="fr">Adresse UM active pour FL en arr</label>
     <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
     <label>Consist Address Active For FL in Reverse</label>
