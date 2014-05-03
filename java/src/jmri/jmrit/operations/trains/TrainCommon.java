@@ -185,7 +185,7 @@ public class TrainCommon {
 			if (trackNames.contains(splitString(track.getName())))
 				continue;
 			trackNames.add(splitString(track.getName())); // use a track name once
-			// block cars by destination
+			// block pick up cars by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = routeList.get(j);
 				for (Car car : carList) {
@@ -211,10 +211,17 @@ public class TrainCommon {
 					}
 				}
 			}
+			// now do set outs and local moves
 			for (Car car : carList) {
-				if (Setup.isSortByTrackEnabled()
-						&& !splitString(track.getName()).equals(splitString(car.getDestinationTrackName())))
-					continue;
+				if (Setup.isSortByTrackEnabled()) {
+					// sort local moves by the car's current track name
+					if (isLocalMove(car)) {
+						if (!splitString(track.getName()).equals(splitString(car.getTrackName())))
+							continue;
+					} else if (!splitString(track.getName()).equals(splitString(car.getDestinationTrackName()))) {
+						continue;
+					}
+				}
 				if (car.getRouteDestination() == rl && car.getDestinationTrack() != null) {
 					if (car.isUtility())
 						setoutUtilityCars(file, carList, car, rl, isManifest);
