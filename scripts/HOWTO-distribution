@@ -56,6 +56,14 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
     Commit any changed files.
 
+( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
+    that you find wrong.  Also, do 
+    
+    svn propset svn:eol-style native <file-path-name>
+    
+    to fix it for good.
+    
+    
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
 ( ) Create & commit the start of a release note for the next version
