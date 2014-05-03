@@ -46,20 +46,30 @@ public class LocaleSelector {
      */
     static public String getAttribute(Element el, String name) {
         String retval;
-        if (testLocale) {
-            Attribute a = el.getAttribute(name);
-            if (a == null) return null;
-            return a.getValue().toUpperCase();
-        }
         // look for each suffix first
         for (String suffix : suffixes) {
             retval = checkElement(el, name, suffix);
-            if (retval != null) return retval;
+            if (retval != null) {
+                if (testLocale) return retval.toUpperCase(); // the I18N test case, return string in upper case
+                return retval;
+            }
         }
-        
+
+        // try default element
+        for (Object obj : el.getChildren(name)) {
+            Element e = (Element)obj;
+            Attribute a = e.getAttribute("lang", Namespace.XML_NAMESPACE);
+            if (a == null) {
+                // default element
+                if (testLocale) return e.getText().toUpperCase(); // the I18N test case, return string in upper case
+                return e.getText();                
+            }
+        }
+                
         // failed, go back to original attribute
         Attribute a = el.getAttribute(name);
         if (a == null) return null;
+        if (testLocale) return a.getValue().toUpperCase(); // the I18N test case, return string in upper case
         return a.getValue();
     }
     
