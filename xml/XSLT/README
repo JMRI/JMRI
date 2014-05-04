@@ -73,31 +73,17 @@ Processing decoder files:
 normalizeDecoder is a shell script that runs the standard series of processings
 on an set of input files, followed by xmllint to put it in standard layout.
 
+Those operations can be tested with the ./testDecoderTransforms script.
 
-decoderLabelToItem.xsl     - if the item attribute is missing, create it from the
-                            label attribute
-
-decoderAddLabelElement.xsl - adds a label element from the label or item attribute
-                             so that the label attribute can later be removed
-
-decoderSuppressRedundantLabel.xsl - removes the label attribute when a label element is
-                                    is present
-
-decoderAddI18nLabel.xsl         - adds <label xml:lang=".."> elements for a specific language
-                                  that has to be editted into the top of the file
-
-decoderAddI18nTooltip.xsl       - adds <tooltip xml:lang=".."> elements for a specific language
-                                  that has to be editted into the top of the file
-
-decoderAddI18nComment.xsl       - adds <comment xml:lang=".."> elements for a specific language
-                                  that has to be editted into the top of the file
-
-decoderAddI18nChoice.xsl        - adds <comment xml:lang=".."> elements for a specific language
-                                  that has to be editted into the top of the file
-
-decoderAddI18nName.xsl          - adds <comment xml:lang=".."> elements for a specific language
-                                  that has to be editted into the top of the file
-
+Operations:
+    move variable@label to variable@item if no @item exists
+    make variable{label] elements from attributes
+    remove variable@label if redundant
+    
+    move label/label to label/text
+    move label@label to label/text
+    remove label@label
+    
 
 Still needed:
 
@@ -108,7 +94,6 @@ Still needed:
 *) handle tooltip in pane elements - need to provide default english element to
    eventually move away from attribute
 
-*) Are "comment" and "tooltip" in the code I18N'd? Need rationalization?
 
 0) process away tooltip attribute in variables (not in panes!), making it a comment attribute
     and then a comment element
@@ -117,22 +102,21 @@ Still needed:
 1) Add <comment xml:lang=""> elements in decoderAddI18N,
     but only if there are others already (might be easiest to just take the english ones)
 
-2) Add a pass to order by lang, comment by language for simplicity, see:
+2) Order subelements by language for simplicity, see:
     http://stackoverflow.com/questions/572854/how-to-sort-a-subelement-of-xml-with-xslt
     
 3) Probably have to do some stuff with panes too
     Translate tooltip attribute and elements
 
-Done:
-    programming/parts, dp3
-    decoders/parts, nmra
 
 Eventual goal is to update schema to enforce regular structure:
     variable element:
         remove label, comment, tooltip attributes in favor of elements
+        label contains text, not label
         
     pane element:
-        remove name attribute in favor of elements
+        remove pane name attribute in favor of elements
+        label contains text, not label
         remove tooltip attribute from display element in favor of elements
        
        
