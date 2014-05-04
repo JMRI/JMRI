@@ -21,8 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -53,6 +51,7 @@ import org.slf4j.LoggerFactory;
 public class CommonConductorYardmasterFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	protected static final String Tab = "     "; // used to space out headers
+	protected static final String Space = " "; // used to pad out panels
 
 	protected Location _location = null;
 	protected Train _train = null;
@@ -127,25 +126,17 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.X_AXIS));
-		pLocos.add(pPickupLocos);
-		pLocos.add(pSetoutLocos);
-
 		locoPane = new JScrollPane(pLocos);
 		locoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Engines")));
-		locoPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		pickupPane = new JScrollPane(pPickups);
 		pickupPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Pickup")));
-		pickupPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		setoutPane = new JScrollPane(pSetouts);
 		setoutPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SetOut")));
-		setoutPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		movePane = new JScrollPane(pMoves);
 		movePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocalMoves")));
-		movePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		// Set up the panels
 		pPickupLocos.setLayout(new BoxLayout(pPickupLocos, BoxLayout.Y_AXIS));
@@ -189,10 +180,16 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 
 		// row 12
 		if ((getPreferredSize().width > Control.widePanelWidth && Setup.isTabEnabled())
-				|| (getPreferredSize().width > Control.widePanelWidth - 200 && !Setup.isTabEnabled()))
+				|| (getPreferredSize().width > Control.widePanelWidth - 200 && !Setup.isTabEnabled())) {
+			pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.X_AXIS));
 			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
-		else
+		} else {
+			pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
 			pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.Y_AXIS));
+		}
+		
+		pLocos.add(pPickupLocos);
+		pLocos.add(pSetoutLocos);
 		pWorkPanes.add(pickupPane);
 		pWorkPanes.add(setoutPane);
 
@@ -351,6 +348,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				pSetoutLocos.add(checkBox);
 			}
 		}
+		// pad the panels in case the horizontal scroll bar appears 
+		pPickupLocos.add(new JLabel(Space));
+		pSetoutLocos.add(new JLabel(Space));
 	}
 
 	/**
@@ -369,6 +369,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest));
 			setLabelFont(header);
 			pSetouts.add(header);
+			header = new JLabel(Tab + trainCommon.getLocalMoveHeader(isManifest));
+			setLabelFont(header);
+			pMoves.add(header);
 		}
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
@@ -482,6 +485,10 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			if (!Setup.isSortByTrackEnabled())
 				break;
 		}
+		// pad the panels in case the horizontal scroll bar appears 
+		pPickups.add(new JLabel(Space));
+		pSetouts.add(new JLabel(Space));
+		pMoves.add(new JLabel(Space));
 	}
 
 	// replace the car checkbox and text with the car's road and number and a Set button

@@ -1200,6 +1200,13 @@ public class TrainCommon {
 		else
 			return getHeader(Setup.getSwitchListDropCarMessageFormat());
 	}
+	
+	public String getLocalMoveHeader(boolean isManifest) {
+		if (isManifest)
+			return getHeader(Setup.getLocalMessageFormat());
+		else
+			return getHeader(Setup.getSwitchListLocalMessageFormat());
+	}
 
 	private String getHeader(String[] format) {
 		StringBuffer buf = new StringBuffer();
