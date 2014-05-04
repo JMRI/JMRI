@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- $Id: decoderAddLabelElement.xsl 25756 2014-05-03 21:31:17Z jacobsen $ -->
 
-<!-- Process a JMRI decoder file, adding a text element (with default     -->
-<!-- language) based on the label attribute in a pane element              -->
+<!-- Process a JMRI decoder file, adding a text element (with default       -->
+<!-- language) based on the label attribute in a pane element               -->
 
-<!-- Note: An existing default-language label element is not replaced.     -->
+<!-- Note: An existing default-language label element is not replaced.      -->
 
 <!-- xsltproc decoderAddPaneLabelTextElement.xsl 0NMRA.xml | diff - 0NMRA.xml      -->
 
-<!-- The sequence of operations to normalize a decoder file is -->
-<!--  decoderPaneLabelToText.xsl -->
-<!--  decoderAddPaneLabelTextElement.xsl                               -->
-<!--  decoderSuppressRedundantPaneLabel.xsl                        -->
-<!--  xmllint -format                                          -->
+<!-- The sequence of operations to normalize a file is                      -->
+<!--  decoderPaneLabelToText.xsl                                            -->
+<!--  decoderAddPaneLabelTextElement.xsl                                    -->
+<!--  decoderAddI18nPaneLabel.xsl             (if translating)              -->
+<!--  decoderPaneSuppressLabelAttribute.xsl                                 -->
+<!--  xmllint -format                                                       -->
 
 
 <!-- This file is part of JMRI.  Copyright 2009-2014.                       -->

@@ -10,7 +10,6 @@
 <!-- Provide the two-character language code in the ENTITY line above.      -->
 
 <!-- You should normalize the decoder file before using this tool.          -->
-<!-- See the decoderLabelToItem.xsl template.                               -->
 
 <!-- Note: Existing specific-language label elements are not replaced.      -->
 

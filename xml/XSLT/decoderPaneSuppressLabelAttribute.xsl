@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- $Id: decoderLabelToItem.xsl 25756 2014-05-03 21:31:17Z jacobsen $ -->
 
-<!-- Process a JMRI decoder file, removing the label attribute on a label         -->
-<!-- element                     -->
+<!-- Process a JMRI decoder file, removing the label attribute on a label   -->
+<!-- element                                                                -->
 
 <!-- xsltproc decoderPaneSuppressLabelAttribute.xsl 0NMRA.xml | diff - 0NMRA.xml   -->
 
-<!-- The sequence of operations to normalize a file is -->
-<!--  decoderPaneLabelToText.xsl                                   -->
-<!--  xmllint -format                                          -->
+<!-- The sequence of operations to normalize a file is                      -->
+<!--  decoderPaneLabelToText.xsl                                            -->
+<!--  decoderAddPaneLabelTextElement.xsl                                    -->
+<!--  decoderAddI18nPaneLabel.xsl             (if translating)              -->
+<!--  decoderPaneSuppressLabelAttribute.xsl                                 -->
+<!--  xmllint -format                                                       -->
 
-<!-- This file is part of JMRI.  Copyright 2009-2011.                            -->
+<!-- This file is part of JMRI.  Copyright 2009-2011.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->

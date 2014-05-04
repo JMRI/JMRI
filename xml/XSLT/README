@@ -95,12 +95,11 @@ Still needed:
    eventually move away from attribute
 
 
-0) process away tooltip attribute in variables (not in panes!), making it a comment attribute
-    and then a comment element
-    Note: Some decoders (e.g. xml/decoders//TCS_V51.xml) have both comment and tooltip attributes
+0) process away tooltip and comment attribute in variables (and tooltip in panes!), making
+    proper sub-elements
 
 1) Add <comment xml:lang=""> elements in decoderAddI18N,
-    but only if there are others already (might be easiest to just take the english ones)
+    but only if there are others already (might be easiest to just replicate the default one)
 
 2) Order subelements by language for simplicity, see:
     http://stackoverflow.com/questions/572854/how-to-sort-a-subelement-of-xml-with-xslt
