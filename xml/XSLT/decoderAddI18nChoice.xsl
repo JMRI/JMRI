@@ -2,6 +2,7 @@
 <!DOCTYPE xslt [
 <!ENTITY target "it">
 ]>
+
 <!-- $Id$ -->
 
 <!-- Process a JMRI decoder file, adding a choice element (with specific    -->
@@ -31,7 +32,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:db="http://docbook.org/ns/docbook"
     >
-
+    
 <xsl:output method="xml" encoding="utf-8"/>
 
 <!--specific template match for enumChoice element with specific-language choice element -->
@@ -42,7 +43,7 @@
     </xsl:template>
 
 <!--specific template match for enumChoice element with no choice element but with choice attribute present-->
-    <xsl:template match="enumChoice[@comment]" priority="4">
+    <xsl:template match="enumChoice[@choice]" priority="4">
       <xsl:copy>
         <xsl:apply-templates select="@*|*[not(self::choice[@xml:lang = '&target;'])]" />
         <xsl:element name="choice">
