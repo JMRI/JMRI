@@ -30,6 +30,7 @@ import jmri.SignalMast;
 import jmri.Turnout;
 import static jmri.jmris.json.JSON.ACTIVE;
 import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.ADD_COMMENT;
 import static jmri.jmris.json.JSON.APPEARANCE;
 import static jmri.jmris.json.JSON.APPEARANCE_NAME;
 import static jmri.jmris.json.JSON.ASPECT;
@@ -52,7 +53,6 @@ import static jmri.jmris.json.JSON.DEPARTURE_LOCATION;
 import static jmri.jmris.json.JSON.DEPARTURE_TIME;
 import static jmri.jmris.json.JSON.DESCRIPTION;
 import static jmri.jmris.json.JSON.DESTINATION;
-import static jmri.jmris.json.JSON.DESTINATION_TRACK;
 import static jmri.jmris.json.JSON.DIRECTION;
 import static jmri.jmris.json.JSON.ENGINE;
 import static jmri.jmris.json.JSON.ENGINES;
@@ -60,10 +60,12 @@ import static jmri.jmris.json.JSON.ERROR;
 import static jmri.jmris.json.JSON.EXPECTED_ARRIVAL;
 import static jmri.jmris.json.JSON.EXPECTED_DEPARTURE;
 import static jmri.jmris.json.JSON.F;
+import static jmri.jmris.json.JSON.FINAL_DESTINATION;
 import static jmri.jmris.json.JSON.FORMER_NODES;
 import static jmri.jmris.json.JSON.FORWARD;
 import static jmri.jmris.json.JSON.FUNCTION_KEYS;
 import static jmri.jmris.json.JSON.GROUP;
+import static jmri.jmris.json.JSON.HAZARDOUS;
 import static jmri.jmris.json.JSON.HEARTBEAT;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.ICON_NAME;
@@ -77,6 +79,7 @@ import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
 import static jmri.jmris.json.JSON.JMRI;
 import static jmri.jmris.json.JSON.JSON;
 import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
+import static jmri.jmris.json.JSON.KERNEL;
 import static jmri.jmris.json.JSON.LABEL;
 import static jmri.jmris.json.JSON.LAST_REPORT;
 import static jmri.jmris.json.JSON.LAYOUT_PANEL;
@@ -88,7 +91,6 @@ import static jmri.jmris.json.JSON.LOAD;
 import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.LOCATIONS;
 import static jmri.jmris.json.JSON.LOCATION_ID;
-import static jmri.jmris.json.JSON.LOCATION_TRACK;
 import static jmri.jmris.json.JSON.LOCKABLE;
 import static jmri.jmris.json.JSON.MAX_SPD_PCT;
 import static jmri.jmris.json.JSON.MEMORY;
@@ -102,6 +104,7 @@ import static jmri.jmris.json.JSON.NULL;
 import static jmri.jmris.json.JSON.NUMBER;
 import static jmri.jmris.json.JSON.OFF;
 import static jmri.jmris.json.JSON.ON;
+import static jmri.jmris.json.JSON.OWNER;
 import static jmri.jmris.json.JSON.PANEL;
 import static jmri.jmris.json.JSON.PANEL_PANEL;
 import static jmri.jmris.json.JSON.PORT;
@@ -109,8 +112,10 @@ import static jmri.jmris.json.JSON.POSITION;
 import static jmri.jmris.json.JSON.POWER;
 import static jmri.jmris.json.JSON.RAILROAD;
 import static jmri.jmris.json.JSON.RATE;
+import static jmri.jmris.json.JSON.REMOVE_COMMENT;
 import static jmri.jmris.json.JSON.REPORT;
 import static jmri.jmris.json.JSON.REPORTER;
+import static jmri.jmris.json.JSON.RETURN_WHEN_EMPTY;
 import static jmri.jmris.json.JSON.ROAD;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.ROUTE;
@@ -128,6 +133,7 @@ import static jmri.jmris.json.JSON.THROWN;
 import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TOGGLE;
 import static jmri.jmris.json.JSON.TOKEN_HELD;
+import static jmri.jmris.json.JSON.TRACK;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TYPE;
@@ -143,6 +149,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -150,6 +157,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -157,6 +165,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerManager;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -174,27 +183,14 @@ public class JsonUtil {
     static public JsonNode getCar(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, CAR);
-        ObjectNode data = root.putObject(DATA);
-        Car car = CarManager.instance().getById(id);
-        data.put(ID, car.getId());
-        data.put(ROAD, car.getRoadName());
-        data.put(NUMBER, car.getNumber());
-        data.put(LOAD, car.getLoadName());
-        data.put(LOCATION, car.getRouteLocationId());
-        data.put(LOCATION_TRACK, car.getTrackName());
-        data.put(DESTINATION, car.getRouteDestinationId());
-        data.put(DESTINATION_TRACK, car.getDestinationTrackName());
-        data.put(TYPE, car.getTypeName());
-        data.put(LENGTH, car.getLength());
-        data.put(COLOR, car.getColor());
-        data.put(COMMENT, car.getComment());
+        root.put(DATA, JsonUtil.getCar(CarManager.instance().getById(id)));
         return root;
     }
 
     static public JsonNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (RollingStock rs : CarManager.instance().getByIdList()) {
-            root.add(getCar(locale, rs.getId()));
+            root.add(JsonUtil.getCar(locale, rs.getId()));
         }
         return root;
     }
@@ -385,18 +381,7 @@ public class JsonUtil {
     static public JsonNode getEngine(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ENGINE);
-        ObjectNode data = root.putObject(DATA);
-        Engine engine = EngineManager.instance().getById(id);
-        data.put(ID, engine.getId());
-        data.put(ROAD, engine.getRoadName());
-        data.put(NUMBER, engine.getNumber());
-        data.put(LOCATION, engine.getRouteLocationId());
-        data.put(LOCATION_TRACK, engine.getTrackName());
-        data.put(DESTINATION, engine.getRouteDestinationId());
-        data.put(DESTINATION_TRACK, engine.getDestinationTrackName());
-        data.put(MODEL, engine.getModel());
-        data.put(LENGTH, engine.getLength());
-        data.put(COMMENT, engine.getComment());
+        root.put(DATA, JsonUtil.getEngine(EngineManager.instance().getById(id)));
         return root;
     }
 
@@ -763,7 +748,7 @@ public class JsonUtil {
         entry.put(DECODER_FAMILY, re.getDecoderFamily());
         entry.put(MODEL, re.getModel());
         entry.put(COMMENT, re.getComment());
-        entry.put(MAX_SPD_PCT, Integer.valueOf(re.getMaxSpeedPCT()).toString());
+        entry.put(MAX_SPD_PCT, Integer.toString(re.getMaxSpeedPCT()));
         File file = new File(re.getImagePath());
         entry.put(IMAGE_FILE_NAME, file.getName());
         file = new File(re.getIconPath());
@@ -1190,8 +1175,8 @@ public class JsonUtil {
      * id.
      *
      * Currently only moves the train to the location given with the key
-     * {@value jmri.jmris.json.JSON#LOCATION}. If the move cannot be completed, throws error
-     * code 428.
+     * {@value jmri.jmris.json.JSON#LOCATION}. If the move cannot be completed,
+     * throws error code 428.
      *
      * @param locale The locale to throw exceptions in.
      * @param id The id of the train.
@@ -1299,8 +1284,8 @@ public class JsonUtil {
         ArrayNode clan = mapper.createArrayNode();
         CarManager carManager = CarManager.instance();
         List<Car> carList = carManager.getByTrainDestinationList(train);
-        for (int k = 0; k < carList.size(); k++) {
-            clan.add(getCar(locale, carList.get(k).getId()).get(DATA)); //add each car's data to the carList array
+        for (Car car : carList) {
+            clan.add(getCar(locale, car.getId()).get(DATA)); //add each car's data to the carList array
         }
         return clan;  //return array of car data
     }
@@ -1309,8 +1294,8 @@ public class JsonUtil {
         ArrayNode elan = mapper.createArrayNode();
         EngineManager engineManager = EngineManager.instance();
         List<Engine> engineList = engineManager.getByTrainBlockingList(train);
-        for (int k = 0; k < engineList.size(); k++) {
-            elan.add(getEngine(locale, engineList.get(k).getId()).get(DATA)); //add each engine's data to the engineList array
+        for (Engine engine : engineList) {
+            elan.add(getEngine(locale, engine.getId()).get(DATA)); //add each engine's data to the engineList array
         }
         return elan;  //return array of engine data
     }
@@ -1318,9 +1303,9 @@ public class JsonUtil {
     static private ArrayNode getRouteLocationsForTrain(Locale locale, Train train) throws JsonException {
         ArrayNode rlan = mapper.createArrayNode();
         List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
-        for (int r = 0; r < routeList.size(); r++) {
+        for (RouteLocation route : routeList) {
             ObjectNode rln = mapper.createObjectNode();
-            RouteLocation rl = routeList.get(r);
+            RouteLocation rl = route;
             rln.put(ID, rl.getId());
             rln.put(NAME, rl.getName());
             rln.put(DIRECTION, rl.getTrainDirectionString());
@@ -1404,4 +1389,71 @@ public class JsonUtil {
         }
         return new DccLocoAddress(number, isLong);
     }
+
+    static public ObjectNode getCar(Car car) {
+        ObjectNode node = JsonUtil.getRollingStock(car);
+        node.put(LOAD, StringEscapeUtils.escapeHtml4(car.getLoadName())); // NOI18N
+        node.put(HAZARDOUS, car.isHazardous());
+        node.put(REMOVE_COMMENT, car.getDropComment());
+        node.put(ADD_COMMENT, car.getPickupComment());
+        node.put(KERNEL, car.getKernelName());
+        if (car.getFinalDestinationTrack() != null) {
+            node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack()));
+        } else if (car.getFinalDestination() != null) {
+            node.put(FINAL_DESTINATION, JsonUtil.getLocation(car.getFinalDestination()));
+        }
+        if (car.getReturnWhenEmptyDestTrack() != null) {
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocationAndTrack(car.getReturnWhenEmptyDestTrack()));
+        } else if (car.getReturnWhenEmptyDestination() != null) {
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocation(car.getReturnWhenEmptyDestination()));
+        }
+        return node;
+    }
+
+    static public ObjectNode getEngine(Engine engine) {
+        ObjectNode node = JsonUtil.getRollingStock(engine);
+        node.put(MODEL, engine.getModel());
+        node.put(CONSIST, engine.getConsistName());
+        return node;
+    }
+
+    static private ObjectNode getRollingStock(RollingStock rs) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(ID, rs.getId());
+        node.put(NUMBER, splitString(rs.getNumber()));
+        node.put(ROAD, StringEscapeUtils.escapeHtml4(rs.getRoadName()));
+        String[] type = rs.getTypeName().split("-"); // second half of string
+        // can be anything
+        node.put(TYPE, type[0]);
+        node.put(LENGTH, rs.getLength());
+        node.put(COLOR, rs.getColor());
+        node.put(OWNER, StringEscapeUtils.escapeHtml4(rs.getOwner()));
+        node.put(COMMENT, StringEscapeUtils.escapeHtml4(rs.getComment()));
+        node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack()));
+        node.put(DESTINATION, JsonUtil.getLocationAndTrack(rs.getDestinationTrack()));
+        return node;
+    }
+
+    static private ObjectNode getLocation(Location location) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(NAME, location.getName());
+        node.put(ID, location.getId());
+        return node;
+    }
+
+    static private ObjectNode getLocationAndTrack(Track track) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(NAME, track.getLocation().getName());
+        node.put(ID, track.getLocation().getId());
+        node.put(TRACK, JsonUtil.getTrack(track));
+        return node;
+    }
+
+    static private ObjectNode getTrack(Track track) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(NAME, track.getName());
+        node.put(ID, track.getId());
+        return node;
+    }
+
 }

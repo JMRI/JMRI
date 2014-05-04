@@ -350,6 +350,16 @@ public final class JSON {
      * {@value #TERMINATE}
      */
     public static final String TERMINATE = "terminate"; // NOI18N
+    /**
+     * {@value #TRACK}
+     * @since 1.1
+     */
+    public static final String TRACK = "track";
+    /**
+     * {@value #DATE}
+     * @since 1.1
+     */
+    public static final String DATE = "date";
 
     /* JSON panel tokens */
     /**
@@ -490,6 +500,11 @@ public final class JSON {
      * {@value #GROUP}
      */
     public static final String GROUP = "group"; // NOI18N
+    /**
+     * {@value #OWNER}
+     * @since 1.1
+     */
+    public static final String OWNER = "owner"; // NOI18N
 
     /* JSON route (operations) tokens */
     /**
@@ -500,6 +515,11 @@ public final class JSON {
      * {@value #SEQUENCE}
      */
     public static final String SEQUENCE = "sequenceId"; // NOI18N
+    /**
+     * {@value #ARRIVAL_TIME}
+     * @since 1.1
+     */
+    public static final String ARRIVAL_TIME = "arrivalTime"; // NOI18N
     /**
      * {@value #EXPECTED_ARRIVAL}
      */
@@ -528,6 +548,97 @@ public final class JSON {
      * {@value #ROUTE_ID}
      */
     public static final String ROUTE_ID = "routeId"; // NOI18N
+    /**
+     * {@value #HAZARDOUS}
+     * @since 1.1
+     */
+    public static final String HAZARDOUS = "hazardous"; // NOI18N
+    /**
+     * {@value #KERNEL}
+     * @since 1.1
+     */
+    public static final String KERNEL = "kernel"; // NOI18N
+    /**
+     * {@value #FINAL_DESTINATION}
+     * @since 1.1
+     */
+    public static final String FINAL_DESTINATION = "finalDestination"; // NOI18N
+    /**
+     * {@value #DROP_COMMENT}
+     * @since 1.1
+     */
+    public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
+    /**
+     * {@value #PICKUP_COMMENT}
+     * @since 1.1
+     */
+    public static final String ADD_COMMENT = "addComment"; // NOI18N
+    /**
+     * {@value #IS_LOCAL}
+     * @since 1.1
+     */
+    public static final String IS_LOCAL = "isLocal";
+    /**
+     * {@value #ADD_HELPERS}
+     * @since 1.1
+     */
+    public static final String ADD_HELPERS = "addHelpers";
+    /**
+     * {@value #CHANGE_CABOOSE}
+     * @since 1.1
+     */
+    public static final String CHANGE_CABOOSE = "changeCaboose";
+    /**
+     * {@value #CHANGE_ENGINES}
+     * @since 1.1
+     */
+    public static final String CHANGE_ENGINES = "changeEngines";
+    /**
+     * {@value #DROP_HELPERS}
+     * @since 1.1
+     */
+    public static final String REMOVE_HELPERS = "removeHelpers";
+    /**
+     * {@value #OPTIONS}
+     * @since 1.1
+     */
+    public static final String OPTIONS = "options";
+    /**
+     * {@value #ADD}
+     * @since 1.1
+     */
+    public static final String ADD = "add";
+    /**
+     * Indicates a drop or setout in operations
+     * {@value #REMOVE}
+     * @since 1.1
+     */
+    public static final String REMOVE = "remove";
+    /**
+     * {@value #ADD_AND_REMOVE}
+     * @since 1.1
+     */
+    public static final String ADD_AND_REMOVE = "addAndRemove";
+    /**
+     * {@value #TOTAL}
+     * @since 1.1
+     */
+    public static final String TOTAL = "total";
+    /**
+     * {@value #LOADS}
+     * @since 1.1
+     */
+    public static final String LOADS = "loads";
+    /**
+     * {@value #EMPTIES}
+     * @since 1.1
+     */
+    public static final String EMPTIES = "empties";
+    /**
+     * {@value #RETURN_WHEN_EMPTY}
+     * @since 1.1
+     */
+    public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
 
     /* JSON signalling tokens */
     /**
@@ -733,6 +844,11 @@ public final class JSON {
      * {@value #THROWN}
      */
     public static final int THROWN = 0x04;
+    /**
+     * {@value #UNIT}
+     * @since 1.1
+     */
+    public static final String UNIT = "unit";
 
     /* prevent the constructor from being documented */
     private JSON() {

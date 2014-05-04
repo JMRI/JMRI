@@ -43,6 +43,7 @@ public class TrainManagerXml extends OperationsXml {
 		return _instance;
 	}
 
+        @Override
 	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 		if (log.isDebugEnabled())
 			log.debug("writeFile " + name);
@@ -74,6 +75,7 @@ public class TrainManagerXml extends OperationsXml {
 	/**
 	 * Read the contents of a roster XML file into this object. Note that this does not clear any existing entries.
 	 */
+        @Override
 	public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
 
 		// suppress rootFromName(name) warning message by checking to see if file exists
@@ -166,16 +168,16 @@ public class TrainManagerXml extends OperationsXml {
 				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
-        public File getJsonManifestFile(String name) {
-            return new File(defaultJsonManifestFilename(name));
+        public File getManifestFile(String name, String ext) {
+            return new File(defaultManifestFilename(name, ext));
         }
 
-        public File createJsonManifestFile(String name) {
-            return createFile(defaultJsonManifestFilename(name), false); // don't backup
+        public File createManifestFile(String name, String ext) {
+            return createFile(defaultManifestFilename(name, ext), false); // don't backup
         }
 
-        public String defaultJsonManifestFilename(String name) {
-            return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + ".json"; // NOI18N
+        private String defaultManifestFilename(String name, String ext) {
+            return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + "." + ext; // NOI18N
         }
 
         /**
@@ -218,10 +220,12 @@ public class TrainManagerXml extends OperationsXml {
 
 	private String SwitchListFileName = Bundle.getMessage("location")+" (";
 
+        @Override
 	public void setOperationsFileName(String name) {
 		operationsFileName = name;
 	}
 
+        @Override
 	public String getOperationsFileName() {
 		return operationsFileName;
 	}
