@@ -29,9 +29,9 @@
       <text> </text>
     </label>
     <label>
+      <text>First line of text in attribute, with translations in label elements</text>
       <text xml:lang="it">Italian for 1st line</text>
       <text xml:lang="fr">French for 1st line</text>
-      <text>First line of text in attribute, with translations in label elements</text>
     </label>
     <label>
       <text>Second line of text, without any translation in original file.</text>

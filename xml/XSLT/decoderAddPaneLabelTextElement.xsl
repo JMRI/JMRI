@@ -45,8 +45,9 @@
 <!--specific template match for variable element with no label element but with label attribute present-->
     <xsl:template match="label[@label]" priority="4">
       <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::label[not(@xml:lang)])]" />
+        <xsl:apply-templates select="@*" /><!-- copy attributes before adding elements-->
         <xsl:element name="text"><xsl:value-of select="@label"/></xsl:element>
+        <xsl:apply-templates select="*[not(self::label[not(@xml:lang)])]" />
       </xsl:copy>
     </xsl:template>
 
