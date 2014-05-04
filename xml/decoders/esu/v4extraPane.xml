@@ -130,14 +130,8 @@
       <separator/>
       <label label="Decoder Information"/>
       <label label=" "/>
-        <row>
-            <display item="Firmware Major Version"/>
-        </row>
-        <row>
-            <display item="Firmware Minor Version"/>
-        </row>
-        <row>
-            <display item="Firmware Build Number"/>
-        </row>
+        <display item="Firmware Major Version"/>
+        <display item="Firmware Minor Version"/>
+        <display item="Firmware Build Number"/>
     </column>
   </pane>
