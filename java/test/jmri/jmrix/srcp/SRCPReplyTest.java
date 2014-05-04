@@ -45,7 +45,7 @@ public class SRCPReplyTest extends TestCase {
             // m is already null if there is an exception parsing the string
         }
         Assert.assertNotNull(m);
-        Assert.assertTrue("Parser Constructor Correct", s.equals("" + m));
+        Assert.assertTrue("Parser Constructor Correct", s.equals(m.toString()));
     }
 
     // from here down is testing infrastructure

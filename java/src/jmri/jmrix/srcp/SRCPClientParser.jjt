@@ -175,11 +175,15 @@ SimpleNode connectionmode():{Token t;}
   }
 }
 
-SimpleNode inforesponse():{SimpleNode t; SimpleNode s;}
+SimpleNode inforesponse() :{SimpleNode t; SimpleNode s;}
 {
-  t=address() (s=info() | s=ok() | s=error() )
+  //t=address() (s=info() | s=ok() | s=error() )
+  address() (s=info() | s=ok() | s=error() )
   {
-    jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.jjtGetValue() );
+    //jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.jjtGetValue() );
+    //jjtThis.jjtSetValue(s.jjtGetValue() );
+    //jjtThis.jjtSetValue(t.jjtGetValue() );
+    jjtThis.jjtSetValue("");
     log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
     return jjtThis;
   }
@@ -187,7 +191,7 @@ SimpleNode inforesponse():{SimpleNode t; SimpleNode s;}
 
 SimpleNode info():{Token t;SimpleNode s; SimpleNode r;}
 {
-   ( t=<INFO> bus() ( fb() | ga() | gl() | sm() | time() | power() |session() | server() | description() | lock() ))
+   ( t=<INFO> bus() ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | description() | lock() ))
   {
     jjtThis.jjtSetValue(t.image );
     log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
@@ -199,7 +203,8 @@ SimpleNode error():{Token t;Token r;}
 {
    ( t=<ERROR> r=<EOL> )
   {
-    jjtThis.jjtSetValue(t.image + " " + r.image);
+    jjtThis.jjtSetValue(t.image + r.image);
+    //jjtThis.jjtSetValue(r.image);
     log.debug("Error Response Production: " + jjtThis.jjtGetValue() );
     return jjtThis;
   }
@@ -261,13 +266,13 @@ SimpleNode power():{Token t; SimpleNode r;}
   }
 }
 
-SimpleNode address():{SimpleNode s;}
+void address() #void:{SimpleNode s;}
 {
   (s=zeroaddress() | s=nonzeroaddress())
   {
     log.debug("Address Production "+ s.jjtGetValue());
-    jjtThis.jjtSetValue(s.jjtGetValue());
-    return jjtThis;
+    //jjtThis.jjtSetValue(s.jjtGetValue());
+    //return jjtThis;
   }
 }
 
@@ -329,7 +334,7 @@ SimpleNode go():{Token t;}
 
 SimpleNode gl():{Token t;}
 {
-  t=<GL>
+  t=<GL> address() ( (<DRIVEMODE>|address()) (address())+ | <PROTOCOL> (address() address())? )? 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -345,7 +350,7 @@ SimpleNode sm():{Token t;}
 
 SimpleNode ga():{Token t;}
 {
-  t=<GA>
+  t=<GA> address() ( <PROTOCOL> | port() zeroone() )?
   { 
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -354,7 +359,7 @@ SimpleNode ga():{Token t;}
 
 SimpleNode fb():{Token t;}
 {
-  t=<FB> (<EOL> | address() port() <EOL>)
+  t=<FB> (address() zeroone())?
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -398,7 +403,7 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
-  t=<DESCRIPTION> 
+  t=<DESCRIPTION> ( LOOKAHEAD(6) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;

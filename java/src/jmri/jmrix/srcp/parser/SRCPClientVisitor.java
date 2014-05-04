@@ -89,11 +89,11 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Received Bus " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
-  public Object visit(ASTaddress node, Object data)
+ /* public Object visit(ASTaddress node, Object data)
   {
     log.debug("Received Address " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
-  }
+  }*/
   public Object visit(ASTnonzeroaddress node, Object data)
   {
     log.debug("Received NonZeroAddress " + node.jjtGetValue() );
