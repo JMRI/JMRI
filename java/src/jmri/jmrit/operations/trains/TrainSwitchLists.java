@@ -195,13 +195,11 @@ public class TrainSwitchLists extends TrainCommon {
 						pickupEngines(fileOut, engineList, rl, isManifest);
 						dropEngines(fileOut, engineList, rl, isManifest);
 					}
-					
-					printCarHeader(fileOut, isManifest);
 
 					if (Setup.isTwoColumnFormatEnabled())
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, isManifest);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
 					else
-						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, isManifest);
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
 						
 					stops++;
 					if (Setup.isPrintHeadersEnabled())

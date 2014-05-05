@@ -177,7 +177,10 @@ public class TrainCommon {
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
 	protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList,
-			RouteLocation rl, int r, boolean isManifest) {
+			RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
+		boolean printPickupHeader = printHeader;
+		boolean printSetoutHeader = printHeader;
+		boolean printLocalMoveHeader = printHeader;
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
 		clearUtilityCarTypes(); // list utility cars by quantity
@@ -194,6 +197,16 @@ public class TrainCommon {
 						continue;
 					// note that a car in train doesn't have a track assignment
 					if (car.getRouteLocation() == rl && car.getTrack() != null && car.getRouteDestination() == rld) {
+						// determine if header is to be printed
+						if (printPickupHeader && !isLocalMove(car)) {
+							printPickupCarHeader(file, isManifest);
+							printPickupHeader = false;
+							// check to see if set out header is needed
+							if (getPickupCarHeader(isManifest).equals(getDropCarHeader(isManifest)))
+								printSetoutHeader = false;
+							if (getPickupCarHeader(isManifest).equals(getLocalMoveHeader(isManifest)))
+								printLocalMoveHeader = false;
+						}
 						if (car.isUtility())
 							pickupUtilityCars(file, carList, car, rl, rld, isManifest);
 						// use truncated format if there's a switch list
@@ -223,6 +236,23 @@ public class TrainCommon {
 					}
 				}
 				if (car.getRouteDestination() == rl && car.getDestinationTrack() != null) {
+					if (printSetoutHeader && !isLocalMove(car)) {
+						printDropCarHeader(file, isManifest);
+						printSetoutHeader = false;
+						if (getPickupCarHeader(isManifest).equals(getDropCarHeader(isManifest)))
+							printPickupHeader = false;
+						if (getDropCarHeader(isManifest).equals(getLocalMoveHeader(isManifest)))
+							printLocalMoveHeader = false;
+					}
+					if (printLocalMoveHeader && isLocalMove(car)) {
+						printLocalCarMoveHeader(file, isManifest);
+						printLocalMoveHeader = false;
+						if (getPickupCarHeader(isManifest).equals(getLocalMoveHeader(isManifest)))
+							printPickupHeader = false;
+						if (getDropCarHeader(isManifest).equals(getLocalMoveHeader(isManifest)))
+							printSetoutHeader = false;
+					}
+
 					if (car.isUtility())
 						setoutUtilityCars(file, carList, car, rl, isManifest);
 					// use truncated format if there's a switch list
@@ -247,12 +277,14 @@ public class TrainCommon {
 	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
 	 */
 	protected void blockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList,
-			List<RouteLocation> routeList, RouteLocation rl, int r, boolean isManifest) {
+			List<RouteLocation> routeList, RouteLocation rl, int r, boolean printHeader, boolean isManifest) {
 		index = 0;
 		int lineLength = getLineLength(isManifest);
 		List<Track> tracks = rl.getLocation().getTrackByNameList(null);
 		List<String> trackNames = new ArrayList<String>();
 		clearUtilityCarTypes(); // list utility cars by quantity
+		if (printHeader)
+			printCarHeader(file, isManifest);
 		for (Track track : tracks) {
 			if (trackNames.contains(splitString(track.getName())))
 				continue;
@@ -837,35 +869,6 @@ public class TrainCommon {
 			file.println(string);
 	}
 
-	// /**
-	// * Writes a string to a file. Checks for string length, and will automatically wrap lines.
-	// *
-	// * @param file
-	// * @param string
-	// * @param isManifest
-	// * set true for manifest page orientation, false for switch list orientation
-	// */
-	// protected void newLine(PrintWriter file, String string, boolean isManifest) {
-	// if (isManifest)
-	// newLine(file, string, Setup.getManifestOrientation());
-	// else
-	// newLine(file, string, Setup.getSwitchListOrientation());
-	// }
-
-	// /**
-	// * Writes a string to file. Checks for string length, and will automatically wrap lines.
-	// *
-	// * @param file
-	// * @param string
-	// * @param orientation
-	// */
-	// protected void newLine(PrintWriter file, String string, String orientation) {
-	// String[] lines = string.split(NEW_LINE);
-	// for (String line : lines) {
-	// makeNewLine(file, line, orientation);
-	// }
-	// }
-
 	/**
 	 * Writes a string to a file. Checks for string length, and will automatically wrap lines.
 	 * 
@@ -998,7 +1001,8 @@ public class TrainCommon {
 					.getCurMaxNameLength() + 1) : " "
 					+ padAndTruncateString(car.getLoadName(), CarLoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
-			return (car.isHazardous() ? " " + Setup.getHazardousMsg() : "");
+			return (car.isHazardous() ? " " + Setup.getHazardousMsg() : padAndTruncateString("", Setup
+					.getHazardousMsg().length() + 1));
 		else if (attribute.equals(Setup.DROP_COMMENT))
 			return " " + car.getDropComment();
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
@@ -1016,7 +1020,9 @@ public class TrainCommon {
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " "
+				return Setup.isPrintHeadersEnabled() ? " "
+						+ padAndTruncateString(splitString(car.getFinalDestinationName()), locationManager
+								.getMaxLocationNameLength()) : " "
 						+ padAndTruncateString(TrainManifestText.getStringFinalDestination() + " "
 								+ splitString(car.getFinalDestinationName()), locationManager
 								.getMaxLocationNameLength()
@@ -1024,7 +1030,10 @@ public class TrainCommon {
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " "
+				return Setup.isPrintHeadersEnabled() ? " "
+						+ padAndTruncateString(splitString(car.getFinalDestinationName()) + ", "
+								+ splitString(car.getFinalDestinationTrackName()), locationManager
+								.getMaxLocationAndTrackNameLength() + 2) : " "
 						+ padAndTruncateString(TrainManifestText.getStringFinalDestination() + " "
 								+ splitString(car.getFinalDestinationName()) + ", "
 								+ splitString(car.getFinalDestinationTrackName()), locationManager
@@ -1062,9 +1071,13 @@ public class TrainCommon {
 										+ locationManager.getMaxTrackNameLength() + 1);
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal)
-			return " "
-					+ padAndTruncateString(TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName()),
-							locationManager.getMaxLocationNameLength() + TrainManifestText.getStringFrom().length() + 1);
+			return Setup.isPrintHeadersEnabled() ? " "
+					+ padAndTruncateString(splitString(rs.getLocationName()), locationManager
+							.getMaxLocationNameLength())
+					: " "
+							+ padAndTruncateString(TrainManifestText.getStringFrom() + " "
+									+ splitString(rs.getLocationName()), locationManager.getMaxLocationNameLength()
+									+ TrainManifestText.getStringFrom().length() + 1);
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
 				return Setup.isPrintHeadersEnabled() ? " "
@@ -1083,7 +1096,10 @@ public class TrainCommon {
 							+ splitString(rs.getDestinationTrackName()), locationManager.getMaxTrackNameLength()
 							+ TrainManifestText.getStringTo().length() + 1);
 		else if (attribute.equals(Setup.DEST_TRACK))
-			return " "
+			return Setup.isPrintHeadersEnabled() ? " "
+					+ padAndTruncateString(splitString(rs.getDestinationName()) + ", "
+							+ splitString(rs.getDestinationTrackName()), locationManager
+							.getMaxLocationAndTrackNameLength() + 2) : " "
 					+ padAndTruncateString(TrainManifestText.getStringDest() + " "
 							+ splitString(rs.getDestinationName()) + ", " + splitString(rs.getDestinationTrackName()),
 							locationManager.getMaxLocationAndTrackNameLength()
@@ -1140,67 +1156,86 @@ public class TrainCommon {
 		printHorizontalLine(file, 0, lineLength);
 	}
 
+	/**
+	 * Prints the two column header for cars
+	 * 
+	 * @param file
+	 * @param isManifest
+	 */
 	public void printCarHeader(PrintWriter file, boolean isManifest) {
-		if (!Setup.isPrintHeadersEnabled())
+		if (!Setup.isPrintHeadersEnabled() || !Setup.isTwoColumnFormatEnabled())
 			return;
 		int lineLength = getLineLength(isManifest);
 		printHorizontalLine(file, 0, lineLength);
-		if (Setup.isTwoColumnFormatEnabled()) {
-			// center pick up and set out text
-			String s = padAndTruncateString(tabString(Setup.getPickupCarPrefix(), lineLength / 4
-					- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
-					+ VERTICAL_LINE_CHAR
-					+ padAndTruncateString(tabString(Setup.getDropCarPrefix(), lineLength / 4
-							- Setup.getDropCarPrefix().length() / 2, true), lineLength / 2 - 1, true);
-			addLine(file, s);
-			printHorizontalLine(file, 0, lineLength);
+		// center pick up and set out text
+		String s = padAndTruncateString(tabString(Setup.getPickupCarPrefix(), lineLength / 4
+				- Setup.getPickupCarPrefix().length() / 2, true), lineLength / 2, true)
+				+ VERTICAL_LINE_CHAR
+				+ padAndTruncateString(tabString(Setup.getDropCarPrefix(), lineLength / 4
+						- Setup.getDropCarPrefix().length() / 2, true), lineLength / 2 - 1, true);
+		addLine(file, s);
+		printHorizontalLine(file, 0, lineLength);
 
-			String[] format = Setup.getPickupCarMessageFormat();
-			if (!isManifest)
-				format = Setup.getSwitchListPickupCarMessageFormat();
-			s = padAndTruncateString(getHeader(format), lineLength / 2, true);
-
-			format = Setup.getDropCarMessageFormat();
-			if (!isManifest)
-				format = Setup.getSwitchListDropCarMessageFormat();
-
-			s = s + VERTICAL_LINE_CHAR + getHeader(format);
-			if (s.length() > lineLength)
-				s = s.substring(0, lineLength);
-			addLine(file, s);
-		} else {
-			String[] format = Setup.getPickupCarMessageFormat();
-			if (!isManifest)
-				format = Setup.getSwitchListPickupCarMessageFormat();
-			String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
-					+ getHeader(format), lineLength, true);
-			addLine(file, s);
-		}
+		s = padAndTruncateString(getPickupCarHeader(isManifest), lineLength / 2, true) + VERTICAL_LINE_CHAR
+				+ getDropCarHeader(isManifest);
+		if (s.length() > lineLength)
+			s = s.substring(0, lineLength);
+		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
-	
+
+	public void printPickupCarHeader(PrintWriter file, boolean isManifest) {
+		if (!Setup.isPrintHeadersEnabled())
+			return;
+		printHorizontalLine(file, isManifest);
+		String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
+				+ getPickupCarHeader(isManifest), getLineLength(isManifest), true);
+		addLine(file, s);
+		printHorizontalLine(file, isManifest);
+	}
+
+	public void printDropCarHeader(PrintWriter file, boolean isManifest) {
+		if (!Setup.isPrintHeadersEnabled())
+			return;
+		printHorizontalLine(file, isManifest);
+		String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
+				+ getDropCarHeader(isManifest), getLineLength(isManifest), true);
+		addLine(file, s);
+		printHorizontalLine(file, isManifest);
+	}
+
+	public void printLocalCarMoveHeader(PrintWriter file, boolean isManifest) {
+		if (!Setup.isPrintHeadersEnabled())
+			return;
+		printHorizontalLine(file, isManifest);
+		String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
+				+ getLocalMoveHeader(isManifest), getLineLength(isManifest), true);
+		addLine(file, s);
+		printHorizontalLine(file, isManifest);
+	}
+
 	public String getPickupEngineHeader() {
 		return getHeader(Setup.getPickupEngineMessageFormat());
 	}
-	
+
 	public String getDropEngineHeader() {
 		return getHeader(Setup.getDropEngineMessageFormat());
 	}
-	
+
 	public String getPickupCarHeader(boolean isManifest) {
 		if (isManifest)
 			return getHeader(Setup.getPickupCarMessageFormat());
 		else
 			return getHeader(Setup.getSwitchListPickupCarMessageFormat());
 	}
-	
+
 	public String getDropCarHeader(boolean isManifest) {
 		if (isManifest)
 			return getHeader(Setup.getDropCarMessageFormat());
 		else
 			return getHeader(Setup.getSwitchListDropCarMessageFormat());
 	}
-	
+
 	public String getLocalMoveHeader(boolean isManifest) {
 		if (isManifest)
 			return getHeader(Setup.getLocalMessageFormat());
@@ -1208,6 +1243,12 @@ public class TrainCommon {
 			return getHeader(Setup.getSwitchListLocalMessageFormat());
 	}
 
+	/**
+	 * TODO change all of the attributes to user controlled text.
+	 * 
+	 * @param format
+	 * @return
+	 */
 	private String getHeader(String[] format) {
 		StringBuffer buf = new StringBuffer();
 		for (String attribute : format) {
@@ -1236,6 +1277,16 @@ public class TrainCommon {
 			else if (attribute.equals(Setup.TRACK) || attribute.equals(Setup.LOCATION)
 					|| attribute.equals(Setup.DESTINATION))
 				buf.append(padAndTruncateString(attribute, locationManager.getMaxTrackNameLength()) + " ");
+			else if (attribute.equals(Setup.DEST_TRACK))
+				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationAndTrackNameLength() + 2)
+						+ " ");
+			else if (attribute.equals(Setup.FINAL_DEST))
+				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationNameLength()) + " ");
+			else if (attribute.equals(Setup.FINAL_DEST_TRACK))
+				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationAndTrackNameLength() + 2)
+						+ " ");
+			else if (attribute.equals(Setup.HAZARDOUS))
+				buf.append(padAndTruncateString(attribute, Setup.getHazardousMsg().length()) + " ");
 			else if (attribute.equals(Setup.TAB))
 				buf.append(tabString("", Setup.getTab1Length()));
 			else if (attribute.equals(Setup.TAB2))

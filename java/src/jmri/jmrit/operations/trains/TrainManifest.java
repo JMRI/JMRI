@@ -154,13 +154,10 @@ public class TrainManifest extends TrainCommon {
 				dropEngines(fileOut, engineList, rl, isManifest);
 			}
 
-			if (printHeader)
-				printCarHeader(fileOut, isManifest);
-
 			if (Setup.isTwoColumnFormatEnabled())
-				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, isManifest);
+				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 			else
-				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, isManifest);
+				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
