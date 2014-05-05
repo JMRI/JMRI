@@ -22,6 +22,7 @@ import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
+import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,7 +143,15 @@ public class OperationsServlet extends HttpServlet {
             ));
             train.setModified(false);
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
-            ServletUtil.getHelper().writeFile(response, new JsonManifest(train).getFile(), ServletUtil.APPLICATION_JSON);
+            log.debug("Getting manifest JSON code for train {}", id);
+            JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());
+            if (manifest.path(JSON.IMAGE_FILE_NAME).isTextual()) {
+                ((ObjectNode) manifest).put(JSON.IMAGE_FILE_NAME, WebServer.URIforPortablePath(FileUtil.getPortableFilename(manifest.path(JSON.IMAGE_FILE_NAME).asText())));
+            }
+            String content = this.mapper.writeValueAsString(manifest);
+            response.setContentType(ServletUtil.APPLICATION_JSON);
+            response.setContentLength(content.length());
+            response.getWriter().print(content);
         } else {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
