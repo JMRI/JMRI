@@ -53,7 +53,7 @@ public class EngineTypes {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] types = TYPES.split("%%"); // NOI18N
+			String[] types = TYPES.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				list.add(types[i]);
 		}

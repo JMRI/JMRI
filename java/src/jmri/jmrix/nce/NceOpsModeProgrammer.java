@@ -14,6 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
+ * @author kcameron Copyright (C) 2014
  * @version			$Revision$
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
@@ -36,7 +37,9 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         NceMessage msg;
         // USB can't send a NMRA packet, must use new ops mode command
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
-				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN) {
         	int locoAddr = mAddress;
         	if (mLongAddr)
         		locoAddr += 0xC000;

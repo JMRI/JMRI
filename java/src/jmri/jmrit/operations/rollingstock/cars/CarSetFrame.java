@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Frame for user to place car on the layout
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014
  * @version $Revision$
  */
 
@@ -50,6 +50,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	// combo boxes
 	protected JComboBox destReturnWhenEmptyBox = LocationManager.instance().getComboBox();
 	protected JComboBox trackReturnWhenEmptyBox = new JComboBox();
+	protected JComboBox loadReturnWhenEmptyBox = CarLoads.instance().getComboBox(null);
 	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
 	JComboBox kernelComboBox = carManager.getKernelComboBox();
 
@@ -97,10 +98,12 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				.getMessage("BorderLayoutReturnWhenEmpty")));
 		addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Location")), 1, 0);
 		addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Track")), 2, 0);
+		addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Load")), 3, 0);
 		addItemLeft(pReturnWhenEmpty, ignoreRWECheckBox, 0, 1);
 		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
 		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
-		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
+		addItem(pReturnWhenEmpty, loadReturnWhenEmptyBox, 3, 1);
+		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 4, 1);
 		pOptional.add(pReturnWhenEmpty);
 
 		// add load fields
@@ -184,6 +187,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		ignoreRWECheckBox.setEnabled(Setup.isCarRoutingEnabled() & enabled);
 		destReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
 		trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
+		loadReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
 		autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
 
 		ignoreLoadCheckBox.setEnabled(enabled);
@@ -322,6 +326,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			return false;
 		// return when empty fields
 		if (!ignoreRWECheckBox.isSelected()) {
+			car.setReturnWhenEmptyLoadName((String)loadReturnWhenEmptyBox.getSelectedItem());
 			if (destReturnWhenEmptyBox.getSelectedItem() == null
 					|| destReturnWhenEmptyBox.getSelectedItem().equals("")) {
 				car.setReturnWhenEmptyDestination(null);
@@ -392,6 +397,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 							&& car.getReturnWhenEmptyDestination() != null) {
 						car.setFinalDestination(car.getReturnWhenEmptyDestination());
 						car.setFinalDestinationTrack(car.getReturnWhenEmptyDestTrack());
+						car.setLoadName(car.getReturnWhenEmptyLoadName());
 					}
 				}
 			}
@@ -481,6 +487,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (ae.getSource() == ignoreRWECheckBox) {
 			destReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
 			trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
+			loadReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
 			autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected());
 		}
 		if (ae.getSource() == ignoreLoadCheckBox) {
@@ -545,6 +552,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			log.debug("Updating load box for car (" + _car.toString() + ")");
 			CarLoads.instance().updateComboBox(_car.getTypeName(), loadComboBox);
 			loadComboBox.setSelectedItem(_car.getLoadName());
+			CarLoads.instance().updateRweComboBox(_car.getTypeName(), loadReturnWhenEmptyBox);
+			loadReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyLoadName());
 		}
 	}
 	

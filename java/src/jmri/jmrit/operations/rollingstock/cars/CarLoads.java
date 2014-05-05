@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * 
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2014
  * @version $Revision$
  */
 public class CarLoads {
@@ -112,11 +112,9 @@ public class CarLoads {
 	 */
 	public JComboBox getComboBox(String type) {
 		JComboBox box = new JComboBox();
-		List<String> loads = getNames(type);
-		for (int i = 0; i < loads.size(); i++) {
-			box.addItem(loads.get(i));
-		}
+		updateComboBox(type, box);
 		return box;
+
 	}
 
 	/**
@@ -232,8 +230,17 @@ public class CarLoads {
 	public void updateComboBox(String type, JComboBox box) {
 		box.removeAllItems();
 		List<String> loads = getNames(type);
-		for (int i = 0; i < loads.size(); i++) {
-			box.addItem(loads.get(i));
+		for (String name : loads) {
+			box.addItem(name);
+		}
+	}
+	
+	public void updateRweComboBox(String type, JComboBox box) {
+		box.removeAllItems();
+		List<String> loads = getNames(type);
+		for (String name : loads) {
+			if (getLoadType(type, name).equals(CarLoad.LOAD_TYPE_EMPTY))
+				box.addItem(name);
 		}
 	}
 
@@ -275,10 +282,13 @@ public class CarLoads {
 	 */
 	public void setLoadType(String type, String name, String loadType) {
 		List<CarLoad> loads = list.get(type);
-		for (int i = 0; i < loads.size(); i++) {
-			CarLoad cl = loads.get(i);
-			if (cl.getName().equals(name))
+		for (CarLoad cl : loads) {
+			if (cl.getName().equals(name)) {
+				String oldType = cl.getLoadType();
 				cl.setLoadType(loadType);
+				if (!oldType.equals(loadType))
+					firePropertyChange(LOAD_CHANGED_PROPERTY, oldType, loadType);
+			}
 		}
 	}
 
@@ -396,22 +406,19 @@ public class CarLoads {
 
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
-			int length = MIN_NAME_LENGTH;
+			maxNameLength = MIN_NAME_LENGTH;
 			Enumeration<String> en = list.keys();
 			while (en.hasMoreElements()) {
 				String key = en.nextElement();
 				List<CarLoad> loads = list.get(key);
-				for (int j = 0; j < loads.size(); j++) {
-					if (loads.get(j).getName().length() > length) {
-						length = loads.get(j).getName().length();
+				for (CarLoad load : loads) {
+					if (load.getName().length() > maxNameLength) {
+						maxNameLength = load.getName().length();
 					}
 				}
 			}
-			maxNameLength = length;
-			return length;
-		} else {
-			return maxNameLength;
 		}
+		return maxNameLength;
 	}
 
 	private List<CarLoad> getSortedList(String type) {

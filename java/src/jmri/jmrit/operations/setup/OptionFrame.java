@@ -203,6 +203,10 @@ public class OptionFrame extends OperationsFrame {
 		buildGroup.add(buildAggressive);
 		addRadioButtonAction(buildNormal);
 		addRadioButtonAction(buildAggressive);
+		
+		// check boxes
+		addCheckBoxAction(routerCheckBox);
+		setRouterCheckBoxesEnabled();
 
 		setBuildOption();
 
@@ -270,6 +274,18 @@ public class OptionFrame extends OperationsFrame {
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
+	}
+	
+	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == routerCheckBox) {
+			setRouterCheckBoxesEnabled();
+		}
+	}
+	
+	private void setRouterCheckBoxesEnabled() {
+		routerYardCheckBox.setEnabled(routerCheckBox.isSelected());
+		routerAllTrainsBox.setEnabled(routerCheckBox.isSelected());
+		routerRestrictBox.setEnabled(routerCheckBox.isSelected());
 	}
 
 	static Logger log = LoggerFactory.getLogger(OptionFrame.class.getName());

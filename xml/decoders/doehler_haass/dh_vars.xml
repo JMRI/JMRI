@@ -12,8 +12,24 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	
-  <!-- 1 2013/07/31 Creation 
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>
 		First version for Doehler und Haass, where most decoders share the same CVs.
 		Even function decoders need motor settings for the (optional) SUSI sound modules.
 		A few exceptions are made ('include' or 'exclude').
@@ -22,7 +38,11 @@
 		(such as RailCom feedback) may not work on old models even with recent firmware.
 		This file contains VARIABLES ONLY; for the decoders definitions see:
 		Doehler_Haass_*.xml files in the root decoder folder.
-  -->
+	  </revremark>
+    </revision>
+  </revhistory>
+	
+
 	<!-- Function tables for outputs 1-8  -->
 	<!-- Code bits from http://jmri.org/xml/nmra/functionmap.xml -->
 	<variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">

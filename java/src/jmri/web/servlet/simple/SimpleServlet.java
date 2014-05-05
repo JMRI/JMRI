@@ -123,7 +123,7 @@ public class SimpleServlet extends WebSocketServlet {
         @Override
         public void onMessage(String string) {
             if (log.isDebugEnabled()) {
-                log.debug("Received from client: " + string);
+                log.debug("Received from client: {}", string);
             }
             try {
                 if (string.startsWith("POWER")) {

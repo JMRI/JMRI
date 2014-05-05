@@ -117,6 +117,26 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertNull(l4);
 	}
     
+    public void testInstanceManagerIntegration() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
+        
+        jmri.util.JUnitUtil.initInternalLightManager();
+        
+        Assert.assertTrue(InstanceManager.getDefault(LightManager.class) instanceof ProxyLightManager);
+        
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
+        
+        InternalLightManager m = new InternalLightManager() {
+            public String getSystemPrefix() { return "J"; }
+        };
+        InstanceManager.setLightManager(m);
+        
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
+        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL2"));
+    }
+    
 	/**
 	 * Number of light to test.  
 	 * Made a separate method so it can be overridden in 

@@ -106,7 +106,12 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     protected AbstractMRMessage pollMessage() {
-       return null;
+       if(numNodes <= 0 ) return null;
+       XBeeMessage msg = null;
+       if(getNode(curSerialNodeIndex).getSensorsActive())
+          msg = XBeeMessage.getForceSampleMessage(((XBeeNode)getNode(curSerialNodeIndex)).getPreferedTransmitAddress());
+       curSerialNodeIndex = (curSerialNodeIndex + 1) % numNodes;
+       return msg;
     }
     @Override
     protected AbstractMRListener pollReplyHandler() {
@@ -142,6 +147,16 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     public void receiveLoop() {
     }
 
+    /**
+     * Public method to register a node
+     */
+    @Override
+    public void registerNode(jmri.jmrix.AbstractNode node){
+      super.registerNode(node);
+      ((XBeeNode) node).setTrafficController(this);
+    }
+
+
     // XBee Packet Listener interface methods
     // NOTE: Many of the details of this function are derived
     // from the the handleOneIncomingReply() in 
@@ -161,6 +176,17 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         } catch( com.rapplogic.xbee.api.XBeeException xbe){
             setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
         }
+
+        // set the firmware version after a "VR" AtCommandResponse
+        if(response instanceof AtCommandResponse &&
+           ((AtCommandResponse)response).getCommand().equals("VR")){
+           setVersion(((com.rapplogic.xbee.api.AtCommandResponse)response).getValue());
+        }
+
+        //if(response.isError()) {
+        //    log.error("XBee API Reports error in parsing reply");
+        //    return;
+        //}
 
         XBeeReply reply=new XBeeReply(this,response);
 
@@ -339,23 +365,52 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     private com.rapplogic.xbee.api.HardwareVersion.RadioType series=com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN;
 
     private void setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType type){
+    	series = type;
  }
 
     // if we are using Series 1 XBees, use wpan classes from the XBee API library
 
     public boolean isSeries1(){
-      return (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1 ||
+      return ((!((firmwareVersion[0]&0xF0)==0x80 )) && 
+      ( series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1 ||
       series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1_PRO ||
-      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN 
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN )
       );
     }
 
     // if we are using Series 2 XBees, use zigbee classes from the XBee API library
     public boolean isSeries2(){
-      return (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2 ||
+      return ( (firmwareVersion[0]&0xF0)==0x80 ||
+      series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2 ||
       series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2_PRO ||
       series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2B_PRO);
     }
+
+
+    // keep track of the XBee Firmware Version
+    private int firmwareVersion[]={0xFF,0xFF}; 
+
+    private void setVersion(int version[]){
+    	firmwareVersion[0]=version[0];
+        firmwareVersion[1]=version[1];
+    }
+
+   /**
+    * Public method to identify an XBeeNode from its node identifier
+    * @param Name the node identifier search string.
+    * @return the node if found, or null otherwise.
+    */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromName(String Name) {
+        log.debug("getNodeFromName called with " +Name);
+        for (int i=0; i<numNodes; i++) {
+            XBeeNode node = (XBeeNode)getNode(i);
+            if(node.getIdentifier().equals(Name))
+               return node;
+        }
+        return (null);
+   }
+
+
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeTrafficController.class.getName());
 

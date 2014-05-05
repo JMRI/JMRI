@@ -7,6 +7,7 @@ package jmri.profile;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -76,217 +77,226 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         enabledPanel = new JPanel();
         chkStartWithActiveProfile = new JCheckBox();
         jScrollPane1 = new JScrollPane();
-        profilesTbl = new JTable();
-        btnOpenExistingProfile = new JButton();
-        btnDeleteProfile = new JButton();
-        btnCreateNewProfile = new JButton();
-        btnActivateProfile = new JButton();
-        btnExportProfile = new JButton();
-        btnCopyProfile = new JButton();
-        searchPathsPanel = new JPanel();
-        jScrollPane2 = new JScrollPane();
-        searchPaths = new JList();
-        btnRemoveSearchPath = new JButton();
-        btnAddSearchPath = new JButton();
+        profilesTbl = new JTable() {
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                try {
+                    return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+                return null;
+            }};
+            btnOpenExistingProfile = new JButton();
+            btnDeleteProfile = new JButton();
+            btnCreateNewProfile = new JButton();
+            btnActivateProfile = new JButton();
+            btnExportProfile = new JButton();
+            btnCopyProfile = new JButton();
+            searchPathsPanel = new JPanel();
+            jScrollPane2 = new JScrollPane();
+            searchPaths = new JList();
+            btnRemoveSearchPath = new JButton();
+            btnAddSearchPath = new JButton();
 
-        profilesPopupMenu.addPopupMenuListener(new PopupMenuListener() {
-            public void popupMenuWillBecomeVisible(PopupMenuEvent evt) {
-                profilesPopupMenuPopupMenuWillBecomeVisible(evt);
-            }
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent evt) {
-            }
-            public void popupMenuCanceled(PopupMenuEvent evt) {
-            }
-        });
+            profilesPopupMenu.addPopupMenuListener(new PopupMenuListener() {
+                public void popupMenuWillBecomeVisible(PopupMenuEvent evt) {
+                    profilesPopupMenuPopupMenuWillBecomeVisible(evt);
+                }
+                public void popupMenuWillBecomeInvisible(PopupMenuEvent evt) {
+                }
+                public void popupMenuCanceled(PopupMenuEvent evt) {
+                }
+            });
 
-        ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
-        renameMI.setText(bundle.getString("ProfilePreferencesPanel.renameMI.text")); // NOI18N
-        renameMI.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                renameMIActionPerformed(evt);
-            }
-        });
-        profilesPopupMenu.add(renameMI);
-        profilesPopupMenu.add(jSeparator1);
+            ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
+            renameMI.setText(bundle.getString("ProfilePreferencesPanel.renameMI.text")); // NOI18N
+            renameMI.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    renameMIActionPerformed(evt);
+                }
+            });
+            profilesPopupMenu.add(renameMI);
+            profilesPopupMenu.add(jSeparator1);
 
-        copyMI.setText(bundle.getString("ProfilePreferencesPanel.copyMI.text")); // NOI18N
-        profilesPopupMenu.add(copyMI);
+            copyMI.setText(bundle.getString("ProfilePreferencesPanel.copyMI.text")); // NOI18N
+            profilesPopupMenu.add(copyMI);
 
-        deleteMI.setText(bundle.getString("ProfilePreferencesPanel.deleteMI.text")); // NOI18N
-        profilesPopupMenu.add(deleteMI);
+            deleteMI.setText(bundle.getString("ProfilePreferencesPanel.deleteMI.text")); // NOI18N
+            profilesPopupMenu.add(deleteMI);
 
-        chkStartWithActiveProfile.setText(bundle.getString("ProfilePreferencesPanel.chkStartWithActiveProfile.text")); // NOI18N
-        chkStartWithActiveProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.chkStartWithActiveProfile.toolTipText")); // NOI18N
-        chkStartWithActiveProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                chkStartWithActiveProfileActionPerformed(evt);
-            }
-        });
+            chkStartWithActiveProfile.setText(bundle.getString("ProfilePreferencesPanel.chkStartWithActiveProfile.text")); // NOI18N
+            chkStartWithActiveProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.chkStartWithActiveProfile.toolTipText")); // NOI18N
+            chkStartWithActiveProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    chkStartWithActiveProfileActionPerformed(evt);
+                }
+            });
 
-        profilesTbl.setModel(new ProfileTableModel());
-        profilesTbl.getSelectionModel().addListSelectionListener(this);
-        profilesTbl.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(profilesTbl);
+            profilesTbl.setModel(new ProfileTableModel());
+            profilesTbl.getSelectionModel().addListSelectionListener(this);
+            profilesTbl.getTableHeader().setReorderingAllowed(false);
+            jScrollPane1.setViewportView(profilesTbl);
 
-        btnOpenExistingProfile.setText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.text")); // NOI18N
-        btnOpenExistingProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.toolTipText")); // NOI18N
-        btnOpenExistingProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnOpenExistingProfileActionPerformed(evt);
-            }
-        });
+            btnOpenExistingProfile.setText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.text")); // NOI18N
+            btnOpenExistingProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnOpenExistingProfile.toolTipText")); // NOI18N
+            btnOpenExistingProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnOpenExistingProfileActionPerformed(evt);
+                }
+            });
 
-        btnDeleteProfile.setText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.text")); // NOI18N
-        btnDeleteProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.toolTipText")); // NOI18N
-        btnDeleteProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnDeleteProfileActionPerformed(evt);
-            }
-        });
+            btnDeleteProfile.setText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.text")); // NOI18N
+            btnDeleteProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnDeleteProfile.toolTipText")); // NOI18N
+            btnDeleteProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnDeleteProfileActionPerformed(evt);
+                }
+            });
 
-        btnCreateNewProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.text")); // NOI18N
-        btnCreateNewProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
-        btnCreateNewProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnCreateNewProfileActionPerformed(evt);
-            }
-        });
+            btnCreateNewProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.text")); // NOI18N
+            btnCreateNewProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnCreateNewProfile.toolTipText")); // NOI18N
+            btnCreateNewProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnCreateNewProfileActionPerformed(evt);
+                }
+            });
 
-        btnActivateProfile.setText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.text")); // NOI18N
-        btnActivateProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.toolTipText")); // NOI18N
-        btnActivateProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnActivateProfileActionPerformed(evt);
-            }
-        });
+            btnActivateProfile.setText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.text")); // NOI18N
+            btnActivateProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnActivateProfile.toolTipText")); // NOI18N
+            btnActivateProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnActivateProfileActionPerformed(evt);
+                }
+            });
 
-        btnExportProfile.setText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.text")); // NOI18N
-        btnExportProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.toolTipText")); // NOI18N
-        btnExportProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnExportProfileActionPerformed(evt);
-            }
-        });
+            btnExportProfile.setText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.text")); // NOI18N
+            btnExportProfile.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnExportProfile.toolTipText")); // NOI18N
+            btnExportProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnExportProfileActionPerformed(evt);
+                }
+            });
 
-        btnCopyProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCopyProfile.text")); // NOI18N
-        btnCopyProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnCopyProfileActionPerformed(evt);
-            }
-        });
+            btnCopyProfile.setText(bundle.getString("ProfilePreferencesPanel.btnCopyProfile.text")); // NOI18N
+            btnCopyProfile.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnCopyProfileActionPerformed(evt);
+                }
+            });
 
-        GroupLayout enabledPanelLayout = new GroupLayout(enabledPanel);
-        enabledPanel.setLayout(enabledPanelLayout);
-        enabledPanelLayout.setHorizontalGroup(
-            enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(enabledPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(enabledPanelLayout.createSequentialGroup()
-                        .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(chkStartWithActiveProfile)
-                            .addGroup(enabledPanelLayout.createSequentialGroup()
-                                .addComponent(btnActivateProfile)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnOpenExistingProfile)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCreateNewProfile)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCopyProfile)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportProfile)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDeleteProfile)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        enabledPanelLayout.setVerticalGroup(
-            enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(enabledPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOpenExistingProfile)
-                    .addComponent(btnCreateNewProfile)
-                    .addComponent(btnActivateProfile)
-                    .addComponent(btnExportProfile)
-                    .addComponent(btnDeleteProfile)
-                    .addComponent(btnCopyProfile))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chkStartWithActiveProfile)
-                .addContainerGap())
-        );
+            GroupLayout enabledPanelLayout = new GroupLayout(enabledPanel);
+            enabledPanel.setLayout(enabledPanelLayout);
+            enabledPanelLayout.setHorizontalGroup(
+                enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(enabledPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
+                        .addGroup(enabledPanelLayout.createSequentialGroup()
+                            .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(chkStartWithActiveProfile)
+                                .addGroup(enabledPanelLayout.createSequentialGroup()
+                                    .addComponent(btnActivateProfile)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnOpenExistingProfile)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnCreateNewProfile)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnCopyProfile)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnExportProfile)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnDeleteProfile)))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            enabledPanelLayout.setVerticalGroup(
+                enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(enabledPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(enabledPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnOpenExistingProfile)
+                        .addComponent(btnCreateNewProfile)
+                        .addComponent(btnActivateProfile)
+                        .addComponent(btnExportProfile)
+                        .addComponent(btnDeleteProfile)
+                        .addComponent(btnCopyProfile))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(chkStartWithActiveProfile)
+                    .addContainerGap())
+            );
 
-        jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle"), enabledPanel); // NOI18N
+            jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle"), enabledPanel); // NOI18N
 
-        searchPaths.setModel(new SearchPathsListModel());
-        searchPaths.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent evt) {
-                searchPathsValueChanged(evt);
-            }
-        });
-        jScrollPane2.setViewportView(searchPaths);
+            searchPaths.setModel(new SearchPathsListModel());
+            searchPaths.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent evt) {
+                    searchPathsValueChanged(evt);
+                }
+            });
+            jScrollPane2.setViewportView(searchPaths);
 
-        btnRemoveSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.text")); // NOI18N
-        btnRemoveSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.toolTipText")); // NOI18N
-        btnRemoveSearchPath.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnRemoveSearchPathActionPerformed(evt);
-            }
-        });
+            btnRemoveSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.text")); // NOI18N
+            btnRemoveSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnRemoveSearchPath.toolTipText")); // NOI18N
+            btnRemoveSearchPath.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnRemoveSearchPathActionPerformed(evt);
+                }
+            });
 
-        btnAddSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.text")); // NOI18N
-        btnAddSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.toolTipText")); // NOI18N
-        btnAddSearchPath.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAddSearchPathActionPerformed(evt);
-            }
-        });
+            btnAddSearchPath.setText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.text")); // NOI18N
+            btnAddSearchPath.setToolTipText(bundle.getString("ProfilePreferencesPanel.btnAddSearchPath.toolTipText")); // NOI18N
+            btnAddSearchPath.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    btnAddSearchPathActionPerformed(evt);
+                }
+            });
 
-        GroupLayout searchPathsPanelLayout = new GroupLayout(searchPathsPanel);
-        searchPathsPanel.setLayout(searchPathsPanelLayout);
-        searchPathsPanelLayout.setHorizontalGroup(
-            searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(searchPathsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPathsPanelLayout.createSequentialGroup()
+            GroupLayout searchPathsPanelLayout = new GroupLayout(searchPathsPanel);
+            searchPathsPanel.setLayout(searchPathsPanelLayout);
+            searchPathsPanelLayout.setHorizontalGroup(
+                searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(searchPathsPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(searchPathsPanelLayout.createSequentialGroup()
+                            .addComponent(btnAddSearchPath)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnRemoveSearchPath)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
+            searchPathsPanelLayout.setVerticalGroup(
+                searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(searchPathsPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAddSearchPath)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRemoveSearchPath)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        searchPathsPanelLayout.setVerticalGroup(
-            searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(searchPathsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddSearchPath)
-                    .addComponent(btnRemoveSearchPath))
-                .addContainerGap())
-        );
+                        .addComponent(btnRemoveSearchPath))
+                    .addContainerGap())
+            );
 
-        jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.searchPathsPanel.TabConstraints.tabTitle_1"), searchPathsPanel); // NOI18N
+            jTabbedPane1.addTab(bundle.getString("ProfilePreferencesPanel.searchPathsPanel.TabConstraints.tabTitle_1"), searchPathsPanel); // NOI18N
 
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, GroupLayout.Alignment.TRAILING)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
+            GroupLayout layout = new GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, GroupLayout.Alignment.TRAILING)
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1)
+            );
 
-        jTabbedPane1.getAccessibleContext().setAccessibleName(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle")); // NOI18N
-    }// </editor-fold>//GEN-END:initComponents
+            jTabbedPane1.getAccessibleContext().setAccessibleName(bundle.getString("ProfilePreferencesPanel.enabledPanel.TabConstraints.tabTitle")); // NOI18N
+        }// </editor-fold>//GEN-END:initComponents
 
     private void renameMIActionPerformed(ActionEvent evt) {//GEN-FIRST:event_renameMIActionPerformed
         // TODO add your handling code here:
@@ -305,17 +315,34 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         chooser.setFileView(new ProfileFileView());
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            ProfileManager.defaultManager().addSearchPath(chooser.getSelectedFile());
-            searchPaths.setSelectedValue(chooser.getSelectedFile(), true);
+            try {
+                ProfileManager.defaultManager().addSearchPath(chooser.getSelectedFile());
+                searchPaths.setSelectedValue(chooser.getSelectedFile(), true);
+            } catch (IOException ex) {
+                log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorMessage", chooser.getSelectedFile().getPath(), ex.getLocalizedMessage()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnAddSearchPath.errorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnAddSearchPathActionPerformed
 
     private void btnRemoveSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnRemoveSearchPathActionPerformed
-        ProfileManager.defaultManager().removeSearchPath((File) searchPaths.getSelectedValue());
+        File path = (File) searchPaths.getSelectedValue();
+        try {
+            ProfileManager.defaultManager().removeSearchPath(path);
+        } catch (IOException ex) {
+            log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorMessage", path.getPath(), ex.getLocalizedMessage()),
+                    Bundle.getMessage("ProfilePreferencesPanel.btnRemoveSearchPath.errorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
 
     private void searchPathsValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_searchPathsValueChanged
-        if (searchPaths.getSelectedValue().equals(new File(FileUtil.getPreferencesPath()))) {
+        if (searchPaths.getSelectedValue() == null || searchPaths.getSelectedValue().equals(new File(FileUtil.getPreferencesPath()))) {
             this.btnRemoveSearchPath.setEnabled(false);
         } else {
             this.btnRemoveSearchPath.setEnabled(true);
@@ -364,10 +391,12 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 JOptionPane.CANCEL_OPTION
         );
         if (result == JOptionPane.OK_OPTION) {
-            // TODO: confirm desire to delete profile
             if (!FileUtil.delete(deletedProfile.getPath())) {
-                // TODO: notify user that profile directory could not be deleted
                 log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
+                        JOptionPane.ERROR_MESSAGE);
             }
             ProfileManager.defaultManager().removeProfile(deletedProfile);
             log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
@@ -389,7 +418,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 profilesTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                // TODO: Display error dialog - selected file is not a profile directory
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage", chooser.getSelectedFile().getPath()),
+                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage"),
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnOpenExistingProfileActionPerformed

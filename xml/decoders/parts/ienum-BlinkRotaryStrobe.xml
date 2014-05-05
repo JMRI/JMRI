@@ -4,11 +4,14 @@
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <ienumChoice choice="Blinking">
             <choice>Blinking</choice>
+	<choice xml:lang="it">Lampeggio</choice>
           </ienumChoice>
           <ienumChoice choice="Rotary">
             <choice>Rotary</choice>
+                <choice xml:lang="it">Rotante</choice>
           </ienumChoice>
           <ienumChoice choice="Strobe">
             <choice>Strobe</choice>
+	<choice xml:lang="it">Strobo</choice>
           </ienumChoice>
 </ienumVal>

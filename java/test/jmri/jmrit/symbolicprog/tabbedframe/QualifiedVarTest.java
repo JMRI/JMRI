@@ -25,27 +25,35 @@ public class QualifiedVarTest extends TestCase {
     public void testFrame() throws Exception {
         if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
 
-        setupDoc();
-        PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                                            "test qualified var", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger(), false) {
-                // dummy implementations
-                protected JPanel getModePane() { return null; }
-            };
+        // run all following on Swing thread
+        javax.swing.SwingUtilities.invokeAndWait( new Runnable() {
+            public void run () {
+                setupDoc();
+                PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
+                                                    "test qualified var", "programmers/Basic.xml",
+                                                    new jmri.progdebugger.ProgDebugger(), false) {
+                        // dummy implementations
+                        protected JPanel getModePane() { return null; }
+                    };
 
-        // get the sample info
-        jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile(){};
-        org.jdom.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
+                // get the sample info
+                try {
+                    jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile(){};
+                    org.jdom.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
         
-        DecoderFile df = new DecoderFile();  // used as a temporary
-        df.loadVariableModel(el.getChild("decoder"), p.variableModel);
-
-        p.readConfig(root, new RosterEntry());
-        p.pack();
-        p.setVisible(true);
+                    DecoderFile df = new DecoderFile();  // used as a temporary
+                    df.loadVariableModel(el.getChild("decoder"), p.variableModel);
+                } catch (Exception e) {
+                    log.error("Exception during setup", e);
+                }
+                p.readConfig(root, new RosterEntry());
+                p.pack();
+                p.setVisible(true);
         
-        // close
-        p.dispose();
+                // close the window for cleanliness
+                p.dispose();
+            }
+        });
     }
 
     // static variables for internal classes to report their interpretations
@@ -86,12 +94,15 @@ public class QualifiedVarTest extends TestCase {
                     .addContent(new Element("display")
                         .setAttribute("item", "CV5")
                         )
+                    .addContent(new Element("display")
+                        .setAttribute("item", "CV6")
+                        )
                     .addContent(new Element("separator"))
                     .addContent(new Element("label")
-                        .setAttribute("label", "set cv3 >= 100 to see cv4")
+                        .setAttribute("label", "set cv3 >= 100 to see CV4")
                         )
                     .addContent(new Element("label")
-                        .setAttribute("label", "set cv3 <=100 to see cv5")
+                        .setAttribute("label", "set cv3 <=100 to see CV5, CV6")
                         )
                     )
                 .addContent(new Element("column")
@@ -135,13 +146,27 @@ public class QualifiedVarTest extends TestCase {
                     )
                 )
             .addContent(new Element("pane")
-                .setAttribute("name", "Other")
+                .setAttribute("name", "CV3>50")
+                .addContent(new Element("qualifier")
+                    .addContent(new Element("variableref")
+                        .addContent("CV3")
+                    )
+                    .addContent(new Element("relation")
+                        .addContent("gt")
+                    )
+                    .addContent(new Element("value")
+                        .addContent("50")
+                    )
+                )
                 .addContent(new Element("column")
                     .addContent(new Element("display")
-                        .setAttribute("item", "Address")
+                        .setAttribute("item", "CV3")
                         )
                     .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
+                        .setAttribute("item", "CV4")
+                        )
+                    .addContent(new Element("label")
+                        .setAttribute("label", "Pane visible with CV3>100")
                         )
                     )
                 )

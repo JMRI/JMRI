@@ -12,23 +12,29 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - for Unified Software -->
-
-
-<variables>
-    <variable label="Decoder ID" item="decoderID" CV="249" default="0" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID</label>
-    </variable>
-    <variable label="Month of Decoder Manufacture" CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
-        <decVal/>
-    </variable>
-    <variable label="Day of Decoder Manufacture" CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
-        <decVal/>
-    </variable>
-    <variable label="Year of Decoder Manufacture" CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
-        <decVal/>
-    </variable>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="decoderID" CV="249" default="0" readOnly="yes">
+    <decVal/>
+    <label>Decoder ID</label>
+    <label xml:lang="it">Decoder ID</label>
+  </variable>
+  <variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
+    <decVal/>
+    <label>Month of Decoder Manufacture</label>
+    <label xml:lang="it">Month of Decoder Manufacture</label>
+    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+  </variable>
+  <variable CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
+    <decVal/>
+    <label>Day of Decoder Manufacture</label>
+    <label xml:lang="it">Day of Decoder Manufacture</label>
+    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+  </variable>
+  <variable CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
+    <decVal/>
+    <label>Year of Decoder Manufacture</label>
+    <label xml:lang="it">Year of Decoder Manufacture</label>
+    <tooltip xml:lang="it">Date TCS made this decoder</tooltip>
+  </variable>
 </variables>

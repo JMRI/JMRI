@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -45,7 +44,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		PrintWriter fileOut = null;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
 					true); // NOI18N
 		} catch (IOException e) {
 			log.error("Can not open CSV switch list file: "+file.getName());
@@ -58,6 +57,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
 		addLine(fileOut, LN + ESC + splitString(location.getName()) + ESC);
 		addLine(fileOut, PRNTR + ESC + location.getDefaultPrinterName() + ESC);
+		addLine(fileOut, SWLC + ESC + location.getSwitchListComment() + ESC);
+		// add location comment
+		if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals("")) {
+			// location comment can have multiple lines
+			String[] comments = location.getComment().split("\n"); // NOI18N
+			for (int i = 0; i < comments.length; i++)
+				addLine(fileOut, LC + ESC + comments[i] + ESC);
+		}
 		addLine(fileOut, VT + getDate(true));
 
 		// get a list of trains
@@ -75,7 +82,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
 				continue; // already printed this train
 			List<Car> carList = carManager.getByTrainDestinationList(train);
-			List<RollingStock> enginesList = engineManager.getByTrainList(train);
+			List<Engine> enginesList = engineManager.getByTrainBlockingList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
@@ -145,8 +152,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = (Engine) enginesList.get(j);
+					for (Engine engine : enginesList) {
 						if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
 							fileOutCsvEngine(fileOut, engine, PL);
 					}
@@ -171,8 +177,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 						}
 					}
 
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = (Engine) enginesList.get(j);
+					for (Engine engine : enginesList) {
 						if (engine.getRouteDestination() == rl)
 							fileOutCsvEngine(fileOut, engine, SL);
 					}

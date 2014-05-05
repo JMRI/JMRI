@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1.1, correction to CV354 by Nigel Cliffe -->
 <!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Load Code 1" CV="260">
     <decVal/>
     <label>Load Code 1</label>

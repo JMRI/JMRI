@@ -4,8 +4,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
@@ -23,9 +25,9 @@ import jmri.jmrit.operations.setup.Setup;
 public class CarTypes {
 
 	private static final String TYPES = Bundle.getMessage("carTypeNames");
-	private static final String CONVERTTYPES = Bundle.getMessage("carTypeConvert"); // Used to convert from ARR to
+	private static final String CONVERT_TYPES = Bundle.getMessage("carTypeConvert"); // Used to convert from ARR to
 																					// Descriptive
-	private static final String ARRTYPES = Bundle.getMessage("carTypeARR");
+	private static final String ARR_TYPES = Bundle.getMessage("carTypeARR");
 	// for property change
 	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length"; // NOI18N
 	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name"; // NOI18N
@@ -58,9 +60,9 @@ public class CarTypes {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] types = TYPES.split("%%"); // NOI18N
+			String[] types = TYPES.split(","); // NOI18N
 			if (Setup.getCarTypes().equals(Setup.AAR))
-				types = ARRTYPES.split("%%"); // NOI18N
+				types = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				list.add(types[i]);
 		}
@@ -86,15 +88,21 @@ public class CarTypes {
 	 * list
 	 */
 	public void changeDefaultNames(String type) {
+		String[] convert = CONVERT_TYPES.split(","); // NOI18N
+		String[] types = TYPES.split(","); // NOI18N
+		if (convert.length != types.length) {
+			log.error(
+					"Properties file doesn't have equal length conversion strings, carTypeNames {}, carTypeConvert {}",
+					types.length, convert.length);
+			return;
+		}
 		if (type.equals(Setup.DESCRIPTIVE)) {
 			// first replace the types
-			String[] convert = CONVERTTYPES.split("%%"); // NOI18N
-			String[] types = TYPES.split("%%"); // NOI18N
 			for (int i = 0; i < convert.length; i++) {
 				replaceName(convert[i], types[i]);
 			}
 			// remove AAR types
-			String[] aarTypes = ARRTYPES.split("%%"); // NOI18N
+			String[] aarTypes = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < aarTypes.length; i++)
 				list.remove(aarTypes[i]);
 			// add descriptive types
@@ -104,8 +112,6 @@ public class CarTypes {
 			}
 		} else {
 			// first replace the types
-			String[] convert = CONVERTTYPES.split("%%"); // NOI18N
-			String[] types = TYPES.split("%%"); // NOI18N
 			for (int i = 0; i < convert.length; i++) {
 				replaceName(types[i], convert[i]);
 			}
@@ -113,7 +119,7 @@ public class CarTypes {
 			for (int i = 0; i < types.length; i++)
 				list.remove(types[i]);
 			// add AAR types
-			types = ARRTYPES.split("%%"); // NOI18N
+			types = ARR_TYPES.split(","); // NOI18N
 			for (int i = 0; i < types.length; i++) {
 				if (!list.contains(types[i]))
 					list.add(types[i]);
@@ -174,18 +180,13 @@ public class CarTypes {
 	 */
 	public int getCurMaxNameLength() {
 		if (maxNameLength == 0) {
-			String[] types = getNames();
-			int length = MIN_NAME_LENGTH;
-			for (int i = 0; i < types.length; i++) {
-				String type[] = types[i].split("-");
-				if (type[0].length() > length)
-					length = type[0].length();
+			maxNameLength = MIN_NAME_LENGTH;
+			for (String name : getNames()) {
+				if (name.length() > maxNameLength)
+					maxNameLength = name.length();
 			}
-			maxNameLength = length;
-			return length;
-		} else {
-			return maxNameLength;
 		}
+		return maxNameLength;
 	}
 
 	private int maxNameLengthSubType = 0;

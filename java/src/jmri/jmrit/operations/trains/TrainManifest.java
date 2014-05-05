@@ -13,10 +13,13 @@ import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest.
@@ -26,16 +29,19 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainManifest extends TrainCommon {
 
+	private static final Logger log = LoggerFactory.getLogger(TrainManifest.class);
+	private static final boolean isManifest = true;
+
 	public TrainManifest(Train train) {
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
-		PrintWriter fileOut = null;
+		PrintWriter fileOut;
 
 		try {
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
 					true);
 		} catch (IOException e) {
-			log.error("Can not open train manifest file: "+file.getName());
+			log.error("Can not open train manifest file: " + file.getName());
 			return;
 		}
 		// build header
@@ -61,7 +67,7 @@ public class TrainManifest extends TrainCommon {
 		if (!train.getComment().equals(""))
 			newLine(fileOut, train.getComment());
 
-		List<RollingStock> engineList = engineManager.getByTrainList(train);
+		List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 
 		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
 			newLine(fileOut, train.getRoute().getComment());
@@ -76,6 +82,7 @@ public class TrainManifest extends TrainCommon {
 		for (int r = 0; r < routeList.size(); r++) {
 			RouteLocation rl = routeList.get(r);
 			boolean oldWork = work;
+			boolean printHeader = false;
 			work = isThereWorkAtLocation(carList, engineList, rl);
 
 			// print info only if new location
@@ -88,6 +95,7 @@ public class TrainManifest extends TrainCommon {
 					if (!oldWork)
 						newLine(fileOut);
 					newWork = true;
+					printHeader = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					String workAt = MessageFormat.format(TrainManifestText.getStringScheduledWork(),
 							new Object[] { routeLocationName });
@@ -135,25 +143,29 @@ public class TrainManifest extends TrainCommon {
 					newLine(fileOut, MessageFormat.format(TrainManifestText.getStringRemoveHelpers(),
 							new Object[] { splitString(rl.getName()) }));
 			}
+			
+			if (isThereWorkAtLocation(null, engineList, rl))
+				printEngineHeader(fileOut, isManifest);
+
+			if (Setup.isTwoColumnFormatEnabled()) {
+				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+			} else {
+				pickupEngines(fileOut, engineList, rl, isManifest);
+				dropEngines(fileOut, engineList, rl, isManifest);
+			}
 
 			if (Setup.isTwoColumnFormatEnabled())
-				blockLocosTwoColumn(fileOut, engineList, rl, true);
+				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 			else
-				pickupEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
-
-			if (Setup.isTwoColumnFormatEnabled())
-				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true);
-			else
-				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true);
-
-			if (!Setup.isTwoColumnFormatEnabled())
-				dropEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
+				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = routeList.get(r + 1);
 				if (!routeLocationName.equals(splitString(rlNext.getName()))) {
 					if (newWork) {
+						if (Setup.isPrintHeadersEnabled())
+							printHorizontalLine(fileOut, isManifest);
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(),
 								new Object[] { routeLocationName, rl.getTrainDirectionString(), cars,
@@ -177,7 +189,8 @@ public class TrainManifest extends TrainCommon {
 						if (!rl.getComment().equals("")) {
 							s = routeLocationName;
 							if (rl.getComment().trim().length() > 0)
-								s = s + ", " + rl.getComment();
+								s = MessageFormat.format(TrainManifestText.getStringNoScheduledWorkWithRouteComment(),
+										new Object[] { routeLocationName, rl.getComment() });
 						}
 						if (train.isShowArrivalAndDepartureTimesEnabled()) {
 							if (r == 0)
@@ -202,13 +215,15 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			} else {
+				if (Setup.isPrintHeadersEnabled())
+					printHorizontalLine(fileOut, isManifest);
 				newLine(fileOut, MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 						new Object[] { routeLocationName }));
 			}
 			previousRouteLocationName = routeLocationName;
 		}
 		// Are there any cars that need to be found?
-		addCarsLocationUnknown(fileOut, true);
+		addCarsLocationUnknown(fileOut, isManifest);
 
 		fileOut.flush();
 		fileOut.close();
@@ -261,7 +276,7 @@ public class TrainManifest extends TrainCommon {
 	}
 
 	private void newLine(PrintWriter file, String string) {
-		newLine(file, string, Setup.getManifestOrientation());
+		newLine(file, string, isManifest);
 	}
 
 }

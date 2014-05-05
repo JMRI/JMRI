@@ -306,8 +306,8 @@
         </enumVal>
         <label>Notching Mode</label>
         <label xml:lang="it">Modalità Notch</label>
-       <tooltip>Not supported on early EVO</tooltip>
-       <tooltip xml:lang="it">Non supportato dai primi EVO</tooltip>
+       <comment>Not supported on early EVO</comment>
+       <comment xml:lang="it">Non supportato dai primi EVO</comment>
       </variable>
     </variables>
     <resets>

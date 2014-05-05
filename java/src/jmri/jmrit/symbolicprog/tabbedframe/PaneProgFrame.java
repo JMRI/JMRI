@@ -157,6 +157,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // some of the names are so long, and we expect more formats
         JMenu importSubMenu = new JMenu(SymbolicProgBundle.getMessage("MenuImport"));
         fileMenu.add(importSubMenu);
+        importSubMenu.add(new CsvImportAction(SymbolicProgBundle.getMessage("MenuImportCSV"), cvModel, this));
         importSubMenu.add(new Pr1ImportAction(SymbolicProgBundle.getMessage("MenuImportPr1"), cvModel, this));
         importSubMenu.add(new LokProgImportAction(SymbolicProgBundle.getMessage("MenuImportLokProg"), cvModel, this));
 
@@ -432,7 +433,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     
                 }
     
-                pickProgrammerMode(programming);
+                if (programming != null) pickProgrammerMode(programming);
                 
             } else {
                 log.error("Can't set programming mode, no programmer instance");
@@ -543,8 +544,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
-        // load function names
-        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+        // load function names from family
+        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"),"family");
+
+        // load sound names from family
+        re.loadSounds(decoderRoot.getChild("decoder").getChild("family").getChild("soundlabels"),"family");
         
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
@@ -559,6 +563,13 @@ abstract public class PaneProgFrame extends JmriJFrame
         
         // save the pointer to the model element
         modelElem = df.getModelElement();
+
+        // load function names from model
+        re.loadFunctions(modelElem.getChild("functionlabels"),"model");
+
+        // load sound names from model
+        re.loadSounds(modelElem.getChild("soundlabels"),"model");
+
     }
 
     protected void loadProgrammerFile(RosterEntry r) {
@@ -953,7 +964,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
         if (log.isDebugEnabled()) log.debug("newPane with enableEmpty "+enableEmpty+" getShowEmptyPanes() "+getShowEmptyPanes());
         // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem);
+        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem, _rosterEntry);
         p.setOpaque(true);
         // how to handle the tab depends on whether it has contents and option setting
         int index;

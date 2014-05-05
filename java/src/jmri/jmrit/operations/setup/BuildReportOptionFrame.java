@@ -125,8 +125,8 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		setBuildReportRadioButton();
 		setBuildReportRouterRadioButton();
 
-		// load font sizes 7 through 14
-		for (int i = 7; i < 15; i++)
+		// load font sizes 5 through 14
+		for (int i = 5; i < 15; i++)
 			fontSizeComboBox.addItem(i);
 		fontSizeComboBox.setSelectedItem(Setup.getBuildReportFontSize());
 

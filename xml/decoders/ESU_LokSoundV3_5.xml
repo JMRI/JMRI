@@ -1945,7 +1945,7 @@
         <label>F4(r)7</label>
         <label xml:lang="fr">F4 (arr)7</label>
       </variable>
-      <variable label="F4(r)8" CV="168" mask="VXXXXXXX" item="F4(r)7" minOut="1">
+      <variable label="F4(r)8" CV="168" mask="VXXXXXXX" item="F4(r)8" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4(r)8</label>
         <label xml:lang="fr">F4 (arr)8</label>
@@ -2400,7 +2400,7 @@
         <label>F10(r)2</label>
         <label xml:lang="fr">F10 (arr)2</label>
       </variable>
-      <variable label="F10(r)3" CV="204" mask="XXXXXVXX" item="F10(r)2" minOut="3">
+      <variable label="F10(r)3" CV="204" mask="XXXXXVXX" item="F10(r)3" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10(r)3</label>
         <label xml:lang="fr">F10 (arr)3</label>

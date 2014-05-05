@@ -137,6 +137,17 @@
       </qualifier>
     </variable>
 
+    <variables>
+      <qualifier>
+        <variableref>CV3</variableref>
+        <relation>le</relation>
+        <value>100</value>
+      </qualifier>
+      <variable label="CV6 qual cv3 le 100 w variables" CV="6" item="CV6" >
+        <decVal max="31"/>
+      </variable>
+    </variables>
+
   </variables>
 
   <resets>

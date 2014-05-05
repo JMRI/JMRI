@@ -15,8 +15,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -32,6 +32,7 @@ public class TrainSwitchLists extends TrainCommon {
 
 	TrainManager trainManager = TrainManager.instance();
 	char formFeed = '\f';
+	private static final boolean isManifest = false;
 
 	/**
 	 * builds a switch list for a location
@@ -116,7 +117,7 @@ public class TrainSwitchLists extends TrainCommon {
 			int stops = 1;
 			boolean trainDone = false;
 			// get engine and car lists
-			List<RollingStock> engineList = engineManager.getByTrainList(train);
+			List<Engine> engineList = engineManager.getByTrainBlockingList(train);
 			List<Car> carList = carManager.getByTrainDestinationList(train);
 			List<RouteLocation> routeList = route.getLocationsBySequenceList();
 			// does the train stop once or more at this location?
@@ -184,20 +185,25 @@ public class TrainSwitchLists extends TrainCommon {
 										expectedArrivalTime, rl.getTrainDirectionString() }));
 						}
 					}
+					
+					if (isThereWorkAtLocation(null, engineList, rl))
+						printEngineHeader(fileOut, isManifest);
+
+					if (Setup.isTwoColumnFormatEnabled()) {
+						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+					} else {
+						pickupEngines(fileOut, engineList, rl, isManifest);
+						dropEngines(fileOut, engineList, rl, isManifest);
+					}
 
 					if (Setup.isTwoColumnFormatEnabled())
-						blockLocosTwoColumn(fileOut, engineList, rl, false);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
 					else
-						pickupEngines(fileOut, engineList, rl, Setup.getSwitchListOrientation());
-
-					if (Setup.isTwoColumnFormatEnabled())
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, false);
-					else
-						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, false);
-
-					if (!Setup.isTwoColumnFormatEnabled())
-						dropEngines(fileOut, engineList, rl, Setup.getSwitchListOrientation());
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
+						
 					stops++;
+					if (Setup.isPrintHeadersEnabled())
+						printHorizontalLine(fileOut, isManifest);
 				}
 			}
 			if (trainDone && !pickupCars && !dropCars) {
@@ -214,7 +220,7 @@ public class TrainSwitchLists extends TrainCommon {
 			}
 		}
 		// Are there any cars that need to be found?
-		addCarsLocationUnknown(fileOut, false);
+		addCarsLocationUnknown(fileOut, isManifest);
 		fileOut.flush();
 		fileOut.close();
 	}
@@ -233,7 +239,7 @@ public class TrainSwitchLists extends TrainCommon {
 	// if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 	// && car.getRouteDestination() == rld) {
 	// if (car.isUtility())
-	// pickupUtilityCars(fileOut, carList, car, rl, rld, false);
+	// pickupUtilityCars(fileOut, carList, car, rl, rld, isManifest);
 	// else
 	// switchListPickUpCar(fileOut, car);
 	// pickupCars = true;
@@ -246,7 +252,7 @@ public class TrainSwitchLists extends TrainCommon {
 	// Car car = carManager.getById(carList.get(j));
 	// if (car.getRouteDestination() == rl) {
 	// if (car.isUtility())
-	// setoutUtilityCars(fileOut, carList, car, rl, false);
+	// setoutUtilityCars(fileOut, carList, car, rl, isManifest);
 	// else
 	// switchListDropCar(fileOut, car);
 	// dropCars = true;
@@ -382,7 +388,7 @@ public class TrainSwitchLists extends TrainCommon {
 	// }
 	// while (index < carList.size()) {
 	// String s = padString("", lineLength / 2);
-	// s = appendSetoutString(s, carList, rl, false, isManifest);
+	// s = appendSetoutString(s, carList, rl, isManifest, isManifest);
 	// String test = s.trim();
 	// if (test.length() > 0)
 	// newLine(fileOut, s, isManifest);
@@ -419,7 +425,7 @@ public class TrainSwitchLists extends TrainCommon {
 	// else
 	// newS = s + " |";
 	// if (car.isUtility()) {
-	// String so = setoutUtilityCars(carList, car, rl, false, isManfest);
+	// String so = setoutUtilityCars(carList, car, rl, isManifest, isManfest);
 	// if (so == null)
 	// return s; // no changes to the input string
 	// newS = newS + so;
@@ -451,7 +457,7 @@ public class TrainSwitchLists extends TrainCommon {
 	}
 
 	protected void newLine(PrintWriter file, String string) {
-		newLine(file, string, Setup.getSwitchListOrientation());
+		newLine(file, string, isManifest);
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());

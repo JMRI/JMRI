@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="ABC">
+<pane name="ABC" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control"/>
     <display item="Direction Dependent stops with asymmetrical DCC"/>

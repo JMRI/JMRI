@@ -2,18 +2,16 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.Apps;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.trains.TrainsTableFrame;
-
-import apps.Apps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
@@ -31,6 +29,7 @@ public class LoadDemoAction extends AbstractAction {
 		super(s);
 	}
 
+        @Override
 	public void actionPerformed(ActionEvent e) {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
@@ -55,14 +54,7 @@ public class LoadDemoAction extends AbstractAction {
 			// now deregister shut down task
 			// If Trains window was opened, then task is active
 			// otherwise it is normal to not have the task running
-			try {
-				if (TrainsTableFrame.trainDirtyTask != null) {
-					jmri.InstanceManager.shutDownManagerInstance().deregister(
-							TrainsTableFrame.trainDirtyTask);
-				}
-			} catch (Exception ex) {
-				log.debug("Unable to deregister Train Dirty Task");
-			}
+			OperationsManager.getInstance().setShutDownTask(null);
 
 			JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterLoadDemo"),
 					Bundle.getMessage("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);

@@ -32,6 +32,8 @@ public class PackageTest extends TestCase {
 		suite.addTest(DefaultSignalSystemManagerTest.suite());
 		suite.addTest(DefaultUserMessagePreferencesTest.suite());
 		suite.addTest(ProxyLightManagerTest.suite());
+		suite.addTest(ProxySensorManagerTest.suite());
+		suite.addTest(ProxyTurnoutManagerTest.suite());
 		suite.addTest(jmri.managers.configurexml.PackageTest.suite());
                 suite.addTest(DefaultIdTagManagerTest.suite());
         return suite;

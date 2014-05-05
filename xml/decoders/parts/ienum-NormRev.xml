@@ -5,8 +5,10 @@
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="normal">
     <choice>normal</choice>
+	<choice xml:lang="it">normale</choice>
   </ienumChoice>
   <ienumChoice choice="reversed">
     <choice>reversed</choice>
+	<choice xml:lang="it">invertito</choice>
   </ienumChoice>
 </ienumVal>

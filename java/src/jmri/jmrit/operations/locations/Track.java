@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or interchange track.
  * 
- * @author Daniel Boudreau
+ * @author Daniel Boudreau Copyright (C) 2008 - 2014
  * @version $Revision$
  */
 public class Track {
@@ -73,7 +73,7 @@ public class Track {
 	protected int _scheduleCount = 0; // the number of times the item has been delivered
 	protected int _reservedInRoute = 0; // length of cars in route to this track
 	protected int _reservationFactor = 100; // percentage of track space for cars in route
-	protected int _mode = MATCH;
+	protected int _mode = MATCH;	// default is match mode
 
 	// drop options
 	protected String _dropOption = ANY; // controls which route or train can set out cars
@@ -169,7 +169,7 @@ public class Track {
 	public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
 	public static final String SCHEDULE_MODE_CHANGED_PROPERTY = "trackScheduleMode"; // NOI18N
 	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "trackScheduleId"; // NOI18N
-	public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder";
+	public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -263,15 +263,35 @@ public class Track {
 		return _name;
 	}
 
+	/**
+	 * Gets the track type
+	 * @return Track.SPUR Track.YARD Track.INTERCHANGE or Track.STAGING
+	 */
 	public String getTrackType() {
 		return _trackType;
 	}
 	
+	/**
+	 * Sets the track type, spur, interchange, yard, staging
+	 * @param type Track.SPUR Track.YARD Track.INTERCHANGE Track.STAGING
+	 */
 	public void setTrackType(String type) {
 		String old = _trackType;
 		_trackType = type;
 		if (!old.equals(type))
 			setDirtyAndFirePropertyChange(TRACK_TYPE_CHANGED_PROPERTY, old, type);
+	}
+	
+	public String getTrackTypeName() {
+		if (getTrackType().equals(Track.SPUR))
+			return Bundle.getMessage("Spur").toLowerCase();
+		if (getTrackType().equals(Track.YARD))
+			return Bundle.getMessage("Yard").toLowerCase();
+		if (getTrackType().equals(Track.INTERCHANGE))
+			return Bundle.getMessage("Class/Interchange");	// this is an abbreviation
+		if (getTrackType().equals(Track.STAGING))
+			return Bundle.getMessage("Staging").toLowerCase();
+		return ("unknown");
 	}
 
 	@Deprecated // as of 10/27/2013 version 3.5.5
@@ -641,6 +661,11 @@ public class Track {
 
 	List<String> _typeList = new ArrayList<String>();
 
+	/**
+	 * Returns all of the rolling stock type names serviced by this track.
+	 * 
+	 * @return rolling stock type names
+	 */
 	public String[] getTypeNames() {
 		String[] types = new String[_typeList.size()];
 		for (int i = 0; i < _typeList.size(); i++)
@@ -1213,8 +1238,8 @@ public class Track {
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
-			if (!acceptsDestination(car.getFinalDestination())
-					&& getLocation() != car.getFinalDestination()) {
+			if (!acceptsDestination(car.getFinalDestination())) {
+//					&& getLocation() != car.getFinalDestination()) { // 4/14/2014 I can't remember why this was needed
 				return DESTINATION + " (" + car.getFinalDestinationName() + ") "
 						+ MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
 			}
@@ -1578,23 +1603,18 @@ public class Track {
 		// does car already have this destination?
 		if (car.getDestinationTrack() == this)
 			return OKAY;
+		// only spurs can have a schedule
+		if (!getTrackType().equals(SPUR))
+			return OKAY;
 		if (getScheduleId().equals("")) {
 			// does car have a scheduled load?
 			if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 					|| car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))
 				return OKAY; // no
-			// can't place a car with a scheduled load at a spur
-			else if (!getTrackType().equals(SPUR))
-				return OKAY;
-			else
-				return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD,
-						car.getLoadName() });
+			return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
 		}
-		// only spurs can have a schedule
-		if (!getTrackType().equals(SPUR))
-			return OKAY;
 		log.debug("Track (" + getName() + ") has schedule (" + getScheduleName() + ") mode "
-				+ getScheduleMode());
+				+ getScheduleMode() + (getScheduleMode() == SEQUENTIAL? " Sequential" : " Match")); // NOI18N
 
 		ScheduleItem si = getCurrentScheduleItem();
 		if (si == null) {
@@ -1687,10 +1707,10 @@ public class Track {
 		}
 		// a car has a schedule id if the schedule was in match mode
 		if (!car.getScheduleId().equals("")) {
-			log.debug("Car (" + car.toString() + ") has schedule id " + car.getScheduleId());
+			String id = car.getScheduleId();
+			log.debug("Car ({}) has schedule id {}", car.toString(), car.getScheduleId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
-				String id = car.getScheduleId();	// save id for error message
 				ScheduleItem si = sch.getItemById(id);
 				car.setScheduleId("");
 				if (si != null) {
@@ -1747,6 +1767,13 @@ public class Track {
 		return OKAY;
 	}
 
+	/**
+	 * Loads the car's with a final destination which is the ship address for the schedule item. Also sets the next load
+	 * and wait count that will kick in when the car arrives at the spur with this schedule.
+	 * 
+	 * @param scheduleItem
+	 * @param car
+	 */
 	private void loadNext(ScheduleItem scheduleItem, Car car) {
 		if (scheduleItem == null) {
 			log.debug("schedule item is null!, id " + getScheduleId());
@@ -1764,7 +1791,7 @@ public class Track {
 
 		log.debug("Car (" + car.toString() + ") type (" + car.getTypeName() + ") next load (" + car.getNextLoadName()
 				+ ") final destination (" + car.getFinalDestinationName() + ", " + car.getFinalDestinationTrackName() // NOI18N
-				+ ") next wait: " + car.getWait()); // NOI18N
+				+ ") next wait: " + car.getNextWait()); // NOI18N
 		// set all cars in kernel to the next load
 		car.updateKernel();
 	}

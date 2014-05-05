@@ -492,7 +492,7 @@ public class WarrantFrame extends WarrantRoute {
                 try {
                     Float.parseFloat(_throttleFactorBox.getText());
                 } catch (NumberFormatException nfe) {
-                	showWarning("MustBeFloat");
+                	showWarning(Bundle.getMessage("MustBeFloat"));
                     _throttleFactorBox.setText("1.0");
                 }
             }
@@ -659,7 +659,7 @@ public class WarrantFrame extends WarrantRoute {
     private void insertRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-        	showWarning("selectRow");
+        	showWarning(Bundle.getMessage("selectRow"));
             return;
         }
         _throttleCommands.add(row, new ThrottleSetting(0, null, null, null));
@@ -669,14 +669,14 @@ public class WarrantFrame extends WarrantRoute {
     private void deleteRow() {
         int row = _commandTable.getSelectedRow();
         if (row<0) {
-        	showWarning("selectRow");
+        	showWarning(Bundle.getMessage("selectRow"));
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
         if (cmd!=null) {
         	String c = cmd.getCommand();
             if (c!=null && c.trim().toUpperCase().equals("NOOP")) {
-            	showWarning("cannotDeleteNoop");
+            	showWarning(Bundle.getMessage("cannotDeleteNoop"));
                 return;
             }
             long time = cmd.getTime();
@@ -1007,12 +1007,22 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     protected void stopRunTrain() {
-    	if (_warrant!=null) {
-        	_warrant.deAllocate();
-            _warrant.stopWarrant();
-            _warrant.removePropertyChangeListener(this);    		
-    	}
         if (_learnThrottle!=null) {
+        	// if last block is dark and previous block has not been exited, we must assume train
+        	// has entered the last block now that the user is terminating the recording.
+           	List<BlockOrder> orders = getOrders();
+           	OBlock lastBlock = orders.get(orders.size()-1).getBlock();
+        	OBlock currentBlock = _warrant.getCurrentBlockOrder().getBlock();
+        	if (!lastBlock.equals(currentBlock)) {
+        		if ((lastBlock.getState() & OBlock.DARK) != 0 && 
+        				currentBlock.equals(orders.get(orders.size()-2).getBlock())) {
+                    setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());                    		       			
+        		} else {
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock), 
+                    		Bundle.getMessage("WarningTitle"), 
+                            JOptionPane.WARNING_MESSAGE);        			
+        		}
+        	}
         	if (_learnThrottle.getSpeedSetting()>0.0) {
                 _learnThrottle.setSpeedSetting(-0.5F);
                 _learnThrottle.setSpeedSetting(0.0F);        		
@@ -1020,6 +1030,11 @@ public class WarrantFrame extends WarrantRoute {
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
+    	if (_warrant!=null) {
+        	_warrant.deAllocate();
+            _warrant.stopWarrant();
+            _warrant.removePropertyChangeListener(this);    		
+    	}
         _statusBox.setText(Bundle.getMessage("LearningStop"));
     }
     
@@ -1094,7 +1109,7 @@ public class WarrantFrame extends WarrantRoute {
     	String bName = Bundle.getMessage("NoBlock");
     	BlockOrder bo = _warrant.getCurrentBlockOrder();
     	if (bo!=null) {
-    		OBlock block = _warrant.getCurrentBlockOrder().getBlock();
+    		OBlock block = bo.getBlock();
     		if (block!=null) {
     			bName = block.getDisplayName();
     		}
@@ -1194,7 +1209,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null)+", name= "+_trainNameBox.getText());
+        if (log.isDebugEnabled()) log.debug("warrant saved _train "+_train+", name= "+_trainNameBox.getText());
 
         if (_create) {
             InstanceManager.getDefault(WarrantManager.class).register(_warrant);
@@ -1220,7 +1235,6 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void close() {
-    	stopRunTrain();
     	WarrantTableAction.closeWarrantFrame(this);    		
     }
 
@@ -1383,6 +1397,8 @@ public class WarrantFrame extends WarrantRoute {
                         ts.setCommand("Wait Sensor");
                     } else if ("RUN WARRANT".equals(cmd)) {
                         ts.setCommand("Run Warrant");                    	
+                    } else if ("START TRACKER".equals(cmd)) {
+                        ts.setCommand("Start Tracker");                    	
                     } else {
                         msg = Bundle.getMessage("badCommand", (String)value); 
                     }

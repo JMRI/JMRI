@@ -20,6 +20,7 @@
   <decoder>
     <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
       <model model="DS54" lowVersionID="65"/>
+
       <comment xml:lang="it">DS54 is a stationary decoder, but it can be programmed in the usual way</comment>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
@@ -28,40 +29,50 @@
       <variable label="Address" CV="1" mask="VVVVVVVV" comment="Decoder address">
         <decVal min="1" max="127"/>
         <label>Address</label>
+
         <label xml:lang="it">Indirizzo</label>
         <comment>Decoder address</comment>
+
         <comment xml:lang="it">Indirizzo decoder</comment>
       </variable>
       <variable label="High Address" CV="9" mask="VVVVVVVV" comment="Decoder address high part, use this if the address is greater than 127">
         <decVal min="1" max="127"/>
         <label>High Address</label>
+
         <label xml:lang="it">Parte Alta Indirizzo</label>
         <comment>Decoder address high part, use this if the address is greater than 127</comment>
+
         <comment xml:lang="it">Parte Alta Indirizzo decoder, usare se l'indirizzo è maggiore di 127</comment>
       </variable>
       <variable label="A Output Type" CV="3" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>A Output Type</label>
+
         <label xml:lang="it">Tipo Uscita A</label>
       </variable>
       <variable label="B Output Type" CV="4" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>B Output Type</label>
+
         <label xml:lang="it">Tipo Uscita B</label>
       </variable>
       <variable label="C Output Type" CV="5" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>C Output Type</label>
+
         <label xml:lang="it">Tipo Uscita C</label>
       </variable>
       <variable label="D Output Type" CV="6" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>D Output Type</label>
+
         <label xml:lang="it">Tipo Uscita D</label>
       </variable>
       <variable label="Aux A input" CV="33" mask="VVVVXXXX">
       <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
+
         <label>Aux A input</label>
+
         <label xml:lang="it">Ingresso Aux. A</label>
       </variable>
       <variable label="Aux A task" CV="33" mask="XXXXVVVV">
@@ -71,11 +82,13 @@
       <variable label="Switch A input" CV="34" mask="VVVVXXXX">
          <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Switch A input</label>
+
         <label xml:lang="it">Ingresso interruttore A</label>
       </variable>
       <variable label="Switch A task" CV="34" mask="XXXXVVVV">
          <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Switch A task</label>
+
         <label xml:lang="it">Comportamento Interruttore A</label>
       </variable>
       <variable label="Aux B input" CV="35" mask="VVVVXXXX">
@@ -83,7 +96,7 @@
         <label>Aux B input</label>
       </variable>
       <variable label="Aux B task" CV="35" mask="XXXXVVVV">
-         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Aux B task</label>
       </variable>
       <variable label="Switch B input" CV="36" mask="VVVVXXXX">

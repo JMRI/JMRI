@@ -192,6 +192,88 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      */
     abstract public IEEE802154Node newNode();
 
+    /**
+     * Public method to identify a SerialNode from its node address
+     *      Note:   'addr' is the node address, numbered from 0.
+     *              Returns 'null' if a SerialNode with the specified address
+     *                  was not found
+     */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(String addr) {
+        log.debug("String getNodeFromAddress called with " +addr);
+        byte ba[]=jmri.util.StringUtil.bytesFromHexString(addr);
+        return getNodeFromAddress(ba);
+    }
+
+    /**
+     * Public method to identify a SerialNode from its node address
+     *      Note:   'addr' is the node address, numbered from 0.
+     *              Returns 'null' if a SerialNode with the specified address
+     *                  was not found
+     */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(int ia[]) {
+        log.debug("int array getNodeFromAddress called with " +ia);
+        byte ba[]=new byte[ia.length];
+        for(int i=0;i<ia.length;i++) ba[i]=(byte)( ia[i] & 0xff);
+        return getNodeFromAddress(ba);
+    }
+
+    /**
+     * Public method to identify a SerialNode from its node address
+     *      Note:   'addr' is the node address, numbered from 0.
+     *              Returns 'null' if a SerialNode with the specified address
+     *                  was not found
+     */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(byte ba[]) {
+        log.debug("byte array getNodeFromAddress called with " +ba);
+        for (int i=0; i<numNodes; i++) {
+            byte bsa[]=((IEEE802154Node)getNode(i)).getUserAddress();
+            byte bga[]=((IEEE802154Node)getNode(i)).getGlobalAddress();
+            if(bsa.length==ba.length){
+              int j = 0;
+              for(;j<bsa.length;j++)
+                 if(bsa[j]!=ba[j])
+                    break;
+              if(j==bsa.length) 
+                return(getNode(i));
+            } else if(bga.length==ba.length) {
+              int j = 0;
+              for(;j<bga.length;j++)
+                 if(bga[j]!=ba[j])
+                    break;
+              if(j==bga.length) 
+                return(getNode(i));
+            }
+        }
+        return (null);
+    }
+
+    /**
+     *  Public method to delete a node by the string representation
+     *  of it's address.
+     */
+     public synchronized void deleteNode(String nodeAddress) {
+        // find the serial node
+        int index = 0;
+        for (int i=0; i<numNodes; i++) {
+            if (nodeArray[i] == getNodeFromAddress(nodeAddress)) {
+                index = i;
+            }
+        }
+        if (index==curSerialNodeIndex) {
+            log.warn("Deleting the serial node active in the polling loop");
+        }
+        // Delete the node from the node list
+        numNodes --;
+        if (index<numNodes) {
+            // did not delete the last node, shift
+            for (int j=index; j<numNodes; j++) {
+                nodeArray[j] = nodeArray[j+1];
+            }
+        }
+        nodeArray[numNodes] = null;
+    }
+
+
  
     static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 

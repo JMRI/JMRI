@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Speed Regulation">
+<pane name="Speed Regulation" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <label label="To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco"/>
     <label label="on track with correct direction set, F0 turned off and enough distance from the Start marker"/>

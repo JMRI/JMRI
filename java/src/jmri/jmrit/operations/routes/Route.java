@@ -2,10 +2,12 @@ package jmri.jmrit.operations.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.locations.Location;
@@ -13,6 +15,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -236,18 +239,17 @@ public class Route implements java.beans.PropertyChangeListener {
 	 * @return list of RouteLocations ordered by sequence
 	 */
 	public List<RouteLocation> getLocationsBySequenceList() {
-		List<RouteLocation> sortList = getLocationsByIdList();
 		// now re-sort
 		List<RouteLocation> out = new ArrayList<RouteLocation>();
-		for (int i = 0; i < sortList.size(); i++) {
+		for (RouteLocation rl : getLocationsByIdList()) {
 			for (int j = 0; j < out.size(); j++) {
-				if (sortList.get(i).getSequenceId() < out.get(j).getSequenceId()) {
-					out.add(j, sortList.get(i));
+				if (rl.getSequenceId() < out.get(j).getSequenceId()) {
+					out.add(j, rl);
 					break;
 				}
 			}
-			if (!out.contains(sortList.get(i))) {
-				out.add(sortList.get(i));
+			if (!out.contains(rl)) {
+				out.add(rl);
 			}
 		}
 		return out;
@@ -269,10 +271,8 @@ public class Route implements java.beans.PropertyChangeListener {
 		// now find and adjust the other location taken by this one
 		boolean found = false;
 		List<RouteLocation> sortList = getLocationsByIdList();
-		RouteLocation rladjust;
 		while (!found) {
-			for (int i = 0; i < sortList.size(); i++) {
-				rladjust = sortList.get(i);
+			for (RouteLocation rladjust : sortList) {
 				if (rladjust.getSequenceId() == searchId && rladjust != rl) {
 					rladjust.setSequenceId(sequenceId);
 					found = true;
@@ -302,10 +302,8 @@ public class Route implements java.beans.PropertyChangeListener {
 		// now find and adjust the other location taken by this one
 		boolean found = false;
 		List<RouteLocation> sortList = getLocationsByIdList();
-		RouteLocation rladjust;
 		while (!found) {
-			for (int i = 0; i < sortList.size(); i++) {
-				rladjust = sortList.get(i);
+			for (RouteLocation rladjust : sortList) {
 				if (rladjust.getSequenceId() == searchId && rladjust != rl) {
 					rladjust.setSequenceId(sequenceId);
 					found = true;
@@ -328,14 +326,13 @@ public class Route implements java.beans.PropertyChangeListener {
 		List<RouteLocation> routeList = getLocationsByIdList();
 		if (routeList.size() == 0)
 			return ERROR;
-		for (int i = 0; routeList.size() > i; i++) {
-			if (routeList.get(i).getName().equals(RouteLocation.DELETED))
+		for (RouteLocation rl : routeList) {
+			if (rl.getName().equals(RouteLocation.DELETED))
 				return ERROR;
 		}
 		// check to see if this route is used by a train
-		List<Train> trains = TrainManager.instance().getTrainsByIdList();
-		for (int i = 0; i < trains.size(); i++) {
-			if (trains.get(i).getRoute() == this)
+		for (Train train : TrainManager.instance().getTrainsByIdList()) {
+			if (train.getRoute() == this)
 				return OKAY;
 		}
 		return ORPHAN;
@@ -343,20 +340,16 @@ public class Route implements java.beans.PropertyChangeListener {
 
 	public JComboBox getComboBox() {
 		JComboBox box = new JComboBox();
-		List<RouteLocation> routeList = getLocationsBySequenceList();
-		for (int i = 0; i < routeList.size(); i++) {
-			box.addItem(routeList.get(i));
-		}
+		for (RouteLocation rl : getLocationsBySequenceList())
+			box.addItem(rl);
 		return box;
 	}
 
 	public void updateComboBox(JComboBox box) {
 		box.removeAllItems();
 		box.addItem("");
-		List<RouteLocation> routeList = getLocationsBySequenceList();
-		for (int i = 0; i < routeList.size(); i++) {
-			box.addItem(routeList.get(i));
-		}
+		for (RouteLocation rl : getLocationsBySequenceList())
+			box.addItem(rl);
 	}
 
 	/**
@@ -366,9 +359,9 @@ public class Route implements java.beans.PropertyChangeListener {
 	 * @param e
 	 *            Consist XML element
 	 */
-	public Route(org.jdom.Element e) {
+	public Route(Element e) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-		org.jdom.Attribute a;
+		Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -394,14 +387,13 @@ public class Route implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.ROUTE);
+	public Element store() {
+		Element e = new Element(Xml.ROUTE);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		e.setAttribute(Xml.COMMENT, getComment());
-		List<RouteLocation> routeList = getLocationsBySequenceList();
-		for (int i = 0; i < routeList.size(); i++) {
-			e.addContent(routeList.get(i).store());
+		for (RouteLocation rl : getLocationsBySequenceList()) {
+			e.addContent(rl.store());
 		}
 		return e;
 	}

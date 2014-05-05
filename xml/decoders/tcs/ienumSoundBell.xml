@@ -16,23 +16,23 @@
 <!-- version 3 - add models 187,1031,1040,1041,1042,336,337,338,411 -->
 <!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
-<ienumVal>
-	<ienumChoice choice="Conrail Num 2233 GP30 air powered bell" value="7" />
-	<ienumChoice choice="Heisler Class 53833 Num 4 Hand powered bell" value="12" />
-	<ienumChoice choice="John Bull Replica hand powered bell" value="9" />
-	<ienumChoice choice="Leetonia RR Shay Num 1 bell" value="13" />
-	<ienumChoice choice="Num 89 Air Power Bell" value="2" />
-	<ienumChoice choice="PRR 280 H3 1187 Hand powered Bell" value="10" />
-	<ienumChoice choice="PRR 280 H3 2846 air Powered Bell" value="11" />
-	<ienumChoice choice="PRR 442 Num 7002 hand powered bell" value="5" />
-	<ienumChoice choice="PRR GG1 bell" value="8" />
-	<ienumChoice choice="PRR Num 1223 American 440 D16SB hand powered bell" value="6" />
-	<ienumChoice choice="Reading 060 Num 1251 Tank engine air powered bell" value="3" />
-	<ienumChoice choice="Strasburg 475 Air Powered bell" value="1" />
-	<ienumChoice choice="Strasburg 475 Hand Powered bell" value="0" />
-	<ienumChoice choice="Strasburg num 90 hand powered bell" value="16" />
-	<ienumChoice choice="Strasburg num 90 hand powered bell variation" value="17" />
-	<ienumChoice choice="Unknown bell from Strasburg museum floor" value="14" />
-	<ienumChoice choice="Virginia Truckee RR 260 hand powered bell" value="4" />
-	<ienumChoice choice="Williams Grove PRR #643 060 bell" value="15" />
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <ienumChoice choice="Conrail Num 2233 GP30 air powered bell" value="7"/>
+  <ienumChoice choice="Heisler Class 53833 Num 4 Hand powered bell" value="12"/>
+  <ienumChoice choice="John Bull Replica hand powered bell" value="9"/>
+  <ienumChoice choice="Leetonia RR Shay Num 1 bell" value="13"/>
+  <ienumChoice choice="Num 89 Air Power Bell" value="2"/>
+  <ienumChoice choice="PRR 280 H3 1187 Hand powered Bell" value="10"/>
+  <ienumChoice choice="PRR 280 H3 2846 air Powered Bell" value="11"/>
+  <ienumChoice choice="PRR 442 Num 7002 hand powered bell" value="5"/>
+  <ienumChoice choice="PRR GG1 bell" value="8"/>
+  <ienumChoice choice="PRR Num 1223 American 440 D16SB hand powered bell" value="6"/>
+  <ienumChoice choice="Reading 060 Num 1251 Tank engine air powered bell" value="3"/>
+  <ienumChoice choice="Strasburg 475 Air Powered bell" value="1"/>
+  <ienumChoice choice="Strasburg 475 Hand Powered bell" value="0"/>
+  <ienumChoice choice="Strasburg num 90 hand powered bell" value="16"/>
+  <ienumChoice choice="Strasburg num 90 hand powered bell variation" value="17"/>
+  <ienumChoice choice="Unknown bell from Strasburg museum floor" value="14"/>
+  <ienumChoice choice="Virginia Truckee RR 260 hand powered bell" value="4"/>
+  <ienumChoice choice="Williams Grove PRR #643 060 bell" value="15"/>
 </ienumVal>

@@ -127,7 +127,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" default="1" item="Sound Option 1">
+      <variable label="Sound On/Off" CV="49" mask="XXXXXXXV" default="1" item="Sound Option 4">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

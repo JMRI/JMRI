@@ -7,10 +7,15 @@ import jmri.*;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrit.audio.DefaultAudioManager;
 
 /**
  * Provide the usual default implementations for
- * the InstanceManager.
+ * the {@link jmri.InstanceManager}.
+ * <P>
+ * Not all {@link jmri.InstanceManager} related classes are provided by this
+ * class. See the discussion in {@link jmri.InstanceManager} of initilization methods.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -24,7 +29,7 @@ import jmri.jmrit.roster.RosterIconFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001, 2008
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @version			$Revision$
  * @since           2.9.4
  */
@@ -32,7 +37,11 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
     public <T> Object getDefault(Class<T> type) {
 
-        // Should do InstanceManagerAutoDefault instead
+        if (type == AudioManager.class) {
+            return DefaultAudioManager.instance();
+        }
+
+        // @TODO Should do "implements InstanceManagerAutoDefault" instead
         if (type == BlockManager.class) {
             return new BlockManager();
         }
@@ -53,12 +62,20 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DefaultIdTagManager();
         }
 
+        if (type == LightManager.class) {
+            return new jmri.managers.ProxyLightManager();
+        }
+
         if (type == LogixManager.class) {
             return new DefaultLogixManager();
         }
 
         if (type == MemoryManager.class) {
             return new DefaultMemoryManager();
+        }
+
+        if (type == ReporterManager.class) {
+            return new jmri.managers.ProxyReporterManager();
         }
 
         if (type == RosterIconFactory.class) {
@@ -69,14 +86,18 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DefaultRouteManager();
         }
 
-        // Should do InstanceManagerAutoDefault instead
+        if (type == SensorManager.class) {
+            return new jmri.managers.ProxySensorManager();
+        }
+        
+        // @TODO Should do "implements InstanceManagerAutoDefault" instead
         if (type == SectionManager.class) {
             return new SectionManager();
         }
 
         if (type == SignalGroupManager.class) {
             // ensure signal mast manager exists first
-            InstanceManager.signalMastManagerInstance();
+            InstanceManager.getDefault(jmri.SignalMastManager.class);
             return new DefaultSignalGroupManager();
         }
 
@@ -90,7 +111,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == SignalMastManager.class) {
             // ensure signal head manager exists first
-            InstanceManager.signalHeadManagerInstance();
+            InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return new DefaultSignalMastManager();
         }
 
@@ -100,14 +121,23 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-            if (InstanceManager.configureManagerInstance() != null)
-                InstanceManager.configureManagerInstance().registerConfig(timebase, jmri.Manager.TIMEBASE);        
+            if (InstanceManager.getDefault(jmri.ConfigureManager.class) != null)
+                InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);        
             return timebase;
         }
 
-        // Should do InstanceManagerAutoDefault instead
+        // @TODO Should do "implements InstanceManagerAutoDefault" instead
         if (type == TransitManager.class) {
             return new TransitManager();
+        }
+
+        if (type == TurnoutManager.class) {
+            return new jmri.managers.ProxyTurnoutManager();
+        }
+
+
+        if (type == VSDecoderManager.class) {
+            return VSDecoderManager.instance();
         }
 
         // Nothing found

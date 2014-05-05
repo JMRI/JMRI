@@ -307,6 +307,21 @@ public class SerialAddressTest extends TestCase {
 		}
 
 	public void testGetUserNameFromSystemName() {
+			jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
+			// create 4 new sensors
+			sMgr.newSensor("CS18016","userS16");
+			sMgr.newSensor("CS18014","userS14");
+			sMgr.newSensor("CS18017","userS17");
+			sMgr.newSensor("CS18012","userS12");
+
+			jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
+			lMgr.newLight("CL18036","userL36");
+			lMgr.newLight("CL18037","userL37");
+
+			jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
+			tMgr.newTurnout("CT18032","userT32");
+			tMgr.newTurnout("CT18034","userT34");
+ 
             Assert.assertEquals("test CS18016", "userS16", SerialAddress.getUserNameFromSystemName("CS18016") );
             Assert.assertEquals("test CS18012", "userS12", SerialAddress.getUserNameFromSystemName("CS18012") );
             Assert.assertEquals("test CS18017", "userS17", SerialAddress.getUserNameFromSystemName("CS18017") );

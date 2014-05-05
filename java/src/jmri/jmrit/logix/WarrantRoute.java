@@ -292,17 +292,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             	OBlock block = o.getBlock();
             	blockBox.setText(block.getDisplayName());
              	setPathBox(block);
-                if (location==Location.DEST) {
-                	setPathName(o.getEntryName());           	
-                } else if (location==Location.ORIGIN){
-                	setPathName(o.getExitName());           	
-                }
                 setPortalBox(o);
                 if (location==Location.DEST) {
-                	setPortalName(o.getEntryPortal().getName());           	
+                	setPortalName(o.getEntryName());           	
                 } else if (location==Location.ORIGIN){
-                	setPortalName(o.getExitPortal().getName());           	
+                	setPortalName(o.getExitName());           	
                 }
+            	setPathName(o.getPathName());           	
         	}
          }
         protected BlockOrder getOrder() {
@@ -616,7 +612,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         selectedRoute(_orders);
                         dialog.dispose();
                     } else {
-                    	showWarning("SelectRoute");
+                    	showWarning(Bundle.getMessage("SelectRoute"));
                     }
                 }
                 ActionListener init(ButtonGroup bg, JDialog d, List <DefaultMutableTreeNode> dn,
@@ -639,7 +635,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                         showRoute(destNodes.get(i), tree);
                     } else {
-                    	showWarning("SelectRoute");
+                    	showWarning(Bundle.getMessage("SelectRoute"));
                     }
                 }
                 ActionListener init(ButtonGroup bg, List <DefaultMutableTreeNode> dn,
@@ -674,7 +670,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     public void showWarning(String msg) {
-        JOptionPane.showMessageDialog(this, Bundle.getMessage(msg),
+        JOptionPane.showMessageDialog(this, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);    	
     }
 

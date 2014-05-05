@@ -77,6 +77,7 @@ public class Xml {
 	static final String USE12HR_FORMAT = "use12hrFormat"; // NOI18N
 	static final String PRINT_VALID = "printValid"; // NOI18N
 	static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N
+	static final String PRINT_HEADERS = "printHeaders"; // NOI18N
 	static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
 	static final String YEAR_MODELED = "yearModeled"; // NOI18N
 	
@@ -117,6 +118,8 @@ public class Xml {
 	static final String LOCAL_COLOR = "localColor"; // NOI18N
 	
 	static final String TAB = "tab"; // NOI18N
+	static final String TAB2_LENGTH = "tab2Length"; // NOI18N
+	static final String TAB3_LENGTH = "tab3Length"; // NOI18N
 	static final String ENABLED = "enabled"; // NOI18N
 	
 	static final String COLUMN_FORMAT = "columnFormat"; // NOI18N

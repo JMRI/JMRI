@@ -1,6 +1,4 @@
-<?xml version="1.0"?>
-<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
-
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,212 +10,219 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<programmer-config>
-<!-- $Id$ -->
-		<version author="sip@euronet.nl" 
-			version="1.0 beta" lastUpdated="20020810"/>
-			<!-- Based on the contribution of many others -->
-		
-<programmer decoderFilePanes="yes">
-
-	<pane name="Basic">
-		<column>
-			<dccaddress/>
-			<label label=" "/>
-			<label label=" "/>
-			<display item="Short Address"/>
-			<display item="Long Address"/>
-			<display item="Address Format"/>
-			<label label=" "/>
-			<display item="Locomotive Direction"/>
-			<display item="Speed Step Mode"/>
-			<display item="Analog (DC) Operation"/>
-		</column>
-		<column>
-<!--			<display item="Decoder Version"/> -->
-<!-- 			<display item="Manufacturer"/>    -->
-			<label label=" "/>
-			<display item="User Id #1"/>
-			<display item="User Id #2"/>
-			<label label=" "/>
-		</column>
-	</pane>
-	
-	<pane name="Motor">
-		<column>
-			<display item="Acceleration"/>
-			<display item="Deceleration"/>
-			<label label=" "/>
-			<display item="Forward Trim"/>
-			<display item="Reverse Trim"/>
-			<label label=" "/>
-			<display item="Total PWM Period" tooltip="read manual"/>
-			<separator/>
-			<label label="0 = 22kHz, 204 = 87Hz"/> 
-		</column>
-		<column>
-			<display item="BEMF Active"/>
-			<label label=" "/>
-			<display item="Adjust EMK Voltage"/>
-			<label label=" "/>
-			<display item="K Adjustment"/>
-			<display item="I Adjustment"/>
-		</column>
-	</pane>
-	
-	<pane name="Speed Control">
-		<column>
-			<display item="Speed Table Definition" 
-					format="offradiobutton" layout="above" label="CV 29, bit 4"/>
-			<row>
-				<column>
-					<display item="Vstart" layout="below" format="vslider" label=""/>
-					<display item="Vstart" layout="below"/>
-				</column>
-				<column>
-					<display item="Vmid" layout="below" format="vslider" label=""/>
-					<display item="Vmid" layout="below"/>
-				</column>
-				<column>
-					<display item="Vhigh" layout="below" format="vslider" label=""/>
-					<display item="Vhigh" layout="below"/>
-				</column>
-			</row>
-		</column>
-		<column>
-			<display item="Speed Table Definition" 
-					format="onradiobutton" layout="above" label=""/>
-			<display item="Speed Table" layout="above" label="CV 67-94"/>
-		</column>
-	</pane>
-
-	<pane name="Function/Output Map">
-		<column>
-			<fnmapping/>
-		</column>
-	</pane>
-
-	<pane name="Output Handling">
-		<column>
-			<label label="F-9(r) Key Output Control" />
-			<separator/>
-			<display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1" />
-			<display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2" />
-			<display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3" />
-			<display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4" />
-			<display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5" />
-			<display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6" />
-			<display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7" />
-			<display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8" />
-			<label label=" " />
-			<label label="F-10(r) Key Output Control" />
-			<separator/>
-			<display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1" />
-			<display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2" />
-			<display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3" />
-			<display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4" />
-			<display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5" />
-			<display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6" />
-			<display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7" />
-			<display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8" />
-		</column>
-	</pane>
-
-	<pane name="Lights">
-		<column>
-			<display item="Blink Rate" />
-		</column>
-		<column>
-			<display item="Brightness Head Lights"/>
-			<display item="Output Configuration Head Lights"/>
-			<separator/>
-			<display item="Brightness Back Lights"/>
-			<display item="Output Configuration Back Lights"/>
-			<separator/>
-			<display item="Brightness AUX"/>
-			<display item="Output Configuration AUX"/>
-		</column>
-	</pane>
-
-	<pane name="Consist">
-		<column>
-			<display item="Consist Address" />
-			<separator/>
-			<label label="Will decoder respond to function requests at consist address?"/>
-			<separator/>
-			<display item="Consist Acceleration Adjustment" />
-			<display item="Consist Acceleration Adjustment Sign"/>
-			<display item="Consist Deceleration Adjustment" />
-			<display item="Consist Deceleration Adjustment Sign" />
-		</column>
-	</pane>
-	
-	<pane name="Advanced">
-		<column>
-			<display item="Packet Time-out Value" />
-		</column>
-		<column>
-			<display item="Analog Vstart"/>
-		</column>
-		<column>
-			<label label="Analog Mode Functions F1-F8" />
-			<separator/>
-			<display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>			
-			<display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>			
-			<display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>			
-			<display item="Analog Mode Function Status - F4" format="checkbox" label="F-4"/>			
-			<display item="Analog Mode Function Status - F5" format="checkbox" label="F-5"/>			
-			<display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>			
-			<display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>			
-			<display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>			
-			<label label=" "/>
-			<label label="Analog Mode Functions F0, F9-F12" />
-			<separator/>
-			<display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>			
-			<display item="Analog Mode Function Status - F0(r)" format="checkbox" label="F-0(r)"/>			
-			<display item="Analog Mode Function Status - F9(f)" format="checkbox" label="F-9(f)"/>			
-			<display item="Analog Mode Function Status - F10(f)" format="checkbox" label="F-10(f)"/>			
-			<display item="Analog Mode Function Status - F11" format="checkbox" label="F-11"/>			
-			<display item="Analog Mode Function Status - F12" format="checkbox" label="F-12"/>			
-			<display item="Analog Mode Function Status - F9(r)" format="checkbox" label="F-9(r)"/>			
-			<display item="Analog Mode Function Status - F10(r)" format="checkbox" label="F-10(r)"/>		
-		</column>
-		<column>
-			<display item="Signal Dependent Acceleration" />
-			<display item="Signal Dependent Deceleration" />
-			<label label=" " />
-			<display item="ZIMO Signal Dependence Active" />
-		</column>		
-	</pane>
-	
-	<pane name="Sound">
-		<column>
-			<display item="Minimum Incidental Sound RPM"/>
-			<display item="Maximum Incidental Sound RPM"/>
-			<label label=" "/>
-			<display item="Sound Mode 1"/>
-			<display item="Sound Mode 2"/>
-			<label label=" "/>
-			<display item="Minimum Incidental Sound Interval"/>
-			<display item="Maximum Incidental Sound Interval"/>
-			<label label=" "/>
-			<display item="Braking Noise Start"/>
-		</column>
-	</pane>
-
-	<pane name="Sound Levels">
-			<column>
-				<display item="Sound Level"/>
-			</column>
-	</pane>
-
-	<pane name="CVs">
-		<column>
-			<cvtable/>
-		</column>
-	</pane>
-
-</programmer>
+<programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <!-- $Id$ -->
+  <version author="sip@euronet.nl" version="1.0 beta" lastUpdated="20020810"/>
+  <!-- Based on the contribution of many others -->
+  <programmer decoderFilePanes="yes">
+    <pane name="Basic">
+      <column>
+        <dccaddress/>
+        <label label=" "/>
+        <label label=" "/>
+        <display item="Short Address"/>
+        <display item="Long Address"/>
+        <display item="Address Format"/>
+        <label label=" "/>
+        <display item="Locomotive Direction"/>
+        <display item="Speed Step Mode"/>
+        <display item="Analog (DC) Operation"/>
+      </column>
+      <column>
+        <!--			<display item="Decoder Version"/> -->
+        <!-- 			<display item="Manufacturer"/>    -->
+        <label label=" "/>
+        <display item="User Id #1"/>
+        <display item="User Id #2"/>
+        <label label=" "/>
+      </column>
+      <name xml:lang="it">Basic</name>
+    </pane>
+    <pane name="Motor">
+      <column>
+        <display item="Acceleration"/>
+        <display item="Deceleration"/>
+        <label label=" "/>
+        <display item="Forward Trim"/>
+        <display item="Reverse Trim"/>
+        <label label=" "/>
+        <display item="Total PWM Period" tooltip="read manual">
+          <tooltip xml:lang="it">read manual</tooltip>
+        </display>
+        <separator/>
+        <label label="0 = 22kHz, 204 = 87Hz">
+          <label xml:lang="it">0 = 22kHz, 204 = 87Hz</label>
+        </label>
+      </column>
+      <column>
+        <display item="BEMF Active"/>
+        <label label=" "/>
+        <display item="Adjust EMK Voltage"/>
+        <label label=" "/>
+        <display item="K Adjustment"/>
+        <display item="I Adjustment"/>
+      </column>
+      <name xml:lang="it">Motor</name>
+    </pane>
+    <pane name="Speed Control">
+      <column>
+        <display item="Speed Table Definition" format="offradiobutton" layout="above" label="CV 29, bit 4"/>
+        <row>
+          <column>
+            <display item="Vstart" layout="below" format="vslider" label=""/>
+            <display item="Vstart" layout="below"/>
+          </column>
+          <column>
+            <display item="Vmid" layout="below" format="vslider" label=""/>
+            <display item="Vmid" layout="below"/>
+          </column>
+          <column>
+            <display item="Vhigh" layout="below" format="vslider" label=""/>
+            <display item="Vhigh" layout="below"/>
+          </column>
+        </row>
+      </column>
+      <column>
+        <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
+        <display item="Speed Table" layout="above" label="CV 67-94"/>
+      </column>
+      <name xml:lang="it">Speed Control</name>
+    </pane>
+    <pane name="Function/Output Map">
+      <column>
+        <fnmapping/>
+      </column>
+      <name xml:lang="it">Function/Output Map</name>
+    </pane>
+    <pane name="Output Handling">
+      <column>
+        <label label="F-9(r) Key Output Control">
+          <label xml:lang="it">F-9(r) Key Output Control</label>
+        </label>
+        <separator/>
+        <display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1"/>
+        <display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2"/>
+        <display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3"/>
+        <display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4"/>
+        <display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5"/>
+        <display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6"/>
+        <display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7"/>
+        <display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8"/>
+        <label label=" "/>
+        <label label="F-10(r) Key Output Control">
+          <label xml:lang="it">F-10(r) Key Output Control</label>
+        </label>
+        <separator/>
+        <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1"/>
+        <display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2"/>
+        <display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3"/>
+        <display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4"/>
+        <display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5"/>
+        <display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6"/>
+        <display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7"/>
+        <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8"/>
+      </column>
+      <name xml:lang="it">Output Handling</name>
+    </pane>
+    <pane name="Lights">
+      <column>
+        <display item="Blink Rate"/>
+      </column>
+      <column>
+        <display item="Brightness Head Lights"/>
+        <display item="Output Configuration Head Lights"/>
+        <separator/>
+        <display item="Brightness Back Lights"/>
+        <display item="Output Configuration Back Lights"/>
+        <separator/>
+        <display item="Brightness AUX"/>
+        <display item="Output Configuration AUX"/>
+      </column>
+      <name xml:lang="it">Lights</name>
+    </pane>
+    <pane name="Consist">
+      <column>
+        <display item="Consist Address"/>
+        <separator/>
+        <label label="Will decoder respond to function requests at consist address?">
+          <label xml:lang="it">Will decoder respond to function requests at consist address?</label>
+        </label>
+        <separator/>
+        <display item="Consist Acceleration Adjustment"/>
+        <display item="Consist Acceleration Adjustment Sign"/>
+        <display item="Consist Deceleration Adjustment"/>
+        <display item="Consist Deceleration Adjustment Sign"/>
+      </column>
+      <name xml:lang="it">Consist</name>
+    </pane>
+    <pane name="Advanced">
+      <column>
+        <display item="Packet Time-out Value"/>
+      </column>
+      <column>
+        <display item="Analog Vstart"/>
+      </column>
+      <column>
+        <label label="Analog Mode Functions F1-F8">
+          <label xml:lang="it">Analog Mode Functions F1-F8</label>
+        </label>
+        <separator/>
+        <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
+        <display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>
+        <display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>
+        <display item="Analog Mode Function Status - F4" format="checkbox" label="F-4"/>
+        <display item="Analog Mode Function Status - F5" format="checkbox" label="F-5"/>
+        <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>
+        <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>
+        <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>
+        <label label=" "/>
+        <label label="Analog Mode Functions F0, F9-F12">
+          <label xml:lang="it">Analog Mode Functions F0, F9-F12</label>
+        </label>
+        <separator/>
+        <display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>
+        <display item="Analog Mode Function Status - F0(r)" format="checkbox" label="F-0(r)"/>
+        <display item="Analog Mode Function Status - F9(f)" format="checkbox" label="F-9(f)"/>
+        <display item="Analog Mode Function Status - F10(f)" format="checkbox" label="F-10(f)"/>
+        <display item="Analog Mode Function Status - F11" format="checkbox" label="F-11"/>
+        <display item="Analog Mode Function Status - F12" format="checkbox" label="F-12"/>
+        <display item="Analog Mode Function Status - F9(r)" format="checkbox" label="F-9(r)"/>
+        <display item="Analog Mode Function Status - F10(r)" format="checkbox" label="F-10(r)"/>
+      </column>
+      <column>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
+        <label label=" "/>
+        <display item="ZIMO Signal Dependence Active"/>
+      </column>
+      <name xml:lang="it">Advanced</name>
+    </pane>
+    <pane name="Sound">
+      <column>
+        <display item="Minimum Incidental Sound RPM"/>
+        <display item="Maximum Incidental Sound RPM"/>
+        <label label=" "/>
+        <display item="Sound Mode 1"/>
+        <display item="Sound Mode 2"/>
+        <label label=" "/>
+        <display item="Minimum Incidental Sound Interval"/>
+        <display item="Maximum Incidental Sound Interval"/>
+        <label label=" "/>
+        <display item="Braking Noise Start"/>
+      </column>
+      <name xml:lang="it">Sound</name>
+    </pane>
+    <pane name="Sound Levels">
+      <column>
+        <display item="Sound Level"/>
+      </column>
+      <name xml:lang="it">Sound Levels</name>
+    </pane>
+    <pane name="CVs">
+      <column>
+        <cvtable/>
+      </column>
+      <name xml:lang="it">CVs</name>
+    </pane>
+  </programmer>
 </programmer-config>
-

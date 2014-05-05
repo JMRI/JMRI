@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.Setup;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -31,6 +30,7 @@ public class WebServerPreferences extends Bean {
     public static final String UseAjax = "useAjax"; // NOI18N
     public static final String Simple = "simple"; // NOI18N
     public static final String RailRoadName = "railRoadName"; // NOI18N
+    public static final String AllowRemoteConfig = "allowRemoteConfig"; // NOI18N
 
     //  Flag that prefs have not been saved:
     private boolean isDirty = false;
@@ -41,6 +41,7 @@ public class WebServerPreferences extends Bean {
     private boolean plain = false;
     private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
+    private boolean allowRemoteConfig = false;
     private int port = 12080;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
@@ -73,6 +74,9 @@ public class WebServerPreferences extends Bean {
         if ((a = child.getAttribute(Simple)) != null) {
             setPlain(Boolean.parseBoolean(a.getValue()));
         }
+        if ((a = child.getAttribute(AllowRemoteConfig)) != null) {
+            setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
+        }
         if ((a = child.getAttribute(Port)) != null) {
             try {
                 setPort(a.getIntValue());
@@ -103,6 +107,9 @@ public class WebServerPreferences extends Bean {
         if (useAjax() != prefs.useAjax()) {
             return true;
         }
+        if (this.allowRemoteConfig() != prefs.allowRemoteConfig()) {
+            return true;
+        }
         if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) {
             return true;
         }
@@ -116,6 +123,7 @@ public class WebServerPreferences extends Bean {
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
         setUseAjax(prefs.useAjax());
+        this.setAllowRemoteConfig(prefs.allowRemoteConfig());
         setDisallowedFrames((ArrayList<String>) prefs.getDisallowedFrames());
         setPort(prefs.getPort());
         setRailRoadName(prefs.getRailRoadName());
@@ -127,6 +135,7 @@ public class WebServerPreferences extends Bean {
         prefs.setAttribute(RefreshDelay, "" + getRefreshDelay());
         prefs.setAttribute(UseAjax, "" + useAjax());
         prefs.setAttribute(Simple, "" + isPlain());
+        prefs.setAttribute(AllowRemoteConfig, "" + this.allowRemoteConfig());
         prefs.setAttribute(DisallowedFrames, "" + getDisallowedFrames());
         prefs.setAttribute(Port, "" + getPort());
         prefs.setAttribute(RailRoadName, getRailRoadName());
@@ -182,7 +191,7 @@ public class WebServerPreferences extends Bean {
                 }
             }
             if (file.createNewFile()) {
-                log.debug("Creating new Web Server prefs file: " + fileName);
+                log.debug("Creating new Web Server prefs file: {}", fileName);
             }
         } catch (IOException ea) {
             log.error("Could not create Web Server preferences file.");
@@ -237,6 +246,14 @@ public class WebServerPreferences extends Bean {
 
     public void setPlain(boolean value) {
         plain = value;
+    }
+
+    public boolean allowRemoteConfig() {
+        return this.allowRemoteConfig;
+    }
+
+    public void setAllowRemoteConfig(boolean value) {
+        this.allowRemoteConfig = value;
     }
 
     public void setDisallowedFrames(ArrayList<String> value) {

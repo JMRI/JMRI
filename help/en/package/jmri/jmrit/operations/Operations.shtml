@@ -139,8 +139,9 @@
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
       <LI><A HREF="#Timetable">Timetable</A></LI>
+      <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
       <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
-      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>   
+      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
       <LI><A HREF="#TrainStatus">Train Status</A></LI>  
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
       <LI><A HREF="#ReadingBuildReport">Reading the Build Report</A></LI>
@@ -553,16 +554,47 @@
 
    There are two build train options, normal and aggressive. It is recommended that you select
    normal when you first begin using the program. Normal builds guarantee that when a car is
-   delivered (set out) by a train that there will be track space available for the car.
+   delivered (set out) by a train that there will be track space available for the car. Normal mode
+   will not fill every track to capacity which is more prototypical. However, normal mode won't swap
+   a set of cars, car are picked up or set out based on the available track space. Normal mode
+   prevents track overloading. In aggressive mode you can "accidentally" create track overloading
+   by the order you build and run your trains or by using the the train reset function.
 
    <P>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
     track, but a "later" train arrives early with a set out to that track and the car hasn't been
     picked up. However, more often than not the same train will perform the pick up and set out thus
     minimizing the number of conflicts. Aggressive also performs a two pass determination of car
-    movements. The net effect is that more cars are moved within a given train. Aggressive also
-    tends to deliver cars to all of the available spurs. The smaller the spur, yard, or interchange
-    the more likely that the program will assign cars to that track.</P>
+    movements. The net effect is that more cars are moved within a given train, and complete car
+    swaps can occur. Aggressive also tends to deliver cars to all of the available spurs. The
+    smaller the spur, yard, or interchange the more likely that the program will assign cars to that
+    track.</P>
+
+   <P>One serious consideration when using aggressive mode is that you can cause your tracks to
+    be overloaded by selectively resetting your trains or building them and running them in a
+    different order. Here's a simple example showing how it's possible to overload a track using the
+    aggressive mode. Say you have two trains that will service the same track. The track has several
+    cars on it, you build the first train and the manifest shows to pull all of the cars from the
+    track. You now build a second train, the program finds that the track will be vacated by the
+    first train, so it schedules new cars to be spotted on to track by the second train. You later
+    decide that you don't want to run the first train, and reset the train. Now the original cars on
+    still sitting on the track, and you now run and terminate the second train. The program will
+    deliver the new cars, while the old cars are still sitting there, which unfortunately will
+    overload the track. You could also overload the the track if you ran the second train before the
+    first, the second train would try and deliver cars to the track that still has cars sitting on
+    it.</P>
+
+   <P>To avoid overloading in aggressive mode, you also need to build, run, and terminate your
+    trains in the same order. And do not use the train reset after you've built or terminated
+    other trains! However, if you need to reset a train, you should also reset all of the trains
+    built after the train that you want to reset, or live with possible track overloading. And never
+    reset a train built before a train that you've already terminated. Normal mode will never
+    overload a track, so you might consider using this mode if you find yourself having to reset
+    trains or you want to build and run your train in any order. The recommendation is not to use
+    train reset in aggressive mode once you've built or terminated additional trains. And if you do
+    reset a train, there isn't a guarantee that building the train again will pull the same cars,
+    each train build can be different depending on the car movements created by the other trains.</P>
+
    <P>Note that once you've built a train, the build option can not be changed until all trains
     are terminated or reset.</P>
 
@@ -606,7 +638,7 @@
    the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
    
    <A NAME="AllowCarsToReturnToStaging"></A>
-   <H4>Allow cars to return to staging if needed</H4>
+   <H4>Allow cars to return to staging</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
@@ -686,12 +718,15 @@
    
    <A NAME="ManifestOptions"></A>
    <H3>Options</H3>
+   
+   <H4>Generate CSV Manifests</H4>
 
-   If you want to create your own custom manifest using a comma separated value (.csv) file, select
-   this option. You can use a program like Excel to create a manifest to your liking. You can find
-   the manifest files in the operations directory in a directory called "csvManifests". Each line of
-   the file starts with a two or three letter code, followed by the code's description, and then any
-   parameters associated with the code. Here's a list of the current codes and descriptions:
+   If you want to create your own <A HREF="#SetupExcelProgram">custom
+    manifest</A> using a comma separated value (.csv) file, select this option. You can use a
+   program like Excel to create a manifest to your liking. You can find the manifest files in the
+   operations directory in a directory called "csvManifests". Each line of the file starts with a
+   two or three letter code, followed by the code's description, and then any parameters associated
+   with the code. Here's a list of the current codes and descriptions:
    <P></P>
    <table>
     <tr>
@@ -822,6 +857,7 @@
     <tr>
      <td>TRUN</td>
      <td>Truncate</td>
+     <td>Appears if there's a <A HREF="#SwitchList">switch list</A> for the location and the "Truncate" checkbox is selected in the <A HREF="#PrintOptions">Manifest Print Options</A></td>
     </tr>
     <tr>
      <td>TT</td>
@@ -854,6 +890,8 @@
     You can find some examples of custom manifests at <A
      HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A>
    </P>
+   
+   <H4>Generate CSV Switch Lists</H4>
 
    <P>You can also generate custom switch lists using a comma separated value (.csv) files. You
     can find the switch list files in the operations directory in a directory called
@@ -906,7 +944,7 @@
     </tr>
     <tr>
      <td>TIR</td>
-     <td>Train In Route</td>
+     <td>Train en Route</td>
     </tr>
     <tr>
      <td>TDONE</td>
@@ -922,6 +960,8 @@
      <td>End Switch List</td>
     </tr>
    </table>
+   
+   <H4>Enable Value Fields</H4>
 
    <P>There are two other options, "Enable Value Fields" and "Enable Radio Frequency
     Identification (RFID) Fields". You can use these fields to enter the value or cost of your
@@ -1115,11 +1155,12 @@
    </P>
    <P>
     The "Locations" window shows all of the places that your trains can work. For each location the
-    window shows the total length of all tracks at that location, the amount of track used by your
-    rolling stock, the quantity of rolling stock, and the number of pick ups and set outs of your
-    rolling stock that are scheduled for that location. The "Yardmaster" button produces a window <A
-     HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set outs
-    by train. Only trains that have work for the location are available.
+    window shows the type of tracks at that location, the total length of all tracks at that
+    location, the amount of track used by your rolling stock, the quantity of rolling stock, and the
+    number of pick ups and set outs of your rolling stock that are scheduled for that location. The
+    "Yardmaster" button produces a window
+    <A HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set
+    outs by train. Only trains that have work for the location are available.
    </P>
 
    <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
@@ -1374,10 +1415,10 @@
     let the program determine which is the appropriate track in staging to use. Otherwise, if you
     did select a track, that track would become unavailable for other cars. To prevent overloading a
     spur with cars with custom loads from staging, the program will normally limit the number of
-    cars in route to a track with a schedule to the available track space. So if you have space for
+    cars en route to a track with a schedule to the available track space. So if you have space for
     three cars, the most the program would normally generate for you from staging is three cars.</P>
 
-   <P>However, if you need to adjust the number of cars in route to a spur with a schedule,
+   <P>However, if you need to adjust the number of cars en route to a spur with a schedule,
     select in the edit schedule window "Tools-&gt;Options". A new window should appear with two
     options, the ability to control how many car loads the program will generate from staging, and
     if the spur has an alternate track. The first option, "Percentage of custom loads generated by
@@ -1442,6 +1483,12 @@
     specified for any of the track/schedules, the program will attempt to move the car to another
     location, which can be staging. However, if there's an alternate track specified, the program will only
     move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
+
+   <P>
+    You can have the program ignore the alternate track car holding feature described above by
+    enabling the <A HREF="#SendCustomToStaging">Send cars with custom load to staging</A> option for
+    a train.
+   </P>
 
    <P>Another feature of using an alternate track for cars with custom loads but without a final
     destination, is that the program will try and forward some number of cars to the spur demanding
@@ -1723,19 +1770,14 @@
     which type of loads the program will generate from the departure staging track.</P>
 
    <P>The third option "Generate custom loads for any staging track" will try and place custom
-    loads into your empty cars by searching for destinations that are staging tracks. First, if the
-    train departing staging is also terminating into staging, the program will try a place a custom
-    load into an empty car that meets the train's load requirements, and the train's departure and
-    terminal staging track's load requirements. If there isn't a terminal staging track for the
-    train, or the program was unsuccessful in adding a custom load to the car that meets the
-    terminal staging track requirements, the program will then search for other staging tracks that
-    aren't at the departure or terminal location. If the program does find a staging track that
-    isn't located at the departure or terminal location, it will randomly assign a custom load that
-    is serviced by the train, the staging departure track and destination staging track. Next the
-    program will determine if the car can be routed to destination staging track using the assigned
-    custom load. If the staging track is reachable, the program will in addition to placing the
-    custom load in the car, set the car's final destination to the location where the staging track
-    resides.</P>
+    loads into your empty cars by searching for destinations that are staging tracks. The program
+    will randomly search for a staging track that isn't located at the train's departure location.
+    If the program does find a staging track, it will then randomly assign a custom load that is
+    serviced by the train, the train's staging departure track and the car's destination staging
+    track. Next the program will determine if the car can be routed to destination staging track
+    using the assigned custom load. If the staging track is reachable, the program will in addition
+    to placing the custom load in the car, set the car's final destination to the location where the
+    staging track resides.</P>
 
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
@@ -2171,10 +2213,13 @@
 
    <P>Use the "Location" set of field to place the car on the layout. Use the "Auto" checkbox to
     show valid tracks for a given location. You can also optionally enter the location and track
-    that you want the car to return to when the car's load status becomes empty. Note that manually
-    changing the load status to empty will not cause the Return When Empty (RWE) destination to
-    become active, only when the car is set out by the program will the RWE destination become
-    active.</P>
+    that you want the car to return to when the car's load status becomes empty. You can also
+    replace the car's default empty load with one from the load combo box. Only custom loads that
+    are type "Empty" are shown in the combo box.</P>
+    
+   <P>Note that manually changing the load status to empty will not cause the Return When Empty
+    (RWE) destination to become active, only when the car is set out by the program will the RWE
+    destination become active.</P>
 
    <P>You can also change the car's load, or create new ones by using the "Edit" button.</P>
 
@@ -2561,13 +2606,14 @@
     train's manifest or build report.</p>
 
    <P>
-    If you select the "Generate CSV Manifest" from the <A HREF="#ManifestOptions">Options</A> window
-    found under "Tools" in the Settings or Trains window, two additional checkboxes will appear
-    labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
-    train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
-    allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
-    the function button for a built train becomes "Run". Pressing a train's "Run" button will start
-    the Excel program configured by the "Setup Excel Program (Manifest Creator)" window found in the
+    If you select the "Generate CSV Manifest" from the
+    <A HREF="#ManifestOptions">Options</A> window found under "Tools" in the Settings or Trains
+    window, two additional checkboxes will appear labeled "Open" and "Run". If the "Open" checkbox
+    is selected the "Function" button for a built train will become "Open" rather than "Print" or
+    "Preview". Pressing a train's "Open" button will allow you to examine the train's comma
+    separated value file. If you select the "Run" checkbox, the function button for a built train
+    becomes "Run". Pressing a train's "Run" button will start the Excel program configured by the
+    <A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A> window found in the
     Trains "Tools" menu .
    </P>
 
@@ -2613,7 +2659,7 @@
    and the horsepower of the locomotives.
    <P>
     You can also on a per train basis, ask the program to dynamically construct the consist for the
-    train. See <A HREF="#BuildlocoConsist">Build loco consist from single locos if needed</A> under
+    train. See <A HREF="#BuildlocoConsist">Build loco consist from single locos</A> under
     the <A HREF="#TrainBuildOptions">Train Build Options</A> for more information.
    </P>
 
@@ -2664,7 +2710,7 @@
    in the train's route (terminal). Useful if you don't want your cars picked up and set out at
    various locations in your train's route.
 
-   <H4>Allow cars to return to staging if needed</H4>
+   <H4>Allow cars to return to staging</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
@@ -2706,8 +2752,19 @@
    operators as this option can and will increase the number of trains needed to move the car to its
    final destination.
    
+   <A NAME="SendCustomToStaging"></A>
+   <H4>Send cars with custom loads to staging</H4>
+
+   When the "Send cars with custom loads to staging" is selected, the program will attempt to send a
+   car with a custom load, but without a final destination, to staging when the program finds all of
+   the spurs with schedules full. The program will also send a car to staging if it finds the routes
+   servicing the spurs with schedules have interim yard or C/I tracks that are also full. This option
+   tends to increase car movement to staging by ignoring the
+   <A HREF="#AlternateTrack">Alternate Track</A> feature for a spur where the program would normally
+   hold a car at its current location when all spurs with schedules were full. 
+   
    <A NAME="BuildlocoConsist"></A>
-   <H4>Build loco consist from single locos if needed</H4>
+   <H4>Build loco consist from single locos</H4>
 
    This option when selected will dynamically build a locomotive consist for you using locos that
    aren't in a consist. For example, say you request a consist of three locomotives in the edit
@@ -2715,7 +2772,7 @@
    <A HREF="#TrainRequires">Optional train requirements</A>. The program when building a train, will
    first search for a consist of three locos that meet the type, model and road requirements for the
    train. If the program can't find a three loco consist, it will attempt to find three
-   non-consisted loco that meet the train's requirements. For some operators, they only want certain
+   non-consisted locos that meet the train's requirements. For some operators, they only want certain
    locomotive models consisted together. To meet this goal, use the "Type" feature for a locomotive,
    and create types of locomotives that you want consisted. Then assign these types to the locos
    that you want the program to consider when creating a consist. You would then restrict your train
@@ -2762,7 +2819,7 @@
 
    <H3>Optional Train Requirements</H3>
 
-   You can have up to two locomotive changes while the train is in route. Select "Locomotive change"
+   You can have up to two locomotive changes while the train is en route. Select "Locomotive change"
    where you want the change to happen in your route, and how many new locomotives should be
    assigned to the train. You can optionally select the new locomotives model and road. At the
    locomotive change location, the previously assigned locomotives will be removed from the train.
@@ -3013,8 +3070,22 @@
    <a HREF="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
     files Operations</a> Install the program "MC4JMRI.xls" in the JMRI/operations/csvManifest
    directory. You can of course create your own program and also place it in the csvManifest
-   directory. 
-   
+   directory.
+
+   <P>
+    To enable the creation of the comma separated value (CSV) files needed for an external Excel program
+    see <a HREF="#ManifestOptions">Options</a> "Generate CSV Manifests".
+   </P>
+
+   <P>
+    You can also create custom switch lists. Install the program "MC4JMRI.xls" in the
+    JMRI/operations/csvSwitchList directory. You can configure the name of the Excel program by
+    opening the "Switch List by Location" window using the "Switch List" button at the bottom of the
+    "Trains" window. Then under "Tools" in the "Switch List by Location" window, select "Setup Excel
+    Program (Manifest Creator)". You must also enable the creation of CSV switch list files, see
+    <a HREF="#ManifestOptions">Options</a> "Generate CSV Switch Lists".
+   </P>
+
    <A NAME="SwitcherService"></A>
    <H3>Switcher Service</H3>
 
@@ -3022,15 +3093,19 @@
    switch list allows the person assigned to the location to service all trains that stop at that
    location. However, there can be locations that don't get enough work servicing through or local
    trains and it would be nice to create some additional work for the operator assigned to that
-   location. To create a "switcher" job, create a route with one location, the location that the
-   switcher will service, and assign that route to a train. The "train" now becomes a switcher that
-   will only service that location. Adjust the "Move" count in the route to control how many cars
-   the switcher will service.
+   location. To create a "switcher" job, create a route with just one location, the location that
+   the switcher will service, and assign that route to a train. The "train" now becomes a switcher
+   that will only service that location. Adjust the "Move" count in the route to control how many
+   cars the switcher will service.
+
+   <P>Since a switcher only services a single location, the program ignores the train direction
+    control in the switcher's route, and therefore the location and track service direction controls
+    for a train are also ignored by the program.</P>
 
    <P>Some operators like to produce a train manifest that only shows set outs or pick ups from
     a yard or interchange, and then have a switch list that shows moves between the yard and spurs.
-    To eliminate tracks from showing up on a train's manifest, deselect all of the direction boxes
-    for that track. Only a "switcher" will service a track that doesn't have any direction boxes
+    To eliminate tracks from showing up on a train's manifest, deselect all of the direction control
+    boxes for that track. Only a switcher will service a track that doesn't have any direction boxes
     selected.</P>
 
    <H3>Switcher Restrictions</H3>
@@ -3082,7 +3157,7 @@
 
    <P>After successfully building a train, you can have the train depart and travel to the first
     location in your train's route by pressing the "Move" button. The train's status would then
-    become "In route", and the status will also show the number of cars in the train, along with the
+    become "en route", and the status will also show the number of cars in the train, along with the
     train's current length and weight. Once the train reaches the last location in the train's
     route, pressing the "Move" button again causes the program to terminate the train, and the
     train's status becomes "Terminated" along with the date and time of when the train was terminated.</P>

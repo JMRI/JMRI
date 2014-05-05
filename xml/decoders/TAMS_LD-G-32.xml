@@ -595,7 +595,7 @@
         </enumVal>
         <label>Shunting gear mode F4</label>
       </variable>
-      <variable label="Enable Acceleration delay on F3" CV="49" mask="XXVXXXXX" item="F4 controls output 3">
+      <variable label="Enable Acceleration delay on F3" CV="49" mask="XXVXXXXX" item="F3 controls output 3">
         <enumVal>
           <enumChoice choice="on">
             <choice>on</choice>
@@ -735,7 +735,7 @@
         </speedTableVal>
         <label>Speed Table</label>
       </variable>
-      <variable label="Blinking frequency" CV="112" default="200" item="Global lighting option 1" tooltip="Frequency of Strobe effects. 10 -&gt; 2 Hz, 48 -&gt; 0.7 Hz, 100 -&gt; 0.25 Hz">
+      <variable label="Blinking frequency" CV="112" default="200" item="Global lighting option 6" tooltip="Frequency of Strobe effects. 10 -&gt; 2 Hz, 48 -&gt; 0.7 Hz, 100 -&gt; 0.25 Hz">
         <decVal min="10" max="255"/>
         <label>Blinking frequency</label>
       </variable>

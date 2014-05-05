@@ -1,4 +1,4 @@
-  <pane name="Effects">
+  <pane name="Effects" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label="Button         Front ">
         <label xml:lang="fr">Bouton avant</label>

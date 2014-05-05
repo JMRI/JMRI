@@ -28,6 +28,8 @@ import jmri.jmrit.operations.setup.Setup;
  */
 
 public class TrainConductorFrame extends CommonConductorYardmasterFrame {
+	
+	protected static final boolean isManifest = true;
 
 	// labels
 	JLabel textTrainName = new JLabel();
@@ -194,7 +196,7 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 				updateLocoPanes(rl);
 
 				// now update the car pick ups and set outs
-				blockCars(rl, true);
+				blockCars(rl, isManifest);
 
 				textStatus.setText(getStatus(rl));
 

@@ -76,8 +76,8 @@ public class ExportEngines extends XmlFile {
 		PrintWriter fileOut = null;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),
-					true); // NOI18N
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
+					true); 
 		} catch (IOException e) {
 			log.error("Can not open export engines CSV file: "+file.getName());
 			return;
@@ -106,19 +106,19 @@ public class ExportEngines extends XmlFile {
 			engineModel = engine.getModel();
 			if (engineModel.contains(del)) {
 				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in model field: " + engineModel);
+						+ ") has delimiter in model field: " + engineModel); // NOI18N
 				engineModel = ESC + engine.getModel() + ESC;
 			}
 			engineLocationName = engine.getLocationName();
 			if (engineLocationName.contains(del)) {
 				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in location field: " + engineLocationName);
+						+ ") has delimiter in location field: " + engineLocationName); // NOI18N
 				engineLocationName = ESC + engine.getLocationName() + ESC;
 			}
 			engineTrackName = engine.getTrackName();
 			if (engineTrackName.contains(del)) {
 				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-						+ ") has delimiter in track field: " + engineTrackName);
+						+ ") has delimiter in track field: " + engineTrackName); // NOI18N
 				engineTrackName = ESC + engine.getTrackName() + ESC;
 			}
 			// only export value field if value has been set.

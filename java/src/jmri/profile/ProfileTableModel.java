@@ -30,6 +30,8 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
     public Object getValueAt(int rowIndex, int columnIndex) {
         Profile p = ProfileManager.defaultManager().getAllProfiles().get(rowIndex);
         switch (columnIndex) {
+            case -1: // tooltip
+                return Bundle.getMessage("ProfileTableModel.toolTip", p.getName(), p.getPath(), p.getId(), this.getValueAt(rowIndex, 2));
             case 0:
                 return p.getName();
             case 1:

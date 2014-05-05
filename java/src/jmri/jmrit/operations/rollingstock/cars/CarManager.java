@@ -203,18 +203,26 @@ public class CarManager extends RollingStockManager {
 	 * @return ordered list of kernel names
 	 */
 	public List<String> getKernelNameList() {
-		String[] arr = new String[_kernelHashTable.size()];
+		String[] names = new String[_kernelHashTable.size()];
 		List<String> out = new ArrayList<String>();
 		Enumeration<String> en = _kernelHashTable.keys();
 		int i = 0;
 		while (en.hasMoreElements()) {
-			arr[i] = en.nextElement();
-			i++;
+			names[i++] = en.nextElement();
 		}
-		jmri.util.StringUtil.sort(arr);
-		for (i = 0; i < arr.length; i++)
-			out.add(arr[i]);
+		jmri.util.StringUtil.sort(names);
+		for (String name : names)
+			out.add(name);
 		return out;
+	}
+	
+	public int getKernelMaxNameLength() {
+		int maxLength = 0;
+		for (String name : getKernelNameList()) {
+			if (name.length() > maxLength)
+				maxLength = name.length();
+		}
+		return maxLength;
 	}
 
 	/**

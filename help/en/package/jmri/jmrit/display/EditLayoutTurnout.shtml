@@ -117,10 +117,11 @@ have four connecting points, each of which may be connected to a different track
 block. So parts of a crossover may be in one, two, three, or four separate 
 blocks. The Edit Turnout dialog for a crossover allows the entry of up to 
 four blocks, each linked to one of the four connection points. The first block 
-entered must be the <b>Block: Name</b> field; this block is linked to the upper left 
-connection point (if the turnout has not been rotated), and serves as the 
-default block for the crossover. If any of <b>Block 2</b>, <b>Block 3</b>, 
-or <b>Block 4</b> entries are blank, the default block is used. Block connection 
+entered must be the <b>Block</b> field and serves as the default block for the crossover.
+Block 1's connection point is highlighted in blue when a track segment is connected, 
+otherwise if the turnout has not been rotated it is the top left hand point.  
+If any of <b>Block 2</b>, <b>Block 3</b>, or <b>Block 4</b> entries are blank, 
+the default block is used. Block connection 
 points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
 point in a clockwise direction.</p>
 

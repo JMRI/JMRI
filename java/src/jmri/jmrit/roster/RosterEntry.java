@@ -80,7 +80,12 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         
     final static int MAXFNNUM = 28;
     public int getMAXFNNUM() { return MAXFNNUM; }
+    
+    final static int MAXSOUNDNUM = 32;
+    public int getMAXSOUNDNUM() { return MAXSOUNDNUM; }
+    
     protected String[] functionLabels;
+    protected String[] soundLabels;
     protected String[] functionSelectedImages;
     protected String[] functionImages;
     protected boolean[] functionLockables;
@@ -94,7 +99,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     
     protected RosterSpeedProfile _sp = null;
     
-	/**
+  /**
      * Construct a blank object.
      *
      */
@@ -134,25 +139,32 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         _isShuntingOn = pEntry._isShuntingOn;
         
         functionLabels = new String[MAXFNNUM+1];
+        soundLabels = new String[MAXSOUNDNUM+1];
         functionSelectedImages = new String[MAXFNNUM+1];
         functionImages = new String[MAXFNNUM+1];
         functionLockables = new boolean[MAXFNNUM+1];
         
         for (int i=0; i<MAXFNNUM; i++) {
-        	if ((pEntry.functionLabels != null) && (pEntry.functionLabels[i] != null)) {
+          if ((pEntry.functionLabels != null) && (pEntry.functionLabels[i] != null)) {
                 functionLabels[i] = pEntry.functionLabels[i];
-        	}
-        	if ((pEntry.functionSelectedImages != null) && (pEntry.functionSelectedImages[i] != null)) {
-        		functionSelectedImages[i] = pEntry.functionSelectedImages[i];
-        	}
-        	if ((pEntry.functionImages != null) && (pEntry.functionImages[i] != null)) {
-        		functionImages[i] = pEntry.functionImages[i];
-        	}
-        	if (pEntry.functionLockables != null) {
-        		functionLockables[i] = pEntry.functionLockables[i];
-        	}
+          }
+          if ((pEntry.functionSelectedImages != null) && (pEntry.functionSelectedImages[i] != null)) {
+            functionSelectedImages[i] = pEntry.functionSelectedImages[i];
+          }
+          if ((pEntry.functionImages != null) && (pEntry.functionImages[i] != null)) {
+            functionImages[i] = pEntry.functionImages[i];
+          }
+          if (pEntry.functionLockables != null) {
+            functionLockables[i] = pEntry.functionLockables[i];
+          }
         }
-    }
+
+         for (int i=0; i<MAXSOUNDNUM; i++) {
+          if ((pEntry.soundLabels != null) && (pEntry.soundLabels[i] != null)) {
+                soundLabels[i] = pEntry.soundLabels[i];
+          }
+        }
+   }
 
     public void setId(String s) {
         String oldID = _id;
@@ -172,7 +184,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public String getFileName() { return _fileName; }
     
     public String getPathName() { 
-    	return LocoFile.getFileLocation() + "/" + _fileName;
+      return LocoFile.getFileLocation() + "/" + _fileName;
     }
     
     /**
@@ -345,7 +357,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public String getIconPath() { return _iconFilePath; }
 
     public void setShuntingFunction(String fn){
-    	_isShuntingOn=fn;
+      _isShuntingOn=fn;
     }
     public String getShuntingFunction(){ return _isShuntingOn; }
     
@@ -407,7 +419,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         if ((a = e.getAttribute("IsShuntingOn")) != null )  _isShuntingOn = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
-        	_maxSpeedPCT = Integer.parseInt(a.getValue());     
+          _maxSpeedPCT = Integer.parseInt(a.getValue());     
         Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null )  {
             _dateUpdated = e3.getText();
@@ -453,7 +465,10 @@ public class RosterEntry implements jmri.BasicRosterEntry {
             if ((a = d.getAttribute("comment")) != null )  _decoderComment = a.getValue();
         }
 
-        loadFunctions(e.getChild("functionlabels"));
+        loadFunctions(e.getChild("functionlabels"),"RosterEntry");
+
+        loadSounds(e.getChild("soundlabels"),"RosterEntry");
+
         loadAttributes(e.getChild("attributepairs"));
         
         if(e.getChild("speedprofile")!=null){
@@ -469,7 +484,16 @@ public class RosterEntry implements jmri.BasicRosterEntry {
      * JDOM element.  Does not change values that are already present!
      */
     @SuppressWarnings("unchecked")
-	public void loadFunctions(Element e3) {
+    public void loadFunctions(Element e3) {
+        this.loadFunctions(e3,"family");
+    }
+
+    /**
+     * Loads function names from a 
+     * JDOM element.  Does not change values that are already present!
+     */
+    @SuppressWarnings("unchecked")
+    public void loadFunctions(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
         ie those saved in the roster file, rather than those being left blank
         rather than being over-written by the defaults linked to the decoder def*/
@@ -483,26 +507,56 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
                 String val = fn.getText();
-                if (this.getFunctionLabel(num)==null) {
+                if ( (this.getFunctionLabel(num)==null) || (source.equalsIgnoreCase("model")) ) {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null)
-                    	this.setFunctionImage(num, FileUtil.getUserResourcePath()+a.getValue());
+                        this.setFunctionImage(num, FileUtil.getUserResourcePath()+a.getValue());
                     if ((a = fn.getAttribute("functionImageSelected")) != null)
-                    	this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath()+a.getValue());              
+                        this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath()+a.getValue());              
                 }
             }
         }
-        loadedOnce = true;
+        if(source.equalsIgnoreCase("RosterEntry"))
+            loadedOnce = true;
+    }
+
+    
+    boolean soundLoadedOnce = false;
+    /**
+     * Loads sound names from a 
+     * JDOM element.  Does not change values that are already present!
+     */
+    @SuppressWarnings("unchecked")
+    public void loadSounds(Element e3, String source) {
+        /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
+        ie those saved in the roster file, rather than those being left blank
+        rather than being over-written by the defaults linked to the decoder def*/
+        if(soundLoadedOnce)
+            return;
+        if (e3 != null)  {
+            // load sound names
+            java.util.List<Element> l = e3.getChildren("soundlabel");
+            for (int i = 0; i < l.size(); i++) {
+                Element fn = l.get(i);
+                int num = Integer.parseInt(fn.getAttribute("num").getValue());
+                String val = fn.getText();
+                if ( (this.getSoundLabel(num)==null) || (source.equalsIgnoreCase("model")) ) {
+                    this.setSoundLabel(num, val);
+                }
+            }
+        }
+        if(source.equalsIgnoreCase("RosterEntry"))
+            soundLoadedOnce = true;
     }
 
     /**
      * Loads attribute key/value pairs from a 
      * JDOM element.
      */
-	@SuppressWarnings("unchecked")
-	public void loadAttributes(Element e3) {
+    @SuppressWarnings("unchecked")
+    public void loadAttributes(Element e3) {
         if (e3 != null)  {
             java.util.List<Element> l = e3.getChildren("keyvaluepair");
             for (int i = 0; i < l.size(); i++) {
@@ -529,10 +583,31 @@ public class RosterEntry implements jmri.BasicRosterEntry {
      * @param fn function number, starting with 0
      */
     public String getFunctionLabel(int fn) {
-        if (functionLabels == null) return null;
+       if (functionLabels == null) return null;
         if (fn <0 || fn >MAXFNNUM)
             throw new IllegalArgumentException("number out of range: "+fn);
         return functionLabels[fn];
+    }
+    
+    /**
+     * Define label for a specific sound
+     * @param fn sound number, starting with 0
+     */
+    public void setSoundLabel(int fn, String label) {
+        if (soundLabels == null) soundLabels = new String[MAXSOUNDNUM+1]; // counts zero
+        soundLabels[fn] = label;
+    }
+    
+    /**
+     * If a label has been defined for a specific sound,
+     * return it, otherwise return null.
+     * @param fn sound number, starting with 0
+     */
+    public String getSoundLabel(int fn) {
+        if (soundLabels == null) return null;
+        if (fn <0 || fn >MAXSOUNDNUM)
+            throw new IllegalArgumentException("number out of range: "+fn);
+        return soundLabels[fn];
     }
     
     public void setFunctionImage(int fn, String s) {
@@ -542,21 +617,21 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         firePropertyChange("functionImage"+fn, old, s);
     }
     public String getFunctionImage(int fn) {
-    	if ((functionImages != null) && (functionImages[fn] != null))
-    		return functionImages[fn];
-    	return FileUtil.getUserResourcePath(); 
+      if ((functionImages != null) && (functionImages[fn] != null))
+        return functionImages[fn];
+      return FileUtil.getUserResourcePath(); 
     }
     
     public void setFunctionSelectedImage(int fn, String s) {
-    	if (functionSelectedImages == null) functionSelectedImages = new String[MAXFNNUM+1]; // counts zero
-    	String old = functionSelectedImages[fn];
-    	functionSelectedImages[fn] = s;
-    	firePropertyChange("functionSelectedImage"+fn, old, s);
+      if (functionSelectedImages == null) functionSelectedImages = new String[MAXFNNUM+1]; // counts zero
+      String old = functionSelectedImages[fn];
+      functionSelectedImages[fn] = s;
+      firePropertyChange("functionSelectedImage"+fn, old, s);
     }
     public String getFunctionSelectedImage(int fn) {
-    	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
-    		return functionSelectedImages[fn];
-    	return FileUtil.getUserResourcePath(); 
+      if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
+        return functionSelectedImages[fn];
+      return FileUtil.getUserResourcePath(); 
     }
     /**
      * Define whether a specific function is lockable.
@@ -616,14 +691,14 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     }
 
     public int getMaxSpeedPCT() {
-		return _maxSpeedPCT;
-	}
+    return _maxSpeedPCT;
+  }
 
-	public void setMaxSpeedPCT(int maxSpeedPCT) {
-		_maxSpeedPCT = maxSpeedPCT;
-	}
+  public void setMaxSpeedPCT(int maxSpeedPCT) {
+    _maxSpeedPCT = maxSpeedPCT;
+  }
 
-	/**
+  /**
      * Warn user that the roster entry needs to be resaved.
      */
     protected void warnShortLong(String id) {
@@ -650,14 +725,14 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
-        	e.setAttribute("imageFilePath", getImagePath().substring( FileUtil.getUserResourcePath().length() ));
+          e.setAttribute("imageFilePath", getImagePath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
-        	e.setAttribute("imageFilePath", "");
+          e.setAttribute("imageFilePath", "");
         }
         try {
         e.setAttribute("iconFilePath", getIconPath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
-        	e.setAttribute("iconFilePath", "");
+          e.setAttribute("iconFilePath", "");
         }
         e.setAttribute("URL", getURL());
         e.setAttribute("IsShuntingOn", getShuntingFunction());
@@ -688,20 +763,35 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                         if (functionLockables!=null) lockable = functionLockables[i];
                         fne.setAttribute("lockable", lockable ? "true" : "false");
                         if ((functionImages!=null) && (functionImages[i]!=null)) {
-                        	try {
-                        		fne.setAttribute("functionImage", functionImages[i].substring( FileUtil.getUserResourcePath().length() ));
-                        	} catch (StringIndexOutOfBoundsException eob) {
-                        		fne.setAttribute("functionImage", "");
-                        	} 
+                          try {
+                            fne.setAttribute("functionImage", functionImages[i].substring( FileUtil.getUserResourcePath().length() ));
+                          } catch (StringIndexOutOfBoundsException eob) {
+                            fne.setAttribute("functionImage", "");
+                          } 
                         }
                         if ((functionSelectedImages!=null) && (functionSelectedImages[i]!=null)) {
-                        	try {
-                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( FileUtil.getUserResourcePath().length() ));
-                        	} catch (StringIndexOutOfBoundsException eob) {
-                        		fne.setAttribute("functionImageSelected", "");
-                        	} 
+                          try {
+                            fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( FileUtil.getUserResourcePath().length() ));
+                          } catch (StringIndexOutOfBoundsException eob) {
+                            fne.setAttribute("functionImageSelected", "");
+                          } 
                         }
                         fne.addContent(functionLabels[i]);
+                        d.addContent(fne); 
+                }
+            }
+            e.addContent(d);
+        }
+
+        if (soundLabels!=null) {
+            d = new Element("soundlabels");
+            
+            // loop to copy non-null elements
+            for (int i = 0; i<MAXSOUNDNUM; i++) {
+                if (soundLabels[i]!=null && !soundLabels[i].equals("")) {
+                        Element fne = new Element("soundlabel");  
+                        fne.setAttribute("num", ""+i);
+                        fne.addContent(soundLabels[i]);
                         d.addContent(fne); 
                 }
             }

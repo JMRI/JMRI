@@ -2118,11 +2118,17 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             
             ArrayList<LayoutBlock> lblks = new ArrayList<LayoutBlock>();
             if(protectingBlock==null){
+            	String pBlkNames = "";
+            	String lBlksNames = "";
                 for(LayoutBlock pBlk:protectingBlocks){
+                	pBlkNames = pBlkNames + " " + pBlk.blockName + " " + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)  + ", ";
                     if(lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)){
                         try {
                             lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
                             protectingBlock = pBlk;
+                            for (LayoutBlock lBlk:lblks){
+                            	lBlksNames = lBlksNames + " " + lBlk.blockName;
+                            }
                             break;
                         } catch (jmri.JmriException ee){
                             log.debug("path not found this time");
@@ -2130,12 +2136,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
                 if(protectingBlock==null){
-                    throw new jmri.JmriException("Path not valid");
+                    throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.blockName + " layout block names: " + lBlksNames);
                 }
             }
             try {
                 if(!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, protectingBlock, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST))
-                    throw new jmri.JmriException("Path not valid");
+                    throw new jmri.JmriException("Path not valid, destination check failed.");
             } catch (jmri.JmriException e){
                 throw e;
             }

@@ -64,6 +64,19 @@ public class IBLnPacketizer extends LnPacketizer {
            trafficController = lt;
        }
 
+    private byte readNextByteFromUSB() {
+        byte inbyte;
+        while (true) {
+            try {
+                inbyte = istream.readByte();
+                return inbyte;
+            }
+            catch (java.io.IOException e) {
+                continue;
+            }
+        }
+    }
+
 	public void run() {
            boolean debug = log.isDebugEnabled();
 
@@ -71,7 +84,7 @@ public class IBLnPacketizer extends LnPacketizer {
            while (true) {   // loop permanently, program close will exit
                try {
                    // start by looking for command -  skip if bit not set
-                   while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
+                   while ( ((opCode = (readNextByteFromUSB()&0xFF)) & 0x80) == 0 )  {
                        if (debug) log.debug("Skipping: "+Integer.toHexString(opCode));
                    }
                    // here opCode is OK. Create output message
@@ -80,7 +93,7 @@ public class IBLnPacketizer extends LnPacketizer {
                    while (msg == null) {
                        try {
                            // Capture 2nd byte, always present
-                           int byte2 = istream.readByte()&0xFF;
+                           int byte2 = readNextByteFromUSB()&0xFF;
                            //log.debug("Byte2: "+Integer.toHexString(byte2));
                            // Decide length
                            switch((opCode & 0x60) >> 5) {
@@ -111,7 +124,7 @@ public class IBLnPacketizer extends LnPacketizer {
                            //log.debug("len: "+len);
                            for (int i = 2; i < len; i++)  {
                                // check for message-blocking error
-                               int b = istream.readByte()&0xFF;
+                               int b = readNextByteFromUSB()&0xFF;
                                //log.debug("char "+i+" is: "+Integer.toHexString(b));
                                if ( (b&0x80) != 0) {
                                    log.warn("LocoNet message with opCode: "
@@ -158,17 +171,6 @@ public class IBLnPacketizer extends LnPacketizer {
                catch (LocoNetMessageException e) {
                    // just let it ride for now
                    log.warn("run: unexpected LocoNetMessageException: "+e);
-               }
-               catch (java.io.EOFException e) {
-                   // posted from idle port when enableReceiveTimeout used
-                   if (debug) log.debug("EOFException, is LocoNet serial I/O using timeouts?");
-               }
-               catch (java.io.IOException e) {
-                   // fired when write-end of HexFile reaches end
-                   if (debug) log.debug("IOException, should only happen with HexFIle: "+e);
-                   log.info("End of file");
-                   disconnectPort(controller);
-                   return;
                }
                // normally, we don't catch the unnamed Exception, but in this
                // permanently running loop it seems wise.

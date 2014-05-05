@@ -79,24 +79,30 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             return addPath(_toPaths, path);
         }
         // portal is incomplete or path block not in this portal
-        // to do!!! fix this so it may return false.  Need true for bogus load
-        return true;
+        return false;
     }
 
     /**
     *  Utility for both path lists
     */
     private boolean addPath(List <OPath> list, OPath path) {
-        if (!list.contains(path))  {
-            String pName =path.getName();
-            for (int i=0; i<list.size(); i++) {
-                if (pName.equals(list.get(i).getName())) { log.error("Path \""+path.getName()+
-                    "\" is duplicate name for another path in Portal \""+getUserName()+"\".");
-                    return false; 
-                }
-            }
-            list.add(path);
+        if (list.contains(path))  {
+            return true;	//OK already there
         }
+        String pName =path.getName();
+        for (int i=0; i<list.size(); i++) {
+        	OPath p = list.get(i); 
+            if (pName.equals(p.getName())) { log.error("Path \""+path.getName()+
+                "\" is duplicate name for another path in Portal \""+getUserName()+"\".");
+                return false; 
+            }
+        	if (p.equals(path)) {
+        		log.error("Path \""+path.getName()+"\" is duplicate of path \""+p.getName()+
+        				"\" in Portal \""+getUserName()+"\".");
+                return false;
+        	}
+        }
+        list.add(path);
         return true;
     }
 
@@ -138,6 +144,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return msg;
     }
     private String checkName(String name, OBlock block) {
+    	if (block==null) {
+    		return null;
+    	}
         List<Portal> list = block.getPortals();
         for (int i=0; i<list.size(); i++) {
             if (name.equals(list.get(i).getName())) {

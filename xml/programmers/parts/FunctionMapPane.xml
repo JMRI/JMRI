@@ -1,16 +1,22 @@
-<?xml version="1.0"?>
-<pane name="Function Map" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Function Map" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Mapejat de funcions</name>
-    <column>
-        <row>
-            <column>
-                <label label="Use this sheet to determine which functions will control which outputs">
-                    <label xml:lang="it">Usa questo Pannello per associare le uscite alle Funzioni</label>
-                </label>
-                <label label=" "/>
-            </column>
-        </row>
-        <fnmapping/>
-    </column>
+  <column>
+    <row>
+      <column>
+        <label label="Use this sheet to determine which functions will control which outputs">
+          <label xml:lang="it">Usa questo Pannello per associare le uscite alle Funzioni</label>
+        </label>
+        <label label=" "/>
+      </column>
+    </row>
+    <fnmapping/>
+    <row>
+      <label label=" "/>
+    </row>
+    <row>
+      <display item="Function Map Option 1"/>
+    </row>
+  </column>
+  <name xml:lang="it">Mappa Funzioni</name>
 </pane>
-

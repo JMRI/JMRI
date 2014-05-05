@@ -1496,7 +1496,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         // allocate the section
         as = new AllocatedSection(s,at,seqNum,nextSection,nextSectionSeqNo);
         if (_SupportVSDecoder) { 
-            as.addPropertyChangeListener(InstanceManager.vsdecoderManagerInstance());
+            as.addPropertyChangeListener(InstanceManager.getDefault(jmri.jmrit.vsdecoder.VSDecoderManager.class));
         }
         
         s.setState(direction/*ar.getSectionDirection()*/);

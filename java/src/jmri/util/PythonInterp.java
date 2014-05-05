@@ -2,9 +2,11 @@
 
 package jmri.util;
 
+import java.io.PipedReader;
+import java.io.PipedWriter;
+import java.io.Writer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
 
 /**
  * Support a single Jython interpreter for JMRI.
@@ -121,7 +123,7 @@ public class PythonInterp {
             interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
 
             // have jython execute the default setup
-            log.debug("load defaults from "+defaultContextFile);
+            log.debug("load defaults from {}", defaultContextFile);
             execFile(defaultContextFile);
 
             return interp;

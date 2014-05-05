@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import javax.swing.Timer;
 
 import jmri.BeanSetting;
@@ -216,6 +217,49 @@ public class OPath extends jmri.Path  {
         return "OPath \""+_name+"\"on block "+(getBlock()!=null ? getBlock().getDisplayName(): "null")+
             (_fromPortal==null?"":" from portal "+_fromPortal.getName())+
             (_toPortal==null?"":" to portal "+ _toPortal.getName());
+    }
+
+    /**
+     * override to disallow duplicate setting
+     */
+    public void addSetting(BeanSetting t) {
+        Iterator<BeanSetting> iter = getSettings().iterator();
+        while (iter.hasNext()) {
+        	BeanSetting bs = iter.next();
+    		if (bs.getBeanName().equals(t.getBeanName())) {
+    			log.error("TO setting for \""+ t.getBeanName()+"\" already set to "+bs.getSetting());
+    			return;
+    		}
+        }
+		super.addSetting(t);
+    }
+    
+    /**
+     * Override to indicate logical equality for use as paths in OBlocks.
+     * 
+     */
+    public boolean equals(OPath path) {
+    	if (_fromPortal!=null && !_fromPortal.equals(path.getFromPortal())) {
+    		return false;
+    	}
+    	if (_toPortal!=null && !_toPortal.equals(path.getToPortal())) {
+    		return false;
+    	}
+        Iterator<BeanSetting> iter = path.getSettings().iterator();
+        while (iter.hasNext()) {
+        	BeanSetting beanSetting = iter.next();
+        	Iterator<BeanSetting> it = getSettings().iterator();
+        	while (it.hasNext()) {
+            	BeanSetting bs = it.next();
+        		if (!bs.getBeanName().equals(beanSetting.getBeanName())) {
+        			return false;
+        		}
+        		if (bs.getSetting()!= beanSetting.getSetting()) {
+        			return false;
+        		}
+        	}
+        }
+    	return true;
     }
        
     static Logger log = LoggerFactory.getLogger(OPath.class.getName());

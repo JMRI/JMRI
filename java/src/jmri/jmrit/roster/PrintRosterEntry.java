@@ -133,7 +133,7 @@ public class PrintRosterEntry implements PaneContainer {
         for (int i=0; i<rawPaneList.size(); i++) {
             // load each pane
             String name = rawPaneList.get(i).getAttribute("name").getValue();
-            PaneProgPane p = new PaneProgPane(this, name, rawPaneList.get(i), cvModel, iCvModel, variableModel, d.getModelElement());
+            PaneProgPane p = new PaneProgPane(this, name, rawPaneList.get(i), cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
             _paneList.add(p);
         }
     }

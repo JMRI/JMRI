@@ -593,7 +593,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		// check car's weight has proper format
 		try {
-			Double.parseDouble(weightTextField.getText());
+			NumberFormat nf = NumberFormat.getNumberInstance();
+			Number number = nf.parse(weightTextField.getText());
+			log.debug("Car weight in oz: {}", number);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"),
 					Bundle.getMessage("carActualWeight"), JOptionPane.ERROR_MESSAGE);

@@ -20,6 +20,25 @@ public class XBeeNodeTest extends TestCase {
         Assert.assertNotNull("exists",m);
     }
 
+    public void testSetUserAddress() {
+       // test the code to set the User address
+       XBeeNode node = new XBeeNode();
+       byte uad[]={(byte)0x6D,(byte)0x97};
+       node.setUserAddress(uad);
+       Assert.assertEquals("Node user address high byte",uad[0],node.getUserAddress()[0]);
+       Assert.assertEquals("Node user address low byte",uad[1],node.getUserAddress()[1]);
+    }
+
+    public void testSetGlobalAddress() {
+       // test the code to set the User address
+       XBeeNode node = new XBeeNode();
+       byte gad[]={(byte)0x00,(byte)0x13,(byte)0xA2,(byte)0x00,(byte)0x40,(byte)0xA0,(byte)0x4D,(byte)0x2D};
+       node.setGlobalAddress(gad);
+       for(int i =0; i< gad.length;i ++)
+       Assert.assertEquals("Node global address byte " + i,gad[i],node.getGlobalAddress()[i]);
+    }
+
+
 	// from here down is testing infrastructure
 
 	public XBeeNodeTest(String s) {

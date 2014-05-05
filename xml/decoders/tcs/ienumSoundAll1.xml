@@ -16,34 +16,34 @@
 <!-- version 3 - add models 187,1031,1040,1041,1042,336,337,338,411 -->
 <!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
 <!-- function output choices for output 15 thru 30 when moving and in neutral -->
-<ienumVal>
-	<ienumChoice choice="Ash Dump 1" value="141" />
-	<ienumChoice choice="Idling Sounds 1" value="140" />
-	<ienumChoice choice="Rotate Whistle Changed" value="115" />
-	<ienumChoice choice="Rotate Whistle Alamo Michigan Plant" value="116" />
-	<ienumChoice choice="Rotate Whistle PA 3 Chime" value="117" />
-	<ienumChoice choice="Rotate Whistle Kingsly 4 Chime" value="118" />
-	<ienumChoice choice="Rotate Whistle Reading 6 Chime 2" value="119" />
-	<ienumChoice choice="Rotate Whistle NPR 765" value="120" />
-	<ienumChoice choice="Rotate Whistle Reading 6 Chime" value="121" />
-	<ienumChoice choice="Rotate Whistle Reading Pacific G2" value="122" />
-	<ienumChoice choice="Rotate Whistle Reading Single Chime" value="123" />
-	<ienumChoice choice="Rotate Whistle Wabash 3 Chime" value="124" />
-	<ienumChoice choice="Rotate Whistle B &amp; O" value="125" />
-	<ienumChoice choice="Rotate Whistle Pennsy K4" value="126" />
-	<ienumChoice choice="Rotate Whistle NW Single Chime" value="127" />
-	<ienumChoice choice="Rotate Whistle Lunkenheimer 3 chime" value="128" />
-	<ienumChoice choice="Rotate Whistle 14" value="129" />
-	<ienumChoice choice="Rotate Whistle Lunkenheimer Single Note" value="130" />
-	<ienumChoice choice="Rotate Whistle 16" value="131" />
-	<ienumChoice choice="Rotate Whistle 17" value="132" />
-	<ienumChoice choice="Rotate Whistle Hancock 3 Chime" value="133" />
-	<ienumChoice choice="Rotate Whistle Southern 6 Chime" value="134" />
-	<ienumChoice choice="Rotate Whistle Wabash 6 Chime" value="135" />
-	<ienumChoice choice="Rotate Whistle Santa Fe 6 Chime" value="136" />
-	<ienumChoice choice="Rotate Whistle NW single chime short bell" value="137" />
-	<ienumChoice choice="Rotate Whistle Great Northern 5 Chime" value="138" />
-	<ienumChoice choice="Rotate Horn Nathan K5LA" value="139" />
-	<ienumChoice choice="Silence" value="114" />
-	<ienumChoice choice="Waterfill 1" value="142" />
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <ienumChoice choice="Ash Dump 1" value="141"/>
+  <ienumChoice choice="Idling Sounds 1" value="140"/>
+  <ienumChoice choice="Rotate Whistle Changed" value="115"/>
+  <ienumChoice choice="Rotate Whistle Alamo Michigan Plant" value="116"/>
+  <ienumChoice choice="Rotate Whistle PA 3 Chime" value="117"/>
+  <ienumChoice choice="Rotate Whistle Kingsly 4 Chime" value="118"/>
+  <ienumChoice choice="Rotate Whistle Reading 6 Chime 2" value="119"/>
+  <ienumChoice choice="Rotate Whistle NPR 765" value="120"/>
+  <ienumChoice choice="Rotate Whistle Reading 6 Chime" value="121"/>
+  <ienumChoice choice="Rotate Whistle Reading Pacific G2" value="122"/>
+  <ienumChoice choice="Rotate Whistle Reading Single Chime" value="123"/>
+  <ienumChoice choice="Rotate Whistle Wabash 3 Chime" value="124"/>
+  <ienumChoice choice="Rotate Whistle B &amp; O" value="125"/>
+  <ienumChoice choice="Rotate Whistle Pennsy K4" value="126"/>
+  <ienumChoice choice="Rotate Whistle NW Single Chime" value="127"/>
+  <ienumChoice choice="Rotate Whistle Lunkenheimer 3 chime" value="128"/>
+  <ienumChoice choice="Rotate Whistle 14" value="129"/>
+  <ienumChoice choice="Rotate Whistle Lunkenheimer Single Note" value="130"/>
+  <ienumChoice choice="Rotate Whistle 16" value="131"/>
+  <ienumChoice choice="Rotate Whistle 17" value="132"/>
+  <ienumChoice choice="Rotate Whistle Hancock 3 Chime" value="133"/>
+  <ienumChoice choice="Rotate Whistle Southern 6 Chime" value="134"/>
+  <ienumChoice choice="Rotate Whistle Wabash 6 Chime" value="135"/>
+  <ienumChoice choice="Rotate Whistle Santa Fe 6 Chime" value="136"/>
+  <ienumChoice choice="Rotate Whistle NW single chime short bell" value="137"/>
+  <ienumChoice choice="Rotate Whistle Great Northern 5 Chime" value="138"/>
+  <ienumChoice choice="Rotate Horn Nathan K5LA" value="139"/>
+  <ienumChoice choice="Silence" value="114"/>
+  <ienumChoice choice="Waterfill 1" value="142"/>
 </ienumVal>

@@ -2,18 +2,17 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
-
+import jmri.jmrit.operations.OperationsManager;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.util.FileUtil;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Loads and stores trains using xml files. Also stores various train parameters managed by the TrainManager.
@@ -44,6 +43,7 @@ public class TrainManagerXml extends OperationsXml {
 		return _instance;
 	}
 
+        @Override
 	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 		if (log.isDebugEnabled())
 			log.debug("writeFile " + name);
@@ -75,6 +75,7 @@ public class TrainManagerXml extends OperationsXml {
 	/**
 	 * Read the contents of a roster XML file into this object. Note that this does not clear any existing entries.
 	 */
+        @Override
 	public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
 
 		// suppress rootFromName(name) warning message by checking to see if file exists
@@ -167,7 +168,19 @@ public class TrainManagerXml extends OperationsXml {
 				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
-	/**
+        public File getManifestFile(String name, String ext) {
+            return new File(defaultManifestFilename(name, ext));
+        }
+
+        public File createManifestFile(String name, String ext) {
+            return createFile(defaultManifestFilename(name, ext), false); // don't backup
+        }
+
+        private String defaultManifestFilename(String name, String ext) {
+            return OperationsManager.getInstance().getPath("manifests") + File.separator + "train-" + name + "." + ext; // NOI18N
+        }
+
+        /**
 	 * Store the switch list for a location
 	 */
 	public File createSwitchListFile(String name) {
@@ -207,10 +220,12 @@ public class TrainManagerXml extends OperationsXml {
 
 	private String SwitchListFileName = Bundle.getMessage("location")+" (";
 
+        @Override
 	public void setOperationsFileName(String name) {
 		operationsFileName = name;
 	}
 
+        @Override
 	public String getOperationsFileName() {
 		return operationsFileName;
 	}

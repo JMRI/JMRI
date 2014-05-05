@@ -222,6 +222,109 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
 		Assert.assertEquals("fifth byte ",  0xC8^0x11^0x13^0x00, ba[4] & 0xFF);
 	}
+	
+	public void testIsAccSignalDecoderPktOK() {
+		byte[] ba = NmraPacket.accSignalDecoderPkt(123, 12);
+		Assert.assertTrue(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testIsAccSignalDecoderPktFalseConsist() {
+		byte[] ba = NmraPacket.consistControl(2065, true, 0, false);
+		Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testIsAccSignalDecoderPktFalseFunction() {
+		byte[] ba = NmraPacket.function21Through28Packet(2065, true, true, false, true, false, true, false, true, false);
+		Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testIsAccSignalDecoderPktFalseAnalog() {
+		byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
+		Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testIsAccSignalDecoderPktFalseOpsWrite() {
+		byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75 );
+		Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testIsAccSignalDecoderPktFalseAccDecoder() {
+		byte[] ba = NmraPacket.accDecoderPkt(257, true);
+		Assert.assertFalse(NmraPacket.isAccSignalDecoderPkt(ba));
+	}
+	
+	public void testGetAccSignalDecoderPktAddr1() {
+	    int addr = 1;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr2() {
+	    int addr = 2;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr4() {
+	    int addr = 4;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr8() {
+	    int addr = 8;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr16() {
+	    int addr = 16;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr32() {
+	    int addr = 32;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr64() {
+	    int addr = 64;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr128() {
+	    int addr = 128;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr256() {
+	    int addr = 256;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr512() {
+	    int addr = 512;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr1024() {
+	    int addr = 1024;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
+	public void testGetAccSignalDecoderPktAddr2044() { // max valid value
+	    int addr = 2044;
+		byte[] ba = NmraPacket.accSignalDecoderPkt(addr, 12);
+		Assert.assertEquals(addr, NmraPacket.getAccSignalDecoderPktAddress(ba));
+	}
+
         
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {

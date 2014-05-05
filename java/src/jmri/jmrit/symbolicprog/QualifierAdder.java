@@ -36,12 +36,35 @@ public abstract class QualifierAdder {
     abstract protected void addListener(java.beans.PropertyChangeListener qc);
     
     public void processModifierElements(Element e, VariableTableModel model) {
-        // currently only looks for one instance and one type
+        
+        ArrayList<Qualifier> lq = new ArrayList<Qualifier>(); 
+        
         @SuppressWarnings("unchecked")
-        List<Element> le = e.getChildren("qualifier");
-        ArrayList<Qualifier> lq = new ArrayList<Qualifier>();
+        List<Element> le = e.getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
+        processList(le, lq, model);
+        
+        // search for enclosing <variables> element
+        Parent p = e;
+        while ( (p = p.getParent()) != null && p instanceof Element) {
+            @SuppressWarnings("unchecked")
+            List<Element> le2 = ((Element)p).getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
+            processList(le2, lq, model);
+        }
+        
+        // Add the AND logic - listen for change and ensure result correct
+        if (lq.size()>1) {
+            QualifierCombiner qc = new QualifierCombiner(lq);
+            addListener(qc);
+        }
+    }
+      
+    void processList(List<Element> le, ArrayList<Qualifier> lq, VariableTableModel model) {
         for (Element q : le) {
-
+            processElement(q, lq, model);
+        }
+    }
+    
+    void processElement(Element q, ArrayList<Qualifier> lq, VariableTableModel model) {
             String variableRef = q.getChild("variableref").getText();
             String relation = q.getChild("relation").getText();
             String value = q.getChild("value").getText();
@@ -60,14 +83,8 @@ public abstract class QualifierAdder {
             } else {
                 log.error("didn't find {} variable", variableRef, new Exception());
             }
-        }
-        // Now add the AND logic - listen for change and ensure result correct
-        if (lq.size()>1) {
-            QualifierCombiner qc = new QualifierCombiner(lq);
-            addListener(qc);
-        }
     }
-      
+    
     static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());
   
 }

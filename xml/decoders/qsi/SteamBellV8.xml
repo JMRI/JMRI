@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Steam bell selections -->
-<ienumVal>
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="Steam Bell, Air, Slow 1" value="1"/>
   <ienumChoice choice="Steam Bell, Air, Mid 1"/>
   <ienumChoice choice="Steam Bell, hand pull, slow 1"/>

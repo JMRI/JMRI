@@ -25,6 +25,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -46,9 +47,9 @@ public class PositionableShape extends PositionableJComponent
     private int	_degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;			// must change level to allow control to other devices
-    private int _changeLevel = -1;
-    private boolean _hide;
+    private int _saveLevel = 5;			// default level set in popup
+    private int _changeLevel = 5;
+    private boolean _doHide;		// whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
     protected int _hitIndex = -1;
@@ -89,10 +90,18 @@ public class PositionableShape extends PositionableJComponent
     	return _transform;
     }
     public void setWidth(int w) {
-    	_width = w;
+    	if (w>SIZE) {
+    		_width = w;
+    	} else {
+    		_width = SIZE;
+    	}
     }
     public void setHeight(int h) {
-    	_height = h;
+    	if (h>SIZE) {
+    		_height = h;
+    	} else {
+    		_height = SIZE;
+    	}    	
     }
     @Override
     public int getHeight() {
@@ -200,11 +209,14 @@ public class PositionableShape extends PositionableJComponent
             r.x=0;
             r.y=0;
        		g2d.draw(r);
+       		g2d.fill(r);
         	for (int i=0; i<_handles.length; i++) {
-        		g2d.setColor(Color.RED);
-        		g2d.fill(_handles[i]);
-                g2d.setColor(Editor.HIGHLIGHT_COLOR);
-           		g2d.draw(_handles[i]);
+        		if (_handles[i]!=null) {
+            		g2d.setColor(Color.RED);
+            		g2d.fill(_handles[i]);
+                    g2d.setColor(Editor.HIGHLIGHT_COLOR);
+               		g2d.draw(_handles[i]);        			
+        		}
         	}
         }
     }
@@ -236,8 +248,8 @@ public class PositionableShape extends PositionableJComponent
     	} else {
         	r = super.getBounds();    		
     	}
-    	_width = r.width;
-    	_height = r.height;
+    	setWidth(r.width);
+    	setHeight(r.height);
         setSize(r.width, r.height);
     }
     
@@ -323,62 +335,74 @@ public class PositionableShape extends PositionableJComponent
 		if (!_editor.isEditable()) {
 	        if (evt.getPropertyName().equals("KnownState")) {
 	        	if (((Integer)evt.getNewValue()).intValue()==Sensor.ACTIVE) {
-                    if (_changeLevel>0) {
-                    	setLevel(_changeLevel);            	
-                    }
-	            	setVisible(!_hide);
+	        		if (_doHide) {
+		            	setVisible(true);	        			
+	        		} else {
+                    	setDisplayLevel(_changeLevel);            		        			
+                    	setVisible(true);
+	        		} 
+	            } else if (((Integer)evt.getNewValue()).intValue()==Sensor.INACTIVE) {
+	        		if (_doHide) {
+		            	setVisible(false);	        			
+	        		} else {
+                    	setDisplayLevel(_saveLevel);            		        			
+                    	setVisible(true);
+	        		} 
 	            } else {
-	            	setLevel(_saveLevel);
+	            	setDisplayLevel(_saveLevel);
 	            	setVisible(true);
 	            }
 	        }			
 		} else {
-        	setLevel(_saveLevel);
+        	setDisplayLevel(_saveLevel);
         	setVisible(true);			
 		}
 	}
-	// override for 
-    public void setDisplayLevel(int l) {
-    	_saveLevel = l;
-    	super.setDisplayLevel(l);
-    }
-
+	
     /**
      * Attach a named sensor to shape
      * @param pName Used as a system/user name to lookup the sensor object
      */
 	public void setControlSensor(String pName, boolean hide, int level) {
-        if (pName==null || pName.trim().length()==0) {
-        	setControlSensorHandle(null);
-            return;
+		NamedBeanHandle<Sensor> senHandle = null;
+		String msg = null;
+		if (pName==null || pName.trim().length()==0) {
+        	msg = Bundle.getMessage("badSensorName", pName);
         }
-        if (InstanceManager.sensorManagerInstance()!=null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
-            	setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                _hide = hide;
-            	_changeLevel = level;                	
-                sensor.addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");            
-                if (sensor.getKnownState()==Sensor.ACTIVE) {
-                    if (_changeLevel>0) {
-                    	setLevel(_changeLevel);            	
+        _saveLevel = getDisplayLevel();
+        if (msg==null) {
+            if (InstanceManager.sensorManagerInstance()!=null) {
+                Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
+                senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
+                if (sensor != null) {
+                    _doHide = hide;
+                	_changeLevel = level;                	
+                    if (_changeLevel<=0) {
+                    	_changeLevel = getDisplayLevel();           	
                     }
-                	setVisible(!_hide);
+                } else {
+                	msg = Bundle.getMessage("badSensorName", pName);
                 }
             } else {
-                log.error("PositionalShape Control Sensor '"+pName+"' not available, shape won't see changes");
-            }
-        } else {
-            log.error("No SensorManager for this protocol, block icons won't see changes");
+                msg = "No SensorManager for this protocol, shape cannot acquire a sensor.";
+            }       	
         }
+        if (msg!=null) {
+        	JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
+        			JOptionPane.INFORMATION_MESSAGE);
+        }
+    	setControlSensorHandle(senHandle);
     }
     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
         if (_controlSensor != null) {
         	getControlSensor().removePropertyChangeListener(this);
-        	setLevel(_saveLevel);
+        	setDisplayLevel(_saveLevel);
         	setVisible(true);
         }
         _controlSensor = senHandle;
+        if (_controlSensor!=null) {
+        	getControlSensor().addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
+        }
     }
     public Sensor getControlSensor() {
         if (_controlSensor==null) {
@@ -389,7 +413,7 @@ public class PositionableShape extends PositionableJComponent
     
     public NamedBeanHandle <Sensor> getControlSensorHandle() { return _controlSensor; }
     public boolean isHideOnSensor() {
-    	return _hide;
+    	return _doHide;
     }
     public int getChangeLevel() {
     	return _changeLevel;
@@ -410,13 +434,17 @@ public class PositionableShape extends PositionableJComponent
     
     protected void drawHandles() {
     	_handles = new Rectangle[4];
-    	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);
-    	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
-    	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
-    	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);
+       	if (_width>2*SIZE) {
+        	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
+        	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);    		       		
+       	}
+       	if (_height>2*SIZE) {
+        	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);       		
+        	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
+       	}
     }
     
-    protected Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
+    public Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
  	   	 if (_transform!=null) {
  	   		 java.awt.geom.AffineTransform t = _transform.createInverse();
  	   		 float[] pt = new float[2];
@@ -447,7 +475,7 @@ public class PositionableShape extends PositionableJComponent
    	   			 return;
        	   	 }
        	   	 for (int i=0; i<_handles.length; i++) {
-       	   		 if (_handles[i].contains(pt.x, pt.y)) {
+       	   		 if (_handles[i]!=null && _handles[i].contains(pt.x, pt.y)) {
        	   			 _hitIndex=i;
        	   		 }       	   		 
        	   	 }

@@ -1,6 +1,9 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.Point;
+
+import org.jdom.Attribute;
+import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -374,9 +377,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 * @param e
 	 *            Consist XML element
 	 */
-	public RouteLocation(org.jdom.Element e) {
+	public RouteLocation(Element e) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-		org.jdom.Attribute a;
+		Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -438,8 +441,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.LOCATION);
+	public Element store() {
+		Element e = new Element(Xml.LOCATION);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		e.setAttribute(Xml.LOCATION_ID, getNameId());
@@ -462,7 +465,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("route location (" + getName() + ") id (" + getId() + ") sees property change "
-					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
 			if (_location != null)
 				_location.removePropertyChangeListener(this);

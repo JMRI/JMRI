@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- CV158, which is sound & Railcom related, added by Nigel Cliffe, 17 Nov 2012 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="RailCom speed reporting method" CV="158" mask="XXXXXVXX" default="1">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">

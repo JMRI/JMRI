@@ -140,9 +140,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     setSensor(ts.getBlockName(), ts.getValue());
                 } else if (command.equals("WAIT SENSOR")) {
                     getSensor(ts.getBlockName(), ts.getValue());
+                } else if (command.equals("START TRACKER")) {
+                	_warrant.startTracker();
                 } else if (command.equals("RUN WARRANT")) {
                     runWarrant(ts);
-                } else if (_runOnET && command.equals("NOOP")) {
+                } else if (_runOnET && command.equals("NOOP")) {	// let warrant know engineer expects entry to dark block
                     _warrant.goingActive(_warrant.getBlockAt(cmdBlockIdx));
                 }
                 _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
@@ -154,7 +156,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
          }
         // shut down
-        abort();
+        _warrant.stopWarrant();
     }
 
     private void setStep(int step) {
@@ -220,6 +222,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     synchronized protected void rampSpeedTo(String endSpeedType, long waitTime) {
     	checkHalt();
         if (_speedType.equals(endSpeedType)) {
+            if (_speedType.equals("Stop") || _speedType.equals("EStop")) {
+            	_waitForClear = true;
+            }
             return;
         }
         if (log.isDebugEnabled()) log.debug("rampSpeedTo ="+endSpeedType+
@@ -366,7 +371,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.warn("Throttle release and cancel threw: "+e);
             }
         }
-        _warrant.stopWarrant();
         if (log.isDebugEnabled()) log.debug("Engineer shut down. warrant "+_warrant.getDisplayName());
     }
 
@@ -538,9 +542,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Wait for Sensor state event 
-     * @param sensorName
-     * @param action
+     * @param Throttle setting
      */
     private void runWarrant(ThrottleSetting ts) {
     	Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant(ts.getBlockName());

@@ -133,7 +133,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="F3 and F4 Function Exchange" CV="37" item="Function exchange" tooltip="exchanges functions, F3 becomes F4 and vice versa" default="0">
+      <variable label="F3 and F4 Function Exchange" CV="37" item="F3 and F4 Function Exchange" tooltip="exchanges functions, F3 becomes F4 and vice versa" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -144,7 +144,7 @@
         </enumVal>
         <label>F3 and F4 Function Exchange</label>
       </variable>
-      <variable label="F5 and F6 Function Exchange" CV="39" item="Function exchange" tooltip="exchanges functions, F5 becomes F6 and vice versa" default="0">
+      <variable label="F5 and F6 Function Exchange" CV="39" item="F5 and F6 Function Exchange" tooltip="exchanges functions, F5 becomes F6 and vice versa" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -155,7 +155,7 @@
         </enumVal>
         <label>F5 and F6 Function Exchange</label>
       </variable>
-      <variable label="F8 and F12 Function Exchange" CV="42" item="Function exchange" tooltip="exchanges functions, F8 becomes F12 and vice versa" default="0">
+      <variable label="F8 and F12 Function Exchange" CV="42" item="F8 and F12 Function Exchange" tooltip="exchanges functions, F8 becomes F12 and vice versa" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>

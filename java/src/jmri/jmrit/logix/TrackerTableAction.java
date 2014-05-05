@@ -77,6 +77,19 @@ public class TrackerTableAction extends AbstractAction {
     	}
     	_frame.stopTrain(t);
     }
+    static public void stopTrackerIn(OBlock block) {
+    	Iterator<Tracker> iter = _trackerList.iterator();
+    	while (iter.hasNext()) {
+    		Tracker t = iter.next();
+    		if (t.getBlocksOccupied().contains(block)) {
+    			if (_frame==null) {
+    				_frame = new TableFrame();    		
+    			}
+    			_frame.stopTrain(t);    			
+    			return;
+    		}
+    	}	    	
+    }
     
     /**
      * Holds a table of Trackers that follow adjacent occupancy.  Needs to be 
@@ -192,6 +205,9 @@ public class TrackerTableAction extends AbstractAction {
         protected boolean mouseClickedOnBlock(OBlock block) {
         	if (_dialog!=null) {
         		_trainLocationBox.setText(block.getDisplayName());
+        		if (block.getValue()!=null) {
+        			_trainNameBox.setText((String)block.getValue());
+        		}
             	return true;
         	} else {
         		if ((block.getState() & OBlock.OCCUPIED)!=0 && block.getValue()!=null) {
@@ -201,11 +217,7 @@ public class TrackerTableAction extends AbstractAction {
         	}
         	return false;
         }
-   	/**
-	    * Create a new OBlock
-	    * Used by New to set up _editCircuitFrame
-	    * Sets _currentBlock to created new OBlock
-	    */
+
 	    private void newTrackerDialog() {
 	        _dialog = new JDialog(this, Bundle.getMessage("MenuNewTracker"), false);
 	        JPanel panel = new JPanel();
@@ -306,7 +318,7 @@ public class TrackerTableAction extends AbstractAction {
 	            return null;
             } else {
             	String oldName = blockInUse(block);
-            	if (oldName!=null) {
+            	if (oldName!=null && !name.equals(block.getValue())) {
      	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", oldName, block.getDisplayName()),
      	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
     	            return null;
@@ -316,13 +328,13 @@ public class TrackerTableAction extends AbstractAction {
  	 	           	_trackerList.add(newTracker);
  	 	        	addBlockListeners(newTracker);
  	 	            _model.fireTableDataChanged();
- 	 		    	setStatus(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
+ 	 		    	setStatus(Bundle.getMessage("startTracker", name, block.getDisplayName()));
  		            return newTracker;   	            		 	            	
  	            }
             }
 	    }
 	    
-	    String blockInUse(OBlock b) {
+	    protected String blockInUse(OBlock b) {
 	    	Iterator<Tracker> iter = _trackerList.iterator();
 	    	while (iter.hasNext()) {
 	    		Tracker t = iter.next();
@@ -584,11 +596,25 @@ public class TrackerTableAction extends AbstractAction {
 					break;
 			}
 	    }
-	    		
+	    
 	    protected void stopTrain(Tracker t) {
-			removeBlockListeners(t.getRange(), t);
+	    	List<OBlock> list = t.getRange();
+			removeBlockListeners(list, t);
+	    	Iterator<OBlock> iter = list.iterator();
+	    	while (iter.hasNext()) {
+	    		OBlock b = iter.next();
+	    		t.removeBlock(b);
+	    	}
+	    	list = t.getBlocksOccupied();
+//			removeBlockListeners(list, t);
+	    	iter = list.iterator();
+	    	while (iter.hasNext()) {
+	    		OBlock b = iter.next();
+		    	long et = (System.currentTimeMillis()-b._entryTime)/1000;
+	        	setStatus(Bundle.getMessage("TrackerBlockEnd", t.getTrainName(),
+	        			b.getDisplayName(), et/60, et%60));
+	    	}
 	    	_trackerList.remove(t);
-	    	t.stopTracking();
 	    	setStatus(Bundle.getMessage("TrackerStopped", t.getTrainName()));
 	    }
 	    
@@ -607,13 +633,13 @@ public class TrackerTableAction extends AbstractAction {
 	    private void  setStatus(String msg) {
 	    	_status.setText(msg);
 	    	if (msg!=null && msg.length()>0) {
+	    		WarrantTableAction.writetoLog(msg);
 	    		_statusHistory.add(msg);
 	    		while (_statusHistory.size()>_maxHistorySize) {
 	    			_statusHistory.remove(0);
 	    		}
 	    	}
 	    }
-
     }
     
     static class TrackerTableModel extends AbstractTableModel {

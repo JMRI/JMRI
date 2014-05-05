@@ -4,7 +4,7 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
-            <choice xml:lang="it">Risponde a Indirizzo Loco</choice>
+            <choice xml:lang="it">Risponde solo a Indirizzo Loco</choice>
 			<choice xml:lang="fr">Adresse locomotive seulement</choice>
 			<choice xml:lang="de">Nur Lok Adresse</choice>
           </enumChoice>

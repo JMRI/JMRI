@@ -198,7 +198,7 @@
         <td></td>
         <td>&bull;</td>
         <td></td>
-        <td>Digitrax hardware supporting Firmware upgrades</td>
+        <td>LocoNet hardware which supports Firmware upgrades</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Download Sounds</a></td>
 

@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected head appearance for clear</revremark>
+    </revision>
   </revhistory>
   <aspecttable>LMS-1932</aspecttable>
   <name>New Lines Repeater signal 1932-1937</name>
@@ -36,7 +42,7 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <show>red</show>
+      <show>dark</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Repeater/LMS-R-Clear.gif</imagelink>
     </appearance>
     <appearance>

@@ -3,7 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 2 Aug 11 JES  - deleted duplicate CV 288 -->
 <!-- version 1.2 20 Aug 11 MWW - amended CV310 0 value meaning -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Load Code 1" CV="260">
     <decVal/>
     <label>Load Code 1</label>

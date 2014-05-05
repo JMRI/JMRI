@@ -42,7 +42,7 @@ public class ProfileManager extends Bean {
     private final File catalog;
     private File configFile = null;
     private boolean readingProfiles = false;
-    private boolean autoStartActiveProfile = true;
+    private boolean autoStartActiveProfile = false;
     private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
@@ -324,22 +324,24 @@ public class ProfileManager extends Bean {
         return null;
     }
 
-    protected void addSearchPath(File path) {
+    protected void addSearchPath(File path) throws IOException {
         if (!searchPaths.contains(path)) {
             searchPaths.add(path);
             if (!this.readingProfiles) {
                 int index = searchPaths.indexOf(path);
                 this.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
+                this.writeProfiles();
             }
             this.findProfiles(path);
         }
     }
 
-    protected void removeSearchPath(File path) {
+    protected void removeSearchPath(File path) throws IOException {
         if (searchPaths.contains(path)) {
             int index = searchPaths.indexOf(path);
             searchPaths.remove(path);
             this.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
+            this.writeProfiles();
         }
     }
 

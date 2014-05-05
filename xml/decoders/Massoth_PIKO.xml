@@ -782,7 +782,7 @@
       <variable label="Shuttle Contact Blocking Period" CV="128" default="0" tooltip="0=deactivated, 1-3 not used, 4-255 * 0.5 seconds equals blocking period">
         <decVal min="0" max="255"/>
       </variable>
-      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" item="Decoder Type" tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
+      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" item="New ID for Decoder Type" tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
         <decVal/>
       </variable>
     </variables>

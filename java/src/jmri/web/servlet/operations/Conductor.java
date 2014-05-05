@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -17,6 +19,7 @@ import jmri.jmrit.operations.trains.Train;
 import static jmri.jmrit.operations.trains.TrainCommon.isThereWorkAtLocation;
 import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +58,7 @@ public class Conductor extends Manifest {
         }
 
         StringBuilder builder = new StringBuilder();
-        List<RollingStock> engineList = EngineManager.instance().getByTrainList(train);
+        List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
 

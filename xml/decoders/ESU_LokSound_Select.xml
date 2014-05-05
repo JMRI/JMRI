@@ -50,6 +50,8 @@
   <version author="Dave Heap" version="14" lastUpdated="20140107"/>
   <!-- ver15 changed all indexed CVs to new form -->
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+  <!-- ver16 fixed incorrect bell rates -->
+  <version author="Dave Heap" version="16" lastUpdated="20140324"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Alco 244" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
@@ -154,6 +156,26 @@
         <functionlabel num="20" lockable="false">Short Horn</functionlabel>
         <functionlabel num="21" lockable="false">pop Valve</functionlabel>
       </functionlabels>
+      <soundlabels>
+        <soundlabel num="1">Diesel volume</soundlabel>
+        <soundlabel num="3">Airhorn volume</soundlabel>
+        <soundlabel num="4">Bell volume</soundlabel>
+        <soundlabel num="5">Coupler volume</soundlabel>
+        <soundlabel num="6">Dynamic Brake volume</soundlabel>
+        <soundlabel num="7">Air Compressor volume</soundlabel>
+        <soundlabel num="8">Radiator Fan volume</soundlabel>
+        <soundlabel num="9">Detector volume</soundlabel>
+        <soundlabel num="10">Crossing Comm volume</soundlabel>
+        <soundlabel num="11">Railclack volume</soundlabel>
+        <soundlabel num="12">Brake Set/Release volume</soundlabel>
+        <soundlabel num="13">Sanding Valve volume</soundlabel>
+        <soundlabel num="14">Short Air Let Off volume</soundlabel>
+        <soundlabel num="15">Pop Valve volume</soundlabel>
+        <soundlabel num="16">Short Airhorn volume</soundlabel>
+        <soundlabel num="25">Random sounds</soundlabel>
+        <soundlabel num="26">Automatic brake sound</soundlabel>
+        <soundlabel num="27">Gear shift sound</soundlabel>
+      </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -470,11 +492,11 @@
       </variable>
       <variable label="Bell" CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
         <enumVal>
-          <enumChoice choice="Fast">
-            <choice>Fast</choice>
-          </enumChoice>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
+          </enumChoice>
+          <enumChoice choice="Fast">
+            <choice>Fast</choice>
           </enumChoice>
         </enumVal>
         <label>Bell</label>
@@ -490,52 +512,6 @@
         </enumVal>
         <label>Brake Squeal</label>
       </variable>
-      <!-- Volumes -->
-      <variable label="Diesel volume" CV="16.1.259" default="99" item="Sound Volume 1">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Airhorn volume" CV="16.1.275" default="128" item="Sound Volume 3">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Bell volume" CV="16.1.283" default="99" item="Sound Volume 4">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Coupler volume" CV="16.1.291" default="128" item="Sound Volume 5">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Dynamic Brake volume" CV="16.1.299" default="128" item="Sound Volume 6">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Air Compressor volume" CV="16.1.307" default="100" item="Sound Volume 7">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Radiator Fan volume" CV="16.1.315" default="128" item="Sound Volume 8">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Detector volume" CV="16.1.323" default="128" item="Sound Volume 9">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Crossing Comm volume" CV="16.1.331" default="128" item="Sound Volume 10">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Railclack volume" CV="16.1.339" default="128" item="Sound Volume 11">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Brake Set/Release volume" CV="16.1.347" default="128" item="Sound Volume 12">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Sanding Valve volume" CV="16.1.355" default="128" item="Sound Volume 13">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Short Air Let Off volume" CV="16.1.363" default="128" item="Sound Volume 14">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Pop Valve volume" CV="16.1.371" default="128" item="Sound Volume 15">
-        <decVal max="128"/>
-      </variable>
-      <variable label="Short Airhorn volume" CV="16.1.379" default="128" item="Sound Volume 16">
-        <decVal max="128"/>
-      </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>
     <resets>
@@ -543,27 +519,6 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <pane name="Indexed CVs">
-    <column>
-      <row>
-        <column>
-      <label label="Due to changes in the internal structure of JMRI, this pane is now obsolete and"/>
-      <label label="should be empty. If you find this pane is not empty, please report back to us by"/>
-      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or log a bug report on"/>
-      <label label="the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
-          <label label=" "/>
-          <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
-          <label label=" "/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
-        </column>
-      </row>
-    </column>
-    <name>Indexed CVs</name>
-  </pane>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>

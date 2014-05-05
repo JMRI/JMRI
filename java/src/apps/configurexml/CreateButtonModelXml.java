@@ -61,14 +61,10 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         try {
             Action action = (Action)Class.forName(className).newInstance();
             if (Apps.buttonSpace()!=null) {
-                JButton b = new JButton((String)action.getValue(Action.NAME));
-                b.addActionListener(action);
-                // Complicated construct to get around no JButton(Action)
-                // ctor in Java 1.1.8
+                JButton b = new JButton(action);
                 Apps.buttonSpace().add(b);
             } else if (Apps3.buttonSpace()!=null) {
-                JButton b = new JButton((String)action.getValue(Action.NAME), (javax.swing.Icon)action.getValue(javax.swing.Action.SMALL_ICON));
-                b.addActionListener(action);
+                JButton b = new JButton(action);
                 Apps3.buttonSpace().add(b);
             }
             //} else if (DecoderPro3.get)

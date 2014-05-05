@@ -72,6 +72,7 @@ public class PrintOptionFrame extends OperationsFrame {
 	JCheckBox use12hrFormatCheckBox = new JCheckBox(Bundle.getMessage("12hrFormat"));
 	JCheckBox printValidCheckBox = new JCheckBox(Bundle.getMessage("PrintValid"));
 	JCheckBox sortByTrackCheckBox = new JCheckBox(Bundle.getMessage("SortByTrack"));
+	JCheckBox printHeadersCheckBox = new JCheckBox(Bundle.getMessage("PrintHeaders"));
 	JCheckBox truncateCheckBox = new JCheckBox(Bundle.getMessage("Truncate"));
 	JCheckBox departureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
 
@@ -146,6 +147,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		use12hrFormatCheckBox.setToolTipText(Bundle.getMessage("Use12hrFormatTip"));
 		printValidCheckBox.setToolTipText(Bundle.getMessage("PrintValidTip"));
 		sortByTrackCheckBox.setToolTipText(Bundle.getMessage("SortByTrackTip"));
+		printHeadersCheckBox.setToolTipText(Bundle.getMessage("PrintHeadersTip"));
 		truncateCheckBox.setToolTipText(Bundle.getMessage("TruncateTip"));
 		departureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
 		editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
@@ -258,6 +260,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		pManifestOptions.add(printTimetableNameCheckBox);
 		pManifestOptions.add(truncateCheckBox);
 		pManifestOptions.add(sortByTrackCheckBox);
+		pManifestOptions.add(printHeadersCheckBox);
 
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -334,6 +337,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
 		sortByTrackCheckBox.setSelected(Setup.isSortByTrackEnabled());
+		printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
 		truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
 		departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
@@ -535,6 +539,7 @@ public class PrintOptionFrame extends OperationsFrame {
 			Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
 			Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
 			Setup.setSortByTrackEnabled(sortByTrackCheckBox.isSelected());
+			Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
 			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
 			Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());

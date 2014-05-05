@@ -2,18 +2,22 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -33,7 +37,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected String _id = "";
 	protected String _name = "";
 	protected int _IdNumber = 0;
-	protected int _numberRS = 0;
+	protected int _numberRS = 0; // number of cars and engines (total rolling stock)
+	protected int _numberCars = 0; // number of cars
+	protected int _numberEngines = 0; // number of engines
 	protected int _pickupRS = 0;
 	protected int _dropRS = 0;
 	protected int _locationOps = NORMAL; // type of operations at this location
@@ -280,6 +286,48 @@ public class Location implements java.beans.PropertyChangeListener {
 	public int getNumberRS() {
 		return _numberRS;
 	}
+	
+	/**
+	 * Sets the number of cars at this location
+	 * 
+	 * @param number
+	 */
+	private void setNumberCars(int number) {
+		int old = _numberCars;
+		_numberCars = number;
+		if (old != number)
+			setDirtyAndFirePropertyChange("numberCars", Integer.toString(old),	// NOI18N
+					Integer.toString(number)); // NOI18N
+	}
+	
+	/**
+	 * 
+	 * @return The number of cars at this location
+	 */
+	public int getNumberCars() {
+		return _numberCars;
+	}
+	
+	/**
+	 * Sets the number of engines at this location
+	 * 
+	 * @param number
+	 */
+	private void setNumberEngines(int number) {
+		int old = _numberEngines;
+		_numberEngines = number;
+		if (old != number)
+			setDirtyAndFirePropertyChange("numberEngines", Integer.toString(old),	// NOI18N
+					Integer.toString(number)); // NOI18N
+	}
+
+	/**
+	 * 
+	 * @return The number of engines at this location
+	 */
+	public int getNumberEngines() {
+		return _numberEngines;
+	}
 
 	/**
 	 * When true, a switchlist is desired for this location. Used for preview and printing a manifest for a single
@@ -414,11 +462,19 @@ public class Location implements java.beans.PropertyChangeListener {
 	 */
 	public void addRS(RollingStock rs) {
 		setNumberRS(getNumberRS() + 1);
+		if (rs.getClass() == Car.class)
+			setNumberCars(getNumberCars() + 1);
+		else if (rs.getClass() == Engine.class)
+			setNumberEngines(getNumberEngines() + 1);
 		setUsedLength(getUsedLength() + rs.getTotalLength());
 	}
 
 	public void deleteRS(RollingStock rs) {
 		setNumberRS(getNumberRS() - 1);
+		if (rs.getClass() == Car.class)
+			setNumberCars(getNumberCars() - 1);
+		else if (rs.getClass() == Engine.class)
+			setNumberEngines(getNumberEngines() - 1);
 		setUsedLength(getUsedLength() - rs.getTotalLength());
 	}
 

@@ -1,14 +1,14 @@
 package jmri.jmrit.operations.trains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
+import jmri.jmrit.operations.OperationsManager;
+import jmri.util.FileUtil;
+import jmri.util.SystemType;
 import org.jdom.Attribute;
 import org.jdom.Element;
-
-import jmri.jmrit.operations.FileHelper;
-import jmri.util.SystemType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrainCustomManifest {
 
@@ -57,11 +57,11 @@ public class TrainCustomManifest {
 		if (csvFile == null)
 			return;
 
-		File workingDir = FileHelper.getOperationsFile(getDirectoryName());
+		File workingDir = OperationsManager.getInstance().getFile(getDirectoryName());
 		File csvNamesFile = new File(workingDir, csvNamesFileName);
 
 		try {
-			FileHelper.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
+			FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
 			fileCount++;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,14 +104,14 @@ public class TrainCustomManifest {
 		if (SystemType.isWindows()) {
 			String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
 			try {
-				Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
+				Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
 			String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
 			try {
-				Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
+				Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -121,7 +121,7 @@ public class TrainCustomManifest {
 	}
 
 	public static boolean manifestCreatorFileExists() {
-		File file = new File(FileHelper.getOperationsFile(getDirectoryName()), getFileName());
+		File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
 		return file.exists();
 	}
 

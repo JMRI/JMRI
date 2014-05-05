@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- Nigel Cliffe, 16th Nov 2012 -->
@@ -6,7 +6,7 @@
 <!-- CV's 500-603 control volume and sound choices of individual sounds -->
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable label="Overall Volume" CV="266" item="Zimo Sound Setting 1">
     <decVal/>
@@ -73,6 +73,7 @@
   </variable>
   <!-- assume Zimo extend this to F28 in time, so require settings 22 to 30 to be reserved -->
   <!-- CV571 is at top of list for Fn Key F0 -->
+  <!-- March 2014 - F20-F28 are in CV674-698 -->
   <variable label="Boiling Sound" CV="574" item="Zimo Sound Setting 31">
     <decVal/>
   </variable>

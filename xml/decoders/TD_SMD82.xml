@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: TD_SMD82.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,7 @@
   <version author="td@teamdigital1.com" version="1.3" lastUpdated="20070420"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20061017"/>
   <version author="td@teamdigital1.com" version="1.1" lastUpdated="20061008"/>
-  <!-- Version 1 inital release -->
+  <!-- Version 1 initial release -->
   <!-- Version 1.1 release fixed route group address - 10/8/06 -->
   <!-- Version 1.2 release fixed pri2 & sec3 input route number - 10/17/06 -->
   <!-- Version 1.3 release fixed output addresses - 4/20/07 -->

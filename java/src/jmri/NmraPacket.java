@@ -354,25 +354,39 @@ public class NmraPacket {
           return null;
       }
 
-      /*if (aspect < 0 || aspect >31) {
-          log.error("invalid aspect "+aspect);
-          return null;
-      }*/
-
       outputAddr -= 1; // Make the address 0 based
       int lowAddr = (outputAddr & 0x03 ) ;  // Output Pair Address
       int boardAddr = (outputAddr >> 2) + 1 ; // Board Address
       
-      /*int midAddr =  boardAddr & 0x3F ;
-      int highAddr = ( (~boardAddr) >> 6) & 0x07;
-
-      byte[] retVal = new byte[4];
-      retVal[0] = (byte) (0x80 | midAddr ) ;
-      retVal[1] = (byte) (0x01 | (highAddr<<4) | (lowAddr << 1)) ;
-      retVal[2] = (byte) (0x1F & aspect);
-      retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);*/
-
       return accSignalDecoderPktCommon(lowAddr, boardAddr, aspect);
+    }
+    
+    /**
+     * Determine if a packet is an Extended Accessory Decoder Control Packet
+     * otherwise known as a Signal Decoder Packet.
+     *<p>
+     *This inverts the computation done by the {@link #accSignalDecoderPkt} method.
+     */
+    public static boolean isAccSignalDecoderPkt(byte[] packet) {
+        if (packet.length !=3 && packet.length !=4 ) return false;   // allow ECC to be present or not
+        if ((packet[0]&0xC0) != 0x80) return false;
+        if ((packet[1]&0x01) != 0x01) return false;
+        if ((packet[2]&0xE0) != 0x00) return false;
+        return true;
+    }
+    
+    /**
+     * Recover the 1-based output address from an Extended Accessory Decoder Control Packet
+     * otherwise known as a Signal Decoder Packet.
+     */
+    public static int getAccSignalDecoderPktAddress(byte[] packet) {
+        int midAddr = packet[0]&0x3f;
+        int lowAddr = (packet[1]&0x0E) >> 1;
+        int  hiAddr = ((~packet[1])&0x70) >> 4;
+        
+        int boardAddr = (hiAddr<<6|midAddr)-1;
+
+        return ((boardAddr<<2) | lowAddr)+1;
     }
     
     /**

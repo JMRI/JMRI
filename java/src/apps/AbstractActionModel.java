@@ -15,10 +15,10 @@ import java.util.HashMap;
  * and startup.
  * <P>
  * The action classes and corresponding human-readable names are kept in the 
- * apps.ActionListBundle properties file (which can be translated).
+ * apps.ActionListCoreBundle properties file (which can be translated).
  * They are displayed in lexical order by human-readable name.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003, 2007
+ * @author	Bob Jacobsen   Copyright 2003, 2007, 2014
  * @version     $Revision$
  * @see PerformActionPanel
  */

@@ -17,7 +17,7 @@ public class ZeroConfClient {
 
     // mdns related routines.
     public void startServiceListener(String service) {
-        log.debug("StartServiceListener called for service: " + service);
+        log.debug("StartServiceListener called for service: {}", service);
         if (mdnsServiceListener == null) {
             mdnsServiceListener = new NetworkServiceListener(service, this);
         }
@@ -90,7 +90,7 @@ public class ZeroConfClient {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
-                log.debug("Found Name: " + info.getQualifiedName());
+                log.debug("Found Name: {}", info.getQualifiedName());
                 if (info.getQualifiedName().equals(adName)) {
                     return info;
                 }

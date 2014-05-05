@@ -4,7 +4,7 @@
 <!-- version 1.1 15 Aug 11 JES
                  - added 224 to includes for servo 3 and 4
 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="Negative Pulse" value="0">

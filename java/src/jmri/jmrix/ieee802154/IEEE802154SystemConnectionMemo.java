@@ -22,15 +22,27 @@ import java.util.ResourceBundle;
  */
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public IEEE802154SystemConnectionMemo() {
-        super("Z", "IEEE802.15.4");
+        this("Z", "IEEE802.15.4");
+    }
+
+    public IEEE802154SystemConnectionMemo(String prefix, String userName) {
+        super(prefix, userName);
         register(); // registers general type
         InstanceManager.store(this, IEEE802154SystemConnectionMemo.class); // also register as specific type
-        
-        // create and register the ComponentFactory
-//      InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.swing.PowerlineComponentFactory(this), 
- //                               jmri.jmrix.swing.ComponentFactory.class);
+        init();
     }
+
+    /*
+     * Override the init function for any subtype specific 
+     * registration into init.  init is called by the generic contstructor.
+     */
+    protected void init() {        
+        // create and register the ComponentFactory
+      InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.swing.IEEE802154ComponentFactory(this), 
+                               jmri.jmrix.swing.ComponentFactory.class);
     
+    }
+ 
     jmri.jmrix.swing.ComponentFactory componentFactory = null;
 
     /**

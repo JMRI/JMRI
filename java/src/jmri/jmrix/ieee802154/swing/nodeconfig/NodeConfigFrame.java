@@ -46,8 +46,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected boolean editMode = false;     // true if in edit mode
     
     protected IEEE802154Node curNode = null;    // IEEE802154 Node being editted
-    protected int nodeAddress = 0;          // 16 bit Node address
-    protected String address64 = "";          // 64 bit Node address
 
     protected boolean errorInStatus1 = false;
     protected boolean errorInStatus2 = false;
@@ -95,6 +93,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(new JLabel(rb.getString("LabelNodeAddress64")+" "));
         panel11.add(nodeAddr64Field);
         nodeAddr64Field.setToolTipText(rb.getString("TipNodeAddress64"));
+        nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                nodeAddrField.setSelectedIndex(nodeAddr64Field.getSelectedIndex());
+            }
+        });
 
         initAddressBoxes();
 
@@ -207,12 +212,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */        
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
-        int nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        String nodeAddress = readNodeAddress();
+        if (nodeAddress.equals("")) return;
         // get a IEEE802154 Node corresponding to this node address if one exists
         curNode = (IEEE802154Node) itc.getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            statusText1.setText(rb.getString("Error1")+Integer.toString(nodeAddress)+
+            statusText1.setText(rb.getString("Error1")+nodeAddress+
                         rb.getString("Error2"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -240,9 +245,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         resetNotes();
         changedNode = true;
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackAdd")+" "+
-                                    Integer.toString(nodeAddress));
+        statusText1.setText(rb.getString("FeedBackAdd")+" "+ nodeAddress);
         errorInStatus1 = true;
+        initAddressBoxes();
     }
 
     /**
@@ -250,8 +255,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */        
     public void editButtonActionPerformed() {
         // Find IEEE802154 Node address
-        nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        String nodeAddress = readNodeAddress();
+        if (nodeAddress.equals("")) return;
         // get the IEEE802154Node corresponding to this node address
         curNode = (IEEE802154Node) itc.getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -281,8 +286,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */        
     public void deleteButtonActionPerformed() {
         // Find IEEE802154 Node address
-        int nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        String nodeAddress = readNodeAddress();
+        if (nodeAddress.equals("")) return;
         // get the IEEE802154Node corresponding to this node address
         curNode = (IEEE802154Node) itc.getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -302,8 +307,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             itc.deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
-            statusText1.setText(rb.getString("FeedBackDelete")+" "+
-                                    Integer.toString(nodeAddress));
+            statusText1.setText(rb.getString("FeedBackDelete")+" "+nodeAddress);
             errorInStatus1 = true;
             changedNode = true;
 	}
@@ -311,6 +315,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // reset as needed
             resetNotes();
         }
+        initAddressBoxes();
     }
 
     /**
@@ -365,8 +370,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText2.setText(stdStatus2);
         statusText3.setText(stdStatus3);
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackUpdate")+" "+
-                                    Integer.toString(nodeAddress));
+        statusText1.setText(rb.getString("FeedBackUpdate")+" "+readNodeAddress());
         errorInStatus1 = true;
     }
 
@@ -437,15 +441,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     
     /**
      * Read node address and check for legal range
-     *     If successful, a node address in the range 0-127 is returned.
+     *     If successful, a node address is returned.
      *     If not successful, -1 is returned and an appropriate error
      *          message is placed in statusText1.
      */
-    private int readNodeAddress() {
-        int addr = -1;
+    private String readNodeAddress() {
+        String addr = "";
         try 
         {
-            addr = Integer.parseInt((String)nodeAddrField.getSelectedItem());
+            addr = (String)nodeAddrField.getSelectedItem();
+            if(addr.equals("FF FF ") || addr.equals("FF FE "))
+               addr = (String)nodeAddr64Field.getSelectedItem();
         }
         catch (Exception e)
         {
@@ -453,14 +459,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
-            return -1;
-        }
-        if ( (addr < 0) || (addr > 127) ) {
-            statusText1.setText(rb.getString("Error6"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
+            return "";
         }
         return (addr);
     }
@@ -482,7 +481,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
        nodeAddr64Field.removeAllItems();
        for(int i=0;i<itc.getNumNodes();i++){
            current=(IEEE802154Node) itc.getNode(i);
-           nodeAddrField.insertItemAt(current.getNodeAddress(),i);           
+           nodeAddrField.insertItemAt(jmri.util.StringUtil.hexStringFromBytes(current.getUserAddress()),i);           
            nodeAddr64Field.insertItemAt(jmri.util.StringUtil.hexStringFromBytes(current.getGlobalAddress()),i);           
        }
        nodeAddrField.insertItemAt("",0);

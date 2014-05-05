@@ -170,7 +170,8 @@
 	and has been working on decoder files
 	<LI>Ray deBlieck, who let us test on his Empire Builder
 	<LI>Joan de Castro who contributed the Catalan internationalization </LI>
-	<li>Lou DeHayes, who provided a definition for the MRC Sound Brilliance 1806 decoder.
+	<li>Lou DeHayes, who provided a definition for the MRC Sound Brilliance 1806 decoder
+	    and a fix for the DS54 definition.
 	<LI>Eddie Delozier, who write the TCS M1 decoder file.
 	<LI>Kevin Dickerson, who figured out the ECoS protocol so JMRI
 	could connect to one and wrote code for ECoS throttles and turnouts,
@@ -300,6 +301,7 @@
 	<LI>Jeff Law provided two Umelec decoder definitions
 	<LI>Jim LeFevre, who did the testing on the TMCC implementation, including buying components so we could do a more complete job,
 	    and coded the function support
+    <LI>Alain Le Marchand, who provided a number of decoder definitions and updates
     <LI>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle 
     and wrote instructions and an installer Ubuntu Linux
 	<LI>Stephen Lowens, who updated the Digitrax sound decoder definitions

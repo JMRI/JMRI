@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -730,7 +732,7 @@ public class FileUtil {
                 // 9 = length of jar:file:
                 jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
                 log.debug("jmri.jar path is {}", jarPath);
-            } 
+            }
             if (jarPath == null) {
                 log.error("Unable to locate jmri.jar");
                 return null;
@@ -930,5 +932,19 @@ public class FileUtil {
                 }
             }
         }
+    }
+
+    /**
+     * Simple helper method to just append a text string to the end of the given
+     * filename. The file will be created if it does not exist.
+     *
+     * @param file File to append text to
+     * @param text Text to append
+     * @throws java.io.IOException if file cannot be written to
+     */
+    public static void appendTextToFile(File file, String text) throws IOException {
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8")); // NOI18N
+        pw.println(text);
+        pw.close();
     }
 }

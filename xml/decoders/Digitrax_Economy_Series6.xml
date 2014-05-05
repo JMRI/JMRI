@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
+<!-- $Id: Digitrax_Economy_Serie6.xml 22115 2014-04-27 xx:x:xxZ jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="0" lastUpdated="20140427"/>
+  <!-- Created from version 0 of the Digitrax_01x6 file -->
+  <!-- Sole difference is absence of BEMF tuning (bemf.xml file) -->
+  <!-- Version 0 - New Series 6 Econmy Digitrax decoders (Alain Le Marchand) -->
+  <!--             DH126D, DH126P, DH126PD 
+                   New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
+  <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
+<decoder>
+    <family name="Economy Series 6 with FX3, silent" mfg="Digitrax" lowVersionID="52" highVersionID="64">
+      <model model="DH126D" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>          
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DH126P" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>          
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DH126PS" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Short Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>          
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/> 
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
+      <!-- <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>     not available in the Economy series -->
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <variable label="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/> 
+</decoder-config>

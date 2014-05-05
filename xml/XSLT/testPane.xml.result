@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Consist" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name xml:lang="ca">Tracció-Múltiple [TM]</name>
+  <name xml:lang="it">Consist (Multi-Trazione)</name>
+  <column>
+    <row>
+      <column>
+        <display item="Consist Address" tooltip="Sets the multiple unit (consist) address">
+          <tooltip xml:lang="it">Sets the multiple unit (consist) address</tooltip>
+        </display>
+        <display item="Consist Direction"/>
+      </column>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <column>
+        <display item="Consist Acceleration Adjustment" tooltip="Sets additional acceleration rate information">
+          <tooltip xml:lang="it">Imposta informazioni addizionali per l'accellerazione</tooltip>
+        </display>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>First line of text in attribute, with translations in label elements</text>
+      <text xml:lang="it">Italian for 1st line</text>
+      <text xml:lang="fr">French for 1st line</text>
+    </label>
+    <label>
+      <text>Second line of text, without any translation in original file.</text>
+      <text xml:lang="it">Second line of text, without any translation in original file.</text>
+    </label>
+    <label>
+      <text>Third line of text, as a label subelement</text>
+      <text xml:lang="it">Italian for 3rd line</text>
+      <text xml:lang="fr">French for 3rd line</text>
+    </label>
+    <label>
+      <text>Fourth line of text, as a text subelement</text>
+      <text xml:lang="it">Italian for 4th line</text>
+      <text xml:lang="fr">French for 4th line</text>
+    </label>
+    <display item="Consist Function" tooltip=" Sets functions to follow base address or consist address">
+      <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
+    </display>
+  </column>
+</pane>

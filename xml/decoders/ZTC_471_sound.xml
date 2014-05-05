@@ -1045,7 +1045,7 @@
         </enumVal>
         <label>F3 controls output FX5</label>
       </variable>
-      <variable label="F3 controls output FX6" CV="37" mask="XXVXXXXX" item="F3 controls output FX5" minOut="4" default="0">
+      <variable label="F3 controls output FX6" CV="37" mask="XXVXXXXX" item="F3 controls output FX6" minOut="4" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>

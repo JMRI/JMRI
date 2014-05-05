@@ -8,6 +8,10 @@
  * error(error)
  * open()
  * close()
+ * willReconnect()
+ * didReconnect()
+ * hello(data)
+ * goodbye(data)
  * light(name, state, data)
  * memory(name, value, data)
  * power(state)
@@ -25,6 +29,10 @@
  * version(version)
  * as demonstrated in the power.html demonstration web app
  *
+ * Note that if you override the open(), close(), didReconnect(), or
+ * willReconnect() methods, you should ensure that the functions called in the
+ * existing methods are still called as appropriate.
+ * 
  * @author Copyright (C) Randall Wood 2013, 2014
  * @param {a jQuery object} $
  * @returns {a JMRI object}
@@ -52,8 +60,27 @@
                 }
             };
             jmri.open = function() {
+                if (window.console) {
+                    console.log("Opened WebSocket");
+                }
+                $("#reconnecting").addClass("hidden").removeClass("show");
             };
             jmri.close = function() {
+                if (window.console) {
+                    console.log("Closed WebSocket");
+                }
+            };
+            jmri.willReconnect = function() {
+                if (window.console) {
+                    console.log("Reconnecting WebSocket");
+                }
+                $("#reconnecting").addClass("show").removeClass("hidden");
+            };
+            jmri.didReconnect = function() {
+            };
+            jmri.hello = function(data) {
+            };
+            jmri.goodbye = function(data) {
             };
             jmri.light = function(name, state, data) {
             };
@@ -521,70 +548,89 @@
             };
             jmri.heartbeatInterval = null;
             // WebSocket
-            jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
-                open: function() {
-                    jmri.open();
-                },
-                // stop the heartbeat when the socket closes
-                close: function() {
-                    clearInterval(jmri.heartbeatInterval);
-                    jmri.close();
-                },
-                message: function(e) {
-                    jmri.console(e.originalEvent.data);
-                },
-                events: {
-                    // TODO: add consist, programmer, and operations-related events
-                    error: function(e) {
-                        jmri.error(e.data);
+            jmri.attemptReconnect = 60000; // one minute in milliseconds
+            jmri.reconnectAttempts = 0;
+            jmri.reconnect = function() {
+                jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
+                    open: function() {
+                        jmri.open();
                     },
-                    goodbye: function(e) {
-                        jmri.socket.close();
+                    // stop the heartbeat when the socket closes
+                    close: function() {
+                        clearInterval(jmri.heartbeatInterval);
+                        jmri.close();
+                        if (jmri.reconnectAttempts < 10) {
+                            jmri.willReconnect();
+                            jmri.reconnectAttempts++;
+                            setTimeout(
+                                    function() {
+                                        jmri.reconnect();
+                                        jmri.didReconnect();
+                                    },
+                                    jmri.attemptReconnect);
+                        }
                     },
-                    // handle the initial handshake response from the server
-                    hello: function(e) {
-                        jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
-                        jmri.version(e.data.JMRI);
-                        jmri.railroad(e.data.railroad);
+                    message: function(e) {
+                        jmri.console(e.originalEvent.data);
                     },
-                    light: function(e) {
-                        jmri.light(e.data.name, e.data.state, e.data);
-                    },
-                    memory: function(e) {
-                        jmri.memory(e.data.name, e.data.value, e.data);
-                    },
-                    power: function(e) {
-                        jmri.power(e.data.state);
-                    },
-                    reporter: function(e) {
-                        jmri.reporter(e.data.name, e.data.value, e.data);
-                    },
-                    route: function(e) {
-                        jmri.route(e.data.name, e.data.state, e.data);
-                    },
-                    sensor: function(e) {
-                        jmri.sensor(e.data.name, e.data.state, e.data);
-                    },
-                    signalHead: function(e) {
-                        jmri.signalHead(e.data.name, e.data.state, e.data);
-                    },
-                    signalMast: function(e) {
-                        jmri.signalMast(e.data.name, e.data.state, e.data);
-                    },
-                    throttle: function(e) {
-                        jmri.throttle(e.data.throttle, e.data);
-                    },
-                    time: function(e) {
-                        jmri.time(e.data.time, e.data);
-                    },
-                    train: function(e) {
-                        jmri.train(e.data.id, e.data);
-                    },
-                    turnout: function(e) {
-                        jmri.turnout(e.data.name, e.data.state, e.data);
+                    events: {
+                        // TODO: add consist, programmer, and operations-related events
+                        error: function(e) {
+                            jmri.error(e.data);
+                        },
+                        goodbye: function(e) {
+                            jmri.attemptReconnect = 0;
+                            jmri.goodbye(e.data);
+                            jmri.socket.close();
+                        },
+                        // handle the initial handshake response from the server
+                        hello: function(e) {
+                            jmri.reconnectAttempts = 0;
+                            jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
+                            jmri.version(e.data.JMRI);
+                            jmri.railroad(e.data.railroad);
+                            jmri.hello(e.data);
+                        },
+                        light: function(e) {
+                            jmri.light(e.data.name, e.data.state, e.data);
+                        },
+                        memory: function(e) {
+                            jmri.memory(e.data.name, e.data.value, e.data);
+                        },
+                        power: function(e) {
+                            jmri.power(e.data.state);
+                        },
+                        reporter: function(e) {
+                            jmri.reporter(e.data.name, e.data.value, e.data);
+                        },
+                        route: function(e) {
+                            jmri.route(e.data.name, e.data.state, e.data);
+                        },
+                        sensor: function(e) {
+                            jmri.sensor(e.data.name, e.data.state, e.data);
+                        },
+                        signalHead: function(e) {
+                            jmri.signalHead(e.data.name, e.data.state, e.data);
+                        },
+                        signalMast: function(e) {
+                            jmri.signalMast(e.data.name, e.data.state, e.data);
+                        },
+                        throttle: function(e) {
+                            jmri.throttle(e.data.throttle, e.data);
+                        },
+                        time: function(e) {
+                            jmri.time(e.data.time, e.data);
+                        },
+                        train: function(e) {
+                            jmri.train(e.data.id, e.data);
+                        },
+                        turnout: function(e) {
+                            jmri.turnout(e.data.name, e.data.state, e.data);
+                        }
                     }
-                }
-            });
+                });
+            };
+            jmri.reconnect();
             if (jmri.socket === null) {
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }

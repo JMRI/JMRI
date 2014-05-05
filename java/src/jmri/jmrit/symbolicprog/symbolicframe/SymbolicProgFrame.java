@@ -235,7 +235,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         String mask = newVarMask.getText();
 
         // ask Table model to do the actuall add
-        variableModel.newDecVariableValue(name, CV, mask, false, false, false, false);
+        variableModel.newDecVariableValue(name, CV, null, mask, false, false, false, false);
         variableModel.configDone();
     }
 

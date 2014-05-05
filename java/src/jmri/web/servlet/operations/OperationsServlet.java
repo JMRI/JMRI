@@ -15,8 +15,10 @@ import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.NULL;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonUtil;
+import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
@@ -39,6 +41,8 @@ public class OperationsServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
+        // ensure all operations managers are functional before receiving first request
+        OperationsManager.getInstance();
     }
 
     /*
@@ -137,6 +141,8 @@ public class OperationsServlet extends HttpServlet {
                     manifest.getLocations()
             ));
             train.setModified(false);
+        } else if (JSON.JSON.equals(request.getParameter("format"))) {
+            ServletUtil.getHelper().writeFile(response, new JsonManifest(train).getFile(), ServletUtil.APPLICATION_JSON);
         } else {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -168,7 +174,7 @@ public class OperationsServlet extends HttpServlet {
             }
         } else {
             data = this.mapper.createObjectNode();
-            ((ObjectNode) data).put("format", (String) request.getParameter("format"));
+            ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
             if (!data.path(LOCATION).isMissingNode()) {

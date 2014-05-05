@@ -52,6 +52,13 @@
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
+    <node name="Open PanelPro Window">
+        <adapter>apps.PanelPro.PanelProAction</adapter>
+    </node>
+    <node name="Open DecoderPro Window">
+        <adapter>apps.DecoderPro.DecoderProAction</adapter>
+    </node>
+    <node>separator</node><!-- separator -->
     <node name="Close Window">
         <name xml:lang="fr">Fermer</name>
         <name xml:lang="it">Chiudi</name>

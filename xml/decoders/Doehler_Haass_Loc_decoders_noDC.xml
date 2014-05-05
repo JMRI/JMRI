@@ -12,6 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140225"/>
+  <!-- 2 2014/02/25 Update: future proofing
+		This is a complete rewrite of my original submission for many D&H decoders.
+		This file now contains ONLY the definition for the DH06A decoder with firmware 3.02.
+		PLEASE DO NOT UPDATE THIS FILE OR ADD OTHER DECODERS TO IT ANYMORE (unless to fix issues).
+		To add new decoders, use the individual file templates as used from firmware 3.03.
+		-->  
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
   <!-- 1 2013/07/31 Creation 
 		First decoder template for the Doehler & Haass DH06A.
@@ -22,19 +29,11 @@
 		It requires variables and panes as defined in the doehler_hass/ folder.
   -->
   <decoder>
-    <family name="Locomotive decoders (DCC/SX)" mfg="Doehler und Haass">
-      <!-- PB: Note about functions: bits 6 & 7 control special light FX for all decoders.
-	  They are considered as Out 7 and Out 8 so they must appear in the mapping table (cleaner UI)
-	  All decoders are set to have 8 outputs. Filtering of absent Outputs is done
-	  with the 'exclude' option on a per Output/decoder basis for Outputs 4,5,6
-	  (the 'minOut' filter is therefore NOT used ).
-       -->
-	  <model model="DH06A" numOuts="8" numFns="14" productID="DH06A" comment="DH06A for Köf with no analog support" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+    <family name="Train Decoders (firmware 3.02+)" mfg="Doehler und Haass">
+	  <model model="DH06A" lowVersionID="3" highVersionID="3" numOuts="3" numFns="14" productID="DH06A" comment="DH06A for Köf with no analog support" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
         <output name="1" label="Front Light" maxcurrent="20mA"/>
 		<output name="2" label="Rear Light" maxcurrent="20mA"/>
 		<output name="3" label="Onboard light LED" maxcurrent="20mA"/>
-		<output name="7" label="Dimmed headlights"/>
-		<output name="8" label="Shunting headlights"/>
         <size length="16" width="9.3" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
@@ -44,25 +43,37 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-		<!-- Analog functions  - DEACTIVATED FOR DH06A 
-		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-		<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/CV14_analogModeFunction.xml"/>  
-		-->
-        <!-- Calls to std NMRA templates   -->
-        <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-        <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-		<!-- Common variables for all Doehler und Haass decoders  -->
-		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/dh_vars.xml"/>
+		<!-- Common D&H variable files -->
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+		<!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+			<!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>  -->
+			<!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/>
+			<!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+				<!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/> -->
+			<!-- SECTION 3	- Analog functions  -->
+			<!-- 	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>  -->
+			<!-- SECTION 4	- Basic Railcom feedback  -->
+				<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+			<!-- SECTION 5	- Extra Railcom feedback options as of fw3.03 -->
+				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_railcom_fw3.03.xml"/> -->
+			<!-- SECTION 6	- Extra general options as of fw3.03 -->
+				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/> -->
+			<!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
+				<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/> -->
     </variables>
 	<resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-		<!-- Common pane(s) for all Doehler und Haass decoders  -->
-	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/dh_pane.xml"/>
+	<!-- Common pane(s) for all Doehler und Haass decoders  -->
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+	<!-- Pane(s) valid for some decoders only  -->
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
 </decoder-config>

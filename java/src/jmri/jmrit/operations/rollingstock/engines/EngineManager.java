@@ -130,35 +130,40 @@ public class EngineManager extends RollingStockManager{
     public JComboBox getConsistComboBox(){
     	JComboBox box = new JComboBox();
     	box.addItem("");
-       	List<String> consistNames = getConsistNameList();
-    	for (int i=0; i<consistNames.size(); i++) {
-       		box.addItem(consistNames.get(i));
-    	}
+    	for (String name : getConsistNameList())
+       		box.addItem(name);
     	return box;
     }
     
     public void updateConsistComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-    	List<String> consistNames = getConsistNameList();
-    	for (int i=0; i<consistNames.size(); i++) {
-       		box.addItem(consistNames.get(i));
-    	}
+    	for (String name : getConsistNameList())
+       		box.addItem(name);
     }
     
-    public List<String> getConsistNameList(){
-    	String[] arr = new String[_consistHashTable.size()];
-    	List<String> out = new ArrayList<String>();
-       	Enumeration<String> en = _consistHashTable.keys();
-       	int i=0;
-    	while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-    	}
-        jmri.util.StringUtil.sort(arr);
-        for (i=0; i<arr.length; i++) out.add(arr[i]);
-    	return out;
-    }
+	public List<String> getConsistNameList() {
+		String[] names = new String[_consistHashTable.size()];
+		List<String> out = new ArrayList<String>();
+		Enumeration<String> en = _consistHashTable.keys();
+		int i = 0;
+		while (en.hasMoreElements()) {
+			names[i++] = en.nextElement();
+		}
+		jmri.util.StringUtil.sort(names);
+		for (String name : names)
+			out.add(name);
+		return out;
+	}
+	
+	public int getConsistMaxNameLength() {
+		int maxLength = 0;
+		for (String name : getConsistNameList()) {
+			if (name.length() > maxLength)
+				maxLength = name.length();
+		}
+		return maxLength;
+	}
     
     /**
      * Sort by engine model
@@ -198,14 +203,11 @@ public class EngineManager extends RollingStockManager{
 	 * @return Ordered list of engines not assigned to a train
 	 */
     public List<Engine> getAvailableTrainList(Train train) {
-    	// get engines by moves list
-    	List<RollingStock> enginesSortByMoves = getByMovesList();
     	// now build list of available engines for this route
     	List<Engine> out = new ArrayList<Engine>();
-    	Engine engine;
- 
-    	for (int i = 0; i < enginesSortByMoves.size(); i++) {
-    		engine = (Engine) enginesSortByMoves.get(i);
+    	// get engines by moves list
+    	for (RollingStock rs : getByMovesList()) {
+    		Engine engine = (Engine) rs;
     		if(engine.getTrack() != null && (engine.getTrain()== null || engine.getTrain()==train))
     			out.add(engine);
     	}
@@ -213,14 +215,20 @@ public class EngineManager extends RollingStockManager{
     }
     
     /**
-     * Returns a list of locos sorted by blocking number.  This returns a list of consisted locos in the order
+     * Returns a list of locos sorted by blocking number for a train.  This returns a list of consisted locos in the order
      * that they were entered in.
      */
-	public List<RollingStock> getByTrainList(Train train) {
-		List<RollingStock> out = getByIntList(super.getByTrainList(train), BY_BLOCKING);
-		return out;
+    public List<Engine> getByTrainBlockingList(Train train) {
+		return castListToEngine(getByIntList(super.getByTrainList(train), BY_BLOCKING));
 	}
     
+	private List<Engine> castListToEngine(List<RollingStock> list) {
+		List<Engine> out = new ArrayList<Engine>();
+		for (RollingStock rs : list)
+			out.add((Engine) rs);
+		return out;
+	}
+   
     /**
      * Get a list of engine road names.
      * @return List of engine road names.
@@ -242,12 +250,11 @@ public class EngineManager extends RollingStockManager{
 		// new format using elements starting version 3.3.1
 		if (root.getChild(Xml.NEW_CONSISTS)!= null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
-			if (log.isDebugEnabled()) log.debug("Engine manager sees "+l.size()+" consists");
+			List<Element> consists = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
+			if (log.isDebugEnabled()) log.debug("Engine manager sees "+consists.size()+" consists");
 			Attribute a;
-			for (int i=0; i<l.size(); i++) {
-				Element kernel = l.get(i);
-				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+			for (Element consist : consists) {
+				if ((a = consist.getAttribute(Xml.NAME)) != null) {
 					newConsist(a.getValue());
 				}
 			}
@@ -258,18 +265,18 @@ public class EngineManager extends RollingStockManager{
         	if(!names.equals("")){
         		String[] consistNames = names.split("%%"); // NOI18N
         		if (log.isDebugEnabled()) log.debug("consists: "+names);
-        		for (int i=0; i<consistNames.length; i++){
-        			newConsist(consistNames[i]);
+        		for (String name : consistNames){
+        			newConsist(name);
         		}
         	}
         }
 		
         if (root.getChild(Xml.ENGINES) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
-            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" engines");
-            for (int i=0; i<l.size(); i++) {
-                register(new Engine(l.get(i)));
+            List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+engines.size()+" engines");
+            for (Element e : engines) {
+                register(new Engine(e));
             }
         }
 	}
@@ -286,25 +293,24 @@ public class EngineManager extends RollingStockManager{
 		List<String> names = getConsistNameList();
 		if (Control.backwardCompatible) {
 			root.addContent(values = new Element(Xml.CONSISTS));
-			for (int i=0; i<names.size(); i++){
-				String consistNames = names.get(i)+"%%"; // NOI18N
+			for (String name : names){
+				String consistNames = name+"%%"; // NOI18N
 				values.addContent(consistNames);
 			}
 		}
         // new format using elements
         Element consists = new Element(Xml.NEW_CONSISTS);
-        for (int i=0; i<names.size(); i++){
+        for (String name : names){
         	Element consist = new Element(Xml.CONSIST);
-        	consist.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+        	consist.setAttribute(new Attribute(Xml.NAME, name));
         	consists.addContent(consist);
         }
         root.addContent(consists);
         
 		root.addContent(values = new Element(Xml.ENGINES));
 		// add entries
-		List<RollingStock> engineList = getByRoadNameList();
-		for (int i=0; i<engineList.size(); i++) {
-			Engine eng = (Engine) engineList.get(i);
+		for (RollingStock rs : getByRoadNameList()) {
+			Engine eng = (Engine) rs;
 			values.addContent(eng.store());
 		}		
     }

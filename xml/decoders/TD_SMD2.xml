@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: TD_SMD2.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1" lastUpdated="20051012"/>
-  <!-- Version 1 inital release -->
+  <!-- Version 1 initial release -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way">
       <model model="SMD2" lowVersionID="1"/>
@@ -79,11 +79,11 @@
         <splitVal highCV="20" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 2 Address</label>
       </variable>
-      <variable label="Route 3 Address" CV="21" mask="VVVVVVVV" item="Route 1 Address" default="00" tooltip="Range 1-2040">
+      <variable label="Route 3 Address" CV="21" mask="VVVVVVVV" item="Route 3 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="22" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 3 Address</label>
       </variable>
-      <variable label="Route 4 Address" CV="23" mask="VVVVVVVV" item="Route 2 Address" default="00" tooltip="Range 1-2040">
+      <variable label="Route 4 Address" CV="23" mask="VVVVVVVV" item="Route 4 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="24" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 4 Address</label>
       </variable>

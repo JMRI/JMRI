@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+		<version author="td@teamdigital1.com" version="1.0" lastUpdated="20100422"/>
+					
+		<!-- Version 1 initial release -->
+
+
+<decoder>
+	<family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+			<model model= "Servette" lowVersionID="1"
+						comment="Servette is a stationary decoder, but it can be programmed in the usual way"/>
+		</family>
+
+	<programming direct="yes" paged="yes" register="no" ops="yes"></programming>
+
+	<variables>
+			
+		<variable label="Servo Address" CV="1" mask="VVVVVVVV"  default="1" tooltip="Range 1-2040">
+			<splitVal highCV="9" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="On Time CV value" CV="2" mask="XVVVVVVV" default="31">
+				<decVal min ="1" max="127" />
+			</variable>
+
+		<variable label="Servo 1 Move Range" CV="3" mask="XVVVVVVV" default="15">
+				<decVal min ="1" max="127" />
+			</variable>
+
+		<variable label="Relay Address" CV="5" mask="VVVVVVVV"  default="9" tooltip="Range 1-2040">
+			<splitVal highCV="6" upperMask="XXXXVVVV"/> </variable>
+
+			
+		<variable label="Test State" CV="7" mask="XXXXXVVV" default="00">
+			<enumVal>
+				<enumChoice choice="None"/>
+				<enumChoice choice="Restart the Servette"/>
+				<enumChoice choice="Move servos to center position"/>
+				<enumChoice choice="Move servos back and forth"/>
+				<enumChoice choice="Move servos to one end"/>
+				<enumChoice choice="Move servos to the other end"/>
+				</enumVal>
+			</variable>	
+			
+		<variable label="Version ID" CV="7" item="Decoder Version"> <decVal/> </variable>
+		<variable label="Manufacturer ID" CV="8" item="Manufacturer" default="25"> <decVal/> </variable>
+			
+		<variable label="Servo 1 Center Posiion" CV="10" mask="XVVVVVVV" default="62">
+				<decVal min ="1" max="127" />
+			</variable>
+
+		<variable label="Servo 2 Center Posiion" CV="11" mask="XVVVVVVV" default="62">
+				<decVal min ="1" max="127" />
+			</variable>
+
+
+		<!-- Begin route variable definition -->
+		
+		<variable label="Route 1 Address" CV="12" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="13" upperMask="XXXXVVVV"/> </variable>
+			
+		<variable label="Route 2 Address" CV="14" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="15" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 3 Address" CV="16" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="17" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 4 Address" CV="18" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="19" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 5 Address" CV="20" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="21" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 6 Address" CV="22" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="23" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 7 Address" CV="24" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="25" upperMask="XXXXVVVV"/> </variable>
+
+		<variable label="Route 8 Address" CV="26" mask="VVVVVVVV"  default="0" tooltip="Range 1-2040">
+			<splitVal highCV="27" upperMask="XXXXVVVV"/> </variable>
+		
+	
+			<variable label="Mode" CV="29" mask="XXXXXVVV" default="1">
+			<enumVal>
+				<enumChoice choice="Mode 1 - Servo 2 Pos, output 2 has unique address"/>
+				<enumChoice choice="Mode 2 - Servo 2 Pos, output 2 has servo address"/>
+				<enumChoice choice="Mode 3 - Servo 3 Pos, output 2 has unique address"/>
+				<enumChoice choice="Not used -do not select"/>
+				<enumChoice choice="Mode 4 - Inputs control servo, output 2 has unique address"/>
+				</enumVal>
+			</variable>	
+	
+
+		 <variable label="Option 1" CV="29" mask="XXXXVXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+			
+		 <variable label="Option 2" CV="29" mask="XXXVXXXX" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>		
+		
+	 	<variable label="Option 3" CV="29" mask="XXVXXXXX" > <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>		
+
+		<variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" default="1"
+			tooltip="Range 1-99">
+			<shortAddressVal/>
+			<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+			</variable>
+
+			
+		<variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="3" >
+			<enumVal> <enumChoice choice="b" value="3"/> <enumChoice choice="t" value="1"/> <enumChoice choice="c" value="2"/> </enumVal>
+			</variable>
+
+		<variable label="" item="OS5" CV="34" mask="XXXXXXVV" default="2" >
+			<enumVal> <enumChoice choice="t" value="1"/> <enumChoice choice="c" value="2"/> </enumVal>
+			</variable>
+			
+
+		<!-- Begin primary input variable definition -->
+
+		<variable label="Transition" item="Transition P1" CV="36" mask="XXXXXXVV" default="2">
+			<enumVal>
+				<enumChoice choice="Input Disabled"/>
+				<enumChoice choice="On Low to High Transition"/>
+				<enumChoice choice="On High to Low Transition"/>
+				<enumChoice choice="On Change Transition"/>
+				</enumVal> </variable>
+		<variable label="Output Number" item="Out Num P1" CV="36" mask="VVVVXXXX" default="1" > <decVal/> </variable>
+		<variable label="   Output State" item="Out State P1" CV="36" mask="XXXXVVXX" default="0" >
+			<enumVal> <enumChoice choice="Close" value="0"/> <enumChoice choice="Throw" value="2"/> <enumChoice choice="Toggle" value="1"/> </enumVal>
+			</variable>
+
+
+		<!-- Begin secondary input variable definition -->
+		
+				<variable label="Transition" item="Transition S1" CV="44" mask="XXXXXXVV" default="2">
+			<enumVal>
+				<enumChoice choice="Input Disabled"/>
+				<enumChoice choice="On Low to High Transition"/>
+				<enumChoice choice="On High to Low Transition"/>
+				<enumChoice choice="On Change Transition"/>
+				</enumVal> </variable>
+		<variable label="Output Number" item="Out Num S1" CV="44" mask="VVVVXXXX" default="1" > <decVal/> </variable>
+		<variable label="   Output State" item="Out State S1" CV="44" mask="XXXXVVXX" default="2" >
+			<enumVal> <enumChoice choice="Close" value="0"/> <enumChoice choice="Throw" value="2"/> <enumChoice choice="Toggle" value="1"/> </enumVal>
+			</variable>
+
+
+		<!-- Begin servo speed variable definition -->
+		
+		<variable label="Servo Move Speed" CV="67" mask="XVVVVVVV" default="18">
+				<decVal min ="1" max="127" />
+			</variable>
+
+		<variable label="Servo Behavior"  CV="71" mask="XXXXXXVV" default="0">
+			<enumVal>
+				<enumChoice choice="None" value="0"/>
+				<enumChoice choice="Sequence or rotate" value="1"/>
+				<enumChoice choice="Speed to Position" value="2"/>
+				</enumVal> </variable>
+		<variable label="Reverse" item="Rev1" CV="71" mask="VXXXXXXX" default="0">
+			<enumVal> <enumChoice choice="no"/> <enumChoice choice="yes"/> </enumVal> </variable>
+						
+		<variable label="Relay" CV="75" mask="XXXXXXVV" default="00">
+			<enumVal>
+				<enumChoice choice="None"/>
+				<enumChoice choice="Will flash when servo is in the cw position"/>
+				<enumChoice choice="Will flash when servo is in the ccw position"/>
+				</enumVal>
+			</variable>	
+	
+
+   </variables>
+</decoder>
+
+<pane name="Basic">
+	<column>
+		<label label="------  Servette Output Addresses  ------ " />
+		<label label="Use this number to set the address number"/>
+		<label label="of the device the output is connected to."/>
+		<label label=" "/>
+	
+			<label label=" "/>
+			<display item="Servo Address"/>
+			<label label=" "/>
+			<display item="Relay Address"/>
+			<label label=" "/>
+			<label label=" "/>
+		
+			<label label=" "/>
+			<label label="------  Special Functions  ------ "/>
+			<label label=" "/>
+		
+			<label label=" "/>
+			<display item="Mode" />
+			<display item="Option 1" tooltip="Enables fixed output state at power on" format="checkbox"/>	
+			<display item="Option 2" tooltip="Disable power save" format="checkbox"/>	
+			<display item="Option 3" tooltip="Enables ops mode" format="checkbox"/>
+			<label label=" "/>
+			<label label=" "/>
+			<display item="Ops Mode Address" tooltip="Sets the Ops Mode address" />
+			<label label="This is the same as a Loco address"/>
+			<label label=" "/>
+			<label label=" "/>
+			<label label=" "/>
+			<label label="------  Notes:  ------ "/>
+			<label label="The Custom Programmer format is recommended"/>
+
+
+		
+		</column>
+</pane>
+
+<pane name="Mfg">
+	<column>
+		<label label="---- Sets the Servette to a paricular test state - Use to help adjust servos ----"/>
+		<label label="            Only works in Ops mode"/>
+		<label label="            Changes the value of CV7 (Version ID) as displayed in DP"/>
+		<label label="            Test State may change when Version ID is read"/>
+		<label label=" "/>
+		<display item="Test State" />
+		<label label=" "/>
+		<label label=" "/>
+		<label label=" "/>
+		<label label=" "/>
+		<display item="Decoder Version" tooltip="The decoder version number (read only)" />
+		<display item="Manufacturer" tooltip="The manufacturer's ID number (read only)" />
+	</column>
+</pane>
+
+<pane name="Inputs">
+	<column>
+		<label label=" "/>
+		<label label="------  Primary Input Control 1  ------ "/>
+		<label label=" "/>
+		<display item="Transition P1" />
+		<row>
+			<column> <display item="Out State P1" tooltip="Sets the action of the output"/> </column>
+			<column> <display item="Out Num P1" tooltip="Range 1-8"/> </column>
+			</row>
+		</column>
+	<column>
+		<label label=" "/>
+		<label label="------  Secondary Input Control 1  ------ "/>
+		<label label=" "/>
+		<display item="Transition S1" />
+		<row>
+			<column> <display item="Out State S1" tooltip="Sets the action of the output"/> </column>
+			<column> <display item="Out Num S1" tooltip="Range 1-8"/> </column>
+			</row>
+
+	</column>
+</pane>
+
+<pane name="Outputs">
+	<column>
+		<label label="---- Servo Configuration ----"/>
+		<label label=" "/>
+	<row>
+		<column>
+		<display item="Servo Move Range" tooltip="Range 1-127" />	
+		<display item="Servo Center Posiion" tooltip="Range 1-127" />
+		<display item="Servo Move Speed" tooltip="Range 1-127" />
+		<row>
+			<column> <display item="Servo Behavior"  /> </column>
+			<column> <display item="Rev1" format="checkbox" tooltip="Servo moves in oposite direction"/> </column>
+			</row>
+		</column>
+		</row>
+	<label label=" "/>
+
+		<label label=" "/>
+		<label label="---- Output Flashing ----"/>
+		<label label=" "/>
+		<display item="Relay" />
+		<label label=" "/>
+		<label label=" "/>
+		<label label="---- Sets the output state to always be the same at power on ----"/>
+		<label label="              Only applies if Option 1 is selected"/>
+		<label label=" "/>
+	<row>
+		<column> <label label=" "/> <label label=" "/> <label label=" "/> <label label=" "/> </column>
+		<column> <label label="Servette"/> <label label="   Both"/> <label label="  Throw"/> <label label="  Close"/> </column>
+		<column> <label label="   "/> <display item="OS1" format="radiobuttons"/> </column>
+		</row>
+	<label label=" "/>
+	<row>
+		<column> <label label=" "/> <label label=" "/> <label label=" "/> <label label=" "/> </column>
+		<column> <label label="Relay"/> <label label="  Throw"/> <label label="  Close"/> </column>
+		<column> <label label="   "/> <display item="OS5" format="radiobuttons"/> </column>
+		</row>
+	</column>
+</pane>
+
+<pane name="Routes">
+	<column>
+		<label label=" "/>
+		<label label="---- Remote Control Route Address ----"/>
+		<label label=" "/>
+
+		<label label=" "/>
+		<display item="Route 1 Address"/>
+		<label label=" "/>
+		<display item="Route 2 Address"/>
+		<label label=" "/>
+		<display item="Route 3 Address"/>
+		<label label=" "/>
+		<display item="Route 4 Address"/>
+		<label label=" "/>
+		<display item="Route 5 Address"/>
+		<label label=" "/>
+		<display item="Route 6 Address"/>
+		<label label=" "/>
+		<display item="Route 7 Address"/>
+		<label label=" "/>
+		<display item="Route 8 Address"/>
+		<label label=" "/>
+		
+		</column>
+</pane>
+
+
+
+ <pane name="CVs">
+		<column>
+			<cvtable/>
+		</column>
+ </pane>
+</decoder-config>
+
+
+ 	  	 

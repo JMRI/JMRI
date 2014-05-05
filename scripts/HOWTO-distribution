@@ -41,7 +41,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     cd help/en/
     ./JHelpDev.csh   (See the doc page for setup)
-    (navigate to JHelpDev.xml in release html/en/ & open it)
+    (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
     (click "Create All", takes a bit of time, wait for button to release)
     (quit)
 
@@ -56,6 +56,14 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
     Commit any changed files.
 
+( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
+    that you find wrong.  Also, do 
+    
+    svn propset svn:eol-style native <file-path-name>
+    
+    to fix it for good.
+    
+    
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
 ( ) Create & commit the start of a release note for the next version
@@ -99,6 +107,15 @@ Second, we build the release branch:
     <check in an update of the version number of the new release>
 
 ( ) If using the CI system, set up CI builds for that branch
+
+    Sign on to Jenkins
+    Under Test Releases, select "New Item",
+        create the job with the new release name, 
+        using Copy Existing Item with the previous test release
+    Then fix the version number in a couple of places:
+        Description, 
+        and then Source Code Management|Repository URL.
+
 
 ( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:

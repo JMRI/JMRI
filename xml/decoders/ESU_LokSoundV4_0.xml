@@ -55,6 +55,17 @@
       <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
+      <model model="LokSound V4.0 Test" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="99999">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+        <functionlabels>
+          <functionlabel num="7" lockable="true">Model Function Override 7 and 11</functionlabel>
+          <functionlabel num="11"/>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="25">Override 15 and 27</soundlabel>
+          <soundlabel num="27"/>
+        </soundlabels>
+      </model>
       <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
@@ -102,6 +113,11 @@
         <functionlabel num="25" lockable="true"/>
         <functionlabel num="26" lockable="true"/>
       </functionlabels>
+      <soundlabels>
+        <soundlabel num="25">Random sounds</soundlabel>
+        <soundlabel num="26">Automatic brake sound</soundlabel>
+        <soundlabel num="27">Gear shift sound</soundlabel>
+      </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
         <capability>
@@ -131,27 +147,6 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <pane name="Indexed CVs">
-    <column>
-      <row>
-        <column>
-      <label label="Due to changes in the internal structure of JMRI, this pane is now obsolete and"/>
-      <label label="should be empty. If you find this pane is not empty, please report back to us by"/>
-      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or log a bug report on"/>
-      <label label="the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/"/>
-          <label label=" "/>
-          <label label="The Indexed CVs will now appear in the list on the CVs pane."/>
-          <label label=" "/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
-        </column>
-      </row>
-    </column>
-    <name>Indexed CVs</name>
-  </pane>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>

@@ -7,7 +7,7 @@
                  - tweaked some "minOut"s in CVs 114,118,119,120,130,131,152
 -->
 <!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable label="User Data #1" CV="105" item="User Id #1">
     <decVal/>
     <label>User Data #1</label>

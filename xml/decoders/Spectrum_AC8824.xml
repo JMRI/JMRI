@@ -45,11 +45,7 @@
         <longAddressVal/>
         <label>Extended Address</label>
       </variable>
-      <variable label="Extended Address" CV="18" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Accessroy Decoder config" CV="29" default="128">
+      <variable label="Accessory Decoder config" CV="29" default="128">
         <decVal/>
       </variable>
       <variable label="Index page address high byte" CV="31" readOnly="no" comment="high byte of indexed address 10H for standard NMRA or 0 for special 128 pages">
@@ -3467,7 +3463,7 @@
 				</display>
           <display item="High Address">
 				</display>
-          <display item="Accessroy Decoder config"/>
+          <display item="Accessory Decoder config"/>
           <separator/>
           <label label="   To help you manage the current drawn by the servos"/>
           <label label="      You can limit the number of servos running at once"/>

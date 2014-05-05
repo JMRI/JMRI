@@ -4,7 +4,7 @@
 <!-- version 1.1 2 Aug 11 JES
                  - added turbocharger CVs 366-371
 -->
-<pane name="Sound - Diesel Loco">
+<pane name="Sound - Diesel Loco" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <label label="Diesel Mechanical">
       <label>Diesel Mechanical</label>

@@ -13,10 +13,15 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
 <!-- Panes to show I/O lines -->
-<pane name="I/O-1 B">
+<pane name="I/O-1 B" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.1 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      	<label label=" "/>
+      	<label label="&lt;html&gt;&lt;h1&gt;I/O Port 1 Lines #5 - #8&lt;/h1&gt;&lt;/html&gt;"/>
+      	<label label=" "/>
         <label label="TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual">
           </label>
         <label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">

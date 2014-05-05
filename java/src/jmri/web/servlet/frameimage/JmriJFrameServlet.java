@@ -33,15 +33,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A simple servlet that returns a JMRI window as a PNG image or enclosing HTML
- * file. <p> The suffix of the request determines which. <dl>
+ * file.
+ * <p>
+ * The suffix of the request determines which. <dl>
  * <dt>.html<dd>Returns a HTML file that displays the frame enabled for clicking
  * via server side image map; see the .properties file for the content
  * <dt>.png<dd>Just return the image <dt>no name<dd>Return an HTML page with
- * links to available images </dl> <P> The associated .properties file contains
- * the HTML fragments used to form replies. <P> Parts taken from Core Web
- * Programming from Prentice Hall and Sun Microsystems Press,
- * http://www.corewebprogramming.com/. &copy; 2001 Marty Hall and Larry Brown;
- * may be freely used or adapted.
+ * links to available images </dl>
+ * <P>
+ * The associated .properties file contains the HTML fragments used to form
+ * replies.
+ * <P>
+ * Parts taken from Core Web Programming from Prentice Hall and Sun Microsystems
+ * Press, http://www.corewebprogramming.com/. &copy; 2001 Marty Hall and Larry
+ * Brown; may be freely used or adapted.
  *
  * @author Modifications by Bob Jacobsen Copyright 2005, 2006, 2008
  * @version $Revision$
@@ -63,10 +68,8 @@ public class JmriJFrameServlet extends HttpServlet {
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
         int x = xg - c.getLocation().x;
         int y = yg - c.getLocation().y;
-        // log.debug("component is "+c);
-        if (log.isDebugEnabled()) {
-            log.debug("Local click at " + x + "," + y);
-        }
+        // log.debug("component is {}", c);
+        log.debug("Local click at {},{}", x, y);
 
         if (c.getClass().equals(JButton.class)) {
             ((JButton) c).doClick();
@@ -75,9 +78,7 @@ public class JmriJFrameServlet extends HttpServlet {
         } else if (c.getClass().equals(JRadioButton.class)) {
             ((JRadioButton) c).doClick();
         } else if (c instanceof MouseListener) {
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke directly on MouseListener, at " + x + "," + y);
-            }
+            log.debug("Invoke directly on MouseListener, at {},{}", x, y);
             sendClickSequence((MouseListener) c, c, x, y);
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
             if (log.isDebugEnabled()) {
@@ -90,7 +91,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     xg, yg, // this component expects global positions for some reason
                     1, // one click
                     false // not a popup
-                    );
+            );
             ((jmri.jmrit.display.MultiSensorIcon) c).doMouseClicked(e);
         } else if (c instanceof jmri.jmrit.display.Positionable) {
             if (log.isDebugEnabled()) {
@@ -103,7 +104,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     x, y, // x, y not in this component?
                     1, // one click
                     false // not a popup
-                    );
+            );
             ((jmri.jmrit.display.Positionable) c).doMousePressed(e);
 
             e = new MouseEvent(c,
@@ -113,7 +114,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     x, y, // x, y not in this component?
                     1, // one click
                     false // not a popup
-                    );
+            );
             ((jmri.jmrit.display.Positionable) c).doMouseReleased(e);
 
             e = new MouseEvent(c,
@@ -123,16 +124,12 @@ public class JmriJFrameServlet extends HttpServlet {
                     x, y, // x, y not in this component?
                     1, // one click
                     false // not a popup
-                    );
+            );
             ((jmri.jmrit.display.Positionable) c).doMouseClicked(e);
         } else {
             MouseListener[] la = c.getMouseListeners();
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke " + la.length + " contained mouse listeners");
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("component is " + c);
-            }
+            log.debug("Invoke {} contained mouse listeners", la.length);
+            log.debug("component is {}", c);
             /*
              * Using c.getLocation() above we adjusted the click position for
              * the offset of the control relative to the frame. That works fine
@@ -148,9 +145,7 @@ public class JmriJFrameServlet extends HttpServlet {
 //           	y -= (int)(pc.getY() - pf.getY());
 
             for (int i = 0; i < la.length; i++) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Send click sequence at " + x + "," + y);
-                }
+                log.debug("Send click sequence at {},{}", x, y);
                 sendClickSequence(la[i], c, x, y);
             }
         }
@@ -168,7 +163,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 x, y, // x, y not in this component?
                 1, // one click
                 false // not a popup
-                );
+        );
         m.mouseEntered(e);
         e = new MouseEvent(c,
                 MouseEvent.MOUSE_PRESSED,
@@ -290,9 +285,7 @@ public class JmriJFrameServlet extends HttpServlet {
         }
         response.getWriter().write(MessageFormat.format(rb.getString("FrameFooter"), args));
 
-        if (log.isDebugEnabled()) {
-            log.debug("Sent jframe html with click=" + (click ? "True" : "False"));
-        }
+        log.debug("Sent jframe html with click={}", (click ? "True" : "False"));
     }
 
     private void doImage(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -314,9 +307,7 @@ public class JmriJFrameServlet extends HttpServlet {
         tmpFile.close();
         response.setContentLength(tmpFile.size());
         response.getOutputStream().write(tmpFile.toByteArray());
-        if (log.isDebugEnabled()) {
-            log.debug("Sent [" + frame.getTitle() + "] as " + tmpFile.size() + " byte png.");
-        }
+        log.debug("Sent [{}] as {} byte png.", frame.getTitle(), tmpFile.size());
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -384,9 +375,7 @@ public class JmriJFrameServlet extends HttpServlet {
             // URI contains a leading / at this point
             URI = URI.substring(1, URI.lastIndexOf("."));
             URI = StringUtil.unescapeString(URI); //undo escaped characters
-            if (log.isDebugEnabled()) {
-                log.debug("Frame name is " + URI);
-            }
+            log.debug("Frame name is {}", URI);
         }
         return URI;
     }
@@ -430,50 +419,49 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doClick(JmriJFrame frame, String coords) {
-    	String[] click = coords.split(",");
-    	int x = Integer.parseInt(click[0]);
-    	int y = Integer.parseInt(click[1]);
+        String[] click = coords.split(",");
+        int x = Integer.parseInt(click[0]);
+        int y = Integer.parseInt(click[1]);
 
-    	//send click to topmost component under click spot
-    	Component c = frame.getContentPane().findComponentAt(x, y);
-    	//log.debug("topmost component is class="+ c.getClass().getName());
-    	sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
+        //send click to topmost component under click spot
+        Component c = frame.getContentPane().findComponentAt(x, y);
+        //log.debug("topmost component is class={}", c.getClass().getName());
+        sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
 
-    	//if clicked on background, search for layout editor target pane TODO: simplify id'ing background
-    	if (!c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane") &&
-    			(c instanceof jmri.jmrit.display.PositionableLabel) && 
-    			!(c instanceof jmri.jmrit.display.LightIcon) &&
-    			!(c instanceof jmri.jmrit.display.LocoIcon) &&
-    			!(c instanceof jmri.jmrit.display.MemoryIcon) &&
-    			!(c instanceof jmri.jmrit.display.MultiSensorIcon) &&
-    			!(c instanceof jmri.jmrit.display.PositionableIcon) &&
-    			!(c instanceof jmri.jmrit.display.ReporterIcon) &&
-    			!(c instanceof jmri.jmrit.display.RpsPositionIcon) &&
-    			!(c instanceof jmri.jmrit.display.SlipTurnoutIcon) &&
-    			!(c instanceof jmri.jmrit.display.TurnoutIcon)
-    			) {
-    		clickOnEditorPane(frame.getContentPane(), x, y, frame);
-    	}
+        //if clicked on background, search for layout editor target pane TODO: simplify id'ing background
+        if (!c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")
+                && (c instanceof jmri.jmrit.display.PositionableLabel)
+                && !(c instanceof jmri.jmrit.display.LightIcon)
+                && !(c instanceof jmri.jmrit.display.LocoIcon)
+                && !(c instanceof jmri.jmrit.display.MemoryIcon)
+                && !(c instanceof jmri.jmrit.display.MultiSensorIcon)
+                && !(c instanceof jmri.jmrit.display.PositionableIcon)
+                && !(c instanceof jmri.jmrit.display.ReporterIcon)
+                && !(c instanceof jmri.jmrit.display.RpsPositionIcon)
+                && !(c instanceof jmri.jmrit.display.SlipTurnoutIcon)
+                && !(c instanceof jmri.jmrit.display.TurnoutIcon)) {
+            clickOnEditorPane(frame.getContentPane(), x, y, frame);
+        }
     }
-    
+
     //recursively search components to find editor target pane, where layout editor paints components
     public void clickOnEditorPane(Component c, int x, int y, JmriJFrame f) {
 
-    	if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) {
-    		log.debug("Sending additional click to Editor$TargetPane");
-    		//then click on it
-    		sendClick(f.getTitle(), c, x, y, f);
-    	
-    	//keep looking
-    	} else {
+        if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) {
+            log.debug("Sending additional click to Editor$TargetPane");
+            //then click on it
+            sendClick(f.getTitle(), c, x, y, f);
 
-    		//check this component's children
-    		Container component = (Container) c;
-    		for (Component child : component.getComponents()) {
-    			clickOnEditorPane(child, x, y, f);
-    		}
-    	}
+            //keep looking
+        } else {
+
+            //check this component's children
+            Container component = (Container) c;
+            for (Component child : component.getComponents()) {
+                clickOnEditorPane(child, x, y, f);
+            }
+        }
     }
-    
+
     static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class.getName());
 }

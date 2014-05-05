@@ -18,7 +18,7 @@
 
 <!-- Lamp choice for aspects -->
 
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="H1-R "/>
   <enumChoice choice="H1-Y"/>
   <enumChoice choice="H1-G"/>

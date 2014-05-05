@@ -4,8 +4,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
 
 import org.jdom.Attribute;
@@ -108,21 +110,17 @@ public class CarOwners {
     }
     
     private int maxNameLength = 0;
-    
-    public int getCurMaxNameLength(){
-    	if (maxNameLength == 0){
-    		String[] colors = getNames();
-    		int length = MIN_NAME_LENGTH;
-    		for (int i = 0; i < colors.length; i++){
-    			if (colors[i].length()>length)
-    				length = colors[i].length();
-    		}
-    		maxNameLength = length;
-    		return length;
-    	} else {
-    		return maxNameLength;
-    	}
-    }
+
+	public int getCurMaxNameLength() {
+		if (maxNameLength == 0) {
+			maxNameLength = MIN_NAME_LENGTH;
+			for (String name : getNames()) {
+				if (name.length() > maxNameLength)
+					maxNameLength = name.length();
+			}
+		}
+		return maxNameLength;
+	}
     
 	/**
 	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in

@@ -19,12 +19,14 @@ package jmri.util;
  * @version			$Revision: 18568 $
  */
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.vecmath.Vector3f;
-import javax.vecmath.Vector3d;
-import java.util.regex.*;
-import jmri.NamedBean;
 
 /** PhysicalLocation
  * 
@@ -137,7 +139,7 @@ public class PhysicalLocation extends Vector3f {
 	    String xs = m.group(1);
 	    String ys = m.group(2);
 	    String zs = m.group(3);
-	    log.debug("Loading position: x = " + xs + " y = " + ys + " z = " + zs);
+	    log.debug("Loading position: x = {} y = {} z = {}", xs, ys, zs);
 	    // --debug
 	    boolean is_tunnel = false;
 	    // Handle optional flags

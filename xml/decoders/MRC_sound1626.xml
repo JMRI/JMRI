@@ -20,7 +20,6 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <variable label="Start Volts" CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start Volts</label>

@@ -31,7 +31,7 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
             protected void init() {
                 super.init();
                 root = this;
-                addTurnoutManager(new jmri.managers.InternalTurnoutManager());
+                store(new jmri.managers.InternalTurnoutManager(), jmri.TurnoutManager.class);
             }
         };
         Assert.assertNotNull("Instance exists", i );

@@ -212,12 +212,12 @@
         <label>User ID #2</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Coupling Fire volume" CV="113" item="Sound Setting 14" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable label="Coupling Fire volume" CV="113" item="Sound Setting 17" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling Fire volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake Release volume" CV="114" item="Sound Setting 15" default="0" tooltip="range 0-3" comment="Range 0-3">
+      <variable label="Brake Release volume" CV="114" item="Sound Setting 18" default="0" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake Release volume</label>
         <comment>Range 0-3</comment>

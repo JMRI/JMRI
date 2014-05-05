@@ -71,6 +71,7 @@ public class Xml {
 	static final String ALLOW_RETURN = "allowReturn"; // NOI18N
 	static final String SERVICE_ALL = "serviceAll"; // NOI18N
 	static final String BUILD_CONSIST = "buildConsist"; // NOI18N
+	static final String SEND_CUSTOM_STAGING = "sendCustomStaging"; // NOI18N
 	
 	static final String BUILT = "built"; // NOI18N
 	static final String BUILD = "build"; // NOI18N
@@ -82,8 +83,8 @@ public class Xml {
 	static final String LEAD_ENGINE = "leadEngine"; // NOI18N
 	static final String STATUS = "status"; // NOI18N
     static final String STATUS_CODE = "statusCode"; // NOI18N
-    static final String TERMINATION_DATE = "TerminationDate";
-    static final String REQUESTED_CARS = "RequestedCars";
+    static final String TERMINATION_DATE = "TerminationDate"; // NOI18N
+    static final String REQUESTED_CARS = "RequestedCars"; // NOI18N
 	
 	static final String CURRENT = "current"; // NOI18N
 	static final String LEG2_START = "leg2Start"; // NOI18N
@@ -145,6 +146,7 @@ public class Xml {
 	static final String WORK_DEPARTURE_TIME = "workDepartureTime"; // NOI18N
 	static final String WORK_ARRIVAL_TIME = "workArrivalTime"; // NOI18N
 	static final String NO_SCHEDULED_WORK = "noScheduledWork"; // NOI18N
+	static final String NO_SCHEDULED_WORK_ROUTE_COMMENT = "noScheduledWorkRouteComment"; // NOI18N
 	static final String DEPART_TIME = "departTime"; // NOI18N
 	static final String TRAIN_DEPARTS_CARS = "trainDepartsCars"; // NOI18N
 	static final String TRAIN_DEPARTS_LOADS = "trainDepartsLoads"; // NOI18N

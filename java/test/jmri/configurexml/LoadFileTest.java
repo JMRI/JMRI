@@ -55,6 +55,23 @@ public class LoadFileTest extends LoadFileTestBase {
         
     }
     
+    public void testLoadMultiSystem() throws Exception {
+        // load file
+        InstanceManager.configureManagerInstance()
+            .load(new java.io.File("java/test/jmri/configurexml/LoadMultipleSystems.xml"));
+    
+        // check existance of a few objects
+        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+
+        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        
+        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        
+    }
+    
     public void testLoad295() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()

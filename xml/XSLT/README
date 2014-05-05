@@ -65,3 +65,80 @@ throttle.xsl    stylesheet for JMRI throttle layout files
 LogixToCode.xml Tool for creating Java code from the Logix and Routes
                 in a panel file.  The code will (with a little adjustment)
                 recreate the contents.
+
+
+
+Processing decoder files:
+
+normalizeDecoder is a shell script that runs the standard series of processings
+on an set of input files, followed by xmllint to put it in standard layout.
+
+Those operations can be tested with the ./testDecoderTransforms script.
+
+Operations:
+    move variable@label to variable@item if no @item exists
+    make variable{label] elements from attributes
+    remove variable@label if redundant
+    
+    move label/label to label/text
+    move label@label to label/text
+    remove label@label
+    
+
+Still needed:
+
+*) decoderAddI18nLabel.xsl needs to handle case of label element but no label attribute
+    
+*) Transforms handle variable elements but not ivariable elements
+
+*) handle tooltip in pane elements - need to provide default english element to
+   eventually move away from attribute
+
+
+0) process away tooltip and comment attribute in variables (and tooltip in panes!), making
+    proper sub-elements
+
+1) Add <comment xml:lang=""> elements in decoderAddI18N,
+    but only if there are others already (might be easiest to just replicate the default one)
+
+2) Order subelements by language for simplicity, see:
+    http://stackoverflow.com/questions/572854/how-to-sort-a-subelement-of-xml-with-xslt
+    
+3) Probably have to do some stuff with panes too
+    Translate tooltip attribute and elements
+
+
+Eventual goal is to update schema to enforce regular structure:
+    variable element:
+        remove label, comment, tooltip attributes in favor of elements
+        label contains text, not label
+        
+    pane element:
+        remove pane name attribute in favor of elements
+        label contains text, not label
+        remove tooltip attribute from display element in favor of elements
+       
+       
+Eventually want a constraint that qualifier variablerefs are present, but how to get that?
+Pane files don't know about the primary decoder file.  (So need it programmatic? Even then,
+matching problematic)
+
+      <xs:element name="variables" type="VariablesType" minOccurs="1" maxOccurs="1">
+        <xs:unique name="UniqueVariableItemAttribute2">
+          <xs:annotation><xs:documentation>Insist that the variable item attribute is unique</xs:documentation></xs:annotation>
+          <xs:selector xpath=".//variable"/> 
+          <xs:field xpath="@item"/>           
+          <xs:field xpath="@include"/>           
+          <xs:field xpath="@exclude"/>           
+        </xs:unique>
+
+        <xs:keyref name="QualifierKeyRef2" refer="UniqueVariableItemAttribute2">
+          <xs:selector xpath=".//variable/qualifier"/>
+          <xs:field xpath="variableref" />
+        </xs:keyref>
+
+      </xs:element>
+
+The above doesn't work because QualifierKeyRef2 needs to have three fields.
+
+

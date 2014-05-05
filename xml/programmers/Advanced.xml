@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of JMRI.  Copyright 2007.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -11,16 +11,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-<!-- $Id$ -->
-    <!-- made from Comprehensive version 18 -->
-    <version version="19" author="Bob Jacobsen" lastUpdated="20091001"/>
-
-    <!-- Version 19 - initial version, with all tabs -->
-
-    <programmer 
-            decoderFilePanes="yes" showEmptyPanes="default"
-            showFnLanelPane="yes" showRosterMediaPane="yes">
-    
+  <!-- $Id$ -->
+  <!-- made from Comprehensive version 18 -->
+  <version version="19" author="Bob Jacobsen" lastUpdated="20091001"/>
+  <!-- Version 19 - initial version, with all tabs -->
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="yes" showRosterMediaPane="yes">
     <!-- all panes -->
     <xi:include href="file:xml/programmers/parts/BasicPane.xml"/>
     <xi:include href="file:xml/programmers/parts/MotorPane.xml"/>
@@ -34,6 +29,5 @@
     <xi:include href="file:xml/programmers/parts/SoundPane.xml"/>
     <xi:include href="file:xml/programmers/parts/SoundLevelsPane.xml"/>
     <xi:include href="file:xml/programmers/parts/CVsPane.xml"/>
-
-    </programmer>
-</programmer-config> 	  	 
+  </programmer>
+</programmer-config>

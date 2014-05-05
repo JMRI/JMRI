@@ -21,12 +21,20 @@ public class SerialAddressTest extends TestCase {
 		// log4j
 		apps.tests.Log4JFixture.setUp(); 
 		// create and register the manager objects
+		
+		InputBits.mInstance = null;
+		InputBits.instance();
+		
+		jmri.util.JUnitUtil.resetInstanceManager();
+		
 		jmri.TurnoutManager l = new SerialTurnoutManager() {
+		    @Override
 			public void notifyTurnoutCreationError(String conflict,int bitNum) {}
 		};	
 		jmri.InstanceManager.setTurnoutManager(l);
 		
 		jmri.LightManager lgt = new SerialLightManager() {
+		    @Override
 			public void notifyLightCreationError(String conflict,int bitNum) {}
 		};	
 		jmri.InstanceManager.setLightManager(lgt);
@@ -181,6 +189,21 @@ public class SerialAddressTest extends TestCase {
 		}
 
 	public void testGetUserNameFromSystemName() {
+			jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
+			// create 4 new sensors
+			sMgr.newSensor("KS16","userS16");
+			sMgr.newSensor("KS014","userS14");
+			sMgr.newSensor("KS17","userS17");
+			sMgr.newSensor("KS12","userS12");
+
+			jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
+			lMgr.newLight("KL36","userL36");
+			lMgr.newLight("KL037","userL37");
+
+			jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
+			tMgr.newTurnout("KT32","userT32");
+			tMgr.newTurnout("KT34","userT34");
+
             Assert.assertEquals("test KS16", "userS16", SerialAddress.getUserNameFromSystemName("KS16") );
             Assert.assertEquals("test KS12", "userS12", SerialAddress.getUserNameFromSystemName("KS12") );
             Assert.assertEquals("test KS17", "userS17", SerialAddress.getUserNameFromSystemName("KS17") );

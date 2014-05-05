@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Diesel bell selections -->
-<ienumVal>
+<ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <ienumChoice choice="Native Bell" value="1"/>
   <ienumChoice choice="Diesel Bell, Air, Fast 1"/>
   <ienumChoice choice="Diesel Bell, Air, Fast 2"/>

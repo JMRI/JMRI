@@ -322,6 +322,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }
         }
         _pathChange = pathChanged;
+        String name = _pathName.getText();
+        if (name==null || name.length()==0) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("needPathName"), 
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+        	
+        }
     }
 
     private boolean findErrors() {
@@ -547,11 +553,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     		if (!_pathChange) {
     			// check portals OK
     			Portal p = otherPath.getFromPortal();
-    			if (!p.isValidPath(otherPath)) {
+    			if (p!=null && !p.isValidPath(otherPath)) {
     				p.addPath(otherPath);
     			}
     			p = otherPath.getToPortal();
-    			if (!p.isValidPath(otherPath)) {
+    			if (p!=null && !p.isValidPath(otherPath)) {
     				p.addPath(otherPath);
     			}
     			return;

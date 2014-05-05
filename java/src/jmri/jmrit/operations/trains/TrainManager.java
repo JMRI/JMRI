@@ -680,6 +680,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		newTrain.setAllowReturnToStagingEnabled(train.isAllowReturnToStagingEnabled());
 		newTrain.setAllowThroughCarsEnabled(train.isAllowThroughCarsEnabled());
 		newTrain.setBuildConsistEnabled(train.isBuildConsistEnabled());
+		newTrain.setSendCarsWithCustomLoadsToStagingEnabled(train.isSendCarsWithCustomLoadsToStagingEnabled());
 		newTrain.setBuildTrainNormalEnabled(train.isBuildTrainNormalEnabled());
 		newTrain.setSendCarsToTerminalEnabled(train.isSendCarsToTerminalEnabled());
 		newTrain.setServiceAllCarsWithFinalDestinationsEnabled(train.isServiceAllCarsWithFinalDestinationsEnabled());		

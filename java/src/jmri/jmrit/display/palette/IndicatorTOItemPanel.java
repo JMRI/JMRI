@@ -402,6 +402,19 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
         hideIcons();
     }
+    
+    protected void updateFamiliesPanel() {
+        if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
+        if (_iconFamilyPanel!=null) {
+            removeIconFamiliesPanel();        	
+        }
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel, _buttonPostion);        	
+        showIcons();
+        _iconFamilyPanel.invalidate();
+        invalidate();
+        reset();
+    }
 
     private void openStatusEditDialog(String key) {
         if (log.isDebugEnabled()) log.debug("openStatusEditDialog for family \""+_family+"\" and \""+key+"\"");

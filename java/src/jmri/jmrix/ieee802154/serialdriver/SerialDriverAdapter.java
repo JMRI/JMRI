@@ -60,24 +60,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
-
-            // set framing (end) character
-            try {
-                log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
-                      +" "+activeSerialPort.getReceiveFramingByte());
-            } catch (Exception ef) {
-                log.debug("failed to set serial framing: "+ef);
-            }
-
-            // set timeout; framing should work before this anyway
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: "+et);
-            }
-            
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 

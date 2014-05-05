@@ -2150,7 +2150,7 @@
           <enumChoice choice="2.40 sec" value="16"/>
         </enumVal>
       </variable>
-      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" item="Decoder Type" tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
+      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" item="New ID for Decoder Type" tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
         <decVal/>
       </variable>
     </variables>

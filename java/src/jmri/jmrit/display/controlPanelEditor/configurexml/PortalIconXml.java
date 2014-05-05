@@ -81,7 +81,7 @@ public class PortalIconXml extends PositionableLabelXml {
             fromBlk=element.getAttribute("fromBlockName").getValue();
         } catch ( NullPointerException e) { 
             log.error("incorrect information for portalIcon; must use fromBlockName.");
-            ed.loadFailed();
+//            ed.loadFailed();
             return;
         }
         String portalName;
@@ -89,7 +89,7 @@ public class PortalIconXml extends PositionableLabelXml {
             portalName=element.getAttribute("portalName").getValue();
         } catch ( NullPointerException e) { 
             log.error("incorrect information for portalIcon; must use portalName.");
-            ed.loadFailed();
+//            ed.loadFailed();
             return;
         }
         OBlock block = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(fromBlk);

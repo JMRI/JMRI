@@ -112,10 +112,6 @@
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
 
-      <variable label="F12 controls output D" CV="46" mask="XXXXXXXV" item="F12 controls output 4" minOut="4" minFn="12">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 controls output D</label>
-      </variable>
       <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
         <enumVal>
           <enumChoice choice="0 ">

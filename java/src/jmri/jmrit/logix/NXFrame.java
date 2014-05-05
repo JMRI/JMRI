@@ -55,7 +55,8 @@ public class NXFrame extends WarrantRoute {
     JRadioButton _forward = new JRadioButton(Bundle.getMessage("forward"));
     JRadioButton _reverse = new JRadioButton(Bundle.getMessage("reverse"));
     JCheckBox	_stageEStop = new JCheckBox();    
-    JCheckBox	_haltStart = new JCheckBox();    
+    JCheckBox	_haltStart = new JCheckBox();
+    JCheckBox	_addTracker = new JCheckBox();
     JTextField _rampInterval = new JTextField();
     JTextField _searchDepth = new JTextField();
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
@@ -148,9 +149,14 @@ public class NXFrame extends WarrantRoute {
         ppp = new JPanel();
         ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
         ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
-        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStart, "HaltStart"));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStart, "HaltAtStart"));
         pp.add(ppp);
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
+        ppp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _addTracker, "AddTracker"));
+        pp.add(ppp);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         _autoRunPanel.add(pp);
        
@@ -162,7 +168,9 @@ public class NXFrame extends WarrantRoute {
         
         panel.add(_autoRunPanel);
         panel.add(_manualPanel);
+		_manualPanel.setVisible(false);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        
         pp = new JPanel();
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(WarrantFrame.makeTextBoxPanel(false, _searchDepth, "SearchDepth", true));
@@ -171,6 +179,7 @@ public class NXFrame extends WarrantRoute {
         _forward.setSelected(true);
         _stageEStop.setSelected(WarrantTableFrame._defaultEStop);
         _haltStart.setSelected(WarrantTableFrame._defaultHaltStart);
+        _addTracker.setSelected(WarrantTableFrame._defaultAddTracker);
         _speedBox.setText(WarrantTableFrame._defaultSpeed);
         _rampInterval.setText(WarrantTableFrame._defaultIntervalTime);
         _searchDepth.setText(WarrantTableFrame._defaultSearchdepth);
@@ -237,64 +246,33 @@ public class NXFrame extends WarrantRoute {
     	} else if (_dccNumBox.getText()==null || _dccNumBox.getText().length()==0){
             msg = Bundle.getMessage("NoLoco");
         }
-        if (msg==null){
-            String addr = _dccNumBox.getText();
-            if (addr!= null && addr.length() != 0) {
-                boolean isLong = false;
-                int dccNum = 0;
-            	addr = addr.toUpperCase().trim();
-        		Character ch = addr.charAt(addr.length()-1);
-        		try {
-            		if (!Character.isDigit(ch)) {
-            			if (ch!='S' && ch!='L' && ch!=')') {
-            				msg = Bundle.getMessage("BadDccAddress", addr);
-            			}
-            			if (ch==')') {
-                        	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
-                        	ch = addr.charAt(addr.length()-2);
-                        	isLong = (ch=='L');
-            			} else {
-                        	dccNum = Integer.parseInt(addr.substring(0, addr.length()-1));        				
-                        	isLong = (ch=='L');
-            			}
-            		} else {
-                		dccNum = Integer.parseInt(addr);
-                		ch = addr.charAt(0);
-                        isLong = (ch=='0' || dccNum>127);  // leading zero means long
-                        addr = addr + (isLong?"L":"S");
-            		}
-                } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("BadDccAddress", addr);
-                }
-        		if (msg==null) {
-                	String name =_trainNameBox.getText();
-                	if (name==null || name.trim().length()==0) {
-                		name = addr;
-                	}
-                	String s = (""+Math.random()).substring(2);
-                	warrant = new Warrant("IW"+s, "NX("+addr+")");
-                	warrant.setDccAddress( new DccLocoAddress(dccNum, isLong));
-                	warrant.setTrainName(name);
-                	
-                	msg = makeCommands(warrant);           	
-                    if (msg==null) {
-                        warrant.setBlockOrders(getOrders());
-                    }
-        		}
-            } else {
-            	msg = Bundle.getMessage("BadDccAddress", addr);
+		if (msg==null) {
+        	String name =_trainNameBox.getText();
+        	if (name==null || name.trim().length()==0) {
+        		name = _addr;
+        	}
+        	String s = (""+Math.random()).substring(2);
+        	warrant = new Warrant("IW"+s, "NX("+_addr+")");
+        	warrant.setDccAddress( new DccLocoAddress(_dccNum, _isLong));
+        	warrant.setTrainName(name);
+        	
+        	msg = makeCommands(warrant);           	
+            if (msg==null) {
+                warrant.setBlockOrders(getOrders());
             }
-        }
+		}
         if (msg==null) {
-        	msg = _parent.runTrain(warrant);           	
+        	_parent.getModel().addNXWarrant(warrant);	//need to catch propertyChange at start
+        	msg = _parent.runTrain(warrant);
+        	if (msg!=null) {
+        		_parent.getModel().removeNXWarrant(warrant);
+        	}
         }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             warrant = null;
         } else {
-        	_parent.getModel().addNXWarrant(warrant);
-        	_parent.getModel().fireTableDataChanged();
         	if (_haltStart.isSelected()) {
         		WarrantTableFrame._defaultHaltStart = true;
             	class Halter implements Runnable {
@@ -337,7 +315,6 @@ public class NXFrame extends WarrantRoute {
         warrant.setRoute(0, getOrders());
     	_parent.getModel().addNXWarrant(warrant);
     	warrant.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-    	_parent.getModel().fireTableDataChanged();    	
     	_parent.scrollTable();
     	dispose();
     	_parent.closeNXFrame();           	
@@ -419,19 +396,61 @@ public class NXFrame extends WarrantRoute {
     	w.addThrottleCommand(new ThrottleSetting(500, "F2", "true", blockName));
     	w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
     	w.addThrottleCommand(new ThrottleSetting(500, "F0", "false", blockName));
+    	if (_addTracker.isSelected()) {
+    		WarrantTableFrame._defaultAddTracker = true;
+    	   	w.addThrottleCommand(new ThrottleSetting(10, "START TRACKER", "", blockName));
+    	} else {
+    		WarrantTableFrame._defaultAddTracker = false;
+    	}
        	return null;    		
    }
+    
+    private String _addr;
+    private int _dccNum;
+    private boolean  _isLong;
  
 	boolean makeAndRunWarrant() {
         int depth = 10;
         String msg = null;
-        try {
-        	WarrantTableFrame._defaultSearchdepth = _searchDepth.getText();
-            depth = Integer.parseInt(_searchDepth.getText());
-        } catch (NumberFormatException nfe) {
-        	depth = 10;
+    	_addr = _dccNumBox.getText();
+        if (_addr!= null && _addr.length() != 0) {
+        	_addr = _addr.toUpperCase().trim();
+        	_isLong = false;
+    		Character ch = _addr.charAt(_addr.length()-1);
+    		try {
+        		if (!Character.isDigit(ch)) {
+        			if (ch!='S' && ch!='L' && ch!=')') {
+        				msg = Bundle.getMessage("BadDccAddress", _addr);
+        			}
+        			if (ch==')') {
+                    	_dccNum = Integer.parseInt(_addr.substring(0, _addr.length()-3));
+                    	ch = _addr.charAt(_addr.length()-2);
+                    	_isLong = (ch=='L');
+        			} else {
+                    	_dccNum = Integer.parseInt(_addr.substring(0, _addr.length()-1));        				
+                    	_isLong = (ch=='L');
+        			}
+        		} else {
+            		_dccNum = Integer.parseInt(_addr);
+            		ch = _addr.charAt(0);
+            		_isLong = (ch=='0' || _dccNum>127);  // leading zero means long
+                    _addr = _addr + (_isLong?"L":"S");
+        		}
+            } catch (NumberFormatException nfe) {
+                msg = Bundle.getMessage("BadDccAddress", _addr);
+            }
+        } else {
+        	msg = Bundle.getMessage("BadDccAddress", _addr);
         }
-        msg = findRoute(depth);
+        if (msg==null) {
+        	try {
+            	WarrantTableFrame._defaultSearchdepth = _searchDepth.getText();
+                depth = Integer.parseInt(_searchDepth.getText());
+            } catch (NumberFormatException nfe) {
+            	depth = 10;
+            }
+            msg = findRoute(depth);
+        }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);

@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +73,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
 	// Session persistent defaults for NX warrants
 	static boolean _defaultEStop = false;
 	static boolean _defaultHaltStart = false;
+	static boolean _defaultAddTracker = false;
 	static String _defaultSearchdepth = "15";
 	static String _defaultSpeed = "0.5";
 	static String _defaultIntervalTime = "4.0";
@@ -152,31 +153,33 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _tablePane = new JScrollPane(table);
-        Dimension dim = table.getPreferredSize();
-        dim.height = _rowHeight*12;
-        _tablePane.getViewport().setPreferredSize(dim);
 
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+        tablePanel.add(Box.createVerticalGlue());
         JLabel title = new JLabel(Bundle.getMessage("ShowWarrants"));
-        tablePanel.add(title, BorderLayout.NORTH);
-        tablePanel.add(_tablePane, BorderLayout.CENTER);
-        
-        
+        tablePanel.add(title);
+        tablePanel.add(_tablePane);
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        bottom.add(new JPanel(), gbc);
+//        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         p.add(new JLabel("status"));
         _status.addMouseListener(this);
 		_status.setBackground(Color.white);
-//    	_background = _status.getBackground();
     	_status.setFont(jmri.util.FontUtil.deriveFont(_status.getFont(),java.awt.Font.BOLD));
+        _status.setEditable(false);
         setStatusText(BLANK.substring(0,90), null, false);
         p.add(_status);
-        _status.setEditable(false);
-        JPanel ps = new JPanel();
-        ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
-        ps.add(Box.createVerticalStrut(WarrantTableAction.STRUT_SIZE));
-        ps.add(p);
-        tablePanel.add(ps, BorderLayout.CENTER);
+        gbc.gridy = 1;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        bottom.add(p, gbc);
         
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -225,14 +228,33 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
         });
         panel.add(nxButton);
         
+        p = new JPanel();
+        p.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("HaltAllTrains"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        JButton haltAllButton = new JButton(Bundle.getMessage("HaltAll"));
+        haltAllButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	haltAllAction();
+            }
+        });
+        p.add(haltAllButton);
+        
         pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(WarrantTableAction.STRUT_SIZE));
         pp.add(panel);
         pp.add(Box.createHorizontalStrut(WarrantTableAction.STRUT_SIZE));
+        pp.add(p);
+        pp.add(Box.createHorizontalStrut(WarrantTableAction.STRUT_SIZE));
         pp.add(concatPanel);
         pp.add(Box.createHorizontalStrut(WarrantTableAction.STRUT_SIZE));
-        tablePanel.add(pp, BorderLayout.SOUTH);
+        gbc.gridy = 2;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        bottom.add(pp, gbc);
+        tablePanel.add(bottom);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -246,7 +268,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.logix.Warrant", true);
 
-        setContentPane(tablePanel);
+        getContentPane().add(tablePanel);
         setLocation(50,0);
         setVisible(true);
         pack();
@@ -271,6 +293,10 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     
     protected void closeNXFrame() {
     	_nxFrame = null;
+    }
+    
+    private void haltAllAction() {
+    	_model.haltAllTrains();
     }
     
     private void concatenate() {
@@ -388,6 +414,7 @@ class WarrantTableFrame  extends jmri.util.JmriJFrame implements MouseListener
     	_status.setForeground(c);
     	_status.setText(msg);
     	if (save && msg!=null && msg.length()>0) {
+    		WarrantTableAction.writetoLog(msg);
     		_statusHistory.add(msg);
     		while (_statusHistory.size()>_maxHistorySize) {
     			_statusHistory.remove(0);

@@ -24,11 +24,23 @@ import java.util.ResourceBundle;
  */
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
    
+    jmri.jmrix.swing.ComponentFactory componentFactory = null;
+
     public XBeeConnectionMemo(){
-      super();
+      super("Z","XBee");
       register(); // registers the general type
       InstanceManager.store(this, XBeeConnectionMemo.class); // also register as specific type
     }
+
+    @Override
+    protected void init() {
+      // create and register the XBeeComponentFactory
+     InstanceManager.store(componentFactory=new jmri.jmrix.ieee802154.xbee.swing.XBeeComponentFactory(this),
+                           jmri.jmrix.swing.ComponentFactory.class);
+
+    }
+
+
  
     /** 
      * Tells which managers this provides by class
@@ -38,6 +50,10 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     	if (getDisabled())
     		return false;
          if (type.equals(jmri.SensorManager.class))
+             return true;
+         if (type.equals(jmri.LightManager.class))
+             return true;
+         if (type.equals(jmri.TurnoutManager.class))
              return true;
         return false; // nothing, by default
     }
@@ -52,6 +68,10 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
             return null;
         if (T.equals(jmri.SensorManager.class))
              return (T)getSensorManager();
+        if (T.equals(jmri.LightManager.class))
+             return (T)getLightManager();
+        if (T.equals(jmri.TurnoutManager.class))
+             return (T)getTurnoutManager();
         return null; // nothing, by default
     }
 
@@ -68,12 +88,18 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
          // before we start the managers, request the hardware
          // version.
          cont.sendXBeeMessage(XBeeMessage.getHardwareVersionRequest(),null);
+         // and the firmware revision.
+         cont.sendXBeeMessage(XBeeMessage.getFirmwareVersionRequest(),null);
 
          // the start the managers.
          _NodeManager = new XBeeNodeManager(cont);
          
  	setSensorManager(new XBeeSensorManager(cont,getSystemPrefix()));
         jmri.InstanceManager.setSensorManager(getSensorManager());
+ 	setLightManager(new XBeeLightManager(cont,getSystemPrefix()));
+        jmri.InstanceManager.setLightManager(getLightManager());
+ 	setTurnoutManager(new XBeeTurnoutManager(cont,getSystemPrefix()));
+        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
 
     }
 
@@ -102,7 +128,33 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
     private SensorManager sensorManager=null;
 
+    /*
+     * Provides access to the Light Manager for this particular connection.
+     * NOTE: Light manager defaults to NULL
+     */
+    public LightManager getLightManager(){
+        return lightManager;
 
+    }
+    public void setLightManager(LightManager s){
+         lightManager = s;
+    }
+
+    private LightManager lightManager=null;
+
+    /*
+     * Provides access to the Turnout Manager for this particular connection.
+     * NOTE: Turnout manager defaults to NULL
+     */
+    public TurnoutManager getTurnoutManager(){
+        return turnoutManager;
+
+    }
+    public void setTurnoutManager(TurnoutManager s){
+         turnoutManager = s;
+    }
+
+    private TurnoutManager turnoutManager=null;
 
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");

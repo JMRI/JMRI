@@ -5,9 +5,6 @@ package jmri.web.server;
  * @author Randall Wood Copyright (C) 2012
  * @version $Revision$
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,11 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,38 +129,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
         railroadName.setColumns(30);
         panel.add(new JLabel(Bundle.getMessage("LabelRailRoadName")));
         panel.add(railroadName);
-        return panel;
-    }
-
-    private JPanel cancelApplySave() {
-        JPanel panel = new JPanel();
-        cancelB = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelB.setVisible(false);
-        cancelB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelValues();
-            }
-        });
-        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
-        applyB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                applyValues();
-            }
-        });
-        saveB = new JButton(Bundle.getMessage("ButtonSave"));
-        saveB.setVisible(false);
-        saveB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                storeValues();
-            }
-        });
-        panel.add(cancelB);
-        panel.add(saveB);
-        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
-        panel.add(applyB);
         return panel;
     }
 

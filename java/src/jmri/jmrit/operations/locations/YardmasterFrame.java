@@ -37,6 +37,8 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  */
 
 public class YardmasterFrame extends CommonConductorYardmasterFrame {
+	
+	protected static final boolean isManifest = false;
 
 	int _visitNumber = 1;
 
@@ -276,7 +278,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				updateLocoPanes(rl);
 				
 				// now update the car pick ups and set outs
-				blockCars(rl, false);
+				blockCars(rl, isManifest);
 
 				if (lastLocation) {
 					textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),

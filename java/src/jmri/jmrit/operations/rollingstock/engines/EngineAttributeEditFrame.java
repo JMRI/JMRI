@@ -26,10 +26,9 @@ import jmri.jmrit.operations.trains.TrainManager;
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
-public class EngineAttributeEditFrame extends OperationsFrame implements
-		java.beans.PropertyChangeListener {
+public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	EngineManager manager = EngineManager.instance();
+	EngineManager engineManager = EngineManager.instance();
 
 	// labels
 	javax.swing.JLabel textAttribute = new javax.swing.JLabel();
@@ -63,8 +62,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 
 		getContentPane().removeAll();
 
-		setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"),
-				new Object[] { comboboxName }));
+		setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"), new Object[] { comboboxName }));
 
 		// track which combo box is being edited
 		_comboboxName = comboboxName;
@@ -116,11 +114,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			if (addItem.equals(""))
 				return;
 			if (addItem.length() > Control.max_len_string_attibute) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("engineAttribute"),
-						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
+						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(Bundle
+						.getMessage("canNotAdd"), new Object[] { _comboboxName }), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			addItemToCombobox(addItem);
@@ -134,18 +130,14 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			if (newItem.equals(""))
 				return;
 			if (newItem.length() > Control.max_len_string_attibute) {
-				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("engineAttribute"),
-						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getMessage("canNotReplace"), new Object[] { _comboboxName }),
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
+						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(Bundle
+						.getMessage("canNotReplace"), new Object[] { _comboboxName }), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldItem = (String) comboBox.getSelectedItem();
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem,
-							newItem }), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] {
+					oldItem, newItem }), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			if (newItem.equals(oldItem))
@@ -176,7 +168,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			CarOwners.instance().deleteName(deleteItem);
 		}
 		if (_comboboxName == EngineEditFrame.CONSIST) {
-			manager.deleteConsist(deleteItem);
+			engineManager.deleteConsist(deleteItem);
 		}
 	}
 
@@ -200,8 +192,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(feet);
 				} catch (NumberFormatException e) {
 					log.error("can not convert from inches to feet");
-					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
-							Bundle.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
+							.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -213,20 +205,22 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(meter);
 				} catch (NumberFormatException e) {
 					log.error("Can not convert from cm to meters");
-					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
-							Bundle.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"), Bundle
+							.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
 			// confirm that length is a number and less than 10000 feet
 			try {
-				Integer.parseInt(addItem);
+				int length = Integer.parseInt(addItem);
+				if (length < 0) {
+					log.error("engine length has to be a positive number");
+					return;
+				}
 				if (addItem.length() > Control.max_len_string_length_name) {
-					JOptionPane.showMessageDialog(this, MessageFormat.format(
-							Bundle.getMessage("engineAttribute"),
-							new Object[] { Control.max_len_string_length_name }), MessageFormat
-							.format(Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
+							new Object[] { Control.max_len_string_length_name }), MessageFormat.format(Bundle
+							.getMessage("canNotAdd"), new Object[] { _comboboxName }), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			} catch (NumberFormatException e) {
@@ -237,7 +231,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			comboBox.setSelectedItem(addItem);
 		}
 		if (_comboboxName == EngineEditFrame.CONSIST) {
-			manager.newConsist(addItem);
+			engineManager.newConsist(addItem);
 		}
 		if (_comboboxName == EngineEditFrame.OWNER) {
 			CarOwners.instance().addName(addItem);
@@ -245,7 +239,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 	}
 
 	private void replaceItem(String oldItem, String newItem) {
-		List<RollingStock> engines = manager.getList();
+		List<RollingStock> engines = engineManager.getList();
 		for (int i = 0; i < engines.size(); i++) {
 			Engine engine = (Engine) engines.get(i);
 			if (_comboboxName == EngineEditFrame.MODEL) {
@@ -269,7 +263,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			}
 		}
 		if (_comboboxName == EngineEditFrame.CONSIST) {
-			manager.replaceConsistName(oldItem, newItem);
+			engineManager.replaceConsistName(oldItem, newItem);
 		}
 		// now adjust locations and trains
 		if (_comboboxName == EngineEditFrame.TYPE) {
@@ -311,8 +305,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 			CarOwners.instance().addPropertyChangeListener(this);
 		}
 		if (_comboboxName == EngineEditFrame.CONSIST) {
-			comboBox = manager.getConsistComboBox();
-			manager.addPropertyChangeListener(this);
+			comboBox = engineManager.getConsistComboBox();
+			engineManager.addPropertyChangeListener(this);
 		}
 	}
 
@@ -322,14 +316,13 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		EngineTypes.instance().removePropertyChangeListener(this);
 		EngineLengths.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
-		manager.removePropertyChangeListener(this);
+		engineManager.removePropertyChangeListener(this);
 		firePcs(DISPOSE, _comboboxName, null);
 		super.dispose();
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("EnginesAttributeFrame sees propertyChange " + e.getPropertyName() + " "
-				+ e.getNewValue());
+		log.debug("EnginesAttributeFrame sees propertyChange " + e.getPropertyName() + " " + e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY))
@@ -341,7 +334,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY))
-			manager.updateConsistComboBox(comboBox);
+			engineManager.updateConsistComboBox(comboBox);
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -360,6 +353,5 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(EngineAttributeEditFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class.getName());
 }

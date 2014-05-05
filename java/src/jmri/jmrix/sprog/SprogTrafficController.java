@@ -202,7 +202,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 			istream = null;
 			ostream = null;
 			if (controller != p)
-				log.warn("disconnectPort: disconnect called from non-connected LnPortController");
+				log.warn("disconnectPort: disconnect called from non-connected SprogPortController");
 			controller = null;
 		}
 

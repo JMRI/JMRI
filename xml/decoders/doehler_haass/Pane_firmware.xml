@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - 2014-02-20 - for common D&H software -->
+    <pane name="Firmware" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">	
+		<column>
+			<row>
+				<column>
+					<row>
+						<label label="Notes on decoder models and firmware versions">
+							<label xml:lang="fr">Notes sur les modèles et versions de firmware </label>
+							<label xml:lang="de">Hinweise: Modele und Firmware Versions</label>
+						</label>
+					</row>
+					<label label=" "/>
+					<label label="The decoder model cannot be read in DCC. You need use Selectrix (SX2) programming and read PAR 102.">
+						<label xml:lang="fr">Déterminer le modèle de décodeur est impossible en DCC, il faut lire le PAR 102 en programmation Selectrix (SX2).</label>
+						<label xml:lang="de">Mit DCC Programmierung kann mann den Decoder nicht erkennen. Mit SX2 (Selectrix) Programmierung ist PAR 102 aber lesbar.</label>
+					</label>
+					<label label=" "/>
+					<label label="The firmware version cannot be read in DCC (except the main version in CV7).">
+						<label xml:lang="fr">La version du firmware n'est pas lisible en DCC (sauf la version principale dans le CV7).</label>
+						<label xml:lang="de">Mit DCC Programmierung kann mann die Firmware Version nicht lesen (Ausnahme: Hauptversion in CV7).</label>
+					</label>
+					<label label="You need to use a Selectrix (SX2) command station, and read:">
+						<label xml:lang="fr">Il faut utiliser une centrale Sélectrix (SX2) et lire:</label>
+						<label xml:lang="de">Eine SX2 (Selectrix) Zentrale ist erforderlich, damit kann mann ablesen:</label>
+					</label>
+				</column>
+			</row>
+			<row>
+				<column>
+					<label label="PAR 103"/>
+					<label label="PAR 104"/>
+					<label label="PAR 105"/>
+					<label label="PAR 106"/>
+				</column>
+				<column>
+					<label label="  Main Fw version number (e.g. 1 in 1.33)">
+						<label xml:lang="fr">  Version de firmware principale (exemple: 1 dans 1.33)</label>
+						<label xml:lang="de">  Versionsnummer (z.B. 1 in 1.33)</label>
+					</label>
+					<label label="  Date (MMY)">
+						<label xml:lang="fr">  Date (MMY)</label>
+						<label xml:lang="de">  Datum (MMY)</label>
+					</label>
+					<label label="  Firmware revision number (e.g. 10 in 8.10)">
+						<label xml:lang="fr">  Révision de firmware (exemple: 10 dans 8.10)</label>
+						<label xml:lang="de">  Revisionsnummer (z.B. 10 in 8.10)</label>
+					</label>
+					<label label="  Date (MMY)">
+						<label xml:lang="fr">  Date (MMY)</label>
+						<label xml:lang="de">  Datum (MMY)</label>
+					</label>
+				</column>
+			</row>
+			<label label=" "/>
+		</column>
+	<name>Firmware</name>
+	</pane>
+  

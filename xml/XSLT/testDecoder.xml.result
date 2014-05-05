@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: accelDecel.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- This is a test file for decoder transforms                             -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-29</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German, corrected French</revremark>
+    </revision>
+  </revhistory>
+  <!-- with label attribute, no item -->
+  <variable item="Accel" CV="3">
+    <decVal max="31"/>
+    <label>Accel</label>
+    <label xml:lang="it">Accellerazione</label>
+    <label xml:lang="fr">Accélération</label>
+    <label xml:lang="de">Beschleunigungszeit</label>
+  </variable>
+  <!-- with label and item attribute same -->
+  <variable CV="4" item="Decel">
+    <decVal max="31"/>
+    <label>Deceleration</label>
+    <label xml:lang="it">Decellerazione</label>
+    <label xml:lang="fr">Décélération</label>
+    <label xml:lang="de">Bremszeit</label>
+  </variable>
+  <!-- with item attribute, no label attribute or element -->
+  <variable CV="7" readOnly="yes" item="Decoder Version">
+    <decVal/>
+    <label>Decoder Version</label>
+    <label xml:lang="it">Versione Decoder Costruttore: </label>
+    <label xml:lang="fr">Version décodeur: </label>
+    <label xml:lang="de">Decoder Version: </label>
+  </variable>
+  <!-- with label attribute and element -->
+  <variable item="Manufacturer" CV="8" readOnly="yes">
+    <decVal/>
+    <label xml:lang="it">ID Costruttore: </label>
+    <label xml:lang="fr">ID constructeur: </label>
+    <label xml:lang="de">Hersteller ID: </label>
+    <label>Manufacturer ID: </label>
+  </variable>
+</variables>

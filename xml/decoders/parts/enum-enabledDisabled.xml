@@ -6,11 +6,11 @@
   <enumChoice choice="Enabled">
     <choice xml:lang="fr">Activé</choice>
     <choice xml:lang="it">Abilitato</choice>
-	<choice xml:lang="de">Aktiviert</choice>
+    <choice xml:lang="de">Aktiviert</choice>
   </enumChoice>
   <enumChoice choice="Disabled">
     <choice xml:lang="fr">Désactivé</choice>
     <choice xml:lang="it">Disabilitato</choice>
-	<choice xml:lang="de">Deaktiviert</choice>
+    <choice xml:lang="de">Deaktiviert</choice>
   </enumChoice>
 </enumVal>
