@@ -55,18 +55,25 @@ public class OperationsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        if (pathInfo[0].equals("") || pathInfo[0].equals("trains")) {
+        if (pathInfo[0].equals("") || (pathInfo[0].equals(JSON.TRAINS) && pathInfo.length == 1)) {
             this.processTrains(request, response);
         } else {
             if (pathInfo.length == 1) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             } else {
                 String id = pathInfo[1];
-                log.debug("Handling {} with id {}", pathInfo[0], id);
-                if (pathInfo[0].equals("manifest")) {
+                String report = pathInfo[0];
+                if (report.equals(JSON.TRAINS) && pathInfo.length == 3) {
+                    report = pathInfo[2];
+                }
+                log.debug("Handling {} with id {}", report, id);
+                if (report.equals("manifest")) {
                     this.processManifest(id, request, response);
-                } else if (pathInfo[0].equals("conductor")) {
+                } else if (report.equals("conductor")) {
                     this.processConductor(id, request, response);
+                } else if (report.equals("trains")) {
+                    // TODO: allow for editing/building/reseting train
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 } else {
                     // Don't know what to do
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -134,7 +141,7 @@ public class OperationsServlet extends HttpServlet {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
-                    train.getIconName(),
+                    WebServer.URIforPortablePath(FileUtil.getPortableFilename(train.getIconName())),
                     train.getDescription(),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
                     train.getComment(),
