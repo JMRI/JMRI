@@ -420,7 +420,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			for (Car car : carList) {
 				if (car.getRouteDestination() != rl || car.getDestinationTrack() == null)
 					continue;
-				// car in train if track null
+				// car in train if track null, second check is for yard master window
 				if (car.getTrack() == null || car.getTrack() != null && (car.getRouteLocation() != rl)) {
 					if (Setup.isSortByTrackEnabled() && !car.getDestinationTrack().getName().equals(track.getName()))
 						continue;
