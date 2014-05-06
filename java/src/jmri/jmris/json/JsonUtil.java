@@ -140,6 +140,7 @@ import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.UNKNOWN;
 import static jmri.jmris.json.JSON.URL;
 import static jmri.jmris.json.JSON.USERNAME;
+import static jmri.jmris.json.JSON.UTILITY;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.WEIGHT;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -1397,6 +1398,7 @@ public class JsonUtil {
         node.put(REMOVE_COMMENT, car.getDropComment());
         node.put(ADD_COMMENT, car.getPickupComment());
         node.put(KERNEL, car.getKernelName());
+        node.put(UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
             node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack()));
         } else if (car.getFinalDestination() != null) {

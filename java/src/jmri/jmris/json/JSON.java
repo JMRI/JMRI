@@ -639,6 +639,11 @@ public final class JSON {
      * @since 1.1
      */
     public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
+    /**
+     * {@value #UTILITY}
+     * @since 1.1
+     */
+    public static final String UTILITY = "utility";
 
     /* JSON signalling tokens */
     /**
