@@ -46,7 +46,11 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
               b.append(inOrderTraversal((SimpleNode)n.jjtGetChild(i)));
            }
         } else {
-          b = new StringBuilder((String)n.jjtGetValue() );
+          try {
+             b = new StringBuilder((String)n.jjtGetValue() );
+          } catch(java.lang.NullPointerException npe) {
+             b=new StringBuilder("");
+          }
         }
         return b.toString();
     }

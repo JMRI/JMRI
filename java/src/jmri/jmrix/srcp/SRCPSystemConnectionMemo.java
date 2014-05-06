@@ -107,12 +107,14 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public SRCPBusConnectionMemo getMemo(int i){
          if(busMemos==null) {
             busMemos=new java.util.ArrayList<SRCPBusConnectionMemo>();
+            // there is always a bus 0, so add it now.
+            busMemos.add(0,new SRCPBusConnectionMemo(getTrafficController(),getSystemPrefix(),0));
          }
          try {
              return busMemos.get(i);
          } catch(java.lang.IndexOutOfBoundsException ie) {
              // this memo must not exist in the list, add it and return it.
-             busMemos.set(i,new SRCPBusConnectionMemo(getTrafficController(),getSystemPrefix(),i));
+             busMemos.add(i,new SRCPBusConnectionMemo(getTrafficController(),getSystemPrefix(),i));
              return busMemos.get(i);
          }
     }

@@ -2,9 +2,13 @@
 
 package jmri.jmrix.srcp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.*;
 import java.util.ResourceBundle;
+import jmri.jmrix.srcp.parser.*;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -27,6 +31,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         //this.et.setSystemConnectionMemo(this);
         _bus=bus;
         register();
+        log.debug("Created SRCPBusConnectionMemo for bus " + bus);
+        et.addSRCPListener(this);
+        et.sendSRCPMessage(new SRCPMessage("GET " + bus +" DESCRIPTION\n"),null);
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -50,21 +57,6 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      */
     public void configureManagers() {
     
-        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
-    
-        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
-     
-        setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager(this,_bus)); 
-        jmri.InstanceManager.setPowerManager(getPowerManager());
-
-        setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager(this,_bus)); 
-        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-
-        setSensorManager(new jmri.jmrix.srcp.SRCPSensorManager(this,_bus)); 
-        jmri.InstanceManager.setSensorManager(getSensorManager());
-        
-        setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this)); 
-        jmri.InstanceManager.setThrottleManager(getThrottleManager());
 
     }
 
@@ -168,15 +160,15 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         if (getDisabled())
             return false;
         if (type.equals(jmri.ProgrammerManager.class))
-            return true;
+            return (null != programmerManager);
         if (type.equals(jmri.ThrottleManager.class))
-            return true;
+            return (null != throttleManager);
         if (type.equals(jmri.PowerManager.class))
-            return true;
+            return (null != powerManager);
         if (type.equals(jmri.SensorManager.class))
-            return true;
+            return (null != sensorManager);
         if (type.equals(jmri.TurnoutManager.class))
-            return true;
+            return (null != turnoutManager);
         return false; // nothing, by default
     }
     
@@ -200,10 +192,48 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n){
-       // Look for description information for this bus, and configure the
-       // managers for this bus.
+       log.debug("SimpleNode Reply called with " + n.toString());
+       reply(new SRCPReply(n));
+       if(n.jjtGetChild(1)  instanceof ASTinfo) {
+          jmri.jmrix.srcp.parser.SimpleNode infonode =
+                 (jmri.jmrix.srcp.parser.SimpleNode) n.jjtGetChild(1);
+          if( !((String)((SimpleNode)(infonode.jjtGetChild(0))).jjtGetValue()).equals("" + _bus ))
+              return; // not for this bus.
+          // Look for description information for this bus, and configure the
+          // managers for this bus.
+          if(infonode.jjtGetChild(1) instanceof jmri.jmrix.srcp.parser.ASTdescription) {
+           SimpleNode descnode = (SimpleNode) infonode.jjtGetChild(1);
+           for(int i=0;i<descnode.jjtGetNumChildren();i++) {
+              jmri.jmrix.srcp.parser.SimpleNode child =
+                    (jmri.jmrix.srcp.parser.SimpleNode) descnode.jjtGetChild(i);
+                 log.debug("child node type " + child.toString() + 
+                           " value " + (String)child.jjtGetValue() );
+                 if(child instanceof jmri.jmrix.srcp.parser.ASTdevicegroup ) {
+                    String DeviceType=(String)child.jjtGetValue();
+                    if( DeviceType.equals("FB")) {
+                         setSensorManager(new jmri.jmrix.srcp.SRCPSensorManager(this,_bus)); 
+                         jmri.InstanceManager.setSensorManager(getSensorManager());
+                   
+                    } else if(DeviceType.equals("GA")) {
+                         setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager(this,_bus)); 
+                         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+                    } else if(DeviceType.equals("SM")) {
+                        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
+                        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
+                    } else if(DeviceType.equals("POWER")) {
+                        setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager(this,_bus)); 
+                        jmri.InstanceManager.setPowerManager(getPowerManager());
+                    } else if(DeviceType.equals("GL")) {
+                        setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this)); 
+                        jmri.InstanceManager.setThrottleManager(getThrottleManager());
+                    }
+                 }
+             }
+          }
+       }      
     }
 
+    static Logger log = LoggerFactory.getLogger(SRCPBusConnectionMemo.class.getName());
 
 }
 

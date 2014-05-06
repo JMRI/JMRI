@@ -312,11 +312,11 @@ SimpleNode port():{SimpleNode s;}
 
 SimpleNode devicegroup():{Token t;}
 {
-  ( <FB> | <GA> | <GL> | <SM> | <TIME> | <SESSION> | <SERVER> | 
-    <LOCK> | <DESCRIPTION> )
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> | t=<SERVER> | 
+    t=<LOCK> | t=<DESCRIPTION> )
   {
     log.debug("DeviceGroup Production");
-    //jjtThis.jjtSetValue(t.image);
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -403,7 +403,8 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
-  t=<DESCRIPTION> ( LOOKAHEAD(6) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
+ t=<DESCRIPTION> (devicegroup())+ <EOL> 
+ //t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
