@@ -141,7 +141,7 @@ public class OperationsServlet extends HttpServlet {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
-                    WebServer.URIforPortablePath(FileUtil.getPortableFilename(train.getIconName())),
+                    train.getIconName(),
                     train.getDescription(),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
                     train.getComment(),
