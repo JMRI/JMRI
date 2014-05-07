@@ -44,7 +44,7 @@
     <label>Start Volts</label>
     <label xml:lang="it">Volts Minimi</label>
     <comment>A value of 255 corresponds to 100%</comment>
-    <comment xml:lang="it">Un valore di 255 corrisponde al 100%i</comment>
+    <comment xml:lang="it">Un valore di 255 corrisponde al 100%</comment>
   </variable>
   <variable label="Max Volts" CV="5" item="Vhigh">
     <decVal/>
@@ -54,6 +54,6 @@
   <variable label="Mid Volts" CV="6" item="Vmid">
     <decVal/>
     <label>Mid Volts</label>
-    <label xml:lang="it">Volts medi</label>
+    <label xml:lang="it">Volts intermedi</label>
   </variable>
 </variables>

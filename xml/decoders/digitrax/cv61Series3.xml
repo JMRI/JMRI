@@ -42,7 +42,7 @@
         <enumVal>
           <enumChoice choice="Normal DC motor">
             <choice>Normal DC motor</choice>
-            <choice xml:lang="it">Motore Normale in CC</choice>
+            <choice xml:lang="it">Motore Normale in DC</choice>
           </enumChoice>
           <enumChoice choice="Split field/AC motor">
             <choice>Split field/AC motor</choice>
@@ -55,7 +55,7 @@
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
-        <label xml:lang="it">Vstart/Vmid/Vfull in modalità 128 step</label>
+        <label xml:lang="it">Vstart/Vmid/Vfull in modalità 28 step</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>

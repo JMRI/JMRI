@@ -47,7 +47,7 @@
   </revhistory>
   <variable CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
-    <label xml:lang="it">Versione Decoder Costruttore: </label>
+    <label xml:lang="it">Versione Decoder: </label>
     <label xml:lang="fr">Version décodeur: </label>
     <label xml:lang="de">Decoder Version: </label>
     <label>Manufacturer Version No: </label>

@@ -68,7 +68,7 @@
             <choice xml:lang="it">Solo NMRA Digitale</choice>
           </enumChoice>
           <enumChoice choice="DC conversion enabled">
-            <choice xml:lang="it">Conversione CC abilitata</choice>
+            <choice xml:lang="it">Conversione DC abilitata</choice>
           </enumChoice>
         </enumVal>
         <label xml:lang="it">Conversione Sorgente Alimentazione</label>

@@ -15,7 +15,7 @@
 <!-- version 1 - Created as a separate file from Digitrax_01x3.xml  v32     -->
 <!-- 					Alain Le Marchand (2014-04-27)						-->
 <!-- 																		-->
-<pane name="Digitrax" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Digitrax" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <display item="Advanced consist droop compensation for speed stabilization"/>
       <display item="Speed Compensation Control"/>

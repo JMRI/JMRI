@@ -50,8 +50,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-1</label>
-    <label>FL(f) controls output 1</label>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-1</label>
   </variable>
   <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
     <enumVal>
@@ -60,8 +60,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-2</label>
-    <label>FL(f) controls output 2</label>
+        <label>FL(f) controls output 2</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-2</label>
   </variable>
   <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
     <enumVal>
@@ -70,8 +70,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-3</label>
-    <label>FL(f) controls output 3</label>
+        <label>FL(f) controls output 3</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-3</label>
   </variable>
   <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
     <enumVal>
@@ -80,8 +80,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-4</label>
-    <label>FL(f) controls output 4</label>
+        <label>FL(f) controls output 4</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-4</label>
   </variable>
   <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
     <enumVal>
@@ -100,8 +100,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-6</label>
-    <label>FL(f) controls output 6</label>
+        <label>FL(f) controls output 6</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-6</label>
   </variable>
   <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
     <enumVal>
@@ -110,8 +110,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-7</label>
-    <label>FL(f) controls output 7</label>
+        <label>FL(f) controls output 7</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-7</label>
   </variable>
   <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
     <enumVal>
@@ -120,8 +120,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (in avanti) Uscita-8</label>
-    <label>FL(f) controls output 8</label>
+        <label>FL(f) controls output 8</label>
+        <label xml:lang="it">Luci frontali (in avanti) Uscita-8</label>
   </variable>
   <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
     <enumVal>
@@ -130,8 +130,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (M.indietro) Uscita-1</label>
-    <label>FL(r) controls output 1</label>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-1</label>
   </variable>
   <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2">
     <enumVal>
@@ -140,8 +140,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">FL (indietro) Uscita-2</label>
-    <label>FL(r) controls output 2</label>
+        <label>FL(r) controls output 2</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-2</label>
   </variable>
   <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
     <enumVal>
@@ -150,8 +150,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (M.indietro) Uscita-3</label>
-    <label>FL(r) controls output 3</label>
+        <label>FL(r) controls output 3</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-3</label>
   </variable>
   <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
     <enumVal>
@@ -170,8 +170,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (M.indietro) Uscita-5</label>
-    <label>FL(r) controls output 5</label>
+        <label>FL(r) controls output 5</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-5</label>
   </variable>
   <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
     <enumVal>
@@ -180,8 +180,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (M.indietro) Uscita-6</label>
-    <label>FL(r) controls output 6</label>
+        <label>FL(r) controls output 6</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-6</label>
   </variable>
   <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
     <enumVal>
@@ -190,8 +190,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Luci frontali (M.indietro) Uscita-7</label>
-    <label>FL(r) controls output 7</label>
+        <label>FL(r) controls output 7</label>
+        <label xml:lang="it">Luci frontali (M.indietro) Uscita-7</label>
   </variable>
   <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
     <enumVal>
@@ -210,8 +210,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">F1 Uscita-1</label>
-    <label>F1 controls output 1</label>
+        <label>F1 controls output 1</label>
+        <label xml:lang="it">F1 Uscita-1</label>
   </variable>
   <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
     <enumVal>
@@ -220,8 +220,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">F1 Uscita-2</label>
-    <label>F1 controls output 2</label>
+        <label>F1 controls output 2</label>
+        <label xml:lang="it">F1 Uscita-2</label>
   </variable>
   <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1">
     <enumVal>
@@ -230,8 +230,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">F1 Uscita-3</label>
-    <label>F1 controls output 3</label>
+        <label>F1 controls output 3</label>
+        <label xml:lang="it">F1 Uscita-3</label>
   </variable>
   <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
     <enumVal>
@@ -240,8 +240,8 @@
         <choice xml:lang="it">Si</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">F1 Uscita-4</label>
-    <label>F1 controls output 4</label>
+        <label>F1 controls output 4</label>
+        <label xml:lang="it">F1 Uscita-4</label>
   </variable>
   <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
     <enumVal>

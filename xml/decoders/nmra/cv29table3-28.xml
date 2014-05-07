@@ -56,7 +56,7 @@
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
-        <choice xml:lang="it">Usa Tabella Velocit\u00E0'</choice>
+        <choice xml:lang="it">Usa Tabella Velocità'</choice>
         <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
         <choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
         <choice xml:lang="it">Usa Tabella</choice>        

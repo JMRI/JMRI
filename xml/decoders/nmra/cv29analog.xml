@@ -56,13 +56,13 @@
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
-        <choice xml:lang="it">Converiosne Analogica Abilitata</choice>
+        <choice xml:lang="it">Conversione Analogica Abilitata</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Conversione Alimentazione</label>
+    <label xml:lang="it">Conversione Sorgente Alimentazione</label>
     <label xml:lang="fr">Conversion source d'alimentation</label>
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
