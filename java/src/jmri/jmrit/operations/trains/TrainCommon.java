@@ -1012,11 +1012,11 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.RWE)) {
 			if (!car.getReturnWhenEmptyDestName().equals(""))
 				return " "
-						+ padAndTruncateString(Bundle.getMessage("RWE") + " "
+						+ padAndTruncateString(TrainManifestHeaderText.getStringHeader_RWE() + " "
 								+ splitString(car.getReturnWhenEmptyDestinationName()) + " ,"
 								+ splitString(car.getReturnWhenEmptyDestTrackName()), locationManager
 								.getMaxLocationAndTrackNameLength()
-								+ Bundle.getMessage("RWE").length() + 3);
+								+ TrainManifestHeaderText.getStringHeader_RWE().length() + 3);
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
@@ -1255,38 +1255,77 @@ public class TrainCommon {
 			if (attribute.equals(Setup.NONE))
 				continue;
 			if (attribute.equals(Setup.ROAD))
-				buf.append(padAndTruncateString(attribute, CarRoads.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance()
+						.getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.NUMBER))
-				buf.append(padAndTruncateString(attribute, Control.max_len_string_road_number - trimRoadNumber) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
+						Control.max_len_string_road_number - trimRoadNumber)
+						+ " ");
 			else if (attribute.equals(Setup.TYPE))
-				buf.append(padAndTruncateString(attribute, CarTypes.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(), CarTypes.instance()
+						.getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.MODEL))
-				buf.append(padAndTruncateString(attribute, EngineModels.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Model(), EngineModels
+						.instance().getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.CONSIST))
-				buf.append(padAndTruncateString(attribute, engineManager.getConsistMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Consist(), engineManager
+						.getConsistMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.KERNEL))
-				buf.append(padAndTruncateString(attribute, carManager.getKernelMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Kernel(), carManager
+						.getKernelMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.LOAD))
-				buf.append(padAndTruncateString(attribute, CarLoads.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(), CarLoads.instance()
+						.getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.COLOR))
-				buf.append(padAndTruncateString(attribute, CarColors.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Color(), CarColors.instance()
+						.getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.OWNER))
-				buf.append(padAndTruncateString(attribute, CarOwners.instance().getCurMaxNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Owner(), CarOwners.instance()
+						.getCurMaxNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.LENGTH))
-				buf.append(padAndTruncateString(attribute, Control.max_len_string_length_name) + " ");
-			else if (attribute.equals(Setup.TRACK) || attribute.equals(Setup.LOCATION)
-					|| attribute.equals(Setup.DESTINATION))
-				buf.append(padAndTruncateString(attribute, locationManager.getMaxTrackNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Length(),
+						Control.max_len_string_length_name)
+						+ " ");
+			else if (attribute.equals(Setup.TRACK))
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Track(), locationManager
+						.getMaxTrackNameLength())
+						+ " ");
+			else if (attribute.equals(Setup.LOCATION))
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(), locationManager
+						.getMaxTrackNameLength())
+						+ " ");
+			else if (attribute.equals(Setup.DESTINATION))
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(), locationManager
+						.getMaxTrackNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.DEST_TRACK))
-				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationAndTrackNameLength() + 2)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Dest_Track(), locationManager
+						.getMaxLocationAndTrackNameLength() + 2)
 						+ " ");
 			else if (attribute.equals(Setup.FINAL_DEST))
-				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationNameLength()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest(), locationManager
+						.getMaxLocationNameLength())
+						+ " ");
 			else if (attribute.equals(Setup.FINAL_DEST_TRACK))
-				buf.append(padAndTruncateString(attribute, locationManager.getMaxLocationAndTrackNameLength() + 2)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest_Track(),
+						locationManager.getMaxLocationAndTrackNameLength() + 2)
 						+ " ");
 			else if (attribute.equals(Setup.HAZARDOUS))
-				buf.append(padAndTruncateString(attribute, Setup.getHazardousMsg().length()) + " ");
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Hazardous(), Setup
+						.getHazardousMsg().length())
+						+ " ");
+			else if (attribute.equals(Setup.RWE))
+				buf.append(TrainManifestHeaderText.getStringHeader_RWE() + " ");
+			else if (attribute.equals(Setup.COMMENT))
+				buf.append(TrainManifestHeaderText.getStringHeader_Comment() + " ");
 			else if (attribute.equals(Setup.TAB))
 				buf.append(tabString("", Setup.getTab1Length()));
 			else if (attribute.equals(Setup.TAB2))

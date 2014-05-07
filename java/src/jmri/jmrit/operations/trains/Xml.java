@@ -82,7 +82,7 @@ public class Xml {
 	static final String SWITCH_LIST_STATUS = "switchListStatus"; // NOI18N
 	static final String LEAD_ENGINE = "leadEngine"; // NOI18N
 	static final String STATUS = "status"; // NOI18N
-    static final String STATUS_CODE = "statusCode"; // NOI18N
+	static final String STATUS_CODE = "statusCode"; // NOI18N
     static final String TERMINATION_DATE = "TerminationDate"; // NOI18N
     static final String REQUESTED_CARS = "RequestedCars"; // NOI18N
 	
@@ -183,5 +183,29 @@ public class Xml {
 	static final String NO_CAR_PICK_UPS = "noCarPickUps"; // NOI18N
 	static final String NO_CAR_SET_OUTS = "noCarSetOuts"; // NOI18N
 	static final String TRAIN_DONE = "trainDone"; // NOI18N
+	
+	// TrainManifestHeaderText.jafa
+	static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
+	static final String ROAD = "road"; // the supported message format options NOI18N 
+	static final String NUMBER = "number";
+	static final String TYPE = "type";
+	static final String MODEL = "model";
+	static final String LENGTH = "length";
+	static final String LOAD = "load";
+	static final String COLOR = "color";
+	static final String TRACK = "track";
+	//static final String DESTINATION = "destination";
+	static final String DEST_TRACK = "dest_Track";
+	//static final String FINAL_DEST = "Final_Dest";
+	static final String FINAL_DEST_TRACK = "fd_Track";
+	//static final String LOCATION = "location";
+	static final String CONSIST = "consist";
+	static final String KERNEL = "kernel";
+	static final String OWNER = "owner";
+	static final String RWE = "rwe";
+	//static final String COMMENT = "Comment";
+	static final String DROP_COMMENT = "setOut_msg";
+	static final String PICKUP_COMMENT = "pickUp_msg";
+	static final String HAZARDOUS = "hazardous";
 	
 }
