@@ -296,6 +296,8 @@ public class Manifest extends HtmlTrainCommon {
                 log.debug("Removing car with attribute {}", attribute);
                 if (attribute.equals(JSON.DESTINATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute)))).append(" "); // NOI18N
+                } else if (attribute.equals(JSON.LOCATION)) {
+                    builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute)))).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
