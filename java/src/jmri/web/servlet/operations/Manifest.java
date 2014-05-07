@@ -276,12 +276,11 @@ public class Manifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
+                log.debug("Adding car with attribute {}", attribute);
                 if (attribute.equals(JSON.LOCATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute)))).append(" "); // NOI18N
-                } else if (attribute.equals(JSON.HAZARDOUS)) {
-                    builder.append(this.getFormattedAttribute(attribute, (car.path(attribute).asBoolean() ? Setup.getHazardousMsg() : ""))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getFormattedAttribute(attribute, car.path(attribute).textValue())).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
             }
         }
@@ -294,10 +293,11 @@ public class Manifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
+                log.debug("Removing car with attribute {}", attribute);
                 if (attribute.equals(JSON.DESTINATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute)))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getFormattedAttribute(attribute, car.path(attribute).textValue())).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
             }
         }
@@ -327,7 +327,7 @@ public class Manifest extends HtmlTrainCommon {
                 if (attribute.equals(JSON.DESTINATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getDropLocation(engine.path(attribute)))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getFormattedAttribute(attribute, engine.path(attribute).textValue())).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
                 }
             }
         }
@@ -354,7 +354,7 @@ public class Manifest extends HtmlTrainCommon {
                 if (attribute.equals(JSON.LOCATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(engine.path(attribute)))).append(" "); // NOI18N
                 } else {
-                    builder.append(this.getFormattedAttribute(attribute, engine.path(attribute).textValue())).append(" "); // NOI18N
+                    builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
                 }
             }
         }
@@ -368,6 +368,17 @@ public class Manifest extends HtmlTrainCommon {
 
     protected String getPickupLocation(JsonNode location) {
         return this.getFormattedLocation(location, strings.getProperty("FromLocation"), strings.getProperty("FromTrack")); // NOI18N
+    }
+
+    protected String getTextAttribute(String attribute, JsonNode rollingStock) {
+        if (attribute.equals(JSON.HAZARDOUS)) {
+            return this.getFormattedAttribute(attribute, (rollingStock.path(attribute).asBoolean() ? Setup.getHazardousMsg() : "")); // NOI18N
+        } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
+            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
+        } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
+            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
+        }
+        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).textValue());
     }
 
     protected String getFormattedAttribute(String attribute, String value) {
