@@ -172,9 +172,9 @@
       </variable>
       -->	  
       <variable item="Feature Disable Group 2-8" CV="179" mask="VXXXXXXX" label="Fuel prime once/mult.start warning bells" tooltip="Fuel prime once for Gen1 diesels OR multiple start warning bells Gen2" include="SDXH166DExt">
+	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label xml:lang="it">Campana in partenza</label>
         <tooltip xml:lang="it">Suono Campana in partenza singolo per Gen1 diesels - ripetuto per Gen2</tooltip>
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>		
       <!-- Used so far: -->
       <!-- "Sound Settings 21 to 37"   -->   

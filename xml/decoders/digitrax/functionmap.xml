@@ -693,11 +693,11 @@
   <variable label="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
     <enumVal>
       <enumChoice choice="No"/>
-      <enumChoice choice="Yes/
+      <enumChoice choice="Yes">
 
       <choice xml:lang="it">Si</choice>
 
-       </enumChoice>>
+       </enumChoice>
     </enumVal>
 
     <label xml:lang="it">Uscita 10-F5</label>
