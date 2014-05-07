@@ -46,12 +46,14 @@ public class Manifest extends HtmlTrainCommon {
         this.resourcePrefix = "Manifest";
     }
 
+    // TODO cache the results so a quick check that if the JsonManifest file is not
+    // newer than the Html manifest, the cached copy is returned instead.
     public String getLocations() throws IOException {
         // build manifest from JSON manifest
         StringBuilder builder = new StringBuilder();
         JsonNode json = this.mapper.readTree((new JsonManifest(this.train)).getFile());
         ArrayNode locations = (ArrayNode) json.path(JSON.LOCATIONS);
-        boolean hasWork = false;
+        boolean hasWork;
         for (int r = 0; r < locations.size(); r++) {
             JsonNode location = locations.get(r);
             RouteLocation routeLocation = this.train.getRoute().getLocationById(location.path(JSON.ID).textValue());
@@ -414,7 +416,11 @@ public class Manifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        return car.path(JSON.LOCATION).path(JSON.ID).equals(car.path(JSON.DESTINATION).path(JSON.ID));
+        if (car.path(JSON.LOCATION).path(JSON.ROUTE).isMissingNode()
+                || car.path(JSON.DESTINATION).path(JSON.ROUTE).isMissingNode()) {
+            return false;
+        }
+        return car.path(JSON.LOCATION).path(JSON.ROUTE).equals(car.path(JSON.DESTINATION).path(JSON.ROUTE));
     }
 
     protected boolean isUtilityCar(JsonNode car) {

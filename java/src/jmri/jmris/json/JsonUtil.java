@@ -1400,14 +1400,14 @@ public class JsonUtil {
         node.put(KERNEL, car.getKernelName());
         node.put(UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
-            node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack()));
+            node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack(), null));
         } else if (car.getFinalDestination() != null) {
-            node.put(FINAL_DESTINATION, JsonUtil.getLocation(car.getFinalDestination()));
+            node.put(FINAL_DESTINATION, JsonUtil.getLocation(car.getFinalDestination(), null));
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
-            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocationAndTrack(car.getReturnWhenEmptyDestTrack()));
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
         } else if (car.getReturnWhenEmptyDestination() != null) {
-            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocation(car.getReturnWhenEmptyDestination()));
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocation(car.getReturnWhenEmptyDestination(), null));
         }
         return node;
     }
@@ -1431,22 +1431,31 @@ public class JsonUtil {
         node.put(COLOR, rs.getColor());
         node.put(OWNER, StringEscapeUtils.escapeHtml4(rs.getOwner()));
         node.put(COMMENT, StringEscapeUtils.escapeHtml4(rs.getComment()));
-        node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack()));
-        node.put(DESTINATION, JsonUtil.getLocationAndTrack(rs.getDestinationTrack()));
+        if (rs.getTrack() != null) {
+            node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
+        } else {
+            node.put(LOCATION, JsonUtil.getLocation(rs.getLocation(), rs.getRouteLocation()));
+        }
+        if (rs.getDestinationTrack() != null) {
+            node.put(DESTINATION, JsonUtil.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
+        } else {
+            node.put(DESTINATION, JsonUtil.getLocation(rs.getDestination(), rs.getRouteDestination()));
+        }
         return node;
     }
 
-    static private ObjectNode getLocation(Location location) {
+    static private ObjectNode getLocation(Location location, RouteLocation routeLocation) {
         ObjectNode node = mapper.createObjectNode();
         node.put(NAME, location.getName());
         node.put(ID, location.getId());
+        if (routeLocation != null) {
+            node.put(ROUTE, routeLocation.getId());
+        }
         return node;
     }
 
-    static private ObjectNode getLocationAndTrack(Track track) {
-        ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, track.getLocation().getName());
-        node.put(ID, track.getLocation().getId());
+    static private ObjectNode getLocationAndTrack(Track track, RouteLocation routeLocation) {
+        ObjectNode node = JsonUtil.getLocation(track.getLocation(), routeLocation);
         node.put(TRACK, JsonUtil.getTrack(track));
         return node;
     }
