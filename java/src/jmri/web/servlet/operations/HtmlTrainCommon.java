@@ -5,6 +5,8 @@
  */
 package jmri.web.servlet.operations;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -32,11 +34,31 @@ public class HtmlTrainCommon extends TrainCommon {
     protected final Train train;
     protected String resourcePrefix;
 
+    protected enum ShowLocation {
+
+        location,
+        track,
+        both;
+    }
+
     static private final Logger log = LoggerFactory.getLogger(HtmlTrainCommon.class);
 
-    public HtmlTrainCommon(Locale locale, Train train) {
+    public HtmlTrainCommon(Locale locale, Train train) throws IOException {
         this.locale = locale;
         this.train = train;
+        FileInputStream is = null;
+        try {
+            is = new FileInputStream(Bundle.getMessage(locale, "ManifestStrings.properties"));
+            strings.load(is);
+            is.close();
+        } catch (IOException ex) {
+            if (is != null) {
+                is.close();
+            }
+            throw ex;
+        }
+        this.cars = 0;
+        this.emptyCars = 0;
     }
 
     @Override
@@ -162,17 +184,17 @@ public class HtmlTrainCommon extends TrainCommon {
             return car.getKernelName();
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestName().equals("")) {
-                return String.format(locale, strings.getProperty("RWE"), StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestinationName())), StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestTrackName())));
+                return String.format(locale, strings.getProperty("RWELocationAndTrack"), StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestinationName())), StringEscapeUtils.escapeHtml4(splitString(car.getReturnWhenEmptyDestTrackName())));
             }
             return ""; // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST)) {
             if (!car.getFinalDestinationName().equals("")) {
-                return String.format(locale, strings.getProperty("FinalDestination"), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())));
+                return String.format(locale, strings.getProperty("FinalDestinationLocation"), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())));
             }
             return "";
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
             if (!car.getFinalDestinationName().equals("")) {
-                return String.format(locale, strings.getProperty("FinalDestinationWithTrack"), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationTrackName())));
+                return String.format(locale, strings.getProperty("FinalDestinationLocationAndTrack"), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationName())), StringEscapeUtils.escapeHtml4(splitString(car.getFinalDestinationTrackName())));
             }
             return "";
         }

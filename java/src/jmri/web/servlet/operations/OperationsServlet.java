@@ -136,7 +136,7 @@ public class OperationsServlet extends HttpServlet {
         Train train = TrainManager.instance().getTrainById(id);
         if ("html".equals(request.getParameter("format"))) {
             log.debug("Getting manifest HTML code for train {}", id);
-            Manifest manifest = new Manifest(request.getLocale(), train);
+            HtmlManifest manifest = new HtmlManifest(request.getLocale(), train);
             ServletUtil.getHelper().setNonCachingHeaders(response);
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -202,7 +202,7 @@ public class OperationsServlet extends HttpServlet {
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);
-            Conductor conductor = new Conductor(request.getLocale(), train);
+            HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
             ServletUtil.getHelper().setNonCachingHeaders(response);
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(conductor.getLocation());

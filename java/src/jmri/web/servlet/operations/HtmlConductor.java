@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-public class Conductor extends Manifest {
+public class HtmlConductor extends HtmlTrainCommon {
 
-    private final static Logger log = LoggerFactory.getLogger(Conductor.class);
+    private final static Logger log = LoggerFactory.getLogger(HtmlConductor.class);
 
-    public Conductor(Locale locale, Train train) throws IOException {
+    public HtmlConductor(Locale locale, Train train) throws IOException {
         super(locale, train);
         this.resourcePrefix = "Conductor";
     }
