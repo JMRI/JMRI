@@ -400,7 +400,6 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
- //t=<DESCRIPTION> (devicegroup())+ <EOL> 
  t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
   {
     jjtThis.jjtSetValue(t.image);
