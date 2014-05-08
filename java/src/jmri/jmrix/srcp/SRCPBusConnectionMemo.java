@@ -26,7 +26,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private int _bus = 0;
 
     public SRCPBusConnectionMemo(SRCPTrafficController et,String Prefix,int bus) {
-        super(Prefix + bus, "SRCP");
+        super(Prefix + bus, "SRCP:" + bus);
         this.et = et;
         //this.et.setSystemConnectionMemo(this);
         _bus=bus;

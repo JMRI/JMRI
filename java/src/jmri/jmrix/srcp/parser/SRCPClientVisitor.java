@@ -89,16 +89,13 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Received Bus " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
- /* public Object visit(ASTaddress node, Object data)
-  {
-    log.debug("Received Address " + node.jjtGetValue() );
-    return node.childrenAccept(this,data);
-  }*/
+
   public Object visit(ASTnonzeroaddress node, Object data)
   {
     log.debug("Received NonZeroAddress " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+
   public Object visit(ASTzeroaddress node, Object data)
   {
     log.debug("Received ZeroAddress " + node.jjtGetValue() );
@@ -158,7 +155,40 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Info Response " +node.jjtGetValue() );
     int bus=Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
     SRCPBusConnectionMemo busMemo=((SRCPSystemConnectionMemo)data).getMemo(bus);
-    return node.childrenAccept(this,data);
+
+    SimpleNode group = (SimpleNode)node.jjtGetChild(1);
+
+    if( group instanceof ASTfb ) {
+       if(busMemo.provides(jmri.SensorManager.class) ) {
+          int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+          ((jmri.jmrix.srcp.SRCPSensor)((jmri.jmrix.srcp.SRCPSensorManager)busMemo.getSensorManager()).provideSensor("" + address)).reply((SimpleNode)node);
+       }
+    } else if( group instanceof ASTga ) {
+       if(busMemo.provides(jmri.TurnoutManager.class) ) {
+          int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+          boolean thrown = ((String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue()).equals("1");
+       }
+    } else if( group instanceof ASTgl ) {
+       if(busMemo.provides(jmri.ThrottleManager.class) ) {
+          int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
+       }
+    } else if( group instanceof ASTsm ) {
+       if(busMemo.provides(jmri.ProgrammerManager.class) ) {
+          ((jmri.jmrix.srcp.SRCPProgrammer)(busMemo.getProgrammerManager().getGlobalProgrammer())).reply(node);
+       }
+    } else if( group instanceof ASTpower ) {
+       if(busMemo.provides(jmri.PowerManager.class) ) {
+          String state = (String)((SimpleNode)group.jjtGetChild(1)).jjtGetValue();
+          //busMemo.getPowerManager().setPower(state.equals("ON")?jmri.PowerManager.ON:jmri.PowerManager.OFF);
+          ((jmri.jmrix.srcp.SRCPPowerManager)busMemo.getPowerManager()).reply(node);
+       }
+    } else if( group instanceof ASTtime ) {
+    } else if( group instanceof ASTsession) {
+    } else if( group instanceof ASTserver) {
+    } else if( group instanceof ASTdescription) {
+    } else if( group instanceof ASTlock) {
+    }
+    return data;
   }
 
   public Object visit(ASTok node, Object data)
@@ -169,7 +199,7 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
 
   public Object visit(ASTerror node, Object data)
   {
-    log.debug("Information Response " +node.jjtGetValue() );
+    log.debug("Error Response " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
 

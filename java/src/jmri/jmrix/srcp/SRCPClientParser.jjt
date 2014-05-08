@@ -180,9 +180,6 @@ SimpleNode inforesponse() :{SimpleNode t; SimpleNode s;}
   //t=address() (s=info() | s=ok() | s=error() )
   address() (s=info() | s=ok() | s=error() )
   {
-    //jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.jjtGetValue() );
-    //jjtThis.jjtSetValue(s.jjtGetValue() );
-    //jjtThis.jjtSetValue(t.jjtGetValue() );
     jjtThis.jjtSetValue("");
     log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
     return jjtThis;
@@ -313,7 +310,7 @@ SimpleNode port():{SimpleNode s;}
 SimpleNode devicegroup():{Token t;}
 {
   ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> | t=<SERVER> | 
-    t=<LOCK> | t=<DESCRIPTION> )
+    t=<LOCK> | t=<POWER>| t=<DESCRIPTION> )
   {
     log.debug("DeviceGroup Production");
     jjtThis.jjtSetValue(t.image);
@@ -403,8 +400,8 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
- t=<DESCRIPTION> (devicegroup())+ <EOL> 
- //t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
+ //t=<DESCRIPTION> (devicegroup())+ <EOL> 
+ t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
