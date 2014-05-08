@@ -2,9 +2,11 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 import jmri.jmrit.operations.trains.TrainManifestText;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
@@ -69,6 +71,8 @@ public class OperationsSetupXml extends OperationsXml {
      
 	        // add top-level elements	        
 	        root.addContent(Setup.store());
+	        // add manifest header text strings
+	        root.addContent(TrainManifestHeaderText.store());
 	        // add manifest text strings
 	        root.addContent(TrainManifestText.store());
 	        // add switch list text strings
@@ -94,7 +98,9 @@ public class OperationsSetupXml extends OperationsXml {
 			log.debug(name + " file could not be read");
 			return;
 		}
-		Setup.load(root);
+		Setup.load(root);	
+		// load manifest header text strings
+		TrainManifestHeaderText.load(root);
 		// load manifest text strings
 		TrainManifestText.load(root);
 		// load switch list text strings

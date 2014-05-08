@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -19,7 +17,6 @@ import jmri.jmrit.operations.trains.Train;
 import static jmri.jmrit.operations.trains.TrainCommon.isThereWorkAtLocation;
 import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.util.FileUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +24,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-public class Conductor extends Manifest {
+public class HtmlConductor extends HtmlTrainCommon {
 
-    private final static Logger log = LoggerFactory.getLogger(Manifest.class);
+    private final static Logger log = LoggerFactory.getLogger(HtmlConductor.class);
 
-    public Conductor(Locale locale, Train train) throws IOException {
+    public HtmlConductor(Locale locale, Train train) throws IOException {
         super(locale, train);
         this.resourcePrefix = "Conductor";
     }

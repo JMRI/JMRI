@@ -79,6 +79,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     public void run() { // invoked in a new thread
+        if (log.isInfoEnabled()) 
+            log.info("LocoNet Simulator Started");    
     	while (true) {
     		while (sFile == null) {
     			// Wait for a file to be available. We have nothing else to do, so we can sleep

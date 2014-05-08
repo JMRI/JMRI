@@ -47,7 +47,7 @@
   </revhistory>
   <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-    <label xml:lang="it">Direzione di Marcia Normale</label>
+    <label xml:lang="it">Direzione Normale di Marcia</label>
     <label xml:lang="fr">Sens normal de marche</label>
     <label xml:lang="de">Fahrtrichtung Standard</label>
     <label>Locomotive Direction</label>

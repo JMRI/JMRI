@@ -149,7 +149,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                 et = System.currentTimeMillis()-et;
-                if (log.isDebugEnabled()) log.debug("Cmd #"+(_idxCurrentCommand+1)+": ("+
+                if (log.isDebugEnabled()) log.debug("Cmd #"+(_idxCurrentCommand)+": ("+
                                                     ts.toString()+") et= "+et+" warrant "+_warrant.getDisplayName());
             } catch (NumberFormatException e) {
                   log.error("Command failed! "+ts.toString()+" - "+e);
@@ -364,7 +364,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_throttle != null) {
             _throttle.setSpeedSetting(-1.0f);
             _throttle.setSpeedSetting(0.0f);
-            try {
+            setFunction(2, false);
+            setFunction(0, false);
+           try {
                 InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrant);
             } catch (Exception e) {
                 // null pointer catch and maybe other such.

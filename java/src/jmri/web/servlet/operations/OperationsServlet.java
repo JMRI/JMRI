@@ -22,6 +22,7 @@ import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
+import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,18 +55,25 @@ public class OperationsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        if (pathInfo[0].equals("") || pathInfo[0].equals("trains")) {
+        if (pathInfo[0].equals("") || (pathInfo[0].equals(JSON.TRAINS) && pathInfo.length == 1)) {
             this.processTrains(request, response);
         } else {
             if (pathInfo.length == 1) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             } else {
                 String id = pathInfo[1];
-                log.debug("Handling {} with id {}", pathInfo[0], id);
-                if (pathInfo[0].equals("manifest")) {
+                String report = pathInfo[0];
+                if (report.equals(JSON.TRAINS) && pathInfo.length == 3) {
+                    report = pathInfo[2];
+                }
+                log.debug("Handling {} with id {}", report, id);
+                if (report.equals("manifest")) {
                     this.processManifest(id, request, response);
-                } else if (pathInfo[0].equals("conductor")) {
+                } else if (report.equals("conductor")) {
                     this.processConductor(id, request, response);
+                } else if (report.equals("trains")) {
+                    // TODO: allow for editing/building/reseting train
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 } else {
                     // Don't know what to do
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -128,7 +136,7 @@ public class OperationsServlet extends HttpServlet {
         Train train = TrainManager.instance().getTrainById(id);
         if ("html".equals(request.getParameter("format"))) {
             log.debug("Getting manifest HTML code for train {}", id);
-            Manifest manifest = new Manifest(request.getLocale(), train);
+            HtmlManifest manifest = new HtmlManifest(request.getLocale(), train);
             ServletUtil.getHelper().setNonCachingHeaders(response);
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -142,7 +150,15 @@ public class OperationsServlet extends HttpServlet {
             ));
             train.setModified(false);
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
-            ServletUtil.getHelper().writeFile(response, new JsonManifest(train).getFile(), ServletUtil.APPLICATION_JSON);
+            log.debug("Getting manifest JSON code for train {}", id);
+            JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());
+            if (manifest.path(JSON.IMAGE_FILE_NAME).isTextual()) {
+                ((ObjectNode) manifest).put(JSON.IMAGE_FILE_NAME, WebServer.URIforPortablePath(FileUtil.getPortableFilename(manifest.path(JSON.IMAGE_FILE_NAME).asText())));
+            }
+            String content = this.mapper.writeValueAsString(manifest);
+            response.setContentType(ServletUtil.APPLICATION_JSON);
+            response.setContentLength(content.length());
+            response.getWriter().print(content);
         } else {
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -186,7 +202,7 @@ public class OperationsServlet extends HttpServlet {
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);
-            Conductor conductor = new Conductor(request.getLocale(), train);
+            HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
             ServletUtil.getHelper().setNonCachingHeaders(response);
             response.setContentType("text/html"); // NOI18N
             response.getWriter().print(conductor.getLocation());

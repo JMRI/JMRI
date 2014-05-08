@@ -144,20 +144,14 @@ public class TrainManifest extends TrainCommon {
 							new Object[] { splitString(rl.getName()) }));
 			}
 			
-			if (isThereWorkAtLocation(null, engineList, rl))
-				printEngineHeader(fileOut, isManifest);
-
 			if (Setup.isTwoColumnFormatEnabled()) {
 				blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
 			} else {
 				pickupEngines(fileOut, engineList, rl, isManifest);
 				dropEngines(fileOut, engineList, rl, isManifest);
-			}
-
-			if (Setup.isTwoColumnFormatEnabled())
-				blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
-			else
 				blockCarsByTrack(fileOut, train, carList, routeList, rl, r, printHeader, isManifest);
+			}			
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?

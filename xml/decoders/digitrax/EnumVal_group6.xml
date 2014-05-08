@@ -15,22 +15,18 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="reserved (0)">
             <choice>reserved (0)</choice>
-
             <choice xml:lang="it">riservato (0)</choice>
           </enumChoice>
           <enumChoice choice="thrown">
             <choice>thrown</choice>
-
             <choice xml:lang="it">deviato</choice>
           </enumChoice>
           <enumChoice choice="reserved (2)">
             <choice>reserved (2)</choice>
-
             <choice xml:lang="it">riservato (2)</choice>
           </enumChoice>
           <enumChoice choice="closed">
             <choice>closed</choice>
-
             <choice xml:lang="it">chiuso</choice>
           </enumChoice>
         </enumVal>

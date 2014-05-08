@@ -17,7 +17,7 @@
 <!--                             for Digitrax Series 6 Sound Decoders       -->
 <!-- 					Alain Le Marchand (2014-04-27)	    -->
 <!-- 									    -->
-<pane name="Digitrax Sound Series 6 Extended" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Digitrax Sound Series 6 Extended" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <row>
     <column>
         <display item="Feature Disable Group 1"/>

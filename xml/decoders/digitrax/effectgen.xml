@@ -90,15 +90,15 @@
   </enumChoice>
   <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
     <choice>Right ditch light; when F2 on, flashes alternately</choice>
-    <choice xml:lang="it">Luce di destra, quando F2=on, lampeggia</choice>
+    <choice xml:lang="it">Luce di destra ditch, quando F2=on, lampeggia</choice>
   </enumChoice>
   <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
     <choice>Left ditch light; when F2 on, flashes alternately</choice>
-    <choice xml:lang="it">Luce di sinistra, quando F2=on, lampeggia</choice>
+    <choice xml:lang="it">Luce di sinistra ditch, quando F2=on, lampeggia</choice>
   </enumChoice>
   <enumChoice choice="Pulse function (Series 6 only)">
     <choice>Pulse function (Series 6 only)</choice>
-    <choice xml:lang="it">Pulse function (Series 6 only)(it)</choice>
+    <choice xml:lang="it">Impulsiva (solo series 6)</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0D)">
     <choice>Reserved (0x0D)</choice>

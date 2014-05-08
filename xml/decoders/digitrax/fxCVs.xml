@@ -42,22 +42,22 @@
   <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Forward light F0F effect generated</label>
-    <label xml:lang="it">Luce anteriore effetto F0F</label>
+    <label xml:lang="it">Luce anteriore effetto in marcia avanti</label>
   </variable>
   <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Forward light F0F behavior</label>
-    <label xml:lang="it">Luce anteriore funzionamento F0F</label>
+    <label xml:lang="it">Luce anteriore funzionamento in marcia avanti</label>
   </variable>
   <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Reverse light F0R effect generated</label>
-    <label xml:lang="it">Luce anteriore effetto F0R</label>
+    <label xml:lang="it">Luce anteriore effetto in marcia indietro</label>
   </variable>
   <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Reverse light F0R behavior</label>
-    <label xml:lang="it">Luce anteriore funzionamento F0R</label>
+    <label xml:lang="it">Luce anteriore funzionamento in marcia indietro</label>
   </variable>
   <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
@@ -82,7 +82,7 @@
   <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 3 effect generated</label>
-    <label xml:lang="it">Effetti generati Funzione 13</label>
+    <label xml:lang="it">Effetti generati Funzione 3</label>
   </variable>
   <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>

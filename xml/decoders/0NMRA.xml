@@ -51,10 +51,12 @@
       <variable label="Radio Power Conversion" item="Radio Power Conversion" CV="12" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Radio Power Conversion(fr)</label>
+        <label xml:lang="it">Conversione Alimentazione Radio</label>
       </variable>
       <variable label="Zero-1 Power Conversion" item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Zero-1 Power Conversion(fr)</label>
+        <label xml:lang="it">Zero-1 Conversione Alimentazione</label>
       </variable>
       <variable label="Trix Power Conversion" item="Trix Power Conversion" CV="12" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -74,7 +76,7 @@
       <variable label="Speed Table/Mid Range Cab Speed Step" CV="25" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
         <decVal/>
         <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
-        <label xml:lang="it">Tabella Velocità/Comando Palmare a metà velocità</label>
+        <label xml:lang="it">Tabella Velocità/Comando Palmare intermedio</label>
         <comment>See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
@@ -88,13 +90,13 @@
           </enumChoice>
         </enumVal>
         <label xml:lang="fr">FL Location(fr)</label>
-        <label xml:lang="it">Località FL</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
-        <label xml:lang="it">Riconoscimento Decoder Avanzato(fr)</label>
+        <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
       </variable>
       <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
@@ -102,7 +104,7 @@
             <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use table in CVs 66 through 95">
-            <choice xml:lang="it">Usare tabella con CV dalla 66 alla 95</choice>
+            <choice xml:lang="it">Usare tabella con CV da 66 a 95</choice>
           </enumChoice>
         </enumVal>
         <label xml:lang="fr">Speed Table Definition(fr)</label>

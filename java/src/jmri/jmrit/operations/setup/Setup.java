@@ -2555,7 +2555,7 @@ public class Setup {
 	 */
 	private static void keyToStringConversion(String[] keys) {
 		for (int i = 0; i < keys.length; i++) {
-			if (keys[i].equals(" "))
+			if (keys[i].equals(NONE))
 				continue;
 			try {
 				keys[i] = Bundle.getMessage(keys[i]);
@@ -2578,7 +2578,7 @@ public class Setup {
 		Locale locale = Locale.ROOT;
 		for (int i = 0; i < strings.length; i++) {
 			String old = strings[i];
-			if (old.equals(" "))
+			if (old.equals(NONE))
 				continue;
 			for (String attribute : attributtes) {
 				if (strings[i].equals(Bundle.getMessage(attribute))) {

@@ -54,7 +54,7 @@
   <variable item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
     <enumVal>
       <enumChoice choice="Adjustment Added">
-        <choice xml:lang="it">Fattore Aggiunto</choice>
+        <choice xml:lang="it">Fattore Aggiustamento sommato</choice>
         <choice xml:lang="fr">Ajustement positif</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
@@ -75,7 +75,7 @@
   <variable item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
     <enumVal>
       <enumChoice choice="Adjustment Added">
-        <choice xml:lang="it">Fattore Aggiunto</choice>
+        <choice xml:lang="it">Fattore Aggiustamento sommato</choice>
         <choice xml:lang="fr">Ajustement positif</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">

@@ -391,6 +391,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new PrintMoreOptionAction());
+		toolMenu.add(new EditManifestHeaderTextAction());
 		toolMenu.add(new EditManifestTextAction());
 		toolMenu.add(new EditSwitchListTextAction());
 		menuBar.add(toolMenu);

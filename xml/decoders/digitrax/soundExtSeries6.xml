@@ -38,67 +38,84 @@
       <variable label="Power Reverser Volume" CV="161" item="Sound Setting 21" default="54" include="SDXH166DExt">
         <decVal/>  
         <label>Power Reverser Volume</label>
+        <label xml:lang="it">Volume Retromarcia</label>
       </variable>	  
       <variable label="Grate Shaker Volume" CV="162" item="Sound Setting 22" default="50" include="SDXH166DExt">
         <decVal max="64"/>
-        <label>Power Reverser Volume</label>
+        <label>Grate Shaker Volume</label>
+        <label xml:lang="it">Volume Agitatore Griglia</label>
       </variable>
       <variable label="Water Coal Fill Volume" CV="163" item="Sound Setting 23" default="44" include="SDXH166DExt">
         <decVal max="64"/>
         <label>Water Coal Fill Volume</label>
+        <label xml:lang="it">Volume Carico Acqua-Carbone</label>
       </variable>
       <variable label="Compressor Volume" CV="164" item="Sound Setting 31" default="35" include="SDXH166DExt">
         <decVal max="64"/>
         <label>Compressor Volume</label>
+        <label xml:lang="it">Volume Compressore</label>
       </variable>
       <variable label="Fan Volume" CV="165" item="Sound Setting 25" default="25" include="SDXH166DExt">
         <decVal max="64"/>
         <label>Fan Volume</label>
+        <label xml:lang="it">Volume Ventole</label>
       </variable>
       <variable label="Coupler Slack Volume" CV="166" item="Sound Setting 27" default="52" include="SDXH166DExt">
         <decVal max="64"/>
         <label>Coupler Slack Volume</label>
+        <label xml:lang="it">Volume Sgancio</label>
       </variable>
       <variable label="AUX Gen/Stoker/OilPump Vol." CV="168" item="Sound Setting 29" default="52" include="SDXH166DExt">
         <decVal max="64"/>
         <label>AUX Gen/Stoker/OilPump Volume</label>
+        <label xml:lang="it">Volume Gener.Ausil./Stoker/Pompa Olio</label>
       </variable>	 
       <variable label="Safety Run Time" CV="170" item="Sound Setting 24" default="22" include="SDXH166DExt">
         <decVal/>
         <label>Safety Run Time</label>
+        <label xml:lang="it">Durata valvola Sicurezza</label>
       </variable>
       <variable label="ALT HORN volume" CV="171" item="Sound Setting 34" default="60" include="SDXH166DExt">
         <decVal/>
         <label>ALT HORN volume</label>
+        <label xml:lang="it">Volume Tromba Alternativa</label>
       </variable>	
       <variable label="Water Pump Cycle Time" CV="172" item="Sound Setting 35" default="19" include="SDXH166DExt">
         <decVal/>
         <label>Water Pump Cycle Time</label>
+        <label xml:lang="it">Ciclo Pompa Acqua</label>
       </variable>		  
       <variable label="Cut Off Speed Steam Cocks" CV="173" item="Sound Setting 28" default="12" include="SDXH166DExt">
         <decVal/>
         <label>Cut Off Speed Steam Cocks</label>
+        <label xml:lang="it">Velocità di intervento Rubinetto Vapore</label>      
       </variable>
       <variable label="Air Pump Run Time" CV="174" item="Sound Setting 32" default="10" include="SDXH166DExt">
         <decVal/>
         <label>Air Pump Run Time</label>
+        <label xml:lang="it">Temporizzazione Pompa Aria </label>      
       </variable>
       <variable label="Stoker/OilPump Run Time" CV="175" item="Sound Setting 33" default="18" include="SDXH166DExt">
         <decVal/>
         <label>Stoker/OilPump Run Time</label>
+        <label xml:lang="it">Temporizzazione Stoker/Pompa Olio</label>
       </variable>	      
       <variable label="Cutoff Speed for high speed chuffs" CV="176" item="Sound Setting 36" default="58" include="SDXH166DExt">
         <decVal/>
-        <label>Stoker/OilPump Run Time</label>
+        <label>Cutoff Speed for high speed chuffs</label>
+        <label xml:lang="it">Velocità di intervento Spegnim.Chuff Vapore</label>
       </variable>		 
       <variable label="Cutoff Speed for wheel slip chuffs" CV="177" item="Sound Setting 37" default="7" include="SDXH166DExt">
         <decVal/>
         <label>Cutoff Speed for wheel slip</label>
+      <label xml:lang="it">Velocità di intervento Slittamento Ruote</label>
       </variable>		
 	  <!-- Disable Sound Settings -->
       <variable item="Feature Disable Group 1" CV="169" label="Feature Disable Group 1" comment="Set sum of bits0-7 on to disable features" include="SDXH166DExt">
         <decVal/>
         <label>Feature Disable Group 1</label>
+        <label xml:lang="it">Funzione Disabilitaz. Gr.1</label>
+        <comment xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</comment>
       </variable>      	  
       <variable item="Feature Disable Group 1-1" CV="169" mask="XXXXXXXV" label="Disable HEP diesel/ARTICULATED steam" include="SDXH166DExt">
 	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -127,6 +144,7 @@
       <variable item="Feature Disable Group 2" CV="179" label="Feature Disable Group 2" comment="Set sum of bits0-7 on to disable features" include="SDXH166DExt">
         <decVal/>
         <label>Feature Disable Group 2</label>
+        <label xml:lang="it">Funzione Disabilitaz. Gr.2</label>
       </variable>
       <!--	  
       <variable item="Feature Disable Group 2-1" CV="179" mask="XXXXXXXV" label="Disable - unused bit 0" include="SDXH166DExt">
@@ -155,6 +173,8 @@
       -->	  
       <variable item="Feature Disable Group 2-8" CV="179" mask="VXXXXXXX" label="Fuel prime once/mult.start warning bells" tooltip="Fuel prime once for Gen1 diesels OR multiple start warning bells Gen2" include="SDXH166DExt">
 	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label xml:lang="it">Campana in partenza</label>
+        <tooltip xml:lang="it">Suono Campana in partenza singolo per Gen1 diesels - ripetuto per Gen2</tooltip>
       </variable>		
       <!-- Used so far: -->
       <!-- "Sound Settings 21 to 37"   -->   

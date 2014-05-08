@@ -186,24 +186,18 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					
-					if (isThereWorkAtLocation(null, engineList, rl))
-						printEngineHeader(fileOut, isManifest);
-
 					if (Setup.isTwoColumnFormatEnabled()) {
 						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
 					} else {
 						pickupEngines(fileOut, engineList, rl, isManifest);
 						dropEngines(fileOut, engineList, rl, isManifest);
-					}
-
-					if (Setup.isTwoColumnFormatEnabled())
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, r, true, isManifest);
-					else
 						blockCarsByTrack(fileOut, train, carList, routeList, rl, r, true, isManifest);
-						
-					stops++;
+					}
 					if (Setup.isPrintHeadersEnabled())
 						printHorizontalLine(fileOut, isManifest);
+						
+					stops++;
 				}
 			}
 			if (trainDone && !pickupCars && !dropCars) {
