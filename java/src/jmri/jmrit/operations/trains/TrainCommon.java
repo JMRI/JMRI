@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -10,9 +11,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.JLabel;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -32,7 +31,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +90,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-	 * @param orientation
+         * @param isManifest
 	 */
 	protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -128,7 +126,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-	 * @param orientation
+         * @param isManifest
 	 */
 	protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -1380,6 +1378,14 @@ public class TrainCommon {
 		addLine(file, sb.toString());
 	}
 
+        public static String getISO8601Date(boolean isModelYear) {
+            Calendar calendar = Calendar.getInstance();
+            if (isModelYear && !Setup.getYearModeled().isEmpty()) {
+                calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+            }
+            return new ISO8601DateFormat().format(calendar.getTime());
+        }
+
 	public static String getDate(boolean isModelYear) {
 		Calendar calendar = Calendar.getInstance();
 
@@ -1464,7 +1470,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param fieldSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String padAndTruncateString(String s, int fieldSize) {
 		return padAndTruncateString(s, fieldSize, Setup.isTabEnabled());
@@ -1484,7 +1490,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param fieldSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String padString(String s, int fieldSize) {
 		StringBuffer buf = new StringBuffer(s);
@@ -1499,7 +1505,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param tabSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String tabString(String s, int tabSize) {
 		return tabString(s, tabSize, Setup.isTabEnabled());
