@@ -326,6 +326,7 @@ public class NXFrame extends WarrantRoute {
         String interval = _rampInterval.getText();
     	float f = 0; 
     	int time = 4000;
+    	int delay = 0;
         try {
         	f = Float.parseFloat(speed);
         	if (f>1.0 || f<0) {
@@ -374,7 +375,19 @@ public class NXFrame extends WarrantRoute {
         	}
         	// next to last block
         	OBlock block = orders.get(orders.size()-2).getBlock();
-        	int delay = (int)Math.max(block.getLengthIn()-48,0)*100;
+        	int len = (int)block.getLengthIn();
+        	if (len >= 48) {
+            	delay = Math.max(len,48)*100;        		
+        	} else if (len>32) {
+            	delay = 0;
+        		time = 2000;        		
+        	} else if (len>18) {
+            	delay = 0;
+        		time = 1000;        		
+        	} else{
+            	delay = 0;
+        		time = 0;        		
+        	}
         	w.addThrottleCommand(new ThrottleSetting(delay, "Speed", Float.toString(7*f/8), blockName));        		
         	w.addThrottleCommand(new ThrottleSetting(time, "Speed", Float.toString(3*f/4), blockName));        		
         	w.addThrottleCommand(new ThrottleSetting(time, "Speed", Float.toString(5*f/8), blockName));        		
@@ -392,10 +405,10 @@ public class NXFrame extends WarrantRoute {
         	time = 0;
     	} else {
     		WarrantTableFrame._defaultEStop = false;
-    		int delay = (int)Math.max(block.getLengthIn()-6, 0)*500;
+    		delay = (int)Math.max(block.getLengthIn()-6, 0)*500;
         	w.addThrottleCommand(new ThrottleSetting(delay, "Speed", Float.toString(f/4), blockName));
      	}
-    	w.addThrottleCommand(new ThrottleSetting(time, "Speed", "0.0", blockName));        		
+    	w.addThrottleCommand(new ThrottleSetting(delay/2, "Speed", "0.0", blockName));        		
     	w.addThrottleCommand(new ThrottleSetting(500, "F2", "true", blockName));
     	w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
     	w.addThrottleCommand(new ThrottleSetting(500, "F0", "false", blockName));
