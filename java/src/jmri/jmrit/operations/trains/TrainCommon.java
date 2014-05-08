@@ -70,6 +70,8 @@ public class TrainCommon {
 	protected boolean dropCars;
 
 	protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
+		if (isThereWorkAtLocation(null, engineList, rl))
+			printEngineHeader(file, isManifest);
 		int lineLength = getLineLength(isManifest);
 		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
@@ -93,8 +95,13 @@ public class TrainCommon {
 	 * @param orientation
 	 */
 	protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
+		boolean printHeader = Setup.isPrintHeadersEnabled();
 		for (Engine engine : engineList) {
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
+				if (printHeader) {
+					printPickupEngineHeader(file, isManifest);
+					printHeader = false;
+				}
 				pickupEngine(file, engine, isManifest);
 			}
 		}
@@ -124,9 +131,15 @@ public class TrainCommon {
 	 * @param orientation
 	 */
 	protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
+		boolean printHeader = Setup.isPrintHeadersEnabled();
 		for (Engine engine : engineList) {
-			if (engine.getRouteDestination() == rl)
+			if (engine.getRouteDestination() == rl) {
+				if (printHeader) {
+					printDropEngineHeader(file, isManifest);
+					printHeader = false;
+				}
 				dropEngine(file, engine, isManifest);
+			}
 		}
 	}
 
@@ -1138,21 +1151,30 @@ public class TrainCommon {
 		if (!Setup.isPrintHeadersEnabled())
 			return;
 		int lineLength = getLineLength(isManifest);
-		String[] format = Setup.getPickupEngineMessageFormat();
 		printHorizontalLine(file, 0, lineLength);
-		if (Setup.isTwoColumnFormatEnabled()) {
-			String s = padAndTruncateString(getHeader(format), lineLength / 2, true);
-			format = Setup.getDropEngineMessageFormat();
-			s = s + VERTICAL_LINE_CHAR + getHeader(format);
-			if (s.length() > lineLength)
-				s = s.substring(0, lineLength);
-			addLine(file, s);
-
-		} else {
-			String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
-					+ getHeader(format), lineLength, true);
-			addLine(file, s);
-		}
+		String s = padAndTruncateString(getPickupEngineHeader(), lineLength / 2, true);
+		s = s + VERTICAL_LINE_CHAR + getDropEngineHeader();
+		if (s.length() > lineLength)
+			s = s.substring(0, lineLength);
+		addLine(file, s);
+		printHorizontalLine(file, 0, lineLength);
+	}
+	
+	public void printPickupEngineHeader(PrintWriter file, boolean isManifest) {
+		int lineLength = getLineLength(isManifest);
+		printHorizontalLine(file, 0, lineLength);
+		String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
+				+ getPickupEngineHeader(), lineLength, true);
+		addLine(file, s);
+		printHorizontalLine(file, 0, lineLength);
+	}
+	
+	public void printDropEngineHeader(PrintWriter file, boolean isManifest) {
+		int lineLength = getLineLength(isManifest);
+		printHorizontalLine(file, 0, lineLength);
+		String s = padAndTruncateString(tabString("", Setup.getManifestPrefixLength() + 1, true)
+				+ getDropEngineHeader(), lineLength, true);
+		addLine(file, s);
 		printHorizontalLine(file, 0, lineLength);
 	}
 
@@ -1215,41 +1237,35 @@ public class TrainCommon {
 	}
 
 	public String getPickupEngineHeader() {
-		return getHeader(Setup.getPickupEngineMessageFormat());
+		return getHeader(Setup.getPickupEngineMessageFormat(), PICKUP, !LOCAL);
 	}
 
 	public String getDropEngineHeader() {
-		return getHeader(Setup.getDropEngineMessageFormat());
+		return getHeader(Setup.getDropEngineMessageFormat(), !PICKUP, !LOCAL);
 	}
 
 	public String getPickupCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getPickupCarMessageFormat());
+			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL);
 		else
-			return getHeader(Setup.getSwitchListPickupCarMessageFormat());
+			return getHeader(Setup.getSwitchListPickupCarMessageFormat(), PICKUP, !LOCAL);
 	}
 
 	public String getDropCarHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getDropCarMessageFormat());
+			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL);
 		else
-			return getHeader(Setup.getSwitchListDropCarMessageFormat());
+			return getHeader(Setup.getSwitchListDropCarMessageFormat(), !PICKUP, !LOCAL);
 	}
 
 	public String getLocalMoveHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getLocalMessageFormat());
+			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL);
 		else
-			return getHeader(Setup.getSwitchListLocalMessageFormat());
+			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL);
 	}
 
-	/**
-	 * TODO change all of the attributes to user controlled text.
-	 * 
-	 * @param format
-	 * @return
-	 */
-	private String getHeader(String[] format) {
+	private String getHeader(String[] format, boolean isPickup, boolean isLocal) {
 		StringBuffer buf = new StringBuffer();
 		for (String attribute : format) {
 			if (attribute.equals(Setup.NONE))
@@ -1298,13 +1314,21 @@ public class TrainCommon {
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Track(), locationManager
 						.getMaxTrackNameLength())
 						+ " ");
-			else if (attribute.equals(Setup.LOCATION))
+			else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(), locationManager
 						.getMaxTrackNameLength())
 						+ " ");
-			else if (attribute.equals(Setup.DESTINATION))
+			else if (attribute.equals(Setup.LOCATION) && !isPickup)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(), locationManager
+						.getMaxLocationNameLength())
+						+ " ");
+			else if (attribute.equals(Setup.DESTINATION) && !isPickup)
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(), locationManager
 						.getMaxTrackNameLength())
+						+ " ");
+			else if (attribute.equals(Setup.DESTINATION) && isPickup)
+				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(), locationManager
+						.getMaxLocationNameLength())
 						+ " ");
 			else if (attribute.equals(Setup.DEST_TRACK))
 				buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Dest_Track(), locationManager
