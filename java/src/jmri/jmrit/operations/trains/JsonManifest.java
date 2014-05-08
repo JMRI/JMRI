@@ -14,7 +14,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -66,7 +65,7 @@ public class JsonManifest extends TrainCommon {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE_FILE_NAME, this.train.getManifestLogoURL());
         }
-        root.put(JSON.DATE, TrainCommon.getDate(true).trim()); // Validity
+        root.put(JSON.DATE, TrainCommon.getISO8601Date(true)); // Validity
         this.mapper.writeValue(TrainManagerXml.instance().createManifestFile(this.train.getName(), JSON.JSON), root);
     }
 
@@ -209,6 +208,7 @@ public class JsonManifest extends TrainCommon {
                     }
                 }
             } else {
+                log.debug("Train terminates in {}", locationName);
                 jsonLocation.put("TrainTerminatesIn", locationName);
             }
             jsonLocation.put(JSON.CARS, jsonCars);
@@ -230,17 +230,6 @@ public class JsonManifest extends TrainCommon {
             return null; // already printed out this car type
         }
         return JsonUtil.getCar(car);
-    }
-
-    private ObjectNode addCarsLocationUnknown() {
-        ObjectNode node = this.mapper.createObjectNode();
-        node.putNull(JSON.LOCATION);
-        ArrayNode miaCars = this.mapper.createArrayNode();
-        for (Car car : CarManager.instance().getCarsLocationUnknown()) {
-            miaCars.add(JsonUtil.getCar(car));
-        }
-        node.put(JSON.CARS, miaCars);
-        return node;
     }
 
     protected ArrayNode dropEngines(List<Engine> engines, RouteLocation location) {

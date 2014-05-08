@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
 import jmri.jmrit.operations.locations.Location;
@@ -1383,15 +1384,14 @@ public class TrainCommon {
             if (isModelYear && !Setup.getYearModeled().isEmpty()) {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
             }
-            return new ISO8601DateFormat().format(calendar.getTime());
+            return (new ISO8601DateFormat()).format(calendar.getTime());
         }
 
-	public static String getDate(boolean isModelYear) {
+        public static String getDate(Date date) {
 		Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
 
-		String year = Setup.getYearModeled();
-		if (year.equals("") || !isModelYear)
-			year = Integer.toString(calendar.get(Calendar.YEAR));
+		String year = Integer.toString(calendar.get(Calendar.YEAR));
 		year = year.trim();
 
 		// Use 24 hour clock
@@ -1422,9 +1422,16 @@ public class TrainCommon {
 		// Calendar.LONG, Locale.getDefault()
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM,
 		// Calendar.LONG, Locale.getDefault())
-		String date = calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
+		return calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
 				+ h + ":" + m + " " + AM_PM;
-		return date;
+        }
+
+	public static String getDate(boolean isModelYear) {
+		Calendar calendar = Calendar.getInstance();
+                if (isModelYear && !Setup.getYearModeled().equals("")) {
+                    calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+                }
+                return TrainCommon.getDate(calendar.getTime());
 	}
 
 	/**
