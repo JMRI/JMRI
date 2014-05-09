@@ -54,14 +54,10 @@ public class HtmlConductor extends HtmlTrainCommon {
             );
         }
 
-        StringBuilder builder = new StringBuilder();
         List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
 
-        int sequenceId = location.getSequenceId();
-        int sequence = train.getRoute().getLocationsBySequenceList().size();
-        boolean work = isThereWorkAtLocation(train, location.getLocation());
         String pickups = performWork(true, false);  // pickup=true, local=false
         String setouts = performWork(false, false); // pickup=false, local=false
         String localMoves = performWork(false, true); // pickup=false, local=true
