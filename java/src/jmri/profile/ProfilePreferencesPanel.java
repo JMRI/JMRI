@@ -30,7 +30,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
@@ -534,7 +533,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     public boolean isDirty() {
         return false; // ProfileManager preferences are saved immediately, so this is always false
     }
-
+    /* Comment out until I get around to utilizing this, so Jenkins does not throw warnings.
     private static class ZipFileFilter extends FileFilter {
 
         public ZipFileFilter() {
@@ -557,4 +556,5 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             return "Zip archives (.zip)";
         }
     }
+    */
 }
