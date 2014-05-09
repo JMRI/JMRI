@@ -1433,12 +1433,12 @@ public class JsonUtil {
         node.put(COMMENT, StringEscapeUtils.escapeHtml4(rs.getComment()));
         if (rs.getTrack() != null) {
             node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
-        } else {
+        } else if (rs.getLocation() != null) {
             node.put(LOCATION, JsonUtil.getLocation(rs.getLocation(), rs.getRouteLocation()));
         }
         if (rs.getDestinationTrack() != null) {
             node.put(DESTINATION, JsonUtil.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
-        } else {
+        } else if (rs.getDestination() != null) {
             node.put(DESTINATION, JsonUtil.getLocation(rs.getDestination(), rs.getRouteDestination()));
         }
         return node;

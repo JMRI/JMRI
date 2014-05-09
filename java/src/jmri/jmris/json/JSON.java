@@ -564,12 +564,12 @@ public final class JSON {
      */
     public static final String FINAL_DESTINATION = "finalDestination"; // NOI18N
     /**
-     * {@value #DROP_COMMENT}
+     * {@value #REMOVE_COMMENT}
      * @since 1.1
      */
     public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
     /**
-     * {@value #PICKUP_COMMENT}
+     * {@value #ADD_COMMENT}
      * @since 1.1
      */
     public static final String ADD_COMMENT = "addComment"; // NOI18N
@@ -594,7 +594,7 @@ public final class JSON {
      */
     public static final String CHANGE_ENGINES = "changeEngines";
     /**
-     * {@value #DROP_HELPERS}
+     * {@value #REMOVE_HELPERS}
      * @since 1.1
      */
     public static final String REMOVE_HELPERS = "removeHelpers";

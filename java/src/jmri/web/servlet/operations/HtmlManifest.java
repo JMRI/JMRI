@@ -3,7 +3,9 @@ package jmri.web.servlet.operations;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -12,6 +14,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
+import static jmri.jmrit.operations.trains.TrainCommon.getDate;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +27,8 @@ import org.slf4j.LoggerFactory;
 public class HtmlManifest extends HtmlTrainCommon {
 
     protected ObjectMapper mapper;
+    private JsonNode jsonManifest = null;
     private final static Logger log = LoggerFactory.getLogger(HtmlManifest.class);
-
 
     public HtmlManifest(Locale locale, Train train) throws IOException {
         super(locale, train);
@@ -37,8 +41,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     public String getLocations() throws IOException {
         // build manifest from JSON manifest
         StringBuilder builder = new StringBuilder();
-        JsonNode json = this.mapper.readTree((new JsonManifest(this.train)).getFile());
-        ArrayNode locations = (ArrayNode) json.path(JSON.LOCATIONS);
+        ArrayNode locations = (ArrayNode) this.getJsonManifest().path(JSON.LOCATIONS);
         boolean hasWork;
         for (int r = 0; r < locations.size(); r++) {
             JsonNode location = locations.get(r);
@@ -438,5 +441,33 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected boolean isUtilityCar(JsonNode car) {
         return car.path(JSON.UTILITY).booleanValue();
+    }
+
+    protected JsonNode getJsonManifest() throws IOException {
+        if (this.jsonManifest == null) {
+            this.jsonManifest = this.mapper.readTree((new JsonManifest(this.train)).getFile());
+        }
+        return this.jsonManifest;
+    }
+
+    @Override
+    public String getValidity() {
+        try {
+            if (Setup.isPrintTimetableNameEnabled()) {
+                return String.format(locale,
+                        strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
+                        getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JSON.DATE).textValue())),
+                        TrainScheduleManager.instance().getScheduleById(train.getId()));
+            } else {
+                return String.format(locale,
+                        strings.getProperty(this.resourcePrefix + "Validity"),
+                        getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JSON.DATE).textValue())));
+            }
+        } catch (ParseException ex) {
+            log.error("Date of JSON manifest could not be parsed as a Date.");
+        } catch (IOException ex) {
+            log.error("JSON manifest could not be read.");
+        }
+        return "";
     }
 }

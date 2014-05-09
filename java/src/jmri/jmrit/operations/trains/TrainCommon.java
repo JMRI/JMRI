@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -9,10 +10,9 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
 import javax.swing.JLabel;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -32,7 +32,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +91,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-	 * @param orientation
+         * @param isManifest
 	 */
 	protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -128,7 +127,7 @@ public class TrainCommon {
 	 * @param file
 	 * @param engineList
 	 * @param rl
-	 * @param orientation
+         * @param isManifest
 	 */
 	protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
 		boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -1380,12 +1379,19 @@ public class TrainCommon {
 		addLine(file, sb.toString());
 	}
 
-	public static String getDate(boolean isModelYear) {
-		Calendar calendar = Calendar.getInstance();
+        public static String getISO8601Date(boolean isModelYear) {
+            Calendar calendar = Calendar.getInstance();
+            if (isModelYear && !Setup.getYearModeled().isEmpty()) {
+                calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+            }
+            return (new ISO8601DateFormat()).format(calendar.getTime());
+        }
 
-		String year = Setup.getYearModeled();
-		if (year.equals("") || !isModelYear)
-			year = Integer.toString(calendar.get(Calendar.YEAR));
+        public static String getDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+
+		String year = Integer.toString(calendar.get(Calendar.YEAR));
 		year = year.trim();
 
 		// Use 24 hour clock
@@ -1416,9 +1422,16 @@ public class TrainCommon {
 		// Calendar.LONG, Locale.getDefault()
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM,
 		// Calendar.LONG, Locale.getDefault())
-		String date = calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
+		return calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
 				+ h + ":" + m + " " + AM_PM;
-		return date;
+        }
+
+	public static String getDate(boolean isModelYear) {
+		Calendar calendar = Calendar.getInstance();
+                if (isModelYear && !Setup.getYearModeled().equals("")) {
+                    calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
+                }
+                return TrainCommon.getDate(calendar.getTime());
 	}
 
 	/**
@@ -1464,7 +1477,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param fieldSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String padAndTruncateString(String s, int fieldSize) {
 		return padAndTruncateString(s, fieldSize, Setup.isTabEnabled());
@@ -1484,7 +1497,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param fieldSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String padString(String s, int fieldSize) {
 		StringBuffer buf = new StringBuffer(s);
@@ -1499,7 +1512,7 @@ public class TrainCommon {
 	 * 
 	 * @param s
 	 * @param tabSize
-	 * @return
+	 * @return A String the specified length
 	 */
 	public static String tabString(String s, int tabSize) {
 		return tabString(s, tabSize, Setup.isTabEnabled());
