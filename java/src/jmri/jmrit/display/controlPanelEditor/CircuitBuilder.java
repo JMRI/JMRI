@@ -1593,7 +1593,7 @@ public class CircuitBuilder  {
             if (log.isDebugEnabled()) log.debug("selection= "+(selection==null?"null":
                                                             selection.getClass().getName()));
             if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
-                _editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);
+                //_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);
                 //_editor.getSelectionGroup().add(selection);
                 _editor.highlight(getPortalIconMap().get(((PortalIcon)selection).getName()));
             }

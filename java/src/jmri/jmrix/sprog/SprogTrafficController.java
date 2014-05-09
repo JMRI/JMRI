@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.util.Vector;
 
 //import jmri.jmrix.AbstractMessage;
-import jmri.jmrix.AbstractSerialPortController;
+import jmri.jmrix.AbstractPortController;
 
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
@@ -181,12 +181,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
 
         // methods to connect/disconnect to a source of data in a LnPortController
-	private AbstractSerialPortController controller = null;
+	private AbstractPortController controller = null;
 
 	/**
 	 * Make connection to existing PortController object.
 	 */
-	public void connectPort(AbstractSerialPortController  p) {
+	public void connectPort(AbstractPortController  p) {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
 			if (controller != null)
@@ -198,7 +198,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * Break connection to existing SprogPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
 	 */
-	public void disconnectPort(AbstractSerialPortController p) {
+	public void disconnectPort(AbstractPortController p) {
 			istream = null;
 			ostream = null;
 			if (controller != p)

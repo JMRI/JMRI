@@ -473,6 +473,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         	}
                     	}
                         msg = Bundle.getMessage("Aborted", blockName, cmdIdx);
+                        break;
                     case Warrant.WAIT_FOR_CLEAR:
                     	msg = Bundle.getMessage("WaitForClear", _trainName, blockName);
                         break;
