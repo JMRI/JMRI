@@ -164,22 +164,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         }
 
         // engine change or helper service?
-        if (train.getSecondLegOptions() != Train.NONE) {
-            if (location == train.getSecondLegStartLocation()) {
-                builder.append(engineChange(location, train.getSecondLegOptions()));
-            }
-            if (location == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
-                builder.append(String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName()))); // NOI18N
-            }
-        }
-        if (train.getThirdLegOptions() != Train.NONE) {
-            if (location == train.getThirdLegStartLocation()) {
-                builder.append(engineChange(location, train.getSecondLegOptions()));
-            }
-            if (location == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
-                builder.append(String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName()))); // NOI18N
-            }
-        }
+        builder.append(this.getEngineChanges(location));
 
         if (r < sequence.size() - 1) {
             // Is the next location the same as the previous?
