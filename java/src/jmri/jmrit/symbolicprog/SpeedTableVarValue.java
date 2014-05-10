@@ -2,22 +2,21 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -25,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Represent an entire speed table as a single Variable.
  * <P>
@@ -474,7 +475,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		int currentValue;
 		DecVariableValue decVal;
 		JLabel label;
-		String padding = "                                                    ";
 
         if (mfx) {
             GridBagLayout gx = new GridBagLayout();
