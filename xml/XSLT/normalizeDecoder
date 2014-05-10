@@ -20,27 +20,34 @@ foreach x ( $* )
  cat $x |\
     xsltproc decoderLabelToItem.xsl - |\
     xsltproc decoderAddLabelElement.xsl - |\
+    xsltproc decoderPaneAddNameElement.xsl - |\
     xsltproc decoderPaneLabelToText.xsl - |\
     xsltproc decoderAddPaneLabelTextElement.xsl - |\
-    xsltproc decoderAddI18nLabel.xsl - |\
-    xsltproc decoderAddI18nComment.xsl - |\
-    xsltproc decoderAddI18nChoice.xsl - |\
-    xsltproc decoderAddI18nName.xsl - |\
-    xsltproc decoderAddI18nTooltip.xsl - |\
-    xsltproc decoderAddI18nPaneTooltip.xsl - |\
-    xsltproc decoderAddI18nPaneLabel.xsl - |\
     xsltproc decoderSuppressRedundantLabel.xsl - |\
     xsltproc decoderPaneSuppressLabelAttribute.xsl - |\
+    xsltproc decoderPaneSuppressNameAttribute.xsl - |\
     xmllint -format - > tmp/$x:t
-# cat $x | xmllint -format - > tmp/$x:t
 end
 
-# full string, including translation
-#  cat $x | xsltproc decoderLabelToItem.xsl - | xsltproc decoderAddLabelElement.xsl - | xsltproc decoderAddI18nLabel.xsl - | xsltproc decoderAddI18nComment.xsl - | xsltproc decoderAddI18nChoice.xsl - | xsltproc decoderAddI18nName.xsl - | xsltproc decoderAddI18nTooltip.xsl - | xsltproc decoderAddI18nPaneTooltip.xsl - | xsltproc decoderAddI18nPaneLabel.xsl - | xsltproc decoderSuppressRedundantLabel.xsl - | tr -d '\r' | xmllint -format - > tmp/$x:t
-
-# full string, no translation
-# cat $x | xsltproc decoderLabelToItem.xsl - | xsltproc decoderAddLabelElement.xsl - | xsltproc decoderSuppressRedundantLabel.xsl - | xsltproc decoderAddI18nLabel.xsl - | xsltproc decoderAddI18nComment.xsl - | xsltproc decoderAddI18nChoice.xsl - | xsltproc decoderAddI18nName.xsl - | xsltproc decoderAddI18nTooltip.xsl - | xsltproc decoderAddI18nPaneTooltip.xsl - | tr -d '\r' | xmllint -format - > tmp/$x:t
 
 # just formatting
 # cat $x | tr -d '\r' | xmllint -format - > tmp/$x:t
 
+# with translation
+#  cat $x |\
+#     xsltproc decoderLabelToItem.xsl - |\
+#     xsltproc decoderAddLabelElement.xsl - |\
+#     xsltproc decoderPaneAddNameElement.xsl - |\
+#     xsltproc decoderPaneLabelToText.xsl - |\
+#     xsltproc decoderAddPaneLabelTextElement.xsl - |\
+#     xsltproc decoderSuppressRedundantLabel.xsl - |\
+#     xsltproc decoderPaneSuppressLabelAttribute.xsl - |\
+#     xsltproc decoderPaneSuppressNameAttribute.xsl - |\
+#     xsltproc decoderAddI18nLabel.xsl - |\
+#     xsltproc decoderAddI18nComment.xsl - |\
+#     xsltproc decoderAddI18nChoice.xsl - |\
+#     xsltproc decoderAddI18nTooltip.xsl - |\
+#     xsltproc decoderPaneAddI18nName.xsl - |\
+#     xsltproc decoderAddI18nPaneLabel.xsl - |\
+#     xsltproc decoderAddI18nPaneTooltip.xsl - |\
+#     xmllint -format - > tmp/$x:t

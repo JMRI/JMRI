@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE xslt [
-<!ENTITY target "it">
-]>
 <!-- $Id$ -->
 
-<!-- Process a JMRI pane definition file, adding a text element (with specific -->
-<!-- language) based on the default text element            -->
+<!-- Process a JMRI decoder or programmer file, adding a name element (with default     -->
+<!-- language) based on the name (preferred) of a pane element          -->
 
-<!-- Provide the two-character language code in the ENTITY line above.      -->
+<!-- Note: An existing default-language name element is not replaced.     -->
 
-<!-- You should normalize the decoder file before using this tool.          -->
+<!-- xsltproc decoderPaneAddNameElement.xsl ../programmers/TrainShowBasic.xml | diff - ../programmers/TrainShowBasic.xml     -->
 
-<!-- Note: Existing specific-language label elements are not replaced.      -->
+<!-- The sequence of operations to normalize a decoder file is -->
+<!--  decoderLabelToItem.xsl                                   -->
+<!--  decoderAddLabelElement.xsl                               -->
+<!--  decoderSuppressRedundantLabel.xsl                        -->
+<!--  xmllint -format                                          -->
 
-<!-- xsltproc xml/XSLT/decoderAddI18nPaneLabel.xsl 0NMRA.xml | xmllint -format - | diff - 0NMRA.xml      -->
 
 <!-- This file is part of JMRI.  Copyright 2009-2014.                       -->
 <!--                                                                        -->
@@ -34,25 +34,19 @@
 
 <xsl:output method="xml" encoding="utf-8"/>
 
-<!--specific template match for lanel element with specific-language text element -->
-    <xsl:template match="label[text[@xml:lang = '&target;']]" priority="5">
+<!--specific template match for pane element with default-language name element -->
+    <xsl:template match="pane[name[not(@xml:lang)]]" priority="5">
       <xsl:copy>
         <xsl:apply-templates select="@*|node()" />
       </xsl:copy>
     </xsl:template>
 
-<!--specific template match for label element with text element with no language attribute present-->
-    <xsl:template match="label[text[not(@xml:lang)]]" priority="4">
+<!--specific template match for pane element with no name element but with name attribute present-->
+    <xsl:template match="pane[@name]" priority="4">
       <xsl:copy>
-        <xsl:element name="text">
-            <xsl:value-of select="./text"/>
-        </xsl:element>
-        <xsl:if test="not(translate(text[not(@xml:lang)], ' ', '') = '')"><!-- don't translate is empty -->
-          <xsl:element name="text">
-            <xsl:attribute name="xml:lang">&target;</xsl:attribute>
-            <xsl:value-of select="./text"/>
-          </xsl:element>
-        </xsl:if>
+        <xsl:apply-templates select="@*" /><!-- copy attributes before adding elements-->
+        <xsl:element name="name"><xsl:value-of select="@name"/></xsl:element>
+        <xsl:apply-templates select="node()" /> <!-- copy elements -->
       </xsl:copy>
     </xsl:template>
 

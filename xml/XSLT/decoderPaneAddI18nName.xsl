@@ -41,14 +41,16 @@
       </xsl:copy>
     </xsl:template>
 
-<!--specific template match for pane element with no name element but with name attribute present-->
-    <xsl:template match="pane[@name]" priority="4">
+<!--specific template match for pane element with default language name element -->
+    <xsl:template match="pane[name]" priority="4">
       <xsl:copy>
-        <xsl:apply-templates select="@*|*[not(self::name[@xml:lang = '&target;'])]" />
+        <xsl:apply-templates select="@*" />
+        <xsl:apply-templates select="name" />
         <xsl:element name="name">
           <xsl:attribute name="xml:lang">&target;</xsl:attribute>
-          <xsl:value-of select="@name"/>
+          <xsl:value-of select="name"/>
         </xsl:element>
+        <xsl:apply-templates select="*[not(self::name)]" />
       </xsl:copy>
     </xsl:template>
 

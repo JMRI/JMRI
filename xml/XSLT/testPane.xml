@@ -35,6 +35,12 @@
       <text xml:lang="it">Italian for 4th line</text>
       <text xml:lang="fr">French for 4th line</text>
     </label>
+    <label>
+      <label>Fifth line of text, as only a label subelement without an attribute</label>
+    </label>
+    <label>
+      <text>Sixth line of text, as only a label subelement without an attribute</text>
+    </label>
     <display item="Consist Function" tooltip=" Sets functions to follow base address or consist address">
       <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
     </display>
