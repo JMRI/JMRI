@@ -11,19 +11,19 @@
       <tooltip xml:lang="it">Determina se una locomotiva pu\u00F2 funzionare in DC convenzionale</tooltip>
     </display>
     <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed">
-      <tooltip xml:lang="it">Imposta il valore di tensione in Volt per muovere il motore alla velocit\u00E0 minima programmata</tooltip>
+      <tooltip xml:lang="it">Imposta il valore di tensione in Volt per muovere il motore alla velocità minima programmata</tooltip>
     </display>
     <display item="Analog Vhigh" tooltip="Sets the analog input voltage at which the motor reaches programmed maximum speed">
-      <tooltip xml:lang="it">Imposta il valore di tensione analogico per muovere il motore alla velocit\u00E0 massima programmata</tooltip>
+      <tooltip xml:lang="it">Imposta il valore di tensione analogico per muovere il motore alla velocità massima programmata</tooltip>
     </display>
     <display item="Analog (AC) Mode" tooltip="Determines whether loco can operate on conventional AC current">
       <tooltip xml:lang="it">Determina se una locomotiva pu\u00F2 funzionare in AC convenzionale</tooltip>
     </display>
     <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed">
-      <tooltip xml:lang="it">Imposta il valore di tensione AC per muovere il motore alla velocit\u00E0 minima programmata</tooltip>
+      <tooltip xml:lang="it">Imposta il valore di tensione AC per muovere il motore alla velocità minima programmata</tooltip>
     </display>
     <display item="Analog (AC) Vhigh" tooltip="Sets the analog AC input voltage at which the motor reaches programmed maximum speed">
-      <tooltip xml:lang="it">Imposta il valore di tensione AC per muovere il motore alla velocit\u00E0 massima programmata</tooltip>
+      <tooltip xml:lang="it">Imposta il valore di tensione AC per muovere il motore alla velocità massima programmata</tooltip>
     </display>
     <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
       <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>

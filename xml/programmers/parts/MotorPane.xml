@@ -39,7 +39,7 @@
     <display item="Load Control"/>
     <display item="EMF Enable"/>
     <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value">
-      <tooltip xml:lang="it">Se la loco non raggiunge la massima Velocit\u00E0, diminuire questo Valore</tooltip>
+      <tooltip xml:lang="it">Se la loco non raggiunge la massima Velocità, diminuire questo Valore</tooltip>
       <tooltip xml:lang="ca">Si la locomotora no arriba a la velocitat m‡xima, reduir aquest valor</tooltip>
     </display>
     <display item="EMF Static Config" tooltip="EMF Static Config">
@@ -55,7 +55,7 @@
       <tooltip xml:lang="ca">Caiguda de la EMF</tooltip>
     </display>
     <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off">
-      <tooltip xml:lang="it">Imposta il valore di velocit\u00E0 oltre il quale il controllo di Back-EMF viene tagliato</tooltip>
+      <tooltip xml:lang="it">Imposta il valore di velocità oltre il quale il controllo di Back-EMF viene tagliato</tooltip>
       <tooltip xml:lang="ca">Estableix a quin pas es desconnecta la compensaciÛ de c‡rrega</tooltip>
     </display>
     <display item="EMF Option 1"/>

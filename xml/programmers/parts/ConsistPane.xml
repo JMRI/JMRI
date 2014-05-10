@@ -6,7 +6,7 @@
     <row>
       <column>
         <display item="Consist Address" tooltip="Sets the multiple unit (consist) address">
-          <tooltip xml:lang="it">Imposta Indirizzi per Unit1u00E0 Multiple</tooltip>
+          <tooltip xml:lang="it">Imposta Indirizzi per Unità Multiple</tooltip>
         </display>
         <display item="Consist Direction" tooltip="Sets the relative direction of the loco when consist is told to move forward">
           <tooltip xml:lang="it">Imposta Direzione relativa della Loco quando il gruppo di loco va in Avanti</tooltip>
