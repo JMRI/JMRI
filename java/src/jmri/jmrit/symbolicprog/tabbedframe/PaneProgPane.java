@@ -1335,7 +1335,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create label from Element
      */
     protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        final JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
+        String text = LocaleSelector.getAttribute(e,"text");
+        if (text==null || text.equals("")) text = LocaleSelector.getAttribute(e,"label"); // label subelement deprecated 3.7.5
+        final JLabel l = new JLabel(text);
         l.setAlignmentX(1.0f);
         cs.fill = GridBagConstraints.BOTH;
         if (log.isDebugEnabled()) {
@@ -2439,12 +2441,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     private JPanel addDccAddressPanel(Element e) {
-        JPanel l;
-        String at = LocaleSelector.getAttribute(e, "label");
-        if (at!=null)
-            l = new DccAddressPanel(_varModel, at);
-        else
-            l = new DccAddressPanel(_varModel);
+        JPanel l = new DccAddressPanel(_varModel);
         panelList.add(l);
         // make sure this will get read/written, even if real vars not on pane
         int iVar;
