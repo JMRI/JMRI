@@ -153,7 +153,8 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _portalList.setCellRenderer(new PortalCellRenderer());
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
-        _portalList.setPreferredSize(new Dimension(300,200));
+        _portalList.setPreferredSize(new Dimension(300,120));
+        _portalList.setVisibleRowCount(5);
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
@@ -346,6 +347,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     private void deletePortalIcon(PortalIcon icon) {
+        if (log.isDebugEnabled()) log.debug("deletePortalIcon: "+icon.getName());
         _parent.removePortalIcon(icon.getName());
         _parent.getCircuitIcons(_homeBlock).remove(icon);
         icon.remove();
@@ -399,6 +401,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     		boolean home = false;
     		OBlock block = portal.getToBlock();
     		if (block==null) {
+    	        _parent._editor.highlight(icon);
                 JOptionPane.showMessageDialog(this,
                 		Bundle.getMessage("portalNeedsBlock", portal.getDisplayName()), 
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
@@ -408,6 +411,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     		}
     		block = portal.getFromBlock();
     		if (block==null) {
+    	        _parent._editor.highlight(icon);
                 JOptionPane.showMessageDialog(this,
                 		Bundle.getMessage("portalNeedsBlock", portal.getDisplayName()), 
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
@@ -416,6 +420,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 home = _homeBlock.equals(block);
     		}
     		if (!home) {
+    	        _parent._editor.highlight(icon);
                 JOptionPane.showMessageDialog(this,
                 		Bundle.getMessage("portalNotInCircuit", _homeBlock.getDisplayName()), 
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
@@ -435,7 +440,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         	return;
         }
         OBlock saveHome = _homeBlock;
-        _parent._editor.highlight(icon);        
         String name = portal.getDisplayName();
         _parent._editor.highlight(icon);
         String msg = null;
@@ -665,6 +669,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 	pi.setLevel(Editor.MARKERS);
                 	pi.setStatus(PortalIcon.VISIBLE);
                     _parent.addPortalIcon(pi);
+                    _portalList.setSelectedValue(portal, true);
                 }
                 _currentPortalName = name;
                 return pi;
