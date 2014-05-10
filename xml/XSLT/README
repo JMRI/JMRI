@@ -94,6 +94,29 @@ Still needed:
 *) handle tooltip in pane elements - need to provide default english element to
    eventually move away from attribute
 
+What does this attribute on <pane> really do?
+    <xs:attribute name="nameFmt" type="labelItemType" default="label">
+      <xs:annotation><xs:documentation>
+      Specifies whether the text displayed in the interface should
+      come from the "item" or "label" of the underlying variable.
+      </xs:documentation></xs:annotation>
+    </xs:attribute>
+    Only used in a couple of programmers
+        JMRI/projects/HEAD/xml/XSLT/ % grep -r nameFmt ../programmers/
+        ../programmers//Basic.xml:    <pane name="Basic" nameFmt="item">
+        ../programmers//Registers.xml:    <pane name="Basic" nameFmt="item">
+        ../programmers//Tutorial.xml:    <pane name="Decoder Address" nameFmt="item">
+        ../programmers//Tutorial.xml:    <pane name="Enums" nameFmt="item">
+        ../programmers//Tutorial.xml:    <pane name="Values" nameFmt="item">
+        JMRI/projects/HEAD/xml/XSLT/ % grep -r nameFmt ../decoders
+        ../decoders/Arnold_81220.xml:	<pane name="Arnold" nameFmt="item">
+        ../decoders/MRC_Rapido_TurboTrain.xml:  <pane name="MRC" nameFmt="label">
+        ../decoders/Umelec_ATL2051.xml:  <pane name="Speed Table" nameFmt="label">
+        ../decoders/Umelec_ATL2051.xml:  <pane name="Whistle" nameFmt="label">
+        ../decoders/Umelec_ATL2051.xml:  <pane name="ATL Motor" nameFmt="label">
+        ../decoders/Umelec_ATL2064.xml:  <pane name="ATLPlus" nameFmt="label">
+        ../decoders/Umelec_ATL2064.xml:  <pane name="Signal Mode" nameFmt="label">
+        ../decoders/Umelec_ATL2064.xml:  <pane name="ATL Other" nameFmt="label">
 
 0) process away tooltip and comment attribute in variables (and tooltip in panes!), making
     proper sub-elements
