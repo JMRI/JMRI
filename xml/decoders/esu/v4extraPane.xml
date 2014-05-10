@@ -1,7 +1,9 @@
-  <pane name="ESU Misc." xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="ESU Misc." xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <separator/>
-      <label label="Enabled Protocols"/>
+      <label label="Enabled Protocols">
+      <label xml:lang="it">Protocolli Abilitati</label>
+      </label>
       <label label=" "/>
       <display item="ESU V4 Extra Protocols Option 1" format="checkbox"/>
       <display item="ESU V4 Extra Protocols Option 2" format="checkbox"/>
@@ -9,7 +11,9 @@
       <display item="ESU V4 Extra Protocols Option 4" format="checkbox"/>
       <label label=" "/>
       <separator/>
-      <label label="Command Station Compatibility"/>
+      <label label="Command Station Compatibility">
+      <label xml:lang="it">Centrali Compatibili</label>
+      </label>
       <label label=" "/>
       <display item="ESU V4 Extra Compatibility Option 1" format="checkbox"/>
       <display item="ESU V4 Extra Compatibility Option 2" format="checkbox"/>
@@ -17,7 +21,9 @@
       <display item="ESU V4 Extra Compatibility Option 4" format="checkbox"/>
       <label label=" "/>
       <separator/>
-      <label label="RailCom Settings"/>
+      <label label="RailCom Settings">
+      <label xml:lang="it">RailCom</label>
+      </label>
       <label label=" "/>
       <display item="ESU V4 Extra RailCom Option 1" format="checkbox"/>
       <display item="ESU V4 Extra RailCom Option 2" format="checkbox"/>
@@ -25,7 +31,9 @@
       <display item="ESU V4 Extra RailCom Option 4" format="checkbox"/>
       <label label=" "/>
       <separator/>
-      <label label="Power Interruption Handling"/>
+      <label label="Power Interruption Handling">
+      <label xml:lang="it">Gestione Interruzione Alim.</label>
+      </label>
       <label label=" "/>
       <display item="ESU V4 Extra Power Handling Option 1"/>
       <display item="ESU V4 Extra Power Handling Option 2"/>
@@ -38,7 +46,9 @@
         </row>
       <label label=" "/>
       <separator/>
-      <label label="Miscellaneous"/>
+      <label label="Miscellaneous">
+      <label xml:lang="it">Varie</label>
+      </label>
       <label label=" "/>
       <display item="ESU V4 Extra Miscellaneous Option 1"/>
       <display item="ESU V4 Extra Miscellaneous Option 2"/>
@@ -56,7 +66,9 @@
     </column>
     <column>
       <separator/>
-      <label label="Function Output Settings"/>
+      <label label="Function Output Settings">
+      <label xml:lang="it">Progr.Funzioni Uscita</label>
+      </label>
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Function Output Settings Slider 1" layout="above" label=""/>
@@ -74,7 +86,9 @@
         </row>
         <label label=" "/>
       <separator/>
-      <label label="Auto Uncoupling"/>
+      <label label="Auto Uncoupling">
+      <label xml:lang="it">Sgancio Autom.</label>
+      </label>
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" label=""/>
@@ -92,7 +106,9 @@
         </row>
         <label label=" "/>
       <separator/>
-      <label label="ESU Smoke Unit"/>
+      <label label="ESU Smoke Unit">
+      <label xml:lang="it">Gener.Fumo ESU</label>
+      </label>
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" label=""/>
@@ -110,7 +126,9 @@
         </row>
         <label label=" "/>
       <separator/>
-      <label label="Smoke Chuffs"/>
+      <label label="Smoke Chuffs">
+      <label xml:lang="it">Chuff Fumo</label>
+      </label>
       <label label=" "/>
         <row>
             <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" label=""/>
@@ -128,7 +146,9 @@
         </row>
         <label label=" "/>
       <separator/>
-      <label label="Decoder Information"/>
+      <label label="Decoder Information">
+      <label xml:lang="it">Informazioni Decoder</label>
+      </label>
       <label label=" "/>
         <display item="Firmware Major Version"/>
         <display item="Firmware Minor Version"/>

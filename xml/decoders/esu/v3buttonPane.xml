@@ -1,7 +1,8 @@
-  <pane name="Button Behavior" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Button Behavior" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label="Button         Accel">
         <label xml:lang="fr">Bouton accel(av)</label>
+        <label xml:lang="it">Pulsante accellera</label>
       </label>
       <display item="F0 forward1" format="checkbox" layout="left" label="F0 Forward">
         <label xml:lang="fr">F0 en av</label>

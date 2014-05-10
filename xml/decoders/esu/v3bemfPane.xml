@@ -1,10 +1,10 @@
-  <pane name="Back EMF" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Back EMF" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column/>
     <column/>
     <column>
       <display item="BEMF Active" format="checkbox" label="BEMF off/on" layout="above" tooltip="Sets BEMF off or on">
         <label xml:lang="fr">Comp.charge off/on</label>
-        <label xml:lang="it">Comp.BEMF off/on</label>
+        <label xml:lang="it">Compens.BEMF off/on</label>
       </display>
     </column>
     <column>

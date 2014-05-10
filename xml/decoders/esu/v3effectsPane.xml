@@ -1,10 +1,12 @@
-  <pane name="Effects" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Effects" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label="Button         Front ">
         <label xml:lang="fr">Bouton avant</label>
+        <label xml:lang="it">Pulsanti ......Frontali</label>
       </label>
       <label label="                   Light ">
         <label xml:lang="fr">            Eclairage</label>
+        <label xml:lang="it">...................Luci</label>
       </label>
       <display item="FL(f)1" format="checkbox" layout="left" label="FL Forward">
         <label xml:lang="fr">FL en av</label>
@@ -98,7 +100,7 @@
     <column>
       <label label="Rear ">
         <label xml:lang="fr">Arrière</label>
-        <label xml:lang="it">Dietro</label>
+        <label xml:lang="it">Indietro</label>
       </label>
       <label label="Light ">
         <label xml:lang="fr">Eclairage</label>
@@ -174,7 +176,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
-        <label xml:lang="it">Ausiliar.</label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  1 ">
         <label xml:lang="fr">  1 </label>
@@ -249,7 +251,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
-        <label xml:lang="it">Ausiliar.</label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  2 ">
         <label xml:lang="fr">  2 </label>
@@ -324,7 +326,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
-        <label xml:lang="it">Ausiliar.</label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  3 ">
         <label xml:lang="fr">  3 </label>
@@ -399,7 +401,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
-        <label xml:lang="it">Ausiliar.</label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  4 ">
         <label xml:lang="fr">  4 </label>
