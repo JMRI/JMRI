@@ -1,12 +1,11 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
-import org.apache.log4j.Logger;
+import jmri.jmrix.ieee802154.IEEE802154Node;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.ieee802154.IEEE802154Node;
+import org.apache.log4j.Logger;
 
 /**
  * SerialTrafficControllerTest.java
@@ -26,8 +25,8 @@ public class SerialTrafficControllerTest extends TestCase {
            // test the code to get a new IEEE802154 node
            SerialTrafficController m = new SerialTrafficController();
            IEEE802154Node node = m.newNode();
-	   Assert.assertNotNull("node create failed",m);
-        }
+	   Assert.assertNotNull("node create failed", node);
+       }
 
         public void testGetNodeFromAddressTest() {
            // test the code to get an IEEE802154 node from its address
