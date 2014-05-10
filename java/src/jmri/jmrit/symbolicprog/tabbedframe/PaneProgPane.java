@@ -1568,7 +1568,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         constraintType = constraint.getType().toString();
                         constraint.setAccessible(true);
                         } catch (NoSuchFieldException ex) {
-                        log.error("Unrecognised attribute \""+attribName+"\"");
+                        log.error("Unrecognised attribute \""+attribName+"\", skipping");
+                        continue;
                     }
                     if ( constraintType.equals("int")) {
                         int attribValue;
