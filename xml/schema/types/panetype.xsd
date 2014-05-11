@@ -97,7 +97,6 @@
       </xs:element>
 
     </xs:sequence>
-    <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="tooltip" type="xs:string"/>
     <xs:attribute name="nameFmt" type="labelItemType" default="label">
       <xs:annotation><xs:documentation>
