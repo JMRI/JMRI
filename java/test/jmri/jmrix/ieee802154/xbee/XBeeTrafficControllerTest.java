@@ -1,10 +1,10 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * XBeeTrafficControllerTest.java
@@ -24,7 +24,7 @@ public class XBeeTrafficControllerTest extends TestCase {
            // test the code to get an new XBee 
            XBeeTrafficController m = new XBeeTrafficController();
            XBeeNode node = (XBeeNode)m.newNode();
-           Assert.assertNotNull("node create failed",m);
+           Assert.assertNotNull("node create failed", node);
     }
 
         public void testGetNodeFromAddressTest() {
@@ -161,7 +161,9 @@ public class XBeeTrafficControllerTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
     static Logger log = Logger.getLogger(XBeeTrafficControllerTest.class.getName());
