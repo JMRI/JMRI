@@ -1820,7 +1820,6 @@ public class PaneProgPane extends javax.swing.JPanel
     
     void setCvListFromTable() {
         // remember which CVs to read/write
-        System.out.println("found "+_cvModel.getRowCount()+" rows");
         for (int j=0; j<_cvModel.getRowCount(); j++) {
             cvList.add(Integer.valueOf(j));
         }
