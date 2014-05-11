@@ -226,9 +226,6 @@
         on the value in other pre-defined variables.
         </xs:documentation></xs:annotation>
       </xs:element>
-      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation><xs:documentation>Provide internationalized label text; deprecated JMRI 3.7.5 for text element</xs:documentation></xs:annotation>
-      </xs:element>
       <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>Provide internationalized label text; first in JMRI 3.7.5</xs:documentation></xs:annotation>
       </xs:element>
