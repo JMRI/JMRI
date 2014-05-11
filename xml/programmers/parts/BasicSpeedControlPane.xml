@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Basic Speed Control" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Basic Speed Control</name>
   <name xml:lang="ca">Control bàsic de velocitat</name>
   <name xml:lang="it">Controllo Semplificato Velocità </name>
   <column>
     <row>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
           <label xml:lang="it">Seleziona questo pulsante per usare le impostazioni visualizzate sotto</label>
           <label xml:lang="ca">Selecciona aquest botÛ per usar les caracterÌstiques seg¸ents</label>
         </display>
-        <label label="           To turn off, use Speed Table pane">
-          <label xml:lang="it">Per disabilitare, usa Pannello Tabella Velocità</label>
-          <label xml:lang="ca">Per desconnectar, usar la pestanya Taula de velocitats</label>
+        <label>
+          <text>           To turn off, use Speed Table pane</text>
+          <text xml:lang="it">Per disabilitare, usa Pannello Tabella Velocità</text>
+          <text xml:lang="ca">Per desconnectar, usar la pestanya Taula de velocitats</text>
         </label>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -55,12 +65,16 @@
     </row>
     <row>
       <column>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first">
           <tooltip xml:lang="it">Imposta Curva Tensione Motore a Velocità Media. Imposta prima Vstart e Vhigh</tooltip>
           <tooltip xml:lang="ca">Estableix corba de voltatge per punt mitj‡ del regulador. Cal establir primer Vinici i VAlt</tooltip>
         </display>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
   </column>

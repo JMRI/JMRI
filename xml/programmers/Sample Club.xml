@@ -18,7 +18,8 @@
   <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="yes" showRosterMediaPane="yes">
     <!-- want this to always look the same, so -->
     <!-- don't include panes from the decoder file -->
-    <pane name="Controls">
+    <pane>
+      <name>Controls</name>
       <column>
         <dccaddress/>
         <display item="Locomotive Direction"/>
@@ -50,7 +51,8 @@
       </column>
       <name xml:lang="it">Controls</name>
     </pane>
-    <pane name="Speed Table">
+    <pane>
+      <name>Speed Table</name>
       <column>
         <row>
           <display item="Speed Table Definition" format="checkbox"/>

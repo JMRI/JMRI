@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Motor" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Motor</name>
   <column>
     <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction">
       <tooltip xml:lang="it">Fornisce un impulso di tensione iniziale per ovviare alla frizione in partenza</tooltip>
@@ -13,12 +14,16 @@
       <tooltip xml:lang="it">Imposta grado di decellerazione (ritardo)</tooltip>
       <tooltip xml:lang="ca"> Estableix la taxa de desacceleraciÛ (retard)</tooltip>
     </display>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="DC Brake Momentum" tooltip="Governs how loco responds in DC powered track block">
       <tooltip xml:lang="it">Stabilisce come la loco risponde in in blocco Analogico (DC)</tooltip>
       <tooltip xml:lang="ca">Determina com reacciona la locomotora en trams on hi ha CC</tooltip>
     </display>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Total PWM Period" tooltip="Sets the motor drive frequency">
       <tooltip xml:lang="it">Imposta periodo impulsi al Motore</tooltip>
       <tooltip xml:lang="ca">Estableix la freq¸Ëncia de control del motor</tooltip>
@@ -35,7 +40,9 @@
       <tooltip xml:lang="it">Imposta ampiezza impulsi al Motore in Partenza</tooltip>
       <tooltip xml:lang="ca">Estableix l'amplitud dels pulsos del voltatge inicial</tooltip>
     </display>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Load Control"/>
     <display item="EMF Enable"/>
     <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value">

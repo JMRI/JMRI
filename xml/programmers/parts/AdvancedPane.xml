@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Advanced" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Advanced</name>
   <name xml:lang="ca">Avançat</name>
   <column>
     <display item="Advanced Ack" tooltip="Enable advanced acknowledgment">
@@ -10,7 +11,9 @@
     </display>
   </column>
   <column>
-    <label label="      "/>
+    <label>
+      <text>      </text>
+    </label>
   </column>
   <column>
     <display item="Advanced Group 1 Option 1"/>
@@ -27,7 +30,9 @@
     <display item="Advanced Group 1 Option 12"/>
   </column>
   <column>
-    <label label="      "/>
+    <label>
+      <text>      </text>
+    </label>
   </column>
   <column>
     <display item="Advanced Group 2 Option 1" format="checkbox"/>
@@ -40,7 +45,9 @@
     <display item="Advanced Group 2 Option 8" format="checkbox"/>
     <display item="Advanced Group 2 Option 9" format="checkbox"/>
     <display item="Advanced Group 2 Option 10" format="checkbox"/>
-    <label label="      "/>
+    <label>
+      <text>      </text>
+    </label>
     <display item="Advanced Group 2 Option 11" format="checkbox"/>
     <display item="Advanced Group 2 Option 12" format="checkbox"/>
     <display item="Advanced Group 2 Option 13" format="checkbox"/>

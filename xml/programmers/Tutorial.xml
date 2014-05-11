@@ -15,29 +15,34 @@
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the most important few CVs -->
   <programmer decoderFilePanes="no">
-    <pane name="Decoder Address" nameFmt="item">
+    <pane nameFmt="item">
+      <name>Decoder Address</name>
       <column>
-        <label label="Using a dccAddress element">
-          <label xml:lang="it">Using a dccAddress element</label>
+        <label>
+          <text>Using a dccAddress element</text>
+          <text xml:lang="it">Using a dccAddress element</text>
         </label>
         <dccaddress/>
         <separator/>
-        <label label="As two numbers and mode selection">
-          <label xml:lang="it">As two numbers and mode selection</label>
+        <label>
+          <text>As two numbers and mode selection</text>
+          <text xml:lang="it">As two numbers and mode selection</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
         <display item="Address Format"/>
         <separator/>
-        <label label="As two numbers and checkbox">
-          <label xml:lang="it">As two numbers and checkbox</label>
+        <label>
+          <text>As two numbers and checkbox</text>
+          <text xml:lang="it">As two numbers and checkbox</text>
         </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
         <display item="Address Format" format="checkbox"/>
         <separator/>
-        <label label="As two numbers and radiobuttons">
-          <label xml:lang="it">As two numbers and radiobuttons</label>
+        <label>
+          <text>As two numbers and radiobuttons</text>
+          <text xml:lang="it">As two numbers and radiobuttons</text>
         </label>
         <row>
           <column>
@@ -59,56 +64,67 @@
       </column>
       <name xml:lang="it">Decoder Address</name>
     </pane>
-    <pane name="Enums" nameFmt="item">
+    <pane nameFmt="item">
+      <name>Enums</name>
       <column>
-        <label label="Default form">
-          <label xml:lang="it">Default form</label>
+        <label>
+          <text>Default form</text>
+          <text xml:lang="it">Default form</text>
         </label>
         <display item="Speed Table Definition" layout="left"/>
         <separator/>
-        <label label="As a checkbox, 1 if checked">
-          <label xml:lang="it">As a checkbox, 1 if checked</label>
+        <label>
+          <text>As a checkbox, 1 if checked</text>
+          <text xml:lang="it">As a checkbox, 1 if checked</text>
         </label>
         <display item="Speed Table Definition" format="checkbox" layout="left"/>
         <separator/>
-        <label label="As a set of radiobuttons">
-          <label xml:lang="it">As a set of radiobuttons</label>
+        <label>
+          <text>As a set of radiobuttons</text>
+          <text xml:lang="it">As a set of radiobuttons</text>
         </label>
         <display item="Speed Table Definition" format="radiobuttons" layout="left"/>
         <separator/>
-        <label label="As a radio button, 1 (on) if selected">
-          <label xml:lang="it">As a radio button, 1 (on) if selected</label>
+        <label>
+          <text>As a radio button, 1 (on) if selected</text>
+          <text xml:lang="it">As a radio button, 1 (on) if selected</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" layout="left"/>
         <separator/>
-        <label label="As a radio button, 0 (off) if selected">
-          <label xml:lang="it">As a radio button, 0 (off) if selected</label>
+        <label>
+          <text>As a radio button, 0 (off) if selected</text>
+          <text xml:lang="it">As a radio button, 0 (off) if selected</text>
         </label>
         <display item="Speed Table Definition" format="offradiobutton" layout="left"/>
         <separator/>
-        <label label="As a radio button, using just the state label">
-          <label xml:lang="it">As a radio button, using just the state label</label>
+        <label>
+          <text>As a radio button, using just the state label</text>
+          <text xml:lang="it">As a radio button, using just the state label</text>
         </label>
         <display item="Speed Table Definition" format="onradiobutton" label="" layout="left"/>
         <separator/>
       </column>
       <name xml:lang="it">Enums</name>
     </pane>
-    <pane name="Values" nameFmt="item">
+    <pane nameFmt="item">
+      <name>Values</name>
       <column>
-        <label label="Default form">
-          <label xml:lang="it">Default form</label>
+        <label>
+          <text>Default form</text>
+          <text xml:lang="it">Default form</text>
         </label>
         <display item="Short Address" layout="left"/>
         <separator/>
-        <label label="As a horizontal slider">
-          <label xml:lang="it">As a horizontal slider</label>
+        <label>
+          <text>As a horizontal slider</text>
+          <text xml:lang="it">As a horizontal slider</text>
         </label>
         <display item="Short Address" layout="left" format="hslider"/>
       </column>
       <column>
-        <label label="As a vertical slider">
-          <label xml:lang="it">As a vertical slider</label>
+        <label>
+          <text>As a vertical slider</text>
+          <text xml:lang="it">As a vertical slider</text>
         </label>
         <display item="Short Address" layout="left" format="vslider"/>
       </column>
