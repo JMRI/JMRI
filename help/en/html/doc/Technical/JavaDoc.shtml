@@ -44,9 +44,9 @@ our JavaDoc pages.
 <h2>JavaDoc for Developers</h2>
 
 The 
-<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html/">JavaDoc tutorial</a>
+<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">JavaDoc tutorial</a>
 is a good, but somewhat long, 
-<a href="hhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction to JavaDoc</a>.
+<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction to JavaDoc</a>.
 A brief summary of the formatting and tags can be found in 
 <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">the reference</a>.
 

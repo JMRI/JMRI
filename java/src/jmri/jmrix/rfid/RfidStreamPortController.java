@@ -2,11 +2,13 @@
 
 package jmri.jmrix.rfid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
+import jmri.jmrix.AbstractStreamPortController;
+import jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo;
+import jmri.jmrix.rfid.generic.standalone.SpecificTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for classes representing a RFID communications port
@@ -17,21 +19,18 @@ import java.io.DataOutputStream;
  * @author			Paul Bender    Copyright (C) 2014
  * @version			$Revision$
  */
-public class RfidStreamPortController extends jmri.jmrix.AbstractStreamPortController implements RfidInterface {
-
-    private DataInputStream input;
-    private DataOutputStream output;
+public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 
     public RfidStreamPortController(DataInputStream in,DataOutputStream out,String pname){
         super(in,out,pname);
-        adaptermemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
+        adaptermemo = new SpecificSystemConnectionMemo();
         
     }
 
+    @Override
     public void configure() {
        log.debug("configure() called.");
-       RfidTrafficController control = null;
-       control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController((RfidSystemConnectionMemo)adaptermemo);
+       RfidTrafficController control = new SpecificTrafficController((RfidSystemConnectionMemo)adaptermemo);
        
        // connect to the traffic controller
        ((RfidSystemConnectionMemo)adaptermemo).setRfidTrafficController(control);
@@ -40,7 +39,7 @@ public class RfidStreamPortController extends jmri.jmrix.AbstractStreamPortContr
        control.connectPort(this);
 
        // declare up
-       jmri.jmrix.rfid.ActiveFlag.setActive(); 
+       ActiveFlag.setActive(); 
 
     }
 
@@ -48,12 +47,15 @@ public class RfidStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     /**
      * Check that this object is ready to operate. This is a question
      * of configuration, not transient hardware status.
+     * @return true
      */
+    @Override
     public boolean status(){ return true; }
 
     
     /**
      * Can the port accept additional characters?  
+     * @return true
      */
     public boolean okToSend(){
                 return(true);
@@ -61,14 +63,17 @@ public class RfidStreamPortController extends jmri.jmrix.AbstractStreamPortContr
 
     // RFID Interface methods.
 
+    @Override
     public void addRfidListener( RfidListener l){
       ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().addRfidListener(l);
     }
 
+    @Override
     public void removeRfidListener( RfidListener l) {
       ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().removeRfidListener(l);
     }
 
+    @Override
     public void sendRfidMessage(RfidMessage m, RfidListener l){
       ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().sendRfidMessage(m,l);
     }

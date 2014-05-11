@@ -18,10 +18,13 @@
   <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
   <programmer decoderFilePanes="yes">
-    <pane name="Basic">
+    <pane>
+      <name>Basic</name>
       <column>
         <dccaddress/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Short Address" tooltip="Sets the Primary (short) address">
           <tooltip xml:lang="it">Sets the Primary (short) address</tooltip>
         </display>
@@ -31,7 +34,9 @@
         <display item="Address Format" tooltip="Determines whether loco will use short or long     address">
           <tooltip xml:lang="it">Determines whether loco will use short or long     address</tooltip>
         </display>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told                 to move forward">
           <tooltip xml:lang="it">Sets the relative direction of the loco when told                 to move forward</tooltip>
         </display>
@@ -44,7 +49,8 @@
       </column>
       <name xml:lang="it">Basic</name>
     </pane>
-    <pane name="Motor">
+    <pane>
+      <name>Motor</name>
       <column>
         <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco      to overcome starting friction">
           <tooltip xml:lang="it">Provides an initial higher voltage spike to loco      to overcome starting friction</tooltip>
@@ -58,13 +64,18 @@
       </column>
       <name xml:lang="it">Motor</name>
     </pane>
-    <pane name="Speed Control">
+    <pane>
+      <name>Speed Control</name>
       <column>
         <row>
           <column>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
             <display item="Speed Table Definition" format="offradiobutton" label=""/>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
           </column>
         </row>
         <row>
@@ -93,21 +104,31 @@
         </row>
         <row>
           <column>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
             <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
               <tooltip xml:lang="it">Fine tune the forward voltage levels</tooltip>
             </display>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
           </column>
           <column>
-            <label label="     "/>
+            <label>
+              <text>     </text>
+            </label>
           </column>
           <column>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
             <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
               <tooltip xml:lang="it">Fine tune the reverse voltage levels</tooltip>
             </display>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
           </column>
         </row>
         <separator/>
@@ -115,13 +136,16 @@
           <column>
             <display item="Speed Table Definition" format="onradiobutton" layout="above" label=""/>
             <display item="Speed Table" layout="above"/>
-            <label label=" "/>
+            <label>
+              <text> </text>
+            </label>
           </column>
         </row>
       </column>
       <name xml:lang="it">Speed Control</name>
     </pane>
-    <pane name="Consist">
+    <pane>
+      <name>Consist</name>
       <column>
         <row>
           <column>
@@ -133,16 +157,25 @@
             </display>
           </column>
           <column>
-            <label label="   "/>
+            <label>
+              <text>   </text>
+            </label>
           </column>
         </row>
-        <label label=" "/>
-        <separator/>
-        <label label=" "/>
-        <label label="Will decoder respond to function     requests at consist address?">
-          <label xml:lang="it">Will decoder respond to function     requests at consist address?</label>
+        <label>
+          <text> </text>
         </label>
-        <label label=" "/>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Will decoder respond to function     requests at consist address?</text>
+          <text xml:lang="it">Will decoder respond to function     requests at consist address?</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond      to the consist address">
           <tooltip xml:lang="it">Determines whether the function will respond      to the consist address</tooltip>
         </display>
@@ -191,7 +224,8 @@
       </column>
       <name xml:lang="it">Consist</name>
     </pane>
-    <pane name="CVs">
+    <pane>
+      <name>CVs</name>
       <column>
         <cvtable/>
       </column>

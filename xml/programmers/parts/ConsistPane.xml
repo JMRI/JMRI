@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Consist" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Consist</name>
   <name xml:lang="ca">Tracció-Múltiple [TM]</name>
   <name xml:lang="it">Consist (Multi-Trazione)</name>
   <column>
     <row>
       <column>
         <display item="Consist Address" tooltip="Sets the multiple unit (consist) address">
-          <tooltip xml:lang="it">Imposta Indirizzi per Unit1u00E0 Multiple</tooltip>
+          <tooltip xml:lang="it">Imposta Indirizzi per Unità Multiple</tooltip>
         </display>
         <display item="Consist Direction" tooltip="Sets the relative direction of the loco when consist is told to move forward">
           <tooltip xml:lang="it">Imposta Direzione relativa della Loco quando il gruppo di loco va in Avanti</tooltip>
         </display>
       </column>
       <column>
-        <label label="   "/>
+        <label>
+          <text>   </text>
+        </label>
       </column>
       <column>
         <display item="Consist Acceleration Adjustment" tooltip="Sets additional acceleration rate information">
@@ -39,20 +42,29 @@
         </display>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
-    <label label=" "/>
-    <label label="Will decoder respond to function requests at consist address?">
-          <label xml:lang="it">Il decoder risponde alle Funzioni usando l'indirizzo di Consist?</label>
-        </label>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>Will decoder respond to function requests at consist address?</text>
+      <text xml:lang="it">Il decoder risponde alle Funzioni usando l'indirizzo di Consist?</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <display item="Consist Function" tooltip=" Sets functions to follow base address or consist address">
       <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
     </display>
     <display item="Consist Function Mode" tooltip="Lighting mode for consist">
       <tooltip xml:lang="it">Modalit\u00E0 Luci per il Consist</tooltip>
     </display>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
         <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond to the consist address">

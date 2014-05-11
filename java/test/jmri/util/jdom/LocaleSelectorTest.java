@@ -2,9 +2,13 @@
 
 package jmri.util.jdom;
 
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import junit.framework.*;
-import org.jdom.*;
+import org.jdom.Element;
+import org.jdom.Namespace;
 
 /**
  * Tests for the jmri.util.LocaleSelector class.
@@ -98,7 +102,6 @@ public class LocaleSelectorTest extends TestCase {
                 "kl_KL","kl"
             };
         
-        Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
                         .setAttribute("temp", "a")
                 ;
@@ -113,7 +116,6 @@ public class LocaleSelectorTest extends TestCase {
                 "kl_KL","kl"
             };
         
-        Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
                         .addContent(
                             new Element("temp")
@@ -203,7 +205,9 @@ public class LocaleSelectorTest extends TestCase {
 	}
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 	static Logger log = Logger.getLogger(LocaleSelectorTest.class.getName());

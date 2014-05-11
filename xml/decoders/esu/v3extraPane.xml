@@ -1,4 +1,4 @@
-  <pane name="ESU Extra" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="ESU Extra" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label=" ">
         <label> </label>
@@ -12,14 +12,10 @@
       </display>
       <display item="Marklin second address" layout="left">
       </display>
-      <label label=" ">
-        <label xml:lang="fr"> </label>
-      </label>
-      <display item="LGB function button mode" layout="left">
+      <label label=" "/>
+       <display item="LGB function button mode" layout="left">
       </display>
-      <label label=" ">
-        <label xml:lang="fr"> </label>
-      </label>
+      <label label=" "/>
       <display item="Zimo manual function" layout="left">
       </display>
       <display item="Function Key Toggle Mode" layout="left">

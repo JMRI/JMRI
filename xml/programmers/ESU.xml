@@ -15,15 +15,22 @@
   <version author="sip@euronet.nl" version="1.0 beta" lastUpdated="20020810"/>
   <!-- Based on the contribution of many others -->
   <programmer decoderFilePanes="yes">
-    <pane name="Basic">
+    <pane>
+      <name>Basic</name>
       <column>
         <dccaddress/>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="Short Address"/>
         <display item="Long Address"/>
         <display item="Address Format"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Locomotive Direction"/>
         <display item="Speed Step Mode"/>
         <display item="Analog (DC) Operation"/>
@@ -31,40 +38,55 @@
       <column>
         <!--			<display item="Decoder Version"/> -->
         <!-- 			<display item="Manufacturer"/>    -->
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="User Id #1"/>
         <display item="User Id #2"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <name xml:lang="it">Basic</name>
     </pane>
-    <pane name="Motor">
+    <pane>
+      <name>Motor</name>
       <column>
         <display item="Acceleration"/>
         <display item="Deceleration"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Forward Trim"/>
         <display item="Reverse Trim"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Total PWM Period" tooltip="read manual">
           <tooltip xml:lang="it">read manual</tooltip>
         </display>
         <separator/>
-        <label label="0 = 22kHz, 204 = 87Hz">
-          <label xml:lang="it">0 = 22kHz, 204 = 87Hz</label>
+        <label>
+          <text>0 = 22kHz, 204 = 87Hz</text>
+          <text xml:lang="it">0 = 22kHz, 204 = 87Hz</text>
         </label>
       </column>
       <column>
         <display item="BEMF Active"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Adjust EMK Voltage"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="K Adjustment"/>
         <display item="I Adjustment"/>
       </column>
       <name xml:lang="it">Motor</name>
     </pane>
-    <pane name="Speed Control">
+    <pane>
+      <name>Speed Control</name>
       <column>
         <display item="Speed Table Definition" format="offradiobutton" layout="above" label="CV 29, bit 4"/>
         <row>
@@ -88,16 +110,19 @@
       </column>
       <name xml:lang="it">Speed Control</name>
     </pane>
-    <pane name="Function/Output Map">
+    <pane>
+      <name>Function/Output Map</name>
       <column>
         <fnmapping/>
       </column>
       <name xml:lang="it">Function/Output Map</name>
     </pane>
-    <pane name="Output Handling">
+    <pane>
+      <name>Output Handling</name>
       <column>
-        <label label="F-9(r) Key Output Control">
-          <label xml:lang="it">F-9(r) Key Output Control</label>
+        <label>
+          <text>F-9(r) Key Output Control</text>
+          <text xml:lang="it">F-9(r) Key Output Control</text>
         </label>
         <separator/>
         <display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -108,9 +133,12 @@
         <display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6"/>
         <display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7"/>
         <display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8"/>
-        <label label=" "/>
-        <label label="F-10(r) Key Output Control">
-          <label xml:lang="it">F-10(r) Key Output Control</label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>F-10(r) Key Output Control</text>
+          <text xml:lang="it">F-10(r) Key Output Control</text>
         </label>
         <separator/>
         <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -124,7 +152,8 @@
       </column>
       <name xml:lang="it">Output Handling</name>
     </pane>
-    <pane name="Lights">
+    <pane>
+      <name>Lights</name>
       <column>
         <display item="Blink Rate"/>
       </column>
@@ -140,12 +169,14 @@
       </column>
       <name xml:lang="it">Lights</name>
     </pane>
-    <pane name="Consist">
+    <pane>
+      <name>Consist</name>
       <column>
         <display item="Consist Address"/>
         <separator/>
-        <label label="Will decoder respond to function requests at consist address?">
-          <label xml:lang="it">Will decoder respond to function requests at consist address?</label>
+        <label>
+          <text>Will decoder respond to function requests at consist address?</text>
+          <text xml:lang="it">Will decoder respond to function requests at consist address?</text>
         </label>
         <separator/>
         <display item="Consist Acceleration Adjustment"/>
@@ -155,7 +186,8 @@
       </column>
       <name xml:lang="it">Consist</name>
     </pane>
-    <pane name="Advanced">
+    <pane>
+      <name>Advanced</name>
       <column>
         <display item="Packet Time-out Value"/>
       </column>
@@ -163,8 +195,9 @@
         <display item="Analog Vstart"/>
       </column>
       <column>
-        <label label="Analog Mode Functions F1-F8">
-          <label xml:lang="it">Analog Mode Functions F1-F8</label>
+        <label>
+          <text>Analog Mode Functions F1-F8</text>
+          <text xml:lang="it">Analog Mode Functions F1-F8</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
@@ -175,9 +208,12 @@
         <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>
         <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>
         <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>
-        <label label=" "/>
-        <label label="Analog Mode Functions F0, F9-F12">
-          <label xml:lang="it">Analog Mode Functions F0, F9-F12</label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Analog Mode Functions F0, F9-F12</text>
+          <text xml:lang="it">Analog Mode Functions F0, F9-F12</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>
@@ -192,33 +228,44 @@
       <column>
         <display item="Signal Dependent Acceleration"/>
         <display item="Signal Dependent Deceleration"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="ZIMO Signal Dependence Active"/>
       </column>
       <name xml:lang="it">Advanced</name>
     </pane>
-    <pane name="Sound">
+    <pane>
+      <name>Sound</name>
       <column>
         <display item="Minimum Incidental Sound RPM"/>
         <display item="Maximum Incidental Sound RPM"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Sound Mode 1"/>
         <display item="Sound Mode 2"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Minimum Incidental Sound Interval"/>
         <display item="Maximum Incidental Sound Interval"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Braking Noise Start"/>
       </column>
       <name xml:lang="it">Sound</name>
     </pane>
-    <pane name="Sound Levels">
+    <pane>
+      <name>Sound Levels</name>
       <column>
         <display item="Sound Level"/>
       </column>
       <name xml:lang="it">Sound Levels</name>
     </pane>
-    <pane name="CVs">
+    <pane>
+      <name>CVs</name>
       <column>
         <cvtable/>
       </column>

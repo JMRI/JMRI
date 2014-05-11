@@ -57,7 +57,12 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     Commit any changed files.
 
 ( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
-    that you find wrong.  Also, do 
+    that you find wrong.  
+    (To scan, e.g the xml tree, do:
+        find xml -type f -exec ./scripts/checkCR.sh {} \; -print
+    )
+    
+    Also, do 
     
     svn propset svn:eol-style native <file-path-name>
     

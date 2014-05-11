@@ -17,20 +17,31 @@
   <!-- Version 1.4 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Notes -->
   <programmer decoderFilePanes="yes">
-    <pane name="Basic">
+    <pane>
+      <name>Basic</name>
       <column>
         <dccaddress/>
-        <label label=" "/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="Short Address"/>
         <display item="Second Short Address"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Long Address"/>
         <display item="Second Extended Address #1"/>
         <display item="Second Extended Address #2"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Address Format"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Locomotive Direction"/>
         <display item="Speed Step Mode"/>
         <display item="Analog (DC) Operation"/>
@@ -38,21 +49,30 @@
       <column>
         <!--			<display item="Decoder Version"/> -->
         <!-- 			<display item="Manufacturer"/>    -->
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="User Id #1"/>
         <display item="User Id #2"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <name xml:lang="it">Basic</name>
     </pane>
-    <pane name="Motor">
+    <pane>
+      <name>Motor</name>
       <column>
         <display item="Acceleration"/>
         <display item="Deceleration"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Forward Trim"/>
         <display item="Reverse Trim"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Total PWM Period" tooltip="read manual">
           <tooltip xml:lang="it">read manual</tooltip>
         </display>
@@ -66,7 +86,9 @@
         <display item="Acceleration Adjustment Sign"/>
         <display item="Deceleration Adjustment"/>
         <display item="Deceleration Adjustment Sign"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Exponential Acceleration"/>
         <display item="Exponential Deceleration"/>
         <display item="Adaption Acceleration/Deceleration"/>
@@ -75,13 +97,16 @@
         <display item="EMF Feedback Cutoff"/>
         <display item="Volume EMF Feedback Cutoff"/>
         <display item="BEMF Pull"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="P/I adjustment"/>
         <display item="Adjust EMK Voltage"/>
       </column>
       <name xml:lang="it">Motor</name>
     </pane>
-    <pane name="Speed Control">
+    <pane>
+      <name>Speed Control</name>
       <column>
         <display item="Speed Table Definition" format="offradiobutton" layout="above" label=""/>
         <row>
@@ -105,13 +130,15 @@
       </column>
       <name xml:lang="it">Speed Control</name>
     </pane>
-    <pane name="Function/Output Map">
+    <pane>
+      <name>Function/Output Map</name>
       <column>
         <fnmapping/>
       </column>
       <name xml:lang="it">Function/Output Map</name>
     </pane>
-    <pane name="Output Handling">
+    <pane>
+      <name>Output Handling</name>
       <column>
         <display item="Output Reduction" layout="below" format="vslider" label=""/>
         <display item="Output Reduction" layout="below" tooltip="0 and 255 no output reduction">
@@ -119,8 +146,9 @@
         </display>
       </column>
       <column>
-        <label label="Dim Outputs">
-          <label xml:lang="it">Dim Outputs</label>
+        <label>
+          <text>Dim Outputs</text>
+          <text xml:lang="it">Dim Outputs</text>
         </label>
         <separator/>
         <display item="Dim Output 1" format="checkbox" label="Output 1"/>
@@ -133,8 +161,9 @@
         <display item="Dim Output 8" format="checkbox" label="Output 8"/>
       </column>
       <column>
-        <label label="Individual Dim Values">
-          <label xml:lang="it">Individual Dim Values</label>
+        <label>
+          <text>Individual Dim Values</text>
+          <text xml:lang="it">Individual Dim Values</text>
         </label>
         <separator/>
         <display item="Value Dim Output 1" label="Output 1"/>
@@ -147,8 +176,9 @@
         <display item="Value Dim Output 8" label="Output 8"/>
       </column>
       <column>
-        <label label="F-6 Key Dims Outputs">
-          <label xml:lang="it">F-6 Key Dims Outputs</label>
+        <label>
+          <text>F-6 Key Dims Outputs</text>
+          <text xml:lang="it">F-6 Key Dims Outputs</text>
         </label>
         <separator/>
         <display item="F6 key dims Output 1" format="checkbox" label="Output 1"/>
@@ -158,9 +188,12 @@
         <display item="F6 key dims Output 5" format="checkbox" label="Output 5"/>
         <display item="F6 key dims Output 6" format="checkbox" label="Output 6"/>
         <display item="F6 key inverted" format="checkbox" label="F-6 Key inverted"/>
-        <label label=" "/>
-        <label label="F-7 Key Dims Outputs">
-          <label xml:lang="it">F-7 Key Dims Outputs</label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>F-7 Key Dims Outputs</text>
+          <text xml:lang="it">F-7 Key Dims Outputs</text>
         </label>
         <separator/>
         <display item="F7 key dims Output 1" format="checkbox" label="Output 1"/>
@@ -173,44 +206,63 @@
       </column>
       <name xml:lang="it">Output Handling</name>
     </pane>
-    <pane name="Lights">
+    <pane>
+      <name>Lights</name>
       <column>
         <display item="Light Effects Output 1"/>
         <display item="Output 1 behavior"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Light Effects Output 2"/>
         <display item="Output 2 behavior"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Light Effects Output 3"/>
         <display item="Output 3 behavior"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Light Effects Output 4"/>
         <display item="Output 4 behavior"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Light Effects Output 5"/>
         <display item="Output 5 behavior"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Light Effects Output 6"/>
         <display item="Output 6 behavior"/>
       </column>
       <column>
-        <label label="Light Effect Modifications">
-          <label xml:lang="it">Light Effect Modifications</label>
+        <label>
+          <text>Light Effect Modifications</text>
+          <text xml:lang="it">Light Effect Modifications</text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Minimum Dim Value"/>
         <display item="Cycle Time"/>
         <display item="Ditch Light Off Time"/>
       </column>
       <column>
-        <label label="          Blink Outputs">
-          <label xml:lang="it">          Blink Outputs</label>
+        <label>
+          <text>          Blink Outputs</text>
+          <text xml:lang="it">          Blink Outputs</text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Blink Rate"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Flash Light Output 1" format="checkbox" label="Output 1"/>
         <display item="Flash Light Output 2" format="checkbox" label="Output 2"/>
         <display item="Flash Light Output 3" format="checkbox" label="Output 3"/>
@@ -223,16 +275,22 @@
       </column>
       <name xml:lang="it">Lights</name>
     </pane>
-    <pane name="Consist">
+    <pane>
+      <name>Consist</name>
       <column>
         <display item="Consist Address"/>
-        <label label=" "/>
-        <separator/>
-        <label label="Will decoder respond to function requests at consist address?">
-          <label xml:lang="it">Will decoder respond to function requests at consist address?</label>
+        <label>
+          <text> </text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text>Will decoder respond to function requests at consist address?</text>
+          <text xml:lang="it">Will decoder respond to function requests at consist address?</text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Consist Address Active For FL in Forward"/>
         <display item="Consist Address Active For FL in Reverse"/>
         <display item="Consist Address Active For F1"/>
@@ -246,27 +304,35 @@
       </column>
       <name xml:lang="it">Consist</name>
     </pane>
-    <pane name="Advanced">
+    <pane>
+      <name>Advanced</name>
       <column>
         <display item="Shunting Usage"/>
         <display item="Shunt Function Key"/>
         <display item="Half Speed (F-7)"/>
         <display item="Half Speed (F-3)"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Special Function Usage" tooltip="see manual">
           <tooltip xml:lang="it">see manual</tooltip>
         </display>
       </column>
       <column>
-        <label label="      Coupler Data">
-          <label xml:lang="it">      Coupler Data</label>
+        <label>
+          <text>      Coupler Data</text>
+          <text xml:lang="it">      Coupler Data</text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Coupler Control" tooltip="tens (0-9):  time for full voltage pulse, units (0-9): percentage (0-90 %) of track voltage  for permanent operation. Read manual; timing depends on model and version">
           <tooltip xml:lang="it">tens (0-9):  time for full voltage pulse, units (0-9): percentage (0-90 %) of track voltage  for permanent operation. Read manual; timing depends on model and version</tooltip>
         </display>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Coupler Output 1" format="checkbox" label="Output 1"/>
         <display item="Coupler Output 2" format="checkbox" label="Output 2"/>
         <display item="Coupler Output 3" format="checkbox" label="Output 3"/>
@@ -275,11 +341,14 @@
         <display item="Coupler Output 6" format="checkbox" label="Output 6"/>
       </column>
       <column>
-        <label label="Analog Mode Functions">
-          <label xml:lang="it">Analog Mode Functions</label>
+        <label>
+          <text>Analog Mode Functions</text>
+          <text xml:lang="it">Analog Mode Functions</text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
         <display item="Analog Mode Function Status - F2" format="checkbox" label="F-2"/>
         <display item="Analog Mode Function Status - F3" format="checkbox" label="F-3"/>
@@ -288,28 +357,36 @@
         <display item="Analog Mode Function Status - F6" format="checkbox" label="F-6"/>
         <row>
           <display item="Analog Mode Function Status - F7" format="checkbox" label="F-7"/>
-          <label label=" "/>
-          <label label="         DC behavior">
-            <label xml:lang="it">         DC behavior</label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>         DC behavior</text>
+            <text xml:lang="it">         DC behavior</text>
           </label>
         </row>
         <row>
           <display item="Analog Mode Function Status - F8" format="checkbox" label="F-8"/>
-          <label label=" "/>
-          <label label="         Headlights">
-            <label xml:lang="it">         Headlights</label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>         Headlights</text>
+            <text xml:lang="it">         Headlights</text>
           </label>
         </row>
       </column>
       <name xml:lang="it">Advanced</name>
     </pane>
-    <pane name="CVs">
+    <pane>
+      <name>CVs</name>
       <column>
         <cvtable/>
       </column>
       <name xml:lang="it">CVs</name>
     </pane>
-    <pane name="Zimo Specific">
+    <pane>
+      <name>Zimo Specific</name>
       <column>
         <display item="Signal Dependent Acceleration"/>
         <display item="Signal Dependent Deceleration"/>
@@ -326,11 +403,14 @@
         <display item="Pulse Chain LGB sounds"/>
       </column>
       <column>
-        <label label="Signal Dependent Speed Limits">
-          <label xml:lang="it">Signal Dependent Speed Limits</label>
+        <label>
+          <text>Signal Dependent Speed Limits</text>
+          <text xml:lang="it">Signal Dependent Speed Limits</text>
         </label>
         <separator/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="-1-" label="             -1-"/>
         <display item="-U-"/>
         <display item="-2-"/>

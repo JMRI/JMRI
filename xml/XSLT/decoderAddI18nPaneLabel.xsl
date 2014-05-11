@@ -45,12 +45,12 @@
     <xsl:template match="label[text[not(@xml:lang)]]" priority="4">
       <xsl:copy>
         <xsl:element name="text">
-          <xsl:value-of select="."/>
+            <xsl:value-of select="./text"/>
         </xsl:element>
-        <xsl:if test="not(translate(@label, ' ', '') = '')"><!-- don't translate is empty -->
+        <xsl:if test="not(translate(text[not(@xml:lang)], ' ', '') = '')"><!-- don't translate is empty -->
           <xsl:element name="text">
             <xsl:attribute name="xml:lang">&target;</xsl:attribute>
-            <xsl:value-of select="."/>
+            <xsl:value-of select="./text"/>
           </xsl:element>
         </xsl:if>
       </xsl:copy>

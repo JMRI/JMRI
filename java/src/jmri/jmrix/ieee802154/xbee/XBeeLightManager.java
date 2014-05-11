@@ -43,6 +43,8 @@ public class XBeeLightManager extends AbstractLightManager {
               // if there was a number format exception, we couldn't
               // find the node.
               curNode = null;
+              log.debug("failed to create light " +systemName);
+              return null;
             }
         int pin = pinFromSystemName(systemName);
         if(!curNode.getPinAssigned(pin)) {

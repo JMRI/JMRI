@@ -3,9 +3,12 @@
 <!-- version  author="Mark Waters mark16w-jmri@yahoo.co.uk" version="3" lastUpdated="20110910"	-->
 <!-- Version 2 - added additional lighting options to functions 3 and 4	-->
 <!-- Version 3 - added output 7 and 8 behavior 					-->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Lights" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Lights</name>
   <column>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Directional Headlights"/>
     <display item="Global lighting option 1"/>
     <display item="Global lighting option 2"/>
@@ -15,8 +18,12 @@
     <display item="Global lighting option 6"/>
     <display item="Global lighting option 7"/>
     <display item="Global lighting option 8"/>
-    <label label=" "/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function F0F effect generated"/>
     <display item="Function F0F behavior"/>
     <display item="Function F0F options"/>
@@ -29,7 +36,9 @@
     <display item="Function F0F check 3" format="checkbox"/>
     <display item="Function F0F check 4" format="checkbox"/>
     <display item="Function F0F check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function F0R effect generated"/>
     <display item="Function F0R behavior"/>
     <display item="Function F0R options"/>
@@ -42,7 +51,9 @@
     <display item="Function F0R check 3" format="checkbox"/>
     <display item="Function F0R check 4" format="checkbox"/>
     <display item="Function F0R check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 1 effect generated"/>
     <display item="Function 1 behavior"/>
     <display item="Function 1 options"/>
@@ -55,7 +66,9 @@
     <display item="Function 1 check 3" format="checkbox"/>
     <display item="Function 1 check 4" format="checkbox"/>
     <display item="Function 1 check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 2 effect generated"/>
     <display item="Function 2 behavior"/>
     <display item="Function 2 options"/>
@@ -68,7 +81,9 @@
     <display item="Function 2 check 3" format="checkbox"/>
     <display item="Function 2 check 4" format="checkbox"/>
     <display item="Function 2 check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 3 effect generated"/>
     <display item="Function 3 behavior"/>
     <display item="Function 3 options"/>
@@ -81,7 +96,9 @@
     <display item="Function 3 check 3" format="checkbox"/>
     <display item="Function 3 check 4" format="checkbox"/>
     <display item="Function 3 check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 4 effect generated"/>
     <display item="Function 4 behavior"/>
     <display item="Function 4 options"/>
@@ -94,29 +111,43 @@
     <display item="Function 4 check 3" format="checkbox"/>
     <display item="Function 4 check 4" format="checkbox"/>
     <display item="Function 4 check 5" format="checkbox"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 5 effect generated"/>
     <display item="Function 5 behavior"/>
     <display item="Function 5 options"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 6 effect generated"/>
     <display item="Function 6 behavior"/>
     <display item="Function 6 options"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 7 effect generated"/>
     <display item="Function 7 behavior"/>
     <display item="Function 7 options"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 8 effect generated"/>
     <display item="Function 8 behavior"/>
     <display item="Function 8 options"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 9 effect generated"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 10 effect generated"/>
   </column>
   <column>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Function 11 effect generated"/>
     <display item="Function 12 effect generated"/>
     <display item="Function 13 effect generated"/>
@@ -137,50 +168,70 @@
     <display item="Function 28 effect generated"/>
   </column>
   <column>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 1 effect generated"/>
     <display item="Output 1 behavior"/>
     <display item="Output 1 options"/>
     <display item="Output 1 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 2 effect generated"/>
     <display item="Output 2 behavior"/>
     <display item="Output 2 options"/>
     <display item="Output 2 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 3 effect generated"/>
     <display item="Output 3 behavior"/>
     <display item="Output 3 options"/>
     <display item="Output 3 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 4 effect generated"/>
     <display item="Output 4 behavior"/>
     <display item="Output 4 options"/>
     <display item="Output 4 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 5 effect generated"/>
     <display item="Output 5 behavior"/>
     <display item="Output 5 options"/>
     <display item="Output 5 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 6 effect generated"/>
     <display item="Output 6 behavior"/>
     <display item="Output 6 options"/>
     <display item="Output 6 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 7 effect generated"/>
     <display item="Output 7 behavior"/>
     <display item="Output 7 options"/>
     <display item="Output 7 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 8 effect generated"/>
     <display item="Output 8 behavior"/>
     <display item="Output 8 options"/>
     <display item="Output 8 option 1"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 9 effect generated"/>
     <display item="Output 9 behavior"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Output 10 effect generated"/>
     <display item="Output 10 behavior"/>
   </column>

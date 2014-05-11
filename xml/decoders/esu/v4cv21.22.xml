@@ -163,9 +163,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F10</label>
@@ -175,9 +177,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F11</label>
@@ -187,9 +191,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F12</label>
@@ -199,9 +205,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F13</label>
@@ -211,9 +219,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F14</label>
@@ -223,9 +233,11 @@
     <enumVal>
       <enumChoice choice="Locomotive Address Only">
         <choice>Locomotive Address Only</choice>
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
       </enumChoice>
       <enumChoice choice="Respond to Consist Address">
         <choice>Respond to Consist Address</choice>
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Indirizzo Consist Attivo per F15</label>

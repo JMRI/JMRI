@@ -43,6 +43,8 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
               // if there was a number format exception, we couldn't
               // find the node.
               curNode = null;
+              log.debug("failed to create turnout " +systemName);
+              return null;
             }
         int pin = pinFromSystemName(systemName);
         int pin2 = pin2FromSystemName(systemName);

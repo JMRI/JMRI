@@ -90,6 +90,7 @@ the conversion will be a lot of work.
 <h2>Code Format</h2>
 The 
 <A HREF="http://java.sun.com/docs/codeconv/">Java recommendations</A>
+(if that link is broken, try <a href="https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">this one</a> from the Internet Archive)
 for names, formatting, etc are really useful.
 If you find that you can't read a piece of code, these will help
 make it better.

@@ -1037,7 +1037,7 @@
    manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text" windows
    found under the
    <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
-   nine optional checkboxes and their functions are described next.
+   ten optional checkboxes and their functions are described next.
    <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the manifest was printed. The print time is always shown at the top
     right of the manifest.</P>
@@ -1062,9 +1062,18 @@
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
 
-   <P>The last options is "Sort by Track". The program when creating a train manifest normally
+   <P>The next option is "Sort by Track". The program when creating a train manifest normally
     lists the cars in the order they need to be placed into the train for proper blocking. If you
-    would rather have the cars listed by the track name, select the option "Sort by Track".
+    would rather have the cars listed by the track name, select the option "Sort by Track".</P>
+
+   <P>
+    The last option is "Print Headers". When this option is selected, the train manifests and switch
+    list will include a header showing all of the car attributes that you've selected in the above <A
+     HREF="#MessageFormats">message formats</A>. You can customize all of the header text by
+    selecting "Edit Manifest Header Text" under the <A HREF="#ManifestPrintOptionsTools">Tools</A>
+    menu.
+   </P>
+
    <H3>Manifest Preview</H3>
 
    If you want to use a text editor to preview your manifests and switch lists, select this option.
@@ -1096,11 +1105,12 @@
 
    The menu bar of the "Manifest Print Options" provides several options listed under "Tools". The
    first is the ability to control the length of the tab character when using the "Tabular" feature.
-   The other two options "Edit Manifest Text" and "Edit Switch List Text" allow you to modify any of
-   the text found in a manifest or switch list. Each text line used by the program is shown along
-   with a text box with the same message. Edit the text box to change the default message to your
-   liking and press "Save" to complete your change. You can always return the text to the original
-   settings by pressing the "Reset" button followed by "Save". 
+   The other three options "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List
+   Text" allow you to modify any of the text found in a manifest or switch list. Each text line used
+   by the program is shown along with a text box with the same message. Edit the text box to change
+   the default message to your liking and press "Save" to complete your change. You can always
+   return the text to the original settings by pressing the "Reset" button followed by "Save". 
+   
    
    <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
@@ -1171,11 +1181,12 @@
 
    <P>In the "Add Location" window, enter the name of the location in box across from "Name".
     The location name must be unique; the program will not allow two locations with identical names.
-    However, if you want more than one location to have the same name for your manifests and switch
-    lists, add a hyphen and a number to the locations name, or a hyphen and a left parenthesis. For
-    example, "Boston-1", "Boston-2" and "Boston-(example)" will print as "Boston". The program will
-    remove the hyphen and number, and hyphen and text when there's a left parenthesis when printing
-    manifests and switch lists.  Note that the "hyphen" feature also works for track names.</P>
+    However, if you want more than one location to have the "same" name for your manifests and
+    switch lists, add a hyphen and a number to the locations name, or a hyphen and a left
+    parenthesis. For example, "Boston-1", "Boston-2" and "Boston-(example)" will print as "Boston".
+    The program will remove the hyphen and number, and hyphen and text when there's a left
+    parenthesis when printing manifests and switch lists. Note that the "hyphen"
+    feature also works for track names.</P>
 
    <P>Now press the "Add Location" button at the bottom of the window. The various fields that
     were disabled should now appear.</P>
@@ -1945,7 +1956,7 @@
    </P>
 
    <P>Each line can start with a space and multiple spaces between fields is okay. Optionally
-    you can include additional attributes in the following order, weight, color, owner name, date
+    you can include additional attributes in the following order; weight, color, owner name, date
     built, and location. The location can have two fields, the location name followed by the
     location's spur or yard name separated by a hyphen. The following shows two examples of the
     correct format:</P>
@@ -2092,7 +2103,7 @@
    track can accept the kernel. However, the program does use the entire length of the kernel to
    determine if the group of cars will fit on the destination track.
    
-   Manifest and switch lists will show the cars in the order that you added them to the kernel.
+   Manifest and switch lists will show the cars in the order that you assigned them to the kernel.
 
    <H3>Optional Fields</H3>
 
@@ -2338,7 +2349,7 @@
     236 UP RS4 40 <BR> 5578 SP SW1200 42
    </P>
    <P>Each line can start with a space and multiple spaces between fields is okay. Optionally
-    you can include additional attributes in the following order, owner name, date built, and
+    you can include additional attributes in the following order; owner name, date built, and
     location. The location can have two fields, the location name followed by the location's spur or
     yard name separated by a hyphen. The following shows two examples of the correct format:</P>
 
@@ -2919,11 +2930,11 @@
      <td>Selected car type can be picked up and set out</td>
     </tr>
     <tr>
-     <td>Pick up</td>
+     <td>Pick Up Only</td>
      <td>Selected car type can only be picked up from this track</td>
     </tr>
     <tr>
-     <td>Set out</td>
+     <td>Set Out Only</td>
      <td>Selected car type can only be set out to this track</td>
     </tr>
     <tr>

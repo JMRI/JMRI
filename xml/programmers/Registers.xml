@@ -16,20 +16,31 @@
   <!-- A very basic programmer, containing only the variables that -->
   <!-- register-mode decoders have. -->
   <programmer decoderFilePanes="no">
-    <pane name="Basic" nameFmt="item">
+    <pane nameFmt="item">
+      <name>Basic</name>
       <column>
         <display item="Short Address" label="Short Address"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Analog (DC) Operation"/>
         <display item="Speed Step Mode"/>
         <display item="Locomotive Direction"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Vstart"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Accel"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="Decel"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <name xml:lang="it">Basic</name>
     </pane>

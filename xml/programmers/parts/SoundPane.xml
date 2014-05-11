@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Sound" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Sound</name>
   <column>
     <display item="Sound Option 1"/>
     <display item="Sound Option 2"/>
@@ -9,7 +10,9 @@
     <display item="Sound Option 6"/>
     <display item="Sound Option 7"/>
     <display item="Sound Option 8"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Option 9"/>
     <display item="Sound Option 10"/>
     <display item="Sound Option 11"/>
@@ -18,7 +21,9 @@
     <display item="Sound Option 14"/>
     <display item="Sound Option 15"/>
     <display item="Sound Option 16"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Option 17"/>
     <display item="Sound Option 18"/>
     <display item="Sound Option 19"/>
@@ -27,7 +32,9 @@
     <display item="Sound Option 22"/>
     <display item="Sound Option 23"/>
     <display item="Sound Option 24"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Option 25"/>
     <display item="Sound Option 26"/>
     <display item="Sound Option 27"/>
@@ -36,7 +43,9 @@
     <display item="Sound Option 30"/>
     <display item="Sound Option 31"/>
     <display item="Sound Option 32"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Option 33"/>
     <display item="Sound Option 34"/>
     <display item="Sound Option 35"/>
@@ -56,7 +65,9 @@
     <display item="Sound Group 1 Option 6"/>
     <display item="Sound Group 1 Option 7"/>
     <display item="Sound Group 1 Option 8"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Group 1 Option 9"/>
     <display item="Sound Group 1 Option 10"/>
     <display item="Sound Group 1 Option 11"/>
@@ -76,7 +87,9 @@
     <display item="Sound Group 2 Option 6"/>
     <display item="Sound Group 2 Option 7"/>
     <display item="Sound Group 2 Option 8"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="Sound Group 2 Option 9"/>
     <display item="Sound Group 2 Option 10"/>
     <display item="Sound Group 2 Option 11"/>
@@ -90,49 +103,79 @@
     <display item="Sound Group 3 Control" format="checkbox"/>
     <row>
       <display item="Sound Group 3 Option 1" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 1" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 2" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 2" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 3" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 3" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 4" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 4" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 5" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 5" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 6" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 6" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 7" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 7" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 3 Option 8" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 3 Option 8" layout="above" format="hslider"/>
     </row>
   </column>
@@ -140,49 +183,79 @@
     <display item="Sound Group 4 Control" format="checkbox"/>
     <row>
       <display item="Sound Group 4 Option 1" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 1" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 2" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 2" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 3" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 3" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 4" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 4" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 5" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 5" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 6" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 6" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 7" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 7" layout="above" format="hslider"/>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <display item="Sound Group 4 Option 8" layout="above" label=""/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound Group 4 Option 8" layout="above" format="hslider"/>
     </row>
   </column>

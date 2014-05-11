@@ -2,10 +2,11 @@
 
 package jmri.jmrix.sprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.AbstractStreamPortController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -17,17 +18,15 @@ import java.io.DataOutputStream;
  * @author			Paul Bender    Copyright (C) 2014
  * @version			$Revision$
  */
-public class SprogCSStreamPortController extends jmri.jmrix.AbstractStreamPortController implements SprogInterface {
-
-    private DataInputStream input;
-    private DataOutputStream output;
+public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 
     public SprogCSStreamPortController(DataInputStream in,DataOutputStream out,String pname){
         super(in,out,pname);
-        adaptermemo = new jmri.jmrix.sprog.SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
+        adaptermemo = new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
         
     }
 
+    @Override
     public void configure() {
        log.debug("configure() called.");
        SprogTrafficController control = SprogTrafficController.instance();
@@ -39,7 +38,7 @@ public class SprogCSStreamPortController extends jmri.jmrix.AbstractStreamPortCo
        control.connectPort(this);
 
        // declare up
-       jmri.jmrix.sprog.ActiveFlag.setActive(); 
+       ActiveFlag.setActive(); 
 
     }
 
@@ -48,11 +47,13 @@ public class SprogCSStreamPortController extends jmri.jmrix.AbstractStreamPortCo
      * Check that this object is ready to operate. This is a question
      * of configuration, not transient hardware status.
      */
+    @Override
     public boolean status(){ return true; }
 
     
     /**
      * Can the port accept additional characters?  
+     * @return true
      */
     public boolean okToSend(){
                 return(true);
@@ -60,14 +61,17 @@ public class SprogCSStreamPortController extends jmri.jmrix.AbstractStreamPortCo
 
     // RFID Interface methods.
 
+    @Override
     public void addSprogListener( SprogListener l){
       SprogTrafficController.instance().addSprogListener(l);
     }
 
+    @Override
     public void removeSprogListener( SprogListener l) {
       SprogTrafficController.instance().removeSprogListener(l);
     }
 
+    @Override
     public void sendSprogMessage(SprogMessage m, SprogListener l){
       SprogTrafficController.instance().sendSprogMessage(m,l);
     }

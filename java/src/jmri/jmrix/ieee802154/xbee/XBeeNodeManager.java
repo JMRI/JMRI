@@ -86,7 +86,7 @@ public class XBeeNodeManager implements XBeeListener {
              // the node does not exist, we're adding a new one.
              node=(XBeeNode)xtc.newNode();
              // register the node with the traffic controller
-             xtc.registerNode((jmri.jmrix.AbstractNode)node);
+             xtc.registerNode(node);
           }
 
           // update the node information.

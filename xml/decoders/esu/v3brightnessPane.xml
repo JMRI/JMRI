@@ -1,4 +1,4 @@
-  <pane name="Brightness" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Brightness" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <row>
         <column>
@@ -6,8 +6,8 @@
             <label> </label>
           </label>
           <label label="Brightness Range 0 (dark) - 15 (maximum)">
-            <label xml:lang="fr">Luminosité valeur 0  - 15 (maximum)</label>
-            <label xml:lang="it">Luminosità: 0=spento  - 15 (massima)</label>
+            <label xml:lang="fr">Luminosité valeur 0 - 15 (maximum)</label>
+            <label xml:lang="it">Luminosità: 0=spento - 15 (massima)</label>
           </label>
           <label label=" ">
             <label> </label>

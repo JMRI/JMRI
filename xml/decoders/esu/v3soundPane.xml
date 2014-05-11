@@ -1,4 +1,4 @@
-  <pane name="Sound Slot" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Sound Slot" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <row>
         <label label="Enter the required sound slot number 1 - 16">
@@ -164,7 +164,7 @@
       <separator/>
       <display item="Soundkey37" label="Sensor 1 Forward" layout="left">
         <label xml:lang="fr">Son 1 en av</label>
-       <label xml:lang="it">sensore 1 Avanti</label>
+       <label xml:lang="it">Sensore 1 Avanti</label>
       </display>
       <display item="Soundkey38" label="Reverse" layout="left">
         <label xml:lang="fr">en arr</label>
@@ -172,7 +172,7 @@
       </display>
       <display item="Soundkey39" label="Sensor 2 Forward" layout="left">
         <label xml:lang="fr">Son 2 en av</label>
-       <label xml:lang="it">sensore 2 Avanti</label>
+       <label xml:lang="it">Sensore 2 Avanti</label>
       </display>
       <display item="Soundkey40" label="Reverse" layout="left">
         <label xml:lang="fr">en arr</label>

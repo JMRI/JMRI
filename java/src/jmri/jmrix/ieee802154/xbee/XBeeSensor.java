@@ -25,8 +25,6 @@ import com.rapplogic.xbee.util.IntArrayInputStream;
 public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
 
-    private boolean statusRequested=false;
-
     private String NodeIdentifier; /* This is a string representation of
                                       the XBee address in the system name
                                       It may be an address or it may be
@@ -176,7 +174,8 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                      log.debug("Caught IllegalStateException parsing IS packet");
                      try {
                          RxResponseIoSample rxSample = new RxResponseIoSample();
-                         int sampleSize = atResp.getValue()[0];
+			 // don't need sampleSize now, might later.
+                         //int sampleSize = atResp.getValue()[0];
                          rxSample.setChannelIndicator1(atResp.getValue()[1]);
                          rxSample.setChannelIndicator2(atResp.getValue()[2]);
 			 IoSample sample = new IoSample(rxSample);

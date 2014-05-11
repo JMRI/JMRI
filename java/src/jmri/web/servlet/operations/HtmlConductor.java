@@ -54,14 +54,10 @@ public class HtmlConductor extends HtmlTrainCommon {
             );
         }
 
-        StringBuilder builder = new StringBuilder();
         List<Engine> engineList = EngineManager.instance().getByTrainBlockingList(train);
         List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
         log.debug("Train has {} cars assigned to it", carList.size());
 
-        int sequenceId = location.getSequenceId();
-        int sequence = train.getRoute().getLocationsBySequenceList().size();
-        boolean work = isThereWorkAtLocation(train, location.getLocation());
         String pickups = performWork(true, false);  // pickup=true, local=false
         String setouts = performWork(false, false); // pickup=false, local=false
         String localMoves = performWork(false, true); // pickup=false, local=true
@@ -168,22 +164,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         }
 
         // engine change or helper service?
-        if (train.getSecondLegOptions() != Train.NONE) {
-            if (location == train.getSecondLegStartLocation()) {
-                builder.append(engineChange(location, train.getSecondLegOptions()));
-            }
-            if (location == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
-                builder.append(String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName()))); // NOI18N
-            }
-        }
-        if (train.getThirdLegOptions() != Train.NONE) {
-            if (location == train.getThirdLegStartLocation()) {
-                builder.append(engineChange(location, train.getSecondLegOptions()));
-            }
-            if (location == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
-                builder.append(String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName()))); // NOI18N
-            }
-        }
+        builder.append(this.getEngineChanges(location));
 
         if (r < sequence.size() - 1) {
             // Is the next location the same as the previous?

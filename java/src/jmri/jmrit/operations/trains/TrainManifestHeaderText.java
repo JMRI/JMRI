@@ -11,27 +11,27 @@ import org.jdom.Element;
  */
 public class TrainManifestHeaderText {
 	
-	public static String road = Bundle.getMessage("Road"); // the supported message format options
-	public static String number = Bundle.getMessage("Number");
-	public static String type = Bundle.getMessage("Type");
-	public static String model = Bundle.getMessage("Model");
-	public static String length = Bundle.getMessage("Length");
-	public static String load = Bundle.getMessage("Load");
-	public static String color = Bundle.getMessage("Color");
-	public static String track = Bundle.getMessage("Track");
-	public static String destination = Bundle.getMessage("Destination");
-	public static String dest_track = Bundle.getMessage("Dest&Track");
-	public static String final_dest = Bundle.getMessage("Final_Dest");
-	public static String final_dest_track = Bundle.getMessage("FD&Track");
-	public static String location = Bundle.getMessage("Location");
-	public static String consist = Bundle.getMessage("Consist");
-	public static String kernel = Bundle.getMessage("Kernel");
-	public static String owner = Bundle.getMessage("Owner");
-	public static String rwe = Bundle.getMessage("RWE");
-	public static String comment = Bundle.getMessage("Comment");
-	public static String drop_comment = Bundle.getMessage("SetOut_Msg");
-	public static String pickup_comment = Bundle.getMessage("PickUp_Msg");
-	public static String hazardous = Bundle.getMessage("Hazardous");
+	private static String road = Bundle.getMessage("Road"); // the supported message format options
+	private static String number = Bundle.getMessage("Number");
+	private static String type = Bundle.getMessage("Type");
+	private static String model = Bundle.getMessage("Model");
+	private static String length = Bundle.getMessage("Length");
+	private static String load = Bundle.getMessage("Load");
+	private static String color = Bundle.getMessage("Color");
+	private static String track = Bundle.getMessage("Track");
+	private static String destination = Bundle.getMessage("Destination");
+	private static String dest_track = Bundle.getMessage("Dest&Track");
+	private static String final_dest = Bundle.getMessage("Final_Dest");
+	private static String final_dest_track = Bundle.getMessage("FD&Track");
+	private static String location = Bundle.getMessage("Location");
+	private static String consist = Bundle.getMessage("Consist");
+	private static String kernel = Bundle.getMessage("Kernel");
+	private static String owner = Bundle.getMessage("Owner");
+	private static String rwe = Bundle.getMessage("RWE");
+	private static String comment = Bundle.getMessage("Comment");
+	private static String drop_comment = Bundle.getMessage("SetOut_Msg");
+	private static String pickup_comment = Bundle.getMessage("PickUp_Msg");
+	private static String hazardous = Bundle.getMessage("Hazardous");
 
 	public static String getStringHeader_Road() {
 		return road;

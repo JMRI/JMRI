@@ -1,8 +1,10 @@
-  <pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <grid ipadx="10" ipady="10"> <!-- default padding for all grid items -->
         <griditem gridx="0" gridy="0" weightx="1" gridheight="REMAINDER" anchor="LINE_START"> <!-- gridheight for full-depth row heading, weightx for right-justified row -->
-          <label label="Master Controls"/>
+          <label label="Master Controls">
+           <label xml:lang="it">="Controlli principali"</label>
+           </label>
         </griditem>
         <griditem gridx="1" gridy="0" gridwidth="REMAINDER" anchor="LINE_START"> <!-- gridwidth for full-width row -->
           <display item="ESU V4 Extra Miscellaneous Option 7"/>
@@ -135,11 +137,19 @@
             <label label="    "/>
           </column>
           <column>
-            <label label="Due to the flexible and free-from design of LokSound Decoders, it is possible"/>
-            <label label="for project designers to assign sounds to arbitrary sound slots."/>
+            <label label="Due to the flexible and free-form design of LokSound Decoders, it is possible">
+            <label xml:lang="it">="Grazie al progetto flessibile dei decoders LokSound è possibile"</label>
+           </label>
+            <label label="for project designers to assign sounds to arbitrary sound slots.">
+            <label xml:lang="it">="assegnare suoni arbitrari ai singoli Slots"</label>
+           </label>
             <label label=" "/>
-            <label label="Any sound slot labels shown below are only a guide from ESU documentation and"/>
-            <label label="may not be correct for the particular sound project loaded into your loco decoder."/>
+            <label label="Any sound slot labels shown below are only a guide from ESU documentation and">
+            <label xml:lang="it">="Tutte le etichette degli sloto visualizzati sono solo esempi presi dalla documentazione ESU"</label>
+           </label>
+            <label label="may not be correct for the particular sound project loaded into your loco decoder.">
+            <label xml:lang="it">="e potrebbero anche non corrispondere al particolare progetto caricato nel vostro decoder"</label>
+           </label>
             <label label=" "/>
           </column>
         </griditem>

@@ -442,7 +442,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         catch (Exception e)
         {
             log.debug("nodeAddrField Contains \"{}\"",
-                       (String)nodeAddrField.getSelectedItem());
+                       nodeAddrField.getSelectedItem());
             statusText1.setText(rb.getString("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -506,7 +506,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
                 rb.getString("HeadingUserName")};
 
         private String free = rb.getString("AssignmentFree");
-        private int curRow = -1;
 
         public void setNode(XBeeNode node){
             curNode=node;

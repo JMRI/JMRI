@@ -1,109 +1,243 @@
-  <pane name="Read Me - IMPORTANT" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+﻿  <pane name="Read Me - IMPORTANT" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <column>
       <label label=" "/>
-      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;strong&gt;JMRI 3.7.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;">
+         <label xml:lang="it">"&lt;html&gt;&lt;strong&gt;Richiesto JMRI 3.7.5 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;"</label>
+       </label>
       <label label=" "/>
-      <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;"/>
-      <label label=" "/>
-      <separator/>
-      <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;Factory Reset Warning&lt;/h2&gt;&lt;/html&gt;"/>
-      <label label=" "/>
-      <label label="&lt;html&gt;&lt;em&gt;Performing a Factory Reset on any ESU sound decoder may render the sound project inoperable!&lt;/em&gt;&lt;/html&gt;"/>
-      <label label=" "/>
-      <label label="ESU sound decoders are manufactured blank and the sound project is loaded, often"/>
-      <label label="by a dealer or other party. If the project installer forgets to select the"/>
-      <label label="optional step to write new 'factory' defaults suited to the project, a"/>
-      <label label="subsequent reset will most likely render the sounds inoperable due to incorrect"/>
-      <label label="CV defaults. If in doubt, consult your dealer before resetting."/>
+      <label label="&lt;html&gt;&lt;h1&gt;ESU V4/Select Decoders Important Information&lt;/h1&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;h1&gt;Decoders ESU V4/Select Informazioni Importanti&lt;/h1&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
       <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;"/>
+      <separator/>
+      <label label="&lt;html&gt;&lt;h2&gt;Factory Reset Warning&lt;/h2&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Avvertenza per RESET a valori di Fabbrica&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
-      <label label="Servo Function Output has been added. Also many corrections and improvements"/>
-      <label label="since JMRI 3.7.4."/>
+      <label label="&lt;html&gt;&lt;em&gt;Performing a Factory Reset on any ESU sound decoder may render the sound project inoperable!&lt;/em&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;em&gt;L'esecuzione di un reset ai valori  di fabbrica sui decoder sonori ESU può rendere il progetto sonoro inutilizzabile!&lt;/em&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
-      <label label="LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added."/>
-      <label label=" "/>
-      <label label="There is now an option to import CV value list files created by LokProgrammer."/>
-      <label label="(File menu when a roster entry is open.)"/>
-      <label label=" "/>
-      <label label="These decoders are probably the most complex (and versatile) DCC decoders"/>
-      <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses"/>
-      <label label="extra challenges for JMRI coding. These defintions are a work in progress."/>
-      <label label=" "/>
-      <label label="If you have an NCE Power Pro system, there is now a workaround in JMRI for the"/>
-      <label label="firmware issue that prevents the Power Pro from correctly writing Indexed CVs on"/>
-      <label label="the Programming Track. You can now safely use the the Programming Track to read"/>
-      <label label="or write any CVs in this definition."/>
-      <label label=" "/>
-      <label label="The naming convention for Indexed CVs has been changed for these decoders to"/>
-      <label label="conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the"/>
-      <label label="CVs list in the same order as in the ESU documentation and LokProgrammer software."/>
-      <label label="The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'."/>
+      <label label="ESU sound decoders are manufactured blank and the sound project is loaded, often">
+         <label xml:lang="it">="I decoder sonori ESU sono prodotti senza progetto sonoro e il progetto sonoro è caricato, spesso"</label>
+      </label>
+      <label label="by a dealer or other party. If the project installer forgets to select the">
+         <label xml:lang="it">="da un distributore. Se nell'installazione viene dimenticato di selezionare"</label>
+      </label>
+      <label label="optional step to write new 'factory' defaults suited to the project, a">
+         <label xml:lang="it">="alcuni parametri optional per i "nuovi settagi di fabbrica" appropriati al progetto"</label>
+      </label>
+      <label label="subsequent reset will most likely render the sounds inoperable due to incorrect">
+         <label xml:lang="it">="un successivo reset potrebbe rendere non utilizzabili i suoni a causa dei valori"</label>
+      </label>
+      <label label="CV defaults. If in doubt, consult your dealer before resetting.">
+         <label xml:lang="it">="di alcune CV. Se avete dubbi, consultate prima il vostro rivenditore."</label>
+      </label>
       <label label=" "/>
       <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;h2&gt;News and Warnings&lt;/h2&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Novità e Avvertenze&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
-      <label label="The ESU V4/Select decoders use a multiplier factor of 0.25 rather than the NMRA standard"/>
-      <label label="factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates."/>
+      <label label="Servo Function Output has been added. Also many corrections and improvements">
+         <label xml:lang="it">="Aggiunta funzione uscita comando Servo."</label>
+      </label>
+      <label label="since JMRI 3.7.4.">
+         <label xml:lang="it">="Oltre a varie correzioni e miglioramenti dalla versione JMRI 3.7.4."</label>
+      </label>
       <label label=" "/>
-      <label label="This means that you will need to enter a value nearly 4 times as great (3.6) in"/>
-      <label label="the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound"/>
-      <label label="V3.5 or almost any other brand of decoder. This can be a particular problem"/>
-      <label label="if have V4/Select and other model decoders in the same consist."/>
+      <label label="LokPilot Fx V4.0 and LokPilot XL V4.0 decoder definitions have been added.">
+         <label xml:lang="it">="Aggiunti i decoder LokPilot Fx V4.0 e LokPilot XL V4.0."</label>
+      </label>
+      <label label=" "/>
+      <label label="There is now an option to import CV value list files created by LokProgrammer.">
+         <label xml:lang="it">="Nuova opzione per importare i valori delle CV da file creato da LokProgrammer."</label>
+      </label>
+      <label label="(File menu when a roster entry is open.)">
+         <label xml:lang="it">="(Menu File quando si apre un decoder dal Roster.)"</label>
+      </label>
+      <label label=" "/>
+      <label label="These decoders are probably the most complex (and versatile) DCC decoders">
+         <label xml:lang="it">="Questi decoders sono probabilmente i più complessi (e versatili) decoders DCC"</label>
+      </label>
+      <label label="manufactured to date. Each decoder implements ~1,200 CVs and this poses">
+         <label xml:lang="it">="fino ad oggi. Comprendono circa 1.200 CV e questo impone"</label>
+      </label>
+      <label label="extra challenges for JMRI coding. These defintions are a work in progress.">
+         <label xml:lang="it">="molto lavoro nella codifica. Queste definizioni sono in evoluzione."</label>
+      </label>
+      <label label=" "/>
+      <label label="If you have an NCE Power Pro system, there is now a workaround in JMRI for the">
+         <label xml:lang="it">="Se avete un NCE Power Pro, è stata corretto un errore che preveniva"</label>
+      </label>
+      <label label="firmware issue that prevents the Power Pro from correctly writing Indexed CVs on">
+         <label xml:lang="it">="la corretta scrittura delle CV indicizzate usando il Binario di Programmazione"</label>
+      </label>
+      <label label="the Programming Track. You can now safely use the the Programming Track to read">
+         <label xml:lang="it">="Ora potete usare tranquillamente il Binario di Programmazione"</label>
+      </label>
+      <label label="or write any CVs in this definition.">
+               <label xml:lang="it">="per leggere e scrivere qualsiasi CV."</label>
+      </label>
+      <label label=" "/>
+      <label label="The naming convention for Indexed CVs has been changed for these decoders to">
+         <label xml:lang="it">="La convenzione per le CV indicizzate di questi decoders è cambiata"</label>
+      </label>
+      <label label="conform to the MNRA/ESU concept of Indexed CVs and hence they will appear in the">
+         <label xml:lang="it">="in conformità alla ENMRA/ESU e quindi queste CV appaiono"</label>
+      </label>
+      <label label="CVs list in the same order as in the ESU documentation and LokProgrammer software.">
+         <label xml:lang="it">="nella lista delle CV nello stesso ordine della documentazione ESU e del LokProgrammer"</label>
+      </label>
+      <label label="The new order is 'PI.SI.CV', that is '(value in CV31).(value in CV32).(CV number)'.">
+         <label xml:lang="it">="Il nuovo ordine è: PI-SI-CV, cioè (valore di CV31) (lvalore di CV32) (numero CV)."</label>
+      </label>
       <label label=" "/>
       <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;h2&gt;Acceleration and Deceleration Rate&lt;/h2&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Tasso Accellerazione e Decellerazione&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
-      <label label="The ESU Function Map has 40 lines and these lines are not sequentially mapped to"/>
-      <label label="functions. Instead, any line can be set to be activated by any one or"/>
-      <label label="combination of function buttons. There are 640 CVs involved and 5,120 checkboxes."/>
+      <label label="The ESU V4/Select decoders use a multiplier factor of 0.25 rather than the NMRA standard">
+         <label xml:lang="it">="I decoders ESU V4 e Select usano un fattore di moltiplica di 0.25 al posto dello standard NMRA"</label>
+      </label>
+      <label label="factor of 0.896 for the values of Acceleration (CV 3) and Deceleration (CV 4) rates.">
+         <label xml:lang="it">="di 0.896 per i valori di Accellerazione (CV 3) e Decellerazione (CV 4)."</label>
+      </label>
       <label label=" "/>
-      <label label="Function mapping is explained in the ESU LokSound V4 manual (pages 51 onwards)."/>
-      <label label="The information in the ESU LokSound Select manual is oversimplified and may not give."/>
-      <label label="satisfactory results. Use the V4 manual for Select decoders as well, or ask for asistance"/>
-      <label label="on the LokSound Yahoo&#174; group."/>
-      <label label=" "/>
-      <label label="You may experience very slow scrolling of the Function Map table with some Mac OS X computers."/>
-      <label label="If affected, change the JMRI GUI setting in Decoder Pro > Preferences > Display > GUI to any"/>
-      <label label="setting other than Mac OS X."/>
-      <label label=" "/>
-      <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;The Speed Table&lt;/h2&gt;&lt;/html&gt;"/>
-      <label label=" "/>
-      <label label="The ESU V4/Select Decoders implement the mfx&#174; style speed table rather than"/>
-      <label label="the NMRA version. This style can do everything the NMRA stlye does and is every"/>
-      <label label="bit as versatile and easy to use."/>
-      <label label=" "/>
-      <label label=" The difference is that Vstart (CV 2) and Vhigh (CV 5) are ALWAYS used as well"/>
-      <label label=" as the speed table CVs. The curve shape defined in the speed table CVs is"/>
-      <label label=" squeezed to fit between Vstart and Vhigh."/>
-      <label label=" "/>
-      <label label="The procedure to set up a speed curve is to pick the curve shape you desire on"/>
-      <label label="the speed table AND use Vstart (CV 2) and Vhigh (CV 5) to set the Minimum and"/>
-      <label label="Maximum speeds."/>
-      <label label=" "/>
-      <label label="When speed matching to a loco the Minimum and Maximum speeds MUST be matched"/>
-      <label label="first using CVs 2 and 5 ONLY on the LokSound decoder. Then use CVs 68 to 93"/>
-      <label label="to match the remaining 26 speed steps. CVs 2 and 5 MUST be set first when speed"/>
-      <label label="matching to another loco."/>
-      <label label=" "/>
-      <label label="The Minimum and Maximum speeds cannot be set by using the speed table steps 1"/>
-      <label label="and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at"/>
-      <label label="1 and 255 respectively."/>
+      <label label="This means that you will need to enter a value nearly 4 times as great (3.6) in">
+         <label xml:lang="it">="Questo significa che dovete introdurre un valore di circa 4 volte più grande (3.6)"</label>
+      </label>
+      <label label="the Acceleration and Deceleration CVs to achieve the same rate as in a LokSound">
+         <label xml:lang="it">="nelle CV Accellerazione e Decellerazione per ottenere lo stesso risultato di un LokSound"</label>
+      </label>
+      <label label="V3.5 or almost any other brand of decoder. This can be a particular problem">
+         <label xml:lang="it">="V3.5 o altre marche di decoders. Questo potrebbe creare un problema"</label>
+      </label>
+      <label label="if have V4/Select and other model decoders in the same consist.">
+          <label xml:lang="it">="se avete dei V4 o Select nello stesso consist con altri decoder diversi"</label>
+      </label>
       <label label=" "/>
       <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;Further Assistance&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;h2&gt;The Function Map&lt;/h2&gt;&lt;/html&gt;">
+          <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Mappa Funzioni&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
       <label label=" "/>
-      <label label="For help with programming these decoders, the LokSound Yahoo&#174; group is recommended."/>
+      <label label="The ESU Function Map has 40 lines and these lines are not sequentially mapped to">
+         <label xml:lang="it">="La tabella ESU delle Funzioni ha 40 linee e queste linee non sono mappate in sequenza"</label>
+      </label>
+      <label label="functions. Instead, any line can be set to be activated by any one or">
+         <label xml:lang="it">="alle funzioni. Ogni linea può essere programmata per essere attivata da un pulsante"</label>
+      </label>
+      <label label="combination of function buttons. There are 640 CVs involved and 5,120 checkboxes.">
+          <label xml:lang="it">="o combinazione di pulsanti funzione. Ci sono 640 CV coinvolte e 5.120 check-box!"</label>
+      </label>
       <label label=" "/>
-      <label label="If you think there is a problem with this decoder definition, please report back to us by"/>
-      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or by logging a bug report on"/>
-      <label label="the JMRI SourceForge page at http//sourceforge.net/p/jmri/bugs/"/>
+      <label label="Function mapping is explained in the ESU LokSound V4 manual (pages 51 onwards).">
+         <label xml:lang="it">="La mappatura delle Funzioni è dettagliata nel manuale ESU LokSound V4 (pagine 51 e seguenti)."</label>
+      </label>
+      <label label="The information in the ESU LokSound Select manual is oversimplified and may not give.">
+          <label xml:lang="it">="Le informazioni nel manuale ESU LokSound Select sono invece semplificate e potrebbero non essere"</label>
+      </label>
+      <label label="satisfactory results. Use the V4 manual for Select decoders as well, or ask for asistance">
+         <label xml:lang="it">="sufficenti. Usate il manuale V4 per il decoder select o chiedete assistenza"</label>
+      </label>
+      <label label="on the LokSound Yahoo&#174; group.">
+          <label xml:lang="it">="sul gruppo LokSound su Yahoo&#174;."</label>
+      </label>
+      <label label=" "/>
+      <label label="You may experience very slow scrolling of the Function Map table with some Mac OS X computers.">
+         <label xml:lang="it">="Su alcuni MAC con OS X potreste sperimentare uno scrolling della Mappa Funztioni molto lento."</label>
+      </label>
+      <label label="If affected, change the JMRI GUI setting in Decoder Pro > Preferences > Display > GUI to any">
+         <label xml:lang="it">="In questi casi, modificate la programmazione dell'Interfaccia Utente di JMRI GUI in Decoder Pro > Preferenze > Display > GUI"</label>
+      </label>
+      <label label="setting other than Mac OS X.">
+          <label xml:lang="it">="con un parametro diverso da MAC OS X"</label>
+      </label>
       <label label=" "/>
       <separator/>
-      <label label="&lt;html&gt;&lt;h2&gt;Decoder Information&lt;/h2&gt;&lt;/html&gt;"/>
+      <label label="&lt;html&gt;&lt;h2&gt;The Speed Table&lt;/h2&gt;&lt;/html&gt;">
+         <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Tabella Velocità&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
+      <label label=" "/>
+      <label label="The ESU V4/Select Decoders implement the mfx&#174; style speed table rather than">
+         <label xml:lang="it">="I decoder ESU V4 e Select implementano una tabella stile &#174; mfx"</label>
+      </label>
+      <label label="the NMRA version. This style can do everything the NMRA stlye does and is every">
+         <label xml:lang="it">="invece della versione NMRA. Questo stile fà tutto quello che permette la tabella NMRA"</label>
+      </label>
+      <label label="bit as versatile and easy to use.">
+         <label xml:lang="it">="ed è altrettanto versatile e facile da usare"</label>
+      </label>
+      <label label=" "/>
+      <label label="The difference is that Vstart (CV 2) and Vhigh (CV 5) are ALWAYS used as well">
+          <label xml:lang="it">="La differenza è che Vstart (CV 2) e Vhigh (CV 5) sono SEMPRE utilizzate come Inizio e Fine valori"</label>
+      </label>
+      <label label=" as the speed table CVs. The curve shape defined in the speed table CVs is">
+         <label xml:lang="it">="nella Tabella. La forma della curva è definita dai valori delle CV in Tabella"</label>
+      </label>
+      <label label=" squeezed to fit between Vstart and Vhigh.">
+         <label xml:lang="it">="ed è ridimensionata per stare tra Vstart e Vhigh."</label>
+      </label>
+      <label label=" "/>
+      <label label="The procedure to set up a speed curve is to pick the curve shape you desire on">
+         <label xml:lang="it">="La procedura per programmare una particolare curva è quella di disegnare la curva che desiderate"</label>
+      </label>
+      <label label="the speed table AND use Vstart (CV 2) and Vhigh (CV 5) to set the Minimum and">
+         <label xml:lang="it">="nella Tabella E usare Vstart (CV 2) e Vhigh (CV 5) per stabilire il valore Minimo"</label>
+      </label>
+      <label label="Maximum speeds.">
+          <label xml:lang="it">="e massimo delle velocità"</label>
+      </label>
+      <label label=" "/>
+      <label label="When speed matching to a loco the Minimum and Maximum speeds MUST be matched">
+          <label xml:lang="it">="Se dovete accopiare due loco i valori di Vstart (CV 2) e Vhigh (CV 5) devono essere uguali"</label>
+      </label>
+      <label label="first using CVs 2 and 5 ONLY on the LokSound decoder. Then use CVs 68 to 93">
+         <label xml:lang="it">="usate prima CV 2 e CV 5 DA SOLE sul decoder LokSound. Poi usate le CV da 68 a 93"</label>
+      </label>
+      <label label="to match the remaining 26 speed steps. CVs 2 and 5 MUST be set first when speed">
+         <label xml:lang="it">="per far corrispondere i rimanenti 26 step. CV 2 e CV 5 devono essere programmati per primi"</label>
+      </label>
+      <label label="matching to another loco.">
+         <label xml:lang="it">="quando accopiate due loco."</label>
+      </label>
+      <label label=" "/>
+      <label label="The Minimum and Maximum speeds cannot be set by using the speed table steps 1">
+         <label xml:lang="it">="La velocità Minima e Massima non si possono programmare sulla Tabella per gli step 1 e 28"</label>
+      </label>
+      <label label="and 28 (CVs 67 and 94). The values of these two CVs are fixed in the decoder at">
+         <label xml:lang="it">="(CV 67 e 94). I valori di queste due CV sono fissati nel decoder"</label>
+      </label>
+      <label label="1 and 255 respectively.">
+         <label xml:lang="it">="rispettivamente a 1 e 255."</label>
+      </label>
+      <label label=" "/>
+      <separator/>
+      <label label="&lt;html&gt;&lt;h2&gt;Further Assistance&lt;/h2&gt;&lt;/html&gt;">
+          <label xml:lang="it">="&lt;html&gt;&lt;h2&gt;Ulteriore Assistenza&lt;/h2&gt;&lt;/html&gt;"</label>
+      </label>
+      <label label=" "/>
+      <label label="For help with programming these decoders, the LokSound Yahoo&#174; group is recommended.">
+          <label xml:lang="it">="Per aiuto nella programmazione di questi Decoder si raccomanda il Gruppo di Yahoo&#174; dedicato a LokSound"</label>
+      </label>
+      <label label=" "/>
+      <label label="If you think there is a problem with this decoder definition, please report back to us by">
+         <label xml:lang="it">="Se pensate ci siano problemi con questa definizione del Decoder in JMRI"</label>
+      </label>
+      <label label="posting to either the JMRI or LokSound Yahoo&#174; groups or by logging a bug report on">
+         <label xml:lang="it">="Mettendo un post sul Gruppo di Yahoo&#174; o inserendo un report"</label>
+      </label>
+      <label label="the JMRI SourceForge page at http//sourceforge.net/p/jmri/bugs/">
+          <label xml:lang="it">="sulla pagina di SourceForge di JMRI http//sourceforge.net/p/jmri/bugs/"</label>
+      </label>
+      <label label=" "/>
+      <separator/>
+      <label label="&lt;html&gt;&lt;h2&gt;Decoder Information&lt;/h2&gt;&lt;/html&gt;">
+        <label xml:lang="it">"&lt;html&gt;&lt;h2&gt;Informazioni Decoder&lt;/h2&gt;&lt;/html&gt;"</label>
+       </label>
       <label label=" "/>
             <display item="Firmware Major Version"/>
             <display item="Firmware Minor Version"/>
