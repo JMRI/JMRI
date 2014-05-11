@@ -145,7 +145,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
     private int pin2FromSystemName(String systemName) {
         int input = 0;
-        int iName = 0;
 
         if(systemName.contains(":")){
             //Address format passed is in the form of encoderAddress:input or T:turnout address
