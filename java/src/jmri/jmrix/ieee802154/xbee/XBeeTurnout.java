@@ -24,7 +24,6 @@ public class XBeeTurnout extends AbstractTurnout{
     private XBeeNode node = null; // Which node does this belong too.    
 
     private int address;
-    private int baseaddress; /* The XBee Address */
     private int pin;         /* Which DIO pin does this turnout represent. */
     private int pin2 = -1;   /* Which 2nd DIO pin does this turnout represent. */
     private String systemName;

@@ -25,7 +25,6 @@ public class XBeeLight extends AbstractLight{
     private XBeeNode node = null; // Which node does this belong too.    
 
     private int address;
-    private int baseaddress; /* The XBee Address */
     private int pin;         /* Which DIO pin does this light represent. */
     private String systemName;
 

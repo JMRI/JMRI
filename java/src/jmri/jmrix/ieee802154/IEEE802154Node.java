@@ -44,14 +44,6 @@ public abstract class IEEE802154Node extends AbstractNode{
     protected byte panaddress[]={0,0}; // default pan address to 0
     protected byte useraddress[]={0,0}; // default user address to 0
     protected byte globaladdress[]={0,0,0,0,0,0,0,0}; // default global address to 0
-    
-    public int nodeAddress = 0;  // Node address, range varies by subclass
-    /**
-     * Public method to return the node address.
-     */
-    public int getNodeAddress() {
-        return (nodeAddress);
-    }
 
     /**
      * Public method to set the node address.
