@@ -219,7 +219,7 @@
   </xs:complexType>
   
   <xs:complexType name="LabelType">
-    <xs:sequence minOccurs="0" maxOccurs="1">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded"><!-- allows any order of elements -->
       <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
         <xs:annotation><xs:documentation>
         Qualifies whether this label will appear in the interface, depending
