@@ -16,6 +16,7 @@
 <!-- 					Alain Le Marchand (2014-04-27)						-->
 <!-- 																		-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Digitrax</name>
   <column>
     <display item="Advanced consist droop compensation for speed stabilization"/>
     <display item="Speed Compensation Control"/>
@@ -33,5 +34,4 @@
       <tooltip xml:lang="it">Imposta il codice di blocco di questo Decoder</tooltip>
     </display>
   </column>
-  <name>Digitrax</name>
 </pane>

@@ -306,12 +306,12 @@
     </variables>
   </decoder>
   <pane>
+    <name>Lenz</name>
     <column>
       <display item="Accel/Decel Trim"/>
       <label>
         <text> </text>
       </label>
     </column>
-    <name>Lenz</name>
   </pane>
 </decoder-config>
