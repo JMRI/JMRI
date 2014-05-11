@@ -12,34 +12,40 @@
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="0">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="0">
         <decVal/>
+        <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
+        <label>Manufacturer ID</label>
       </variable>
-      <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
+      <variable CV="61" mask="XXXXXXXV" item="F0 use">
         <enumVal>
           <enumChoice choice="Off"/>
           <enumChoice choice="On"/>
         </enumVal>
+        <label>Use F0 for function control</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
+      <variable CV="61" mask="XXXXXXVX" item="Transpond" default="1">
         <enumVal>
           <enumChoice choice="Off"/>
           <enumChoice choice="On"/>
         </enumVal>
+        <label>Digitrax Transponding</label>
       </variable>
-      <variable label="Function controlling output" CV="64" mask="XXXXXXXV" item="ControlFn">
+      <variable CV="64" mask="XXXXXXXV" item="ControlFn">
         <enumVal>
           <enumChoice choice="F0"/>
           <enumChoice choice="F3"/>
           <enumChoice choice="F5"/>
         </enumVal>
+        <label>Function controlling output</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="Function Output">
+  <pane>
+    <name>Function Output</name>
     <column>
       <display item="Transpond"/>
       <display item="ControlFn"/>

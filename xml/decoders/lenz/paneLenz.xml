@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane name="Lenz" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -51,122 +51,120 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-
-    <name>Lenz</name>
-
-    <column>
-      <row>
-        <column>
-          <label label="RailCom Configuration">
-            <label>RailCom Configuration</label>
-            <label xml:lang="it">Configurazione RailCom</label>
-          </label>
-          <display item="RailCom Address"/>
-          <display item="RailCom Data"/>
-          <display item="RailCom Command"/>
-          <display item="Enable RailCom"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Fault Indication">
-            <label>Fault Indication</label>
-            <label xml:lang="it">Indicazione Guasti</label>
-          </label>
-          <display item="Light Short"/>
-          <display item="Overheating"/>
-          <display item="Motor Short"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Motor Configuration">
-            <label>Motor Configuration</label>
-            <label xml:lang="it">Configurazione Motore</label>
-          </label>
-          <display item="Motor type"/>
-          <display item="EMF Switch"/>
-          <display item="BEMF Control"/>
-          <display item="Motor Frequency"/>
-          <display item="Minimum PWM Value"/>
-          <display item="Motor Duty Cycle"/>
-          <display item="Motor Timeout"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="           ">
-            <label>           </label>
-          </label>
-        </column>
-        <column>
-          <label label="Braking Configuration">
-            <label>Braking Configuration</label>
-            <label xml:lang="it">Configurazione Frenata</label>
-          </label>
-          <display item="Constant Braking"/>
-          <display item="ABC"/>
-          <display item="ABC Direction"/>
-          <display item="Push-Pull w/o Stop"/>
-          <display item="Push-Pull w Stop"/>
-          <display item="Stop on DC"/>
-          <display item="Braking Distance"/>
-          <display item="ABC Approach Speed"/>
-          <display item="Push-Pull Stop Time"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-            <display item="Signal stop activated with external contact"/>
-            <display item="Push-pull operation activated with external contact"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear">
-            <label>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</label>
-            <label xml:lang="it">La Frenata Costante funziona solo se è abilitata l'inerzia, e quando non in velocità da manovra</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Product Number"/>
-        </column>
-      </row>
-    </column>
-  </pane>
+  <name>Lenz</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>RailCom Configuration</text>
+          <text xml:lang="it">Configurazione RailCom</text>
+        </label>
+        <display item="RailCom Address"/>
+        <display item="RailCom Data"/>
+        <display item="RailCom Command"/>
+        <display item="Enable RailCom"/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Fault Indication</text>
+          <text xml:lang="it">Indicazione Guasti</text>
+        </label>
+        <display item="Light Short"/>
+        <display item="Overheating"/>
+        <display item="Motor Short"/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Motor Configuration</text>
+          <text xml:lang="it">Configurazione Motore</text>
+        </label>
+        <display item="Motor type"/>
+        <display item="EMF Switch"/>
+        <display item="BEMF Control"/>
+        <display item="Motor Frequency"/>
+        <display item="Minimum PWM Value"/>
+        <display item="Motor Duty Cycle"/>
+        <display item="Motor Timeout"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>           </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>Braking Configuration</text>
+          <text xml:lang="it">Configurazione Frenata</text>
+        </label>
+        <display item="Constant Braking"/>
+        <display item="ABC"/>
+        <display item="ABC Direction"/>
+        <display item="Push-Pull w/o Stop"/>
+        <display item="Push-Pull w Stop"/>
+        <display item="Stop on DC"/>
+        <display item="Braking Distance"/>
+        <display item="ABC Approach Speed"/>
+        <display item="Push-Pull Stop Time"/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Signal stop activated with external contact"/>
+        <display item="Push-pull operation activated with external contact"/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
+          <text xml:lang="it">La Frenata Costante funziona solo se è abilitata l'inerzia, e quando non in velocità da manovra</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Product Number"/>
+      </column>
+    </row>
+  </column>
+</pane>

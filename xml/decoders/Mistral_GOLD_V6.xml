@@ -1060,7 +1060,8 @@
       <factReset label="Reset All CVs" CV="8" default="55"/>
     </resets>
   </decoder>
-  <pane name="Mistral GOLD V6">
+  <pane>
+    <name>Mistral GOLD V6</name>
     <column>
       <separator/>
       <row>

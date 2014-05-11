@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">	
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2014</year>
     <holder>JMRI</holder>
@@ -36,76 +36,86 @@
       </revremark>
     </revision>
   </revhistory>
-	<!-- Break options (in DH Options panel) -->
-	  <variable label="Break on asymmetrical signal (normal)" CV="27" mask="XXXXXXXV" tooltip="CV27 Bit 0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/signal asymétrique (normal)</label>
-		<label xml:lang="de">Bremsen - Asymmetrie (normal)</label>
-	  </variable>
-	  <variable label="Break on asymmetrical signal (inverted)" CV="27" mask="XXXXXXVX" tooltip="CV27 Bit 1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/signal asymétrique (inversé)</label>
-		<label xml:lang="de">Bremsen - Asymmetrie (invers)</label>
-	  </variable>
-	  <variable label="Break on negative power" CV="27" mask="XXXVXXXX" tooltip="CV27 Bit 4">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/courant négatif</label>
-		<label xml:lang="de">Bremsen - Negative Spannung</label>
-	  </variable>
-	  <variable label="Break on positive power" CV="27" mask="XXVXXXXX" tooltip="CV27 Bit 5">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/courant positif</label>
-		<label xml:lang="de">Bremsen - Positif Spannung</label>
-	  </variable>
-	  <variable label="Break with diode (normal)" CV="27" mask="XVXXXXXX" tooltip="CV27 Bit 6">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/diode (normal)</label>
-		<label xml:lang="de">Bremsen - Diode (normal)</label>
-	  </variable>
-	  <variable label="Break with diode (inverted)" CV="27" mask="VXXXXXXX" tooltip="CV27 Bit 7">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-		<label xml:lang="fr">Freinage/diode (inversé)</label>
-		<label xml:lang="de">Bremsen - Diode (invers)</label>
-	  </variable> 
-		  <!-- Extra options for DH05C/DH10C/DH16A/DH18A (in DH Options panel) -->
-	  <variable label="Function for front and rear lights on" CV="121" tooltip="CV121" minOut="2">
-			<enumVal>
-				<enumChoice choice="-" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="4"/>
-				<enumChoice choice="F4" value="8"/>
-				<enumChoice choice="F5" value="16"/>
-				<enumChoice choice="F6" value="32"/>
-				<enumChoice choice="F7" value="64"/>
-				<enumChoice choice="F8" value="128"/>
-			</enumVal>
-			<label xml:lang="fr">Fonction pour feux avant et arrière</label>
-			<label xml:lang="de">Funktion für LV und LR ein</label>
-	   </variable>  
-	   <variable label="Function for AUX 1 and AUX 2 on" CV="122" tooltip="CV122" minOut="4">
-			<enumVal>
-				<enumChoice choice="-" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="4"/>
-				<enumChoice choice="F4" value="8"/>
-				<enumChoice choice="F5" value="16"/>
-				<enumChoice choice="F6" value="32"/>
-				<enumChoice choice="F7" value="64"/>
-				<enumChoice choice="F8" value="128"/>
-			</enumVal>
-			<label xml:lang="fr">Fonction pour allumer AUX 1 et AUX 2</label>
-			<label xml:lang="de">Funktion für AUX 1 und AUX 2 ein</label>
-	   </variable>  
-	   <variable label="Reduced speed in breaking zones" CV="123" default="63" tooltip="CV123 (0-127)">
-		<decVal min="0" max="127"/>
-		<label xml:lang="fr">Vitesse réduite (asym.)</label>
-		<label xml:lang="de">Langsamfahrt Geschw. bei bremsen</label>
-	  </variable>
-	  <variable label="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)">
-		<decVal min="0" max="15"/>
-		<label xml:lang="fr">Limite de signal asymétrique</label>
-		<label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
-	  </variable>
+  <!-- Break options (in DH Options panel) -->
+  <variable item="Break on asymmetrical signal (normal)" CV="27" mask="XXXXXXXV" tooltip="CV27 Bit 0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break on asymmetrical signal (normal)</label>
+    <label xml:lang="fr">Freinage/signal asymétrique (normal)</label>
+    <label xml:lang="de">Bremsen - Asymmetrie (normal)</label>
+  </variable>
+  <variable item="Break on asymmetrical signal (inverted)" CV="27" mask="XXXXXXVX" tooltip="CV27 Bit 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break on asymmetrical signal (inverted)</label>
+    <label xml:lang="fr">Freinage/signal asymétrique (inversé)</label>
+    <label xml:lang="de">Bremsen - Asymmetrie (invers)</label>
+  </variable>
+  <variable item="Break on negative power" CV="27" mask="XXXVXXXX" tooltip="CV27 Bit 4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break on negative power</label>
+    <label xml:lang="fr">Freinage/courant négatif</label>
+    <label xml:lang="de">Bremsen - Negative Spannung</label>
+  </variable>
+  <variable item="Break on positive power" CV="27" mask="XXVXXXXX" tooltip="CV27 Bit 5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break on positive power</label>
+    <label xml:lang="fr">Freinage/courant positif</label>
+    <label xml:lang="de">Bremsen - Positif Spannung</label>
+  </variable>
+  <variable item="Break with diode (normal)" CV="27" mask="XVXXXXXX" tooltip="CV27 Bit 6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break with diode (normal)</label>
+    <label xml:lang="fr">Freinage/diode (normal)</label>
+    <label xml:lang="de">Bremsen - Diode (normal)</label>
+  </variable>
+  <variable item="Break with diode (inverted)" CV="27" mask="VXXXXXXX" tooltip="CV27 Bit 7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Break with diode (inverted)</label>
+    <label xml:lang="fr">Freinage/diode (inversé)</label>
+    <label xml:lang="de">Bremsen - Diode (invers)</label>
+  </variable>
+  <!-- Extra options for DH05C/DH10C/DH16A/DH18A (in DH Options panel) -->
+  <variable item="Function for front and rear lights on" CV="121" tooltip="CV121" minOut="2">
+    <enumVal>
+      <enumChoice choice="-" value="0"/>
+      <enumChoice choice="F1" value="1"/>
+      <enumChoice choice="F2" value="2"/>
+      <enumChoice choice="F3" value="4"/>
+      <enumChoice choice="F4" value="8"/>
+      <enumChoice choice="F5" value="16"/>
+      <enumChoice choice="F6" value="32"/>
+      <enumChoice choice="F7" value="64"/>
+      <enumChoice choice="F8" value="128"/>
+    </enumVal>
+    <label>Function for front and rear lights on</label>
+    <label xml:lang="fr">Fonction pour feux avant et arrière</label>
+    <label xml:lang="de">Funktion für LV und LR ein</label>
+  </variable>
+  <variable item="Function for AUX 1 and AUX 2 on" CV="122" tooltip="CV122" minOut="4">
+    <enumVal>
+      <enumChoice choice="-" value="0"/>
+      <enumChoice choice="F1" value="1"/>
+      <enumChoice choice="F2" value="2"/>
+      <enumChoice choice="F3" value="4"/>
+      <enumChoice choice="F4" value="8"/>
+      <enumChoice choice="F5" value="16"/>
+      <enumChoice choice="F6" value="32"/>
+      <enumChoice choice="F7" value="64"/>
+      <enumChoice choice="F8" value="128"/>
+    </enumVal>
+    <label>Function for AUX 1 and AUX 2 on</label>
+    <label xml:lang="fr">Fonction pour allumer AUX 1 et AUX 2</label>
+    <label xml:lang="de">Funktion für AUX 1 und AUX 2 ein</label>
+  </variable>
+  <variable item="Reduced speed in breaking zones" CV="123" default="63" tooltip="CV123 (0-127)">
+    <decVal min="0" max="127"/>
+    <label>Reduced speed in breaking zones</label>
+    <label xml:lang="fr">Vitesse réduite (asym.)</label>
+    <label xml:lang="de">Langsamfahrt Geschw. bei bremsen</label>
+  </variable>
+  <variable item="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)">
+    <decVal min="0" max="15"/>
+    <label>Threshold for asymmetric behavior</label>
+    <label xml:lang="fr">Limite de signal asymétrique</label>
+    <label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
+  </variable>
 </variables>

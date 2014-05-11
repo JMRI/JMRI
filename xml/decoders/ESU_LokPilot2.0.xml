@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
 <!--$Id: ESU_LokPilot2.0.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -62,35 +62,35 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
+      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
         <decVal min="1" max="75"/>
         <label>Starting Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
+      <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
         <decVal min="0" max="64"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
+      <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Maximum Speed" CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
+      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
         <decVal min="0" max="64"/>
         <label>Maximum Speed</label>
       </variable>
-      <variable label="Medium speed" CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
+      <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
       </variable>
-      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+      <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
+      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -101,7 +101,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F1</label>
       </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
+      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -112,7 +112,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F2</label>
       </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
+      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -123,7 +123,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F3</label>
       </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
+      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -134,7 +134,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -145,7 +145,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -156,7 +156,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -167,7 +167,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F7</label>
       </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -178,7 +178,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
+      <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -189,7 +189,7 @@
         </enumVal>
         <label>Analog Mode Function Status - FL(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
+      <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -200,7 +200,7 @@
         </enumVal>
         <label>Analog Mode Function Status - FL(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9(f)" CV="14" mask="XXXXXVXX" default="0">
+      <variable item="Analog Mode Function Status - F9(f)" CV="14" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -211,7 +211,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F9(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10(f)" CV="14" mask="XXXXVXXX" default="0">
+      <variable item="Analog Mode Function Status - F10(f)" CV="14" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -222,7 +222,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F10(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0">
+      <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -233,7 +233,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F11</label>
       </variable>
-      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -244,7 +244,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F12</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9(r)" CV="14" mask="XVXXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F9(r)" CV="14" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -255,7 +255,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F9(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10(r)" CV="14" mask="VXXXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F10(r)" CV="14" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -266,11 +266,11 @@
         </enumVal>
         <label>Analog Mode Function Status - F10(r)</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0">
+      <variable item="Consist Address" CV="19" mask="XVVVVVVV" default="0">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" default="0">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -281,7 +281,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
+      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Normal direction of travel">
             <choice>Normal direction of travel</choice>
@@ -292,7 +292,7 @@
         </enumVal>
         <label>Direction of Travel</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
+      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -303,7 +303,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
         <enumVal>
           <enumChoice choice="Digital Operation Only">
             <choice>Digital Operation Only</choice>
@@ -314,7 +314,7 @@
         </enumVal>
         <label>Analogue mode</label>
       </variable>
-      <variable label="Selection of speed curve" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
+      <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
         <enumVal>
           <enumChoice choice="speed curve through CV 2, 5, 6">
             <choice>speed curve through CV 2, 5, 6</choice>
@@ -325,7 +325,7 @@
         </enumVal>
         <label>Selection of speed curve</label>
       </variable>
-      <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option">
+      <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -336,7 +336,7 @@
         </enumVal>
         <label>Load control</label>
       </variable>
-      <variable label="DC Motor PWM frequency" CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
+      <variable CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
         <enumVal>
           <enumChoice choice="20 kHz Tact frequency on">
             <choice>20 kHz Tact frequency on</choice>
@@ -347,7 +347,7 @@
         </enumVal>
         <label>DC Motor PWM frequency</label>
       </variable>
-      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
+      <variable item="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -358,7 +358,7 @@
         </enumVal>
         <label>Marklin Delta Mode</label>
       </variable>
-      <variable label="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
+      <variable item="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -369,7 +369,7 @@
         </enumVal>
         <label>Marklin 2. address</label>
       </variable>
-      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
+      <variable item="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -380,7 +380,7 @@
         </enumVal>
         <label>Automatic speed step detection</label>
       </variable>
-      <variable label="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
+      <variable item="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -391,7 +391,7 @@
         </enumVal>
         <label>LGB Function button mode</label>
       </variable>
-      <variable label="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
+      <variable item="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -402,7 +402,7 @@
         </enumVal>
         <label>ZIMO Manual function</label>
       </variable>
-      <variable label="AC Analogue mode" CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion">
+      <variable CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -413,7 +413,7 @@
         </enumVal>
         <label>AC Analogue mode</label>
       </variable>
-      <variable label="DC Analogue mode" CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion">
+      <variable CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -424,7 +424,7 @@
         </enumVal>
         <label>DC Analogue mode</label>
       </variable>
-      <variable label="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1">
+      <variable item="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -435,7 +435,7 @@
         </enumVal>
         <label>Marklin Brake mode</label>
       </variable>
-      <variable label="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1">
+      <variable item="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -446,7 +446,7 @@
         </enumVal>
         <label>ZIMO Brake mode</label>
       </variable>
-      <variable label="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0">
+      <variable item="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -457,43 +457,43 @@
         </enumVal>
         <label>Lenz DCC Brake mode</label>
       </variable>
-      <variable label="Control reference" CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80)">
+      <variable CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80)">
         <decVal min="0" max="80"/>
         <label>Control reference</label>
       </variable>
-      <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80)">
+      <variable CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80)">
         <decVal min="0" max="80"/>
         <label>Load control parameter K</label>
       </variable>
-      <variable label="Load control parameter I" CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80)">
+      <variable CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80)">
         <decVal min="0" max="80"/>
         <label>Load control parameter I</label>
       </variable>
-      <variable label="Load control influence" CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64)">
+      <variable CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64)">
         <decVal min="0" max="64"/>
         <label>Load control influence</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)">
+      <variable item="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)">
         <decVal min="0" max="255"/>
         <label>Forward Trim</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
+      <variable item="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
         <decVal min="0" max="255"/>
         <label>Reverse Trim</label>
       </variable>
-      <variable label="Blinking frequency" CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).">
+      <variable CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).">
         <decVal min="0" max="255"/>
         <label>Blinking frequency</label>
       </variable>
-      <variable label="Brightness Headlights" CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+      <variable CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
         <decVal min="0" max="15"/>
         <label>Brightness Headlights</label>
       </variable>
-      <variable label="Output Configuration Headlights" CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior">
+      <variable CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -528,11 +528,11 @@
         </enumVal>
         <label>Output Configuration Headlights</label>
       </variable>
-      <variable label="Brightness Back up lights" CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+      <variable CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
         <decVal min="0" max="15"/>
         <label>Brightness Back up lights</label>
       </variable>
-      <variable label="Output Configuration Back up lights" CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior">
+      <variable CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -567,11 +567,11 @@
         </enumVal>
         <label>Output Configuration Back up lights</label>
       </variable>
-      <variable label="Brightness AUX1" CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+      <variable CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX1</label>
       </variable>
-      <variable label="Output Configuration AUX1" CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior">
+      <variable CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -606,11 +606,11 @@
         </enumVal>
         <label>Output Configuration AUX1</label>
       </variable>
-      <variable label="Brightness AUX2" CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+      <variable CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX2</label>
       </variable>
-      <variable label="Output Configuration AUX2" CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior">
+      <variable CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -645,7 +645,7 @@
         </enumVal>
         <label>Output Configuration AUX2</label>
       </variable>
-      <variable label="Saves the direction of travel" CV="124" mask="XXXXXXXV" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+      <variable item="Saves the direction of travel" CV="124" mask="XXXXXXXV" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -656,7 +656,7 @@
         </enumVal>
         <label>Saves the direction of travel</label>
       </variable>
-      <variable label="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+      <variable item="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -667,7 +667,7 @@
         </enumVal>
         <label>Saves the status of function buttons</label>
       </variable>
-      <variable label="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+      <variable item="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -678,7 +678,7 @@
         </enumVal>
         <label>Saves the current speed setting</label>
       </variable>
-      <variable label="Accelerates after a reset with the programmed acceleration" CV="124" mask="XXXXVXXX" default="0" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+      <variable item="Accelerates after a reset with the programmed acceleration" CV="124" mask="XXXXVXXX" default="0" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -689,23 +689,23 @@
         </enumVal>
         <label>Accelerates after a reset with the programmed acceleration</label>
       </variable>
-      <variable label="Analogue DC starting voltage" CV="125" default="110" item="Radio Power Conversion" tooltip="Range 0-127">
+      <variable CV="125" default="110" item="Radio Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue DC starting voltage</label>
       </variable>
-      <variable label="Analogue DC maximum speed" CV="126" default="127" item="Zero-1 Power Conversion" tooltip="Range 0-127">
+      <variable CV="126" default="127" item="Zero-1 Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue DC maximum speed</label>
       </variable>
-      <variable label="Analogue AC starting voltage" CV="127" default="50" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127">
+      <variable CV="127" default="50" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue AC starting voltage</label>
       </variable>
-      <variable label="Analogue AC maximum speed" CV="128" default="127" item="FMZ(Fleischmann)" tooltip="Range 0-127">
+      <variable CV="128" default="127" item="FMZ(Fleischmann)" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue AC maximum speed</label>
       </variable>
-      <variable label="Stand Forward A Headlight" CV="129" mask="XXXXXXXV">
+      <variable item="Stand Forward A Headlight" CV="129" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -716,7 +716,7 @@
         </enumVal>
         <label>Stand Forward A Headlight</label>
       </variable>
-      <variable label="Stand Forward A Rear light" CV="129" mask="XXXXXXVX">
+      <variable item="Stand Forward A Rear light" CV="129" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -727,7 +727,7 @@
         </enumVal>
         <label>Stand Forward A Rear light</label>
       </variable>
-      <variable label="Stand Forward A AUX1" CV="129" mask="XXXXXVXX">
+      <variable item="Stand Forward A AUX1" CV="129" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -738,7 +738,7 @@
         </enumVal>
         <label>Stand Forward A AUX1</label>
       </variable>
-      <variable label="Stand Forward A AUX2" CV="129" mask="XXXXVXXX">
+      <variable item="Stand Forward A AUX2" CV="129" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -749,7 +749,7 @@
         </enumVal>
         <label>Stand Forward A AUX2</label>
       </variable>
-      <variable label="Stand Forward B Acceleration on/off" CV="130" mask="XXXXXXXV">
+      <variable item="Stand Forward B Acceleration on/off" CV="130" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -760,7 +760,7 @@
         </enumVal>
         <label>Stand Forward B Acceleration on/off</label>
       </variable>
-      <variable label="Stand Forward B Shunting mode on/off" CV="130" mask="XXXXXXVX">
+      <variable item="Stand Forward B Shunting mode on/off" CV="130" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -771,7 +771,7 @@
         </enumVal>
         <label>Stand Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="Stand Back up A Headlight" CV="132" mask="XXXXXXXV">
+      <variable item="Stand Back up A Headlight" CV="132" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -782,7 +782,7 @@
         </enumVal>
         <label>Stand Back up A Headlight</label>
       </variable>
-      <variable label="Stand Back up A Rear light" CV="132" mask="XXXXXXVX">
+      <variable item="Stand Back up A Rear light" CV="132" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -793,7 +793,7 @@
         </enumVal>
         <label>Stand Back up A Rear light</label>
       </variable>
-      <variable label="Stand Back up A AUX1" CV="132" mask="XXXXXVXX">
+      <variable item="Stand Back up A AUX1" CV="132" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -804,7 +804,7 @@
         </enumVal>
         <label>Stand Back up A AUX1</label>
       </variable>
-      <variable label="Stand Back up A AUX2" CV="132" mask="XXXXVXXX">
+      <variable item="Stand Back up A AUX2" CV="132" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -815,7 +815,7 @@
         </enumVal>
         <label>Stand Back up A AUX2</label>
       </variable>
-      <variable label="Stand Back up B Acceleration on/off" CV="133" mask="XXXXXXXV">
+      <variable item="Stand Back up B Acceleration on/off" CV="133" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -826,7 +826,7 @@
         </enumVal>
         <label>Stand Back up B Acceleration on/off</label>
       </variable>
-      <variable label="Stand Back up B Shunting mode on/off" CV="133" mask="XXXXXXVX">
+      <variable item="Stand Back up B Shunting mode on/off" CV="133" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -837,7 +837,7 @@
         </enumVal>
         <label>Stand Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="Drive Forward A Headlight" CV="135" mask="XXXXXXXV">
+      <variable item="Drive Forward A Headlight" CV="135" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -848,7 +848,7 @@
         </enumVal>
         <label>Drive Forward A Headlight</label>
       </variable>
-      <variable label="Drive Forward A Rear light" CV="135" mask="XXXXXXVX">
+      <variable item="Drive Forward A Rear light" CV="135" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -859,7 +859,7 @@
         </enumVal>
         <label>Drive Forward A Rear light</label>
       </variable>
-      <variable label="Drive Forward A AUX1" CV="135" mask="XXXXXVXX">
+      <variable item="Drive Forward A AUX1" CV="135" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -870,7 +870,7 @@
         </enumVal>
         <label>Drive Forward A AUX1</label>
       </variable>
-      <variable label="Drive Forward A AUX2" CV="135" mask="XXXXVXXX">
+      <variable item="Drive Forward A AUX2" CV="135" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -881,7 +881,7 @@
         </enumVal>
         <label>Drive Forward A AUX2</label>
       </variable>
-      <variable label="Drive Forward B Acceleration on/off" CV="136" mask="XXXXXXXV">
+      <variable item="Drive Forward B Acceleration on/off" CV="136" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -892,7 +892,7 @@
         </enumVal>
         <label>Drive Forward B Acceleration on/off</label>
       </variable>
-      <variable label="Drive Forward B Shunting mode on/off" CV="136" mask="XXXXXXVX">
+      <variable item="Drive Forward B Shunting mode on/off" CV="136" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -903,7 +903,7 @@
         </enumVal>
         <label>Drive Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="Drive Back up A Headlight" CV="138" mask="XXXXXXXV">
+      <variable item="Drive Back up A Headlight" CV="138" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -914,7 +914,7 @@
         </enumVal>
         <label>Drive Back up A Headlight</label>
       </variable>
-      <variable label="Drive Back up A Rear light" CV="138" mask="XXXXXXVX">
+      <variable item="Drive Back up A Rear light" CV="138" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -925,7 +925,7 @@
         </enumVal>
         <label>Drive Back up A Rear light</label>
       </variable>
-      <variable label="Drive Back up A AUX1" CV="138" mask="XXXXXVXX">
+      <variable item="Drive Back up A AUX1" CV="138" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -936,7 +936,7 @@
         </enumVal>
         <label>Drive Back up A AUX1</label>
       </variable>
-      <variable label="Drive Back up A AUX2" CV="138" mask="XXXXVXXX">
+      <variable item="Drive Back up A AUX2" CV="138" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -947,7 +947,7 @@
         </enumVal>
         <label>Drive Back up A AUX2</label>
       </variable>
-      <variable label="Drive Back up B Acceleration on/off" CV="139" mask="XXXXXXXV">
+      <variable item="Drive Back up B Acceleration on/off" CV="139" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -958,7 +958,7 @@
         </enumVal>
         <label>Drive Back up B Acceleration on/off</label>
       </variable>
-      <variable label="Drive Back up B Shunting mode on/off" CV="139" mask="XXXXXXVX">
+      <variable item="Drive Back up B Shunting mode on/off" CV="139" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -969,7 +969,7 @@
         </enumVal>
         <label>Drive Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="Light Forward A Headlight" CV="141" mask="XXXXXXXV" default="1">
+      <variable item="Light Forward A Headlight" CV="141" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -980,7 +980,7 @@
         </enumVal>
         <label>Light Forward A Headlight</label>
       </variable>
-      <variable label="Light Forward A Rear light" CV="141" mask="XXXXXXVX">
+      <variable item="Light Forward A Rear light" CV="141" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -991,7 +991,7 @@
         </enumVal>
         <label>Light Forward A Rear light</label>
       </variable>
-      <variable label="Light Forward A AUX1" CV="141" mask="XXXXXVXX">
+      <variable item="Light Forward A AUX1" CV="141" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1002,7 +1002,7 @@
         </enumVal>
         <label>Light Forward A AUX1</label>
       </variable>
-      <variable label="Light Forward A AUX2" CV="141" mask="XXXXVXXX">
+      <variable item="Light Forward A AUX2" CV="141" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1013,7 +1013,7 @@
         </enumVal>
         <label>Light Forward A AUX2</label>
       </variable>
-      <variable label="Light Forward B Acceleration on/off" CV="142" mask="XXXXXXXV">
+      <variable item="Light Forward B Acceleration on/off" CV="142" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1024,7 +1024,7 @@
         </enumVal>
         <label>Light Forward B Acceleration on/off</label>
       </variable>
-      <variable label="Light Forward B Shunting mode on/off" CV="142" mask="XXXXXXVX">
+      <variable item="Light Forward B Shunting mode on/off" CV="142" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1035,7 +1035,7 @@
         </enumVal>
         <label>Light Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="Light Back up A Headlight" CV="144" mask="XXXXXXXV">
+      <variable item="Light Back up A Headlight" CV="144" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1046,7 +1046,7 @@
         </enumVal>
         <label>Light Back up A Headlight</label>
       </variable>
-      <variable label="Light Back up A Rear light" CV="144" mask="XXXXXXVX" default="1">
+      <variable item="Light Back up A Rear light" CV="144" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1057,7 +1057,7 @@
         </enumVal>
         <label>Light Back up A Rear light</label>
       </variable>
-      <variable label="Light Back up A AUX1" CV="144" mask="XXXXXVXX">
+      <variable item="Light Back up A AUX1" CV="144" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1068,7 +1068,7 @@
         </enumVal>
         <label>Light Back up A AUX1</label>
       </variable>
-      <variable label="Light Back up A AUX2" CV="144" mask="XXXXVXXX">
+      <variable item="Light Back up A AUX2" CV="144" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1079,7 +1079,7 @@
         </enumVal>
         <label>Light Back up A AUX2</label>
       </variable>
-      <variable label="Light Back up B Acceleration on/off" CV="145" mask="XXXXXXXV">
+      <variable item="Light Back up B Acceleration on/off" CV="145" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1090,7 +1090,7 @@
         </enumVal>
         <label>Light Back up B Acceleration on/off</label>
       </variable>
-      <variable label="Light Back up B Shunting mode on/off" CV="145" mask="XXXXXXVX">
+      <variable item="Light Back up B Shunting mode on/off" CV="145" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1101,7 +1101,7 @@
         </enumVal>
         <label>Light Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F1 Forward A Headlight" CV="147" mask="XXXXXXXV">
+      <variable item="F1 Forward A Headlight" CV="147" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1112,7 +1112,7 @@
         </enumVal>
         <label>F1 Forward A Headlight</label>
       </variable>
-      <variable label="F1 Forward A Rear light" CV="147" mask="XXXXXXVX">
+      <variable item="F1 Forward A Rear light" CV="147" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1123,7 +1123,7 @@
         </enumVal>
         <label>F1 Forward A Rear light</label>
       </variable>
-      <variable label="F1 Forward A AUX1" CV="147" mask="XXXXXVXX" default="1">
+      <variable item="F1 Forward A AUX1" CV="147" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1134,7 +1134,7 @@
         </enumVal>
         <label>F1 Forward A AUX1</label>
       </variable>
-      <variable label="F1 Forward A AUX2" CV="147" mask="XXXXVXXX">
+      <variable item="F1 Forward A AUX2" CV="147" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1145,7 +1145,7 @@
         </enumVal>
         <label>F1 Forward A AUX2</label>
       </variable>
-      <variable label="F1 Forward B Acceleration on/off" CV="148" mask="XXXXXXXV">
+      <variable item="F1 Forward B Acceleration on/off" CV="148" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1156,7 +1156,7 @@
         </enumVal>
         <label>F1 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F1 Forward B Shunting mode on/off" CV="148" mask="XXXXXXVX">
+      <variable item="F1 Forward B Shunting mode on/off" CV="148" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1167,7 +1167,7 @@
         </enumVal>
         <label>F1 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F1 Back up A Headlight" CV="150" mask="XXXXXXXV">
+      <variable item="F1 Back up A Headlight" CV="150" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1178,7 +1178,7 @@
         </enumVal>
         <label>F1 Back up A Headlight</label>
       </variable>
-      <variable label="F1 Back up A Rear light" CV="150" mask="XXXXXXVX">
+      <variable item="F1 Back up A Rear light" CV="150" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1189,7 +1189,7 @@
         </enumVal>
         <label>F1 Back up A Rear light</label>
       </variable>
-      <variable label="F1 Back up A AUX1" CV="150" mask="XXXXXVXX" default="1">
+      <variable item="F1 Back up A AUX1" CV="150" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1200,7 +1200,7 @@
         </enumVal>
         <label>F1 Back up A AUX1</label>
       </variable>
-      <variable label="F1 Back up A AUX2" CV="150" mask="XXXXVXXX">
+      <variable item="F1 Back up A AUX2" CV="150" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1211,7 +1211,7 @@
         </enumVal>
         <label>F1 Back up A AUX2</label>
       </variable>
-      <variable label="F1 Back up B Acceleration on/off" CV="151" mask="XXXXXXXV">
+      <variable item="F1 Back up B Acceleration on/off" CV="151" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1222,7 +1222,7 @@
         </enumVal>
         <label>F1 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F1 Back up B Shunting mode on/off" CV="151" mask="XXXXXXVX">
+      <variable item="F1 Back up B Shunting mode on/off" CV="151" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1233,7 +1233,7 @@
         </enumVal>
         <label>F1 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F2 Forward A Headlight" CV="153" mask="XXXXXXXV">
+      <variable item="F2 Forward A Headlight" CV="153" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1244,7 +1244,7 @@
         </enumVal>
         <label>F2 Forward A Headlight</label>
       </variable>
-      <variable label="F2 Forward A Rear light" CV="153" mask="XXXXXXVX">
+      <variable item="F2 Forward A Rear light" CV="153" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1255,7 +1255,7 @@
         </enumVal>
         <label>F2 Forward A Rear light</label>
       </variable>
-      <variable label="F2 Forward A AUX1" CV="153" mask="XXXXXVXX">
+      <variable item="F2 Forward A AUX1" CV="153" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1266,7 +1266,7 @@
         </enumVal>
         <label>F2 Forward A AUX1</label>
       </variable>
-      <variable label="F2 Forward A AUX2" CV="153" mask="XXXXVXXX" default="1">
+      <variable item="F2 Forward A AUX2" CV="153" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1277,7 +1277,7 @@
         </enumVal>
         <label>F2 Forward A AUX2</label>
       </variable>
-      <variable label="F2 Forward B Acceleration on/off" CV="154" mask="XXXXXXXV">
+      <variable item="F2 Forward B Acceleration on/off" CV="154" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1288,7 +1288,7 @@
         </enumVal>
         <label>F2 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F2 Forward B Shunting mode on/off" CV="154" mask="XXXXXXVX">
+      <variable item="F2 Forward B Shunting mode on/off" CV="154" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1299,7 +1299,7 @@
         </enumVal>
         <label>F2 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F2 Back up A Headlight" CV="156" mask="XXXXXXXV">
+      <variable item="F2 Back up A Headlight" CV="156" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1310,7 +1310,7 @@
         </enumVal>
         <label>F2 Back up A Headlight</label>
       </variable>
-      <variable label="F2 Back up A Rear light" CV="156" mask="XXXXXXVX">
+      <variable item="F2 Back up A Rear light" CV="156" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1321,7 +1321,7 @@
         </enumVal>
         <label>F2 Back up A Rear light</label>
       </variable>
-      <variable label="F2 Back up A AUX1" CV="156" mask="XXXXXVXX">
+      <variable item="F2 Back up A AUX1" CV="156" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1332,7 +1332,7 @@
         </enumVal>
         <label>F2 Back up A AUX1</label>
       </variable>
-      <variable label="F2 Back up A AUX2" CV="156" mask="XXXXVXXX" default="1">
+      <variable item="F2 Back up A AUX2" CV="156" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1343,7 +1343,7 @@
         </enumVal>
         <label>F2 Back up A AUX2</label>
       </variable>
-      <variable label="F2 Back up B Acceleration on/off" CV="157" mask="XXXXXXXV">
+      <variable item="F2 Back up B Acceleration on/off" CV="157" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1354,7 +1354,7 @@
         </enumVal>
         <label>F2 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F2 Back up B Shunting mode on/off" CV="157" mask="XXXXXXVX">
+      <variable item="F2 Back up B Shunting mode on/off" CV="157" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1365,7 +1365,7 @@
         </enumVal>
         <label>F2 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F3 Forward A Headlight" CV="159" mask="XXXXXXXV">
+      <variable item="F3 Forward A Headlight" CV="159" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1376,7 +1376,7 @@
         </enumVal>
         <label>F3 Forward A Headlight</label>
       </variable>
-      <variable label="F3 Forward A Rear light" CV="159" mask="XXXXXXVX">
+      <variable item="F3 Forward A Rear light" CV="159" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1387,7 +1387,7 @@
         </enumVal>
         <label>F3 Forward A Rear light</label>
       </variable>
-      <variable label="F3 Forward A AUX1" CV="159" mask="XXXXXVXX">
+      <variable item="F3 Forward A AUX1" CV="159" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1398,7 +1398,7 @@
         </enumVal>
         <label>F3 Forward A AUX1</label>
       </variable>
-      <variable label="F3 Forward A AUX2" CV="159" mask="XXXXVXXX">
+      <variable item="F3 Forward A AUX2" CV="159" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1409,7 +1409,7 @@
         </enumVal>
         <label>F3 Forward A AUX2</label>
       </variable>
-      <variable label="F3 Forward B Acceleration on/off" CV="160" mask="XXXXXXXV">
+      <variable item="F3 Forward B Acceleration on/off" CV="160" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1420,7 +1420,7 @@
         </enumVal>
         <label>F3 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F3 Forward B Shunting mode on/off" CV="160" mask="XXXXXXVX" default="1">
+      <variable item="F3 Forward B Shunting mode on/off" CV="160" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1431,7 +1431,7 @@
         </enumVal>
         <label>F3 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F3 Back up A Headlight" CV="162" mask="XXXXXXXV">
+      <variable item="F3 Back up A Headlight" CV="162" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1442,7 +1442,7 @@
         </enumVal>
         <label>F3 Back up A Headlight</label>
       </variable>
-      <variable label="F3 Back up A Rear light" CV="162" mask="XXXXXXVX">
+      <variable item="F3 Back up A Rear light" CV="162" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1453,7 +1453,7 @@
         </enumVal>
         <label>F3 Back up A Rear light</label>
       </variable>
-      <variable label="F3 Back up A AUX1" CV="162" mask="XXXXXVXX">
+      <variable item="F3 Back up A AUX1" CV="162" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1464,7 +1464,7 @@
         </enumVal>
         <label>F3 Back up A AUX1</label>
       </variable>
-      <variable label="F3 Back up A AUX2" CV="162" mask="XXXXVXXX">
+      <variable item="F3 Back up A AUX2" CV="162" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1475,7 +1475,7 @@
         </enumVal>
         <label>F3 Back up A AUX2</label>
       </variable>
-      <variable label="F3 Back up B Acceleration on/off" CV="163" mask="XXXXXXXV">
+      <variable item="F3 Back up B Acceleration on/off" CV="163" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1486,7 +1486,7 @@
         </enumVal>
         <label>F3 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F3 Back up B Shunting mode on/off" CV="163" mask="XXXXXXVX" default="1">
+      <variable item="F3 Back up B Shunting mode on/off" CV="163" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1497,7 +1497,7 @@
         </enumVal>
         <label>F3 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F4 Forward A Headlight" CV="165" mask="XXXXXXXV">
+      <variable item="F4 Forward A Headlight" CV="165" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1508,7 +1508,7 @@
         </enumVal>
         <label>F4 Forward A Headlight</label>
       </variable>
-      <variable label="F4 Forward A Rear light" CV="165" mask="XXXXXXVX">
+      <variable item="F4 Forward A Rear light" CV="165" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1519,7 +1519,7 @@
         </enumVal>
         <label>F4 Forward A Rear light</label>
       </variable>
-      <variable label="F4 Forward A AUX1" CV="165" mask="XXXXXVXX">
+      <variable item="F4 Forward A AUX1" CV="165" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1530,7 +1530,7 @@
         </enumVal>
         <label>F4 Forward A AUX1</label>
       </variable>
-      <variable label="F4 Forward A AUX2" CV="165" mask="XXXXVXXX">
+      <variable item="F4 Forward A AUX2" CV="165" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1541,7 +1541,7 @@
         </enumVal>
         <label>F4 Forward A AUX2</label>
       </variable>
-      <variable label="F4 Forward B Acceleration on/off" CV="166" mask="XXXXXXXV" default="1">
+      <variable item="F4 Forward B Acceleration on/off" CV="166" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1552,7 +1552,7 @@
         </enumVal>
         <label>F4 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F4 Forward B Shunting mode on/off" CV="166" mask="XXXXXXVX">
+      <variable item="F4 Forward B Shunting mode on/off" CV="166" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1563,7 +1563,7 @@
         </enumVal>
         <label>F4 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F4 Back up A Headlight" CV="168" mask="XXXXXXXV">
+      <variable item="F4 Back up A Headlight" CV="168" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1574,7 +1574,7 @@
         </enumVal>
         <label>F4 Back up A Headlight</label>
       </variable>
-      <variable label="F4 Back up A Rear light" CV="168" mask="XXXXXXVX">
+      <variable item="F4 Back up A Rear light" CV="168" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1585,7 +1585,7 @@
         </enumVal>
         <label>F4 Back up A Rear light</label>
       </variable>
-      <variable label="F4 Back up A AUX1" CV="168" mask="XXXXXVXX">
+      <variable item="F4 Back up A AUX1" CV="168" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1596,7 +1596,7 @@
         </enumVal>
         <label>F4 Back up A AUX1</label>
       </variable>
-      <variable label="F4 Back up A AUX2" CV="168" mask="XXXXVXXX">
+      <variable item="F4 Back up A AUX2" CV="168" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1607,7 +1607,7 @@
         </enumVal>
         <label>F4 Back up A AUX2</label>
       </variable>
-      <variable label="F4 Back up B Acceleration on/off" CV="169" mask="XXXXXXXV" default="1">
+      <variable item="F4 Back up B Acceleration on/off" CV="169" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1618,7 +1618,7 @@
         </enumVal>
         <label>F4 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F4 Back up B Shunting mode on/off" CV="169" mask="XXXXXXVX">
+      <variable item="F4 Back up B Shunting mode on/off" CV="169" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1629,7 +1629,7 @@
         </enumVal>
         <label>F4 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F5 Forward A Headlight" CV="171" mask="XXXXXXXV">
+      <variable item="F5 Forward A Headlight" CV="171" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1640,7 +1640,7 @@
         </enumVal>
         <label>F5 Forward A Headlight</label>
       </variable>
-      <variable label="F5 Forward A Rear light" CV="171" mask="XXXXXXVX">
+      <variable item="F5 Forward A Rear light" CV="171" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1651,7 +1651,7 @@
         </enumVal>
         <label>F5 Forward A Rear light</label>
       </variable>
-      <variable label="F5 Forward A AUX1" CV="171" mask="XXXXXVXX">
+      <variable item="F5 Forward A AUX1" CV="171" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1662,7 +1662,7 @@
         </enumVal>
         <label>F5 Forward A AUX1</label>
       </variable>
-      <variable label="F5 Forward A AUX2" CV="171" mask="XXXXVXXX">
+      <variable item="F5 Forward A AUX2" CV="171" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1673,7 +1673,7 @@
         </enumVal>
         <label>F5 Forward A AUX2</label>
       </variable>
-      <variable label="F5 Forward B Acceleration on/off" CV="172" mask="XXXXXXXV">
+      <variable item="F5 Forward B Acceleration on/off" CV="172" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1684,7 +1684,7 @@
         </enumVal>
         <label>F5 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F5 Forward B Shunting mode on/off" CV="172" mask="XXXXXXVX">
+      <variable item="F5 Forward B Shunting mode on/off" CV="172" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1695,7 +1695,7 @@
         </enumVal>
         <label>F5 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F5 Back up A Headlight" CV="174" mask="XXXXXXXV">
+      <variable item="F5 Back up A Headlight" CV="174" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1706,7 +1706,7 @@
         </enumVal>
         <label>F5 Back up A Headlight</label>
       </variable>
-      <variable label="F5 Back up A Rear light" CV="174" mask="XXXXXXVX">
+      <variable item="F5 Back up A Rear light" CV="174" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1717,7 +1717,7 @@
         </enumVal>
         <label>F5 Back up A Rear light</label>
       </variable>
-      <variable label="F5 Back up A AUX1" CV="174" mask="XXXXXVXX">
+      <variable item="F5 Back up A AUX1" CV="174" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1728,7 +1728,7 @@
         </enumVal>
         <label>F5 Back up A AUX1</label>
       </variable>
-      <variable label="F5 Back up A AUX2" CV="174" mask="XXXXVXXX">
+      <variable item="F5 Back up A AUX2" CV="174" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1739,7 +1739,7 @@
         </enumVal>
         <label>F5 Back up A AUX2</label>
       </variable>
-      <variable label="F5 Back up B Acceleration on/off" CV="175" mask="XXXXXXXV">
+      <variable item="F5 Back up B Acceleration on/off" CV="175" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1750,7 +1750,7 @@
         </enumVal>
         <label>F5 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F5 Back up B Shunting mode on/off" CV="175" mask="XXXXXXVX">
+      <variable item="F5 Back up B Shunting mode on/off" CV="175" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1761,7 +1761,7 @@
         </enumVal>
         <label>F5 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F6 Forward A Headlight" CV="177" mask="XXXXXXXV">
+      <variable item="F6 Forward A Headlight" CV="177" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1772,7 +1772,7 @@
         </enumVal>
         <label>F6 Forward A Headlight</label>
       </variable>
-      <variable label="F6 Forward A Rear light" CV="177" mask="XXXXXXVX">
+      <variable item="F6 Forward A Rear light" CV="177" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1783,7 +1783,7 @@
         </enumVal>
         <label>F6 Forward A Rear light</label>
       </variable>
-      <variable label="F6 Forward A AUX1" CV="177" mask="XXXXXVXX">
+      <variable item="F6 Forward A AUX1" CV="177" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1794,7 +1794,7 @@
         </enumVal>
         <label>F6 Forward A AUX1</label>
       </variable>
-      <variable label="F6 Forward A AUX2" CV="177" mask="XXXXVXXX">
+      <variable item="F6 Forward A AUX2" CV="177" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1805,7 +1805,7 @@
         </enumVal>
         <label>F6 Forward A AUX2</label>
       </variable>
-      <variable label="F6 Forward B Acceleration on/off" CV="178" mask="XXXXXXXV">
+      <variable item="F6 Forward B Acceleration on/off" CV="178" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1816,7 +1816,7 @@
         </enumVal>
         <label>F6 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F6 Forward B Shunting mode on/off" CV="178" mask="XXXXXXVX">
+      <variable item="F6 Forward B Shunting mode on/off" CV="178" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1827,7 +1827,7 @@
         </enumVal>
         <label>F6 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F6 Back up A Headlight" CV="180" mask="XXXXXXXV">
+      <variable item="F6 Back up A Headlight" CV="180" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1838,7 +1838,7 @@
         </enumVal>
         <label>F6 Back up A Headlight</label>
       </variable>
-      <variable label="F6 Back up A Rear light" CV="180" mask="XXXXXXVX">
+      <variable item="F6 Back up A Rear light" CV="180" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1849,7 +1849,7 @@
         </enumVal>
         <label>F6 Back up A Rear light</label>
       </variable>
-      <variable label="F6 Back up A AUX1" CV="180" mask="XXXXXVXX">
+      <variable item="F6 Back up A AUX1" CV="180" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1860,7 +1860,7 @@
         </enumVal>
         <label>F6 Back up A AUX1</label>
       </variable>
-      <variable label="F6 Back up A AUX2" CV="180" mask="XXXXVXXX">
+      <variable item="F6 Back up A AUX2" CV="180" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1871,7 +1871,7 @@
         </enumVal>
         <label>F6 Back up A AUX2</label>
       </variable>
-      <variable label="F6 Back up B Acceleration on/off" CV="181" mask="XXXXXXXV">
+      <variable item="F6 Back up B Acceleration on/off" CV="181" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1882,7 +1882,7 @@
         </enumVal>
         <label>F6 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F6 Back up B Shunting mode on/off" CV="181" mask="XXXXXXVX">
+      <variable item="F6 Back up B Shunting mode on/off" CV="181" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1893,7 +1893,7 @@
         </enumVal>
         <label>F6 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F7 Forward A Headlight" CV="183" mask="XXXXXXXV">
+      <variable item="F7 Forward A Headlight" CV="183" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1904,7 +1904,7 @@
         </enumVal>
         <label>F7 Forward A Headlight</label>
       </variable>
-      <variable label="F7 Forward A Rear light" CV="183" mask="XXXXXXVX">
+      <variable item="F7 Forward A Rear light" CV="183" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1915,7 +1915,7 @@
         </enumVal>
         <label>F7 Forward A Rear light</label>
       </variable>
-      <variable label="F7 Forward A AUX1" CV="183" mask="XXXXXVXX">
+      <variable item="F7 Forward A AUX1" CV="183" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1926,7 +1926,7 @@
         </enumVal>
         <label>F7 Forward A AUX1</label>
       </variable>
-      <variable label="F7 Forward A AUX2" CV="183" mask="XXXXVXXX">
+      <variable item="F7 Forward A AUX2" CV="183" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1937,7 +1937,7 @@
         </enumVal>
         <label>F7 Forward A AUX2</label>
       </variable>
-      <variable label="F7 Forward B Acceleration on/off" CV="184" mask="XXXXXXXV">
+      <variable item="F7 Forward B Acceleration on/off" CV="184" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1948,7 +1948,7 @@
         </enumVal>
         <label>F7 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F7 Forward B Shunting mode on/off" CV="184" mask="XXXXXXVX">
+      <variable item="F7 Forward B Shunting mode on/off" CV="184" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1959,7 +1959,7 @@
         </enumVal>
         <label>F7 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F7 Back up A Headlight" CV="186" mask="XXXXXXXV">
+      <variable item="F7 Back up A Headlight" CV="186" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1970,7 +1970,7 @@
         </enumVal>
         <label>F7 Back up A Headlight</label>
       </variable>
-      <variable label="F7 Back up A Rear light" CV="186" mask="XXXXXXVX">
+      <variable item="F7 Back up A Rear light" CV="186" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1981,7 +1981,7 @@
         </enumVal>
         <label>F7 Back up A Rear light</label>
       </variable>
-      <variable label="F7 Back up A AUX1" CV="186" mask="XXXXXVXX">
+      <variable item="F7 Back up A AUX1" CV="186" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1992,7 +1992,7 @@
         </enumVal>
         <label>F7 Back up A AUX1</label>
       </variable>
-      <variable label="F7 Back up A AUX2" CV="186" mask="XXXXVXXX">
+      <variable item="F7 Back up A AUX2" CV="186" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2003,7 +2003,7 @@
         </enumVal>
         <label>F7 Back up A AUX2</label>
       </variable>
-      <variable label="F7 Back up B Acceleration on/off" CV="187" mask="XXXXXXXV">
+      <variable item="F7 Back up B Acceleration on/off" CV="187" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2014,7 +2014,7 @@
         </enumVal>
         <label>F7 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F7 Back up B Shunting mode on/off" CV="187" mask="XXXXXXVX">
+      <variable item="F7 Back up B Shunting mode on/off" CV="187" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2025,7 +2025,7 @@
         </enumVal>
         <label>F7 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F8 Forward A Headlight" CV="189" mask="XXXXXXXV">
+      <variable item="F8 Forward A Headlight" CV="189" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2036,7 +2036,7 @@
         </enumVal>
         <label>F8 Forward A Headlight</label>
       </variable>
-      <variable label="F8 Forward A Rear light" CV="189" mask="XXXXXXVX">
+      <variable item="F8 Forward A Rear light" CV="189" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2047,7 +2047,7 @@
         </enumVal>
         <label>F8 Forward A Rear light</label>
       </variable>
-      <variable label="F8 Forward A AUX1" CV="189" mask="XXXXXVXX">
+      <variable item="F8 Forward A AUX1" CV="189" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2058,7 +2058,7 @@
         </enumVal>
         <label>F8 Forward A AUX1</label>
       </variable>
-      <variable label="F8 Forward A AUX2" CV="189" mask="XXXXVXXX">
+      <variable item="F8 Forward A AUX2" CV="189" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2069,7 +2069,7 @@
         </enumVal>
         <label>F8 Forward A AUX2</label>
       </variable>
-      <variable label="F8 Forward B Acceleration on/off" CV="190" mask="XXXXXXXV">
+      <variable item="F8 Forward B Acceleration on/off" CV="190" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2080,7 +2080,7 @@
         </enumVal>
         <label>F8 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F8 Forward B Shunting mode on/off" CV="190" mask="XXXXXXVX">
+      <variable item="F8 Forward B Shunting mode on/off" CV="190" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2091,7 +2091,7 @@
         </enumVal>
         <label>F8 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F8 Back up A Headlight" CV="192" mask="XXXXXXXV">
+      <variable item="F8 Back up A Headlight" CV="192" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2102,7 +2102,7 @@
         </enumVal>
         <label>F8 Back up A Headlight</label>
       </variable>
-      <variable label="F8 Back up A Rear light" CV="192" mask="XXXXXXVX">
+      <variable item="F8 Back up A Rear light" CV="192" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2113,7 +2113,7 @@
         </enumVal>
         <label>F8 Back up A Rear light</label>
       </variable>
-      <variable label="F8 Back up A AUX1" CV="192" mask="XXXXXVXX">
+      <variable item="F8 Back up A AUX1" CV="192" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2124,7 +2124,7 @@
         </enumVal>
         <label>F8 Back up A AUX1</label>
       </variable>
-      <variable label="F8 Back up A AUX2" CV="192" mask="XXXXVXXX">
+      <variable item="F8 Back up A AUX2" CV="192" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2135,7 +2135,7 @@
         </enumVal>
         <label>F8 Back up A AUX2</label>
       </variable>
-      <variable label="F8 Back up B Acceleration on/off" CV="193" mask="XXXXXXXV">
+      <variable item="F8 Back up B Acceleration on/off" CV="193" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2146,7 +2146,7 @@
         </enumVal>
         <label>F8 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F8 Back up B Shunting mode on/off" CV="193" mask="XXXXXXVX">
+      <variable item="F8 Back up B Shunting mode on/off" CV="193" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2157,7 +2157,7 @@
         </enumVal>
         <label>F8 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F9 Forward A Headlight" CV="195" mask="XXXXXXXV">
+      <variable item="F9 Forward A Headlight" CV="195" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2168,7 +2168,7 @@
         </enumVal>
         <label>F9 Forward A Headlight</label>
       </variable>
-      <variable label="F9 Forward A Rear light" CV="195" mask="XXXXXXVX">
+      <variable item="F9 Forward A Rear light" CV="195" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2179,7 +2179,7 @@
         </enumVal>
         <label>F9 Forward A Rear light</label>
       </variable>
-      <variable label="F9 Forward A AUX1" CV="195" mask="XXXXXVXX">
+      <variable item="F9 Forward A AUX1" CV="195" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2190,7 +2190,7 @@
         </enumVal>
         <label>F9 Forward A AUX1</label>
       </variable>
-      <variable label="F9 Forward A AUX2" CV="195" mask="XXXXVXXX">
+      <variable item="F9 Forward A AUX2" CV="195" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2201,7 +2201,7 @@
         </enumVal>
         <label>F9 Forward A AUX2</label>
       </variable>
-      <variable label="F9 Forward B Acceleration on/off" CV="196" mask="XXXXXXXV">
+      <variable item="F9 Forward B Acceleration on/off" CV="196" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2212,7 +2212,7 @@
         </enumVal>
         <label>F9 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F9 Forward B Shunting mode on/off" CV="196" mask="XXXXXXVX">
+      <variable item="F9 Forward B Shunting mode on/off" CV="196" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2223,7 +2223,7 @@
         </enumVal>
         <label>F9 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F9 Back up A Headlight" CV="198" mask="XXXXXXXV">
+      <variable item="F9 Back up A Headlight" CV="198" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2234,7 +2234,7 @@
         </enumVal>
         <label>F9 Back up A Headlight</label>
       </variable>
-      <variable label="F9 Back up A Rear light" CV="198" mask="XXXXXXVX">
+      <variable item="F9 Back up A Rear light" CV="198" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2245,7 +2245,7 @@
         </enumVal>
         <label>F9 Back up A Rear light</label>
       </variable>
-      <variable label="F9 Back up A AUX1" CV="198" mask="XXXXXVXX">
+      <variable item="F9 Back up A AUX1" CV="198" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2256,7 +2256,7 @@
         </enumVal>
         <label>F9 Back up A AUX1</label>
       </variable>
-      <variable label="F9 Back up A AUX2" CV="198" mask="XXXXVXXX">
+      <variable item="F9 Back up A AUX2" CV="198" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2267,7 +2267,7 @@
         </enumVal>
         <label>F9 Back up A AUX2</label>
       </variable>
-      <variable label="F9 Back up B Acceleration on/off" CV="199" mask="XXXXXXXV">
+      <variable item="F9 Back up B Acceleration on/off" CV="199" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2278,7 +2278,7 @@
         </enumVal>
         <label>F9 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F9 Back up B Shunting mode on/off" CV="199" mask="XXXXXXVX">
+      <variable item="F9 Back up B Shunting mode on/off" CV="199" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2289,7 +2289,7 @@
         </enumVal>
         <label>F9 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F10 Forward A Headlight" CV="201" mask="XXXXXXXV">
+      <variable item="F10 Forward A Headlight" CV="201" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2300,7 +2300,7 @@
         </enumVal>
         <label>F10 Forward A Headlight</label>
       </variable>
-      <variable label="F10 Forward A Rear light" CV="201" mask="XXXXXXVX">
+      <variable item="F10 Forward A Rear light" CV="201" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2311,7 +2311,7 @@
         </enumVal>
         <label>F10 Forward A Rear light</label>
       </variable>
-      <variable label="F10 Forward A AUX1" CV="201" mask="XXXXXVXX">
+      <variable item="F10 Forward A AUX1" CV="201" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2322,7 +2322,7 @@
         </enumVal>
         <label>F10 Forward A AUX1</label>
       </variable>
-      <variable label="F10 Forward A AUX2" CV="201" mask="XXXXVXXX">
+      <variable item="F10 Forward A AUX2" CV="201" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2333,7 +2333,7 @@
         </enumVal>
         <label>F10 Forward A AUX2</label>
       </variable>
-      <variable label="F10 Forward B Acceleration on/off" CV="202" mask="XXXXXXXV">
+      <variable item="F10 Forward B Acceleration on/off" CV="202" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2344,7 +2344,7 @@
         </enumVal>
         <label>F10 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F10 Forward B Shunting mode on/off" CV="202" mask="XXXXXXVX">
+      <variable item="F10 Forward B Shunting mode on/off" CV="202" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2355,7 +2355,7 @@
         </enumVal>
         <label>F10 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F10 Back up A Headlight" CV="204" mask="XXXXXXXV">
+      <variable item="F10 Back up A Headlight" CV="204" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2366,7 +2366,7 @@
         </enumVal>
         <label>F10 Back up A Headlight</label>
       </variable>
-      <variable label="F10 Back up A Rear light" CV="204" mask="XXXXXXVX">
+      <variable item="F10 Back up A Rear light" CV="204" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2377,7 +2377,7 @@
         </enumVal>
         <label>F10 Back up A Rear light</label>
       </variable>
-      <variable label="F10 Back up A AUX1" CV="204" mask="XXXXXVXX">
+      <variable item="F10 Back up A AUX1" CV="204" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2388,7 +2388,7 @@
         </enumVal>
         <label>F10 Back up A AUX1</label>
       </variable>
-      <variable label="F10 Back up A AUX2" CV="204" mask="XXXXVXXX">
+      <variable item="F10 Back up A AUX2" CV="204" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2399,7 +2399,7 @@
         </enumVal>
         <label>F10 Back up A AUX2</label>
       </variable>
-      <variable label="F10 Back up B Acceleration on/off" CV="205" mask="XXXXXXXV">
+      <variable item="F10 Back up B Acceleration on/off" CV="205" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2410,7 +2410,7 @@
         </enumVal>
         <label>F10 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F10 Back up B Shunting mode on/off" CV="205" mask="XXXXXXVX">
+      <variable item="F10 Back up B Shunting mode on/off" CV="205" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2421,7 +2421,7 @@
         </enumVal>
         <label>F10 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F11 Forward A Headlight" CV="207" mask="XXXXXXXV">
+      <variable item="F11 Forward A Headlight" CV="207" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2432,7 +2432,7 @@
         </enumVal>
         <label>F11 Forward A Headlight</label>
       </variable>
-      <variable label="F11 Forward A Rear light" CV="207" mask="XXXXXXVX">
+      <variable item="F11 Forward A Rear light" CV="207" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2443,7 +2443,7 @@
         </enumVal>
         <label>F11 Forward A Rear light</label>
       </variable>
-      <variable label="F11 Forward A AUX1" CV="207" mask="XXXXXVXX">
+      <variable item="F11 Forward A AUX1" CV="207" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2454,7 +2454,7 @@
         </enumVal>
         <label>F11 Forward A AUX1</label>
       </variable>
-      <variable label="F11 Forward A AUX2" CV="207" mask="XXXXVXXX">
+      <variable item="F11 Forward A AUX2" CV="207" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2465,7 +2465,7 @@
         </enumVal>
         <label>F11 Forward A AUX2</label>
       </variable>
-      <variable label="F11 Forward B Acceleration on/off" CV="208" mask="XXXXXXXV">
+      <variable item="F11 Forward B Acceleration on/off" CV="208" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2476,7 +2476,7 @@
         </enumVal>
         <label>F11 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F11 Forward B Shunting mode on/off" CV="208" mask="XXXXXXVX">
+      <variable item="F11 Forward B Shunting mode on/off" CV="208" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2487,7 +2487,7 @@
         </enumVal>
         <label>F11 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F11 Back up A Headlight" CV="210" mask="XXXXXXXV">
+      <variable item="F11 Back up A Headlight" CV="210" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2498,7 +2498,7 @@
         </enumVal>
         <label>F11 Back up A Headlight</label>
       </variable>
-      <variable label="F11 Back up A Rear light" CV="210" mask="XXXXXXVX">
+      <variable item="F11 Back up A Rear light" CV="210" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2509,7 +2509,7 @@
         </enumVal>
         <label>F11 Back up A Rear light</label>
       </variable>
-      <variable label="F11 Back up A AUX1" CV="210" mask="XXXXXVXX">
+      <variable item="F11 Back up A AUX1" CV="210" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2520,7 +2520,7 @@
         </enumVal>
         <label>F11 Back up A AUX1</label>
       </variable>
-      <variable label="F11 Back up A AUX2" CV="210" mask="XXXXVXXX">
+      <variable item="F11 Back up A AUX2" CV="210" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2531,7 +2531,7 @@
         </enumVal>
         <label>F11 Back up A AUX2</label>
       </variable>
-      <variable label="F11 Back up B Acceleration on/off" CV="211" mask="XXXXXXXV">
+      <variable item="F11 Back up B Acceleration on/off" CV="211" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2542,7 +2542,7 @@
         </enumVal>
         <label>F11 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F11 Back up B Shunting mode on/off" CV="211" mask="XXXXXXVX">
+      <variable item="F11 Back up B Shunting mode on/off" CV="211" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2553,7 +2553,7 @@
         </enumVal>
         <label>F11 Back up B Shunting mode on/off</label>
       </variable>
-      <variable label="F12 Forward A Headlight" CV="213" mask="XXXXXXXV">
+      <variable item="F12 Forward A Headlight" CV="213" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2564,7 +2564,7 @@
         </enumVal>
         <label>F12 Forward A Headlight</label>
       </variable>
-      <variable label="F12 Forward A Rear light" CV="213" mask="XXXXXXVX">
+      <variable item="F12 Forward A Rear light" CV="213" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2575,7 +2575,7 @@
         </enumVal>
         <label>F12 Forward A Rear light</label>
       </variable>
-      <variable label="F12 Forward A AUX1" CV="213" mask="XXXXXVXX">
+      <variable item="F12 Forward A AUX1" CV="213" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2586,7 +2586,7 @@
         </enumVal>
         <label>F12 Forward A AUX1</label>
       </variable>
-      <variable label="F12 Forward A AUX2" CV="213" mask="XXXXVXXX">
+      <variable item="F12 Forward A AUX2" CV="213" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2597,7 +2597,7 @@
         </enumVal>
         <label>F12 Forward A AUX2</label>
       </variable>
-      <variable label="F12 Forward B Acceleration on/off" CV="214" mask="XXXXXXXV">
+      <variable item="F12 Forward B Acceleration on/off" CV="214" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2608,7 +2608,7 @@
         </enumVal>
         <label>F12 Forward B Acceleration on/off</label>
       </variable>
-      <variable label="F12 Forward B Shunting mode on/off" CV="214" mask="XXXXXXVX">
+      <variable item="F12 Forward B Shunting mode on/off" CV="214" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2619,7 +2619,7 @@
         </enumVal>
         <label>F12 Forward B Shunting mode on/off</label>
       </variable>
-      <variable label="F12 Back up A Headlight" CV="216" mask="XXXXXXXV">
+      <variable item="F12 Back up A Headlight" CV="216" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2630,7 +2630,7 @@
         </enumVal>
         <label>F12 Back up A Headlight</label>
       </variable>
-      <variable label="F12 Back up A Rear light" CV="216" mask="XXXXXXVX">
+      <variable item="F12 Back up A Rear light" CV="216" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2641,7 +2641,7 @@
         </enumVal>
         <label>F12 Back up A Rear light</label>
       </variable>
-      <variable label="F12 Back up A AUX1" CV="216" mask="XXXXXVXX">
+      <variable item="F12 Back up A AUX1" CV="216" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2652,7 +2652,7 @@
         </enumVal>
         <label>F12 Back up A AUX1</label>
       </variable>
-      <variable label="F12 Back up A AUX2" CV="216" mask="XXXXVXXX">
+      <variable item="F12 Back up A AUX2" CV="216" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2663,7 +2663,7 @@
         </enumVal>
         <label>F12 Back up A AUX2</label>
       </variable>
-      <variable label="F12 Back up B Acceleration on/off" CV="217" mask="XXXXXXXV">
+      <variable item="F12 Back up B Acceleration on/off" CV="217" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2674,7 +2674,7 @@
         </enumVal>
         <label>F12 Back up B Acceleration on/off</label>
       </variable>
-      <variable label="F12 Back up B Shunting mode on/off" CV="217" mask="XXXXXXVX">
+      <variable item="F12 Back up B Shunting mode on/off" CV="217" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -2690,19 +2690,19 @@
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="Function Map">
+  <pane>
     <column>
-      <label label="Description          Headlight">
-        <label>Description          Headlight</label>
+      <label>
+        <text>Description          Headlight</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="  ">
-        <label>  </label>
+      <label>
+        <text>  </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward A Headlight" label="Standing Forward" format="checkbox">
         <label>Standing Forward</label>
@@ -2796,17 +2796,17 @@
       </display>
     </column>
     <column>
-      <label label="Rear Light">
-        <label>Rear Light</label>
+      <label>
+        <text>Rear Light</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward A Rear light" label="" format="checkbox">
         <label/>
@@ -2900,17 +2900,17 @@
       </display>
     </column>
     <column>
-      <label label="AUX 1">
-        <label>AUX 1</label>
+      <label>
+        <text>AUX 1</text>
       </label>
-      <label label="(except">
-        <label>(except</label>
+      <label>
+        <text>(except</text>
       </label>
-      <label label="micro)">
-        <label>micro)</label>
+      <label>
+        <text>micro)</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward A AUX1" label="" format="checkbox">
         <label/>
@@ -3004,17 +3004,17 @@
       </display>
     </column>
     <column>
-      <label label="AUX 2">
-        <label>AUX 2</label>
+      <label>
+        <text>AUX 2</text>
       </label>
-      <label label="(except">
-        <label>(except</label>
+      <label>
+        <text>(except</text>
       </label>
-      <label label="micro)">
-        <label>micro)</label>
+      <label>
+        <text>micro)</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward A AUX2" label="" format="checkbox">
         <label/>
@@ -3108,17 +3108,17 @@
       </display>
     </column>
     <column>
-      <label label="Accel-">
-        <label>Accel-</label>
+      <label>
+        <text>Accel-</text>
       </label>
-      <label label="eration">
-        <label>eration</label>
+      <label>
+        <text>eration</text>
       </label>
-      <label label="on/off">
-        <label>on/off</label>
+      <label>
+        <text>on/off</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward B Acceleration on/off" label="" format="checkbox">
         <label/>
@@ -3212,17 +3212,17 @@
       </display>
     </column>
     <column>
-      <label label="Shunting">
-        <label>Shunting</label>
+      <label>
+        <text>Shunting</text>
       </label>
-      <label label="mode">
-        <label>mode</label>
+      <label>
+        <text>mode</text>
       </label>
-      <label label="on/off">
-        <label>on/off</label>
+      <label>
+        <text>on/off</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Stand Forward B Shunting mode on/off" label="" format="checkbox">
         <label/>
@@ -3317,27 +3317,27 @@
     </column>
     <name>Function Map</name>
   </pane>
-  <pane name="ESU">
+  <pane>
     <column>
       <display item="Marklin Delta Mode"/>
       <display item="Marklin 2. address"/>
       <display item="Automatic speed step detection"/>
       <display item="LGB Function button mode"/>
       <display item="ZIMO Manual function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Marklin Brake mode"/>
       <display item="ZIMO Brake mode"/>
       <display item="Lenz DCC Brake mode"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Saves the direction of travel"/>
       <display item="Saves the status of function buttons"/>

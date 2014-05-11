@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!--                                                                        -->
@@ -120,25 +120,26 @@
       </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
-        <capability>
-            <name>High Access via Double Index</name>
-            <parameter name="Max Regular CV address">256</parameter>
-            <parameter name="High Address CV">96</parameter>
-            <parameter name="Low Address CV">97</parameter>
-            <parameter name="Access Register CV">99</parameter>
-            <parameter name="Modulo">100</parameter>
-        </capability>
-        <capability>
-            <name>Indexed CV access</name>
-            <parameter name="PI">31</parameter>
-            <parameter name="SI">32</parameter>
-            <parameter name="cvFirst">false</parameter>
-        </capability>
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable label="Language selection" CV="48" mask="XXXXVVVV" item="ESU V4 Extra Miscellaneous Option 5" default="0">
+      <variable CV="48" mask="XXXXVVVV" item="ESU V4 Extra Miscellaneous Option 5" default="0">
         <decVal max="15"/>
+        <label>Language selection</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
 <!-- $Id$ -->
@@ -5280,13 +5280,13 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
-      <label label="------  Output Addresses  ------ ">
-        <label>------  Output Addresses  ------ </label>
+      <label>
+        <text>------  Output Addresses  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -5296,96 +5296,96 @@
           <display item="through"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Configuration  ------ ">
-        <label>------  Configuration  ------ </label>
+      <label>
+        <text>------  Configuration  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Op1" tooltip="Required for ops mode" format="checkbox"/>
-      <label label="Enables ops mode">
-        <label>Enables ops mode</label>
+      <label>
+        <text>Enables ops mode</text>
       </label>
       <display item="Op2" tooltip="This option inhibits option 3" format="checkbox"/>
-      <label label="Disables sending of output state messages">
-        <label>Disables sending of output state messages</label>
+      <label>
+        <text>Disables sending of output state messages</text>
       </label>
       <display item="Op3" tooltip="Enables SE8C signal message control" format="checkbox"/>
-      <label label="Enables SE8C signal message control">
-        <label>Enables SE8C signal message control</label>
+      <label>
+        <text>Enables SE8C signal message control</text>
       </label>
       <display item="Op4" tooltip="This does not effect output control of the logic cells" format="checkbox"/>
-      <label label="Enables use of common cathode LEDs with Smart programmming">
-        <label>Enables use of common cathode LEDs with Smart programmming</label>
+      <label>
+        <text>Enables use of common cathode LEDs with Smart programmming</text>
       </label>
       <display item="Op5" tooltip="Send input status in rsponse to Digitrax interrogation request" format="checkbox"/>
-      <label label="Enables interrogation">
-        <label>Enables interrogation</label>
+      <label>
+        <text>Enables interrogation</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Special Functions  ------ ">
-        <label>------  Special Functions  ------ </label>
+      <label>
+        <text>------  Special Functions  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="SE8C address factor" tooltip="Range 0-23"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <dccaddress/>
-      <label label="DO NOT enter a value in the Active DCC Address field ">
-        <label>DO NOT enter a value in the Active DCC Address field </label>
+      <label>
+        <text>DO NOT enter a value in the Active DCC Address field </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ops Mode Address" tooltip="Sets the Ops Mode address"/>
-      <label label="Use ONLY the Ops Mode Address field for the DCC address">
-        <label>Use ONLY the Ops Mode Address field for the DCC address</label>
+      <label>
+        <text>Use ONLY the Ops Mode Address field for the DCC address</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Notes:  ------ ">
-        <label>------  Notes:  ------ </label>
+      <label>
+        <text>------  Notes:  ------ </text>
       </label>
-      <label label="The Custom Programmer format is recommended">
-        <label>The Custom Programmer format is recommended</label>
+      <label>
+        <text>The Custom Programmer format is recommended</text>
       </label>
-      <label label="SIC24 software version 13 or later required for DecoderPro">
-        <label>SIC24 software version 13 or later required for DecoderPro</label>
+      <label>
+        <text>SIC24 software version 13 or later required for DecoderPro</text>
       </label>
-      <label label="SIC24 software version 17 or later required for Option 5 and input toggle">
-        <label>SIC24 software version 17 or later required for Option 5 and input toggle</label>
+      <label>
+        <text>SIC24 software version 17 or later required for Option 5 and input toggle</text>
       </label>
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Mfg">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
       <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
@@ -5393,16 +5393,16 @@
     </column>
     <name>Mfg</name>
   </pane>
-  <pane name="Inputs">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 1  ------ ">
-        <label>------  Input 1  ------ </label>
+      <label>
+        <text>------  Input 1  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -5412,15 +5412,15 @@
           <display item="Tog P1" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
         </column>
         <column>
-          <label label="       ">
-            <label>       </label>
+          <label>
+            <text>       </text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5434,8 +5434,8 @@
       <display item="Secondary Address 1" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5446,19 +5446,19 @@
         </column>
       </row>
       <display item="Secondary Transition 1" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 2  ------ ">
-        <label>------  Input 2  ------ </label>
+      <label>
+        <text>------  Input 2  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5470,8 +5470,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5485,8 +5485,8 @@
       <display item="Secondary Address 2" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="       ">
-            <label>       </label>
+          <label>
+            <text>       </text>
           </label>
         </column>
         <column>
@@ -5497,19 +5497,19 @@
         </column>
       </row>
       <display item="Secondary Transition 2" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 3  ------ ">
-        <label>------  Input 3  ------ </label>
+      <label>
+        <text>------  Input 3  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5521,8 +5521,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5536,8 +5536,8 @@
       <display item="Secondary Address 3" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5548,19 +5548,19 @@
         </column>
       </row>
       <display item="Secondary Transition 3" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 4  ------ ">
-        <label>------  Input 4  ------ </label>
+      <label>
+        <text>------  Input 4  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5572,8 +5572,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5587,8 +5587,8 @@
       <display item="Secondary Address 4" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5599,19 +5599,19 @@
         </column>
       </row>
       <display item="Secondary Transition 4" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 5  ------ ">
-        <label>------  Input 5  ------ </label>
+      <label>
+        <text>------  Input 5  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -5621,15 +5621,15 @@
           <display item="Tog P5" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
         </column>
         <column>
-          <label label="       ">
-            <label>       </label>
+          <label>
+            <text>       </text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5643,8 +5643,8 @@
       <display item="Secondary Address 5" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5655,19 +5655,19 @@
         </column>
       </row>
       <display item="Secondary Transition 5" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 6  ------ ">
-        <label>------  Input 6  ------ </label>
+      <label>
+        <text>------  Input 6  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5679,8 +5679,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5694,8 +5694,8 @@
       <display item="Secondary Address 6" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5706,19 +5706,19 @@
         </column>
       </row>
       <display item="Secondary Transition 6" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 7  ------ ">
-        <label>------  Input 7  ------ </label>
+      <label>
+        <text>------  Input 7  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5730,8 +5730,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5745,8 +5745,8 @@
       <display item="Secondary Address 7" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5757,19 +5757,19 @@
         </column>
       </row>
       <display item="Secondary Transition 7" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Input 8  ------ ">
-        <label>------  Input 8  ------ </label>
+      <label>
+        <text>------  Input 8  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
@@ -5781,8 +5781,8 @@
       </row>
       <row>
         <column>
-          <label label="             ">
-            <label>             </label>
+          <label>
+            <text>             </text>
           </label>
         </column>
         <column>
@@ -5796,8 +5796,8 @@
       <display item="Secondary Address 8" tooltip="Configures the input for specfic use"/>
       <row>
         <column>
-          <label label="         ">
-            <label>         </label>
+          <label>
+            <text>         </text>
           </label>
         </column>
         <column>
@@ -5808,93 +5808,93 @@
         </column>
       </row>
       <display item="Secondary Transition 8" tooltip="Configures the input for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <name>Inputs</name>
   </pane>
-  <pane name="Outputs 1-8">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Logic combination reference table for elements B and C ------">
-        <label>------ Logic combination reference table for elements B and C ------</label>
+      <label>
+        <text>------ Logic combination reference table for elements B and C ------</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <separator/>
         <column>
           <separator/>
-          <label label="Logic Combination">
-            <label>Logic Combination</label>
+          <label>
+            <text>Logic Combination</text>
           </label>
           <separator/>
-          <label label="A OR B OR C ">
-            <label>A OR B OR C </label>
+          <label>
+            <text>A OR B OR C </text>
           </label>
           <separator/>
-          <label label="(A OR B) AND C ">
-            <label>(A OR B) AND C </label>
+          <label>
+            <text>(A OR B) AND C </text>
           </label>
           <separator/>
-          <label label="(A AND B) OR C ">
-            <label>(A AND B) OR C </label>
+          <label>
+            <text>(A AND B) OR C </text>
           </label>
           <separator/>
-          <label label="A AND B AND C ">
-            <label>A AND B AND C </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" B Logic ">
-            <label> B Logic </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text>A AND B AND C </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label=" C Logic">
-            <label> C Logic</label>
+          <label>
+            <text> B Logic </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text> C Logic</text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
         </column>
@@ -5902,22 +5902,22 @@
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 1 ------ ">
-            <label>------ Logic Cell 1 ------ </label>
+          <label>
+            <text>------ Logic Cell 1 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 1A"/>
           <display item="Message 1A"/>
           <display item="State 1A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -5931,8 +5931,8 @@
           <display item="State 1B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -5944,61 +5944,61 @@
           </row>
           <display item="Message 1C"/>
           <display item="State 1C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 1 Control ---">
-            <label>Output 1 Control ---</label>
+          <label>
+            <text>Output 1 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o1" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC1" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip1" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff1" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu1" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 2 ------">
-            <label>------ Logic Cell 2 ------</label>
+          <label>
+            <text>------ Logic Cell 2 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 2A"/>
           <display item="Message 2A"/>
           <display item="State 2A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6012,8 +6012,8 @@
           <display item="State 2B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6025,61 +6025,61 @@
           </row>
           <display item="Message 2C"/>
           <display item="State 2C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 2 Control ---">
-            <label>Output 2 Control ---</label>
+          <label>
+            <text>Output 2 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o2" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC2" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip2" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff2" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu2" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 3 ------">
-            <label>------ Logic Cell 3 ------</label>
+          <label>
+            <text>------ Logic Cell 3 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 3A"/>
           <display item="Message 3A"/>
           <display item="State 3A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6093,8 +6093,8 @@
           <display item="State 3B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6106,61 +6106,61 @@
           </row>
           <display item="Message 3C"/>
           <display item="State 3C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 3 Control ---">
-            <label>Output 3 Control ---</label>
+          <label>
+            <text>Output 3 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o3" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC3" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip3" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff3" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu3" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 4 ------ ">
-            <label>------ Logic Cell 4 ------ </label>
+          <label>
+            <text>------ Logic Cell 4 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 4A"/>
           <display item="Message 4A"/>
           <display item="State 4A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6174,8 +6174,8 @@
           <display item="State 4B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6187,66 +6187,66 @@
           </row>
           <display item="Message 4C"/>
           <display item="State 4C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 4 Control ---">
-            <label>Output 4 Control ---</label>
+          <label>
+            <text>Output 4 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o4" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC4" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip4" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff4" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu4" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 5 ------ ">
-            <label>------ Logic Cell 5 ------ </label>
+          <label>
+            <text>------ Logic Cell 5 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 5A"/>
           <display item="Message 5A"/>
           <display item="State 5A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6260,8 +6260,8 @@
           <display item="State 5B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6273,61 +6273,61 @@
           </row>
           <display item="Message 5C"/>
           <display item="State 5C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 5 Control ---">
-            <label>Output 5 Control ---</label>
+          <label>
+            <text>Output 5 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o5" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC5" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip5" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff5" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu5" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 6 ------">
-            <label>------ Logic Cell 6 ------</label>
+          <label>
+            <text>------ Logic Cell 6 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 6A"/>
           <display item="Message 6A"/>
           <display item="State 6A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6341,8 +6341,8 @@
           <display item="State 6B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6354,61 +6354,61 @@
           </row>
           <display item="Message 6C"/>
           <display item="State 6C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 6 Control ---">
-            <label>Output 6 Control ---</label>
+          <label>
+            <text>Output 6 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o6" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC6" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip6" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff6" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu6" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 7 ------">
-            <label>------ Logic Cell 7 ------</label>
+          <label>
+            <text>------ Logic Cell 7 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 7A"/>
           <display item="Message 7A"/>
           <display item="State 7A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6422,8 +6422,8 @@
           <display item="State 7B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6435,61 +6435,61 @@
           </row>
           <display item="Message 7C"/>
           <display item="State 7C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 7 Control ---">
-            <label>Output 7 Control ---</label>
+          <label>
+            <text>Output 7 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o7" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC7" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip7" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff7" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu7" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 8 ------">
-            <label>------ Logic Cell 8 ------</label>
+          <label>
+            <text>------ Logic Cell 8 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 8A"/>
           <display item="Message 8A"/>
           <display item="State 8A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6503,8 +6503,8 @@
           <display item="State 8B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6516,134 +6516,134 @@
           </row>
           <display item="Message 8C"/>
           <display item="State 8C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 8 Control ---">
-            <label>Output 8 Control ---</label>
+          <label>
+            <text>Output 8 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o8" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC8" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip8" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff8" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu8" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Outputs 1-8</name>
   </pane>
-  <pane name="Outputs 9-16">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Logic combination reference table for elements B and C ------">
-        <label>------ Logic combination reference table for elements B and C ------</label>
+      <label>
+        <text>------ Logic combination reference table for elements B and C ------</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <separator/>
         <column>
           <separator/>
-          <label label="Logic Combination">
-            <label>Logic Combination</label>
+          <label>
+            <text>Logic Combination</text>
           </label>
           <separator/>
-          <label label="A OR B OR C ">
-            <label>A OR B OR C </label>
+          <label>
+            <text>A OR B OR C </text>
           </label>
           <separator/>
-          <label label="(A OR B) AND C ">
-            <label>(A OR B) AND C </label>
+          <label>
+            <text>(A OR B) AND C </text>
           </label>
           <separator/>
-          <label label="(A AND B) OR C ">
-            <label>(A AND B) OR C </label>
+          <label>
+            <text>(A AND B) OR C </text>
           </label>
           <separator/>
-          <label label="A AND B AND C ">
-            <label>A AND B AND C </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" B Logic ">
-            <label> B Logic </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text>A AND B AND C </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label=" C Logic">
-            <label> C Logic</label>
+          <label>
+            <text> B Logic </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text> C Logic</text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
         </column>
@@ -6651,22 +6651,22 @@
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 9 ------ ">
-            <label>------ Logic Cell 9 ------ </label>
+          <label>
+            <text>------ Logic Cell 9 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 9A"/>
           <display item="Message 9A"/>
           <display item="State 9A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6680,8 +6680,8 @@
           <display item="State 9B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6693,61 +6693,61 @@
           </row>
           <display item="Message 9C"/>
           <display item="State 9C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 9 Control ---">
-            <label>Output 9 Control ---</label>
+          <label>
+            <text>Output 9 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o9" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC9" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip9" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff9" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu9" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 10 ------">
-            <label>------ Logic Cell 10 ------</label>
+          <label>
+            <text>------ Logic Cell 10 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 10A"/>
           <display item="Message 10A"/>
           <display item="State 10A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6761,8 +6761,8 @@
           <display item="State 10B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6774,61 +6774,61 @@
           </row>
           <display item="Message 10C"/>
           <display item="State 10C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 10 Control ---">
-            <label>Output 10 Control ---</label>
+          <label>
+            <text>Output 10 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o10" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC10" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip10" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff10" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu10" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 11 ------">
-            <label>------ Logic Cell 11 ------</label>
+          <label>
+            <text>------ Logic Cell 11 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 11A"/>
           <display item="Message 11A"/>
           <display item="State 11A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6842,8 +6842,8 @@
           <display item="State 11B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6855,61 +6855,61 @@
           </row>
           <display item="Message 11C"/>
           <display item="State 11C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 11 Control ---">
-            <label>Output 11 Control ---</label>
+          <label>
+            <text>Output 11 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o11" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC11" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip11" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff11" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu11" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 12 ------ ">
-            <label>------ Logic Cell 12 ------ </label>
+          <label>
+            <text>------ Logic Cell 12 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 12A"/>
           <display item="Message 12A"/>
           <display item="State 12A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6923,8 +6923,8 @@
           <display item="State 12B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -6936,66 +6936,66 @@
           </row>
           <display item="Message 12C"/>
           <display item="State 12C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 12 Control ---">
-            <label>Output 12 Control ---</label>
+          <label>
+            <text>Output 12 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o12" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC12" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip12" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff12" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu12" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 13 ------ ">
-            <label>------ Logic Cell 13 ------ </label>
+          <label>
+            <text>------ Logic Cell 13 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 13A"/>
           <display item="Message 13A"/>
           <display item="State 13A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7009,8 +7009,8 @@
           <display item="State 13B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7022,61 +7022,61 @@
           </row>
           <display item="Message 13C"/>
           <display item="State 13C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 13 Control ---">
-            <label>Output 13 Control ---</label>
+          <label>
+            <text>Output 13 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o13" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC13" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip13" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff13" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu13" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 14 ------">
-            <label>------ Logic Cell 14 ------</label>
+          <label>
+            <text>------ Logic Cell 14 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 14A"/>
           <display item="Message 14A"/>
           <display item="State 14A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7090,8 +7090,8 @@
           <display item="State 14B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7103,61 +7103,61 @@
           </row>
           <display item="Message 14C"/>
           <display item="State 14C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 14 Control ---">
-            <label>Output 14 Control ---</label>
+          <label>
+            <text>Output 14 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o14" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC14" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip14" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff14" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu14" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 15 ------">
-            <label>------ Logic Cell 15 ------</label>
+          <label>
+            <text>------ Logic Cell 15 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 15A"/>
           <display item="Message 15A"/>
           <display item="State 15A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7171,8 +7171,8 @@
           <display item="State 15B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7184,61 +7184,61 @@
           </row>
           <display item="Message 15C"/>
           <display item="State 15C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 15 Control ---">
-            <label>Output 15 Control ---</label>
+          <label>
+            <text>Output 15 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o15" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC15" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip15" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff15" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu15" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 16 ------">
-            <label>------ Logic Cell 16 ------</label>
+          <label>
+            <text>------ Logic Cell 16 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 16A"/>
           <display item="Message 16A"/>
           <display item="State 16A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7252,8 +7252,8 @@
           <display item="State 16B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7265,134 +7265,134 @@
           </row>
           <display item="Message 16C"/>
           <display item="State 16C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 16 Control ---">
-            <label>Output 16 Control ---</label>
+          <label>
+            <text>Output 16 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o16" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC16" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip16" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff16" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu16" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Outputs 9-16</name>
   </pane>
-  <pane name="Outputs 17-24">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Logic combination reference table for elements B and C ------">
-        <label>------ Logic combination reference table for elements B and C ------</label>
+      <label>
+        <text>------ Logic combination reference table for elements B and C ------</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <separator/>
         <column>
           <separator/>
-          <label label="Logic Combination">
-            <label>Logic Combination</label>
+          <label>
+            <text>Logic Combination</text>
           </label>
           <separator/>
-          <label label="A OR B OR C ">
-            <label>A OR B OR C </label>
+          <label>
+            <text>A OR B OR C </text>
           </label>
           <separator/>
-          <label label="(A OR B) AND C ">
-            <label>(A OR B) AND C </label>
+          <label>
+            <text>(A OR B) AND C </text>
           </label>
           <separator/>
-          <label label="(A AND B) OR C ">
-            <label>(A AND B) OR C </label>
+          <label>
+            <text>(A AND B) OR C </text>
           </label>
           <separator/>
-          <label label="A AND B AND C ">
-            <label>A AND B AND C </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" B Logic ">
-            <label> B Logic </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" OR ">
-            <label> OR </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
-          </label>
-          <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text>A AND B AND C </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label=" C Logic">
-            <label> C Logic</label>
+          <label>
+            <text> B Logic </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> OR </text>
           </label>
           <separator/>
-          <label label=" OR ">
-            <label> OR </label>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
-          <label label=" AND ">
-            <label> AND </label>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text> C Logic</text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
+          </label>
+          <separator/>
+          <label>
+            <text> OR </text>
+          </label>
+          <separator/>
+          <label>
+            <text> AND </text>
           </label>
           <separator/>
         </column>
@@ -7400,22 +7400,22 @@
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 17 ------ ">
-            <label>------ Logic Cell 17 ------ </label>
+          <label>
+            <text>------ Logic Cell 17 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 17A"/>
           <display item="Message 17A"/>
           <display item="State 17A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7429,8 +7429,8 @@
           <display item="State 17B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7442,61 +7442,61 @@
           </row>
           <display item="Message 17C"/>
           <display item="State 17C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 17 Control ---">
-            <label>Output 17 Control ---</label>
+          <label>
+            <text>Output 17 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o17" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC17" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip17" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff17" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu17" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 18 ------">
-            <label>------ Logic Cell 18 ------</label>
+          <label>
+            <text>------ Logic Cell 18 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 18A"/>
           <display item="Message 18A"/>
           <display item="State 18A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7510,8 +7510,8 @@
           <display item="State 18B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7523,61 +7523,61 @@
           </row>
           <display item="Message 18C"/>
           <display item="State 18C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 18 Control ---">
-            <label>Output 18 Control ---</label>
+          <label>
+            <text>Output 18 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o18" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC18" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip18" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff18" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu18" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 19 ------">
-            <label>------ Logic Cell 19 ------</label>
+          <label>
+            <text>------ Logic Cell 19 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 19A"/>
           <display item="Message 19A"/>
           <display item="State 19A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7591,8 +7591,8 @@
           <display item="State 19B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7604,61 +7604,61 @@
           </row>
           <display item="Message 19C"/>
           <display item="State 19C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 19 Control ---">
-            <label>Output 19 Control ---</label>
+          <label>
+            <text>Output 19 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o19" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC19" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip19" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff19" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu19" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 20 ------ ">
-            <label>------ Logic Cell 20 ------ </label>
+          <label>
+            <text>------ Logic Cell 20 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 20A"/>
           <display item="Message 20A"/>
           <display item="State 20A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7672,8 +7672,8 @@
           <display item="State 20B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7685,66 +7685,66 @@
           </row>
           <display item="Message 20C"/>
           <display item="State 20C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 20 Control ---">
-            <label>Output 20 Control ---</label>
+          <label>
+            <text>Output 20 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o20" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC20" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip20" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff20" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu20" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 21 ------ ">
-            <label>------ Logic Cell 21 ------ </label>
+          <label>
+            <text>------ Logic Cell 21 ------ </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 21A"/>
           <display item="Message 21A"/>
           <display item="State 21A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7758,8 +7758,8 @@
           <display item="State 21B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7771,61 +7771,61 @@
           </row>
           <display item="Message 21C"/>
           <display item="State 21C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 21 Control ---">
-            <label>Output 21 Control ---</label>
+          <label>
+            <text>Output 21 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o21" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC21" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip21" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff21" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu21" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 22 ------">
-            <label>------ Logic Cell 22 ------</label>
+          <label>
+            <text>------ Logic Cell 22 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 22A"/>
           <display item="Message 22A"/>
           <display item="State 22A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7839,8 +7839,8 @@
           <display item="State 22B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7852,61 +7852,61 @@
           </row>
           <display item="Message 22C"/>
           <display item="State 22C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 22 Control ---">
-            <label>Output 22 Control ---</label>
+          <label>
+            <text>Output 22 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o22" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC22" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip22" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff22" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu22" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 23 ------">
-            <label>------ Logic Cell 23 ------</label>
+          <label>
+            <text>------ Logic Cell 23 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 23A"/>
           <display item="Message 23A"/>
           <display item="State 23A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7920,8 +7920,8 @@
           <display item="State 23B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -7933,61 +7933,61 @@
           </row>
           <display item="Message 23C"/>
           <display item="State 23C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 23 Control ---">
-            <label>Output 23 Control ---</label>
+          <label>
+            <text>Output 23 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o23" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC23" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip23" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff23" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu23" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="------ Logic Cell 24 ------">
-            <label>------ Logic Cell 24 ------</label>
+          <label>
+            <text>------ Logic Cell 24 ------</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Address 24A"/>
           <display item="Message 24A"/>
           <display item="State 24A"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -8001,8 +8001,8 @@
           <display item="State 24B"/>
           <row>
             <column>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
@@ -8014,54 +8014,54 @@
           </row>
           <display item="Message 24C"/>
           <display item="State 24C"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Output 24 Control ---">
-            <label>Output 24 Control ---</label>
+          <label>
+            <text>Output 24 Control ---</text>
           </label>
           <row>
             <column>
-              <label label="            ">
-                <label>            </label>
+              <label>
+                <text>            </text>
               </label>
             </column>
             <column>
               <display item="Inv o24" format="checkbox" tooltip="Use for common cathode type LEDs"/>
             </column>
             <column>
-              <label label=" Do not use for Bi-Color LEDs">
-                <label> Do not use for Bi-Color LEDs</label>
+              <label>
+                <text> Do not use for Bi-Color LEDs</text>
               </label>
             </column>
           </row>
           <display item="BiC24" tooltip="Use for two legged bi-color LEDs"/>
           <row>
             <column>
-              <label label="              ">
-                <label>              </label>
+              <label>
+                <text>              </text>
               </label>
             </column>
             <column>
               <display item="Recip24" format="checkbox" tooltip="Inverts the output state of the effect"/>
             </column>
             <column>
-              <label label=" Use for alternating flashing LEDs">
-                <label> Use for alternating flashing LEDs</label>
+              <label>
+                <text> Use for alternating flashing LEDs</text>
               </label>
             </column>
           </row>
           <display item="Eff24" tooltip="Configures the output for specfic effect"/>
           <display item="EffDu24" tooltip="Time is based on the type of effect"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Outputs 17-24</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

@@ -45,12 +45,12 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+  <variable CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>
   </variable>
-  <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+  <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
     <decVal/>
     <label>Manufacturer ID</label>
     <label xml:lang="it">ID Costruttore</label>

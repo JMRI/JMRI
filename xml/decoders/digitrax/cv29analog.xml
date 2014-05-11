@@ -33,8 +33,9 @@
       <revremark>Created from NMRA cv29analog.xml file, for use with Digitrax</revremark>
     </revision>
   </revhistory>
-  <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+  <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog conversion mode</label>
     <label xml:lang="it">Conversione Analogica</label>
     <label xml:lang="fr">Conversion mode analogique</label>
     <label xml:lang="ca">Analog conversion mode(ca)</label>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- $Id: Wekomm_RRR.xml ,v 1.0 2013/02/24 19:01:43 Alain CARASSO $       -->
 <!--                                                                        -->
@@ -13,298 +12,204 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<version author="Alain Carasso" version="1" lastUpdated="20130224" />
-
-<decoder>
-	<family name="Wekomm for LSM" mfg="Wekomm" >
-		<model model="Wekomm_RRR" ></model>
- 		 	<functionlabels>
-				<functionlabel num="0" lockable="true">Cab Lights</functionlabel>
-				<functionlabel num="1" lockable="true">Trailing Lights</functionlabel>
-				<functionlabel num="2" lockable="true">Safelights</functionlabel>
-				<functionlabel num="3" lockable="true">Interior lights</functionlabel>
-				<functionlabel num="4" lockable="true">Warning lights</functionlabel>
-				<functionlabel num="5" lockable="true">3rd Front light</functionlabel>
-				<functionlabel num="9" lockable="true">Reverse lights</functionlabel>
-				<functionlabel num="10" lockable="true">Failed lights</functionlabel>
-		</functionlabels>      
-	</family>
-		<programming direct="yes" paged="no" 
-	                     register="yes" ops="yes"></programming>
-<variables>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso" version="1" lastUpdated="20130224"/>
+  <decoder>
+    <family name="Wekomm for LSM" mfg="Wekomm">
+      <model model="Wekomm_RRR"/>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Cab Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Trailing Lights</functionlabel>
+        <functionlabel num="2" lockable="true">Safelights</functionlabel>
+        <functionlabel num="3" lockable="true">Interior lights</functionlabel>
+        <functionlabel num="4" lockable="true">Warning lights</functionlabel>
+        <functionlabel num="5" lockable="true">3rd Front light</functionlabel>
+        <functionlabel num="9" lockable="true">Reverse lights</functionlabel>
+        <functionlabel num="10" lockable="true">Failed lights</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-  		<variable label="Decoder Version No: " CV="7" readOnly="yes"
-			item="Decoder Version">
-			<decVal/>
-	</variable>
-	<variable label="Manufacturer ID: "
-            CV="8"
-            default="86"
-            item="Manufacturer"
-            readOnly="yes"
-			comment="8 to reset"
-            tooltip="Readonly default=86">
-            <decVal />
-    </variable>
-
-     <!-- CV 19 Consist address  (can also use CV27-28 for Long Secondary address-->
-     <variable
-            label="Consist Address"
-            CV="19"
-            mask="XVVVVVVV"
-            default="0"
-            item="Consist Address"
-            tooltip="XVVVVVVV  (0 -127) default=0">
-            <decVal
-                min="0"
-                max="127"
-                />
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Decoder Version No: </label>
       </variable>
- 
-    <!-- CV 27-28 managed as long address-->
-    <variable
-            label="Consist 2nd Address"
-            CV="27"
-            item="Secondary Address"
-    >
-            <longAddressVal/>
-     </variable>
-	<!-- CV 29 -->
-        <variable
-            label="Locomotive Direction"
-            CV="29"
-            mask="XXXXXXXV"
-            default="0"
-            item="Locomotive Direction"
-            tooltip="XXXXXXXV  default=0">
-            <enumVal>
-                <enumChoice choice="Normal"></enumChoice>
-                <enumChoice choice="Reverse"></enumChoice>
-                </enumVal>
-        </variable>
-        <variable
-            label="Speed Step Mode"
-            CV="29"
-            mask="XXXXXXVX"
-            default="1"
-            item="Speed Step Mode"
-            tooltip="XXXXXXVX  default=1">
-            <enumVal>
-                <enumChoice choice="14"></enumChoice>
-                <enumChoice choice="28/128"></enumChoice>
-                </enumVal>
-        </variable>
-        <variable
-            label="Analog (DC) Operation"
-            CV="29"
-            mask="XXXXXVXX"
-            default="1"
-            item="Analog (DC) Operation"
-            tooltip="XXXXXVXX  default=1">
-            <enumVal>
-                <enumChoice choice="No"></enumChoice>
-                <enumChoice choice="Yes"></enumChoice>
-                </enumVal>
-        </variable>
-        <variable
-            label="Enable RailCom"
-            CV="29"
-            mask="XXXXVXXX"
-            default="0"
-            item="Enable RailCom"
-            tooltip="XXXXVXXX  default=0">
-            <enumVal>
-                <enumChoice choice="Disabled"></enumChoice>
-                <enumChoice choice="Enabled"></enumChoice>
-                </enumVal>
-        </variable>
-
-        <variable
-            label="Decoder Type"
-            CV="29"
-            mask="VXXXXXXX"
-            default="0"
-            item="Decoder Type"
-            tooltip="VXXXXXXX  default=0">
-            <enumVal>
-                <enumChoice choice="MultiFuncton"></enumChoice>
-                <enumChoice choice="Accessory"></enumChoice>
-                </enumVal>
-        </variable>
-
-   <!-- CV 33; 35-42 Function mapping-->
-		<variable label="Fx (0-28) activates Cab lights"
-			CV="33"
-			item="Fx (0-28) activates Cab lights"
-			default="00">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) activates Tail lights"
-			CV="35"
-			item="Fx (0-28) activates Tail lights"
-			default="01">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) activates Safelights"
-			CV="36"
-			item="Fx (0-28) activates Safelights"
-			default="02">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) activates Cars Lights"
-			CV="37"
-			item="Fx (0-28) activates Cars Lights"
-			default="03">
-			<decVal max="28"/>
-		</variable>	
-		<variable label="Fx (0-28) activates Warning"
-			CV="38"
-			item="Fx (0-28) activates Warning"
-			default="04">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) activates 3rd Light"
-			CV="39"
-			item="Fx (0-28) activates 3rd Light"
-			default="05">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) to reverse Cab Lights"
-			CV="41"
-			item="Fx (0-28) to reverse Cab Lights"
-			default="09">
-			<decVal max="28"/>
-		</variable>
-		<variable label="Fx (0-28) activates failed Lights"
-			CV="42"
-			item="Fx (0-28) activates failed Lights"
-			default="10">
-			<decVal max="28"/>
-		</variable>
-
-		<variable label="Lights level (0-255)"
-			CV="52"
-			item="Lights level (0-255)"
-			default="15">
-			<decVal max="255"/>
-		</variable>
-
-		<variable label="Number of failed lights (0-13)"
-			CV="84"
-			item="Number of failed lights (0-13)"
-			default="3">
-			<decVal max="13"/>
-		</variable>
-   <!-- CV 110-116 Magnet, Analog Function-->
-	<variable 
-		label="Magnet authorized (Range 0 - 3)"
-		CV="110"
-            mask="XXXXXXVV"
-            default="3"
-            item="External Magnet"
-            tooltip="XXXXXXVV  default=3">
-            <enumVal>
-                <enumChoice choice="Magnet active for Consist Address"></enumChoice>
-                <enumChoice choice="Range is F5-F8 / F9-F12"></enumChoice>
-                </enumVal>
-        </variable>
-	<variable
-		label="Analog Lights Activated (Range 0 - 7)"
-		CV="116"
-            mask="XXXXXVVV"
-			default="7"
-            item="Analog Lights Activated"
-            tooltip="XXXXXVVV  default=7">
-            <enumVal>
-				<enumChoice choice="Cab lights"></enumChoice>
-				<enumChoice choice="Cars lights"></enumChoice>
-				<enumChoice choice="Tail lights"></enumChoice>
-			</enumVal>
-	</variable> 
-  </variables>
-
-        <resets>
-           <factReset label="Reset All CVs" CV="8" default="8"/>
-        </resets>
-
-</decoder>
-
-<pane name="RRR Functions Mapping">
-	<column>
-	<row>
-		<display item="Fx (0-28) activates Cab lights" label="" layout="above" />
-		<display item="Fx (0-28) activates Cab lights" label="Fx (0-28) activates Cab lights            "
-		layout="above"	tooltip="Fx (0-28) activates Cab lights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates Tail lights" label="" layout="above" />
-		<display item="Fx (0-28) activates Tail lights" label="Fx (0-28) activates Tail lights           "
-		layout="above"	tooltip="Fx (0-28) activates Tail lights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates Safelights" label="" layout="above" />
-		<display item="Fx (0-28) activates Safelights" label="Fx (0-28) activates Safelights            "
-		layout="above"	tooltip="Fx (0-28) activates Safelights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates Cars Lights" label="" layout="above" />
-		<display item="Fx (0-28) activates Cars Lights" label="Fx (0-28) activates Cars Lights           "
-		layout="above"	tooltip="Fx (0-28) activates Cars Lights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates Warning" label="" layout="above" />
-		<display item="Fx (0-28) activates Warning" label="Fx (0-28) activates Warning               "
-		layout="above"	tooltip="Fx (0-28) activates Warning" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates 3rd Light"  label="" layout="above" />
-		<display item="Fx (0-28) activates 3rd Light" label="Fx (0-28) activates 3rd Light             "
-		layout="above"	tooltip="Fx (0-28) activates 3rd Light" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) to reverse Cab Lights"  label="" layout="above" />
-		<display item="Fx (0-28) to reverse Cab Lights" label="Fx (0-28) to reverse Cab Lights"
-		layout="above"	tooltip="Fx (0-28) to reverse Cab Lights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Fx (0-28) activates failed Lights"  label="" layout="above" />
-		<display item="Fx (0-28) activates failed Lights"  label="Fx (0-28) activates failed Lights         "
-		layout="above"	tooltip="Fx (0-28) activates failed Lights" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Lights level (0-255)"  label="" layout="above" />
-		<display item="Lights level (0-255)" label= "Lights level (0-255)                        "
-		layout="above"	tooltip="Lights level (0-255)" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-	<row>
-		<display item="Number of failed lights (0-13)"   label="" layout="above" />
-		<display item="Number of failed lights (0-13)"  label= "Number of failed lights (0-13)              "
-		layout="above"	tooltip="Number of failed lights (0-13)" format="hslider" />
-	</row>
-<separator/>
-<separator/>
-
-	</column>
-</pane>
-
+      <variable CV="8" default="86" item="Manufacturer" readOnly="yes" comment="8 to reset" tooltip="Readonly default=86">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+      </variable>
+      <!-- CV 19 Consist address  (can also use CV27-28 for Long Secondary address-->
+      <variable CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
+        <decVal min="0" max="127"/>
+        <label>Consist Address</label>
+      </variable>
+      <!-- CV 27-28 managed as long address-->
+      <variable CV="27" item="Secondary Address">
+        <longAddressVal/>
+        <label>Consist 2nd Address</label>
+      </variable>
+      <!-- CV 29 -->
+      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="XXXXXXXV  default=0">
+        <enumVal>
+          <enumChoice choice="Normal"/>
+          <enumChoice choice="Reverse"/>
+        </enumVal>
+        <label>Locomotive Direction</label>
+      </variable>
+      <variable CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="XXXXXXVX  default=1">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128"/>
+        </enumVal>
+        <label>Speed Step Mode</label>
+      </variable>
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="XXXXXVXX  default=1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>Analog (DC) Operation</label>
+      </variable>
+      <variable CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
+        <enumVal>
+          <enumChoice choice="Disabled"/>
+          <enumChoice choice="Enabled"/>
+        </enumVal>
+        <label>Enable RailCom</label>
+      </variable>
+      <variable CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">
+        <enumVal>
+          <enumChoice choice="MultiFuncton"/>
+          <enumChoice choice="Accessory"/>
+        </enumVal>
+        <label>Decoder Type</label>
+      </variable>
+      <!-- CV 33; 35-42 Function mapping-->
+      <variable CV="33" item="Fx (0-28) activates Cab lights" default="00">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates Cab lights</label>
+      </variable>
+      <variable CV="35" item="Fx (0-28) activates Tail lights" default="01">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates Tail lights</label>
+      </variable>
+      <variable CV="36" item="Fx (0-28) activates Safelights" default="02">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates Safelights</label>
+      </variable>
+      <variable CV="37" item="Fx (0-28) activates Cars Lights" default="03">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates Cars Lights</label>
+      </variable>
+      <variable CV="38" item="Fx (0-28) activates Warning" default="04">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates Warning</label>
+      </variable>
+      <variable CV="39" item="Fx (0-28) activates 3rd Light" default="05">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates 3rd Light</label>
+      </variable>
+      <variable CV="41" item="Fx (0-28) to reverse Cab Lights" default="09">
+        <decVal max="28"/>
+        <label>Fx (0-28) to reverse Cab Lights</label>
+      </variable>
+      <variable CV="42" item="Fx (0-28) activates failed Lights" default="10">
+        <decVal max="28"/>
+        <label>Fx (0-28) activates failed Lights</label>
+      </variable>
+      <variable CV="52" item="Lights level (0-255)" default="15">
+        <decVal max="255"/>
+        <label>Lights level (0-255)</label>
+      </variable>
+      <variable CV="84" item="Number of failed lights (0-13)" default="3">
+        <decVal max="13"/>
+        <label>Number of failed lights (0-13)</label>
+      </variable>
+      <!-- CV 110-116 Magnet, Analog Function-->
+      <variable CV="110" mask="XXXXXXVV" default="3" item="External Magnet" tooltip="XXXXXXVV  default=3">
+        <enumVal>
+          <enumChoice choice="Magnet active for Consist Address"/>
+          <enumChoice choice="Range is F5-F8 / F9-F12"/>
+        </enumVal>
+        <label>Magnet authorized (Range 0 - 3)</label>
+      </variable>
+      <variable CV="116" mask="XXXXXVVV" default="7" item="Analog Lights Activated" tooltip="XXXXXVVV  default=7">
+        <enumVal>
+          <enumChoice choice="Cab lights"/>
+          <enumChoice choice="Cars lights"/>
+          <enumChoice choice="Tail lights"/>
+        </enumVal>
+        <label>Analog Lights Activated (Range 0 - 7)</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <pane>
+    <name>RRR Functions Mapping</name>
+    <column>
+      <row>
+        <display item="Fx (0-28) activates Cab lights" label="" layout="above"/>
+        <display item="Fx (0-28) activates Cab lights" label="Fx (0-28) activates Cab lights            " layout="above" tooltip="Fx (0-28) activates Cab lights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates Tail lights" label="" layout="above"/>
+        <display item="Fx (0-28) activates Tail lights" label="Fx (0-28) activates Tail lights           " layout="above" tooltip="Fx (0-28) activates Tail lights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates Safelights" label="" layout="above"/>
+        <display item="Fx (0-28) activates Safelights" label="Fx (0-28) activates Safelights            " layout="above" tooltip="Fx (0-28) activates Safelights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates Cars Lights" label="" layout="above"/>
+        <display item="Fx (0-28) activates Cars Lights" label="Fx (0-28) activates Cars Lights           " layout="above" tooltip="Fx (0-28) activates Cars Lights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates Warning" label="" layout="above"/>
+        <display item="Fx (0-28) activates Warning" label="Fx (0-28) activates Warning               " layout="above" tooltip="Fx (0-28) activates Warning" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates 3rd Light" label="" layout="above"/>
+        <display item="Fx (0-28) activates 3rd Light" label="Fx (0-28) activates 3rd Light             " layout="above" tooltip="Fx (0-28) activates 3rd Light" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) to reverse Cab Lights" label="" layout="above"/>
+        <display item="Fx (0-28) to reverse Cab Lights" label="Fx (0-28) to reverse Cab Lights" layout="above" tooltip="Fx (0-28) to reverse Cab Lights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Fx (0-28) activates failed Lights" label="" layout="above"/>
+        <display item="Fx (0-28) activates failed Lights" label="Fx (0-28) activates failed Lights         " layout="above" tooltip="Fx (0-28) activates failed Lights" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Lights level (0-255)" label="" layout="above"/>
+        <display item="Lights level (0-255)" label="Lights level (0-255)                        " layout="above" tooltip="Lights level (0-255)" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <display item="Number of failed lights (0-13)" label="" layout="above"/>
+        <display item="Number of failed lights (0-13)" label="Number of failed lights (0-13)              " layout="above" tooltip="Number of failed lights (0-13)" format="hslider"/>
+      </row>
+      <separator/>
+      <separator/>
+    </column>
+  </pane>
 </decoder-config>

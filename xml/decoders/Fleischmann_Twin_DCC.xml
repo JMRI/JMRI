@@ -28,29 +28,35 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Volts" CV="2" item="Vstart" default="5">
+      <variable CV="2" item="Vstart" default="5">
         <decVal/>
+        <label>Start Volts</label>
       </variable>
-      <variable label="Acceleration" item="Accel" CV="3" default="5">
+      <variable item="Accel" CV="3" default="5">
         <decVal/>
+        <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" item="Decel" CV="4" default="3">
+      <variable item="Decel" CV="4" default="3">
         <decVal/>
+        <label>Deceleration</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="132">
+      <variable item="Vhigh" CV="5" default="132">
         <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Vmid" CV="6">
+      <variable item="Vmid" CV="6">
         <decVal/>
+        <label>Vmid</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
+        <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
+        <label>Manufacturer ID</label>
       </variable>
-      <variable label="Motor PWM Frequency" CV="9" default="20" item="Motor PWM Frequency" tooltip="0=100Hz, 15-22=variable-kHz" comment="Range 0/15-22">
+      <variable CV="9" default="20" item="Motor PWM Frequency" tooltip="0=100Hz, 15-22=variable-kHz" comment="Range 0/15-22">
         <enumVal>
           <enumChoice choice="100 Hz" value="0"/>
           <enumChoice choice="15 kHz" value="15"/>
@@ -62,42 +68,49 @@
           <enumChoice choice="21 kHz" value="21"/>
           <enumChoice choice="22 kHz" value="22"/>
         </enumVal>
+        <label>Motor PWM Frequency</label>
       </variable>
-      <variable label="Alternative mode (analogue)" CV="12" mask="XXXXXXXV" item="Advanced Group 1 Option 1" default="1" tooltip="allow alternative mode (analogue), set action in">
+      <variable CV="12" mask="XXXXXXXV" item="Advanced Group 1 Option 1" default="1" tooltip="allow alternative mode (analogue), set action in">
         <enumVal>
           <enumChoice choice="Off"/>
           <enumChoice choice="Analogue permitted"/>
         </enumVal>
+        <label>Alternative mode (analogue)</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Forward"/>
           <enumChoice choice="Reverse"/>
         </enumVal>
+        <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14"/>
           <enumChoice choice="28/128 (recommended)"/>
         </enumVal>
+        <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off"/>
           <enumChoice choice="On"/>
         </enumVal>
+        <label>Analog conversion mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="1">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="1">
         <enumVal>
           <enumChoice choice="Don't use Speed Table"/>
           <enumChoice choice="Use Speed Table"/>
         </enumVal>
+        <label>Use Speed Table</label>
       </variable>
-      <variable label="Error Information (read only)" CV="30" mask="XXXXXXXV" item="Advanced Group 2 Option 1" readOnly="yes" default="0">
+      <variable CV="30" mask="XXXXXXXV" item="Advanced Group 2 Option 1" readOnly="yes" default="0">
         <decVal/>
+        <label>Error Information (read only)</label>
       </variable>
       <!-- Function Mapping follows -->
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -108,7 +121,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -119,7 +132,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -130,7 +143,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -141,7 +154,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -152,7 +165,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -163,7 +176,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output AC" CV="37" mask="XVXXXXXX" minOut="2" minFn="3">
+      <variable item="F1 controls output AC" CV="37" mask="XVXXXXXX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -174,7 +187,7 @@
         </enumVal>
         <label>F1 controls output AC</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -185,7 +198,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -196,7 +209,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output SH" CV="37" mask="VXXXXXXX" minOut="2" minFn="3">
+      <variable item="F2 controls output SH" CV="37" mask="VXXXXXXX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -207,7 +220,7 @@
         </enumVal>
         <label>F2 controls output SH</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -218,7 +231,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -229,7 +242,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -240,7 +253,7 @@
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="2" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="2" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -251,7 +264,7 @@
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="2" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="2" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -262,7 +275,7 @@
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="Motor Control" CV="51" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 5">
+      <variable CV="51" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -271,8 +284,9 @@
             <choice>Yes</choice>
           </enumChoice>
         </enumVal>
+        <label>Motor Control</label>
       </variable>
-      <variable label="Motor Cycles Summary" CV="51" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 6">
+      <variable CV="51" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>No</choice>
@@ -281,8 +295,9 @@
             <choice>Yes</choice>
           </enumChoice>
         </enumVal>
+        <label>Motor Cycles Summary</label>
       </variable>
-      <variable label="Lamp indicates error state" CV="51" mask="XXVXXXXX" default="1" item="Advanced Group 2 Option 4">
+      <variable CV="51" mask="XXVXXXXX" default="1" item="Advanced Group 2 Option 4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -291,8 +306,9 @@
             <choice>Yes</choice>
           </enumChoice>
         </enumVal>
+        <label>Lamp indicates error state</label>
       </variable>
-      <variable label="Light Dimming" CV="52" mask="XXXXXVVV" item="Advanced Group 1 Option 7" default="7">
+      <variable CV="52" mask="XXXXXVVV" item="Advanced Group 1 Option 7" default="7">
         <enumVal>
           <enumChoice choice="0"/>
           <enumChoice choice="1"/>
@@ -303,8 +319,9 @@
           <enumChoice choice="6"/>
           <enumChoice choice="7"/>
         </enumVal>
+        <label>Light Dimming</label>
       </variable>
-      <variable label="Motor BEMF tuning, P adjustment" CV="53" default="15" item="EMF Static Config" tooltip="P adjustment, 11-17" comment="Range 11-17">
+      <variable CV="53" default="15" item="EMF Static Config" tooltip="P adjustment, 11-17" comment="Range 11-17">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="11" value="11"/>
@@ -315,8 +332,9 @@
           <enumChoice choice="16" value="16"/>
           <enumChoice choice="17" value="17"/>
         </enumVal>
+        <label>Motor BEMF tuning, P adjustment</label>
       </variable>
-      <variable label="Motor BEMF tuning, I adjustment" CV="54" default="8" item="EMF Dynamic Config" tooltip="I adjustment, 5-10" comment="Range 5-10">
+      <variable CV="54" default="8" item="EMF Dynamic Config" tooltip="I adjustment, 5-10" comment="Range 5-10">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="5" value="5"/>
@@ -326,18 +344,23 @@
           <enumChoice choice="9" value="9"/>
           <enumChoice choice="10" value="10"/>
         </enumVal>
+        <label>Motor BEMF tuning, I adjustment</label>
       </variable>
-      <variable label="Motor Switch-off Threshold" CV="57" item="Advanced Group 2 Option 2" default="13">
+      <variable CV="57" item="Advanced Group 2 Option 2" default="13">
         <decVal/>
+        <label>Motor Switch-off Threshold</label>
       </variable>
-      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+      <variable CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
+        <label>Forward Trim (0-255)</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
+        <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+      <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
+        <label>Reverse Trim (0-255)</label>
       </variable>
     </variables>
     <resets>

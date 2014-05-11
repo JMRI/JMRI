@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: BLI_Blueline_diesel.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -57,60 +57,60 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
       </variable>
-      <variable label="Consist Address Active For F0" CV="22" mask="XXXXXXXV" default="0" item="Consist Address Active For FL in Reverse">
+      <variable CV="22" mask="XXXXXXXV" default="0" item="Consist Address Active For FL in Reverse">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F0</label>
       </variable>
-      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0" minFn="9">
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
       </variable>
-      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0" minFn="10">
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
       </variable>
-      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0" minFn="11">
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
       </variable>
-      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0" minFn="12">
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -121,547 +121,547 @@
         </enumVal>
         <label>Speed steps</label>
       </variable>
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output Horn1" CV="33" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Horn1" CV="33" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Horn1</label>
       </variable>
-      <variable label="FL(f) controls output Horn2" CV="33" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Horn2" CV="33" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Horn2</label>
       </variable>
-      <variable label="FL(f) controls output Bell" CV="33" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Bell" CV="33" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Bell</label>
       </variable>
-      <variable label="FL(f) controls output Coupler" CV="33" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Coupler" CV="33" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Coupler</label>
       </variable>
-      <variable label="FL(f) controls output Blower/Comp" CV="33" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Blower/Comp" CV="33" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Blower/Comp</label>
       </variable>
-      <variable label="FL(f) controls output Rev Up" CV="33" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Rev Up" CV="33" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Rev Up</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output Horn1" CV="34" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Horn1" CV="34" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Horn1</label>
       </variable>
-      <variable label="FL(r) controls output Horn2" CV="34" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Horn2" CV="34" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Horn2</label>
       </variable>
-      <variable label="FL(r) controls output Bell" CV="34" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Bell" CV="34" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Bell</label>
       </variable>
-      <variable label="FL(r) controls output Coupler" CV="34" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Coupler" CV="34" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Coupler</label>
       </variable>
-      <variable label="FL(r) controls output Blower/Comp" CV="34" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Blower/Comp" CV="34" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Blower/Comp</label>
       </variable>
-      <variable label="FL(r) controls output Rev Up" CV="34" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="FL(r) controls output Rev Up" CV="34" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Rev Up</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" default="0">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output Horn1" CV="35" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F1 controls output Horn1" CV="35" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Horn1</label>
       </variable>
-      <variable label="F1 controls output Horn2" CV="35" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F1 controls output Horn2" CV="35" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Horn2</label>
       </variable>
-      <variable label="F1 controls output Bell" CV="35" mask="XXXVXXXX" minOut="1" default="1">
+      <variable item="F1 controls output Bell" CV="35" mask="XXXVXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Bell</label>
       </variable>
-      <variable label="F1 controls output Coupler" CV="35" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F1 controls output Coupler" CV="35" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Coupler</label>
       </variable>
-      <variable label="F1 controls output Blower/Comp" CV="35" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F1 controls output Blower/Comp" CV="35" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Blower/Comp</label>
       </variable>
-      <variable label="F1 controls output Rev Up" CV="35" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F1 controls output Rev Up" CV="35" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Rev Up</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" default="0">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output Horn1" CV="36" mask="XXXXXVXX" minOut="1" default="1">
+      <variable item="F2 controls output Horn1" CV="36" mask="XXXXXVXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Horn1</label>
       </variable>
-      <variable label="F2 controls output Horn2" CV="36" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F2 controls output Horn2" CV="36" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Horn2</label>
       </variable>
-      <variable label="F2 controls output Bell" CV="36" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F2 controls output Bell" CV="36" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Bell</label>
       </variable>
-      <variable label="F2 controls output Coupler" CV="36" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F2 controls output Coupler" CV="36" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Coupler</label>
       </variable>
-      <variable label="F2 controls output Blower/Comp" CV="36" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F2 controls output Blower/Comp" CV="36" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Blower/Comp</label>
       </variable>
-      <variable label="F2 controls output Rev Up" CV="36" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F2 controls output Rev Up" CV="36" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Rev Up</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" default="0">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output Horn1" CV="37" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F3 controls output Horn1" CV="37" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Horn1</label>
       </variable>
-      <variable label="F3 controls output Horn2" CV="37" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F3 controls output Horn2" CV="37" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Horn2</label>
       </variable>
-      <variable label="F3 controls output Bell" CV="37" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F3 controls output Bell" CV="37" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Bell</label>
       </variable>
-      <variable label="F3 controls output Coupler" CV="37" mask="XXVXXXXX" minOut="1" default="1">
+      <variable item="F3 controls output Coupler" CV="37" mask="XXVXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Coupler</label>
       </variable>
-      <variable label="F3 controls output Blower/Comp" CV="37" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F3 controls output Blower/Comp" CV="37" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Blower/Comp</label>
       </variable>
-      <variable label="F3 controls output Rev Up" CV="37" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F3 controls output Rev Up" CV="37" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Rev Up</label>
       </variable>
-      <variable label="F4 controls output Horn2" CV="38" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F4 controls output Horn2" CV="38" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Horn2</label>
       </variable>
-      <variable label="F4 controls output Bell" CV="38" mask="XXXXXXVX" minOut="2" default="0">
+      <variable item="F4 controls output Bell" CV="38" mask="XXXXXXVX" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Bell</label>
       </variable>
-      <variable label="F4 controls output Coupler" CV="38" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F4 controls output Coupler" CV="38" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Coupler</label>
       </variable>
-      <variable label="F4 controls output Blower/Comp" CV="38" mask="XXXXVXXX" minOut="1" default="1">
+      <variable item="F4 controls output Blower/Comp" CV="38" mask="XXXXVXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Blower/Comp</label>
       </variable>
-      <variable label="F4 controls output Rev Up" CV="38" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F4 controls output Rev Up" CV="38" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Rev Up</label>
       </variable>
-      <variable label="F4 controls output Rev Down" CV="38" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F4 controls output Rev Down" CV="38" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Rev Down</label>
       </variable>
-      <variable label="F4 controls output 3" CV="38" mask="XVXXXXXX" minOut="3" default="0">
+      <variable item="F4 controls output 3" CV="38" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 3</label>
       </variable>
-      <variable label="F4 controls output Volume" CV="38" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F4 controls output Volume" CV="38" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Volume</label>
       </variable>
-      <variable label="F5 controls output Horn2" CV="39" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F5 controls output Horn2" CV="39" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Horn2</label>
       </variable>
-      <variable label="F5 controls output Bell" CV="39" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F5 controls output Bell" CV="39" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Bell</label>
       </variable>
-      <variable label="F5 controls output Coupler" CV="39" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F5 controls output Coupler" CV="39" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Coupler</label>
       </variable>
-      <variable label="F5 controls output Blower/Comp" CV="39" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F5 controls output Blower/Comp" CV="39" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Blower/Comp</label>
       </variable>
-      <variable label="F5 controls output Rev Up" CV="39" mask="XXXVXXXX" minOut="1" default="1">
+      <variable item="F5 controls output Rev Up" CV="39" mask="XXXVXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Rev Up</label>
       </variable>
-      <variable label="F5 controls output Rev Down" CV="39" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F5 controls output Rev Down" CV="39" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Rev Down</label>
       </variable>
-      <variable label="F5 controls output 3" CV="39" mask="XVXXXXXX" minOut="3" default="0">
+      <variable item="F5 controls output 3" CV="39" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 3</label>
       </variable>
-      <variable label="F5 controls output Volume" CV="39" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F5 controls output Volume" CV="39" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Volume</label>
       </variable>
-      <variable label="F6 controls output Horn2" CV="40" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F6 controls output Horn2" CV="40" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Horn2</label>
       </variable>
-      <variable label="F6 controls output Bell" CV="40" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F6 controls output Bell" CV="40" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Bell</label>
       </variable>
-      <variable label="F6 controls output Coupler" CV="40" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F6 controls output Coupler" CV="40" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Coupler</label>
       </variable>
-      <variable label="F6 controls output Blower/Comp" CV="40" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F6 controls output Blower/Comp" CV="40" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Blower/Comp</label>
       </variable>
-      <variable label="F6 controls output Rev Up" CV="40" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F6 controls output Rev Up" CV="40" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Rev Up</label>
       </variable>
-      <variable label="F6 controls output Rev Down" CV="40" mask="XXVXXXXX" minOut="1" default="1">
+      <variable item="F6 controls output Rev Down" CV="40" mask="XXVXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Rev Down</label>
       </variable>
-      <variable label="F6 controls output 3" CV="40" mask="XVXXXXXX" minOut="3" default="0">
+      <variable item="F6 controls output 3" CV="40" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 3</label>
       </variable>
-      <variable label="F6 controls output Volume" CV="40" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F6 controls output Volume" CV="40" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Volume</label>
       </variable>
-      <variable label="F7 controls output Horn2" CV="41" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F7 controls output Horn2" CV="41" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Horn2</label>
       </variable>
-      <variable label="F7 controls output Bell" CV="41" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F7 controls output Bell" CV="41" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Bell</label>
       </variable>
-      <variable label="F7 controls output Coupler" CV="41" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F7 controls output Coupler" CV="41" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Coupler</label>
       </variable>
-      <variable label="F7 controls output Blower/Comp" CV="41" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F7 controls output Blower/Comp" CV="41" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Blower/Comp</label>
       </variable>
-      <variable label="F7 controls output Rev Up" CV="41" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F7 controls output Rev Up" CV="41" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Rev Up</label>
       </variable>
-      <variable label="F7 controls output Rev Down" CV="41" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F7 controls output Rev Down" CV="41" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Rev Down</label>
       </variable>
-      <variable label="F7 controls output 3" CV="41" mask="XVXXXXXX" minOut="3" default="1">
+      <variable item="F7 controls output 3" CV="41" mask="XVXXXXXX" minOut="3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 3</label>
       </variable>
-      <variable label="F7 controls output Volume" CV="41" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F7 controls output Volume" CV="41" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Volume</label>
       </variable>
-      <variable label="F8 controls output Horn2" CV="42" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F8 controls output Horn2" CV="42" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Horn2</label>
       </variable>
-      <variable label="F8 controls output Bell" CV="42" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F8 controls output Bell" CV="42" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Bell</label>
       </variable>
-      <variable label="F8 controls output Coupler" CV="42" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F8 controls output Coupler" CV="42" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Coupler</label>
       </variable>
-      <variable label="F8 controls output Blower/Comp" CV="42" mask="XXXXVXXX" minOut="1" default="0">
+      <variable item="F8 controls output Blower/Comp" CV="42" mask="XXXXVXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Blower/Comp</label>
       </variable>
-      <variable label="F8 controls output Rev Up" CV="42" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F8 controls output Rev Up" CV="42" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Rev Up</label>
       </variable>
-      <variable label="F8 controls output Rev Down" CV="42" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F8 controls output Rev Down" CV="42" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Rev Down</label>
       </variable>
-      <variable label="F8 controls output 3" CV="42" mask="XVXXXXXX" minOut="3" default="0">
+      <variable item="F8 controls output 3" CV="42" mask="XVXXXXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 3</label>
       </variable>
-      <variable label="F8 controls output Volume" CV="42" mask="VXXXXXXX" minOut="1" default="1">
+      <variable item="F8 controls output Volume" CV="42" mask="VXXXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Volume</label>
       </variable>
-      <variable label="F9 controls output Blower/Comp" CV="43" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F9 controls output Blower/Comp" CV="43" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Blower/Comp</label>
       </variable>
-      <variable label="F9 controls output Rev Up" CV="43" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F9 controls output Rev Up" CV="43" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Rev Up</label>
       </variable>
-      <variable label="F9 controls output Rev Down" CV="43" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F9 controls output Rev Down" CV="43" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Rev Down</label>
       </variable>
-      <variable label="F9 controls output 3" CV="43" mask="XXXXVXXX" minOut="3" default="0">
+      <variable item="F9 controls output 3" CV="43" mask="XXXXVXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 3</label>
       </variable>
-      <variable label="F9 controls output Start/Shut" CV="43" mask="XXXVXXXX" minOut="1" default="1">
+      <variable item="F9 controls output Start/Shut" CV="43" mask="XXXVXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Start/Shut</label>
       </variable>
-      <variable label="F9 controls output Rad Fan" CV="43" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F9 controls output Rad Fan" CV="43" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Rad Fan</label>
       </variable>
-      <variable label="F9 controls output Air" CV="43" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F9 controls output Air" CV="43" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Air</label>
       </variable>
-      <variable label="F9 controls output Brakes" CV="43" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F9 controls output Brakes" CV="43" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Brakes</label>
       </variable>
-      <variable label="F10 controls output Blower/Comp" CV="44" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F10 controls output Blower/Comp" CV="44" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Blower/Comp</label>
       </variable>
-      <variable label="F10 controls output Rev Up" CV="44" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F10 controls output Rev Up" CV="44" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Rev Up</label>
       </variable>
-      <variable label="F10 controls output Rev Down" CV="44" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F10 controls output Rev Down" CV="44" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Rev Down</label>
       </variable>
-      <variable label="F10 controls output 3" CV="44" mask="XXXXVXXX" minOut="3" default="0">
+      <variable item="F10 controls output 3" CV="44" mask="XXXXVXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 3</label>
       </variable>
-      <variable label="F10 controls output Start/Shut" CV="44" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F10 controls output Start/Shut" CV="44" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Start/Shut</label>
       </variable>
-      <variable label="F10 controls output Rad Fan" CV="44" mask="XXVXXXXX" minOut="1" default="1">
+      <variable item="F10 controls output Rad Fan" CV="44" mask="XXVXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Rad Fan</label>
       </variable>
-      <variable label="F10 controls output Air" CV="44" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F10 controls output Air" CV="44" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Air</label>
       </variable>
-      <variable label="F10 controls output Brakes" CV="44" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F10 controls output Brakes" CV="44" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Brakes</label>
       </variable>
-      <variable label="F11 controls output Blower/Comp" CV="45" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F11 controls output Blower/Comp" CV="45" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Blower/Comp</label>
       </variable>
-      <variable label="F11 controls output Rev Up" CV="45" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F11 controls output Rev Up" CV="45" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Rev Up</label>
       </variable>
-      <variable label="F11 controls output Rev Down" CV="45" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F11 controls output Rev Down" CV="45" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Rev Down</label>
       </variable>
-      <variable label="F11 controls output 3" CV="45" mask="XXXXVXXX" minOut="3" default="0">
+      <variable item="F11 controls output 3" CV="45" mask="XXXXVXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 3</label>
       </variable>
-      <variable label="F11 controls output Start/Shut" CV="45" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F11 controls output Start/Shut" CV="45" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Start/Shut</label>
       </variable>
-      <variable label="F11 controls output Rad Fan" CV="45" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F11 controls output Rad Fan" CV="45" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Rad Fan</label>
       </variable>
-      <variable label="F11 controls output Air" CV="45" mask="XVXXXXXX" minOut="1" default="1">
+      <variable item="F11 controls output Air" CV="45" mask="XVXXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Air</label>
       </variable>
-      <variable label="F11 controls output Brakes" CV="45" mask="VXXXXXXX" minOut="1" default="0">
+      <variable item="F11 controls output Brakes" CV="45" mask="VXXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Brakes</label>
       </variable>
-      <variable label="F12 controls output Blower/Comp" CV="46" mask="XXXXXXXV" minOut="1" default="0">
+      <variable item="F12 controls output Blower/Comp" CV="46" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Blower/Comp</label>
       </variable>
-      <variable label="F12 controls output Rev Up" CV="46" mask="XXXXXXVX" minOut="1" default="0">
+      <variable item="F12 controls output Rev Up" CV="46" mask="XXXXXXVX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Rev Up</label>
       </variable>
-      <variable label="F12 controls output Rev Down" CV="46" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="F12 controls output Rev Down" CV="46" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Rev Down</label>
       </variable>
-      <variable label="F12 controls output 3" CV="46" mask="XXXXVXXX" minOut="3" default="0">
+      <variable item="F12 controls output 3" CV="46" mask="XXXXVXXX" minOut="3" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 3</label>
       </variable>
-      <variable label="F12 controls output Start/Shut" CV="46" mask="XXXVXXXX" minOut="1" default="0">
+      <variable item="F12 controls output Start/Shut" CV="46" mask="XXXVXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Start/Shut</label>
       </variable>
-      <variable label="F12 controls output Rad Fan" CV="46" mask="XXVXXXXX" minOut="1" default="0">
+      <variable item="F12 controls output Rad Fan" CV="46" mask="XXVXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Rad Fan</label>
       </variable>
-      <variable label="F12 controls output Air" CV="46" mask="XVXXXXXX" minOut="1" default="0">
+      <variable item="F12 controls output Air" CV="46" mask="XVXXXXXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Air</label>
       </variable>
-      <variable label="F12 controls output Brakes" CV="46" mask="VXXXXXXX" minOut="1" default="1">
+      <variable item="F12 controls output Brakes" CV="46" mask="VXXXXXXX" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Brakes</label>
       </variable>
-      <variable label="Master Volume Sound Increment" CV="130" item="Sound Setting 1" default="2">
+      <variable CV="130" item="Sound Setting 1" default="2">
         <decVal max="16"/>
         <label>Master Volume Sound Increment</label>
       </variable>
-      <variable label="Analog Startup Voltage" CV="131" mask="VVVVVVVV" default="56">
+      <variable item="Analog Startup Voltage" CV="131" mask="VVVVVVVV" default="56">
         <decVal max="255"/>
         <label>Analog Startup Voltage</label>
       </variable>
-      <variable label="Analog Shutdown Voltage" CV="132" mask="VVVVVVVV" default="54">
+      <variable item="Analog Shutdown Voltage" CV="132" mask="VVVVVVVV" default="54">
         <decVal max="255"/>
         <label>Analog Shutdown Voltage</label>
       </variable>
-      <variable label="Master Volume" CV="133" mask="VVVVVVVV" default="15" item="Sound Setting 2">
+      <variable CV="133" mask="VVVVVVVV" default="15" item="Sound Setting 2">
         <decVal max="15"/>
         <label>Master Volume</label>
       </variable>
-      <variable label="Horn Volume" CV="135" mask="VVVVVVVV" default="100" item="Sound Setting 3">
+      <variable CV="135" mask="VVVVVVVV" default="100" item="Sound Setting 3">
         <decVal max="120"/>
         <label>Horn Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="136" mask="VVVVVVVV" default="100" item="Sound Setting 4">
+      <variable CV="136" mask="VVVVVVVV" default="100" item="Sound Setting 4">
         <decVal max="120"/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Diesel Volume" CV="137" mask="VVVVVVVV" default="100" item="Sound Setting 5">
+      <variable CV="137" mask="VVVVVVVV" default="100" item="Sound Setting 5">
         <decVal max="120"/>
         <label>Diesel Volume</label>
       </variable>
-      <variable label="Horn2 Volume" CV="138" mask="VVVVVVVV" default="100" item="Sound Setting 6">
+      <variable CV="138" mask="VVVVVVVV" default="100" item="Sound Setting 6">
         <decVal max="120"/>
         <label>Horn2 Volume</label>
       </variable>
-      <variable label="Coupler Volume" CV="140" mask="VVVVVVVV" default="100" item="Sound Setting 7">
+      <variable CV="140" mask="VVVVVVVV" default="100" item="Sound Setting 7">
         <decVal max="120"/>
         <label>Coupler Volume</label>
       </variable>
-      <variable label="Uncouple Volume" CV="141" mask="VVVVVVVV" default="100" item="Sound Setting 8">
+      <variable CV="141" mask="VVVVVVVV" default="100" item="Sound Setting 8">
         <decVal max="120"/>
         <label>Uncouple Volume</label>
       </variable>
-      <variable label="Flange Volume" CV="142" mask="VVVVVVVV" default="100" item="Sound Setting 9">
+      <variable CV="142" mask="VVVVVVVV" default="100" item="Sound Setting 9">
         <decVal max="120"/>
         <label>Flange Volume</label>
       </variable>
-      <variable label="Compressor Volume" CV="143" mask="VVVVVVVV" default="100" item="Sound Setting 10">
+      <variable CV="143" mask="VVVVVVVV" default="100" item="Sound Setting 10">
         <decVal max="120"/>
         <label>Compressor Volume</label>
       </variable>
-      <variable label="Air Release Volume" CV="144" mask="VVVVVVVV" default="100" item="Sound Setting 11">
+      <variable CV="144" mask="VVVVVVVV" default="100" item="Sound Setting 11">
         <decVal max="120"/>
         <label>Air Release Volume</label>
       </variable>
-      <variable label="Air Filling Volume" CV="145" mask="VVVVVVVV" default="100" item="Sound Setting 12">
+      <variable CV="145" mask="VVVVVVVV" default="100" item="Sound Setting 12">
         <decVal max="120"/>
         <label>Air Filling Volume</label>
       </variable>
-      <variable label="Brake Set Volume" CV="146" mask="VVVVVVVV" default="100" item="Sound Setting 13">
+      <variable CV="146" mask="VVVVVVVV" default="100" item="Sound Setting 13">
         <decVal max="120"/>
         <label>Brake Set Volume</label>
       </variable>
-      <variable label="Brake Release Volume" CV="147" mask="VVVVVVVV" default="100" item="Sound Setting 14">
+      <variable CV="147" mask="VVVVVVVV" default="100" item="Sound Setting 14">
         <decVal max="120"/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable label="Spit Valve Volume" CV="148" mask="VVVVVVVV" default="100" item="Sound Setting 15">
+      <variable CV="148" mask="VVVVVVVV" default="100" item="Sound Setting 15">
         <decVal max="120"/>
         <label>Spit Valve Volume</label>
       </variable>
-      <variable label="Radiator Cooling Volume" CV="149" mask="VVVVVVVV" default="100" item="Sound Setting 16">
+      <variable CV="149" mask="VVVVVVVV" default="100" item="Sound Setting 16">
         <decVal max="120"/>
         <label>Radiator Cooling Volume</label>
       </variable>
-      <variable label="Grid Blower Volume" CV="150" mask="VVVVVVVV" default="100" item="Sound Setting 17">
+      <variable CV="150" mask="VVVVVVVV" default="100" item="Sound Setting 17">
         <decVal max="120"/>
         <label>Grid Blower Volume</label>
       </variable>
-      <variable label="Brake Squeal Volume" CV="151" mask="VVVVVVVV" default="100" item="Sound Setting 18">
+      <variable CV="151" mask="VVVVVVVV" default="100" item="Sound Setting 18">
         <decVal max="120"/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable label="Fuel Fill Volume" CV="152" mask="VVVVVVVV" default="100" item="Sound Setting 19">
+      <variable CV="152" mask="VVVVVVVV" default="100" item="Sound Setting 19">
         <decVal max="120"/>
         <label>Fuel Fill Volume</label>
       </variable>
-      <variable label="DCC Rule 17 Lighting" CV="159" mask="XXXXXXXV" default="0">
+      <variable item="DCC Rule 17 Lighting" CV="159" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>DCC Rule 17 Lighting</label>
       </variable>
-      <variable label="DC Rule 17 Lighting" CV="159" mask="XXXVXXXX" default="0">
+      <variable item="DC Rule 17 Lighting" CV="159" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>DC Rule 17 Lighting</label>
       </variable>
-      <variable label="L1 Light Definition" CV="160" mask="VVVVVVVV" default="1" item="Directional Headlights">
+      <variable CV="160" mask="VVVVVVVV" default="1" item="Directional Headlights">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -678,59 +678,59 @@
         </enumVal>
         <label>L1 Light Definition</label>
       </variable>
-      <variable label="L1 parameter 1" CV="161" mask="VVVVVVVV" default="10" item="Global lighting option 1" tooltip="-/On Time/On Time One/Start Point Power On">
+      <variable CV="161" mask="VVVVVVVV" default="10" item="Global lighting option 1" tooltip="-/On Time/On Time One/Start Point Power On">
         <decVal/>
         <label>L1 parameter 1</label>
       </variable>
-      <variable label="L1 parameter 2" CV="162" mask="VVVVVVVV" default="10" item="Global lighting option 2" tooltip="-/Off Time/Off Time One/Ramp Up Time">
+      <variable CV="162" mask="VVVVVVVV" default="10" item="Global lighting option 2" tooltip="-/Off Time/Off Time One/Ramp Up Time">
         <decVal/>
         <label>L1 parameter 2</label>
       </variable>
-      <variable label="L1 parameter 3" CV="163" mask="VVVVVVVV" default="180" item="Global lighting option 3" tooltip="-/-/On Time Two/End Point Power On">
+      <variable CV="163" mask="VVVVVVVV" default="180" item="Global lighting option 3" tooltip="-/-/On Time Two/End Point Power On">
         <decVal/>
         <label>L1 parameter 3</label>
       </variable>
-      <variable label="L1 parameter 4" CV="164" mask="VVVVVVVV" default="20" item="Global lighting option 4" tooltip="-/-/Off Time Two/Ramp Down Time">
+      <variable CV="164" mask="VVVVVVVV" default="20" item="Global lighting option 4" tooltip="-/-/Off Time Two/Ramp Down Time">
         <decVal/>
         <label>L1 parameter 4</label>
       </variable>
-      <variable label="Bell Ring Interval" CV="180" mask="VVVVVVVV" default="100" item="Sound Group 3 Option 2">
+      <variable CV="180" mask="VVVVVVVV" default="100" item="Sound Group 3 Option 2">
         <decVal max="120"/>
         <label>Bell Ring Interval</label>
       </variable>
-      <variable label="Horn Fade In" CV="181" mask="VVVVVVVV" default="1" item="Sound Group 3 Option 3">
+      <variable CV="181" mask="VVVVVVVV" default="1" item="Sound Group 3 Option 3">
         <decVal max="120"/>
         <label>Horn Fade In</label>
       </variable>
-      <variable label="Horn Fade Out" CV="182" mask="VVVVVVVV" default="26" item="Sound Group 3 Option 4">
+      <variable CV="182" mask="VVVVVVVV" default="26" item="Sound Group 3 Option 4">
         <decVal max="120"/>
         <label>Horn Fade Out</label>
       </variable>
-      <variable label="Horn Fade In Level" CV="183" mask="VVVVVVVV" default="1" item="Sound Group 3 Option 5">
+      <variable CV="183" mask="VVVVVVVV" default="1" item="Sound Group 3 Option 5">
         <decVal max="120"/>
         <label>Horn Fade In Level</label>
       </variable>
-      <variable label="Analog Brake Control" CV="184" mask="VVVVVVVV" default="64">
+      <variable item="Analog Brake Control" CV="184" mask="VVVVVVVV" default="64">
         <decVal max="255"/>
         <label>Analog Brake Control</label>
       </variable>
-      <variable label="DCC Brake Control" CV="185" mask="VVVVVVVV" default="20">
+      <variable item="DCC Brake Control" CV="185" mask="VVVVVVVV" default="20">
         <decVal max="255"/>
         <label>DCC Brake Control</label>
       </variable>
-      <variable label="DCC Brake Timer" CV="186" mask="VVVVVVVV" default="1">
+      <variable item="DCC Brake Timer" CV="186" mask="VVVVVVVV" default="1">
         <decVal max="255"/>
         <label>DCC Brake Timer</label>
       </variable>
-      <variable label="DCC Uncouple Throttle Stop" CV="187" mask="VVVVVVVV" default="3">
+      <variable item="DCC Uncouple Throttle Stop" CV="187" mask="VVVVVVVV" default="3">
         <decVal max="255"/>
         <label>DCC Uncouple Throttle Stop</label>
       </variable>
-      <variable label="Pitch Shift" CV="188" mask="VVVVVVVV" default="128" item="Sound Group 3 Option 6">
+      <variable CV="188" mask="VVVVVVVV" default="128" item="Sound Group 3 Option 6">
         <decVal max="255"/>
         <label>Pitch Shift</label>
       </variable>
-      <variable label="Analog Sound Setup" CV="190" mask="VVVVVVVV" default="0" tooltip="Stores analog saved voltage to:">
+      <variable item="Analog Sound Setup" CV="190" mask="VVVVVVVV" default="0" tooltip="Stores analog saved voltage to:">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -762,67 +762,67 @@
         </enumVal>
         <label>Analog Sound Setup</label>
       </variable>
-      <variable label="Analog Brake Set Voltage" CV="191" mask="VVVVVVVV" default="70">
+      <variable item="Analog Brake Set Voltage" CV="191" mask="VVVVVVVV" default="70">
         <decVal max="255"/>
         <label>Analog Brake Set Voltage</label>
       </variable>
-      <variable label="Analog Brake Release Voltage" CV="192" mask="VVVVVVVV" default="77">
+      <variable item="Analog Brake Release Voltage" CV="192" mask="VVVVVVVV" default="77">
         <decVal max="255"/>
         <label>Analog Brake Release Voltage</label>
       </variable>
-      <variable label="Analog Rev Level 1 Voltage" CV="193" mask="VVVVVVVV" default="79">
+      <variable item="Analog Rev Level 1 Voltage" CV="193" mask="VVVVVVVV" default="79">
         <decVal max="255"/>
         <label>Analog Rev Level 1 Voltage</label>
       </variable>
-      <variable label="Analog Rev Level 2 Voltage" CV="194" mask="VVVVVVVV" default="88">
+      <variable item="Analog Rev Level 2 Voltage" CV="194" mask="VVVVVVVV" default="88">
         <decVal max="255"/>
         <label>Analog Rev Level 2 Voltage</label>
       </variable>
-      <variable label="Analog Rev Level 3 Voltage" CV="195" mask="VVVVVVVV" default="112">
+      <variable item="Analog Rev Level 3 Voltage" CV="195" mask="VVVVVVVV" default="112">
         <decVal max="255"/>
         <label>Analog Rev Level 3 Voltage</label>
       </variable>
-      <variable label="Analog Rev Level Hysteresis" CV="200" mask="VVVVVVVV" default="2">
+      <variable item="Analog Rev Level Hysteresis" CV="200" mask="VVVVVVVV" default="2">
         <decVal max="255"/>
         <label>Analog Rev Level Hysteresis</label>
       </variable>
-      <variable label="DCC Rev Level 1 Throttle Stop" CV="201" mask="VVVVVVVV" default="4">
+      <variable item="DCC Rev Level 1 Throttle Stop" CV="201" mask="VVVVVVVV" default="4">
         <decVal max="255"/>
         <label>DCC Rev Level 1 Throttle Stop</label>
       </variable>
-      <variable label="DCC Rev Level 2 Throttle Stop" CV="202" mask="VVVVVVVV" default="12">
+      <variable item="DCC Rev Level 2 Throttle Stop" CV="202" mask="VVVVVVVV" default="12">
         <decVal max="255"/>
         <label>DCC Rev Level 2 Throttle Stop</label>
       </variable>
-      <variable label="DCC Rev Level 3 Throttle Stop" CV="203" mask="VVVVVVVV" default="20">
+      <variable item="DCC Rev Level 3 Throttle Stop" CV="203" mask="VVVVVVVV" default="20">
         <decVal max="255"/>
         <label>DCC Rev Level 3 Throttle Stop</label>
       </variable>
-      <variable label="DCC Cab Light Throttle Stop" CV="208" mask="VVVVVVVV" default="3">
+      <variable item="DCC Cab Light Throttle Stop" CV="208" mask="VVVVVVVV" default="3">
         <decVal max="255"/>
         <label>DCC Cab Light Throttle Stop</label>
       </variable>
-      <variable label="DCC Brake Set Throttle Stop" CV="209" mask="VVVVVVVV" default="0">
+      <variable item="DCC Brake Set Throttle Stop" CV="209" mask="VVVVVVVV" default="0">
         <decVal max="128"/>
         <label>DCC Brake Set Throttle Stop</label>
       </variable>
-      <variable label="DCC Brake Release Throttle Stop" CV="210" mask="VVVVVVVV" default="2">
+      <variable item="DCC Brake Release Throttle Stop" CV="210" mask="VVVVVVVV" default="2">
         <decVal max="128"/>
         <label>DCC Brake Release Throttle Stop</label>
       </variable>
-      <variable label="DC Front/Rear Lights" CV="220" mask="XXXXXXXV" default="1">
+      <variable item="DC Front/Rear Lights" CV="220" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Front/Rear Lights</label>
       </variable>
-      <variable label="DC L1 Light" CV="220" mask="XXXXXXVX" default="1">
+      <variable item="DC L1 Light" CV="220" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC L1 Light</label>
       </variable>
-      <variable label="DC L1 Activate on Bell or Horn" CV="220" mask="XXXVXXXX" default="0">
+      <variable item="DC L1 Activate on Bell or Horn" CV="220" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC L1 Activate on Bell or Horn</label>
       </variable>
-      <variable label="Activates L1 on DC" CV="221" mask="XXXXXXXV" default="0">
+      <variable item="Activates L1 on DC" CV="221" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Horn">
             <choice>Horn</choice>
@@ -833,7 +833,7 @@
         </enumVal>
         <label>Activates L1 on DC</label>
       </variable>
-      <variable label="Analog Aux Select" CV="222" mask="VVVVVVVV" default="0">
+      <variable item="Analog Aux Select" CV="222" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Comp/Blower">
             <choice>Comp/Blower</choice>
@@ -850,31 +850,31 @@
         </enumVal>
         <label>Analog Aux Select</label>
       </variable>
-      <variable label="DC Consist Rear Light" CV="223" mask="XXXXXXXV" default="1">
+      <variable item="DC Consist Rear Light" CV="223" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist Rear Light</label>
       </variable>
-      <variable label="DC Consist Front Light" CV="223" mask="XXXXXXVX" default="1">
+      <variable item="DC Consist Front Light" CV="223" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist Front Light</label>
       </variable>
-      <variable label="DC Consist L1 Light" CV="223" mask="XXXXXVXX" default="1">
+      <variable item="DC Consist L1 Light" CV="223" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist L1 Light</label>
       </variable>
-      <variable label="DC Consist Bell" CV="223" mask="XXVXXXXX" default="0">
+      <variable item="DC Consist Bell" CV="223" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist Bell</label>
       </variable>
-      <variable label="DC Consist Horn" CV="223" mask="XVXXXXXX" default="0">
+      <variable item="DC Consist Horn" CV="223" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist Horn</label>
       </variable>
-      <variable label="DC Consist Aux" CV="223" mask="VXXXXXXX" default="1">
+      <variable item="DC Consist Aux" CV="223" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DC Consist Aux</label>
       </variable>
-      <variable label="DC Easy Consist" CV="224" mask="VVVVVVVV" default="0">
+      <variable item="DC Easy Consist" CV="224" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Single">
             <choice>Single</choice>
@@ -891,19 +891,19 @@
         </enumVal>
         <label>DC Easy Consist</label>
       </variable>
-      <variable label="DCC Front/Rear Lights" CV="225" mask="XXXXXXXV" default="1">
+      <variable item="DCC Front/Rear Lights" CV="225" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Front/Rear Lights</label>
       </variable>
-      <variable label="DCC L1 Light" CV="225" mask="XXXXXXVX" default="1">
+      <variable item="DCC L1 Light" CV="225" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC L1 Light</label>
       </variable>
-      <variable label="DCC L1 Activate on Bell or Horn" CV="225" mask="XXXVXXXX" default="0">
+      <variable item="DCC L1 Activate on Bell or Horn" CV="225" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC L1 Activate on Bell or Horn</label>
       </variable>
-      <variable label="Activates L1 on DCC" CV="226" mask="XXXXXXXV" default="0">
+      <variable item="Activates L1 on DCC" CV="226" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Horn">
             <choice>Horn</choice>
@@ -914,35 +914,35 @@
         </enumVal>
         <label>Activates L1 on DCC</label>
       </variable>
-      <variable label="Brake Set/Release" CV="227" mask="XXXXXXXV" default="1">
+      <variable item="Brake Set/Release" CV="227" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Brake Set/Release</label>
       </variable>
-      <variable label="Brake Squeal" CV="227" mask="XXXXXXVX" default="1">
+      <variable item="Brake Squeal" CV="227" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Brake Squeal</label>
       </variable>
-      <variable label="DCC Startup Timer" CV="228" mask="VVVVVVVV" default="2">
+      <variable item="DCC Startup Timer" CV="228" mask="VVVVVVVV" default="2">
         <decVal max="255"/>
         <label>DCC Startup Timer</label>
       </variable>
-      <variable label="DCC Consist Rear Light" CV="229" mask="XXXXXXXV" default="1">
+      <variable item="DCC Consist Rear Light" CV="229" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Rear Light</label>
       </variable>
-      <variable label="DCC Consist Front Light" CV="229" mask="XXXXXXVX" default="1">
+      <variable item="DCC Consist Front Light" CV="229" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Front Light</label>
       </variable>
-      <variable label="DCC Consist L1 Light" CV="229" mask="XXXXXVXX" default="1">
+      <variable item="DCC Consist L1 Light" CV="229" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist L1 Light</label>
       </variable>
-      <variable label="DCC Consist Cab" CV="229" mask="VXXXXXXX" default="1">
+      <variable item="DCC Consist Cab" CV="229" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Cab</label>
       </variable>
-      <variable label="DCC Easy Consist" CV="230" mask="VVVVVVVV" default="0">
+      <variable item="DCC Easy Consist" CV="230" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Single">
             <choice>Single</choice>
@@ -959,31 +959,31 @@
         </enumVal>
         <label>DCC Easy Consist</label>
       </variable>
-      <variable label="Random Sound Occurrence" CV="240" mask="VVVVVVVV" default="24" item="Sound Group 3 Option 1">
+      <variable CV="240" mask="VVVVVVVV" default="24" item="Sound Group 3 Option 1">
         <decVal max="30"/>
         <label>Random Sound Occurrence</label>
       </variable>
-      <variable label="DC Motor Startup Delay" CV="248" mask="VVVVVVVV" default="8">
+      <variable item="DC Motor Startup Delay" CV="248" mask="VVVVVVVV" default="8">
         <decVal max="63"/>
         <label>DC Motor Startup Delay</label>
       </variable>
-      <variable label="DC Motor Control Momentum" CV="249" mask="VVVVVVVV" default="2">
+      <variable item="DC Motor Control Momentum" CV="249" mask="VVVVVVVV" default="2">
         <decVal max="255"/>
         <label>DC Motor Control Momentum</label>
       </variable>
-      <variable label="DC Track Voltage Momentum" CV="250" mask="VVVVVVVV" default="10">
+      <variable item="DC Track Voltage Momentum" CV="250" mask="VVVVVVVV" default="10">
         <decVal max="255"/>
         <label>DC Track Voltage Momentum</label>
       </variable>
-      <variable label="DC Motor Control Vmax" CV="251" mask="VVVVVVVV" default="144">
+      <variable item="DC Motor Control Vmax" CV="251" mask="VVVVVVVV" default="144">
         <decVal max="255"/>
         <label>DC Motor Control Vmax</label>
       </variable>
-      <variable label="DC Motor Control Vmin" CV="252" mask="VVVVVVVV" default="80">
+      <variable item="DC Motor Control Vmin" CV="252" mask="VVVVVVVV" default="80">
         <decVal max="255"/>
         <label>DC Motor Control Vmin</label>
       </variable>
-      <variable label="DC Motor Control Dmin" CV="253" mask="VVVVVVVV" default="50">
+      <variable item="DC Motor Control Dmin" CV="253" mask="VVVVVVVV" default="50">
         <decVal max="255"/>
         <label>DC Motor Control Dmin</label>
       </variable>
@@ -992,86 +992,86 @@
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="DCC Control">
+  <pane>
     <column>
       <row>
         <display item="DCC Rev Level 1 Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Rev Level 1 Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Rev Level 2 Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Rev Level 2 Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Rev Level 3 Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Rev Level 3 Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Uncouple Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Uncouple Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Cab Light Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Cab Light Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Brake Set Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Brake Set Throttle Stop" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Brake Release Throttle Stop" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Brake Release Throttle Stop" layout="above" format="hslider"/>
       </row>
@@ -1081,32 +1081,32 @@
         <display item="DCC Brake Control" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Brake Control" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Brake Timer" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Brake Timer" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DCC Startup Timer" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DCC Startup Timer" layout="above" format="hslider"/>
       </row>
@@ -1119,113 +1119,113 @@
       <display item="Activates L1 on DCC"/>
       <display item="Brake Set/Release"/>
       <display item="Brake Squeal"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="DCC Consist Rear Light"/>
       <display item="DCC Consist Front Light"/>
       <display item="DCC Consist L1 Light"/>
       <display item="DCC Consist Cab"/>
       <display item="DCC Easy Consist"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Decoder Lock ID number"/>
     </column>
     <name>DCC Control</name>
   </pane>
-  <pane name="DC Control">
+  <pane>
     <column>
       <row>
         <display item="Analog Startup Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Startup Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Shutdown Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Shutdown Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Brake Set Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Brake Set Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Brake Release Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Brake Release Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Rev Level 1 Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Rev Level 1 Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Rev Level 2 Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Rev Level 2 Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Rev Level 3 Voltage" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Rev Level 3 Voltage" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="Analog Rev Level Hysteresis" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Rev Level Hysteresis" layout="above" format="hslider"/>
       </row>
@@ -1235,80 +1235,80 @@
         <display item="Analog Brake Control" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Analog Brake Control" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Motor Startup Delay" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Motor Startup Delay" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Motor Control Momentum" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Motor Control Momentum" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Track Voltage Momentum" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Track Voltage Momentum" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Motor Control Vmax" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Motor Control Vmax" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Motor Control Vmin" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Motor Control Vmin" layout="above" format="hslider"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <display item="DC Motor Control Dmin" layout="above" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="DC Motor Control Dmin" layout="above" format="hslider"/>
       </row>
@@ -1320,8 +1320,8 @@
       <display item="DC L1 Activate on Bell or Horn"/>
       <display item="Activates L1 on DC"/>
       <display item="Analog Aux Select"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="DC Consist Rear Light"/>
       <display item="DC Consist Front Light"/>
@@ -1330,8 +1330,8 @@
       <display item="DC Consist Horn"/>
       <display item="DC Consist Aux"/>
       <display item="DC Easy Consist"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Analog Sound Setup"/>
     </column>

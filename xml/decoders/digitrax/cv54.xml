@@ -33,19 +33,19 @@
       <revremark>Initial release as separate file</revremark>
     </revision>
   </revhistory>
-      <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Switching speed enabled by F6</label>
-        <label xml:lang="it">Abilita velocità di Manovra con F6</label>
-      </variable>
-      <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Torque compensation</label>
-        <label xml:lang="it">Coppia di compensazione</label>
-      </variable>
-      <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Decoder Lock Feature</label>
-        <label xml:lang="it">Funzione di Blocco decoder</label>
-      </variable>
+  <variable item="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Switching speed enabled by F6</label>
+    <label xml:lang="it">Abilita velocità di Manovra con F6</label>
+  </variable>
+  <variable item="Torque compensation" CV="54" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Torque compensation</label>
+    <label xml:lang="it">Coppia di compensazione</label>
+  </variable>
+  <variable item="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Decoder Lock Feature</label>
+    <label xml:lang="it">Funzione di Blocco decoder</label>
+  </variable>
 </variables>

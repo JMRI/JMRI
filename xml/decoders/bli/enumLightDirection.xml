@@ -12,13 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<enumChoice choice="Non Directional">
-		<choice>Non Directional</choice>
-	</enumChoice>
-	<enumChoice choice="Active in Forward" value="2">
-		<choice>Active in Forward</choice>
-	</enumChoice>
-	<enumChoice choice="Active in Reverse">
-		<choice>Active in Reverse</choice>
-	</enumChoice>
+  <enumChoice choice="Non Directional">
+    <choice>Non Directional</choice>
+  </enumChoice>
+  <enumChoice choice="Active in Forward" value="2">
+    <choice>Active in Forward</choice>
+  </enumChoice>
+  <enumChoice choice="Active in Reverse">
+    <choice>Active in Reverse</choice>
+  </enumChoice>
 </enumVal>

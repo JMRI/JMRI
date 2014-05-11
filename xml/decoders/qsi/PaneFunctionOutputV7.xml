@@ -14,20 +14,33 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-<pane name="Function Output" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Output</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <separator/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
         <display item="CV53.1.0"/>
@@ -36,7 +49,9 @@
         <display item="CV53.1.1"/>
       </column>
       <column>
-        <label label=" F0f"/>
+        <label>
+          <text> F0f</text>
+        </label>
       </column>
     </row>
     <row>
@@ -47,7 +62,9 @@
         <display item="CV53.2.1"/>
       </column>
       <column>
-        <label label=" F0f"/>
+        <label>
+          <text> F0f</text>
+        </label>
       </column>
     </row>
     <row>
@@ -58,7 +75,9 @@
         <display item="CV53.3.1"/>
       </column>
       <column>
-        <label label=" F1"/>
+        <label>
+          <text> F1</text>
+        </label>
       </column>
     </row>
     <row>
@@ -69,7 +88,9 @@
         <display item="CV53.4.1"/>
       </column>
       <column>
-        <label label=" F2"/>
+        <label>
+          <text> F2</text>
+        </label>
       </column>
     </row>
     <row>
@@ -80,7 +101,9 @@
         <display item="CV53.5.1"/>
       </column>
       <column>
-        <label label=" F3"/>
+        <label>
+          <text> F3</text>
+        </label>
       </column>
     </row>
     <row>
@@ -91,7 +114,9 @@
         <display item="CV53.6.1"/>
       </column>
       <column>
-        <label label=" F4"/>
+        <label>
+          <text> F4</text>
+        </label>
       </column>
     </row>
     <row>
@@ -102,7 +127,9 @@
         <display item="CV53.7.1"/>
       </column>
       <column>
-        <label label=" F5"/>
+        <label>
+          <text> F5</text>
+        </label>
       </column>
     </row>
     <row>
@@ -113,7 +140,9 @@
         <display item="CV53.8.1"/>
       </column>
       <column>
-        <label label=" F6"/>
+        <label>
+          <text> F6</text>
+        </label>
       </column>
     </row>
     <row>
@@ -124,7 +153,9 @@
         <display item="CV53.9.1"/>
       </column>
       <column>
-        <label label=" F7"/>
+        <label>
+          <text> F7</text>
+        </label>
       </column>
     </row>
     <row>
@@ -135,7 +166,9 @@
         <display item="CV53.10.1"/>
       </column>
       <column>
-        <label label=" F8"/>
+        <label>
+          <text> F8</text>
+        </label>
       </column>
     </row>
     <row>
@@ -146,7 +179,9 @@
         <display item="CV53.11.1"/>
       </column>
       <column>
-        <label label=" F9"/>
+        <label>
+          <text> F9</text>
+        </label>
       </column>
     </row>
     <row>
@@ -157,7 +192,9 @@
         <display item="CV53.12.1"/>
       </column>
       <column>
-        <label label=" F10"/>
+        <label>
+          <text> F10</text>
+        </label>
       </column>
     </row>
     <row>
@@ -168,7 +205,9 @@
         <display item="CV53.13.1"/>
       </column>
       <column>
-        <label label=" F11"/>
+        <label>
+          <text> F11</text>
+        </label>
       </column>
     </row>
     <row>
@@ -179,7 +218,9 @@
         <display item="CV53.14.1"/>
       </column>
       <column>
-        <label label=" F12"/>
+        <label>
+          <text> F12</text>
+        </label>
       </column>
     </row>
     <row>
@@ -190,7 +231,9 @@
         <display item="CV53.15.1"/>
       </column>
       <column>
-        <label label=" F13"/>
+        <label>
+          <text> F13</text>
+        </label>
       </column>
     </row>
     <row>
@@ -201,7 +244,9 @@
         <display item="CV53.16.1"/>
       </column>
       <column>
-        <label label=" F14"/>
+        <label>
+          <text> F14</text>
+        </label>
       </column>
     </row>
     <row>
@@ -212,7 +257,9 @@
         <display item="CV53.17.1"/>
       </column>
       <column>
-        <label label=" F15"/>
+        <label>
+          <text> F15</text>
+        </label>
       </column>
     </row>
     <row>
@@ -223,7 +270,9 @@
         <display item="CV53.18.1"/>
       </column>
       <column>
-        <label label=" F16"/>
+        <label>
+          <text> F16</text>
+        </label>
       </column>
     </row>
     <row>
@@ -234,7 +283,9 @@
         <display item="CV53.19.1"/>
       </column>
       <column>
-        <label label=" F17"/>
+        <label>
+          <text> F17</text>
+        </label>
       </column>
     </row>
     <row>
@@ -245,7 +296,9 @@
         <display item="CV53.20.1"/>
       </column>
       <column>
-        <label label=" F18"/>
+        <label>
+          <text> F18</text>
+        </label>
       </column>
     </row>
     <row>
@@ -256,7 +309,9 @@
         <display item="CV53.21.1"/>
       </column>
       <column>
-        <label label=" F19"/>
+        <label>
+          <text> F19</text>
+        </label>
       </column>
     </row>
     <row>
@@ -267,7 +322,9 @@
         <display item="CV53.22.1"/>
       </column>
       <column>
-        <label label=" F20"/>
+        <label>
+          <text> F20</text>
+        </label>
       </column>
     </row>
     <row>
@@ -278,7 +335,9 @@
         <display item="CV53.23.1"/>
       </column>
       <column>
-        <label label=" F21"/>
+        <label>
+          <text> F21</text>
+        </label>
       </column>
     </row>
     <row>
@@ -289,7 +348,9 @@
         <display item="CV53.24.1"/>
       </column>
       <column>
-        <label label=" F22"/>
+        <label>
+          <text> F22</text>
+        </label>
       </column>
     </row>
     <row>
@@ -300,7 +361,9 @@
         <display item="CV53.25.1"/>
       </column>
       <column>
-        <label label=" F23"/>
+        <label>
+          <text> F23</text>
+        </label>
       </column>
     </row>
     <row>
@@ -311,7 +374,9 @@
         <display item="CV53.26.1"/>
       </column>
       <column>
-        <label label=" F24"/>
+        <label>
+          <text> F24</text>
+        </label>
       </column>
     </row>
     <row>
@@ -322,7 +387,9 @@
         <display item="CV53.27.1"/>
       </column>
       <column>
-        <label label=" F25"/>
+        <label>
+          <text> F25</text>
+        </label>
       </column>
     </row>
     <row>
@@ -333,7 +400,9 @@
         <display item="CV53.28.1"/>
       </column>
       <column>
-        <label label=" F26"/>
+        <label>
+          <text> F26</text>
+        </label>
       </column>
     </row>
     <row>
@@ -344,7 +413,9 @@
         <display item="CV53.29.1"/>
       </column>
       <column>
-        <label label=" F27"/>
+        <label>
+          <text> F27</text>
+        </label>
       </column>
     </row>
     <row>
@@ -355,7 +426,9 @@
         <display item="CV53.30.1"/>
       </column>
       <column>
-        <label label=" F28"/>
+        <label>
+          <text> F28</text>
+        </label>
       </column>
     </row>
   </column>

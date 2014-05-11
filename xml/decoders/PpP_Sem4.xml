@@ -9,33 +9,41 @@
     </family>
     <programming direct="yes" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Red light bright" CV="3" mask="XXXXVVVV" default="15" comment="Red light bright" item="pCV3">
+      <variable CV="3" mask="XXXXVVVV" default="15" comment="Red light bright" item="pCV3">
         <decVal min="1" max="15"/>
+        <label>Red light bright</label>
       </variable>
-      <variable label="Green light bright" CV="4" mask="XXXXVVVV" default="15" comment="Green light bright" item="pCV4">
+      <variable CV="4" mask="XXXXVVVV" default="15" comment="Green light bright" item="pCV4">
         <decVal min="1" max="15"/>
+        <label>Green light bright</label>
       </variable>
-      <variable label="Yellow light bright" CV="5" mask="XXXXVVVV" default="15" comment="Yellow light  bright" item="pCV5">
+      <variable CV="5" mask="XXXXVVVV" default="15" comment="Yellow light  bright" item="pCV5">
         <decVal min="1" max="15"/>
+        <label>Yellow light bright</label>
       </variable>
-      <variable label="White light bright" CV="6" mask="XXXXVVVV" default="15" comment="White light bright" item="pCV6">
+      <variable CV="6" mask="XXXXVVVV" default="15" comment="White light bright" item="pCV6">
         <decVal min="1" max="15"/>
+        <label>White light bright</label>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" default="42">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="42">
         <decVal min="0" max="255"/>
+        <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer" CV="8" readOnly="yes" default="74">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="74">
         <decVal min="0" max="255"/>
+        <label>Manufacturer</label>
       </variable>
-      <variable label="On/Off time" CV="33" default="12" comment="On/Off time" item="pCV33">
+      <variable CV="33" default="12" comment="On/Off time" item="pCV33">
         <decVal min="1" max="255"/>
+        <label>On/Off time</label>
       </variable>
-      <variable label="Flash rate" CV="34" default="6" comment="Flash rate" item="pCV34">
+      <variable CV="34" default="6" comment="Flash rate" item="pCV34">
         <decVal min="1" max="255"/>
+        <label>Flash rate</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="PpP">
+  <pane>
     <column>
       <display item="pCV3"/>
       <display item="pCV4"/>

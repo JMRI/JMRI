@@ -33,8 +33,9 @@
       <revremark>Creation as a separate file for Digitrax from nmra cv29direction.xml</revremark>
     </revision>
   </revhistory>
-  <variable label="Normal Direction of Travel" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+  <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
+    <label>Normal Direction of Travel</label>
     <label xml:lang="it">Normale direzione di movimento</label>
     <label xml:lang="fr">Sens normal de marche</label>
     <label xml:lang="de">Fahrtrichtung Standard</label>

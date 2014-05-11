@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
 <!-- $Id: MRC_soundbrilliance1637.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -29,35 +29,35 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Voltage" CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
+      <variable CV="2" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" item="Vstart" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" tooltip="sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
+      <variable CV="3" tooltip="sets the acceleration rate (delay) [range 0-32]" item="Accel" default="0">
         <decVal max="32"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" tooltip="sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
+      <variable CV="4" tooltip="sets the deceleration rate (delay) [range 0-32]" item="Decel" default="0">
         <decVal max="32"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Top Voltage" CV="5" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
+      <variable CV="5" tooltip="sets the motor voltage at the top Speed Step [range 0-32]" item="Vhigh" default="32">
         <decVal max="32"/>
         <label>Top Voltage</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" tooltip="is the Decoder ID,  Read Only" item="Decoder Version">
+      <variable CV="7" readOnly="yes" tooltip="is the Decoder ID,  Read Only" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC-143, Read Only" item="Manufacturer" default="143">
+      <variable CV="8" readOnly="yes" tooltip="is the Manufacturer ID, MRC-143, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Advanced Consist Address" CV="19" tooltip="sets the Advanced Consist address, [range 0-127]" mask="XVVVVVVV" item="Consist Address" default="0">
+      <variable CV="19" tooltip="sets the Advanced Consist address, [range 0-127]" mask="XVVVVVVV" item="Consist Address" default="0">
         <decVal max="127"/>
         <label>Advanced Consist Address</label>
       </variable>
-      <variable label="Locomotive Direction In Consist" CV="19" mask="VXXXXXXX" item="Consist Direction">
+      <variable CV="19" mask="VXXXXXXX" item="Consist Direction">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -68,7 +68,7 @@
         </enumVal>
         <label>Locomotive Direction In Consist</label>
       </variable>
-      <variable label="Consist Function" CV="21" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV" item="Functions Respond To" default="0">
+      <variable CV="21" tooltip="selects the address accessory functions will respond to" mask="XXXXXXXV" item="Functions Respond To" default="0">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -79,7 +79,7 @@
         </enumVal>
         <label>Consist Function</label>
       </variable>
-      <variable label="Normal Direction of Motion" CV="29" tooltip="[ '1' bit (LSB)] sets the direction of motion" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" tooltip="[ '1' bit (LSB)] sets the direction of motion" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -90,7 +90,7 @@
         </enumVal>
         <label>Normal Direction of Motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" tooltip="['2' bit] sets the Speed Step resolution" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" tooltip="['2' bit] sets the Speed Step resolution" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -101,7 +101,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog Conversion Mode" CV="29" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
+      <variable CV="29" tooltip="['4' bit] determines if loco motor will respond to DCC only (OFF) or DC and DCC (ON)" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -112,7 +112,7 @@
         </enumVal>
         <label>Analog Conversion Mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" tooltip="['8' bit] determines if loco will use Speed Table or not" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" tooltip="['8' bit] determines if loco will use Speed Table or not" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
             <choice>Don't use Speed Table</choice>
@@ -123,7 +123,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="Sound On/Off" CV="49" tooltip="can turn off all sound" mask="XXXXXXXV" item="Sound Option 1" default="1">
+      <variable CV="49" tooltip="can turn off all sound" mask="XXXXXXXV" item="Sound Option 1" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -134,79 +134,79 @@
         </enumVal>
         <label>Sound On/Off</label>
       </variable>
-      <variable label="Whistle Type" CV="50" tooltip="selects the Whistle Type [range 0-11]" item="Sound Option 2" default="3">
+      <variable CV="50" tooltip="selects the Whistle Type [range 0-11]" item="Sound Option 2" default="3">
         <decVal max="11"/>
         <label>Whistle Type</label>
       </variable>
-      <variable label="Whistle Volume" CV="51" tooltip="selects the Whistle Volume [range 0-3]" item="Sound Setting 1" default="3">
+      <variable CV="51" tooltip="selects the Whistle Volume [range 0-3]" item="Sound Setting 1" default="3">
         <decVal max="3"/>
         <label>Whistle Volume</label>
       </variable>
-      <variable label="Bell Type" CV="52" tooltip="selects the Bell Type [range 0-3]" item="Sound Option 3" default="3">
+      <variable CV="52" tooltip="selects the Bell Type [range 0-3]" item="Sound Option 3" default="3">
         <decVal max="3"/>
         <label>Bell Type</label>
       </variable>
-      <variable label="Bell Volume" CV="53" tooltip="selects the Bell Volume [range 0-3]" item="Sound Setting 2" default="3">
+      <variable CV="53" tooltip="selects the Bell Volume [range 0-3]" item="Sound Setting 2" default="3">
         <decVal max="3"/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="54" tooltip="selects the Bell Ring Rate [range 0-50]" item="Sound Setting 3" default="3">
+      <variable CV="54" tooltip="selects the Bell Ring Rate [range 0-50]" item="Sound Setting 3" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable label="Chuff Type" CV="55" tooltip="selects the Chuff Type (0-5=single chuff, 8-12=double chuff)[range 0-12]" item="Sound Option 4" default="0">
+      <variable CV="55" tooltip="selects the Chuff Type (0-5=single chuff, 8-12=double chuff)[range 0-12]" item="Sound Option 4" default="0">
         <decVal max="12"/>
         <label>Chuff Type</label>
       </variable>
-      <variable label="Chuff Volume" CV="56" tooltip="selects the Chuff Volume [range 0-3]" item="Sound Setting 4" default="3">
+      <variable CV="56" tooltip="selects the Chuff Volume [range 0-3]" item="Sound Setting 4" default="3">
         <decVal max="3"/>
         <label>Chuff Volume</label>
       </variable>
-      <variable label="Brake Squeal Volume" CV="57" tooltip="sets the Brake Squeal Volume [range 0-3]" item="Sound Setting 5" default="3">
+      <variable CV="57" tooltip="sets the Brake Squeal Volume [range 0-3]" item="Sound Setting 5" default="3">
         <decVal max="3"/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable label="Air Release Volume" CV="58" tooltip="sets the Air Release Volume [range 0-3]" item="Sound Setting 6" default="3">
+      <variable CV="58" tooltip="sets the Air Release Volume [range 0-3]" item="Sound Setting 6" default="3">
         <decVal max="3"/>
         <label>Air Release Volume</label>
       </variable>
-      <variable label="Blower Hiss Volume" CV="59" tooltip="sets the Blower Hiss Volume [range 0-3]" item="Sound Setting 7" default="3">
+      <variable CV="59" tooltip="sets the Blower Hiss Volume [range 0-3]" item="Sound Setting 7" default="3">
         <decVal max="3"/>
         <label>Blower Hiss Volume</label>
       </variable>
-      <variable label="Random Noise Volume" CV="60" tooltip="sets the Random Noise Volume [range 0-3]" item="Sound Setting 8" default="3">
+      <variable CV="60" tooltip="sets the Random Noise Volume [range 0-3]" item="Sound Setting 8" default="3">
         <decVal max="3"/>
         <label>Random Noise Volume</label>
       </variable>
-      <variable label="Injector Volume" CV="61" tooltip="sets the Injector Volume [range 0-3]" item="Sound Setting 11" default="3">
+      <variable CV="61" tooltip="sets the Injector Volume [range 0-3]" item="Sound Setting 11" default="3">
         <decVal max="3"/>
         <label>Injector Volume</label>
       </variable>
-      <variable label="Coupling Volume" CV="62" tooltip="sets the Coupling Volume [range 0-3]" item="Sound Setting 12" default="3">
+      <variable CV="62" tooltip="sets the Coupling Volume [range 0-3]" item="Sound Setting 12" default="3">
         <decVal max="3"/>
         <label>Coupling Volume</label>
       </variable>
-      <variable label="Air Pump Type" CV="63" tooltip="selects the Air Pump Type [range 0-3]" item="Sound Option 5" default="0">
+      <variable CV="63" tooltip="selects the Air Pump Type [range 0-3]" item="Sound Option 5" default="0">
         <decVal max="3"/>
         <label>Air Pump Type</label>
       </variable>
-      <variable label="Air Pump Volume" CV="64" tooltip="sets the Air Pump Volume [range 0-3]" item="Sound Setting 13" default="3">
+      <variable CV="64" tooltip="sets the Air Pump Volume [range 0-3]" item="Sound Setting 13" default="3">
         <decVal max="3"/>
         <label>Air Pump Volume</label>
       </variable>
-      <variable label="User ID #1" CV="105" tooltip="sets the User ID #1 [range 0-255]" item="User Id #1" default="0">
+      <variable CV="105" tooltip="sets the User ID #1 [range 0-255]" item="User Id #1" default="0">
         <decVal max="255"/>
         <label>User ID #1</label>
       </variable>
-      <variable label="User ID #2" CV="106" tooltip="sets the User ID #2 [range 0-255]" item="User Id #2" default="0">
+      <variable CV="106" tooltip="sets the User ID #2 [range 0-255]" item="User Id #2" default="0">
         <decVal max="255"/>
         <label>User ID #2</label>
       </variable>
-      <variable label="Conductor Volume" CV="112" tooltip="sets the Air Pump Volume [range 0-3]" item="Sound Setting 14" default="3">
+      <variable CV="112" tooltip="sets the Air Pump Volume [range 0-3]" item="Sound Setting 14" default="3">
         <decVal max="3"/>
         <label>Conductor Volume</label>
       </variable>
-      <variable label="Auto Brake Squeal Enable/Disable" CV="115" tooltip="turns Auto Brake Squeal On or Off" item="Sound Option 6" default="1">
+      <variable CV="115" tooltip="turns Auto Brake Squeal On or Off" item="Sound Option 6" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -217,27 +217,27 @@
         </enumVal>
         <label>Auto Brake Squeal Enable/Disable</label>
       </variable>
-      <variable label="Coupling Sound Type" CV="116" tooltip="selects the Coupling Sound Type [Range 0,2,3]" item="Sound Option 7" default="3">
+      <variable CV="116" tooltip="selects the Coupling Sound Type [Range 0,2,3]" item="Sound Option 7" default="3">
         <decVal max="3"/>
         <label>Coupling Sound Type</label>
       </variable>
-      <variable label="Shoveling Volume" CV="118" tooltip="sets the Shoveling Volume [range 0-3]" item="Sound Setting 15" default="3">
+      <variable CV="118" tooltip="sets the Shoveling Volume [range 0-3]" item="Sound Setting 15" default="3">
         <decVal max="3"/>
         <label>Shoveling Volume</label>
       </variable>
-      <variable label="Coupling Fire Volume" CV="119" tooltip="sets the Coupling Fire Volume [range 0-3]" item="Sound Setting 16" default="3">
+      <variable CV="119" tooltip="sets the Coupling Fire Volume [range 0-3]" item="Sound Setting 16" default="3">
         <decVal max="3"/>
         <label>Coupling Fire Volume</label>
       </variable>
-      <variable label="Chuff Rate" CV="120" tooltip="sets the Chuff Rate [range 0-30]" item="Sound Setting 17" default="0">
+      <variable CV="120" tooltip="sets the Chuff Rate [range 0-30]" item="Sound Setting 17" default="0">
         <decVal max="30"/>
         <label>Chuff Rate</label>
       </variable>
-      <variable label="Chuff Start Point" CV="121" tooltip="sets the Chuff Start Point [range 0-5]" item="Sound Setting 18" default="0">
+      <variable CV="121" tooltip="sets the Chuff Start Point [range 0-5]" item="Sound Setting 18" default="0">
         <decVal max="5"/>
         <label>Chuff Start Point</label>
       </variable>
-      <variable label="Select Speed Curve" item="Speed Table Selection" CV="124" default="0">
+      <variable item="Speed Table Selection" CV="124" default="0">
         <enumVal>
           <enumChoice choice="Linear">
             <choice>Linear</choice>

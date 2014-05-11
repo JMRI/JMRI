@@ -1,309 +1,444 @@
-    <pane name="DH Options" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">	
-		<column>
-			<row>
-				<column>
-					<label label=" "/>
-					<label label="Dimming options">
-						<label xml:lang="fr">Options d'intensité</label>
-						<label xml:lang="de">Dimmer Optionen</label>
-					</label>
-					<label label=" "/>
-					<row>
-						<display item="Lights dimming (normal)"/>
-						<label label=" "/>
-						<display item="Lights dimming (normal)" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="Lights dimming (alternative)"/>
-						<label label=" "/>
-						<display item="Lights dimming (alternative)" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="AUX 1 dimming"/>
-						<label label=" "/>
-						<display item="AUX 1 dimming" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="AUX 2 dimming"/>
-						<label label=" "/>
-						<display item="AUX 2 dimming" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-				</column>
-				<column>
-					<label label="   "/>
-				</column>
-				<separator/>
-				<column>
-					<label label="   "/>
-				</column>
-				<column>
-					<label label=" "/>
-					<label label="Timer options">
-						<label xml:lang="fr">Options de temporisation</label>
-						<label xml:lang="de">Timer Optionen</label>
-					</label>
-					<label label=" "/>
-					<row>
-						<display item="AUX 1 Auto-off timer"/>
-						<label label=" "/>
-						<display item="AUX 1 Auto-off timer" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="AUX 2 Auto-off timer"/>
-						<label label=" "/>
-						<display item="AUX 2 Auto-off timer" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="AUX 3 Auto-off timer"/>
-						<label label=" "/>
-						<display item="AUX 3 Auto-off timer" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-					<row>
-						<display item="AUX 4 Auto-off timer"/>
-						<label label=" "/>
-						<display item="AUX 4 Auto-off timer" label="" format="hslider"/>
-					</row>
-					<label label=" "/>
-				</column>
-			</row>
-			
-			<label label=" "/>
-			<label label=" "/>			
-			<separator/>
-			<label label=" "/>	
-			<label label=" "/>
-			<row>	
-				<column>
-					<label label="'Preclusion' options">
-						<label xml:lang="fr">Option de blocage des fonctions</label>
-						<label xml:lang="de">Ausschaltfunktionen</label>
-					</label>
-					<label label=" "/>
-					<label label="Blocks an output even if its main function is activated">
-						<label xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</label>
-						<label xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</label>
-					</label>
-					<label label="E.g. turn off front lights if the engine is pushing a train">
-						<label xml:lang="fr">Par exemple, éteindre feux avant si la loco pousse un convoi</label>
-						<label xml:lang="de">z.B.: Stirnbeleuchtung aus im Wendezugbetrieb</label>
-					</label>
-					<label label=" "/>
-				</column>
-			</row>
-			<row>
-				<column>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F1 precludes  ">
-								<label xml:lang="fr"> F1 bloque  </label>
-								<label xml:lang="de"> F1 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F1 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F1 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F1 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F1 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F2 precludes  ">
-								<label xml:lang="fr"> F2 bloque  </label>
-								<label xml:lang="de"> F2 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F2 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F2 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F2 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F2 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F3 precludes  ">
-								<label xml:lang="fr"> F3 bloque  </label>
-								<label xml:lang="de"> F3 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F3 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F3 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F3 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F3 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F4 precludes  ">
-								<label xml:lang="fr"> F4 bloque  </label>
-								<label xml:lang="de"> F4 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F4 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F4 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F4 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F4 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-				</column>
-				<column>
-					<label label="          "/>
-				</column>
-				<column>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F5 precludes  ">
-								<label xml:lang="fr"> F5 bloque  </label>
-								<label xml:lang="de"> F5 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F5 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F5 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F5 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F5 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F6 precludes  ">
-								<label xml:lang="fr"> F6 bloque  </label>
-								<label xml:lang="de"> F6 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F6 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F6 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F6 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F6 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F7 precludes  ">
-								<label xml:lang="fr"> F7 bloque  </label>
-								<label xml:lang="de"> F7 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F7 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F7 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F7 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F7 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-					<row>
-						<column>
-							<label label=" "/>
-							<label label=" F8 precludes  ">
-								<label xml:lang="fr"> F8 bloque  </label>
-								<label xml:lang="de"> F8 schaltet aus  </label>
-							</label>
-							<label label=" "/>
-						</column>
-						<column>
-							<row>
-								<display item="F8 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-								<display item="F8 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-								<display item="F8 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-								<display item="F8 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-							</row>
-							<label label=" "/>
-						</column>
-					</row>
-				</column>			
-			</row>
-			<label label=" "/>
-			<label label=" "/>			
-			<separator/>
-			<label label=" "/>	
-			<label label=" "/>
-			<row>
-				<column>
-					<display item="Function for front and rear lights on"/>
-				</column>
-				<column>
-					<label label="                       "/>
-				</column>
-				<column>
-					<display item="Function for AUX 1 and AUX 2 on"/>
-				</column>
-			</row>
-			<label label=" "/>
-			<row>
-				<column>
-					<display item="Break on asymmetrical signal (normal)" format="checkbox"/>
-					<display item="Break on asymmetrical signal (inverted)" format="checkbox"/>
-				</column>
-				<column>
-					<label label="       "/>
-				</column>
-				<column>
-					<display item="Break on negative power" format="checkbox"/>
-					<display item="Break on positive power" format="checkbox"/>
-				</column>
-				<column>
-					<label label="       "/>
-				</column>
-				<column>
-					<display item="Break with diode (normal)" format="checkbox"/>
-					<display item="Break with diode (inverted)" format="checkbox"/>
-				</column>
-			</row>
-			<row>
-				<column>
-					<display item="Reduced speed in breaking zones"/>
-					<display item="Threshold for asymmetric behavior"/>
-				</column>
-			</row>
-			<label label=" "/>
-
-		</column>
-	<name>DH Options</name>
-	</pane>
-  
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Dimming options</text>
+          <text xml:lang="fr">Options d'intensité</text>
+          <text xml:lang="de">Dimmer Optionen</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Lights dimming (normal)"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Lights dimming (normal)" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="Lights dimming (alternative)"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Lights dimming (alternative)" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 1 dimming"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 1 dimming" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 2 dimming"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 2 dimming" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Timer options</text>
+          <text xml:lang="fr">Options de temporisation</text>
+          <text xml:lang="de">Timer Optionen</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 1 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 1 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 2 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 2 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 3 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 3 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 4 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 4 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <label>
+          <text>'Preclusion' options</text>
+          <text xml:lang="fr">Option de blocage des fonctions</text>
+          <text xml:lang="de">Ausschaltfunktionen</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Blocks an output even if its main function is activated</text>
+          <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
+          <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
+        </label>
+        <label>
+          <text>E.g. turn off front lights if the engine is pushing a train</text>
+          <text xml:lang="fr">Par exemple, éteindre feux avant si la loco pousse un convoi</text>
+          <text xml:lang="de">z.B.: Stirnbeleuchtung aus im Wendezugbetrieb</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F1 precludes  </text>
+              <text xml:lang="fr"> F1 bloque  </text>
+              <text xml:lang="de"> F1 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F1 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F1 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F1 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F1 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F2 precludes  </text>
+              <text xml:lang="fr"> F2 bloque  </text>
+              <text xml:lang="de"> F2 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F2 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F2 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F2 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F2 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F3 precludes  </text>
+              <text xml:lang="fr"> F3 bloque  </text>
+              <text xml:lang="de"> F3 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F3 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F3 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F3 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F3 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F4 precludes  </text>
+              <text xml:lang="fr"> F4 bloque  </text>
+              <text xml:lang="de"> F4 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F4 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F4 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F4 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F4 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F5 precludes  </text>
+              <text xml:lang="fr"> F5 bloque  </text>
+              <text xml:lang="de"> F5 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F5 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F5 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F5 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F5 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F6 precludes  </text>
+              <text xml:lang="fr"> F6 bloque  </text>
+              <text xml:lang="de"> F6 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F6 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F6 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F6 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F6 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F7 precludes  </text>
+              <text xml:lang="fr"> F7 bloque  </text>
+              <text xml:lang="de"> F7 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F7 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F7 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F7 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F7 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <label>
+              <text> </text>
+            </label>
+            <label>
+              <text> F8 precludes  </text>
+              <text xml:lang="fr"> F8 bloque  </text>
+              <text xml:lang="de"> F8 schaltet aus  </text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="F8 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
+              <display item="F8 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
+              <display item="F8 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
+              <display item="F8 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+          </column>
+        </row>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Function for front and rear lights on"/>
+      </column>
+      <column>
+        <label>
+          <text>                       </text>
+        </label>
+      </column>
+      <column>
+        <display item="Function for AUX 1 and AUX 2 on"/>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Break on asymmetrical signal (normal)" format="checkbox"/>
+        <display item="Break on asymmetrical signal (inverted)" format="checkbox"/>
+      </column>
+      <column>
+        <label>
+          <text>       </text>
+        </label>
+      </column>
+      <column>
+        <display item="Break on negative power" format="checkbox"/>
+        <display item="Break on positive power" format="checkbox"/>
+      </column>
+      <column>
+        <label>
+          <text>       </text>
+        </label>
+      </column>
+      <column>
+        <display item="Break with diode (normal)" format="checkbox"/>
+        <display item="Break with diode (inverted)" format="checkbox"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Reduced speed in breaking zones"/>
+        <display item="Threshold for asymmetric behavior"/>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+  </column>
+  <name>DH Options</name>
+</pane>

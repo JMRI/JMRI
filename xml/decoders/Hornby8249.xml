@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- $Id: Hornby8249.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -26,27 +26,27 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Acceleration Rate  " CV="3" default="5" item="Accel">
+      <variable CV="3" default="5" item="Accel">
         <decVal max="255"/>
         <label>Acceleration Rate  </label>
       </variable>
-      <variable label="Deceleration Rate  " CV="4" default="5" item="Decel">
+      <variable CV="4" default="5" item="Decel">
         <decVal max="255"/>
         <label>Deceleration Rate  </label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="48">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="48">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="EMF Feedback Cutout" CV="10" item="EMF Feedback Cutout" default="128">
+      <variable CV="10" item="EMF Feedback Cutout" default="128">
         <decVal max="128"/>
         <label>EMF Feedback Cutout</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -57,7 +57,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -68,7 +68,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>

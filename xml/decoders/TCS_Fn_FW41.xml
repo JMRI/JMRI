@@ -11,55 +11,31 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>        
-    <decoder>
-        <family name="June 2007" mfg="Train Control Systems" comment="TCS FW Starting June 2007">
-            <model show="maybe" model="FL2" numOuts="2" numFns="14" lowVersionID="41" highVersionID="51" formFactor="HO"  productID="6">
-                <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <size length="1.000" width="0.650" height="0.160" units="inches"/>
-            </model>
-            <model show="maybe" model="FL4" numOuts="4" numFns="14" lowVersionID="41" highVersionID="51" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"  productID="7">
-                <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
-                <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
-                <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>
-                <output name="4" label="Pink" connection="solder" maxcurrent="200 mA"/>
-                <size length="0.565" width="0.355" height="0.132" units="inches"/>
-            </model>
-        </family>
-        <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-        <variables>
-            
-            <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV106_Fn_FW41.xml"/>
-            
-        </variables>
-        <resets>
-            <factReset label="Reset All CVs" CV="8" default="2"/>
-        </resets>
-    </decoder>
-    
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
-    
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
-
+  <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>
+  <decoder>
+    <family name="June 2007" mfg="Train Control Systems" comment="TCS FW Starting June 2007">
+      <model show="maybe" model="FL2" numOuts="2" numFns="14" lowVersionID="41" highVersionID="51" formFactor="HO" productID="6">
+        <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <size length="1.000" width="0.650" height="0.160" units="inches"/>
+      </model>
+      <model show="maybe" model="FL4" numOuts="4" numFns="14" lowVersionID="41" highVersionID="51" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" productID="7">
+        <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
+        <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
+        <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>
+        <output name="4" label="Pink" connection="solder" maxcurrent="200 mA"/>
+        <size length="0.565" width="0.355" height="0.132" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV106_Fn_FW41.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 </decoder-config>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

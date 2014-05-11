@@ -33,25 +33,25 @@
       <revremark>Initial release as separate file</revremark>
     </revision>
   </revhistory>
-	  <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" tooltip="0 is no keep-alive, use with LEDs">
-		<decVal max="15"/>
-		<label>Lamp keep-alive voltage</label>
-		<label xml:lang="it">Tensione mantenimento Lampade</label>
-		<comment>0 is no keep-alive, use with LEDs</comment>
-		<comment xml:lang="it">0=nessuna, usare con i LED</comment>
-	  </variable>
-	  <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" tooltip="0 is fast, 15 is slow, 4 is recommended for start">
-		<decVal max="15"/>
-		<label>FX rate adjust</label>
-		<label xml:lang="it">Aggiustamento FX</label>
-		<comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
-		<comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
-	  </variable>
-	  <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" tooltip="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
-		<decVal/>
-		<label>Ditch light hold-over time</label>
-		<label xml:lang="it">Tempo di carica Luci Ditch</label>
-		<comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
-		<comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
-	  </variable>
+  <variable CV="62" mask="VVVVXXXX" item="Global lighting option 1" tooltip="0 is no keep-alive, use with LEDs">
+    <decVal max="15"/>
+    <label>Lamp keep-alive voltage</label>
+    <label xml:lang="it">Tensione mantenimento Lampade</label>
+    <comment>0 is no keep-alive, use with LEDs</comment>
+    <comment xml:lang="it">0=nessuna, usare con i LED</comment>
+  </variable>
+  <variable CV="62" mask="XXXXVVVV" item="Global lighting option 2" tooltip="0 is fast, 15 is slow, 4 is recommended for start">
+    <decVal max="15"/>
+    <label>FX rate adjust</label>
+    <label xml:lang="it">Aggiustamento FX</label>
+    <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+    <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
+  </variable>
+  <variable CV="63" item="Global lighting option 3" tooltip="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+    <decVal/>
+    <label>Ditch light hold-over time</label>
+    <label xml:lang="it">Tempo di carica Luci Ditch</label>
+    <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
+    <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
+  </variable>
 </variables>

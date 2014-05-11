@@ -32,8 +32,8 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Added Italian, used Vhigh (NMRA) instead of Vmax</revremark>
     </revision>
-    <revision>    
-        <revnumber>2</revnumber>
+    <revision>
+      <revnumber>2</revnumber>
       <date>2013-07-31</date>
       <authorinitials>PB</authorinitials>
       <revremark>Added German, French</revremark>
@@ -52,14 +52,14 @@
         <choice xml:lang="it">Usa Vstart-Vmid-Vmax</choice>
         <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax</choice>
         <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
-        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>        
+        <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
         <choice xml:lang="it">Usa Tabella Velocità'</choice>
         <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
         <choice xml:lang="de">Geschwindigkeitskennlinie nutzen</choice>
-        <choice xml:lang="it">Usa Tabella</choice>        
+        <choice xml:lang="it">Usa Tabella</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>

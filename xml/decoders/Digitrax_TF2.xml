@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2005, 2007 All rights reserved -->
 <!-- $Id: Digitrax_TF2.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
@@ -35,17 +35,17 @@
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
-       <label xml:lang="it">ID Versione</label>
+        <label xml:lang="it">ID Versione</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
-       <label xml:lang="it">ID Costruttore</label>
+        <label xml:lang="it">ID Costruttore</label>
       </variable>
-      <variable label="Decoder Lock Type" CV="16" item="Decoder Lock Type" default="0">
+      <variable CV="16" item="Decoder Lock Type" default="0">
         <enumVal>
           <enumChoice choice="0 - Unlocked">
             <choice>0 - Unlocked</choice>
@@ -81,9 +81,9 @@
           </enumChoice>
         </enumVal>
         <label>Decoder Lock Type</label>
-       <label xml:lang="it">Tipo Blocco decoder</label>
+        <label xml:lang="it">Tipo Blocco decoder</label>
       </variable>
-      <variable label="Effect Generated for White Lead" CV="49" mask="XXXXXVVV" item="Effect Generated W">
+      <variable CV="49" mask="XXXXXVVV" item="Effect Generated W">
         <enumVal>
           <enumChoice choice="Normal on/off">
             <choice>Normal on/off</choice>
@@ -119,9 +119,9 @@
           </enumChoice>
         </enumVal>
         <label>Effect Generated for White Lead</label>
-       <label xml:lang="it">Effetti generati per luce Bianca frontale</label>
+        <label xml:lang="it">Effetti generati per luce Bianca frontale</label>
       </variable>
-      <variable label="Effect Generated for Yellow Lead" CV="50" mask="XXXXXVVV" item="Effect Generated Y" minOut="2">
+      <variable CV="50" mask="XXXXXVVV" item="Effect Generated Y" minOut="2">
         <enumVal>
           <enumChoice choice="Normal on/off">
             <choice>Normal on/off</choice>
@@ -157,28 +157,28 @@
           </enumChoice>
         </enumVal>
         <label>Effect Generated for Yellow Lead</label>
-       <label xml:lang="it">Effetti generati per luce Gialla frontale</label>
+        <label xml:lang="it">Effetti generati per luce Gialla frontale</label>
       </variable>
-      <variable label="Decoder Lock" CV="54" mask="XVXXXXXX" item="Decoder Lock" default="1">
+      <variable CV="54" mask="XVXXXXXX" item="Decoder Lock" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock</label>
-       <label xml:lang="it">Blocco decoder</label>
+        <label xml:lang="it">Blocco decoder</label>
       </variable>
-      <variable label="CV 61" CV="61" mask="XXXXXXVV" item="CV61" default="2">
+      <variable CV="61" mask="XXXXXXVV" item="CV61" default="2">
         <decVal max="3"/>
         <label>CV 61</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transponding" default="1">
+      <variable CV="61" mask="XXXXXXVX" item="Transponding" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
-       <label xml:lang="it">Tranponding Digitrax</label>
+        <label xml:lang="it">Tranponding Digitrax</label>
       </variable>
-      <variable label="Use F0 for White Function Control" CV="61" mask="XXXXXXXV" item="F0 use" inOptions="numOuts=2">
+      <variable CV="61" mask="XXXXXXXV" item="F0 use" inOptions="numOuts=2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Use F0 for White Function Control</label>
-       <label xml:lang="it">Usa F0 per controllo funzioni Bianco</label>
+        <label xml:lang="it">Usa F0 per controllo funzioni Bianco</label>
       </variable>
-      <variable label="Effect Rate White Lead" CV="62" mask="XXXXXVVV" item="Effect Rate W">
+      <variable CV="62" mask="XXXXXVVV" item="Effect Rate W">
         <enumVal>
           <enumChoice choice="0 fastest">
             <choice>0 fastest</choice>
@@ -208,9 +208,9 @@
           </enumChoice>
         </enumVal>
         <label>Effect Rate White Lead</label>
-       <label xml:lang="it">Velocità Effetti Bianco di testa</label>
+        <label xml:lang="it">VelocitÃ  Effetti Bianco di testa</label>
       </variable>
-      <variable label="Effect Rate Yellow Lead" CV="63" mask="XXXXXVVV" item="Effect Rate Y" minOut="2">
+      <variable CV="63" mask="XXXXXVVV" item="Effect Rate Y" minOut="2">
         <enumVal>
           <enumChoice choice="0 fastest">
             <choice>0 fastest</choice>
@@ -240,9 +240,9 @@
           </enumChoice>
         </enumVal>
         <label>Effect Rate Yellow Lead</label>
-       <label xml:lang="it">Velocità Effetti Giallo di testa</label>
+        <label xml:lang="it">VelocitÃ  Effetti Giallo di testa</label>
       </variable>
-      <variable label="Function Controlling White Output" CV="64" mask="XXXXXXVV" item="ControlFn" minOut="2">
+      <variable CV="64" mask="XXXXXXVV" item="ControlFn" minOut="2">
         <enumVal>
           <enumChoice choice="F0 or F1">
             <choice>F0 or F1</choice>
@@ -259,337 +259,337 @@
           </enumChoice>
         </enumVal>
         <label>Function Controlling White Output</label>
-       <label xml:lang="it">Funzioni per controllare uscita Luce Bianca</label>
+        <label xml:lang="it">Funzioni per controllare uscita Luce Bianca</label>
       </variable>
-      <variable label="CV 64" CV="64" mask="XXXXXXVV" item="CV64">
+      <variable CV="64" mask="XXXXXXVV" item="CV64">
         <decVal max="3"/>
         <label>CV 64</label>
       </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Ripristino di tutte le CV</label>
       </factReset>
       <factReset label="Reset All CVs except speed table" CV="8" default="9">
-                 <label>Reset All CVs except speed table</label>
-                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocitÃ </label>
       </factReset>
     </resets>
   </decoder>
-  <pane name="Function Output">
+  <pane>
     <column>
-      <label label="Use the matrix below to determine the values for CV 61 and 64">
-        <label>Use the matrix below to determine the values for CV 61 and 64</label>
-       <label xml:lang="it">Usa la matrice sotto per determinare valori per CV 61 e CV 64</label>
+      <label>
+        <text>Use the matrix below to determine the values for CV 61 and 64</text>
+        <text xml:lang="it">Usa la matrice sotto per determinare valori per CV 61 e CV 64</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
           <row>
-            <label label="CV64">
-              <label>CV64</label>
+            <label>
+              <text>CV64</text>
             </label>
           </row>
           <row>
-            <label label="0">
-              <label>0</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="0">
-              <label>0</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="0">
-              <label>0</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="0">
-              <label>0</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="1">
-              <label>1</label>
+            <label>
+              <text>1</text>
             </label>
           </row>
           <row>
-            <label label="2">
-              <label>2</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="3">
-              <label>3</label>
+            <label>
+              <text>3</text>
             </label>
           </row>
           <row>
-            <label label="1">
-              <label>1</label>
+            <label>
+              <text>1</text>
             </label>
           </row>
           <row>
-            <label label="2">
-              <label>2</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="3">
-              <label>3</label>
-            </label>
-          </row>
-        </column>
-        <label label="   ">
-          <label>   </label>
-        </label>
-        <column>
-          <row>
-            <label label="CV61">
-              <label>CV61</label>
-            </label>
-          </row>
-          <row>
-            <label label="0">
-              <label>0</label>
-            </label>
-          </row>
-          <row>
-            <label label="1">
-              <label>1</label>
-            </label>
-          </row>
-          <row>
-            <label label="2">
-              <label>2</label>
-            </label>
-          </row>
-          <row>
-            <label label="3">
-              <label>3</label>
-            </label>
-          </row>
-          <row>
-            <label label="2">
-              <label>2</label>
-            </label>
-          </row>
-          <row>
-            <label label="2">
-              <label>2</label>
-            </label>
-          </row>
-          <row>
-            <label label="2">
-              <label>2</label>
-            </label>
-          </row>
-          <row>
-            <label label="0">
-              <label>0</label>
-            </label>
-          </row>
-          <row>
-            <label label="0">
-              <label>0</label>
-            </label>
-          </row>
-          <row>
-            <label label="0">
-              <label>0</label>
+            <label>
+              <text>3</text>
             </label>
           </row>
         </column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
         <column>
           <row>
-            <label label="White">
-              <label>White</label>
-              <label xml:lang="it">Bianco</label>
+            <label>
+              <text>CV61</text>
             </label>
           </row>
           <row>
-            <label label="F1">
-              <label>F1</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="F0">
-              <label>F0</label>
+            <label>
+              <text>1</text>
             </label>
           </row>
           <row>
-            <label label="F1">
-              <label>F1</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="F0">
-              <label>F0</label>
+            <label>
+              <text>3</text>
             </label>
           </row>
           <row>
-            <label label="F3">
-              <label>F3</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="F5">
-              <label>F5</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="F9">
-              <label>F9</label>
+            <label>
+              <text>2</text>
             </label>
           </row>
           <row>
-            <label label="F3">
-              <label>F3</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="F5">
-              <label>F5</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
           <row>
-            <label label="F9">
-              <label>F9</label>
+            <label>
+              <text>0</text>
             </label>
           </row>
         </column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
         <column>
           <row>
-            <label label="Yellow">
-              <label>Yellow</label>
-              <label xml:lang="it">Giallo</label>
+            <label>
+              <text>White</text>
+              <text xml:lang="it">Bianco</text>
             </label>
           </row>
           <row>
-            <label label="F2">
-              <label>F2</label>
+            <label>
+              <text>F1</text>
             </label>
           </row>
           <row>
-            <label label="F1">
-              <label>F1</label>
+            <label>
+              <text>F0</text>
             </label>
           </row>
           <row>
-            <label label="F2">
-              <label>F2</label>
+            <label>
+              <text>F1</text>
             </label>
           </row>
           <row>
-            <label label="F1">
-              <label>F1</label>
+            <label>
+              <text>F0</text>
             </label>
           </row>
           <row>
-            <label label="F4">
-              <label>F4</label>
+            <label>
+              <text>F3</text>
             </label>
           </row>
           <row>
-            <label label="F6">
-              <label>F6</label>
+            <label>
+              <text>F5</text>
             </label>
           </row>
           <row>
-            <label label="F10">
-              <label>F10</label>
+            <label>
+              <text>F9</text>
             </label>
           </row>
           <row>
-            <label label="F4">
-              <label>F4</label>
+            <label>
+              <text>F3</text>
             </label>
           </row>
           <row>
-            <label label="F6">
-              <label>F6</label>
+            <label>
+              <text>F5</text>
             </label>
           </row>
           <row>
-            <label label="F10">
-              <label>F10</label>
+            <label>
+              <text>F9</text>
             </label>
           </row>
         </column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
         <column>
           <row>
-            <label label="Transponding">
-              <label>Transponding</label>
-              <label xml:lang="it">Transponding</label>
+            <label>
+              <text>Yellow</text>
+              <text xml:lang="it">Giallo</text>
             </label>
           </row>
           <row>
-            <label label="OFF">
-              <label>OFF</label>
+            <label>
+              <text>F2</text>
             </label>
           </row>
           <row>
-            <label label="OFF">
-              <label>OFF</label>
+            <label>
+              <text>F1</text>
             </label>
           </row>
           <row>
-            <label label="ON">
-              <label>ON</label>
+            <label>
+              <text>F2</text>
             </label>
           </row>
           <row>
-            <label label="ON">
-              <label>ON</label>
+            <label>
+              <text>F1</text>
             </label>
           </row>
           <row>
-            <label label="ON">
-              <label>ON</label>
+            <label>
+              <text>F4</text>
             </label>
           </row>
           <row>
-            <label label="ON">
-              <label>ON</label>
+            <label>
+              <text>F6</text>
             </label>
           </row>
           <row>
-            <label label="ON">
-              <label>ON</label>
+            <label>
+              <text>F10</text>
             </label>
           </row>
           <row>
-            <label label="OFF">
-              <label>OFF</label>
+            <label>
+              <text>F4</text>
             </label>
           </row>
           <row>
-            <label label="OFF">
-              <label>OFF</label>
+            <label>
+              <text>F6</text>
             </label>
           </row>
           <row>
-            <label label="OFF">
-              <label>OFF</label>
+            <label>
+              <text>F10</text>
+            </label>
+          </row>
+        </column>
+        <label>
+          <text>   </text>
+        </label>
+        <column>
+          <row>
+            <label>
+              <text>Transponding</text>
+              <text xml:lang="it">Transponding</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>OFF</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>OFF</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>ON</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>ON</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>ON</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>ON</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>ON</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>OFF</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>OFF</text>
+            </label>
+          </row>
+          <row>
+            <label>
+              <text>OFF</text>
             </label>
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -597,8 +597,8 @@
             <display item="CV64"/>
           </row>
         </column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
         <column>
           <row>
@@ -606,25 +606,25 @@
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transponding" format="radiobuttons"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="ControlFn"/>
       <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above">
-           <tooltip>Do not check this box if 'F0 or F1' is not selected above</tooltip>
-           <tooltip xml:lang="it">Non spuntare questo box se 'F0 o F1' non è stato selezionato</tooltip>
+        <tooltip>Do not check this box if 'F0 or F1' is not selected above</tooltip>
+        <tooltip xml:lang="it">Non spuntare questo box se 'F0 o F1' non Ã¨ stato selezionato</tooltip>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Effect Generated W"/>
       <display item="Effect Rate W"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Effect Generated Y"/>
       <display item="Effect Rate Y"/>
@@ -632,7 +632,7 @@
     <name>Function Output</name>
     <name xml:lang="it">Uscita Funzione</name>
   </pane>
-  <pane name="Decoder Lock">
+  <pane>
     <column>
       <display item="Decoder Lock" format="radiobuttons"/>
       <display item="Decoder Lock Type"/>

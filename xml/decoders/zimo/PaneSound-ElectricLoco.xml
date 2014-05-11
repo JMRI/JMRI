@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Sound - Electric Loco" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
-    <label label="Thyristor control">
-      <label>Thyristor control</label>
+    <label>
+      <text>Thyristor control</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Thyristor control: Sound pitch for stepping effect" label="Sound pitch for stepping effect">
       <label>Thyristor control: Sound pitch for stepping effect</label>
@@ -22,8 +22,8 @@
     <display item="Thyristor control: Speed step for medium speed" label="Speed step for medium speed">
       <label>Speed step for medium speed</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Thyristor control: Volume during acceleration" label="Volume during acceleration">
       <label>Volume during acceleration</label>
@@ -34,8 +34,8 @@
     <display item="Thyristor control: Volume during deceleration" label="Volume during deceleration">
       <label>Volume during deceleration</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Thyristor Volume at Higher Speed" label="Volume at Higher Speed">
       <label>Thyristor Volume at Higher Speed</label>
@@ -48,12 +48,12 @@
     </display>
   </column>
   <column>
-    <label label="Motor sound">
-      <label>Motor sound</label>
+    <label>
+      <text>Motor sound</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Electric Engine Motor sound: highest volume" label="Highest volume">
       <label>Highest volume</label>
@@ -69,12 +69,12 @@
     </display>
   </column>
   <column>
-    <label label="Switchgear sound">
-      <label>Switchgear sound</label>
+    <label>
+      <text>Switchgear sound</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Delay of Switchgear sound at startup" label="Delay of Switchgear sound at startup">
       <label>Delay of Switchgear sound at startup</label>

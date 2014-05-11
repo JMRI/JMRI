@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
 <!-- $Id: SoundTraxx_Tsu_Steam_Genesis.xml 22121 2012-12-30 02:57:59Z jacobsen $ -->
@@ -494,7 +494,11 @@
       </variable>
       <!-- begin exchangeable function groups -->
       <variables>
-        <qualifier><variableref>Function Group 2 and 3 Exchange</variableref><relation>eq</relation><value>0</value></qualifier>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
         <!-- begin normal function group 2 -->
         <variable label="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -693,7 +697,11 @@
         <!-- end normal function group 3 -->
       </variables>
       <variables>
-        <qualifier><variableref>Function Group 2 and 3 Exchange</variableref><relation>eq</relation><value>1</value></qualifier>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <!-- begin exchanged function group 2 -->
         <variable label="F9 controls output 6(alt)" CV="39" mask="XXXXXXXV" default="0">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1129,7 +1137,7 @@
           <enumChoice choice="Union Pacific #4018">
             <choice>Union Pacific #4018</choice>
           </enumChoice>
-           <enumChoice choice="D&amp;RGW K-37 #497">
+          <enumChoice choice="D&amp;RGW K-37 #497">
             <choice>D&amp;RGW K-37 #497</choice>
           </enumChoice>
           <enumChoice choice="USRA 6-Chime">
@@ -1147,7 +1155,7 @@
           <enumChoice choice="Westside Lumber Co. Shay #12">
             <choice>Westside Lumber Co. Shay #12</choice>
           </enumChoice>
-		</enumVal>
+        </enumVal>
         <label>Whistle Select</label>
       </variable>
       <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="chal,FEF" tooltip="Select an alternate whistle to use">
@@ -1158,7 +1166,7 @@
           <enumChoice choice="Union Pacific #4018">
             <choice>Union Pacific #4018</choice>
           </enumChoice>
-           <enumChoice choice="D&amp;RGW K-37 #497">
+          <enumChoice choice="D&amp;RGW K-37 #497">
             <choice>D&amp;RGW K-37 #497</choice>
           </enumChoice>
           <enumChoice choice="USRA 6-Chime">
@@ -1469,11 +1477,11 @@
       <!-- appear on pane definitions in this file -->
       <!-- Equalizer Controls follow -->
       <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" exclude="chal,FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
-         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
       <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" include="chal,FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
-         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
       <!-- Individual Cut/Boost Controls follow -->
@@ -1519,7 +1527,7 @@
       </variable>
       <!-- Reverb Section follows -->
       <variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
-         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReverb.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReverb.xml"/>
         <label>Reverb Control</label>
       </variable>
       <!-- Individual Reverb Output Level Controls follow -->
@@ -1752,8 +1760,7 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
-      <variable label="Analog Mode Engine Sound Start" CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="15" 
-		include="chal,FEF">
+      <variable label="Analog Mode Engine Sound Start" CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="15" include="chal,FEF">
         <decVal/>
         <label>Analog Mode Engine Sound Start</label>
       </variable>

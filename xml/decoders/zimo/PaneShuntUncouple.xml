@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Shunt/Uncouple" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="Shunting"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Shunt Function Key" tooltip="+ 6"/>
     <display item="Shunt Function Key Extension"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Half Speed Key" tooltip="+ 4"/>
     <display item="Half Speed Key Extension"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
         <display item="Uncoupler"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Auto Uncouple"/>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="Tens digit = Pull In time (0-9)">
-          <label>Tens digit = Pull In time (0-9)</label>
+        <label>
+          <text>Tens digit = Pull In time (0-9)</text>
         </label>
-        <label label="Ones digit = Hold power % x10 (0-9)">
-          <label>Ones digit = Hold power % x10 (0-9)</label>
+        <label>
+          <text>Ones digit = Hold power % x10 (0-9)</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="Tens digit = Move Away time (0-9)">
-          <label>Tens digit = Move Away time (0-9)</label>
+        <label>
+          <text>Tens digit = Move Away time (0-9)</text>
         </label>
-        <label label="Ones digit = Internal Speed Step x4 (0-9)">
-          <label>Ones digit = Internal Speed Step x4 (0-9)</label>
+        <label>
+          <text>Ones digit = Internal Speed Step x4 (0-9)</text>
         </label>
-        <label label="Hundreds digit, 1 = Tension Relieve">
-          <label>Hundreds digit, 1 = Tension Relieve</label>
+        <label>
+          <text>Hundreds digit, 1 = Tension Relieve</text>
         </label>
       </column>
     </row>

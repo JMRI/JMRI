@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
@@ -3033,13 +3033,13 @@
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="Equalizer">
+  <pane>
     <column>
       <row>
         <display item="Equalizer Control"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3047,98 +3047,98 @@
             <display item="62 Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="62 Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="125 Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="125 Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="250 Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="250 Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="500 Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="500 Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="1K Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="1K Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="2K Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="2K Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="4K Hz Cut/Boost" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="4K Hz Cut/Boost" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Equalizer</name>
   </pane>
-  <pane name="Reverb">
+  <pane>
     <column>
       <row>
         <display item="Reverb Control"/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3146,140 +3146,140 @@
             <display item="Reverb Output Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Reverb Output Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Reverb Delay" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Reverb Delay" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Reverb Gain" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Reverb Gain" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Whistle Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Whistle Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Bell Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Bell Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Exhaust Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Exhaust Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Air Pump Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Dynamo Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Dynamo Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Blower Reverb Level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Blower Reverb Level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Reverb channel 6 mixer level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Reverb channel 6 mixer level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Reverb channel 7 mixer level" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Reverb channel 7 mixer level" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Reverb</name>
   </pane>
-  <pane name="DDE">
+  <pane>
     <column>
       <!-- panes always start with column elements-->
       <row>
@@ -3288,169 +3288,169 @@
             <display item="Throttle Gain" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Throttle Gain" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Motor Load Gain" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Motor Load Gain" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Attack Time Constant" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Attack Time Constant" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Release Time Constant" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Release Time Constant" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Exhaust Low Volume Limit" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Exhaust Low Volume Limit" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Exhaust High Volume Limit" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Exhaust High Volume Limit" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Side Rod Clank Low Volume Limit" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Side Rod Clank Low Volume Limit" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Side Rod Clank High Volume Limit" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Side Rod Clank High Volume Limit" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
-        <label label="    ">
-          <label>    </label>
+        <label>
+          <text>    </text>
         </label>
         <column>
           <row>
             <display item="Filter Initial Frequency" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Filter Initial Frequency" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Filter Control Gain" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Filter Control Gain" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Filter Damping" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Filter Damping" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Tracking Coefficient" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Tracking Coefficient" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Tracking Offset" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Tracking Offset" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>DDE</name>
   </pane>
-  <pane name="Analog Sound Control">
+  <pane>
     <column>
       <row>
         <column>
@@ -3471,204 +3471,204 @@
       <separator/>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Bell-On Set Point" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Bell-On Set Point" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Bell-Off Set Point" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Bell-Off Set Point" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Grade Crossing Whistle Sensitivity" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Brake Squeal Sensitivity" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <separator/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Fireman" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Fireman" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Wrench" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Wrench" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Clack Valve" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Clack Valve" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Oil-Can" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Oil-Can" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <separator/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Injector" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Injector" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Blower" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Blower" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Probability Pop-Off" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Probability Pop-Off" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <display item="Door Slam Range" layout="above" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
             <display item="Door Slam Range" layout="above" format="hslider"/>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="  ">
-            <label>  </label>
+          <label>
+            <text>  </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Analog Sound Control</name>
   </pane>
-  <pane name="Lock">
+  <pane>
     <column>
-      <label label=" CV 16 decoder lock.  If set, must match the lock by setting CV15 in single CV programmer  ">
-        <label> CV 16 decoder lock.  If set, must match the lock by setting CV15 in single CV programmer  </label>
+      <label>
+        <text> CV 16 decoder lock.  If set, must match the lock by setting CV15 in single CV programmer  </text>
       </label>
       <display item="Decoder Lock"/>
-      <label label="  ">
-        <label>  </label>
+      <label>
+        <text>  </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <!--
 			<label label= "Processor Parameters (CV120-127)" />

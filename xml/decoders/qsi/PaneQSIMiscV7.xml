@@ -12,11 +12,18 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V7 files -->
-<pane name="QSI Misc." xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>QSI Misc.</name>
   <column>
-    <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-    <label label="JMRI 2.13.2 or later is required for QSI V8 and V9"/>
-    <label label=" "/>
+    <label>
+      <text>JMRI 2.9.5 or later is required for QSI V7</text>
+    </label>
+    <label>
+      <text>JMRI 2.13.2 or later is required for QSI V8 and V9</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <display item="Decoder Version"/>
     <display item="CV56.254.6"/>
     <display item="CV56.254.8"/>
@@ -24,24 +31,44 @@
     <display item="Sound Set"/>
     <display item="Sound Set Number"/>
     <display item="Hardware Profile"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="CV56.254.10"/>
     <display item="CV56.254.11"/>
     <display item="CV56.254.12"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <display item="CV56.254.16"/>
     <display item="CV56.254.17"/>
     <display item="CV56.254.18"/>
-    <label label=" "/>
-    <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>When programming in Ops-mode, set Verbal Acknowledgement to disable</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <display item="CV62 Verbal Ack"/>
     <display item="CV62 CV Readout"/>
-    <label label=" "/>
-    <label label="When in Ops-mode:"/>
-    <label label="Enter a CV you wish to hear the value spoken out"/>
-    <label label="If needed, enter Primary and Secondary Indexes"/>
-    <label label="Then press - Write changes on sheet"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>When in Ops-mode:</text>
+    </label>
+    <label>
+      <text>Enter a CV you wish to hear the value spoken out</text>
+    </label>
+    <label>
+      <text>If needed, enter Primary and Secondary Indexes</text>
+    </label>
+    <label>
+      <text>Then press - Write changes on sheet</text>
+    </label>
     <display item="Primary Index"/>
     <display item="Secondary Index"/>
     <display item="Verbal CV Inquiry"/>

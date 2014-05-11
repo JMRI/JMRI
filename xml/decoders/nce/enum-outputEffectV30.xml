@@ -15,7 +15,7 @@
   <enumChoice choice="Standard on/off function output">
     <choice>Standard on/off function output</choice>
   </enumChoice>
-   <enumChoice choice="Mars light" value="2">
+  <enumChoice choice="Mars light" value="2">
     <choice>Mars light</choice>
   </enumChoice>
   <enumChoice choice="Rotary beacon">

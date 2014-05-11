@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!--$Id: ESU_LokPilotDCC.xml 22294 2013-01-06 21:25:34Z jacobsen $ -->
@@ -23,7 +23,7 @@
   <version author="Dave Heap" version="5" lastUpdated="20130105"/>
   <!-- ver6 revert version 5 changes - inapplicable to this decoder -->
   <version author="Dave Heap" version="6" lastUpdated="20130127"/>
-<decoder>
+  <decoder>
     <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
       <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" nmraWarrant="yes">
         <output name="1" label="Front Lights"/>
@@ -37,48 +37,48 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" default="3" comment="A value of 63 corresponds to 100%">
+      <variable item="Vstart" CV="2" default="3" comment="A value of 63 corresponds to 100%">
         <decVal max="63"/>
         <label>Vstart</label>
         <comment>A value of 63 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration" CV="3" default="4" item="Accel">
+      <variable CV="3" default="4" item="Accel">
         <decVal max="63"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" default="3" item="Decel">
+      <variable CV="4" default="3" item="Decel">
         <decVal max="63"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="63" comment="Range 1-63">
+      <variable item="Vhigh" CV="5" default="63" comment="Range 1-63">
         <decVal max="63"/>
         <label>Vhigh</label>
         <comment>Range 1-63</comment>
       </variable>
-      <variable label="Vmid" CV="6" default="25" comment="Range 1-63">
+      <variable item="Vmid" CV="6" default="25" comment="Range 1-63">
         <decVal max="63"/>
         <label>Vmid</label>
         <comment>Range 1-63</comment>
       </variable>
       <!--readOnly="yes" -->
-      <variable label="Decoder Version" CV="7" item="Decoder Version">
+      <variable CV="7" item="Decoder Version">
         <decVal/>
         <!--readOnly="yes" -->
         <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" item="Manufacturer">
+      <variable CV="8" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Manufacturer ID - Reset" CV="8">
+      <variable item="Manufacturer ID - Reset" CV="8">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -89,7 +89,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -100,7 +100,7 @@
         </enumVal>
         <label>Normal Direction of Motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -111,7 +111,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog Conversion Mode" CV="29" mask="XXXXXVXX" default="1" item="Power Source Conversion">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Power Source Conversion">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -122,7 +122,7 @@
         </enumVal>
         <label>Analog Conversion Mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
             <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
@@ -133,7 +133,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -144,7 +144,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -155,7 +155,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -166,7 +166,7 @@
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -177,7 +177,7 @@
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -188,7 +188,7 @@
         </enumVal>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -199,7 +199,7 @@
         </enumVal>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -210,7 +210,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -221,7 +221,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -232,7 +232,7 @@
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -243,7 +243,7 @@
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -254,7 +254,7 @@
         </enumVal>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -265,7 +265,7 @@
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -276,7 +276,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -287,7 +287,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -298,7 +298,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -309,7 +309,7 @@
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -320,7 +320,7 @@
         </enumVal>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -331,7 +331,7 @@
         </enumVal>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -342,7 +342,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -353,7 +353,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -364,7 +364,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -375,7 +375,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -386,7 +386,7 @@
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -397,7 +397,7 @@
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXXXV" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXXXV" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -408,7 +408,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXXXVX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXXXVX" minOut="4" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -419,7 +419,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" mask="XXXXXVXX" minOut="5" minFn="3" default="1">
+      <variable item="F3 controls output 5" CV="37" mask="XXXXXVXX" minOut="5" minFn="3" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -430,7 +430,7 @@
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -441,7 +441,7 @@
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F4 controls output 3" CV="38" mask="XXXXXXXV" minOut="3" minFn="4">
+      <variable item="F4 controls output 3" CV="38" mask="XXXXXXXV" minOut="3" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -452,7 +452,7 @@
         </enumVal>
         <label>F4 controls output 3</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXVX" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXVX" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -463,7 +463,7 @@
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="38" mask="XXXXXVXX" minOut="5" minFn="4">
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXVXX" minOut="5" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -474,7 +474,7 @@
         </enumVal>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="F4 controls output 6" CV="38" mask="XXXXVXXX" minOut="6" minFn="4" default="1">
+      <variable item="F4 controls output 6" CV="38" mask="XXXXVXXX" minOut="6" minFn="4" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -485,7 +485,7 @@
         </enumVal>
         <label>F4 controls output 6</label>
       </variable>
-      <variable label="F5 controls output 3" CV="39" mask="XXXXXXXV" minOut="3" minFn="5">
+      <variable item="F5 controls output 3" CV="39" mask="XXXXXXXV" minOut="3" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -496,7 +496,7 @@
         </enumVal>
         <label>F5 controls output 3</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXVX" minOut="4" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXVX" minOut="4" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -507,7 +507,7 @@
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XXXXXVXX" minOut="5" minFn="5">
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXVXX" minOut="5" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -518,7 +518,7 @@
         </enumVal>
         <label>F5 controls output 5</label>
       </variable>
-      <variable label="F5 controls output 6" CV="39" mask="XXXXVXXX" minOut="6" minFn="5">
+      <variable item="F5 controls output 6" CV="39" mask="XXXXVXXX" minOut="6" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -529,7 +529,7 @@
         </enumVal>
         <label>F5 controls output 6</label>
       </variable>
-      <variable label="F6 controls output 3" CV="40" mask="XXXXXXXV" minOut="3" minFn="6">
+      <variable item="F6 controls output 3" CV="40" mask="XXXXXXXV" minOut="3" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -540,7 +540,7 @@
         </enumVal>
         <label>F6 controls output 3</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXVX" minOut="4" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXVX" minOut="4" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -551,7 +551,7 @@
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 5" CV="40" mask="XXXXXVXX" minOut="5" minFn="6">
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXVXX" minOut="5" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -562,7 +562,7 @@
         </enumVal>
         <label>F6 controls output 5</label>
       </variable>
-      <variable label="F6 controls output 6" CV="40" mask="XXXXVXXX" minOut="6" minFn="6">
+      <variable item="F6 controls output 6" CV="40" mask="XXXXVXXX" minOut="6" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -573,7 +573,7 @@
         </enumVal>
         <label>F6 controls output 6</label>
       </variable>
-      <variable label="BEMF Active" item="EMF Static Config" CV="49" mask="XXXXXXXV" default="1">
+      <variable item="EMF Static Config" CV="49" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -584,22 +584,22 @@
         </enumVal>
         <label>BEMF Active</label>
       </variable>
-      <variable label="Adjust EMK Voltage" item="EMF Dynamic Config" CV="51" default="56" comment="Range 0-79">
+      <variable item="EMF Dynamic Config" CV="51" default="56" comment="Range 0-79">
         <decVal min="0" max="79"/>
         <label>Adjust EMK Voltage</label>
         <comment>Range 0-79</comment>
       </variable>
-      <variable label="K Adjustment" item="EMF Droop Config" CV="52" default="32" comment="Range 0-79">
+      <variable item="EMF Droop Config" CV="52" default="32" comment="Range 0-79">
         <decVal min="0" max="79"/>
         <label>K Adjustment</label>
         <comment>Range 0-79</comment>
       </variable>
-      <variable label="I Adjustment" item="EMF Feedback Cutout" CV="53" default="24" comment="Range 0-79">
+      <variable item="EMF Feedback Cutout" CV="53" default="24" comment="Range 0-79">
         <decVal min="0" max="79"/>
         <label>I Adjustment</label>
         <comment>Range 0-79</comment>
       </variable>
-      <variable label="Analog Mode" item="Analog Mode" CV="55" mask="XXXXXXVV">
+      <variable item="Analog Mode" CV="55" mask="XXXXXXVV">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -616,21 +616,21 @@
         </enumVal>
         <label>Analog Mode</label>
       </variable>
-      <variable label="Signal Dependent Deceleration" CV="57" default="0" comment="Range 0-63">
+      <variable item="Signal Dependent Deceleration" CV="57" default="0" comment="Range 0-63">
         <decVal min="0" max="63"/>
         <label>Signal Dependent Deceleration</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable label="Blink Rate" item="Global lighting option 1" CV="59" default="33" comment="Range 10-63, value is multiplied by 32.768 ms">
+      <variable item="Global lighting option 1" CV="59" default="33" comment="Range 10-63, value is multiplied by 32.768 ms">
         <decVal min="10" max="63"/>
         <label>Blink Rate</label>
         <comment>Range 10-63, value is multiplied by 32.768 ms</comment>
       </variable>
-      <variable label="Brightness Head Lights" item="Output 1 effect generated" CV="60" default="15" mask="XXXXVVVV">
+      <variable item="Output 1 effect generated" CV="60" default="15" mask="XXXXVVVV">
         <decVal/>
         <label>Brightness Head Lights</label>
       </variable>
-      <variable label="Output Configuration Head Lights" item="Output 1 behavior" CV="60" default="0" mask="XVVVXXXX">
+      <variable item="Output 1 behavior" CV="60" default="0" mask="XVVVXXXX">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -656,11 +656,11 @@
         </enumVal>
         <label>Output Configuration Head Lights</label>
       </variable>
-      <variable label="Brightness Back Lights" item="Output 2 effect generated" CV="61" default="15" mask="XXXXVVVV">
+      <variable item="Output 2 effect generated" CV="61" default="15" mask="XXXXVVVV">
         <decVal/>
         <label>Brightness Back Lights</label>
       </variable>
-      <variable label="Output Configuration Back Lights" item="Output 2 behavior" CV="61" default="0" mask="XVVVXXXX">
+      <variable item="Output 2 behavior" CV="61" default="0" mask="XVVVXXXX">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -686,11 +686,11 @@
         </enumVal>
         <label>Output Configuration Back Lights</label>
       </variable>
-      <variable label="Brightness AUX1" item="Output 3 effect generated" CV="62" default="15" mask="XXXXVVVV">
+      <variable item="Output 3 effect generated" CV="62" default="15" mask="XXXXVVVV">
         <decVal/>
         <label>Brightness AUX1</label>
       </variable>
-      <variable label="Output Configuration AUX1" item="Output 3 behavior" CV="62" default="0" mask="XVVVXXXX">
+      <variable item="Output 3 behavior" CV="62" default="0" mask="XVVVXXXX">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -716,11 +716,11 @@
         </enumVal>
         <label>Output Configuration AUX1</label>
       </variable>
-      <variable label="Brightness AUX2" item="Output 4 effect generated" CV="63" default="15" mask="XXXXVVVV">
+      <variable item="Output 4 effect generated" CV="63" default="15" mask="XXXXVVVV">
         <decVal/>
         <label>Brightness AUX2</label>
       </variable>
-      <variable label="Output Configuration AUX2" item="Output 4 behavior" CV="63" default="0" mask="XVVVXXXX">
+      <variable item="Output 4 behavior" CV="63" default="0" mask="XVVVXXXX">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -746,7 +746,7 @@
         </enumVal>
         <label>Output Configuration AUX2</label>
       </variable>
-      <variable label="DCC Speedstep Detection" CV="64" default="1" mask="XXXXXXXV">
+      <variable item="DCC Speedstep Detection" CV="64" default="1" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -757,7 +757,7 @@
         </enumVal>
         <label>DCC Speedstep Detection</label>
       </variable>
-      <variable label="ZIMO Manual Function" CV="64" default="1" mask="XXXXXXVX">
+      <variable item="ZIMO Manual Function" CV="64" default="1" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="New (MX2000)">
             <choice>New (MX2000)</choice>
@@ -768,7 +768,7 @@
         </enumVal>
         <label>ZIMO Manual Function</label>
       </variable>
-      <variable label="Emergency Stop" CV="64" default="0" mask="XXXXXVXX">
+      <variable item="Emergency Stop" CV="64" default="0" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="On">
             <choice>On</choice>
@@ -779,13 +779,13 @@
         </enumVal>
         <label>Emergency Stop</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="ESU">
+  <pane>
     <column>
       <display item="DCC Speedstep Detection"/>
     </column>

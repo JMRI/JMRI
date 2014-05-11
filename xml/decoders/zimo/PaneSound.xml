@@ -3,38 +3,38 @@
 <!-- version 1.2, Nigel Cliffe, added "Standing Sound on premature shutdown" and "Chuff rate at higher speed steps" -->
 <!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
 <!-- version 1, Mark Waters - for Unified Software -->
-<pane name="Sound" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="Set sound program"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Total volume"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="On/off key for engine and random sound"/>
     <display item="On/off key for function sound"/>
     <display item="Blow-off key"/>
     <display item="Mute key"/>
     <display item="Fade in/out time"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Switch input 1 playback time"/>
     <display item="Switch input 2 playback time"/>
     <display item="Switch input 3 playback time"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Drive Away if Startup sound still playing"/>
     <display item="Delay Shutdown untill end of Starting Whistle"/>
@@ -50,20 +50,20 @@
     <display item="Chuff volume at high speed and no load"/>
     <display item="Degree of volume change under load"/>
     <display item="Chuff rate at higher speed steps"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Blow-off time"/>
     <display item="Delayed start after blow-off time"/>
     <display item="Blow-off schedule"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Load change threshold"/>
     <display item="Reaction time to load change"/>
@@ -73,36 +73,36 @@
     <display item="Acceleration threshold for full load sound"/>
     <display item="Duration of acceleration sound"/>
     <display item="Engine volume at full acceleration"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Threshold for deceleration sound"/>
     <display item="Duration of reduced volume on deceleration"/>
     <display item="Volume level during deceleration"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Brake squeal threshold"/>
     <display item="Minimum driving time before brake squeal"/>
     <display item="Run-on time for Diesel and Electric Auxiliaries"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Multi-system engine Quick Select key"/>
     <display item="Two Stage Air Compressor"/>
   </column>
   <column>
-    <label label="      ">
-      <label>      </label>
+    <label>
+      <text>      </text>
     </label>
   </column>
   <name>Sound</name>

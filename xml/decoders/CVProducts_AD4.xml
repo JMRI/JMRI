@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2007 All rights reserved -->
 <!-- $Id: CVProducts_AD4.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -27,7 +27,7 @@
     </family>
     <programming direct="byteOnly" paged="no" register="no" ops="no"/>
     <variables>
-      <variable label="Card Address" item="Short Address" CV="1" mask="XXVVVVVV">
+      <variable item="Short Address" CV="1" mask="XXVVVVVV">
         <splitVal highCV="9"/>
         <label>Card Address</label>
       </variable>
@@ -39,15 +39,15 @@
         <splitVal highCV="9" factor="4"/>
         <label>Turnout_Address_High</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="135">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="135">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version" default="62">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="62">
         <decVal/>
         <label>Manufacturer Version No</label>
       </variable>
-      <variable label="Local_Input_1" CV="2" mask="XXXXXXXV" default="1">
+      <variable item="Local_Input_1" CV="2" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -58,7 +58,7 @@
         </enumVal>
         <label>Local_Input_1</label>
       </variable>
-      <variable label="Local_Input_2" CV="2" mask="XXXXXVXX" default="1">
+      <variable item="Local_Input_2" CV="2" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -69,7 +69,7 @@
         </enumVal>
         <label>Local_Input_2</label>
       </variable>
-      <variable label="Local_Input_3" CV="2" mask="XXXVXXXX" default="1">
+      <variable item="Local_Input_3" CV="2" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -80,7 +80,7 @@
         </enumVal>
         <label>Local_Input_3</label>
       </variable>
-      <variable label="Local_Input_4" CV="2" mask="XVXXXXXX" default="1">
+      <variable item="Local_Input_4" CV="2" mask="XVXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -91,7 +91,7 @@
         </enumVal>
         <label>Local_Input_4</label>
       </variable>
-      <variable label="Output_A_Constant_Mode" CV="3" mask="VVVVVVVV" default="0">
+      <variable item="Output_A_Constant_Mode" CV="3" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Constant output">
             <choice>Constant output</choice>
@@ -99,7 +99,7 @@
         </enumVal>
         <label>Output_A_Constant_Mode</label>
       </variable>
-      <variable label="Output_A_Mode" CV="3" mask="VXXXXXXX" default="0">
+      <variable item="Output_A_Mode" CV="3" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Single pulse">
             <choice>Single pulse</choice>
@@ -110,11 +110,11 @@
         </enumVal>
         <label>Output_A_Mode</label>
       </variable>
-      <variable label="Output_A_On_Time" CV="3" default="1" mask="XVVVVVVV">
+      <variable item="Output_A_On_Time" CV="3" default="1" mask="XVVVVVVV">
         <decVal/>
         <label>Output_A_On_Time</label>
       </variable>
-      <variable label="Output_B_Constant_Mode" CV="4" mask="VVVVVVVV" default="0">
+      <variable item="Output_B_Constant_Mode" CV="4" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Constant output">
             <choice>Constant output</choice>
@@ -122,7 +122,7 @@
         </enumVal>
         <label>Output_B_Constant_Mode</label>
       </variable>
-      <variable label="Output_B_Mode" CV="4" mask="VXXXXXXX" default="0">
+      <variable item="Output_B_Mode" CV="4" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Single pulse">
             <choice>Single pulse</choice>
@@ -133,11 +133,11 @@
         </enumVal>
         <label>Output_B_Mode</label>
       </variable>
-      <variable label="Output_B_On_Time" CV="4" default="1" mask="XVVVVVVV">
+      <variable item="Output_B_On_Time" CV="4" default="1" mask="XVVVVVVV">
         <decVal/>
         <label>Output_B_On_Time</label>
       </variable>
-      <variable label="Output_C_Constant_Mode" CV="5" mask="VVVVVVVV" default="0">
+      <variable item="Output_C_Constant_Mode" CV="5" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Constant output">
             <choice>Constant output</choice>
@@ -145,7 +145,7 @@
         </enumVal>
         <label>Output_C_Constant_Mode</label>
       </variable>
-      <variable label="Output_C_Mode" CV="5" mask="VXXXXXXX" default="0">
+      <variable item="Output_C_Mode" CV="5" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Single pulse">
             <choice>Single pulse</choice>
@@ -156,11 +156,11 @@
         </enumVal>
         <label>Output_C_Mode</label>
       </variable>
-      <variable label="Output_C_On_Time" CV="5" default="1" mask="XVVVVVVV">
+      <variable item="Output_C_On_Time" CV="5" default="1" mask="XVVVVVVV">
         <decVal/>
         <label>Output_C_On_Time</label>
       </variable>
-      <variable label="Output_D_Constant_Mode" CV="6" mask="VVVVVVVV" default="0">
+      <variable item="Output_D_Constant_Mode" CV="6" mask="VVVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="Constant output">
             <choice>Constant output</choice>
@@ -168,7 +168,7 @@
         </enumVal>
         <label>Output_D_Constant_Mode</label>
       </variable>
-      <variable label="Output_D_Mode" CV="6" mask="VXXXXXXX" default="0">
+      <variable item="Output_D_Mode" CV="6" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Single pulse">
             <choice>Single pulse</choice>
@@ -179,13 +179,13 @@
         </enumVal>
         <label>Output_D_Mode</label>
       </variable>
-      <variable label="Output_D_On_Time" CV="6" default="1" mask="XVVVVVVV">
+      <variable item="Output_D_On_Time" CV="6" default="1" mask="XVVVVVVV">
         <decVal/>
         <label>Output_D_On_Time</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="AD4">
+  <pane>
     <column>
       <display item="Card Address" label="AD4 Module Number: ">
         <label>AD4 Module Number: </label>
@@ -196,18 +196,18 @@
       <display item="Turnout_Address_High" label="through: ">
         <label>through: </label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
       <row>
         <separator/>
         <column>
-          <label label="Output Port A">
-            <label>Output Port A</label>
+          <label>
+            <text>Output Port A</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Output_A_Constant_Mode" format="offradiobutton" label="">
             <label/>
@@ -218,15 +218,15 @@
           <display item="Output_A_On_Time" label="On Time (1/10th Sec) ">
             <label>On Time (1/10th Sec) </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label="Output Port C">
-            <label>Output Port C</label>
+          <label>
+            <text>Output Port C</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Output_C_Constant_Mode" format="offradiobutton" label="">
             <label/>
@@ -237,17 +237,17 @@
           <display item="Output_C_On_Time" label="On Time (1/10th Sec) ">
             <label>On Time (1/10th Sec) </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
-          <label label="Output Port B">
-            <label>Output Port B</label>
+          <label>
+            <text>Output Port B</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Output_B_Constant_Mode" format="offradiobutton" label="">
             <label/>
@@ -258,15 +258,15 @@
           <display item="Output_B_On_Time" label="On Time (1/10th Sec) ">
             <label>On Time (1/10th Sec) </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label="Output Port D">
-            <label>Output Port D</label>
+          <label>
+            <text>Output Port D</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Output_D_Constant_Mode" format="offradiobutton" label="">
             <label/>
@@ -277,17 +277,17 @@
           <display item="Output_D_On_Time" label="On Time (1/10th Sec) ">
             <label>On Time (1/10th Sec) </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <separator/>
         <column>
-          <label label="   Local Input Line Usage  ">
-            <label>   Local Input Line Usage  </label>
+          <label>
+            <text>   Local Input Line Usage  </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Local_Input_1" format="checkbox" label="      Input 1 Enabled ">
             <label>      Input 1 Enabled </label>
@@ -305,8 +305,8 @@
         <separator/>
       </row>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer ID" label="Manufacturer ID: ">
         <label>Manufacturer ID: </label>

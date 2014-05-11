@@ -13,17 +13,24 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Chuff Rate" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Chuff Rate</name>
   <column>
-    <label label="Must have JMRI 3.3.6 or later.">
-      <label xml:lang="it">Must have JMRI 3.3.6 or later.</label>
+    <label>
+      <text>Must have JMRI 3.3.6 or later.</text>
+      <text xml:lang="it">Must have JMRI 3.3.6 or later.</text>
     </label>
-    <label label="   "/>
+    <label>
+      <text>   </text>
+    </label>
     <display item="Chuff rate adjustment"/>
     <display item="Chuff rate adjustment" label="" format="hslider"/>
-    <label label="   "/>
-    <label label="Individual Chuff Rates">
-      <label xml:lang="it">Individual Chuff Rates</label>
+    <label>
+      <text>   </text>
+    </label>
+    <label>
+      <text>Individual Chuff Rates</text>
+      <text xml:lang="it">Individual Chuff Rates</text>
     </label>
     <row>
       <column>

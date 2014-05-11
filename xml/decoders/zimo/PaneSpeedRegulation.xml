@@ -1,26 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Speed Regulation" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Speed Regulation</name>
   <column>
-    <label label="To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco"/>
-    <label label="on track with correct direction set, F0 turned off and enough distance from the Start marker"/>
-    <label label="to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135"/>
-    <label label="using a cab or the Single CV Programmer, then drive the loco through the marked section at"/>
-    <label label="a mid speed, turning F0 on at the Start marker and off at the End marker."/>
-    <label label=" "/>
-    <label label="If several calibration runs are performed at different speeds and the Calibration Result read"/>
-    <label label="after each one, the Calibration Result should be approximately the same"/>
-    <label label=" "/>
+    <label>
+      <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
+    </label>
+    <label>
+      <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
+    </label>
+    <label>
+      <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
+    </label>
+    <label>
+      <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
+    </label>
+    <label>
+      <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
+    </label>
+    <label>
+      <text>after each one, the Calibration Result should be approximately the same</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only"/>
-    <label label=" "/>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
         <display item="km/h speed regulation control and range" label="Speed Regulation Control"/>
       </column>
       <column>
-        <label label=" Miles or Kilometres per hour per (128) Speed Step"/>
+        <label>
+          <text> Miles or Kilometres per hour per (128) Speed Step</text>
+        </label>
       </column>
     </row>
   </column>

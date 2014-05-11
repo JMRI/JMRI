@@ -39,14 +39,14 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Acceleration Momentum (0-255)" CV="3" item="Accel" default="6" comment="Range 0-255">
+  <variable CV="3" item="Accel" default="6" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Acceleration Momentum (0-255)</label>
     <label xml:lang="it">Inerzia Accellerazione</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
   </variable>
-  <variable label="Deceleration (Brake) Momentum (0-255)" CV="4" item="Decel" default="5" comment="Range 0-255">
+  <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Deceleration (Brake) Momentum (0-255)</label>
     <label xml:lang="it">Inerzia Decellarazione (Frenata) 0-225</label>

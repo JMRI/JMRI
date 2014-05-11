@@ -29,176 +29,208 @@
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%" default="1">
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%" default="1">
         <decVal max="255"/>
+        <label>Vstart</label>
       </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel" default="5">
+      <variable CV="3" item="Accel" default="5">
         <decVal max="255"/>
+        <label>Acceleration Rate</label>
       </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel" default="3">
+      <variable CV="4" item="Decel" default="3">
         <decVal max="255"/>
+        <label>Deceleration Rate</label>
       </variable>
-      <variable label="Vhigh" CV="5" item="Vmax" default="255">
+      <variable CV="5" item="Vmax" default="255">
         <decVal max="255"/>
+        <label>Vhigh</label>
       </variable>
-      <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="7">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="7">
         <decVal/>
+        <label>Decoder Version No: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" default="131" item="Manufacturer" readOnly="yes" tooltip="Readonly default=131">
+      <variable CV="8" default="131" item="Manufacturer" readOnly="yes" tooltip="Readonly default=131">
         <decVal/>
+        <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
+      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F1</label>
       </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
+      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F2</label>
       </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="1">
+      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F3</label>
       </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
+      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
+      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - F7</label>
       </variable>
-      <variable label="Analog Mode Function Status - FL" CV="13" mask="VXXXXXXX" default="1">
+      <variable item="Analog Mode Function Status - FL" CV="13" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Analog Mode Function Status - FL</label>
       </variable>
       <!-- CV 14 -->
       <variable item="F9-F15 Mapping on DC-not used" CV="14" default="1" tooltip="(0 -255) default=1">
         <decVal min="0" max="255"/>
+        <label>F9-F15 Mapping on DC-not used</label>
       </variable>
       <!-- CV 17 -->
       <!-- CV 19 -->
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
+      <variable CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
         <decVal min="0" max="127"/>
+        <label>Consist Address</label>
       </variable>
       <!-- CV 19 -->
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" default="0" item="Consist Direction" tooltip="VXXXXXXX  default=0">
+      <variable CV="19" mask="VXXXXXXX" default="0" item="Consist Direction" tooltip="VXXXXXXX  default=0">
         <enumVal>
           <enumChoice choice="Forward"/>
           <enumChoice choice="Reverse"/>
         </enumVal>
+        <label>Consist Direction</label>
       </variable>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F1</label>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F2</label>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F3</label>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F4</label>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F5</label>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F6</label>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F7</label>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only"/>
           <enumChoice choice="Respond to Consist Address"/>
         </enumVal>
+        <label>Consist Address Active For F8</label>
       </variable>
       <!-- CV 22 -->
       <variable item="F9-F15 Mapping on UM-not used" CV="22" default="0" tooltip="(0 -255) default=0">
         <decVal min="0" max="255"/>
+        <label>F9-F15 Mapping on UM-not used</label>
       </variable>
       <!-- CV 29 -->
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="XXXXXXXV  default=0">
+      <variable CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="XXXXXXXV  default=0">
         <enumVal>
           <enumChoice choice="Normal"/>
           <enumChoice choice="Reverse"/>
         </enumVal>
+        <label>Locomotive Direction</label>
       </variable>
-      <variable label="Speed Step Mode" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="XXXXXXVX  default=1">
+      <variable CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="XXXXXXVX  default=1">
         <enumVal>
           <enumChoice choice="14"/>
           <enumChoice choice="28/128"/>
         </enumVal>
+        <label>Speed Step Mode</label>
       </variable>
-      <variable label="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="XXXXXVXX  default=1">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="XXXXXVXX  default=1">
         <enumVal>
           <enumChoice choice="No"/>
           <enumChoice choice="Yes"/>
         </enumVal>
+        <label>Analog (DC) Operation</label>
       </variable>
-      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
+      <variable CV="29" mask="XXXXVXXX" default="0" item="Enable RailCom" tooltip="XXXXVXXX  default=0">
         <enumVal>
           <enumChoice choice="Disabled"/>
           <enumChoice choice="Enabled"/>
         </enumVal>
+        <label>Enable RailCom</label>
       </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="XXXVXXXX  default=0">
+      <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="XXXVXXXX  default=0">
         <enumVal>
           <enumChoice choice="Vstart/mid/high"/>
           <enumChoice choice="Use Speed Table"/>
         </enumVal>
+        <label>Speed Table Definition</label>
       </variable>
-      <variable label="Decoder Type" CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">
+      <variable CV="29" mask="VXXXXXXX" default="0" item="Decoder Type" tooltip="VXXXXXXX  default=0">
         <enumVal>
           <enumChoice choice="MultiFuncton"/>
           <enumChoice choice="Accessory"/>
         </enumVal>
+        <label>Decoder Type</label>
       </variable>
     </variables>
     <resets>

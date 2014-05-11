@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: Atlas_VO1000.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -23,39 +23,39 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Volts" CV="2" item="Vstart" default="10" comment="Range 1-15">
+      <variable CV="2" item="Vstart" default="10" comment="Range 1-15">
         <decVal min="1" max="15"/>
         <label>Start Volts</label>
         <comment>Range 1-15</comment>
       </variable>
-      <variable label="Accel" CV="3" default="1" comment="Range 1-31">
+      <variable item="Accel" CV="3" default="1" comment="Range 1-31">
         <decVal min="1" max="31"/>
         <label>Accel</label>
         <comment>Range 1-31</comment>
       </variable>
-      <variable label="Decel" CV="4" default="1" comment="Range 1-31">
+      <variable item="Decel" CV="4" default="1" comment="Range 1-31">
         <decVal min="1" max="31"/>
         <label>Decel</label>
         <comment>Range 1-31</comment>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="127">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="127">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Manufacturer ID - Reset" CV="8" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
+      <variable CV="8" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 33 will reset decoder to factory defaults</comment>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -66,7 +66,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -77,7 +77,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -88,7 +88,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -99,7 +99,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Brake Momentum on DC" CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
+      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>

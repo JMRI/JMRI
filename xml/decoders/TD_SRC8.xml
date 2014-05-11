@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2014 All rights reserved -->
 <!-- $Id$ -->
@@ -1325,17 +1325,17 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
-      <label label="------  Output Addresses  ------ ">
-        <label>------  Output Addresses  ------ </label>
+      <label>
+        <text>------  Output Addresses  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Base Address CV1"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -1345,340 +1345,340 @@
           <display item="through"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Address Assignment Examples">
-        <label>Address Assignment Examples</label>
+      <label>
+        <text>Address Assignment Examples</text>
       </label>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label="CV1 = 1 ">
-            <label>CV1 = 1 </label>
+          <label>
+            <text>CV1 = 1 </text>
           </label>
           <separator/>
-          <label label="CV1 = 2 ">
-            <label>CV1 = 2 </label>
+          <label>
+            <text>CV1 = 2 </text>
           </label>
           <separator/>
-          <label label="CV1 = 6 ">
-            <label>CV1 = 6 </label>
+          <label>
+            <text>CV1 = 6 </text>
           </label>
           <separator/>
-          <label label="CV1 = 127 ">
-            <label>CV1 = 127 </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" Group ">
-            <label> Group </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
+          <label>
+            <text>CV1 = 127 </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  1">
-            <label>  1</label>
+          <label>
+            <text> Group </text>
           </label>
           <separator/>
-          <label label="  1">
-            <label>  1</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
-          <label label="  9">
-            <label>  9</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
-          <label label="  41 ">
-            <label>  41 </label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
-          <label label=" 1009 ">
-            <label> 1009 </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  2">
-            <label>  2</label>
-          </label>
-          <separator/>
-          <label label="  2">
-            <label>  2</label>
-          </label>
-          <separator/>
-          <label label="  10 ">
-            <label>  10 </label>
-          </label>
-          <separator/>
-          <label label="  42 ">
-            <label>  42 </label>
-          </label>
-          <separator/>
-          <label label=" 1010 ">
-            <label> 1010 </label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  3">
-            <label>  3</label>
+          <label>
+            <text>  1</text>
           </label>
           <separator/>
-          <label label="  3">
-            <label>  3</label>
+          <label>
+            <text>  1</text>
           </label>
           <separator/>
-          <label label="  11 ">
-            <label>  11 </label>
+          <label>
+            <text>  9</text>
           </label>
           <separator/>
-          <label label="  43 ">
-            <label>  43 </label>
+          <label>
+            <text>  41 </text>
           </label>
           <separator/>
-          <label label=" 1011 ">
-            <label> 1011 </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  4">
-            <label>  4</label>
-          </label>
-          <separator/>
-          <label label="  4">
-            <label>  4</label>
-          </label>
-          <separator/>
-          <label label="  12">
-            <label>  12</label>
-          </label>
-          <separator/>
-          <label label="  44 ">
-            <label>  44 </label>
-          </label>
-          <separator/>
-          <label label=" 1012 ">
-            <label> 1012 </label>
+          <label>
+            <text> 1009 </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  5">
-            <label>  5</label>
+          <label>
+            <text>  2</text>
           </label>
           <separator/>
-          <label label="  5">
-            <label>  5</label>
+          <label>
+            <text>  2</text>
           </label>
           <separator/>
-          <label label="  13">
-            <label>  13</label>
+          <label>
+            <text>  10 </text>
           </label>
           <separator/>
-          <label label="  45 ">
-            <label>  45 </label>
+          <label>
+            <text>  42 </text>
           </label>
           <separator/>
-          <label label=" 1013 ">
-            <label> 1013 </label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  6">
-            <label>  6</label>
-          </label>
-          <separator/>
-          <label label="  6">
-            <label>  6</label>
-          </label>
-          <separator/>
-          <label label="  14">
-            <label>  14</label>
-          </label>
-          <separator/>
-          <label label="  46 ">
-            <label>  46 </label>
-          </label>
-          <separator/>
-          <label label=" 1014 ">
-            <label> 1014 </label>
+          <label>
+            <text> 1010 </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  7">
-            <label>  7</label>
+          <label>
+            <text>  3</text>
           </label>
           <separator/>
-          <label label="  7">
-            <label>  7</label>
+          <label>
+            <text>  3</text>
           </label>
           <separator/>
-          <label label="  15">
-            <label>  15</label>
+          <label>
+            <text>  11 </text>
           </label>
           <separator/>
-          <label label="  47 ">
-            <label>  47 </label>
+          <label>
+            <text>  43 </text>
           </label>
           <separator/>
-          <label label=" 1015 ">
-            <label> 1015 </label>
+          <label>
+            <text> 1011 </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  8">
-            <label>  8</label>
+          <label>
+            <text>  4</text>
           </label>
           <separator/>
-          <label label="  8">
-            <label>  8</label>
+          <label>
+            <text>  4</text>
           </label>
           <separator/>
-          <label label="  16">
-            <label>  16</label>
+          <label>
+            <text>  12</text>
           </label>
           <separator/>
-          <label label="  48 ">
-            <label>  48 </label>
+          <label>
+            <text>  44 </text>
           </label>
           <separator/>
-          <label label=" 1016 ">
-            <label> 1016 </label>
+          <label>
+            <text> 1012 </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  5</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  5</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  13</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  45 </text>
+          </label>
+          <separator/>
+          <label>
+            <text> 1013 </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  6</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  6</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  14</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  46 </text>
+          </label>
+          <separator/>
+          <label>
+            <text> 1014 </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  7</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  7</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  15</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  47 </text>
+          </label>
+          <separator/>
+          <label>
+            <text> 1015 </text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  8</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  8</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  16</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  48 </text>
+          </label>
+          <separator/>
+          <label>
+            <text> 1016 </text>
           </label>
           <separator/>
         </column>
         <separator/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Configuration  ------ ">
-        <label>------  Configuration  ------ </label>
+      <label>
+        <text>------  Configuration  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Option 1" tooltip="Switch state remembered at power off" format="checkbox"/>
-      <label label="  Memory enabled">
-        <label>  Memory enabled</label>
+      <label>
+        <text>  Memory enabled</text>
       </label>
       <display item="Option 2" tooltip="Applies to group 1" format="checkbox"/>
-      <label label="  Loco STOP/RESUME enabled">
-        <label>  Loco STOP/RESUME enabled</label>
+      <label>
+        <text>  Loco STOP/RESUME enabled</text>
       </label>
       <display item="Option 3" tooltip="Applies to group 1" format="checkbox"/>
-      <label label="  Track power ON/OFF enabled">
-        <label>  Track power ON/OFF enabled</label>
+      <label>
+        <text>  Track power ON/OFF enabled</text>
       </label>
       <display item="Option 4" tooltip="Outputs respond to feedback messages" format="checkbox"/>
-      <label label="  Display switch feedback status enabled">
-        <label>  Display switch feedback status enabled</label>
+      <label>
+        <text>  Display switch feedback status enabled</text>
       </label>
       <display item="Option 5" tooltip="Required for ops mode" format="checkbox"/>
-      <label label="  Ops mode programming enabled">
-        <label>  Ops mode programming enabled</label>
+      <label>
+        <text>  Ops mode programming enabled</text>
       </label>
       <display item="Option 6" tooltip="Requires option 1, options 2 and 3 are disabled" format="checkbox"/>
-      <label label="  Send memory output state at power on">
-        <label>  Send memory output state at power on</label>
+      <label>
+        <text>  Send memory output state at power on</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Special Functions  ------ ">
-        <label>------  Special Functions  ------ </label>
+      <label>
+        <text>------  Special Functions  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <dccaddress/>
-      <label label="DO NOT enter a value in the Active DCC Address field ">
-        <label>DO NOT enter a value in the Active DCC Address field </label>
+      <label>
+        <text>DO NOT enter a value in the Active DCC Address field </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ops Mode Address" tooltip="Sets the Ops Mode address"/>
-      <label label="Use ONLY the Ops Mode Address field for the DCC address">
-        <label>Use ONLY the Ops Mode Address field for the DCC address</label>
+      <label>
+        <text>Use ONLY the Ops Mode Address field for the DCC address</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Notes:  ------ ">
-        <label>------  Notes:  ------ </label>
+      <label>
+        <text>------  Notes:  ------ </text>
       </label>
-      <label label="The Custom Programmer format is recommended">
-        <label>The Custom Programmer format is recommended</label>
+      <label>
+        <text>The Custom Programmer format is recommended</text>
       </label>
-      <label label="SRC8 software version 44 or later required for DecoderPro">
-        <label>SRC8 software version 44 or later required for DecoderPro</label>
+      <label>
+        <text>SRC8 software version 44 or later required for DecoderPro</text>
       </label>
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Mfg">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
       <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
@@ -1686,116 +1686,116 @@
     </column>
     <name>Mfg</name>
   </pane>
-  <pane name="Inputs">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 1  ------ ">
-        <label>------  Group Input 1  ------ </label>
+      <label>
+        <text>------  Group Input 1  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep1" tooltip="Enable feedback"/>
       <display item="Alt Group Address 1" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 2  ------ ">
-        <label>------  Group Input 2  ------ </label>
+      <label>
+        <text>------  Group Input 2  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep2" tooltip="Enable feedback"/>
       <display item="Alt Group Address 2" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 3  ------ ">
-        <label>------  Group Input 3  ------ </label>
+      <label>
+        <text>------  Group Input 3  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep3" tooltip="Enable feedback"/>
       <display item="Alt Group Address 3" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 4  ------ ">
-        <label>------  Group Input 4  ------ </label>
+      <label>
+        <text>------  Group Input 4  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep4" tooltip="Enable feedback"/>
       <display item="Alt Group Address 4" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 5  ------ ">
-        <label>------  Group Input 5  ------ </label>
+      <label>
+        <text>------  Group Input 5  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep5" tooltip="Enable feedback"/>
       <display item="Alt Group Address 5" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 6  ------ ">
-        <label>------  Group Input 6  ------ </label>
+      <label>
+        <text>------  Group Input 6  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep6" tooltip="Enable feedback"/>
       <display item="Alt Group Address 6" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 7  ------ ">
-        <label>------  Group Input 7  ------ </label>
+      <label>
+        <text>------  Group Input 7  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep7" tooltip="Enable feedback"/>
       <display item="Alt Group Address 7" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Group Input 8  ------ ">
-        <label>------  Group Input 8  ------ </label>
+      <label>
+        <text>------  Group Input 8  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Sw rep8" tooltip="Enable feedback"/>
       <display item="Alt Group Address 8" tooltip="Determines the input addess"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <name>Inputs</name>
   </pane>
-  <pane name="Routes">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Send Address Delay" tooltip="Time between senting addresses in a route"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 1 ------ ">
-        <label>------ Route 1 ------ </label>
+      <label>
+        <text>------ Route 1 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe1" tooltip="A sensor type message activates the route"/>
       <row>
@@ -1869,14 +1869,14 @@
           <display item="Sw state18"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 2 ------ ">
-        <label>------ Route 2 ------ </label>
+      <label>
+        <text>------ Route 2 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe2" tooltip="A sensor type message activates the route"/>
       <row>
@@ -1950,14 +1950,14 @@
           <display item="Sw state28"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 3 ------ ">
-        <label>------ Route 3 ------ </label>
+      <label>
+        <text>------ Route 3 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe3" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2031,14 +2031,14 @@
           <display item="Sw state38"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 4 ------ ">
-        <label>------ Route 4 ------ </label>
+      <label>
+        <text>------ Route 4 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe4" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2112,25 +2112,25 @@
           <display item="Sw state48"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 5 ------ ">
-        <label>------ Route 5 ------ </label>
+      <label>
+        <text>------ Route 5 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe5" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2204,14 +2204,14 @@
           <display item="Sw state58"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 6 ------ ">
-        <label>------ Route 6 ------ </label>
+      <label>
+        <text>------ Route 6 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe6" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2285,14 +2285,14 @@
           <display item="Sw state68"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 7 ------ ">
-        <label>------ Route 7 ------ </label>
+      <label>
+        <text>------ Route 7 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe7" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2366,14 +2366,14 @@
           <display item="Sw state78"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------ Route 8 ------ ">
-        <label>------ Route 8 ------ </label>
+      <label>
+        <text>------ Route 8 ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Se exe8" tooltip="A sensor type message activates the route"/>
       <row>
@@ -2447,13 +2447,13 @@
           <display item="Sw state88"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <name>Routes</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

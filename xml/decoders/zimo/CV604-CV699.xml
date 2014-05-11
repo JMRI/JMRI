@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- Nigel Cliffe, 7th March 2014 -->
@@ -6,38 +6,43 @@
 <!-- CV's 500-603 control volume and sound choices of individual sounds -->
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
- <!-- March 2014 - F20-F28 are in CV674-698 -->
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<!-- March 2014 - F20-F28 are in CV674-698 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
-  <variable label="Volume on Key F20" CV="674" item="Zimo Sound Setting 22">
+  <variable CV="674" item="Zimo Sound Setting 22">
     <decVal/>
+    <label>Volume on Key F20</label>
   </variable>
-  <variable label="Volume on Key F21" CV="677" item="Zimo Sound Setting 23">
+  <variable CV="677" item="Zimo Sound Setting 23">
     <decVal/>
+    <label>Volume on Key F21</label>
   </variable>
-  <variable label="Volume on Key F22" CV="680" item="Zimo Sound Setting 24">
+  <variable CV="680" item="Zimo Sound Setting 24">
     <decVal/>
+    <label>Volume on Key F22</label>
   </variable>
-  <variable label="Volume on Key F23" CV="683" item="Zimo Sound Setting 25">
+  <variable CV="683" item="Zimo Sound Setting 25">
     <decVal/>
+    <label>Volume on Key F23</label>
   </variable>
-  <variable label="Volume on Key F24" CV="686" item="Zimo Sound Setting 26">
+  <variable CV="686" item="Zimo Sound Setting 26">
     <decVal/>
+    <label>Volume on Key F24</label>
   </variable>
-  <variable label="Volume on Key F25" CV="689" item="Zimo Sound Setting 27">
+  <variable CV="689" item="Zimo Sound Setting 27">
     <decVal/>
+    <label>Volume on Key F25</label>
   </variable>
-  <variable label="Volume on Key F26" CV="692" item="Zimo Sound Setting 28">
+  <variable CV="692" item="Zimo Sound Setting 28">
     <decVal/>
+    <label>Volume on Key F26</label>
   </variable>
-  <variable label="Volume on Key F27" CV="695" item="Zimo Sound Setting 29">
+  <variable CV="695" item="Zimo Sound Setting 29">
     <decVal/>
+    <label>Volume on Key F27</label>
   </variable>
-  <variable label="Volume on Key F28" CV="698" item="Zimo Sound Setting 30">
+  <variable CV="698" item="Zimo Sound Setting 30">
     <decVal/>
+    <label>Volume on Key F28</label>
   </variable>
-  
- 
- 
-  
 </variables>

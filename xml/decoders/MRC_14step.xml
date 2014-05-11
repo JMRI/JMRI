@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002 All rights reserved -->
 <!-- $Id: MRC_14step.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -23,23 +23,23 @@
       <!-- Register 1 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <!-- Register 2 -->
-      <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
       <!-- Register 3 -->
-      <variable label="Acceleration Rate" CV="3" item="Accel">
+      <variable CV="3" item="Accel">
         <decVal max="31"/>
         <label>Acceleration Rate</label>
       </variable>
       <!-- Register 4 -->
-      <variable label="Deceleration Rate" CV="4" item="Decel">
+      <variable CV="4" item="Decel">
         <decVal max="31"/>
         <label>Deceleration Rate</label>
       </variable>
       <!-- Register 5 -->
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
             <choice>normal</choice>
@@ -51,12 +51,12 @@
         <label>Locomotive Direction</label>
       </variable>
       <!-- Register 7 -->
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Manufacturer Version No</label>
       </variable>
       <!-- Register 8 -->
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>

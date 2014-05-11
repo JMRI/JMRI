@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- $Id: Uhlenbrock_74400.xml 17977 2011-07-18 17:23:46Z zoo $ -->
@@ -22,35 +22,35 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" comment="Speed setting between 1 and 31" default="5">
+      <variable item="Vstart" CV="2" comment="Speed setting between 1 and 31" default="5">
         <decVal max="31"/>
         <label>Vstart</label>
         <comment>Speed setting between 1 and 31</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="2">
+      <variable CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="2">
         <decVal/>
         <label>Acceleration Rate</label>
         <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
       </variable>
-      <variable label="Deceleration Rate" CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="2">
+      <variable CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="2">
         <decVal/>
         <label>Deceleration Rate</label>
         <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
       </variable>
-      <variable label="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="90">
+      <variable item="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="90">
         <decVal max="95"/>
         <label>Vhigh</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version" default="1">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
         <decVal/>
         <label>Manufacturer Version No: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="85">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
             <choice>normal</choice>
@@ -61,7 +61,7 @@
         </enumVal>
         <label>Locomotive Direction</label>
       </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
         <enumVal>
           <enumChoice choice="14 speed step format">
             <choice>14 speed step format</choice>
@@ -72,7 +72,7 @@
         </enumVal>
         <label>FL Location</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <enumVal>
           <enumChoice choice="NMRA Digital only">
             <choice>NMRA Digital only</choice>

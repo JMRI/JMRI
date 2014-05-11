@@ -24,10 +24,9 @@
     <programming direct="yes" paged="yes" register="yes" ops="no"/>
     <!-- not sure if it can do ops-mode, but few command stations can do accessory ops-mode -->
     <variables>
-      <variable label="Low 7 bytes of Address CV1" CV="1" default="01">
-        <!--  in decoder address mode, takes values 0-63, ie, bits 0 to 5 
-			        in output address mode, takes values 0-255, ie. all bits -->
+      <variable item="Low 7 bytes of Address CV1" CV="1" default="01">
         <decVal/>
+        <label>Low 7 bytes of Address CV1</label>
       </variable>
       <!-- CV7 and 8 values not yet set 
 		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version"  default="133" >
@@ -37,313 +36,419 @@
 			<decVal/>
 		</variable>
 		-->
-      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
-        <!-- uses same bits in both addressing modes -->
+      <variable item="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
+        <label>High 3 bytes of Address CV9</label>
       </variable>
-      <variable label="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511">
+      <variable item="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
+        <label>Decoder Address (1-511)</label>
       </variable>
-      <variable label="Output Mode Address (1-2047)" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2047">
+      <variable item="Output Mode Address (1-2047)" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2047">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
+        <label>Output Mode Address (1-2047)</label>
       </variable>
-      <variable label="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
+      <variable item="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
         <decVal min="0" max="144"/>
+        <label>A Output (x10) Millisecs</label>
       </variable>
-      <variable label="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0" minOut="8">
+      <variable item="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0" minOut="8">
         <decVal min="0" max="144"/>
+        <label>B Output (x10) Millisecs</label>
       </variable>
-      <variable label="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0" minOut="8">
+      <variable item="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0" minOut="8">
         <decVal min="0" max="144"/>
+        <label>C Output (x10) Millisecs</label>
       </variable>
-      <variable label="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0" minOut="8">
+      <variable item="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0" minOut="8">
         <decVal min="0" max="144"/>
+        <label>D Output (x10) Millisecs</label>
       </variable>
       <!-- these calculate turnout (decoder) addresses for Lenz/Digitrax systems.  Roco and MERG use offsets of -3 to 0 -->
-      <variable label="                    outputs 1+2" CV="1" mask="XXVVVVVV" default="1" item="Decoder Lenz Base Address" tooltip="Range 1-2041">
+      <variable CV="1" mask="XXVVVVVV" default="1" item="Decoder Lenz Base Address" tooltip="Range 1-2041">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-7"/>
+        <label>                    outputs 1+2</label>
       </variable>
-      <variable label="                    outputs 3+4" CV="1" mask="XXVVVVVV" default="2" item="Decoder Lenz 2nd Address" tooltip="Range 2-2042" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="2" item="Decoder Lenz 2nd Address" tooltip="Range 2-2042" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-6"/>
+        <label>                    outputs 3+4</label>
       </variable>
-      <variable label="                    outputs 5+6" CV="1" mask="XXVVVVVV" default="3" item="Decoder Lenz 3rd Address" tooltip="Range 3-2043" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="3" item="Decoder Lenz 3rd Address" tooltip="Range 3-2043" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-5"/>
+        <label>                    outputs 5+6</label>
       </variable>
-      <variable label="                    outputs 7+8" CV="1" mask="XXVVVVVV" default="4" item="Decoder Lenz 4th Address" tooltip="Range 4-2044" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="4" item="Decoder Lenz 4th Address" tooltip="Range 4-2044" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-4"/>
+        <label>                    outputs 7+8</label>
       </variable>
-      <variable label="                    outputs 1+2" CV="1" mask="XXVVVVVV" default="1" item="Decoder Roco Base Address" tooltip="Range 1-2037">
+      <variable CV="1" mask="XXVVVVVV" default="1" item="Decoder Roco Base Address" tooltip="Range 1-2037">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+        <label>                    outputs 1+2</label>
       </variable>
-      <variable label="                    outputs 3+4" CV="1" mask="XXVVVVVV" default="2" item="Decoder Roco 2nd Address" tooltip="Range 2-20138" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="2" item="Decoder Roco 2nd Address" tooltip="Range 2-20138" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-2"/>
+        <label>                    outputs 3+4</label>
       </variable>
-      <variable label="                    outputs 5+6" CV="1" mask="XXVVVVVV" default="3" item="Decoder Roco 3rd Address" tooltip="Range 3-2039" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="3" item="Decoder Roco 3rd Address" tooltip="Range 3-2039" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-1"/>
+        <label>                    outputs 5+6</label>
       </variable>
-      <variable label="                    outputs 7+8" CV="1" mask="XXVVVVVV" default="4" item="Decoder Roco 4th Address" tooltip="Range 4-2040" minOut="8">
+      <variable CV="1" mask="XXVVVVVV" default="4" item="Decoder Roco 4th Address" tooltip="Range 4-2040" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="0"/>
+        <label>                    outputs 7+8</label>
       </variable>
       <!-- these calculate turnout (output mode) addresses for Lenz/Digitrax systems.  Roco and MERG use offsets of -3 to 0 -->
-      <variable label="                    outputs 1+2" CV="1" mask="VVVVVVVV" default="1" item="Output Lenz Base Address" tooltip="Range 1-2043">
+      <variable CV="1" mask="VVVVVVVV" default="1" item="Output Lenz Base Address" tooltip="Range 1-2043">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-4"/>
+        <label>                    outputs 1+2</label>
       </variable>
-      <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Lenz 2nd Address" tooltip="Range 2-2044" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="2" item="Output Lenz 2nd Address" tooltip="Range 2-2044" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-3"/>
+        <label>                    outputs 3+4</label>
       </variable>
-      <variable label="                    outputs 5+6" CV="1" mask="VVVVVVVV" default="3" item="Output Lenz 3rd Address" tooltip="Range 3-2045" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="3" item="Output Lenz 3rd Address" tooltip="Range 3-2045" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-2"/>
+        <label>                    outputs 5+6</label>
       </variable>
-      <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Lenz 4th Address" tooltip="Range 4-2046" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="4" item="Output Lenz 4th Address" tooltip="Range 4-2046" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="-1"/>
+        <label>                    outputs 7+8</label>
       </variable>
-      <variable label="                    outputs 1+2" CV="1" mask="VVVVVVVV" default="1" item="Output Roco Base Address" tooltip="Range 1-2047">
+      <variable CV="1" mask="VVVVVVVV" default="1" item="Output Roco Base Address" tooltip="Range 1-2047">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="0"/>
+        <label>                    outputs 1+2</label>
       </variable>
-      <variable label="                    outputs 3+4" CV="1" mask="VVVVVVVV" default="2" item="Output Roco 2nd Address" tooltip="Range 2-2048" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="2" item="Output Roco 2nd Address" tooltip="Range 2-2048" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="1"/>
+        <label>                    outputs 3+4</label>
       </variable>
-      <variable label="                    outputs 5+6" CV="1" mask="VVVVVVVV" default="3" item="Output Roco 3rd Address" tooltip="Range 3-2049" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="3" item="Output Roco 3rd Address" tooltip="Range 3-2049" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="2"/>
+        <label>                    outputs 5+6</label>
       </variable>
-      <variable label="                    outputs 7+8" CV="1" mask="VVVVVVVV" default="4" item="Output Roco 4th Address" tooltip="Range 4-2050" minOut="8">
+      <variable CV="1" mask="VVVVVVVV" default="4" item="Output Roco 4th Address" tooltip="Range 4-2050" minOut="8">
         <splitVal highCV="9" upperMask="XXXXXVVV" offset="3"/>
+        <label>                    outputs 7+8</label>
       </variable>
-      <variable label="Accessory Mode Setting" CV="29" mask="XVXXXXXX" item="Accessory Mode" default="1">
+      <variable CV="29" mask="XVXXXXXX" item="Accessory Mode" default="1">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
+        <label>Accessory Mode Setting</label>
       </variable>
-      <variable label="Sequential Address Mode" CV="29" mask="VXXXXXXX" default="0" item="Sequential Address Mode">
+      <variable CV="29" mask="VXXXXXXX" default="0" item="Sequential Address Mode">
         <enumVal>
           <enumChoice choice="Decoder Address Mode"/>
           <enumChoice choice="Output Address Mode"/>
         </enumVal>
+        <label>Sequential Address Mode</label>
       </variable>
-      <variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
+      <variable item="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
         <decVal min="0" max="255"/>
+        <label>Lenz Toggle Mode</label>
       </variable>
-      <variable label="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
+      <variable item="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 1</label>
       </variable>
-      <variable label="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1" minOut="8">
+      <variable item="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1" minOut="8">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 2</label>
       </variable>
-      <variable label="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1" minOut="8">
+      <variable item="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1" minOut="8">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 3</label>
       </variable>
-      <variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1" minOut="8">
+      <variable item="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1" minOut="8">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 4</label>
       </variable>
-      <variable label="Roco Momentary Mode" CV="33" mask="XVXXXXXX" default="0">
+      <variable item="Roco Momentary Mode" CV="33" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Roco Momentary Mode</label>
       </variable>
-      <variable label="Ack Pin" CV="34" mask="XXXXVXXX" default="0">
+      <variable item="Ack Pin" CV="34" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Pin 6" value="0"/>
           <enumChoice choice="Pin 5 or 11" value="1"/>
         </enumVal>
+        <label>Ack Pin</label>
       </variable>
-      <variable label="invert outputs" CV="35" default="255">
+      <variable item="invert outputs" CV="35" default="255">
         <decVal/>
+        <label>invert outputs</label>
       </variable>
-      <variable label="invert output 1" CV="35" mask="VXXXXXXX" minOut="1" default="1">
+      <variable item="invert output 1" CV="35" mask="VXXXXXXX" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 1</label>
       </variable>
-      <variable label="invert output 2" CV="35" mask="XVXXXXXX" minOut="1" default="1">
+      <variable item="invert output 2" CV="35" mask="XVXXXXXX" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 2</label>
       </variable>
-      <variable label="invert output 3" CV="35" mask="XXVXXXXX" minOut="8" default="1">
+      <variable item="invert output 3" CV="35" mask="XXVXXXXX" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 3</label>
       </variable>
-      <variable label="invert output 4" CV="35" mask="XXXVXXXX" minOut="8" default="1">
+      <variable item="invert output 4" CV="35" mask="XXXVXXXX" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 4</label>
       </variable>
-      <variable label="invert output 5" CV="35" mask="XXXXVXXX" minOut="8" default="1">
+      <variable item="invert output 5" CV="35" mask="XXXXVXXX" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 5</label>
       </variable>
-      <variable label="invert output 6" CV="35" mask="XXXXXVXX" minOut="8" default="1">
+      <variable item="invert output 6" CV="35" mask="XXXXXVXX" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 6</label>
       </variable>
-      <variable label="invert output 7" CV="35" mask="XXXXXXVX" minOut="8" default="1">
+      <variable item="invert output 7" CV="35" mask="XXXXXXVX" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 7</label>
       </variable>
-      <variable label="invert output 8" CV="35" mask="XXXXXXXV" minOut="8" default="1">
+      <variable item="invert output 8" CV="35" mask="XXXXXXXV" minOut="8" default="1">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>invert output 8</label>
       </variable>
-      <variable label="flicker outputs" CV="36" default="255">
+      <variable item="flicker outputs" CV="36" default="255">
         <decVal/>
+        <label>flicker outputs</label>
       </variable>
-      <variable label="flicker output 1" CV="36" mask="VXXXXXXX" minOut="8">
+      <variable item="flicker output 1" CV="36" mask="VXXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 1</label>
       </variable>
-      <variable label="flicker output 2" CV="36" mask="XVXXXXXX" minOut="8">
+      <variable item="flicker output 2" CV="36" mask="XVXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 2</label>
       </variable>
-      <variable label="flicker output 3" CV="36" mask="XXVXXXXX" minOut="8">
+      <variable item="flicker output 3" CV="36" mask="XXVXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 3</label>
       </variable>
-      <variable label="flicker output 4" CV="36" mask="XXXVXXXX" minOut="8">
+      <variable item="flicker output 4" CV="36" mask="XXXVXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 4</label>
       </variable>
-      <variable label="flicker output 5" CV="36" mask="XXXXVXXX" minOut="8">
+      <variable item="flicker output 5" CV="36" mask="XXXXVXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 5</label>
       </variable>
-      <variable label="flicker output 6" CV="36" mask="XXXXXVXX" minOut="8">
+      <variable item="flicker output 6" CV="36" mask="XXXXXVXX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 6</label>
       </variable>
-      <variable label="flicker output 7" CV="36" mask="XXXXXXVX" minOut="8">
+      <variable item="flicker output 7" CV="36" mask="XXXXXXVX" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 7</label>
       </variable>
-      <variable label="flicker output 8" CV="36" mask="XXXXXXXV" minOut="8">
+      <variable item="flicker output 8" CV="36" mask="XXXXXXXV" minOut="8">
         <enumVal>
           <enumChoice choice="No" value="1"/>
           <enumChoice choice="Yes" value="0"/>
         </enumVal>
+        <label>flicker output 8</label>
       </variable>
     </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="Decoder Address Mode">
+  <pane>
+    <name>Decoder Address Mode</name>
     <column>
       <row>
         <column>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
           <display item="Sequential Address Mode" format="offradiobutton" label="Select to use settings shown below"/>
-          <label label="           To turn off, use Output Address Mode pane"/>
-          <label label="  "/>
+          <label>
+            <text>           To turn off, use Output Address Mode pane</text>
+          </label>
+          <label>
+            <text>  </text>
+          </label>
         </column>
       </row>
       <separator/>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
       <display item="Decoder Address (1-511)"/>
-      <label label="In Decoder Address Mode, the decoder address is multiplied by four to get the accessory address."/>
-      <label label="An offset of 1 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations"/>
-      <label label="    "/>
+      <label>
+        <text>In Decoder Address Mode, the decoder address is multiplied by four to get the accessory address.</text>
+      </label>
+      <label>
+        <text>An offset of 1 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations</text>
+      </label>
+      <label>
+        <text>    </text>
+      </label>
       <row>
         <column>
-          <label label=" Lenz (etc) Command Stations "/>
-          <label label=" Accessory Address to operate "/>
+          <label>
+            <text> Lenz (etc) Command Stations </text>
+          </label>
+          <label>
+            <text> Accessory Address to operate </text>
+          </label>
           <display item="Decoder Lenz Base Address"/>
           <display item="Decoder Lenz 2nd Address"/>
           <display item="Decoder Lenz 3rd Address"/>
           <display item="Decoder Lenz 4th Address"/>
         </column>
         <column>
-          <label label="                  "/>
+          <label>
+            <text>                  </text>
+          </label>
         </column>
         <column>
-          <label label=" Roco (etc) Command Stations "/>
-          <label label=" Accessory Address to operate "/>
+          <label>
+            <text> Roco (etc) Command Stations </text>
+          </label>
+          <label>
+            <text> Accessory Address to operate </text>
+          </label>
           <display item="Decoder Roco Base Address"/>
           <display item="Decoder Roco 2nd Address"/>
           <display item="Decoder Roco 3rd Address"/>
           <display item="Decoder Roco 4th Address"/>
         </column>
       </row>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
       <separator/>
-      <label label="  "/>
-      <label label="Output Duration and Toggle Mode"/>
-      <label label="Toggle Mode is required for some systems, if in doubt, turn on"/>
-      <label label="The behaviour is the same as with MERG kit built decoders"/>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>Output Duration and Toggle Mode</text>
+      </label>
+      <label>
+        <text>Toggle Mode is required for some systems, if in doubt, turn on</text>
+      </label>
+      <label>
+        <text>The behaviour is the same as with MERG kit built decoders</text>
+      </label>
       <separator/>
       <row>
         <column>
-          <label label="Duration of Output"/>
+          <label>
+            <text>Duration of Output</text>
+          </label>
           <display item="A Output (x10) Millisecs" label="1+2 "/>
           <display item="B Output (x10) Millisecs" label="3+4 "/>
           <display item="C Output (x10) Millisecs" label="5+6 "/>
           <display item="D Output (x10) Millisecs" label="7+8 "/>
-          <label label="(x10 MilliSecs)"/>
-          <label label="0 = continous output"/>
+          <label>
+            <text>(x10 MilliSecs)</text>
+          </label>
+          <label>
+            <text>0 = continous output</text>
+          </label>
         </column>
         <column>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
         </column>
         <column>
-          <label label="Toggle Mode Outputs"/>
+          <label>
+            <text>Toggle Mode Outputs</text>
+          </label>
           <display item="Toggle Mode output 1" format="checkbox" label="1+2"/>
           <display item="Toggle Mode output 2" format="checkbox" label="3+4"/>
           <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
           <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
-          <label label="         "/>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
+          <label>
+            <text>         </text>
+          </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
           <display item="Roco Momentary Mode" format="checkbox"/>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
         </column>
       </row>
       <separator/>
-      <label label="Output behaviours:"/>
-      <label label="  "/>
+      <label>
+        <text>Output behaviours:</text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>
       <row>
         <column>
           <display item="invert output 1" format="checkbox"/>
@@ -352,7 +457,9 @@
           <display item="invert output 7" format="checkbox"/>
         </column>
         <column>
-          <label label="   "/>
+          <label>
+            <text>   </text>
+          </label>
         </column>
         <column>
           <display item="invert output 2" format="checkbox"/>
@@ -361,7 +468,9 @@
           <display item="invert output 8" format="checkbox"/>
         </column>
         <column>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
         </column>
         <column>
           <display item=" "/>
@@ -370,7 +479,9 @@
           <display item="flicker output 7" format="checkbox"/>
         </column>
         <column>
-          <label label="   "/>
+          <label>
+            <text>   </text>
+          </label>
         </column>
         <column>
           <display item=" "/>
@@ -379,86 +490,145 @@
           <display item="flicker output 8" format="checkbox"/>
         </column>
       </row>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
     </column>
   </pane>
-  <pane name="Output Address Mode">
+  <pane>
+    <name>Output Address Mode</name>
     <column>
       <row>
         <column>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
           <display item="Sequential Address Mode" format="onradiobutton" label="Select to use settings shown below"/>
-          <label label="           To turn off, use Decoder Address Mode pane"/>
-          <label label="  "/>
+          <label>
+            <text>           To turn off, use Decoder Address Mode pane</text>
+          </label>
+          <label>
+            <text>  </text>
+          </label>
         </column>
       </row>
       <separator/>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
       <display item="Output Mode Address (1-2047)"/>
-      <label label="In Output Address Mode, the decoder address is the accessory address, there is no multiplication. "/>
-      <label label="An offset of 4 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations"/>
-      <label label="    "/>
+      <label>
+        <text>In Output Address Mode, the decoder address is the accessory address, there is no multiplication. </text>
+      </label>
+      <label>
+        <text>An offset of 4 is required to work with Lenz/Digitrax systems when compared to Roco/MERG command stations</text>
+      </label>
+      <label>
+        <text>    </text>
+      </label>
       <row>
         <column>
-          <label label=" Lenz (etc) Command Stations "/>
-          <label label=" Accessory Address to operate "/>
+          <label>
+            <text> Lenz (etc) Command Stations </text>
+          </label>
+          <label>
+            <text> Accessory Address to operate </text>
+          </label>
           <display item="Output Lenz Base Address"/>
           <display item="Output Lenz 2nd Address"/>
           <display item="Output Lenz 3rd Address"/>
           <display item="Output Lenz 4th Address"/>
         </column>
         <column>
-          <label label="                  "/>
+          <label>
+            <text>                  </text>
+          </label>
         </column>
         <column>
-          <label label=" Roco (etc) Command Stations "/>
-          <label label=" Accessory Address to operate "/>
+          <label>
+            <text> Roco (etc) Command Stations </text>
+          </label>
+          <label>
+            <text> Accessory Address to operate </text>
+          </label>
           <display item="Output Roco Base Address"/>
           <display item="Output Roco 2nd Address"/>
           <display item="Output Roco 3rd Address"/>
           <display item="Output Roco 4th Address"/>
         </column>
       </row>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
       <separator/>
-      <label label="  "/>
-      <label label="Output Duration and Toggle Mode"/>
-      <label label="Toggle Mode is required for some systems, if in doubt, turn on"/>
-      <label label="The behaviour is the same as with MERG kit built decoders"/>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>Output Duration and Toggle Mode</text>
+      </label>
+      <label>
+        <text>Toggle Mode is required for some systems, if in doubt, turn on</text>
+      </label>
+      <label>
+        <text>The behaviour is the same as with MERG kit built decoders</text>
+      </label>
       <separator/>
       <row>
         <column>
-          <label label="Duration of Output"/>
+          <label>
+            <text>Duration of Output</text>
+          </label>
           <display item="A Output (x10) Millisecs" label="1+2 "/>
           <display item="B Output (x10) Millisecs" label="3+4 "/>
           <display item="C Output (x10) Millisecs" label="5+6 "/>
           <display item="D Output (x10) Millisecs" label="7+8 "/>
-          <label label="(x10 MilliSecs)"/>
-          <label label="0 = continous output"/>
+          <label>
+            <text>(x10 MilliSecs)</text>
+          </label>
+          <label>
+            <text>0 = continous output</text>
+          </label>
         </column>
         <column>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
         </column>
         <column>
-          <label label="Toggle Mode Outputs"/>
+          <label>
+            <text>Toggle Mode Outputs</text>
+          </label>
           <display item="Toggle Mode output 1" format="checkbox" label="1+2"/>
           <display item="Toggle Mode output 2" format="checkbox" label="3+4"/>
           <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
           <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
-          <label label="         "/>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
+          <label>
+            <text>         </text>
+          </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
           <display item="Roco Momentary Mode" format="checkbox"/>
-          <label label="  "/>
+          <label>
+            <text>  </text>
+          </label>
         </column>
       </row>
       <separator/>
-      <label label="Output behaviours:"/>
-      <label label="  "/>
+      <label>
+        <text>Output behaviours:</text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>
       <row>
         <column>
           <display item="invert output 1" format="checkbox"/>
@@ -467,7 +637,9 @@
           <display item="invert output 7" format="checkbox"/>
         </column>
         <column>
-          <label label="   "/>
+          <label>
+            <text>   </text>
+          </label>
         </column>
         <column>
           <display item="invert output 2" format="checkbox"/>
@@ -476,7 +648,9 @@
           <display item="invert output 8" format="checkbox"/>
         </column>
         <column>
-          <label label="         "/>
+          <label>
+            <text>         </text>
+          </label>
         </column>
         <column>
           <display item=" "/>
@@ -485,7 +659,9 @@
           <display item="flicker output 7" format="checkbox"/>
         </column>
         <column>
-          <label label="   "/>
+          <label>
+            <text>   </text>
+          </label>
         </column>
         <column>
           <display item=" "/>
@@ -494,7 +670,9 @@
           <display item="flicker output 8" format="checkbox"/>
         </column>
       </row>
-      <label label="  "/>
+      <label>
+        <text>  </text>
+      </label>
     </column>
   </pane>
 </decoder-config>

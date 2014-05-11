@@ -12,60 +12,99 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Light Ports" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Light Ports</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
       <column>
         <display item="CV115.70.0"/>
         <display item="CV115.70.1"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.76.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.84.0"/>
         <display item="CV115.84.1"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.92.0"/>
         <display item="CV115.92.1"/>
         <display item="CV115.92.2"/>
         <display item="CV115.92.3"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.100.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.104.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.116.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
-      <label label="      "/>
+      <label>
+        <text>      </text>
+      </label>
       <column>
         <display item="CV115.73.0"/>
         <display item="CV115.73.1"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.80.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.88.0"/>
         <display item="CV115.88.1"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.96.0"/>
         <display item="CV115.96.1"/>
         <display item="CV115.96.2"/>
         <display item="CV115.96.3"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.102.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.106.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV115.118.0"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
@@ -76,7 +115,9 @@
         <display item="CV115.121.0"/>
         <display item="CV115.122.0"/>
         <display item="CV115.122.1"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
   </column>

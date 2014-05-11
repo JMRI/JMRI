@@ -23,212 +23,260 @@
     </family>
     <programming direct="yes" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01">
+      <variable item="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01">
         <decVal min="1" max="63"/>
+        <label>Low 7 bytes of Address CV1</label>
       </variable>
-      <variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
+      <variable item="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
         <decVal min="1" max="255"/>
+        <label>Outputs Active</label>
       </variable>
-      <variable label="Output Active bit 0" CV="2" mask="XXXXXXXV" default="1">
+      <variable item="Output Active bit 0" CV="2" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 0</label>
       </variable>
-      <variable label="Output Active bit 1" CV="2" mask="XXXXXXVX" default="1">
+      <variable item="Output Active bit 1" CV="2" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 1</label>
       </variable>
-      <variable label="Output Active bit 2" CV="2" mask="XXXXXVXX" default="1">
+      <variable item="Output Active bit 2" CV="2" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 2</label>
       </variable>
-      <variable label="Output Active bit 3" CV="2" mask="XXXXVXXX" default="1">
+      <variable item="Output Active bit 3" CV="2" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 3</label>
       </variable>
-      <variable label="Output Active bit 4" CV="2" mask="XXXVXXXX" default="1">
+      <variable item="Output Active bit 4" CV="2" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 4</label>
       </variable>
-      <variable label="Output Active bit 5" CV="2" mask="XXVXXXXX" default="1">
+      <variable item="Output Active bit 5" CV="2" mask="XXVXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 5</label>
       </variable>
-      <variable label="Output Active bit 6" CV="2" mask="XVXXXXXX" default="1">
+      <variable item="Output Active bit 6" CV="2" mask="XVXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 6</label>
       </variable>
-      <variable label="Output Active bit 7" CV="2" mask="VXXXXXXX" default="1">
+      <variable item="Output Active bit 7" CV="2" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Output Active bit 7</label>
       </variable>
-      <variable label="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
+      <variable item="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
         <decVal min="0" max="255"/>
+        <label>A Output (x10) Millisecs</label>
       </variable>
-      <variable label="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0">
+      <variable item="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0">
         <decVal min="0" max="255"/>
+        <label>B Output (x10) Millisecs</label>
       </variable>
-      <variable label="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0">
+      <variable item="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0">
         <decVal min="0" max="255"/>
+        <label>C Output (x10) Millisecs</label>
       </variable>
-      <variable label="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0">
+      <variable item="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0">
         <decVal min="0" max="255"/>
+        <label>D Output (x10) Millisecs</label>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes">
+      <variable item="Decoder Version" CV="7" readOnly="yes">
         <decVal min="0" max="255"/>
+        <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer" CV="8" readOnly="yes" default="165">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="165">
         <decVal min="0" max="255"/>
+        <label>Manufacturer</label>
       </variable>
-      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
+      <variable item="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
+        <label>High 3 bytes of Address CV9</label>
       </variable>
-      <variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address_1" tooltip="Range 1-2041">
+      <variable CV="1" mask="XXVVVVVV" default="1" item="Short Address_1" tooltip="Range 1-2041">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+        <label>Turnout Address of Output 1 (1-2041)</label>
       </variable>
-      <variable label="Turnout Address 2" CV="1" mask="XXVVVVVV" default="2" tooltip="Range 2-2042">
+      <variable item="Turnout Address 2" CV="1" mask="XXVVVVVV" default="2" tooltip="Range 2-2042">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-2"/>
+        <label>Turnout Address 2</label>
       </variable>
-      <variable label="Turnout Address 3" CV="1" mask="XXVVVVVV" default="3" tooltip="Range 3-2043">
+      <variable item="Turnout Address 3" CV="1" mask="XXVVVVVV" default="3" tooltip="Range 3-2043">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-1"/>
+        <label>Turnout Address 3</label>
       </variable>
-      <variable label="Turnout Address 4" CV="1" mask="XXVVVVVV" default="4" tooltip="Range 4-2044">
+      <variable item="Turnout Address 4" CV="1" mask="XXVVVVVV" default="4" tooltip="Range 4-2044">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="4"/>
+        <label>Turnout Address 4</label>
       </variable>
-      <variable label="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511" item="Long Address_1">
+      <variable CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511" item="Long Address_1">
         <splitVal highCV="9" upperMask="XXXXXVVV"/>
+        <label>Decoder Address (1-511)</label>
       </variable>
-      <variable label="Configuration" CV="29" readOnly="yes" default="128">
+      <variable item="Configuration" CV="29" readOnly="yes" default="128">
         <decVal min="0" max="255"/>
+        <label>Configuration</label>
       </variable>
-      <variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
+      <variable item="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
         <decVal min="0" max="255"/>
+        <label>Lenz Toggle Mode</label>
       </variable>
-      <variable label="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
+      <variable item="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 1</label>
       </variable>
-      <variable label="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1">
+      <variable item="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 2</label>
       </variable>
-      <variable label="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1">
+      <variable item="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 3</label>
       </variable>
-      <variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1">
+      <variable item="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Toggle Mode output 4</label>
       </variable>
-      <variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
+      <variable item="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Off" value="0"/>
           <enumChoice choice="On" value="1"/>
         </enumVal>
+        <label>Dual Address Mode</label>
       </variable>
-      <variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
+      <variable item="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 0</label>
       </variable>
-      <variable label="Invert bit 1" CV="34" mask="XXXXXXVX" default="1" include="52">
+      <variable item="Invert bit 1" CV="34" mask="XXXXXXVX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 1</label>
       </variable>
-      <variable label="Invert bit 2" CV="34" mask="XXXXXVXX" default="1" include="52">
+      <variable item="Invert bit 2" CV="34" mask="XXXXXVXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 2</label>
       </variable>
-      <variable label="Invert bit 3" CV="34" mask="XXXXVXXX" default="1" include="52">
+      <variable item="Invert bit 3" CV="34" mask="XXXXVXXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 3</label>
       </variable>
-      <variable label="Invert bit 4" CV="34" mask="XXXVXXXX" default="1" include="52">
+      <variable item="Invert bit 4" CV="34" mask="XXXVXXXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 4</label>
       </variable>
-      <variable label="Invert bit 5" CV="34" mask="XXVXXXXX" default="1" include="52">
+      <variable item="Invert bit 5" CV="34" mask="XXVXXXXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 5</label>
       </variable>
-      <variable label="Invert bit 6" CV="34" mask="XVXXXXXX" default="1" include="52">
+      <variable item="Invert bit 6" CV="34" mask="XVXXXXXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 6</label>
       </variable>
-      <variable label="Invert bit 7" CV="34" mask="VXXXXXXX" default="1" include="52">
+      <variable item="Invert bit 7" CV="34" mask="VXXXXXXX" default="1" include="52">
         <enumVal>
           <enumChoice choice="Off" value="1"/>
           <enumChoice choice="On" value="0"/>
         </enumVal>
+        <label>Invert bit 7</label>
       </variable>
-      <variable label="Decoder Address_" CV="513" mask="XVVVVVVV" comment="Decoder address" item="Short Address_" default="01">
+      <variable CV="513" mask="XVVVVVVV" comment="Decoder address" item="Short Address_" default="01">
         <decVal min="1" max="63"/>
+        <label>Decoder Address_</label>
       </variable>
-      <variable label="Outputs Active_" CV="514" mask="VVVVVVVV" comment="Outputs Active" default="255">
+      <variable item="Outputs Active_" CV="514" mask="VVVVVVVV" comment="Outputs Active" default="255">
         <decVal min="1" max="255"/>
+        <label>Outputs Active_</label>
       </variable>
-      <variable label="A Output (x10) Millisecs_" CV="515" mask="VVVVVVVV" default="05">
+      <variable item="A Output (x10) Millisecs_" CV="515" mask="VVVVVVVV" default="05">
         <decVal min="0" max="255"/>
+        <label>A Output (x10) Millisecs_</label>
       </variable>
-      <variable label="B Output (x10) Millisecs_" CV="516" mask="VVVVVVVV" default="05">
+      <variable item="B Output (x10) Millisecs_" CV="516" mask="VVVVVVVV" default="05">
         <decVal min="0" max="255"/>
+        <label>B Output (x10) Millisecs_</label>
       </variable>
-      <variable label="C Output (x10) Millisecs_" CV="517" mask="VVVVVVVV" default="05">
+      <variable item="C Output (x10) Millisecs_" CV="517" mask="VVVVVVVV" default="05">
         <decVal min="0" max="255"/>
+        <label>C Output (x10) Millisecs_</label>
       </variable>
-      <variable label="D Output (x10) Millisecs_" CV="518" mask="VVVVVVVV" default="05">
+      <variable item="D Output (x10) Millisecs_" CV="518" mask="VVVVVVVV" default="05">
         <decVal min="0" max="255"/>
+        <label>D Output (x10) Millisecs_</label>
       </variable>
-      <variable label="Decoder Version_" CV="519" readOnly="yes" default="4">
+      <variable item="Decoder Version_" CV="519" readOnly="yes" default="4">
         <decVal min="0" max="255"/>
+        <label>Decoder Version_</label>
       </variable>
-      <variable label="Manufacturer_" CV="520" readOnly="yes" default="165">
+      <variable item="Manufacturer_" CV="520" readOnly="yes" default="165">
         <decVal min="0" max="255"/>
+        <label>Manufacturer_</label>
       </variable>
-      <variable label="High Address_" CV="521" mask="XXXXXVVV">
+      <variable item="High Address_" CV="521" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
+        <label>High Address_</label>
       </variable>
-      <variable label="Configuration_" CV="541" readOnly="yes" default="128">
+      <variable item="Configuration_" CV="541" readOnly="yes" default="128">
         <decVal min="0" max="255"/>
+        <label>Configuration_</label>
       </variable>
-      <variable label="Lenz Toggle Mode_" CV="545" mask="VVVVVVVV" default="15">
+      <variable item="Lenz Toggle Mode_" CV="545" mask="VVVVVVVV" default="15">
         <decVal min="0" max="255"/>
+        <label>Lenz Toggle Mode_</label>
       </variable>
       <constant item="PICV" default="33" comment="CV used for Primary Index"/>
       <ivariable label="Address Range 1" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
@@ -413,58 +461,109 @@
 	</column>
 </pane>
 -->
-  <pane name="DCCACC5 Addresses">
+  <pane>
+    <name>DCCACC5 Addresses</name>
     <column>
       <row>
         <column>
-          <label label="If requiring 8 independent addresses, set dual address to on and set both the first and second address blocks"/>
-          <label label="After setting anything on this pane, double check mode and toggle bits on Settings Pane"/>
-          <label label=" "/>
+          <label>
+            <text>If requiring 8 independent addresses, set dual address to on and set both the first and second address blocks</text>
+          </label>
+          <label>
+            <text>After setting anything on this pane, double check mode and toggle bits on Settings Pane</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>
         <column>
           <display item="Dual Address Mode" label="Dual Address Mode  "/>
-          <label label=" "/>
-          <label label="Addressing first block"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Addressing first block</text>
+          </label>
           <separator/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <row>
             <column>
-              <label label="Decoder Address (1-511) "/>
+              <label>
+                <text>Decoder Address (1-511) </text>
+              </label>
               <display item="Address Range 1"/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
             </column>
             <column>
-              <label label="    Turnout Address in blocks"/>
-              <label label="    of 4, range 1-2044"/>
+              <label>
+                <text>    Turnout Address in blocks</text>
+              </label>
+              <label>
+                <text>    of 4, range 1-2044</text>
+              </label>
               <display item="Turnout Address 1st output (1-2041)"/>
               <display item="Turnout Address 2nd output"/>
               <display item="Turnout Address 3rd output"/>
               <display item="Turnout Address 4th output"/>
             </column>
           </row>
-          <label label=" "/>
-          <label label="Addressing second block"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Addressing second block</text>
+          </label>
           <separator/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <row>
             <column>
-              <label label="Decoder Address (1-511) "/>
+              <label>
+                <text>Decoder Address (1-511) </text>
+              </label>
               <display item="Address Range 2"/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
             </column>
             <column>
-              <label label="    Turnout Address in blocks"/>
-              <label label="    of 4, range 1-2044"/>
+              <label>
+                <text>    Turnout Address in blocks</text>
+              </label>
+              <label>
+                <text>    of 4, range 1-2044</text>
+              </label>
               <display item="Turnout Address 5th output (1-2041)"/>
               <display item="Turnout Address 6th output"/>
               <display item="Turnout Address 7th output"/>
@@ -475,105 +574,167 @@
       </row>
     </column>
   </pane>
-  <pane name="DCCACC5 Settings">
+  <pane>
+    <name>DCCACC5 Settings</name>
     <column>
       <row>
         <column>
-          <label label="Set operating modes"/>
-          <label label="After setting address on Addresses pane, double check mode and toggle bits on this pane"/>
-          <label label=" "/>
+          <label>
+            <text>Set operating modes</text>
+          </label>
+          <label>
+            <text>After setting address on Addresses pane, double check mode and toggle bits on this pane</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>
         <column>
           <display item="Dual Address Mode" label="Dual Address Mode  "/>
-          <label label=" "/>
-          <label label="Output operation, select / deselect as required"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Output operation, select / deselect as required</text>
+          </label>
           <separator/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <row>
             <column>
               <display item="Output Active bit 0" format="checkbox" label="Output Active   1"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1"/>
             </column>
             <column>
               <display item="Output Active bit 1" format="checkbox" label="  2"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 1" format="checkbox" label="  2"/>
             </column>
             <column>
               <display item="Output Active bit 2" format="checkbox" label="  3"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 2" format="checkbox" label="  3"/>
             </column>
             <column>
               <display item="Output Active bit 3" format="checkbox" label="  4"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 3" format="checkbox" label="  4"/>
             </column>
             <column>
               <display item="Output Active bit 4" format="checkbox" label="  5"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 4" format="checkbox" label="  5"/>
             </column>
             <column>
               <display item="Output Active bit 5" format="checkbox" label="  6"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 5" format="checkbox" label="  6"/>
             </column>
             <column>
               <display item="Output Active bit 6" format="checkbox" label="  7"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 6" format="checkbox" label="  7"/>
             </column>
             <column>
               <display item="Output Active bit 7" format="checkbox" label="  8"/>
-              <label label=" "/>
+              <label>
+                <text> </text>
+              </label>
               <display item="Invert bit 7" format="checkbox" label="  8"/>
             </column>
           </row>
-          <label label=" "/>
-          <label label=" "/>
-          <label label=" "/>
-          <label label=" "/>
-          <label label="Output Duration and Toggle Mode"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Output Duration and Toggle Mode</text>
+          </label>
           <separator/>
           <row>
             <column>
-              <label label="Duration of Output"/>
+              <label>
+                <text>Duration of Output</text>
+              </label>
               <display item="A Output (x10) Millisecs" label="1+2 "/>
               <display item="B Output (x10) Millisecs" label="3+4 "/>
               <display item="C Output (x10) Millisecs" label="5+6 "/>
               <display item="D Output (x10) Millisecs" label="7+8 "/>
-              <label label="(x10 MilliSecs)"/>
-              <label label="0 = continous output"/>
+              <label>
+                <text>(x10 MilliSecs)</text>
+              </label>
+              <label>
+                <text>0 = continous output</text>
+              </label>
             </column>
             <column>
-              <label label="         "/>
+              <label>
+                <text>         </text>
+              </label>
             </column>
             <column>
-              <label label="Toggle Mode Outputs"/>
+              <label>
+                <text>Toggle Mode Outputs</text>
+              </label>
               <display item="Toggle Mode output 1" format="checkbox" label="1+2"/>
               <display item="Toggle Mode output 2" format="checkbox" label="3+4"/>
               <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
               <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
-              <label label="Not used in dual"/>
-              <label label="address mode"/>
+              <label>
+                <text>Not used in dual</text>
+              </label>
+              <label>
+                <text>address mode</text>
+              </label>
             </column>
           </row>
-          <label label=" "/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
     </column>
   </pane>
-  <pane name="Indexed CVs">
+  <pane>
+    <name>Indexed CVs</name>
     <column>
       <row>
         <column>
-          <label label="JMRI 2.8 or later is required to use this definition"/>
-          <label label=" "/>
+          <label>
+            <text>JMRI 2.8 or later is required to use this definition</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>

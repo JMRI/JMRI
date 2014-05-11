@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
 <!-- $Id: MERG_DCCACC.xml 17977 2011-07-18 17:23:46Z zoo $ -->
@@ -20,30 +20,30 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Decoder Address" CV="513" mask="VVVVVVVV" comment="Decoder address">
+      <variable item="Decoder Address" CV="513" mask="VVVVVVVV" comment="Decoder address">
         <decVal min="1" max="63"/>
         <label>Decoder Address</label>
         <comment>Decoder address</comment>
       </variable>
-      <variable label="A Output Milliseconds" CV="515" mask="VVVVVVVV">
+      <variable item="A Output Milliseconds" CV="515" mask="VVVVVVVV">
         <decVal min="0" max="255"/>
         <label>A Output Milliseconds</label>
       </variable>
-      <variable label="B Output Milliseconds" CV="516" mask="VVVVVVVV">
+      <variable item="B Output Milliseconds" CV="516" mask="VVVVVVVV">
         <decVal min="0" max="255"/>
         <label>B Output Milliseconds</label>
       </variable>
-      <variable label="C Output Milliseconds" CV="517" mask="VVVVVVVV">
+      <variable item="C Output Milliseconds" CV="517" mask="VVVVVVVV">
         <decVal min="0" max="255"/>
         <label>C Output Milliseconds</label>
       </variable>
-      <variable label="D Output Milliseconds" CV="518" mask="VVVVVVVV">
+      <variable item="D Output Milliseconds" CV="518" mask="VVVVVVVV">
         <decVal min="0" max="255"/>
         <label>D Output Milliseconds</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="DCCACC">
+  <pane>
     <column>
       <display item="Decoder Address"/>
       <display item="A Output Milliseconds"/>

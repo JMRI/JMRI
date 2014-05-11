@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
 <!-- $Id: ZTC_4007.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -24,57 +24,57 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel" default="1">
+      <variable CV="3" item="Accel" default="1">
         <decVal max="31"/>
         <label>Acceleration Rate</label>
       </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel" default="1">
+      <variable CV="4" item="Decel" default="1">
         <decVal max="31"/>
         <label>Deceleration Rate</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="0">
+      <variable item="Vhigh" CV="5" default="0">
         <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Vmid" CV="6" default="0">
+      <variable item="Vmid" CV="6" default="0">
         <decVal/>
         <label>Vmid</label>
       </variable>
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Manufacturer Version No: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" item="Manufacturer">
+      <variable CV="8" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Total PWM Period" CV="9" default="1" tooltip="Sets motor drive frequency. Range=0 to 255. Low value=large motor; High value=coreless motors">
+      <variable item="Total PWM Period" CV="9" default="1" tooltip="Sets motor drive frequency. Range=0 to 255. Low value=large motor; High value=coreless motors">
         <decVal/>
         <label>Total PWM Period</label>
       </variable>
-      <variable label="Packet Time-out Value" CV="11" default="100" tooltip="Delay on no DCC x 0.01 sec before switching to DC mode">
+      <variable item="Packet Time-out Value" CV="11" default="100" tooltip="Delay on no DCC x 0.01 sec before switching to DC mode">
         <decVal/>
         <label>Packet Time-out Value</label>
       </variable>
-      <variable label="DC Conversion Available (Read Only)" CV="12" readOnly="yes" item="Analog" default="1">
+      <variable CV="12" readOnly="yes" item="Analog" default="1">
         <decVal/>
         <label>DC Conversion Available (Read Only)</label>
       </variable>
-      <variable label="Alternate Function Status" CV="14" default="3" item="alt function">
+      <variable CV="14" default="3" item="alt function">
         <decVal/>
         <label>Alternate Function Status</label>
       </variable>
-      <variable label="Speed Table/Mid Range Cab Speed Step" CV="25" default="100" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
+      <variable item="Speed Table/Mid Range Cab Speed Step" CV="25" default="100" comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
         <decVal/>
         <label>Speed Table/Mid Range Cab Speed Step</label>
         <comment>See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied</comment>
       </variable>
-      <variable label="Decoder Automatic Stopping Configuration" CV="27" default="3" comment="Allows Automatic stop on detection of Assymetric signal        0=Disable, 1=Right Rail, 2= Left Rail, 3= Both Rails">
+      <variable item="Decoder Automatic Stopping Configuration" CV="27" default="3" comment="Allows Automatic stop on detection of Assymetric signal        0=Disable, 1=Right Rail, 2= Left Rail, 3= Both Rails">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -92,7 +92,7 @@
         <label>Decoder Automatic Stopping Configuration</label>
         <comment>Allows Automatic stop on detection of Assymetric signal        0=Disable, 1=Right Rail, 2= Left Rail, 3= Both Rails</comment>
       </variable>
-      <variable label="ZTC Talkback Configuration" CV="28" item="talkbackconfig" comment="Used to configure ZTC Talkback       0= Talkback OFF, 1= Constant Broadcast, 2= Broadcast on detection of Asymetric Signal">
+      <variable CV="28" item="talkbackconfig" comment="Used to configure ZTC Talkback       0= Talkback OFF, 1= Constant Broadcast, 2= Broadcast on detection of Asymetric Signal">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -107,7 +107,7 @@
         <label>ZTC Talkback Configuration</label>
         <comment>Used to configure ZTC Talkback       0= Talkback OFF, 1= Constant Broadcast, 2= Broadcast on detection of Asymetric Signal</comment>
       </variable>
-      <variable label="Locomotive Direction" CV="29" default="0" mask="XXXXXXXV">
+      <variable item="Locomotive Direction" CV="29" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
             <choice>normal</choice>
@@ -118,7 +118,7 @@
         </enumVal>
         <label>Locomotive Direction</label>
       </variable>
-      <variable label="Speed Steps" CV="29" default="1" mask="XXXXXXVX" item="Speed Step Mode">
+      <variable CV="29" default="1" mask="XXXXXXVX" item="Speed Step Mode">
         <enumVal>
           <enumChoice choice="14 speed step format">
             <choice>14 speed step format</choice>
@@ -129,7 +129,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" default="0" mask="XXXXXVXX" item="Analog (DC) Operation">
+      <variable CV="29" default="0" mask="XXXXXVXX" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="NMRA Digital only">
             <choice>NMRA Digital only</choice>
@@ -140,7 +140,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-      <variable label="ZTC Talkback" CV="29" default="0" mask="XXXXVXXX" item="ZTC Talkback">
+      <variable CV="29" default="0" mask="XXXXVXXX" item="ZTC Talkback">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -151,7 +151,7 @@
         </enumVal>
         <label>ZTC Talkback</label>
       </variable>
-      <variable label="Speed Table Definition" CV="29" default="0" mask="XXXVXXXX">
+      <variable item="Speed Table Definition" CV="29" default="0" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -162,7 +162,7 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-      <variable label="F0(f) controls output 1" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" default="1" minOut="1" minFn="0">
+      <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" default="1" minOut="1" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -173,7 +173,7 @@
         </enumVal>
         <label>F0(f) controls output 1</label>
       </variable>
-      <variable label="F0(f) controls output 2" CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" default="0" minOut="2" minFn="0">
+      <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" default="0" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -184,7 +184,7 @@
         </enumVal>
         <label>F0(f) controls output 2</label>
       </variable>
-      <variable label="F0(f) controls output 3" CV="33" mask="XXXXXVXX" item="FL(f) controls output 3" default="0" minOut="2" minFn="0">
+      <variable CV="33" mask="XXXXXVXX" item="FL(f) controls output 3" default="0" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -195,7 +195,7 @@
         </enumVal>
         <label>F0(f) controls output 3</label>
       </variable>
-      <variable label="F0(r) controls output 1" CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" default="0" minOut="1" minFn="0">
+      <variable CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" default="0" minOut="1" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -206,7 +206,7 @@
         </enumVal>
         <label>F0(r) controls output 1</label>
       </variable>
-      <variable label="F0(r) controls output 2" CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" default="1" minOut="2" minFn="0">
+      <variable CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" default="1" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -217,7 +217,7 @@
         </enumVal>
         <label>F0(r) controls output 2</label>
       </variable>
-      <variable label="F0(r) controls output 3" CV="34" mask="XXXXXVXX" item="FL(r) controls output 3" default="0" minOut="2" minFn="0">
+      <variable CV="34" mask="XXXXXVXX" item="FL(r) controls output 3" default="0" minOut="2" minFn="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -228,7 +228,7 @@
         </enumVal>
         <label>F0(r) controls output 3</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" default="0" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" default="0" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -239,7 +239,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" default="0" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" default="0" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -250,7 +250,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" default="1" minOut="3" minFn="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" default="1" minOut="3" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -261,7 +261,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -272,7 +272,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -283,7 +283,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -294,7 +294,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" default="1" minOut="3" minFn="2">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" default="1" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -305,7 +305,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -316,7 +316,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -327,7 +327,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -338,7 +338,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -349,7 +349,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="37" mask="XXXVXXXX" default="1" minOut="3" minFn="3">
+      <variable item="F4 controls output 5" CV="37" mask="XXXVXXXX" default="1" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -360,12 +360,12 @@
         </enumVal>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="Auto Stopping Distance" CV="48" tooltip="0 = None; 255=max" comment="Sets the constant Braking Distance for auto stopping 0-255">
+      <variable item="Auto Stopping Distance" CV="48" tooltip="0 = None; 255=max" comment="Sets the constant Braking Distance for auto stopping 0-255">
         <decVal/>
         <label>Auto Stopping Distance</label>
         <comment>Sets the constant Braking Distance for auto stopping 0-255</comment>
       </variable>
-      <variable label="Output 1 effect generated" CV="49" mask="XXVVVVVV" minOut="3">
+      <variable item="Output 1 effect generated" CV="49" mask="XXVVVVVV" minOut="3">
         <enumVal>
           <enumChoice choice="Output is ON or OFF">
             <choice>Output is ON or OFF</choice>
@@ -487,7 +487,7 @@
         </enumVal>
         <label>Output 1 effect generated</label>
       </variable>
-      <variable label="Output 2 effect generated" CV="50" mask="XXVVVVVV" minOut="3">
+      <variable item="Output 2 effect generated" CV="50" mask="XXVVVVVV" minOut="3">
         <enumVal>
           <enumChoice choice="Output is ON or OFF">
             <choice>Output is ON or OFF</choice>
@@ -609,7 +609,7 @@
         </enumVal>
         <label>Output 2 effect generated</label>
       </variable>
-      <variable label="Output 3 effect generated" CV="51" mask="XXVVVVVV" minOut="3">
+      <variable item="Output 3 effect generated" CV="51" mask="XXVVVVVV" minOut="3">
         <enumVal>
           <enumChoice choice="Output is ON or OFF">
             <choice>Output is ON or OFF</choice>
@@ -731,7 +731,7 @@
         </enumVal>
         <label>Output 3 effect generated</label>
       </variable>
-      <variable label="Motor Feedback Enable" item="feedback" CV="56" default="1" comment="0=OFF, 1=ON">
+      <variable item="feedback" CV="56" default="1" comment="0=OFF, 1=ON">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -743,17 +743,17 @@
         <label>Motor Feedback Enable</label>
         <comment>0=OFF, 1=ON</comment>
       </variable>
-      <variable label="Feedback Proportional Gain" CV="57" default="140" comment="Insert comment">
+      <variable item="Feedback Proportional Gain" CV="57" default="140" comment="Insert comment">
         <decVal/>
         <label>Feedback Proportional Gain</label>
         <comment>Insert comment</comment>
       </variable>
-      <variable label="Feedback Integral Gain" CV="58" default="143" comment="Insert comment">
+      <variable item="Feedback Integral Gain" CV="58" default="143" comment="Insert comment">
         <decVal/>
         <label>Feedback Integral Gain</label>
         <comment>Insert comment</comment>
       </variable>
-      <variable label="ZTC Real Slow Mode Enable" CV="60" default="0" comment="Enables ZTCs own slow running mode">
+      <variable item="ZTC Real Slow Mode Enable" CV="60" default="0" comment="Enables ZTCs own slow running mode">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -765,23 +765,23 @@
         <label>ZTC Real Slow Mode Enable</label>
         <comment>Enables ZTCs own slow running mode</comment>
       </variable>
-      <variable label="ZTC Real Slow Mode Tuning" CV="61" comment="allows fine tuning of the speed range">
+      <variable item="ZTC Real Slow Mode Tuning" CV="61" comment="allows fine tuning of the speed range">
         <decVal max="20"/>
         <label>ZTC Real Slow Mode Tuning</label>
         <comment>allows fine tuning of the speed range</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <variable label="User Id #1" CV="105">
+      <variable item="User Id #1" CV="105">
         <decVal/>
         <label>User Id #1</label>
       </variable>
-      <variable label="User Id #2" CV="106">
+      <variable item="User Id #2" CV="106">
         <decVal/>
         <label>User Id #2</label>
       </variable>
@@ -790,13 +790,13 @@
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="ZTC">
+  <pane>
     <column>
       <row>
         <column>
           <display item="feedback"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Feedback Proportional Gain" format="hslider" label=" ">
             <label> </label>
@@ -807,57 +807,57 @@
           </display>
           <display item="Feedback Integral Gain"/>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="ZTC Real Slow Mode Enable" label="ZTC Real Slow Mode Enable">
             <label>ZTC Real Slow Mode Enable</label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="ZTC Real Slow Mode Tuning" format="hslider" label=" " tooltip="Adjust Top Speed Resolution. 0=Fastest: 20=Slowest">
             <label> </label>
           </display>
           <display item="ZTC Real Slow Mode Tuning" tooltip="Adjust Top Speed Resolution. 0=Fastest: 20=Slowest"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Decoder Automatic Stopping Configuration"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Auto Stopping Distance" format="hslider" label="">
             <label/>
           </display>
           <display item="Auto Stopping Distance"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="ZTC Talkback"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="talkbackconfig"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="alt function" tooltip="Sets which functions operate in DC mode: 3=Directional lights"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Analog" tooltip="Read Only CV: 1=Yes"/>
         </column>

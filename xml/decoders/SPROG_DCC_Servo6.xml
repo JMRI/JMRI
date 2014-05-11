@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
 <!-- $Id: SPROG_DCC_Servo6.xml 17977 2011-07-18 17:23:46Z zoo $ -->
@@ -20,138 +20,138 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Decoder Address" CV="1" mask="XXVVVVVV" comment="Decoder address outputs A - F" item="Short Address" default="01">
+      <variable CV="1" mask="XXVVVVVV" comment="Decoder address outputs A - F" item="Short Address" default="01">
         <splitVal highCV="9"/>
         <label>Decoder Address</label>
         <comment>Decoder address outputs A - F</comment>
       </variable>
-      <variable label="Turnout_Address_Low1" CV="1" mask="XXVVVVVV" default="01">
+      <variable item="Turnout_Address_Low1" CV="1" mask="XXVVVVVV" default="01">
         <splitVal highCV="9" factor="4" offset="-3"/>
         <label>Turnout_Address_Low1</label>
       </variable>
-      <variable label="Turnout_Address_MidLow1" CV="1" mask="XXVVVVVV" default="02">
+      <variable item="Turnout_Address_MidLow1" CV="1" mask="XXVVVVVV" default="02">
         <splitVal highCV="9" factor="4" offset="-2"/>
         <label>Turnout_Address_MidLow1</label>
       </variable>
-      <variable label="Turnout_Address_MidHigh1" CV="1" mask="XXVVVVVV" default="03">
+      <variable item="Turnout_Address_MidHigh1" CV="1" mask="XXVVVVVV" default="03">
         <splitVal highCV="9" factor="4" offset="-1"/>
         <label>Turnout_Address_MidHigh1</label>
       </variable>
-      <variable label="Turnout_Address_High1" CV="1" mask="XXVVVVVV" default="04">
+      <variable item="Turnout_Address_High1" CV="1" mask="XXVVVVVV" default="04">
         <splitVal highCV="9" factor="4"/>
         <label>Turnout_Address_High1</label>
       </variable>
-      <variable label="Decoder Address2" CV="69" mask="XXVVVVVV" comment="Decoder address outputs G - H" default="02">
+      <variable item="Decoder Address2" CV="69" mask="XXVVVVVV" comment="Decoder address outputs G - H" default="02">
         <splitVal highCV="9"/>
         <label>Decoder Address2</label>
         <comment>Decoder address outputs G - H</comment>
       </variable>
-      <variable label="Turnout_Address_Low2" CV="69" mask="XXVVVVVV" default="05">
+      <variable item="Turnout_Address_Low2" CV="69" mask="XXVVVVVV" default="05">
         <splitVal highCV="9" factor="4" offset="-3"/>
         <label>Turnout_Address_Low2</label>
       </variable>
-      <variable label="Turnout_Address_MidLow2" CV="69" mask="XXVVVVVV" default="06">
+      <variable item="Turnout_Address_MidLow2" CV="69" mask="XXVVVVVV" default="06">
         <splitVal highCV="9" factor="4" offset="-2"/>
         <label>Turnout_Address_MidLow2</label>
       </variable>
-      <variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
+      <variable item="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
         <decVal min="1" max="255"/>
         <label>Outputs Active</label>
         <comment>Outputs Active</comment>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" default="10">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="10">
         <decVal/>
         <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer" CV="8" readOnly="yes" default="44">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="44">
         <decVal/>
         <label>Manufacturer</label>
       </variable>
-      <variable label="Hardware Version" CV="73" readOnly="yes" default="10">
+      <variable item="Hardware Version" CV="73" readOnly="yes" default="10">
         <decVal/>
         <label>Hardware Version</label>
       </variable>
-      <variable label="Firmware Version" CV="74" readOnly="yes" default="10">
+      <variable item="Firmware Version" CV="74" readOnly="yes" default="10">
         <decVal/>
         <label>Firmware Version</label>
       </variable>
-      <variable label="Configuration" CV="29" readOnly="yes" default="128">
+      <variable item="Configuration" CV="29" readOnly="yes" default="128">
         <decVal min="0" max="255"/>
         <label>Configuration</label>
       </variable>
-      <variable label="Output A endpoint 0" CV="33" default="145" item="OutA0">
+      <variable CV="33" default="145" item="OutA0">
         <decVal min="0" max="255"/>
         <label>Output A endpoint 0</label>
       </variable>
-      <variable label="Output A endpoint 1" CV="34" default="145" item="OutA1">
+      <variable CV="34" default="145" item="OutA1">
         <decVal min="0" max="255"/>
         <label>Output A endpoint 1</label>
       </variable>
-      <variable label="Output A speed" CV="35" default="3" item="OutASpeed">
+      <variable CV="35" default="3" item="OutASpeed">
         <decVal min="1" max="7"/>
         <label>Output A speed</label>
       </variable>
-      <variable label="Output B endpoint 0" CV="36" default="145" item="OutB0">
+      <variable CV="36" default="145" item="OutB0">
         <decVal min="0" max="255"/>
         <label>Output B endpoint 0</label>
       </variable>
-      <variable label="Output B endpoint 1" CV="37" default="145" item="OutB1">
+      <variable CV="37" default="145" item="OutB1">
         <decVal min="0" max="255"/>
         <label>Output B endpoint 1</label>
       </variable>
-      <variable label="Output B speed" CV="38" default="3" item="OutBSpeed">
+      <variable CV="38" default="3" item="OutBSpeed">
         <decVal min="1" max="7"/>
         <label>Output B speed</label>
       </variable>
-      <variable label="Output C endpoint 0" CV="39" default="145" item="OutC0">
+      <variable CV="39" default="145" item="OutC0">
         <decVal min="0" max="255"/>
         <label>Output C endpoint 0</label>
       </variable>
-      <variable label="Output C endpoint 1" CV="40" default="145" item="OutC1">
+      <variable CV="40" default="145" item="OutC1">
         <decVal min="0" max="255"/>
         <label>Output C endpoint 1</label>
       </variable>
-      <variable label="Output C speed" CV="41" default="3" item="OutCSpeed">
+      <variable CV="41" default="3" item="OutCSpeed">
         <decVal min="1" max="7"/>
         <label>Output C speed</label>
       </variable>
-      <variable label="Output D endpoint 0" CV="42" default="145" item="OutD0">
+      <variable CV="42" default="145" item="OutD0">
         <decVal min="0" max="255"/>
         <label>Output D endpoint 0</label>
       </variable>
-      <variable label="Output D endpoint 1" CV="43" default="145" item="OutD1">
+      <variable CV="43" default="145" item="OutD1">
         <decVal min="0" max="255"/>
         <label>Output D endpoint 1</label>
       </variable>
-      <variable label="Output D speed" CV="44" default="3" item="OutDSpeed">
+      <variable CV="44" default="3" item="OutDSpeed">
         <decVal min="1" max="7"/>
         <label>Output D speed</label>
       </variable>
-      <variable label="Output E endpoint 0" CV="45" default="145" item="OutE0">
+      <variable CV="45" default="145" item="OutE0">
         <decVal min="0" max="255"/>
         <label>Output E endpoint 0</label>
       </variable>
-      <variable label="Output E endpoint 1" CV="46" default="145" item="OutE1">
+      <variable CV="46" default="145" item="OutE1">
         <decVal min="0" max="255"/>
         <label>Output E endpoint 1</label>
       </variable>
-      <variable label="Output E speed" CV="47" default="3" item="OutESpeed">
+      <variable CV="47" default="3" item="OutESpeed">
         <decVal min="1" max="7"/>
         <label>Output E speed</label>
       </variable>
-      <variable label="Output F endpoint 0" CV="48" default="145" item="OutF0">
+      <variable CV="48" default="145" item="OutF0">
         <decVal min="0" max="255"/>
         <label>Output F endpoint 0</label>
       </variable>
-      <variable label="Output F endpoint 1" CV="49" default="145" item="OutF1">
+      <variable CV="49" default="145" item="OutF1">
         <decVal min="0" max="255"/>
         <label>Output F endpoint 1</label>
       </variable>
-      <variable label="Output F speed" CV="50" default="3" item="OutFSpeed">
+      <variable CV="50" default="3" item="OutFSpeed">
         <decVal min="1" max="7"/>
         <label>Output F speed</label>
       </variable>
-      <variable label="Local_Input_A" CV="71" mask="XXXXXXXV" default="0">
+      <variable item="Local_Input_A" CV="71" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -162,7 +162,7 @@
         </enumVal>
         <label>Local_Input_A</label>
       </variable>
-      <variable label="Local_Input_B" CV="71" mask="XXXXXXVX" default="0">
+      <variable item="Local_Input_B" CV="71" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -173,7 +173,7 @@
         </enumVal>
         <label>Local_Input_B</label>
       </variable>
-      <variable label="Local_Input_C" CV="71" mask="XXXXXVXX" default="0">
+      <variable item="Local_Input_C" CV="71" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -184,7 +184,7 @@
         </enumVal>
         <label>Local_Input_C</label>
       </variable>
-      <variable label="Local_Input_D" CV="71" mask="XXXXVXXX" default="0">
+      <variable item="Local_Input_D" CV="71" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -195,7 +195,7 @@
         </enumVal>
         <label>Local_Input_D</label>
       </variable>
-      <variable label="Local_Input_E" CV="71" mask="XXXVXXXX" default="0">
+      <variable item="Local_Input_E" CV="71" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -206,7 +206,7 @@
         </enumVal>
         <label>Local_Input_E</label>
       </variable>
-      <variable label="Local_Input_F" CV="71" mask="XXVXXXXX" default="0">
+      <variable item="Local_Input_F" CV="71" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -219,7 +219,7 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="SERVO6">
+  <pane>
     <column>
       <row>
         <column>
@@ -238,8 +238,8 @@
           <display item="Turnout_Address_High1" label="D: ">
             <label>D: </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -252,8 +252,8 @@
           <display item="Turnout_Address_MidLow2" label="F: ">
             <label>F: </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -375,14 +375,14 @@
       <separator/>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="   Local Input Lockout ">
-            <label>   Local Input Lockout </label>
+          <label>
+            <text>   Local Input Lockout </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Local_Input_A" format="checkbox" label="      Input A Disabled " tooltip="Disables local control of output A">
             <label>      Input A Disabled </label>
@@ -402,13 +402,13 @@
           <display item="Local_Input_F" format="checkbox" label="      Input F Disabled " tooltip="Disables local control of output F">
             <label>      Input F Disabled </label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Decoder Version"/>
           <display item="Manufacturer"/>

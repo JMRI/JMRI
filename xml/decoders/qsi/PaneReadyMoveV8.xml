@@ -12,45 +12,72 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Ready to Move" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Ready to Move</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV51.20 Leave"/>
         <display item="CV51.20 Enter"/>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <row>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.1.0" layout="above" label=""/>
           <display item="CV120.1.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.1.0 hoot" format="checkbox"/>
-        <label label="        "/>
-        <label label="Headlight turns on"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>Headlight turns on</text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.2.0" layout="above" label=""/>
           <display item="CV120.2.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.2.0 hoot" format="checkbox"/>
-        <label label="        "/>
-        <label label="Hazard Lights turns on"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>Hazard Lights turns on</text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.3.0" layout="above" label=""/>
           <display item="CV120.3.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.3.0 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
     </row>
     <row>
@@ -60,64 +87,106 @@
           <display item="CV120.4.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.4.0 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.5.0" layout="above" label=""/>
           <display item="CV120.5.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.5.0 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.6.0" layout="above" label=""/>
           <display item="CV120.6.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.6.0 hoot" format="checkbox"/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
+        <label>
+          <text>        </text>
+        </label>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <display item="CV120.4.1" layout="above" label=""/>
           <display item="CV120.4.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.4.1 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.5.1" layout="above" label=""/>
           <display item="CV120.5.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.5.1 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.6.1" layout="above" label=""/>
           <display item="CV120.6.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.6.1 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.7.1" layout="above" label=""/>
           <display item="CV120.7.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.7.1 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
         <row>
           <display item="CV120.8.1" layout="above" label=""/>
           <display item="CV120.8.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.8.1 hoot" format="checkbox"/>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
     </row>
     <row>
@@ -133,11 +202,19 @@
       <column>
 		</column>
       <column>
-        <label label="Rear headlight turns on"/>
+        <label>
+          <text>Rear headlight turns on</text>
+        </label>
       </column>
     </row>
-    <label label="    "/>
-    <label label="If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used"/>
-    <label label="Not all Firmware have Hoot and/or Fancy Ending, regular sound will be played instead"/>
+    <label>
+      <text>    </text>
+    </label>
+    <label>
+      <text>If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used</text>
+    </label>
+    <label>
+      <text>Not all Firmware have Hoot and/or Fancy Ending, regular sound will be played instead</text>
+    </label>
   </column>
 </pane>

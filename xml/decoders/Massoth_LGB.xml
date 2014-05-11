@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
 <!-- $Id: Massoth_LGB.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -667,35 +667,35 @@
       <factReset label="Reset to factory settings" CV="55" default="55"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
       <dccaddress/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Short Address"/>
       <display item="Long Address"/>
       <display item="Address Format"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Locomotive Direction"/>
       <display item="Speed Step Mode"/>
       <display item="Analog (DC) Operation"/>
     </column>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
@@ -703,25 +703,25 @@
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Motor">
+  <pane>
     <column>
       <display item="Accel"/>
       <display item="Decel"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Total PWM Period"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Pause Time between changes in direction"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="MTS Back-EMF"/>
       <display item="analog Back-EMF"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Back-EMF Maximum Adjustment Factor"/>
       <display item="Back-EMF Adjustment Frequency"/>
@@ -729,32 +729,32 @@
     </column>
     <name>Motor</name>
   </pane>
-  <pane name="Basic Speed Control">
+  <pane>
     <column>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
             <label>Select this button to use settings shown below</label>
           </display>
-          <label label="           To turn off, use Speed Table pane">
-            <label>           To turn off, use Speed Table pane</label>
+          <label>
+            <text>           To turn off, use Speed Table pane</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
@@ -779,32 +779,32 @@
     </column>
     <name>Basic Speed Control</name>
   </pane>
-  <pane name="Speed Table">
+  <pane>
     <column>
       <row>
         <column>
           <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
             <label>Select this button to use a Speed Table for Speed Control</label>
           </display>
-          <label label="            To turn off, use Basic Speed Control pane">
-            <label>            To turn off, use Basic Speed Control pane</label>
+          <label>
+            <text>            To turn off, use Basic Speed Control pane</text>
           </label>
         </column>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
         </column>
@@ -812,35 +812,35 @@
       <row>
         <column>
           <display item="Speed Table" layout="above"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Speed Table</name>
   </pane>
-  <pane name="Lights and Functions">
+  <pane>
     <column>
       <display item="Voltage for lighting terminals"/>
       <display item="Voltage for F1 terminal"/>
       <display item="Voltage for F2 terminal"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for front lighting terminal"/>
       <display item="Command for rear lighting terminal"/>
       <display item="Command for F1 terminal"/>
       <display item="Command for F2 terminal"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Loco dependent bit 5"/>
       <display item="Loco dependent bit 6"/>
     </column>
     <name>Lights and Functions</name>
   </pane>
-  <pane name="Sound">
+  <pane>
     <column>
       <display item="Loco dependent bit 4"/>
       <display item="Loco dependent bit 7"/>
@@ -848,14 +848,14 @@
     </column>
     <name>Sound</name>
   </pane>
-  <pane name="Miscellaneous">
+  <pane>
     <column>
       <display item="hand-off function"/>
       <display item="Half-speed mode"/>
     </column>
     <name>Miscellaneous</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

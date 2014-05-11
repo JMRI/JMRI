@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
 <!-- $Id: Zimo_MX640_v3.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -4513,39 +4513,39 @@
       <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
     </resets>
   </decoder>
-  <pane name="Accel/Decel">
+  <pane>
     <column>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <column>
               <display item="Acceleration"/>
               <display item="Deceleration"/>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
-            <label label="      ">
-              <label>      </label>
+            <label>
+              <text>      </text>
             </label>
             <column>
               <display item="Acceleration Trim"/>
               <display item="Acceleration Trim Sign"/>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
-            <label label="    ">
-              <label>    </label>
+            <label>
+              <text>    </text>
             </label>
             <column>
               <display item="Deceleration Trim"/>
               <display item="Deceleration Trim Sign"/>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
           </row>
@@ -4557,8 +4557,8 @@
           <display item="BEMF Intensity"/>
         </column>
         <column>
-          <label label="   ">
-            <label>   </label>
+          <label>
+            <text>   </text>
           </label>
         </column>
         <separator/>
@@ -4566,28 +4566,28 @@
           <display item="BEMF config"/>
         </column>
         <column>
-          <label label="     ">
-            <label>     </label>
+          <label>
+            <text>     </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors">
-            <label>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</label>
+          <label>
+            <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
           </label>
-          <label label="Tens digit is the Proportional value, mid value = 5">
-            <label>Tens digit is the Proportional value, mid value = 5</label>
+          <label>
+            <text>Tens digit is the Proportional value, mid value = 5</text>
           </label>
-          <label label="Ones digit is the integral value, mid value = 5">
-            <label>Ones digit is the integral value, mid value = 5</label>
+          <label>
+            <text>Ones digit is the integral value, mid value = 5</text>
           </label>
-          <label label="With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5">
-            <label>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</label>
+          <label>
+            <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -4596,202 +4596,202 @@
         <column>
           <display item="Motor Frequency and EMF sample Rate"/>
         </column>
-        <label label="    ">
-          <label>    </label>
+        <label>
+          <text>    </text>
         </label>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz">
-            <label>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</label>
+          <label>
+            <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
           </label>
-          <label label="Tens digit = Sampling rate (1-9) mid value = 5">
-            <label>Tens digit = Sampling rate (1-9) mid value = 5</label>
+          <label>
+            <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
           </label>
-          <label label="Ones digit = EMF sampling time (1-9) mid value = 5">
-            <label>Ones digit = EMF sampling time (1-9) mid value = 5</label>
+          <label>
+            <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
           </label>
-          <label label="100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time">
-            <label>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</label>
+          <label>
+            <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
           </label>
-          <label label="255-176 = Low frequency according to formula;-">
-            <label>255-176 = Low frequency according to formula;-</label>
+          <label>
+            <text>255-176 = Low frequency according to formula;-</text>
           </label>
-          <label label="(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp">
-            <label>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</label>
+          <label>
+            <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <row>
-        <label label="Acceleration/Deceleration time (momentum) can be streched in the lower speed range">
-          <label>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</label>
+        <label>
+          <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
         </label>
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Exponential Acceleration"/>
           <display item="Exponential Deceleration"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="      ">
-            <label>      </label>
+          <label>
+            <text>      </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Tens digit = percentage of speed range to be included (0-9)">
-            <label>Tens digit = percentage of speed range to be included (0-9)</label>
+          <label>
+            <text>Tens digit = percentage of speed range to be included (0-9)</text>
           </label>
-          <label label="Ones digit = Exponential curve (0-9)">
-            <label>Ones digit = Exponential curve (0-9)</label>
+          <label>
+            <text>Ones digit = Exponential curve (0-9)</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <row>
         <column>
-          <label label="Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance">
-            <label>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</label>
+          <label>
+            <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
           </label>
-          <label label="for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)">
-            <label>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</label>
+          <label>
+            <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Adaptive Acceleration/Deceleration"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="     ">
-            <label>     </label>
+          <label>
+            <text>     </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Tens digit = acceleration (1-9)">
-            <label>Tens digit = acceleration (1-9)</label>
+          <label>
+            <text>Tens digit = acceleration (1-9)</text>
           </label>
-          <label label="Ones digit = deceleration (1-9)">
-            <label>Ones digit = deceleration (1-9)</label>
+          <label>
+            <text>Ones digit = deceleration (1-9)</text>
           </label>
-          <label label="Value 0 = no adaptive acceleration/deceleration">
-            <label>Value 0 = no adaptive acceleration/deceleration</label>
+          <label>
+            <text>Value 0 = no adaptive acceleration/deceleration</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Accel/Decel</name>
   </pane>
-  <pane name="Shunt/Uncouple">
+  <pane>
     <column>
       <display item="Shunting"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Shunt Function Key" tooltip="+ 6"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Half Speed Key" tooltip="+ 4"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
           <display item="Uncoupler"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Auto Uncouple"/>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Tens digit = Pull In time (0-9)">
-            <label>Tens digit = Pull In time (0-9)</label>
+          <label>
+            <text>Tens digit = Pull In time (0-9)</text>
           </label>
-          <label label="Ones digit = Hold power % x10 (0-9)">
-            <label>Ones digit = Hold power % x10 (0-9)</label>
+          <label>
+            <text>Ones digit = Hold power % x10 (0-9)</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Tens digit = Move Away time (0-9)">
-            <label>Tens digit = Move Away time (0-9)</label>
+          <label>
+            <text>Tens digit = Move Away time (0-9)</text>
           </label>
-          <label label="Ones digit = Internal Speed Step x4 (0-9)">
-            <label>Ones digit = Internal Speed Step x4 (0-9)</label>
+          <label>
+            <text>Ones digit = Internal Speed Step x4 (0-9)</text>
           </label>
-          <label label="Hundreds digit, 1 = Tension Relieve">
-            <label>Hundreds digit, 1 = Tension Relieve</label>
+          <label>
+            <text>Hundreds digit, 1 = Tension Relieve</text>
           </label>
         </column>
       </row>
     </column>
     <name>Shunt/Uncouple</name>
   </pane>
-  <pane name="Alt Function Map">
+  <pane>
     <column>
       <display item="Special Function Mapping" format="radiobuttons"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="           Description                                      Output wire or operation">
-        <label>           Description                                      Output wire or operation</label>
+      <label>
+        <text>           Description                                      Output wire or operation</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="                                               1">
-            <label>                                               1</label>
+          <label>
+            <text>                                               1</text>
           </label>
-          <label label="                                           Front  ">
-            <label>                                           Front  </label>
+          <label>
+            <text>                                           Front  </text>
           </label>
-          <label label="                                           Light  ">
-            <label>                                           Light  </label>
+          <label>
+            <text>                                           Light  </text>
           </label>
           <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
             <label>Forward Headlight F0(f)</label>
@@ -4837,14 +4837,14 @@
           </display>
         </column>
         <column>
-          <label label="    2 ">
-            <label>    2 </label>
+          <label>
+            <text>    2 </text>
           </label>
-          <label label=" Rear ">
-            <label> Rear </label>
+          <label>
+            <text> Rear </text>
           </label>
-          <label label=" Light ">
-            <label> Light </label>
+          <label>
+            <text> Light </text>
           </label>
           <display item="FL(f) controls output 2" format="checkbox" label="">
             <label/>
@@ -4890,14 +4890,14 @@
           </display>
         </column>
         <column>
-          <label label="    3 ">
-            <label>    3 </label>
+          <label>
+            <text>    3 </text>
           </label>
-          <label label="  FO 1 ">
-            <label>  FO 1 </label>
+          <label>
+            <text>  FO 1 </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="FL(f) controls output 3" format="checkbox" label="">
             <label/>
@@ -4943,14 +4943,14 @@
           </display>
         </column>
         <column>
-          <label label="    4 ">
-            <label>    4 </label>
+          <label>
+            <text>    4 </text>
           </label>
-          <label label=" FO 2 ">
-            <label> FO 2 </label>
+          <label>
+            <text> FO 2 </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="FL(f) controls output 4" format="checkbox" label="">
             <label/>
@@ -4996,14 +4996,14 @@
           </display>
         </column>
         <column>
-          <label label="     5 ">
-            <label>     5 </label>
+          <label>
+            <text>     5 </text>
           </label>
-          <label label=" FO 3 ">
-            <label> FO 3 </label>
+          <label>
+            <text> FO 3 </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="FL(f) controls output 5" format="checkbox" label="">
             <label/>
@@ -5049,14 +5049,14 @@
           </display>
         </column>
         <column>
-          <label label="    6">
-            <label>    6</label>
+          <label>
+            <text>    6</text>
           </label>
-          <label label=" FO 4">
-            <label> FO 4</label>
+          <label>
+            <text> FO 4</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="FL(f) controls output 6" format="checkbox" label="">
             <label/>
@@ -5102,14 +5102,14 @@
           </display>
         </column>
         <column>
-          <label label="     7">
-            <label>     7</label>
+          <label>
+            <text>     7</text>
           </label>
-          <label label="  FO 5">
-            <label>  FO 5</label>
+          <label>
+            <text>  FO 5</text>
           </label>
-          <label label="  (+5v)">
-            <label>  (+5v)</label>
+          <label>
+            <text>  (+5v)</text>
           </label>
           <display item="FL(f) controls output 7" format="checkbox" label="">
             <label/>
@@ -5155,14 +5155,14 @@
           </display>
         </column>
         <column>
-          <label label="      8">
-            <label>      8</label>
+          <label>
+            <text>      8</text>
           </label>
-          <label label="  FO 6">
-            <label>  FO 6</label>
+          <label>
+            <text>  FO 6</text>
           </label>
-          <label label="  (+5v)">
-            <label>  (+5v)</label>
+          <label>
+            <text>  (+5v)</text>
           </label>
           <display item="FL(f) controls output 8" format="checkbox" label="">
             <label/>
@@ -5208,52 +5208,52 @@
           </display>
         </column>
         <column>
-          <label label="   Outputs FO 7, FO 8 and FO 9 ">
-            <label>   Outputs FO 7, FO 8 and FO 9 </label>
+          <label>
+            <text>   Outputs FO 7, FO 8 and FO 9 </text>
           </label>
-          <label label="   can not be used with this ">
-            <label>   can not be used with this </label>
+          <label>
+            <text>   can not be used with this </text>
           </label>
-          <label label="   Alternative Function Mapping ">
-            <label>   Alternative Function Mapping </label>
+          <label>
+            <text>   Alternative Function Mapping </text>
           </label>
         </column>
       </row>
     </column>
     <name>Alt Function Map</name>
   </pane>
-  <pane name="Function Output">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="SUSI"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
           <display item="Pulse Chain Generation"/>
         </column>
         <column>
-          <label label="    ">
-            <label>    </label>
+          <label>
+            <text>    </text>
           </label>
         </column>
         <column>
-          <label label="Generates pulse chain commands for LGB sound modules on FO 1">
-            <label>Generates pulse chain commands for LGB sound modules on FO 1</label>
+          <label>
+            <text>Generates pulse chain commands for LGB sound modules on FO 1</text>
           </label>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
           <display item="Function Output 4 as virtual Cam"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
@@ -5263,16 +5263,16 @@
           <row>
             <column>
               <display item="Output Level"/>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
             <column>
               <display item="Output Level" format="hslider" label="">
                 <label/>
               </display>
-              <label label=" ">
-                <label> </label>
+              <label>
+                <text> </text>
               </label>
             </column>
           </row>
@@ -5304,47 +5304,47 @@
               <display item="F7 inverted" format="checkbox"/>
             </column>
             <column>
-              <label label="          ">
-                <label>          </label>
+              <label>
+                <text>          </text>
               </label>
             </column>
           </row>
         </column>
         <separator/>
         <column>
-          <label label="        ">
-            <label>        </label>
+          <label>
+            <text>        </text>
           </label>
         </column>
         <column>
           <row>
             <column>
-              <label label="     ">
-                <label>     </label>
+              <label>
+                <text>     </text>
               </label>
             </column>
             <column>
               <display item="Flash Rate"/>
             </column>
             <column>
-              <label label="    ">
-                <label>    </label>
+              <label>
+                <text>    </text>
               </label>
             </column>
             <column>
-              <label label="Tens digit = on time">
-                <label>Tens digit = on time</label>
+              <label>
+                <text>Tens digit = on time</text>
               </label>
-              <label label="Ones digit = Off time">
-                <label>Ones digit = Off time</label>
+              <label>
+                <text>Ones digit = Off time</text>
               </label>
-              <label label="(0 = 100ms, 9 = 1s)">
-                <label>(0 = 100ms, 9 = 1s)</label>
+              <label>
+                <text>(0 = 100ms, 9 = 1s)</text>
               </label>
             </column>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Flash front light" format="checkbox"/>
           <display item="Flash rear light" format="checkbox"/>
@@ -5356,90 +5356,90 @@
           <display item="Inverse Flash Output 4" format="checkbox"/>
           <display item="Flash Rate Off Time"/>
           <display item="Flash Rate On Time"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
-      <label label="                                         Lighting Effects Adjustments (Mars, Gyralight etc)">
-        <label>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</label>
+      <label>
+        <text>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</text>
       </label>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Minimum Dimming Value"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Light Effects Modifications"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Ditch Light Off Time"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   ">
-            <label>   </label>
+          <label>
+            <text>   </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label="Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)">
-            <label>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</label>
+          <label>
+            <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</text>
           </label>
-          <label label="Ones digit extends Off time(0-9)">
-            <label>Ones digit extends Off time(0-9)</label>
+          <label>
+            <text>Ones digit extends Off time(0-9)</text>
           </label>
-          <label label="Auto Turn Off delay time (0-255 = 0 - 25.5 sec)">
-            <label>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</label>
+          <label>
+            <text>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Function Output</name>
   </pane>
-  <pane name="Zimo Specific">
+  <pane>
     <column>
       <display item="Pulse Chain Recognition (LGB)"/>
       <display item="NMRA"/>
       <display item="Loco Number Recognition"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Signal Dependent Acceleration"/>
           <display item="Signal Dependent Deceleration"/>
           <display item="Signal Dependent Reaction Time"/>
         </column>
         <column>
-          <label label="Signal Dependent Speed Limits">
-            <label>Signal Dependent Speed Limits</label>
+          <label>
+            <text>Signal Dependent Speed Limits</text>
           </label>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="-1-" label="             -1-">
             <label>             -1-</label>
@@ -5450,12 +5450,12 @@
           <display item="-3-"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Distance controlled stopping"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -5474,171 +5474,171 @@
     </column>
     <name>Zimo Specific</name>
   </pane>
-  <pane name="Railcom">
+  <pane>
     <column>
       <display item="Enable RailCom" format="checkbox"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ch. 1 for Address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ch. 2 for Railcom Data"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ch. 1 for Acknowledgment"/>
     </column>
     <name>Railcom</name>
   </pane>
-  <pane name="ABC">
+  <pane>
     <column>
       <display item="Direction Dependent stops with asymmetrical DCC"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Distance controlled stopping"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
           <display item="Distance controlled stopping Distance"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Distance controlled stopping speed correction (ABC)"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
           <display item="Distance controlled stopping Distance" format="hslider" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Signal Dependent Acceleration"/>
           <display item="Signal Dependent Deceleration"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Signal Dependent Reaction Time"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   ">
-            <label>   </label>
+          <label>
+            <text>   </text>
           </label>
         </column>
         <column>
-          <label label="Entered value multiplied by 0.4 seconds is the additional accel/decel">
-            <label>Entered value multiplied by 0.4 seconds is the additional accel/decel</label>
+          <label>
+            <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
           </label>
-          <label label="added to the normal CV3 and CV4 setting, for speed changes due to ABC">
-            <label>added to the normal CV3 and CV4 setting, for speed changes due to ABC</label>
+          <label>
+            <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
           <display item="Asymmetrical DCC Threshold"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="    ">
-            <label>    </label>
+          <label>
+            <text>    </text>
           </label>
         </column>
         <column>
           <row>
             <column>
-              <label label="Hundreds digit = sensitivity">
-                <label>Hundreds digit = sensitivity</label>
+              <label>
+                <text>Hundreds digit = sensitivity</text>
               </label>
             </column>
             <column>
-              <label label="    ">
-                <label>    </label>
+              <label>
+                <text>    </text>
               </label>
             </column>
             <column>
-              <label label="0 = Fast recognition">
-                <label>0 = Fast recognition</label>
+              <label>
+                <text>0 = Fast recognition</text>
               </label>
-              <label label="1 = Normal recognition (0.5s)">
-                <label>1 = Normal recognition (0.5s)</label>
+              <label>
+                <text>1 = Normal recognition (0.5s)</text>
               </label>
-              <label label="2 = Slow recognition (1s)">
-                <label>2 = Slow recognition (1s)</label>
+              <label>
+                <text>2 = Slow recognition (1s)</text>
               </label>
             </column>
           </row>
-          <label label="Tens and Ones digits = Assymmetrical threshold in tenths of a volt">
-            <label>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</label>
+          <label>
+            <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
           </label>
         </column>
       </row>
     </column>
     <name>ABC</name>
   </pane>
-  <pane name="Servos">
+  <pane>
     <column>
       <display item="Servo Protocol" format="radiobuttons"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Servo Control Signal" format="radiobuttons"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
       <row>
         <column>
-          <label label="Servo 1        ">
-            <label>Servo 1        </label>
+          <label>
+            <text>Servo 1        </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Servo 1 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <column>
@@ -5647,13 +5647,13 @@
               </display>
             </column>
             <column>
-              <label label="Tenths of a second">
-                <label>Tenths of a second</label>
+              <label>
+                <text>Tenths of a second</text>
               </label>
             </column>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Servo 1 Left Stop" label="Left Stop">
             <label>Left Stop</label>
@@ -5664,30 +5664,30 @@
           <display item="Servo 1 Right Stop" label="Right Stop">
             <label>Right Stop</label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <separator/>
       <row>
         <column>
-          <label label="Servo 2        ">
-            <label>Servo 2        </label>
+          <label>
+            <text>Servo 2        </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Servo 2 Function Allocation" label="Function Allocation">
             <label>Function Allocation</label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <row>
             <column>
@@ -5696,13 +5696,13 @@
               </display>
             </column>
             <column>
-              <label label="Tenths of a second">
-                <label>Tenths of a second</label>
+              <label>
+                <text>Tenths of a second</text>
               </label>
             </column>
           </row>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Servo 2 Left Stop" label="Left Stop">
             <label>Left Stop</label>
@@ -5713,51 +5713,51 @@
           <display item="Servo 2 Right Stop" label="Right Stop">
             <label>Right Stop</label>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Servos</name>
   </pane>
-  <pane name="Decoder Lock">
+  <pane>
     <column>
       <display item="Service Mode Programming Locked" format="checkbox"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Software Update Locked" format="checkbox"/>
     </column>
     <name>Decoder Lock</name>
   </pane>
   <!-- Begin sound-only panes -->
-  <pane name="Sound">
+  <pane>
     <column>
       <display item="Set sound program"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Total volume"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="On/off key for engine and random sound"/>
       <display item="On/off key for function sound"/>
       <display item="Blow-off key"/>
       <display item="Mute key"/>
       <display item="Fade in/out time"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Switch input 1 playback time"/>
       <display item="Switch input 2 playback time"/>
@@ -5770,20 +5770,20 @@
       <display item="Chuff volume at low speed and no load"/>
       <display item="Chuff volume at high speed and no load"/>
       <display item="Degree of volume change under load"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Blow-off time"/>
       <display item="Delayed start after blow-off time"/>
       <display item="Blow-off schedule"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Load change threshold"/>
       <display item="Reaction time to load change"/>
@@ -5793,39 +5793,39 @@
       <display item="Acceleration threshold for full load sound"/>
       <display item="Duration of acceleration sound"/>
       <display item="Engine volume at full acceleration"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Threshold for deceleration sound"/>
       <display item="Duration of reduced volume on deceleration"/>
       <display item="Volume level during deceleration"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Brake squeal threshold"/>
       <display item="Minimum driving time before brake squeal"/>
     </column>
     <column>
-      <label label="      ">
-        <label>      </label>
+      <label>
+        <text>      </text>
       </label>
     </column>
     <name>Sound</name>
   </pane>
-  <pane name="Random Sounds">
+  <pane>
     <column>
-      <label label="Random Generator Z1">
-        <label>Random Generator Z1</label>
+      <label>
+        <text>Random Generator Z1</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z1" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5836,18 +5836,18 @@
       <display item="Playback length for random generator Z1" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z2">
-        <label>Random Generator Z2</label>
+      <label>
+        <text>Random Generator Z2</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z2" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5858,18 +5858,18 @@
       <display item="Playback length for random generator Z2" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z3">
-        <label>Random Generator Z3</label>
+      <label>
+        <text>Random Generator Z3</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z3" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5880,18 +5880,18 @@
       <display item="Playback length for random generator Z3" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z4">
-        <label>Random Generator Z4</label>
+      <label>
+        <text>Random Generator Z4</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z4" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5904,12 +5904,12 @@
       </display>
     </column>
     <column>
-      <label label="Random Generator Z5">
-        <label>Random Generator Z5</label>
+      <label>
+        <text>Random Generator Z5</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z5" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5920,18 +5920,18 @@
       <display item="Playback length for random generator Z5" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z6">
-        <label>Random Generator Z6</label>
+      <label>
+        <text>Random Generator Z6</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z6" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5942,18 +5942,18 @@
       <display item="Playback length for random generator Z6" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z7">
-        <label>Random Generator Z7</label>
+      <label>
+        <text>Random Generator Z7</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z7" label="Minimum interval">
         <label>Minimum interval</label>
@@ -5964,18 +5964,18 @@
       <display item="Playback length for random generator Z7" label="Playback length">
         <label>Playback length</label>
       </display>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Random Generator Z8">
-        <label>Random Generator Z8</label>
+      <label>
+        <text>Random Generator Z8</text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Minimum interval for random generator Z8" label="Minimum interval">
         <label>Minimum interval</label>

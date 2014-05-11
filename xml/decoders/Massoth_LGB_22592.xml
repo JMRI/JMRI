@@ -1217,61 +1217,94 @@
       <factReset label="Reset to factory settings" CV="55" default="55"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
+    <name>Basic</name>
     <column>
       <dccaddress/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Short Address"/>
       <display item="Long Address"/>
       <display item="Address Format"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Locomotive Direction"/>
       <display item="Speed Step Mode"/>
       <display item="Analog (DC) Operation"/>
     </column>
     <column>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
       <display item="Product number"/>
     </column>
   </pane>
-  <pane name="Motor">
+  <pane>
+    <name>Motor</name>
     <column>
       <display item="Accel"/>
       <display item="Decel"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Total PWM Period"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Pause Time between changes in direction"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="MTS Back-EMF"/>
       <display item="analog Back-EMF"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Back-EMF Maximum Adjustment Factor"/>
       <display item="Back-EMF Adjustment Frequency"/>
       <display item="Back-EMF Maximum Adjustment"/>
     </column>
   </pane>
-  <pane name="Basic Speed Control">
+  <pane>
+    <name>Basic Speed Control</name>
     <column>
       <row>
         <column>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
-          <label label="           To turn off, use Speed Table pane"/>
-          <label label=" "/>
+          <label>
+            <text>           To turn off, use Speed Table pane</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
         <column>
@@ -1286,50 +1319,67 @@
       </row>
     </column>
   </pane>
-  <pane name="Speed Table">
+  <pane>
+    <name>Speed Table</name>
     <column>
       <row>
         <column>
           <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
-          <label label="            To turn off, use Basic Speed Control pane"/>
+          <label>
+            <text>            To turn off, use Basic Speed Control pane</text>
+          </label>
         </column>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
         <column>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
         </column>
       </row>
       <row>
         <column>
           <display item="Speed Table" layout="above"/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
     </column>
   </pane>
-  <pane name="Lights and Functions">
+  <pane>
+    <name>Lights and Functions</name>
     <column>
       <display item="Voltage for lighting terminals"/>
       <display item="Voltage for F1 terminal"/>
       <display item="Voltage for F2 terminal"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Command for front lighting terminal"/>
       <display item="Command for rear lighting terminal"/>
       <display item="Command for F1 terminal"/>
       <display item="Command for F2 terminal"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="F1 output flashing"/>
       <display item="F2 output flashing"/>
     </column>
   </pane>
-  <pane name="Analog Controls">
+  <pane>
+    <name>Analog Controls</name>
     <column>
       <display item="Analog (DC) Operation"/>
     </column>
@@ -1342,99 +1392,151 @@
       <display item="Analog Mode Function Status - F6" format="checkbox"/>
     </column>
   </pane>
-  <pane name="Miscellaneous">
+  <pane>
+    <name>Miscellaneous</name>
     <column>
       <display item="hand-off function"/>
     </column>
   </pane>
-  <pane name="Sound - Main">
+  <pane>
+    <name>Sound - Main</name>
     <column>
       <display item="Control Register - Type of Sound"/>
       <display item="Sound On/Off: Command Allocation - Function Keys"/>
       <display item="Loco Start Up/Shut Down: Command Allocation - Function Keys"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random Sounds Generator"/>
       <display item="Standing Phase Noise"/>
       <display item="Load dependent sound"/>
       <display item="Automatic brake sounds"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="Sound - F-Keys">
+  <pane>
+    <name>Sound - F-Keys</name>
     <column>
       <display item="Horn: Command Allocation - Function Keys"/>
       <display item="Horn: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Brake: Command Allocation - Function Keys"/>
       <display item="Brake: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Bell: Command Allocation - Function Keys"/>
       <display item="Bell: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Coupling: Command Allocation - Function Keys"/>
       <display item="Coupling: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Engineer enters cab: Command Allocation - Function Keys"/>
       <display item="Engineer enters cab: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Rolling train: Command Allocation - Function Keys"/>
       <display item="Rolling train: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Compressor: Command Allocation - Function Keys"/>
       <display item="Compressor: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Trill whistle: Command Allocation - Function Keys"/>
       <display item="Trill whistle: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Gear box direction change: Command Allocation - Function Keys"/>
       <display item="Gear box direction change: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="No sound 10: Command Allocation - Function Keys"/>
       <display item="No sound 10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="No sound 11: Command Allocation - Function Keys"/>
       <display item="No sound 11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="No sound 12: Command Allocation - Function Keys"/>
       <display item="No sound 12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="Sound - Standing">
+  <pane>
+    <name>Sound - Standing</name>
     <column>
       <display item="Standing sound 1 : sound assignment"/>
       <display item="Standing sound 1 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 2 : sound assignment"/>
       <display item="Standing sound 2 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 3 : sound assignment"/>
       <display item="Standing sound 3 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 4 : sound assignment"/>
       <display item="Standing sound 4 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="Sound - Random">
+  <pane>
+    <name>Sound - Random</name>
     <column>
       <display item="Time Value of Random Generator"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 1 : sound assignment"/>
       <display item="Random sound 1 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 2 : sound assignment"/>
       <display item="Random sound 2 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 3 : sound assignment"/>
       <display item="Random sound 3 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 4 : sound assignment"/>
       <display item="Random sound 4 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="CVs">
+  <pane>
+    <name>CVs</name>
     <column>
       <cvtable/>
     </column>

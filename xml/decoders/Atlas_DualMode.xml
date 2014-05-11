@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: Atlas_DualMode.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -26,32 +26,32 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Volts" CV="2" comment="0-31" item="Vstart" default="8">
+      <variable CV="2" comment="0-31" item="Vstart" default="8">
         <decVal max="31"/>
         <label>Start Volts</label>
         <comment>0-31</comment>
       </variable>
-      <variable label="Acceleration momentum" CV="3" item="Accel">
+      <variable CV="3" item="Accel">
         <decVal max="31"/>
         <label>Acceleration momentum</label>
       </variable>
-      <variable label="Brake momentum" CV="4" item="Decel">
+      <variable CV="4" item="Decel">
         <decVal max="31"/>
         <label>Brake momentum</label>
       </variable>
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Manufacturer Version No</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -62,11 +62,11 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+      <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Acceleration Adjustment</label>
       </variable>
-      <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+      <variable item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Adjustment Added">
             <choice>Adjustment Added</choice>
@@ -77,11 +77,11 @@
         </enumVal>
         <label>Consist Acceleration Adjustment Sign</label>
       </variable>
-      <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+      <variable item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Deceleration Adjustment</label>
       </variable>
-      <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+      <variable item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Adjustment Added">
             <choice>Adjustment Added</choice>
@@ -92,7 +92,7 @@
         </enumVal>
         <label>Consist Deceleration Adjustment Sign</label>
       </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+      <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
             <choice>normal</choice>
@@ -103,7 +103,7 @@
         </enumVal>
         <label>Locomotive Direction</label>
       </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode">
         <enumVal>
           <enumChoice choice="14 speed step format">
             <choice>14 speed step format</choice>
@@ -114,7 +114,7 @@
         </enumVal>
         <label>FL Location</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="NMRA Digital only">
             <choice>NMRA Digital only</choice>
@@ -125,7 +125,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
             <choice>Don't use Speed Table</choice>
@@ -136,20 +136,20 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="User Id #1" CV="105">
+      <variable item="User Id #1" CV="105">
         <decVal/>
         <label>User Id #1</label>
       </variable>
-      <variable label="User Id #2" CV="106">
+      <variable item="User Id #2" CV="106">
         <decVal/>
         <label>User Id #2</label>
       </variable>
       <!-- Atlas-specific variables -->
-      <variable label="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
+      <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
         <enumVal>
           <enumChoice choice="Not Active">
             <choice>Not Active</choice>
@@ -160,7 +160,7 @@
         </enumVal>
         <label>Consist Accel and Decel Trims</label>
       </variable>
-      <variable label="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX" item="DC Brake Momentum">
+      <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -171,7 +171,7 @@
         </enumVal>
         <label>Brake Momentum on DC operation</label>
       </variable>
-      <variable label="Directional Headlights" CV="51" mask="XXXXXXXV">
+      <variable item="Directional Headlights" CV="51" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Headlights are Directional">
             <choice>Headlights are Directional</choice>
@@ -182,7 +182,7 @@
         </enumVal>
         <label>Directional Headlights</label>
       </variable>
-      <variable label="Functional Headlight Dimming" CV="51" mask="XXXXXXVX" item="Global lighting option 1">
+      <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1">
         <enumVal>
           <enumChoice choice="Dimming Disabled">
             <choice>Dimming Disabled</choice>
@@ -193,7 +193,7 @@
         </enumVal>
         <label>Functional Headlight Dimming</label>
       </variable>
-      <variable label="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX" item="Global lighting option 2">
+      <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -204,7 +204,7 @@
         </enumVal>
         <label>If Lights Independent, F4 dims F0</label>
       </variable>
-      <variable label="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX" item="Global lighting option 3">
+      <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -215,11 +215,11 @@
         </enumVal>
         <label>If Lights Independent, F4 dims F1</label>
       </variable>
-      <variable label="Dimming Value" CV="52" item="Global lighting option 4" default="64">
+      <variable CV="52" item="Global lighting option 4" default="64">
         <decVal/>
         <label>Dimming Value</label>
       </variable>
-      <variable label="Decoder Software Version" CV="128" readOnly="yes">
+      <variable item="Decoder Software Version" CV="128" readOnly="yes">
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
@@ -231,7 +231,7 @@
       <factReset label="Reset All CVs" CV="8" default="33"/>
     </resets>
   </decoder>
-  <pane name="Atlas">
+  <pane>
     <name>Atlas</name>
     <column>
       <display item="Decoder Software Version"/>

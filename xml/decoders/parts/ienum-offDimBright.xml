@@ -3,16 +3,16 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: enum-disabledEnabled.xml 22112 2012-12-30 02:13:36Z jacobsen $ -->
 <ienumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<ienumChoice choice="Off">
-		<choice>Off</choice>
-	<choice xml:lang="it">Off</choice>
-	</ienumChoice>
-	<ienumChoice choice="Dim">
-		<choice>Dim</choice>
-	                <choice xml:lang="it">Smorzato</choice>
-	</ienumChoice>
-	<ienumChoice choice="Bright">
-		<choice>Bright</choice>
-	                <choice xml:lang="it">Luminoso</choice>
-	</ienumChoice>
+  <ienumChoice choice="Off">
+    <choice>Off</choice>
+    <choice xml:lang="it">Off</choice>
+  </ienumChoice>
+  <ienumChoice choice="Dim">
+    <choice>Dim</choice>
+    <choice xml:lang="it">Smorzato</choice>
+  </ienumChoice>
+  <ienumChoice choice="Bright">
+    <choice>Bright</choice>
+    <choice xml:lang="it">Luminoso</choice>
+  </ienumChoice>
 </ienumVal>

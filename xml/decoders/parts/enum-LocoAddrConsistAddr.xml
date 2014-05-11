@@ -2,16 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2012 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-            <choice xml:lang="it">Risponde solo a Indirizzo Loco</choice>
-			<choice xml:lang="fr">Adresse locomotive seulement</choice>
-			<choice xml:lang="de">Nur Lok Adresse</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-            <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
-			<choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
-			<choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
-          </enumChoice>
+  <enumChoice choice="Locomotive Address Only">
+    <choice>Locomotive Address Only</choice>
+    <choice xml:lang="it">Risponde solo a Indirizzo Loco</choice>
+    <choice xml:lang="fr">Adresse locomotive seulement</choice>
+    <choice xml:lang="de">Nur Lok Adresse</choice>
+  </enumChoice>
+  <enumChoice choice="Respond to Consist Address">
+    <choice>Respond to Consist Address</choice>
+    <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+    <choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+    <choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+  </enumChoice>
 </enumVal>

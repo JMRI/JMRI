@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- $Id: Atlas_NCE_N.xml 2014-03-02 xx:xx:xx $ -->
@@ -15,10 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20140302"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140308"/>
-  <!-- version 1 created by modifing NCE_D13SR_TC.xml ver 10 - kept decoders N12A0, N12A1 and N12A2 - Add CV15 on NCE pane (Alain Le Marchand) -->  
-  <!-- version 1.1 - Used same family name as existing Atlas N-scale decoders (Alain Le Marchand) -->  
+  <!-- version 1 created by modifing NCE_D13SR_TC.xml ver 10 - kept decoders N12A0, N12A1 and N12A2 - Add CV15 on NCE pane (Alain Le Marchand) -->
+  <!-- version 1.1 - Used same family name as existing Atlas N-scale decoders (Alain Le Marchand) -->
   <decoder>
-    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="36" highVersionID="36"  comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
+    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="36" highVersionID="36" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
       <model model="AN12A0 by NCE (Part #518299)" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
@@ -39,58 +39,58 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <variable label="Packet Time-out Value (0=Don't Brake)" CV="11" item="Packet Time-out Value" tooltip="Time the decoder will wait before braking to a stop after running into a section of track with DC power">
+      <variable CV="11" item="Packet Time-out Value" tooltip="Time the decoder will wait before braking to a stop after running into a section of track with DC power">
         <decVal/>
         <label>Packet Time-out Value (0=Don't Brake)</label>
       </variable>
-      <variable label="Programming Key CV15" CV="15" item="Programming Key CV15" tooltip="Need to equal to Decoder Lock ID number to allow programming the decoder.">
+      <variable CV="15" item="Programming Key CV15" tooltip="Need to equal to Decoder Lock ID number to allow programming the decoder.">
         <decVal/>
         <label>Programming Key CV15</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minFn="1" default="1">
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" minFn="2" default="1">
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" minFn="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" minFn="3" default="1">
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" minFn="3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" minFn="4" default="1">
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" minFn="4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" minFn="5" default="1">
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" minFn="5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" minFn="6" default="1">
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" minFn="6" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" minFn="7" default="1">
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" minFn="7" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" minFn="8" default="1">
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" minFn="8" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
       </variable>
-      <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" minFn="1" default="1">
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Forward</label>
       </variable>
-      <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" minFn="1" default="1">
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Reverse</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <variable label="Speed Step" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="14 Speed Step Mode not supported in this decoder">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="14 Speed Step Mode not supported in this decoder">
         <enumVal>
           <enumChoice choice="14 speed step not supported">
             <choice>14 speed step not supported</choice>
@@ -102,7 +102,7 @@
         <label>Speed Step</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -113,320 +113,320 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 7</label>
       </variable>
-      <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 8</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 7</label>
       </variable>
-      <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 8</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 7</label>
       </variable>
-      <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 8</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 7</label>
       </variable>
-      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 8</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 7</label>
       </variable>
-      <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 8</label>
       </variable>
       <!-- this group is like NMRA, except we only go to output 8 for now -->
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 6</label>
       </variable>
-      <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 7</label>
       </variable>
-      <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 8</label>
       </variable>
-      <variable label="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 9</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 5</label>
       </variable>
-      <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
+      <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 6</label>
       </variable>
-      <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
+      <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 7</label>
       </variable>
-      <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
+      <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 8</label>
       </variable>
-      <variable label="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
+      <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 9</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 5</label>
       </variable>
-      <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
+      <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 6</label>
       </variable>
-      <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
+      <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 7</label>
       </variable>
-      <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
+      <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 8</label>
       </variable>
-      <variable label="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
+      <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 9</label>
       </variable>
-      <variable label="F7 controls output 7" CV="41" mask="XXXXXXXV" minOut="7" minFn="7">
+      <variable item="F7 controls output 7" CV="41" mask="XXXXXXXV" minOut="7" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 7</label>
       </variable>
-      <variable label="F7 controls output 8" CV="41" mask="XXXXXXVX" minOut="8" minFn="7">
+      <variable item="F7 controls output 8" CV="41" mask="XXXXXXVX" minOut="8" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 8</label>
       </variable>
-      <variable label="F7 controls output 9" CV="41" mask="XXXXXVXX" minOut="9" minFn="7" default="1">
+      <variable item="F7 controls output 9" CV="41" mask="XXXXXVXX" minOut="9" minFn="7" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 9</label>
       </variable>
-      <variable label="F8 controls output 7" CV="42" mask="XXXXXXXV" minOut="7" minFn="8">
+      <variable item="F8 controls output 7" CV="42" mask="XXXXXXXV" minOut="7" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 7</label>
       </variable>
-      <variable label="F8 controls output 8" CV="42" mask="XXXXXXVX" minOut="8" minFn="8">
+      <variable item="F8 controls output 8" CV="42" mask="XXXXXXVX" minOut="8" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 8</label>
       </variable>
-      <variable label="F8 controls output 9" CV="42" mask="XXXXXVXX" minOut="9" minFn="8">
+      <variable item="F8 controls output 9" CV="42" mask="XXXXXVXX" minOut="9" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 9</label>
       </variable>
-      <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
+      <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 7</label>
       </variable>
-      <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
+      <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 8</label>
       </variable>
-      <variable label="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
+      <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 9</label>
       </variable>
-      <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
+      <variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 7</label>
       </variable>
-      <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
+      <variable item="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 8</label>
       </variable>
-      <variable label="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
+      <variable item="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output 9</label>
       </variable>
-      <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
+      <variable item="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 7</label>
       </variable>
-      <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
+      <variable item="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 8</label>
       </variable>
-      <variable label="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
+      <variable item="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output 9</label>
       </variable>
-      <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
+      <variable item="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 7</label>
       </variable>
-      <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
+      <variable item="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 8</label>
       </variable>
-      <variable label="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
+      <variable item="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 9</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim Adjustment" CV="95" mask="XVVVVVVV" item="Forward Trim" tooltip="Adjustment amount used to equalize the speed in each direction">
+      <variable CV="95" mask="XVVVVVVV" item="Forward Trim" tooltip="Adjustment amount used to equalize the speed in each direction">
         <decVal max="127"/>
         <label>Reverse Trim Adjustment</label>
       </variable>
-      <variable label="Reverse Trim Sign" CV="95" mask="VXXXXXXX" item="Reverse Trim" tooltip="Determines whether to add the adjustment amount to the forward or reverse direction">
+      <variable CV="95" mask="VXXXXXXX" item="Reverse Trim" tooltip="Determines whether to add the adjustment amount to the forward or reverse direction">
         <enumVal>
           <enumChoice choice="Added to reverse direction">
             <choice>Added to reverse direction</choice>
@@ -439,111 +439,111 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- NCE-specific variables -->
-      <variable label="Torque Kick Rate" CV="116" mask="VVVVVVVV" item="Dither frequency" tooltip="Number of 16 ms periods in a row that the motor is ‘kicked’ with a voltage pulse.">
+      <variable CV="116" mask="VVVVVVVV" item="Dither frequency" tooltip="Number of 16 ms periods in a row that the motor is Â‘kickedÂ’ with a voltage pulse.">
         <decVal/>
         <label>Torque Kick Rate</label>
       </variable>
-      <variable label="Torque Kick Strength" CV="117" mask="VVVVVVVV" item="Dither option" tooltip="How much voltage is used to kick the motor at slow speeds. Reduces to 0 as speed is increased.">
+      <variable CV="117" mask="VVVVVVVV" item="Dither option" tooltip="How much voltage is used to kick the motor at slow speeds. Reduces to 0 as speed is increased.">
         <decVal/>
         <label>Torque Kick Strength</label>
       </variable>
-      <variable label="Ditch light hold time" CV="118" mask="VVVVVVVV" item="Global lighting option 1" default="20" minFn="1" tooltip="Value in 1/4 second increments after F2 goes off">
+      <variable CV="118" mask="VVVVVVVV" item="Global lighting option 1" default="20" minFn="1" tooltip="Value in 1/4 second increments after F2 goes off">
         <decVal/>
         <label>Ditch light hold time</label>
       </variable>
-      <variable label="Output 1 effect generated" CV="120" mask="XXVVVVXX" minOut="1">
+      <variable item="Output 1 effect generated" CV="120" mask="XXVVVVXX" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 1 effect generated</label>
       </variable>
-      <variable label="Output 1 active" CV="120" mask="XXXXXXVV" minOut="1" item="Output 1 behavior" default="1">
+      <variable CV="120" mask="XXXXXXVV" minOut="1" item="Output 1 behavior" default="1">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 1 active</label>
       </variable>
-      <variable label="Output 1 connected to" CV="120" mask="VXXXXXXX" minOut="1" item="Output 1 options">
+      <variable CV="120" mask="VXXXXXXX" minOut="1" item="Output 1 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 1 connected to</label>
       </variable>
-      <variable label="Output 2 effect generated" CV="121" mask="XXVVVVXX" minOut="2">
+      <variable item="Output 2 effect generated" CV="121" mask="XXVVVVXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 2 effect generated</label>
       </variable>
-      <variable label="Output 2 active" CV="121" mask="XXXXXXVV" minOut="2" item="Output 2 behavior" default="2">
+      <variable CV="121" mask="XXXXXXVV" minOut="2" item="Output 2 behavior" default="2">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 2 active</label>
       </variable>
-      <variable label="Output 2 connected to" CV="121" mask="VXXXXXXX" minOut="2" item="Output 2 options">
+      <variable CV="121" mask="VXXXXXXX" minOut="2" item="Output 2 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 2 connected to</label>
       </variable>
-      <variable label="Output 3 effect generated" CV="122" mask="XXVVVVXX" minOut="3">
+      <variable item="Output 3 effect generated" CV="122" mask="XXVVVVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 3 effect generated</label>
       </variable>
-      <variable label="Output 3 active" CV="122" mask="XXXXXXVV" minOut="3" item="Output 3 behavior">
+      <variable CV="122" mask="XXXXXXVV" minOut="3" item="Output 3 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 3 active</label>
       </variable>
-      <variable label="Output 3 connected to" CV="122" mask="VXXXXXXX" minOut="3" item="Output 3 options">
+      <variable CV="122" mask="VXXXXXXX" minOut="3" item="Output 3 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 3 connected to</label>
       </variable>
-      <variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="4" item="Output 4 options">
+      <variable CV="123" mask="VXXXXXXX" minOut="4" item="Output 4 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 4 connected to</label>
       </variable>
-      <variable label="Output 4 effect generated" CV="123" mask="XXVVVVXX" minOut="4">
+      <variable item="Output 4 effect generated" CV="123" mask="XXVVVVXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 4 effect generated</label>
       </variable>
-      <variable label="Output 4 active" CV="123" mask="XXXXXXVV" minOut="4" item="Output 4 behavior">
+      <variable CV="123" mask="XXXXXXVV" minOut="4" item="Output 4 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 4 active</label>
       </variable>
-      <variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="5" item="Output 5 options">
+      <variable CV="124" mask="VXXXXXXX" minOut="5" item="Output 5 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 5 connected to</label>
       </variable>
-      <variable label="Output 5 effect generated" CV="124" mask="XXVVVVXX" minOut="5">
+      <variable item="Output 5 effect generated" CV="124" mask="XXVVVVXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 5 effect generated</label>
       </variable>
-      <variable label="Output 5 active" CV="124" mask="XXXXXXVV" minOut="5" item="Output 5 behavior">
+      <variable CV="124" mask="XXXXXXVV" minOut="5" item="Output 5 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 5 active</label>
       </variable>
-      <variable label="Output 6 effect generated" CV="125" mask="XXVVVVXX" minOut="6">
+      <variable item="Output 6 effect generated" CV="125" mask="XXVVVVXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 6 effect generated</label>
       </variable>
-      <variable label="Output 6 active" CV="125" mask="XXXXXXVV" minOut="6" item="Output 6 behavior">
+      <variable CV="125" mask="XXXXXXVV" minOut="6" item="Output 6 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 6 active</label>
       </variable>
-      <variable label="Output 6 connected to" CV="125" mask="VXXXXXXX" minOut="6" item="Output 6 options">
+      <variable CV="125" mask="VXXXXXXX" minOut="6" item="Output 6 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 6 connected to</label>
       </variable>
-      <variable label="Output 7 effect generated" CV="126" mask="XXVVVVXX" minOut="7">
+      <variable item="Output 7 effect generated" CV="126" mask="XXVVVVXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 7 effect generated</label>
       </variable>
-      <variable label="Output 7 active" CV="126" mask="XXXXXXVV" minOut="7" item="Output 7 behavior">
+      <variable CV="126" mask="XXXXXXVV" minOut="7" item="Output 7 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 7 active</label>
       </variable>
-      <variable label="Output 7 connected to" CV="126" mask="VXXXXXXX" minOut="7" item="Output 7 options">
+      <variable CV="126" mask="VXXXXXXX" minOut="7" item="Output 7 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 7 connected to</label>
       </variable>
-      <variable label="Output 8 effect generated" CV="127" mask="XXVVVVXX" minOut="8">
+      <variable item="Output 8 effect generated" CV="127" mask="XXVVVVXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputEffectV35.xml"/>
         <label>Output 8 effect generated</label>
       </variable>
-      <variable label="Output 8 active" CV="127" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
+      <variable CV="127" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputActive.xml"/>
         <label>Output 8 active</label>
       </variable>
-      <variable label="Output 8 connected to" CV="127" mask="VXXXXXXX" minOut="8" item="Output 8 options">
+      <variable CV="127" mask="VXXXXXXX" minOut="8" item="Output 8 options">
         <xi:include href="http://jmri.org/xml/decoders/nce/enum-outputType.xml"/>
         <label>Output 8 connected to</label>
       </variable>
@@ -552,15 +552,15 @@
       <factReset label="Reset All CVs(Programing Track Only)" CV="30" default="2"/>
     </resets>
   </decoder>
-  <pane name="NCE">
+  <pane>
     <column>
       <display item="Decoder Lock ID number"/>
-      <label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming">
-        <label>Tip: you must set CV15 equal to this number to unlock the decoder for programming</label>
+      <label>
+        <text>Tip: you must set CV15 equal to this number to unlock the decoder for programming</text>
       </label>
       <display item="Programming Key CV15"/>
-      <label label="Note: Multi-decoder control in the tools menu will set CV15 as needed.">
-        <label>Multi-decoder control in the tools menu will set CV15 as needed.</label>
+      <label>
+        <text>Multi-decoder control in the tools menu will set CV15 as needed.</text>
       </label>
     </column>
     <name>NCE</name>

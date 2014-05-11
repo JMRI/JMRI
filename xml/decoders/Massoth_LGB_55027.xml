@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
 <!-- $Id: Massoth_LGB_55027.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -1408,41 +1408,41 @@
       <factReset label="Reset lights and functions" CV="7" default="77"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
       <dccaddress/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Short Address"/>
       <display item="Extended Address"/>
       <display item="Address Format"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Locomotive Direction"/>
       <display item="Speed Step Mode"/>
       <display item="Analog (DC) Operation"/>
     </column>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
@@ -1450,25 +1450,25 @@
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Motor">
+  <pane>
     <column>
       <display item="Accel"/>
       <display item="Decel"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Total PWM Period"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Pause time when stopping and changing direction"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Digital Back-EMF"/>
       <display item="Analog Back-EMF"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Back-EMF Maximum Adjustment Factor"/>
       <display item="Back-EMF Adjustment Frequency"/>
@@ -1476,32 +1476,32 @@
     </column>
     <name>Motor</name>
   </pane>
-  <pane name="Basic Speed Control">
+  <pane>
     <column>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
             <label>Select this button to use settings shown below</label>
           </display>
-          <label label="           To turn off, use Speed Table pane">
-            <label>           To turn off, use Speed Table pane</label>
+          <label>
+            <text>           To turn off, use Speed Table pane</text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
@@ -1526,32 +1526,32 @@
     </column>
     <name>Basic Speed Control</name>
   </pane>
-  <pane name="Speed Table">
+  <pane>
     <column>
       <row>
         <column>
           <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
             <label>Select this button to use a Speed Table for Speed Control</label>
           </display>
-          <label label="            To turn off, use Basic Speed Control pane">
-            <label>            To turn off, use Basic Speed Control pane</label>
+          <label>
+            <text>            To turn off, use Basic Speed Control pane</text>
           </label>
         </column>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </row>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
         </column>
@@ -1559,70 +1559,70 @@
       <row>
         <column>
           <display item="Speed Table" layout="above"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
     </column>
     <name>Speed Table</name>
   </pane>
-  <pane name="Lights and Functions">
+  <pane>
     <column>
       <display item="Voltage for lights"/>
       <display item="Command for front light - Direction"/>
       <display item="Command for front light - Function Keys"/>
       <display item="Command for rear light - Direction"/>
       <display item="Command for rear light - Function Keys"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F1 - Direction"/>
       <display item="Command for F1 - Function Keys"/>
       <display item="F1: Special Function: Blinking/Monoflop time base"/>
       <display item="F1: Special Function: Select Special Function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="F1 + F2: Voltage"/>
       <display item="F1 + F2: Voltage: Select Function to be Dimmed"/>
       <display item="F1: Inverse coupling of F1 and F2 terminals"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F2 - Direction"/>
       <display item="Command for F2 - Function Keys"/>
       <display item="F2: Special Function: Blinking/Monoflop time base"/>
       <display item="F2: Special Function: Select Special Function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F3 - Direction"/>
       <display item="Command for F3 - Function Keys"/>
       <display item="F3: Special Function: Blinking/Monoflop time base"/>
       <display item="F3: Special Function: Select Special Function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="F3 + F4: Voltage"/>
       <display item="F3 + F4: Voltage: Select Function to be Dimmed"/>
       <display item="F3: Inverse coupling of F3 and F4 terminals"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F4 - Direction"/>
       <display item="Command for F4 - Function Keys"/>
       <display item="F4: Special Function: Blinking/Monoflop time base"/>
       <display item="F4: Special Function: Select Special Function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F5 - Direction"/>
       <display item="Command for F5 - Function Keys"/>
       <display item="F5: Special Function: Blinking/Monoflop time base"/>
       <display item="F5: Special Function: Select Special Function"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Command for F6 - Direction"/>
       <display item="Command for F6 - Function Keys"/>
@@ -1630,7 +1630,7 @@
     </column>
     <name>Lights and Functions</name>
   </pane>
-  <pane name="Analog Controls">
+  <pane>
     <column>
       <display item="Analog (DC) Operation"/>
     </column>
@@ -1644,30 +1644,30 @@
     </column>
     <name>Analog Controls</name>
   </pane>
-  <pane name="Miscellaneous">
+  <pane>
     <column>
       <row>
         <column>
           <display item="Half-speed mode"/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="LGB configuration">
-            <label>LGB configuration</label>
+          <label>
+            <text>LGB configuration</text>
           </label>
           <separator/>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Function commands"/>
           <display item="Interface"/>
@@ -1676,7 +1676,7 @@
     </column>
     <name>Miscellaneous</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

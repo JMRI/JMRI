@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane name="Lenz Lighting" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -39,356 +39,354 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-
-    <name>Lenz Lighting</name>
-    <name xml:lang="it">Effetti Luce Lenz</name>
-
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.">
-            <label>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</label>
-            <label xml:lang="it">I valori delle CV di questa pagina sono unici in modo che ogni CV rappresenta la selezione Luci per due differenti uscite</label>
-          </label>
-          <label label="The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.">
-            <label>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</label>
-            <label xml:lang="it">Il valore delle decine corrisponde ad una uscita e l'altra cifra corrisponde all'altra uscita</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.">
-            <label>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</label>
-            <label xml:lang="it">Esempio: un valore di 23 cossponde a una Gyra-light sull'uscita B e una Strobe sulla uscita A</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The following lighting effects are">
-            <label>The following lighting effects are</label>
-            <label xml:lang="it">I seguenti effetti di luce sono</label>
-          </label>
-          <label label="available for outputs A and B">
-            <label>available for outputs A and B</label>
-            <label xml:lang="it">disponibili per le uscite A e B</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="No effect    ">
-            <label>No effect    </label>
-            <label xml:lang="it">Nessun effetto</label>
-          </label>
-          <label label="Mars light   ">
-            <label>Mars light   </label>
-            <label xml:lang="it">Mars-light   </label>
-          </label>
-          <label label="Gyra light   ">
-            <label>Gyra light   </label>
-            <label xml:lang="it">Gyra-light   </label>
-          </label>
-          <label label="Strobe       ">
-            <label>Strobe       </label>
-            <label xml:lang="it">Strobe       </label>
-          </label>
-          <label label="Double Strobe">
-            <label>Double Strobe</label>
-            <label xml:lang="it">Doppio Strobe</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output B">
-            <label>Output B</label>
-            <label xml:lang="it">Uscita B</label>
-          </label>
-          <label label=" (Tens)">
-            <label> (Tens)</label>
-            <label xml:lang="it"> (decine)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label="   4">
-            <label>   4</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output A">
-            <label>Output A</label>
-            <label xml:lang="it">Uscita A</label>
-          </label>
-          <label label=" (Ones)">
-            <label> (Ones)</label>
-            <label xml:lang="it"> (Unità)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label="   4">
-            <label>   4</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="                                                          ">
-            <label>                                                          </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="Lighting effects A/B"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The following lighting effects are">
-            <label>The following lighting effects are</label>
-            <label xml:lang="it">I seguenti effetti di luce sono</label>
-          </label>
-          <label label="available for output D">
-            <label>available for output D</label>
-            <label xml:lang="it">disponibili per l'uscita D</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="No effect                      ">
-            <label>No effect                      </label>
-            <label xml:lang="it">Nessun effetto                 </label>
-          </label>
-          <label label="Flashing with output C         ">
-            <label>Flashing with output C         </label>
-            <label xml:lang="it">Lampeggio con uscita C         </label>
-          </label>
-          <label label="Flashing alternate to output C ">
-            <label>Flashing alternate to output C </label>
-            <label xml:lang="it">Lampeggio alternato su uscita C</label>
-          </label>
-          <label label="Flickering type 2 (less smooth)">
-            <label>Flickering type 2 (less smooth)</label>
-            <label xml:lang="it">Sfarfallio tipo 2 (meno marcato)</label>
-          </label>
-          <label label="Flickering type 3 (excitedly)  ">
-            <label>Flickering type 3 (excitedly)  </label>
-            <label xml:lang="it">Sfarfallio tipo 3 (frequente)  </label>
-          </label>
-          <label label="Dimming enabled                ">
-            <label>Dimming enabled                </label>
-            <label xml:lang="it">Attenuazione Abilitata         </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output D">
-            <label>Output D</label>
-            <label xml:lang="it">Uscita D</label>
-          </label>
-          <label label=" (Tens)">
-            <label> (Tens)</label>
-            <label xml:lang="it"> (decine)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label="   4">
-            <label>   4</label>
-          </label>
-          <label label="   5">
-            <label>   5</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output C">
-            <label>Output C</label>
-            <label xml:lang="it">Uscita C</label>
-          </label>
-          <label label=" (Ones)">
-            <label> (Ones)</label>
-            <label xml:lang="it"> (unità)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The following lighting effects are">
-            <label>The following lighting effects are</label>
-            <label xml:lang="it">I seguenti effetti luce sono</label>
-          </label>
-          <label label="available for output C">
-            <label>available for output C</label>
-            <label xml:lang="it">disponibili per l'Uscita C</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="No effect                 ">
-            <label>No effect                 </label>
-            <label xml:lang="it">nessun effetto            </label>
-          </label>
-          <label label="Flashing                  ">
-            <label>Flashing                  </label>
-            <label xml:lang="it">Lampeggiante             </label>
-          </label>
-          <label label="Flickering type 1 (smooth)">
-            <label>Flickering type 1 (smooth)</label>
-            <label xml:lang="it">Sfarfallio tipo 1 (morbido)</label>
-          </label>
-          <label label="Dimming enabled           ">
-            <label>Dimming enabled           </label>
-            <label xml:lang="it">Attenuazione abilitata     </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="Lighting effects C/D"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-  </pane>
+  <name>Lenz Lighting</name>
+  <name xml:lang="it">Effetti Luce Lenz</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
+          <text xml:lang="it">I valori delle CV di questa pagina sono unici in modo che ogni CV rappresenta la selezione Luci per due differenti uscite</text>
+        </label>
+        <label>
+          <text>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
+          <text xml:lang="it">Il valore delle decine corrisponde ad una uscita e l'altra cifra corrisponde all'altra uscita</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</text>
+          <text xml:lang="it">Esempio: un valore di 23 cossponde a una Gyra-light sull'uscita B e una Strobe sulla uscita A</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti di luce sono</text>
+        </label>
+        <label>
+          <text>available for outputs A and B</text>
+          <text xml:lang="it">disponibili per le uscite A e B</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>No effect    </text>
+          <text xml:lang="it">Nessun effetto</text>
+        </label>
+        <label>
+          <text>Mars light   </text>
+          <text xml:lang="it">Mars-light   </text>
+        </label>
+        <label>
+          <text>Gyra light   </text>
+          <text xml:lang="it">Gyra-light   </text>
+        </label>
+        <label>
+          <text>Strobe       </text>
+          <text xml:lang="it">Strobe       </text>
+        </label>
+        <label>
+          <text>Double Strobe</text>
+          <text xml:lang="it">Doppio Strobe</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>        </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Output B</text>
+          <text xml:lang="it">Uscita B</text>
+        </label>
+        <label>
+          <text> (Tens)</text>
+          <text xml:lang="it"> (decine)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>   0</text>
+        </label>
+        <label>
+          <text>   1</text>
+        </label>
+        <label>
+          <text>   2</text>
+        </label>
+        <label>
+          <text>   3</text>
+        </label>
+        <label>
+          <text>   4</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>        </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Output A</text>
+          <text xml:lang="it">Uscita A</text>
+        </label>
+        <label>
+          <text> (Ones)</text>
+          <text xml:lang="it"> (Unità)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>   0</text>
+        </label>
+        <label>
+          <text>   1</text>
+        </label>
+        <label>
+          <text>   2</text>
+        </label>
+        <label>
+          <text>   3</text>
+        </label>
+        <label>
+          <text>   4</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>                                                          </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Lighting effects A/B"/>
+        <label>
+          <text> </text>
+        </label>
+        <separator/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti di luce sono</text>
+        </label>
+        <label>
+          <text>available for output D</text>
+          <text xml:lang="it">disponibili per l'uscita D</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>No effect                      </text>
+          <text xml:lang="it">Nessun effetto                 </text>
+        </label>
+        <label>
+          <text>Flashing with output C         </text>
+          <text xml:lang="it">Lampeggio con uscita C         </text>
+        </label>
+        <label>
+          <text>Flashing alternate to output C </text>
+          <text xml:lang="it">Lampeggio alternato su uscita C</text>
+        </label>
+        <label>
+          <text>Flickering type 2 (less smooth)</text>
+          <text xml:lang="it">Sfarfallio tipo 2 (meno marcato)</text>
+        </label>
+        <label>
+          <text>Flickering type 3 (excitedly)  </text>
+          <text xml:lang="it">Sfarfallio tipo 3 (frequente)  </text>
+        </label>
+        <label>
+          <text>Dimming enabled                </text>
+          <text xml:lang="it">Attenuazione Abilitata         </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>        </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Output D</text>
+          <text xml:lang="it">Uscita D</text>
+        </label>
+        <label>
+          <text> (Tens)</text>
+          <text xml:lang="it"> (decine)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>   0</text>
+        </label>
+        <label>
+          <text>   1</text>
+        </label>
+        <label>
+          <text>   2</text>
+        </label>
+        <label>
+          <text>   3</text>
+        </label>
+        <label>
+          <text>   4</text>
+        </label>
+        <label>
+          <text>   5</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>        </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Output C</text>
+          <text xml:lang="it">Uscita C</text>
+        </label>
+        <label>
+          <text> (Ones)</text>
+          <text xml:lang="it"> (unità)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>   0</text>
+        </label>
+        <label>
+          <text>   1</text>
+        </label>
+        <label>
+          <text>   2</text>
+        </label>
+        <label>
+          <text>   3</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>        </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>The following lighting effects are</text>
+          <text xml:lang="it">I seguenti effetti luce sono</text>
+        </label>
+        <label>
+          <text>available for output C</text>
+          <text xml:lang="it">disponibili per l'Uscita C</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>No effect                 </text>
+          <text xml:lang="it">nessun effetto            </text>
+        </label>
+        <label>
+          <text>Flashing                  </text>
+          <text xml:lang="it">Lampeggiante             </text>
+        </label>
+        <label>
+          <text>Flickering type 1 (smooth)</text>
+          <text xml:lang="it">Sfarfallio tipo 1 (morbido)</text>
+        </label>
+        <label>
+          <text>Dimming enabled           </text>
+          <text xml:lang="it">Attenuazione abilitata     </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Lighting effects C/D"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

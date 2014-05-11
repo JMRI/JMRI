@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Servos" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
         <display item="Servo Protocol" format="radiobuttons"/>
       </column>
       <column>
-        <label label="                          ">
-          <label>                          </label>
+        <label>
+          <text>                          </text>
         </label>
       </column>
       <column>
@@ -17,25 +17,25 @@
       </column>
     </row>
     <display item="Servo Centering" format="radiobuttons"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <separator/>
     <row>
       <column>
-        <label label="Servo 1">
-          <label>Servo 1</label>
+        <label>
+          <text>Servo 1</text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 1 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
@@ -44,13 +44,13 @@
             </display>
           </column>
           <column>
-            <label label="Tenths of a second">
-              <label>Tenths of a second</label>
+            <label>
+              <text>Tenths of a second</text>
             </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 1 Left Stop" label="Left Stop">
           <label>Left Stop</label>
@@ -61,35 +61,35 @@
         <display item="Servo 1 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="      ">
-          <label>      </label>
+        <label>
+          <text>      </text>
         </label>
       </column>
       <separator/>
       <column>
-        <label label="      ">
-          <label>      </label>
+        <label>
+          <text>      </text>
         </label>
       </column>
       <column>
-        <label label="Servo 2">
-          <label>Servo 2</label>
+        <label>
+          <text>Servo 2</text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 2 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
@@ -98,13 +98,13 @@
             </display>
           </column>
           <column>
-            <label label="Tenths of a second">
-              <label>Tenths of a second</label>
+            <label>
+              <text>Tenths of a second</text>
             </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 2 Left Stop" label="Left Stop">
           <label>Left Stop</label>
@@ -115,27 +115,27 @@
         <display item="Servo 2 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
     <row>
       <column>
-        <label label="Servo 3">
-          <label>Servo 3</label>
+        <label>
+          <text>Servo 3</text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 3 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
@@ -144,13 +144,13 @@
             </display>
           </column>
           <column>
-            <label label="Tenths of a second">
-              <label>Tenths of a second</label>
+            <label>
+              <text>Tenths of a second</text>
             </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 3 Left Stop" label="Left Stop">
           <label>Left Stop</label>
@@ -161,35 +161,35 @@
         <display item="Servo 3 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="      ">
-          <label>      </label>
+        <label>
+          <text>      </text>
         </label>
       </column>
       <separator/>
       <column>
-        <label label="      ">
-          <label>      </label>
+        <label>
+          <text>      </text>
         </label>
       </column>
       <column>
-        <label label="Servo 4">
-          <label>Servo 4</label>
+        <label>
+          <text>Servo 4</text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 4 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
@@ -198,13 +198,13 @@
             </display>
           </column>
           <column>
-            <label label="Tenths of a second">
-              <label>Tenths of a second</label>
+            <label>
+              <text>Tenths of a second</text>
             </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Servo 4 Left Stop" label="Left Stop">
           <label>Left Stop</label>
@@ -215,14 +215,14 @@
         <display item="Servo 4 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Special Assignment for Live Steam" format="radiobuttons" tooltip="185"/>
   </column>

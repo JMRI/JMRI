@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- $Id: Zimo_MX61_N.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -30,50 +30,50 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" default="7" comment="Range 0-252">
+      <variable item="Vstart" CV="2" default="7" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vstart</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Acceleration" CV="3" default="0" comment="Range 0-255">
+      <variable item="Acceleration" CV="3" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Acceleration</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Deceleration" CV="4" default="0" comment="Range 0-255">
+      <variable item="Deceleration" CV="4" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Deceleration</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Vhigh" CV="5" default="252" comment="Range 0-252">
+      <variable item="Vhigh" CV="5" default="252" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vhigh</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Vmid" CV="6" default="0" comment="Range 0-252">
+      <variable item="Vmid" CV="6" default="0" comment="Range 0-252">
         <decVal max="252"/>
         <label>Vmid</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Decoder Version No" CV="7" readOnly="yes" item="Decoder Version" default="132">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="132">
         <decVal/>
         <label>Decoder Version No</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="145">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="145">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Total PWM Period" CV="9" default="0" comment="Range 0/176-255">
+      <variable item="Total PWM Period" CV="9" default="0" comment="Range 0/176-255">
         <decVal/>
         <label>Total PWM Period</label>
         <comment>Range 0/176-255</comment>
       </variable>
-      <variable label="Consist Address" CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
+      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
         <decVal/>
         <label>Consist Address</label>
         <comment>Allows permanent storage of consist address. Range 0-127</comment>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -84,7 +84,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -95,7 +95,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -106,7 +106,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
             <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
@@ -117,7 +117,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -128,7 +128,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -139,7 +139,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -150,7 +150,7 @@
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -161,7 +161,7 @@
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -172,7 +172,7 @@
         </enumVal>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -183,7 +183,7 @@
         </enumVal>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -194,7 +194,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -205,7 +205,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -216,7 +216,7 @@
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -227,7 +227,7 @@
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -238,7 +238,7 @@
         </enumVal>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -249,7 +249,7 @@
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -260,7 +260,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -271,7 +271,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1">
+      <variable item="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -282,7 +282,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -293,7 +293,7 @@
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -304,7 +304,7 @@
         </enumVal>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -315,7 +315,7 @@
         </enumVal>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -326,7 +326,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -337,7 +337,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -348,7 +348,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2">
+      <variable item="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -359,7 +359,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -370,7 +370,7 @@
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -381,7 +381,7 @@
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXXXV" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXXXV" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -392,7 +392,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXXXVX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXXXVX" minOut="4" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -403,7 +403,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" default="1" mask="XXXXXVXX" minOut="5" minFn="3">
+      <variable item="F3 controls output 5" CV="37" default="1" mask="XXXXXVXX" minOut="5" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -414,7 +414,7 @@
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -425,78 +425,78 @@
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="Signal Controlled Acceleration" CV="49" default="0" comment="Range 0-255">
+      <variable item="Signal Controlled Acceleration" CV="49" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Signal Controlled Acceleration</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Signal Controlled Deceleration" CV="50" default="0" comment="Range 0-255">
+      <variable item="Signal Controlled Deceleration" CV="50" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Signal Controlled Deceleration</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Signal Controlled Speed Limit -1-" CV="51" default="20" comment="Range 0-252">
+      <variable item="Signal Controlled Speed Limit -1-" CV="51" default="20" comment="Range 0-252">
         <decVal max="252"/>
         <label>Signal Controlled Speed Limit -1-</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Signal Controlled Speed Limit -U-" CV="52" default="40" comment="Range 0-252">
+      <variable item="Signal Controlled Speed Limit -U-" CV="52" default="40" comment="Range 0-252">
         <decVal max="252"/>
         <label>Signal Controlled Speed Limit -U-</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Signal Controlled Speed Limit -2-" CV="53" default="70" comment="Range 0-252">
+      <variable item="Signal Controlled Speed Limit -2-" CV="53" default="70" comment="Range 0-252">
         <decVal max="252"/>
         <label>Signal Controlled Speed Limit -2-</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Signal Controlled Speed Limit -L-" CV="54" default="110" comment="Range 0-252">
+      <variable item="Signal Controlled Speed Limit -L-" CV="54" default="110" comment="Range 0-252">
         <decVal max="252"/>
         <label>Signal Controlled Speed Limit -L-</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Signal Controlled Speed Limit -3-" CV="55" default="180" comment="Range 0-252">
+      <variable item="Signal Controlled Speed Limit -3-" CV="55" default="180" comment="Range 0-252">
         <decVal max="252"/>
         <label>Signal Controlled Speed Limit -3-</label>
         <comment>Range 0-252</comment>
       </variable>
-      <variable label="Back EMF Control D-parameter" CV="56" default="50" comment="Range 0-255">
+      <variable item="Back EMF Control D-parameter" CV="56" default="50" comment="Range 0-255">
         <decVal max="255"/>
         <label>Back EMF Control D-parameter</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Voltage Reference" CV="57" default="0" comment="Range 0-255">
+      <variable item="Voltage Reference" CV="57" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Voltage Reference</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Back EMF Intensity" CV="58" default="255" comment="Controls how much BEMF (0-no BEMF to 255-max)">
+      <variable item="Back EMF Intensity" CV="58" default="255" comment="Controls how much BEMF (0-no BEMF to 255-max)">
         <decVal min="0" max="255"/>
         <label>Back EMF Intensity</label>
         <comment>Controls how much BEMF (0-no BEMF to 255-max)</comment>
       </variable>
-      <variable label="Signal Controlled Reaction Time" CV="59" default="0" comment="Range 0-255">
+      <variable item="Signal Controlled Reaction Time" CV="59" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>Signal Controlled Reaction Time</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Function Outputs Voltage Reduction" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
+      <variable item="Function Outputs Voltage Reduction" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
         <decVal min="0" max="255"/>
         <label>Function Outputs Voltage Reduction</label>
         <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
       </variable>
-      <variable label="Back EMF Control P-parameter" CV="61" default="40" comment="Range 0-255">
+      <variable item="Back EMF Control P-parameter" CV="61" default="40" comment="Range 0-255">
         <decVal max="255"/>
         <label>Back EMF Control P-parameter</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="Zimo">
+  <pane>
     <column>
       <display item="Signal Controlled Acceleration"/>
       <display item="Signal Controlled Deceleration"/>
@@ -511,8 +511,8 @@
       <display item="Back EMF Control D-parameter"/>
       <display item="Back EMF Control P-parameter"/>
       <display item="Back EMF Intensity"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Voltage Reference"/>
       <display item="Function Outputs Voltage Reduction"/>

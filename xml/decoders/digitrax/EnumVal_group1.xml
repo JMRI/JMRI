@@ -13,45 +13,44 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-            <choice xml:lang="it">Attiva ON, Trigger da OFF a ON, fronte Positivo</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-            <choice xml:lang="it">Attiva ON, Trigger da cambio stato, livello Positivo</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-            <choice xml:lang="it">Uscita Attiva da fronte positivo, uscita OFF per fronte negativo</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-            <choice xml:lang="it">Uscita Attiva da fronte negativo, uscita OFF per fronte positivo</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-            <choice xml:lang="it">Riservato(0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-
-            <choice xml:lang="it">Riservato(0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-            <choice xml:lang="it">Riservato(0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-            <choice xml:lang="it">Riservato(0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-            <choice xml:lang="it">Attiva OFF, Trigger da ON a OFF, fronte Negativo</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-            <choice xml:lang="it">Attiva OFF, Trigger da cambio stato, livello negativo</choice>
-          </enumChoice>
-        </enumVal>
+  <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
+    <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
+    <choice xml:lang="it">Attiva ON, Trigger da OFF a ON, fronte Positivo</choice>
+  </enumChoice>
+  <enumChoice choice="Active ON, trigger on change, Positive Level">
+    <choice>Active ON, trigger on change, Positive Level</choice>
+    <choice xml:lang="it">Attiva ON, Trigger da cambio stato, livello Positivo</choice>
+  </enumChoice>
+  <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
+    <choice>Qualified: Output on positive edge, Output off negative edge</choice>
+    <choice xml:lang="it">Uscita Attiva da fronte positivo, uscita OFF per fronte negativo</choice>
+  </enumChoice>
+  <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
+    <choice>Qualified: Output on negative edge, Output off positive edge</choice>
+    <choice xml:lang="it">Uscita Attiva da fronte negativo, uscita OFF per fronte positivo</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x04)">
+    <choice>Reserved (0x04)</choice>
+    <choice xml:lang="it">Riservato(0x04)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x05)">
+    <choice>Reserved (0x05)</choice>
+    <choice xml:lang="it">Riservato(0x05)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x06)">
+    <choice>Reserved (0x06)</choice>
+    <choice xml:lang="it">Riservato(0x06)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x07)">
+    <choice>Reserved (0x07)</choice>
+    <choice xml:lang="it">Riservato(0x07)</choice>
+  </enumChoice>
+  <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
+    <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
+    <choice xml:lang="it">Attiva OFF, Trigger da ON a OFF, fronte Negativo</choice>
+  </enumChoice>
+  <enumChoice choice="Active OFF, trigger on change, Negative Level">
+    <choice>Active OFF, trigger on change, Negative Level</choice>
+    <choice xml:lang="it">Attiva OFF, Trigger da cambio stato, livello negativo</choice>
+  </enumChoice>
+</enumVal>

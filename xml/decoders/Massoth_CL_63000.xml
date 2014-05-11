@@ -912,95 +912,150 @@
       <factReset label="Reset sound settings CV171 - CV200" CV="7" default="122"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
+    <name>Basic</name>
     <column>
       <dccaddress/>
     </column>
     <column>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
     </column>
   </pane>
-  <pane name="Sound - F-Keys">
+  <pane>
+    <name>Sound - F-Keys</name>
     <column>
       <display item="Sound_01: Command Allocation - Function Keys"/>
       <display item="Sound_01: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_02: Command Allocation - Function Keys"/>
       <display item="Sound_02: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_03: Command Allocation - Function Keys"/>
       <display item="Sound_03: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_04: Command Allocation - Function Keys"/>
       <display item="Sound_04: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_05: Command Allocation - Function Keys"/>
       <display item="Sound_05: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_06: Command Allocation - Function Keys"/>
       <display item="Sound_06: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_07: Command Allocation - Function Keys"/>
       <display item="Sound_07: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_08: Command Allocation - Function Keys"/>
       <display item="Sound_08: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_09: Command Allocation - Function Keys"/>
       <display item="Sound_09: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_10: Command Allocation - Function Keys"/>
       <display item="Sound_10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_11: Command Allocation - Function Keys"/>
       <display item="Sound_11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Sound_12: Command Allocation - Function Keys"/>
       <display item="Sound_12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="Sound - Standing">
+  <pane>
+    <name>Sound - Standing</name>
     <column>
       <display item="Standing sound 1 : sound assignment"/>
       <display item="Standing sound 1 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 2 : sound assignment"/>
       <display item="Standing sound 2 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 3 : sound assignment"/>
       <display item="Standing sound 3 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Standing sound 4 : sound assignment"/>
       <display item="Standing sound 4 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="Sound - Random">
+  <pane>
+    <name>Sound - Random</name>
     <column>
       <display item="Time Value of Random Generator"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 1 : sound assignment"/>
       <display item="Random sound 1 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 2 : sound assignment"/>
       <display item="Random sound 2 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 3 : sound assignment"/>
       <display item="Random sound 3 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Random sound 4 : sound assignment"/>
       <display item="Random sound 4 : Number of repetitions" label="Number of repetitions"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="CVs">
+  <pane>
+    <name>CVs</name>
     <column>
       <cvtable/>
     </column>
