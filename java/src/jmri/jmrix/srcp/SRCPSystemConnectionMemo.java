@@ -72,7 +72,12 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         et.sendSRCPMessage(new SRCPMessage("GO\n"), null);
         et.sendSRCPMessage(new SRCPMessage("GET 1 DESCRIPTION\n"),null);
     }
-   
+
+    // keep track of the current mode.
+    private int mode = SRCPTrafficController.HANDSHAKEMODE;
+    public void setMode(int m) { mode = m; }   
+    public int getMode() { return mode; }   
+
 
     @Override
     @SuppressWarnings("unchecked")

@@ -91,7 +91,6 @@ TOKEN :
 | <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
 
 // Client return codes
-//| < INFO: <I><N><F><O>>:IN_REASON
 | < INFO: <I><N><F><O>>
 | < OK: <O><K>>:IN_REASON
 | < ERROR: <E><R><R><O><R>>:IN_REASON
@@ -356,7 +355,7 @@ SimpleNode ga():{Token t;}
 
 SimpleNode fb():{Token t;}
 {
-  t=<FB> (address() zeroone())?
+  t=<FB> ( address() zeroone() )?
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -417,12 +416,12 @@ SimpleNode onoff():{Token t; Token r;}
   }
 }
 
-SimpleNode zeroone():{Token t;}
+void zeroone() #void:{SimpleNode s;}
 {
-  (zeroaddress() | nonzeroaddress())
+  (s=zeroaddress() | s=nonzeroaddress())
   {
      log.debug("ZeroOne Production ");
-     return jjtThis;
+     //return jjtThis;
   }
 }
 

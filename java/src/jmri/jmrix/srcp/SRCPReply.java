@@ -40,7 +40,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         StringBuilder b;
         if(n.jjtGetNumChildren()>1) {
            b = new StringBuilder(n.jjtGetFirstToken().toString());
-	   for(int i=1;i<n.jjtGetNumChildren();i++) {
+	   for(int i=0;i<n.jjtGetNumChildren();i++) {
               b.append(" ");
               //b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
               b.append(inOrderTraversal((SimpleNode)n.jjtGetChild(i)));
