@@ -695,6 +695,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Set the train's status
+	 * 
 	 * @param status
 	 *            machine readable stringCode
 	 */
@@ -746,8 +747,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
 		case Train.CODE_PARTIAL_BUILT:
 			// 0 should be number of cars requested to be worked
-			return Bundle
-					.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(), this.getNumberCarsRequested()); // NOI18N
+			return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(), this
+					.getNumberCarsRequested()); // NOI18N
 		case Train.CODE_TERMINATED:
 			return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
 		case Train.CODE_TRAIN_IN_ROUTE:
@@ -787,7 +788,8 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Used to determine if train is a local switcher serving one location. Note the the train can have more than
-	 * location in its route, but all location names must be same.
+	 * location in its route, but all location names must be "same". See TrainCommon.splitString(String name) for
+	 * the definition of the "same" name.
 	 * 
 	 * @return true if local switcher
 	 */
@@ -965,7 +967,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Get how this train deals with road names.
 	 * 
-	 * @return ALLROADS INCLUDEROADS EXCLUDEROADS
+	 * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
 	 */
 	public String getRoadOption() {
 		return _roadOption;
@@ -975,7 +977,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Set how this train deals with car road names.
 	 * 
 	 * @param option
-	 *            ALLROADS INCLUDEROADS EXCLUDEROADS
+	 *            ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
 	 */
 	public void setRoadOption(String option) {
 		String old = _roadOption;
@@ -1078,7 +1080,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Gets the car load option for this train.
 	 * 
-	 * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 * @return ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public String getLoadOption() {
 		return _loadOption;
@@ -1088,7 +1090,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Set how this train deals with car loads
 	 * 
 	 * @param option
-	 *            ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 *            ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
 	 */
 	public void setLoadOption(String option) {
 		String old = _loadOption;
@@ -1197,7 +1199,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Set how this train deals with car owner names
 	 * 
 	 * @param option
-	 *            ALLOWNERS INCLUDEOWNERS EXCLUDEOWNERS
+	 *            ALL_OWNERS INCLUDE_OWNERS EXCLUDE_OWNERS
 	 */
 	public void setOwnerOption(String option) {
 		String old = _ownerOption;
@@ -1483,8 +1485,8 @@ public class Train implements java.beans.PropertyChangeListener {
 								if (!car.getDestinationTrack().acceptsDropTrain(this)) {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-												.getMessage("buildCanNotDropCarTrain"), new Object[] {
-												car.toString(), getName(), car.getDestinationTrackName() }));
+												.getMessage("buildCanNotDropCarTrain"), new Object[] { car.toString(),
+												getName(), car.getDestinationTrackName() }));
 									continue;
 								}
 							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
@@ -1658,7 +1660,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Returns the statusCode of the "services(Car)" routine. There are two statusCodees that need special consideration
+	 * Returns the statusCode of the "services(Car)" routine. There are two statusCodes that need special consideration
 	 * when the train is being built, the moves in a train's route and the maximum train length.
 	 */
 	protected void setServiceStatus(String status) {
@@ -1684,19 +1686,19 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		return cars.size();
 	}
-	
+
 	public void setNumberCarsRequested(int number) {
 		_statusCarsRequested = number;
 	}
-	
+
 	public int getNumberCarsRequested() {
 		return _statusCarsRequested;
 	}
-	
+
 	public void setTerminationDate(String date) {
 		_statusTerminatedDate = date;
 	}
-	
+
 	public String getTerminationDate() {
 		return _statusTerminatedDate;
 	}
@@ -3179,7 +3181,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param e
 	 *            Consist XML element
 	 */
-	public Train(org.jdom.Element e) {
+	public Train(Element e) {
 		org.jdom.Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
