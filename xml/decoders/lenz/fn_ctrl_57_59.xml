@@ -122,41 +122,41 @@
   <variable item="Disable momentum with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle acceleration and deceleration delays 'off' using F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F1</label>
-    <label xml:lang="it">Disabilita inrezia con F1</label>
+    <label xml:lang="it">Disabilita inerzia con F1</label>
   </variable>
   <variable item="Disable momentum with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle acceleration and deceleration delays 'off' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F2</label>
-    <label xml:lang="it">Disabilita inrezia con F2</label>
+    <label xml:lang="it">Disabilita inerzia con F2</label>
   </variable>
   <variable item="Disable momentum with F3" CV="59" mask="XXXXXVXX" tooltip="Toggle acceleration and deceleration delays 'off' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F3</label>
-    <label xml:lang="it">Disabilita inrezia con F3</label>
+    <label xml:lang="it">Disabilita inerzia con F3</label>
   </variable>
   <variable item="Disable momentum with F4" CV="59" mask="XXXXVXXX" default="1" tooltip="Toggle acceleration and deceleration delays 'off' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F4</label>
-    <label xml:lang="it">Disabilita inrezia con F4</label>
+    <label xml:lang="it">Disabilita inerzia con F4</label>
   </variable>
   <variable item="Disable momentum with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F5</label>
-    <label xml:lang="it">Disabilita inrezia con F5</label>
+    <label xml:lang="it">Disabilita inerzia con F5</label>
   </variable>
   <variable item="Disable momentum with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F6</label>
-    <label xml:lang="it">Disabilita inrezia con F6</label>
+    <label xml:lang="it">Disabilita inerzia con F6</label>
   </variable>
   <variable item="Disable momentum with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F7</label>
-    <label xml:lang="it">Disabilita inrezia con F7</label>
+    <label xml:lang="it">Disabilita inerzia con F7</label>
   </variable>
   <variable item="Disable momentum with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Disable momentum with F8</label>
-    <label xml:lang="it">Disabilita inrezia con F8</label>
+    <label xml:lang="it">Disabilita inerzia con F8</label>
   </variable>
 </variables>
