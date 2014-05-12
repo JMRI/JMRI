@@ -50,7 +50,7 @@
       </column>
       <column>
         <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
-          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocit\u00E0 1</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
         </display>
         <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
@@ -58,7 +58,7 @@
           <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
         </display>
         <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
-          <tooltip xml:lang="it">Imposta Tensione Motore a Velocit\u00E0 Massima</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
         </display>
       </column>
