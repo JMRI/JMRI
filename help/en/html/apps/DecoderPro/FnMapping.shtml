@@ -36,7 +36,7 @@ of three (or four) parts:
 <LI>A function name.  This could be "Fn" or "Fnn", where n or nn is a decimal number.
 Two special names for F0 are also recognized:  "FL(f)" and "FL(r)"
 <LI>The exact string " controls output ".  Note the spaces!
-<LI>An output's decimal number OR name.
+<LI>An output's decimal number (preferred) OR name.
 <LI>An optional "(alt)" suffix. This allows for an alternate definition of an output, such as for the Tsunami function group exchange feature.
 </OL>
 <P>
