@@ -14,11 +14,14 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Both directions">
     <choice>Both directions</choice>
+    <choice xml:lang="it">Both directions</choice>
   </enumChoice>
   <enumChoice choice="Only in forward">
     <choice>Only in forward</choice>
+    <choice xml:lang="it">Only in forward</choice>
   </enumChoice>
   <enumChoice choice="Only in reverse">
     <choice>Only in reverse</choice>
+    <choice xml:lang="it">Only in reverse</choice>
   </enumChoice>
 </enumVal>
