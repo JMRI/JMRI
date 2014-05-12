@@ -14,8 +14,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
-
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
@@ -29,30 +28,30 @@
         <label>Normal direction of motion</label>
         <label xml:lang="it">Normale direzione di marcia</label>
       </variable>
-
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
+      <variable CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
         <label xml:lang="it">Transponding Digitrax</label>
       </variable>
-
-      <variable label="Function controlling output" CV="64" mask="XXXXXXVV" item="ControlFn">
+      <variable CV="64" mask="XXXXXXVV" item="ControlFn">
         <enumVal>
           <enumChoice choice="F0"/>
           <enumChoice choice="F3"/>
           <enumChoice choice="F5"/>
           <enumChoice choice="F9"/>
         </enumVal>
+        <label>Function controlling output</label>
       </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Ripristino di tutte le CV</label>
       </factReset>
     </resets>
   </decoder>
-  <pane name="Function Output">
+  <pane>
+    <name>Function Output</name>
     <column>
       <display item="ControlFn"/>
     </column>

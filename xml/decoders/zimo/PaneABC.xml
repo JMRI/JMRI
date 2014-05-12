@@ -1,119 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="ABC" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control"/>
     <display item="Direction Dependent stops with asymmetrical DCC"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Distance controlled stopping"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
         <display item="Distance controlled stopping Distance"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Distance controlled stopping speed correction (ABC)"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
         <display item="Distance controlled stopping Distance" format="hslider" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
           <label/>
         </display>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Signal Dependent Acceleration"/>
         <display item="Signal Dependent Deceleration"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Signal Dependent Reaction Time"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
       </column>
       <column>
-        <label label="Entered value multiplied by 0.4 seconds is the additional accel/decel">
-          <label>Entered value multiplied by 0.4 seconds is the additional accel/decel</label>
+        <label>
+          <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
         </label>
-        <label label="added to the normal CV3 and CV4 setting, for speed changes due to ABC">
-          <label>added to the normal CV3 and CV4 setting, for speed changes due to ABC</label>
+        <label>
+          <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <row>
       <column>
         <display item="Asymmetrical DCC Threshold"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="    ">
-          <label>    </label>
+        <label>
+          <text>    </text>
         </label>
       </column>
       <column>
         <row>
           <column>
-            <label label="Hundreds digit = sensitivity">
-              <label>Hundreds digit = sensitivity</label>
+            <label>
+              <text>Hundreds digit = sensitivity</text>
             </label>
           </column>
           <column>
-            <label label="    ">
-              <label>    </label>
+            <label>
+              <text>    </text>
             </label>
           </column>
           <column>
-            <label label="0 = Fast recognition">
-              <label>0 = Fast recognition</label>
+            <label>
+              <text>0 = Fast recognition</text>
             </label>
-            <label label="1 = Normal recognition (0.5s)">
-              <label>1 = Normal recognition (0.5s)</label>
+            <label>
+              <text>1 = Normal recognition (0.5s)</text>
             </label>
-            <label label="2 = Slow recognition (1s)">
-              <label>2 = Slow recognition (1s)</label>
+            <label>
+              <text>2 = Slow recognition (1s)</text>
             </label>
           </column>
         </row>
-        <label label="Tens and Ones digits = Assymmetrical threshold in tenths of a volt">
-          <label>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</label>
+        <label>
+          <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
         </label>
       </column>
     </row>

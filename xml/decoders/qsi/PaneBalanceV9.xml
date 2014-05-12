@@ -12,19 +12,30 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Component Balance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Component Balance</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V9"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V9</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
-      <label label="Select the speaker and percent reduction of sound output for that speaker, other speaker remains at 100%"/>
+      <label>
+        <text>Select the speaker and percent reduction of sound output for that speaker, other speaker remains at 100%</text>
+      </label>
     </row>
     <row>
       <column>
@@ -40,7 +51,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.10.10 Sign" format="onradiobutton" label="" layout="left"/>
@@ -53,7 +66,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.10.20 Sign" format="onradiobutton" label="" layout="left"/>
@@ -66,7 +81,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.10.30 Sign" format="onradiobutton" label="" layout="left"/>
@@ -79,7 +96,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.10.60 Sign" format="onradiobutton" label="" layout="left"/>
@@ -92,7 +111,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.10.70 Sign" format="onradiobutton" label="" layout="left"/>
@@ -105,10 +126,14 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
         <row>
@@ -123,7 +148,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.11.10 Sign" format="onradiobutton" label="" layout="left"/>
@@ -136,7 +163,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.11.20 Sign" format="onradiobutton" label="" layout="left"/>
@@ -149,7 +178,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.11.30 Sign" format="onradiobutton" label="" layout="left"/>
@@ -162,7 +193,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.11.60 Sign" format="onradiobutton" label="" layout="left"/>
@@ -175,7 +208,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV128.11.70 Sign" format="onradiobutton" label="" layout="left"/>
@@ -188,14 +223,28 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
-    <label label=" "/>
-    <label label="Sets the relative volumes of the two speakers, adjust overall volume on the Volume tab"/>
-    <label label="Please treat the 'Off' in the sliders as '0%' also slider is percent reduction of selected speaker"/>
-    <label label="If silder is at 'Off' read as 0% reduction, ie both speakers are 100% of volume setting as set on Volume tab"/>
-    <label label="If Speaker 1 selected and silder is at '50%', speaker 1 is half the volume as speaker 2 and speaker 2 is as set on Volume tab"/>
-    <label label="If Speaker 2 selected and silder is at '100%', speaker 2 is silent and speaker 1 is as set on Volume tab"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>Sets the relative volumes of the two speakers, adjust overall volume on the Volume tab</text>
+    </label>
+    <label>
+      <text>Please treat the 'Off' in the sliders as '0%' also slider is percent reduction of selected speaker</text>
+    </label>
+    <label>
+      <text>If silder is at 'Off' read as 0% reduction, ie both speakers are 100% of volume setting as set on Volume tab</text>
+    </label>
+    <label>
+      <text>If Speaker 1 selected and silder is at '50%', speaker 1 is half the volume as speaker 2 and speaker 2 is as set on Volume tab</text>
+    </label>
+    <label>
+      <text>If Speaker 2 selected and silder is at '100%', speaker 2 is silent and speaker 1 is as set on Volume tab</text>
+    </label>
   </column>
 </pane>

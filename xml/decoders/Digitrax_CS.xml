@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005, 2007 All rights reserved -->
 <!-- $Id: Digitrax_CS.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
@@ -33,7 +33,7 @@
     </family>
     <programming direct="no" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+      <variable CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal>
           <shortAddressChanges cv="55"/>
           <shortAddressChanges cv="56"/>
@@ -44,66 +44,66 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer" CV="8" readOnly="yes">
+      <variable item="Manufacturer" CV="8" readOnly="yes">
         <decVal/>
         <label>Manufacturer</label>
         <label xml:lang="it">Costruttore</label>
       </variable>
-      <variable label="F1 during DC operation" CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
+      <variable CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 during DC operation</label>
-       <label xml:lang="it">F1 in Analogico</label>
+        <label xml:lang="it">F1 in Analogico</label>
       </variable>
-      <variable label="F2 during DC operation" CV="13" mask="XXXXXXVX" minFn="2" item="Analog Mode Function Status - F2">
+      <variable CV="13" mask="XXXXXXVX" minFn="2" item="Analog Mode Function Status - F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 during DC operation</label>
-       <label xml:lang="it">F2 in Analogico</label>
+        <label xml:lang="it">F2 in Analogico</label>
       </variable>
-      <variable label="F3 during DC operation" CV="13" mask="XXXXXVXX" minFn="3" item="Analog Mode Function Status - F3">
+      <variable CV="13" mask="XXXXXVXX" minFn="3" item="Analog Mode Function Status - F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 during DC operation</label>
-       <label xml:lang="it">F3 in Analogico</label>
+        <label xml:lang="it">F3 in Analogico</label>
       </variable>
-      <variable label="F4 during DC operation" CV="13" mask="XXXXVXXX" minFn="4" item="Analog Mode Function Status - F4">
+      <variable CV="13" mask="XXXXVXXX" minFn="4" item="Analog Mode Function Status - F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 during DC operation</label>
-       <label xml:lang="it">F4 in Analogico</label>
+        <label xml:lang="it">F4 in Analogico</label>
       </variable>
-      <variable label="F5 during DC operation" CV="13" mask="XXXVXXXX" minFn="5" item="Analog Mode Function Status - F5">
+      <variable CV="13" mask="XXXVXXXX" minFn="5" item="Analog Mode Function Status - F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 during DC operation</label>
-       <label xml:lang="it">F5 in Analogico</label>
+        <label xml:lang="it">F5 in Analogico</label>
       </variable>
-      <variable label="F6 during DC operation" CV="13" mask="XXVXXXXX" minFn="6" item="Analog Mode Function Status - F6">
+      <variable CV="13" mask="XXVXXXXX" minFn="6" item="Analog Mode Function Status - F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 during DC operation</label>
-       <label xml:lang="it">F6 in Analogico</label>
+        <label xml:lang="it">F6 in Analogico</label>
       </variable>
-      <variable label="F0 Forward during DC operation" CV="13" mask="XVXXXXXX" item="Analog Mode Function Status - FL(f)">
+      <variable CV="13" mask="XVXXXXXX" item="Analog Mode Function Status - FL(f)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Forward during DC operation</label>
-       <label xml:lang="it">F0 Avanti in Analogico</label>
+        <label xml:lang="it">F0 Avanti in Analogico</label>
       </variable>
-      <variable label="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX" item="Analog Mode Function Status - FL(r)">
+      <variable CV="13" mask="VXXXXXXX" item="Analog Mode Function Status - FL(r)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Reverse during DC operation</label>
-       <label xml:lang="it">F0 indietro in Analogico</label>
+        <label xml:lang="it">F0 indietro in Analogico</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
+      <variable CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>
-       <label xml:lang="it">Indirizzo esteso</label>
+        <label xml:lang="it">Indirizzo esteso</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
-       <label xml:lang="it">Indirizzo Consist</label>
+        <label xml:lang="it">Indirizzo Consist</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -111,27 +111,27 @@
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
-           <choice xml:lang="it">Invertita</choice>
+            <choice xml:lang="it">Invertita</choice>
           </enumChoice>
         </enumVal>
         <label>Consist Direction</label>
-       <label xml:lang="it">Direzione Consist</label>
+        <label xml:lang="it">Direzione Consist</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
-           <choice xml:lang="it">avanti</choice>
+            <choice xml:lang="it">avanti</choice>
           </enumChoice>
           <enumChoice choice="reverse">
             <choice>reverse</choice>
-           <choice xml:lang="it">invertita</choice>
+            <choice xml:lang="it">invertita</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
-       <label xml:lang="it">Normale direzione di marcia</label>
+        <label xml:lang="it">Normale direzione di marcia</label>
       </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -141,14 +141,14 @@
           </enumChoice>
         </enumVal>
         <label>Speed steps</label>
-      <label xml:lang="it">Step Velocità</label>
+        <label xml:lang="it">Step VelocitÃ </label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
-      <label xml:lang="it">Modo Conversione Analogica</label>
+        <label xml:lang="it">Modo Conversione Analogica</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -160,181 +160,181 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      <label xml:lang="it">Usa Tabella velocità</label>
+        <label xml:lang="it">Usa Tabella velocitÃ </label>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+      <variable CV="29" mask="XXVXXXXX" item="Address Format">
         <enumVal>
           <enumChoice choice="Short addressing">
             <choice>Short addressing</choice>
-           <choice xml:lang="it">Indirizzo a 2 cifre</choice>
+            <choice xml:lang="it">Indirizzo a 2 cifre</choice>
           </enumChoice>
           <enumChoice choice="Long addressing">
             <choice>Long addressing</choice>
-           <choice xml:lang="it">Indirizzo a 4 cifre</choice>
+            <choice xml:lang="it">Indirizzo a 4 cifre</choice>
           </enumChoice>
         </enumVal>
         <label>Addressing Mode</label>
-      <label xml:lang="it">Modalità Indirizzamento</label>
+        <label xml:lang="it">ModalitÃ  Indirizzamento</label>
       </variable>
-      <variable label="Function F0F effect generated" CV="49" mask="XXXXVVVV">
+      <variable item="Function F0F effect generated" CV="49" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Normal function of lead">
             <choice>Normal function of lead</choice>
-           <choice xml:lang="it">Funzionamento Normale Luci di testa</choice>
+            <choice xml:lang="it">Funzionamento Normale Luci di testa</choice>
           </enumChoice>
           <enumChoice choice="Blink">
             <choice>Blink</choice>
-           <choice xml:lang="it">Lampeggio</choice>
+            <choice xml:lang="it">Lampeggio</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
-           <choice xml:lang="it">Luci mars</choice>
+            <choice xml:lang="it">Luci mars</choice>
           </enumChoice>
           <enumChoice choice="Blinking headlight">
             <choice>Blinking headlight</choice>
-           <choice xml:lang="it">Lampeggiante</choice>
+            <choice xml:lang="it">Lampeggiante</choice>
           </enumChoice>
           <enumChoice choice="Single pulse strobe">
             <choice>Single pulse strobe</choice>
-           <choice xml:lang="it">Strobe a impulso singolo</choice>
+            <choice xml:lang="it">Strobe a impulso singolo</choice>
           </enumChoice>
           <enumChoice choice="Double pulse strobe">
             <choice>Double pulse strobe</choice>
-           <choice xml:lang="it">Strobe impulso doppio</choice>
+            <choice xml:lang="it">Strobe impulso doppio</choice>
           </enumChoice>
           <enumChoice choice="Rotary beacon simulation">
             <choice>Rotary beacon simulation</choice>
-           <choice xml:lang="it">Simulazione Lampeggiante rotante</choice>
+            <choice xml:lang="it">Simulazione Lampeggiante rotante</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x07)">
             <choice>Reserved (0x07)</choice>
-           <choice xml:lang="it">Riservato (0x07)</choice>
+            <choice xml:lang="it">Riservato (0x07)</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0F effect generated</label>
         <label xml:lang="it">F0 avanti Effetti generati</label>
       </variable>
-      <variable label="Function F0F behavior" CV="49" mask="VVVVXXXX">
+      <variable item="Function F0F behavior" CV="49" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction">
             <choice>Forward direction</choice>
-         <choice xml:lang="it">Direzione in avanti</choice>
+            <choice xml:lang="it">Direzione in avanti</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction">
             <choice>Reverse direction</choice>
-         <choice xml:lang="it">Direzione indietro</choice>
+            <choice xml:lang="it">Direzione indietro</choice>
           </enumChoice>
           <enumChoice choice="Non directional">
             <choice>Non directional</choice>
-          <choice xml:lang="it">Non direzionale</choice>
+            <choice xml:lang="it">Non direzionale</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0F behavior</label>
         <label xml:lang="it">F0 avanti comportamento</label>
       </variable>
-      <variable label="Function F0R effect generated" CV="50" mask="XXXXXVVV">
+      <variable item="Function F0R effect generated" CV="50" mask="XXXXXVVV">
         <enumVal>
           <enumChoice choice="Normal function of lead">
             <choice>Normal function of lead</choice>
-           <choice xml:lang="it">Funzionamento Normale Luci di testa</choice>
+            <choice xml:lang="it">Funzionamento Normale Luci di testa</choice>
           </enumChoice>
           <enumChoice choice="Blink">
             <choice>Blink</choice>
-           <choice xml:lang="it">Lampeggio</choice>
+            <choice xml:lang="it">Lampeggio</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
-           <choice xml:lang="it">Luci mars</choice>
+            <choice xml:lang="it">Luci mars</choice>
           </enumChoice>
           <enumChoice choice="Blinking headlight">
             <choice>Blinking headlight</choice>
-           <choice xml:lang="it">Lampeggiante</choice>
+            <choice xml:lang="it">Lampeggiante</choice>
           </enumChoice>
           <enumChoice choice="Single pulse strobe">
             <choice>Single pulse strobe</choice>
-           <choice xml:lang="it">Strobe a impulso singolo</choice>
+            <choice xml:lang="it">Strobe a impulso singolo</choice>
           </enumChoice>
           <enumChoice choice="Double pulse strobe">
             <choice>Double pulse strobe</choice>
-           <choice xml:lang="it">Strobe impulso doppio</choice>
+            <choice xml:lang="it">Strobe impulso doppio</choice>
           </enumChoice>
           <enumChoice choice="Rotary beacon simulation">
             <choice>Rotary beacon simulation</choice>
-           <choice xml:lang="it">Simulazione Lampeggiante rotante</choice>
+            <choice xml:lang="it">Simulazione Lampeggiante rotante</choice>
           </enumChoice>
           <enumChoice choice="Reserved (0x07)">
             <choice>Reserved (0x07)</choice>
-           <choice xml:lang="it">Riservato (0x07)</choice>
+            <choice xml:lang="it">Riservato (0x07)</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0R effect generated</label>
         <label xml:lang="it">F0 indietro comportamento</label>
       </variable>
-      <variable label="Function F0R behavior" CV="50" mask="VVVVXXXX">
+      <variable item="Function F0R behavior" CV="50" mask="VVVVXXXX">
         <enumVal>
           <enumChoice choice="Forward direction">
             <choice>Forward direction</choice>
-           <choice xml:lang="it">Direzione Avanti</choice>
+            <choice xml:lang="it">Direzione Avanti</choice>
           </enumChoice>
           <enumChoice choice="Reverse direction">
             <choice>Reverse direction</choice>
-           <choice xml:lang="it">Direzione Indietro</choice>
+            <choice xml:lang="it">Direzione Indietro</choice>
           </enumChoice>
           <enumChoice choice="Non directional">
             <choice>Non directional</choice>
-           <choice xml:lang="it">Non Direzionale</choice>
+            <choice xml:lang="it">Non Direzionale</choice>
           </enumChoice>
         </enumVal>
         <label>Function F0R behavior</label>
         <label xml:lang="it">Comportamento F0 indietro</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
+      <variable CV="61" mask="XXXXXXVX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
         <label xml:lang="it">Transpondig Digitrax</label>
       </variable>
-      <variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
+      <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Normal headlight operation">
             <choice>Normal headlight operation</choice>
-           <choice xml:lang="it">Normale funzionamento Luci di testa</choice>
+            <choice xml:lang="it">Normale funzionamento Luci di testa</choice>
           </enumChoice>
           <enumChoice choice="Enable configurable strobes">
             <choice>Enable configurable strobes</choice>
-           <choice xml:lang="it">Abilita Strobe configurabili</choice>
+            <choice xml:lang="it">Abilita Strobe configurabili</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
         <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
-      <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+      <variable item="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
         <label xml:lang="it">Vstart/Vmid/Vfull in modo 128 step</label>
       </variable>
-      <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+      <variable item="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
         <label xml:lang="it">protezione Corto-circuito</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
         <comment xml:lang="it">Funzione non documentata, occasionalmente richiesta dal servizio assistenza Digitrax</comment>
       </variable>
-      <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
+      <variable CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
         <decVal max="15"/>
         <label>Lamp keep-alive voltage</label>
         <label xml:lang="it">Tensione mantenimento Lampade</label>
         <comment>0 is no keep-alive, use with LEDs</comment>
         <comment xml:lang="it">0=nessuna, usare con LED</comment>
       </variable>
-      <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
+      <variable CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
         <decVal max="15"/>
         <label>FX rate adjust</label>
         <label xml:lang="it">Tasso aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
-         <comment xml:lang="it">0= veloce, 4 raccomandato all'inizio</comment>
+        <comment xml:lang="it">0= veloce, 4 raccomandato all'inizio</comment>
       </variable>
-      <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+      <variable CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
         <label>Ditch light hold-over time</label>
         <label xml:lang="it">tempo smorzamento luci Ditch</label>
@@ -345,10 +345,10 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
+        <label xml:lang="it">Tabella VelocitÃ </label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
@@ -364,16 +364,16 @@
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Ripristino di tutte le CV</label>
       </factReset>
       <factReset label="Reset All CVs except speed table" CV="8" default="9">
-                 <label>Reset All CVs except speed table</label>
-                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocitÃ </label>
       </factReset>
     </resets>
   </decoder>
-  <pane name="Digitrax">
+  <pane>
     <column>
       <display item="Vstart/Vmid/Vfull in 128 step mode"/>
       <display item="Short-circuit protection"/>

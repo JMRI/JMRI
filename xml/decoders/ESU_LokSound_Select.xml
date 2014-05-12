@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!--                                                                        -->
@@ -178,24 +178,24 @@
       </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
-        <capability>
-            <name>High Access via Double Index</name>
-            <parameter name="Max Regular CV address">256</parameter>
-            <parameter name="High Address CV">96</parameter>
-            <parameter name="Low Address CV">97</parameter>
-            <parameter name="Access Register CV">99</parameter>
-            <parameter name="Modulo">100</parameter>
-        </capability>
-        <capability>
-            <name>Indexed CV access</name>
-            <parameter name="PI">31</parameter>
-            <parameter name="SI">32</parameter>
-            <parameter name="cvFirst">false</parameter>
-        </capability>
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable label="Airhorn" CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
+      <variable CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
         <enumVal>
           <enumChoice choice="Nathan K5LA">
             <choice>Nathan K5LA</choice>
@@ -248,7 +248,7 @@
         </enumVal>
         <label>Airhorn</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73401" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73401" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Alco 244 V12">
             <choice>Alco 244 V12</choice>
@@ -259,7 +259,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73402" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73402" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Alco 251 V12">
             <choice>Alco 251 V12</choice>
@@ -273,7 +273,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73403" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73403" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="GE FDL 12">
             <choice>GE FDL 12</choice>
@@ -281,7 +281,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73404" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73404" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="GE 7FDL-12">
             <choice>GE 7FDL-12</choice>
@@ -295,7 +295,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73405" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73405" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Baldwin VO 6">
             <choice>Baldwin VO 6</choice>
@@ -303,7 +303,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73406" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73406" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 567 16">
             <choice>EMD 567 16</choice>
@@ -320,7 +320,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73407" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73407" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 8-645E">
             <choice>EMD 8-645E</choice>
@@ -328,7 +328,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73408" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73408" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-645E">
             <choice>EMD 16-645E</choice>
@@ -342,7 +342,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73410" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73410" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 12-710GB">
             <choice>EMD 12-710GB</choice>
@@ -356,7 +356,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73411" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73411" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Alco 539T">
             <choice>Alco 539T</choice>
@@ -364,7 +364,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73418" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73418" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="PCC trolley steetcar">
             <choice>PCC trolley steetcar</choice>
@@ -372,7 +372,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73425" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73425" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-710G3C-T2">
             <choice>EMD 16-710G3C-T2</choice>
@@ -380,7 +380,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73426" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73426" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="regular start">
             <choice>regular start</choice>
@@ -391,7 +391,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73427" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73427" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="air start">
             <choice>air start</choice>
@@ -402,7 +402,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73428" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73428" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-710GB">
             <choice>EMD 16-710GB</choice>
@@ -410,7 +410,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73430" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73430" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-645E3">
             <choice>EMD 16-645E3</choice>
@@ -418,7 +418,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73431" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73431" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-710GB">
             <choice>EMD 16-710GB</choice>
@@ -426,7 +426,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73439" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73439" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 12-645E3">
             <choice>EMD 12-645E3</choice>
@@ -434,7 +434,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73443" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73443" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 12-645 non turbo">
             <choice>EMD 12-645 non turbo</choice>
@@ -442,7 +442,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73444" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73444" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="GE Cat-44T">
             <choice>GE Cat-44T</choice>
@@ -450,7 +450,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73445" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73445" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="GE FDL-16cyl">
             <choice>GE FDL-16cyl</choice>
@@ -458,7 +458,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73446" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73446" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Baldwin 606_606NA">
             <choice>Baldwin 606_606NA</choice>
@@ -466,7 +466,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73447" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73447" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Baldwin 606SC_606A">
             <choice>Baldwin 606SC_606A</choice>
@@ -474,7 +474,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73450" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73450" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 16-645F">
             <choice>EMD 16-645F</choice>
@@ -482,7 +482,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73461" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73461" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="EMD 20-710G3B-ES">
             <choice>EMD 20-710G3B-ES</choice>
@@ -490,7 +490,7 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable label="Bell" CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
+      <variable CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
         <enumVal>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
@@ -501,7 +501,7 @@
         </enumVal>
         <label>Bell</label>
       </variable>
-      <variable label="Brake Squeal" CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
+      <variable CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
         <enumVal>
           <enumChoice choice="Squeal #1">
             <choice>Squeal #1</choice>

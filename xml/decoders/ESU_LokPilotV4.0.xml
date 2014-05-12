@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!--                                                                        -->
@@ -47,11 +47,11 @@
   <version author="Dave Heap" version="8" lastUpdated="20131028"/>
   <!-- ver9 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
   <version author="Dave Heap" version="9" lastUpdated="20140107"/>
-   <!-- ver9 changed all indexed CVs to new form -->
+  <!-- ver9 changed all indexed CVs to new form -->
   <version author="Dave Heap" version="190" lastUpdated="20140114"/>
-   <!-- ver9 refactor to use "|" instead of "/" for line break in custom output labels -->
+  <!-- ver9 refactor to use "|" instead of "/" for line break in custom output labels -->
   <version author="Dave Heap" version="10" lastUpdated="20140324"/>
- <decoder>
+  <decoder>
     <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
       <model model="LokPilot V4.0" numOuts="105" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
         <output name="97" label="not|used"/>
@@ -155,20 +155,20 @@
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
-        <capability>
-            <name>High Access via Double Index</name>
-            <parameter name="Max Regular CV address">256</parameter>
-            <parameter name="High Address CV">96</parameter>
-            <parameter name="Low Address CV">97</parameter>
-            <parameter name="Access Register CV">99</parameter>
-            <parameter name="Modulo">100</parameter>
-        </capability>
-        <capability>
-            <name>Indexed CV access</name>
-            <parameter name="PI">31</parameter>
-            <parameter name="SI">32</parameter>
-            <parameter name="cvFirst">false</parameter>
-        </capability>
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>

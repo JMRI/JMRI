@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- $Id: Atlas_Lenz_N.xml 22121 2014-03-08 xx:xx:xx $ -->
@@ -30,50 +30,50 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+      <variable CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
         <label>Primary Address</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" comment="Range 0-31">
+      <variable CV="2" item="Vstart" comment="Range 0-31">
         <decVal/>
         <label>Start Volts</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Accel" CV="3" comment="Range 0-31">
+      <variable item="Accel" CV="3" comment="Range 0-31">
         <decVal max="31"/>
         <label>Accel</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Decel" CV="4" comment="Range 0-31">
+      <variable item="Decel" CV="4" comment="Range 0-31">
         <decVal max="31"/>
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
       <!-- deleted max and mid voltage-->
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="127">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="127">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Manufacturer ID - Reset" CV="8" default="99">
+      <variable item="Manufacturer ID - Reset" CV="8" default="99">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
       </variable>
       <!-- Deleted all CV 13 references-->
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+      <variable CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
         <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -84,17 +84,17 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Acceleration Trim (range 0-255)" CV="23" default="255" item="Consist Acceleration Adjustment" comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
+      <variable CV="23" default="255" item="Consist Acceleration Adjustment" comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
         <decVal min="0" max="255"/>
         <label>Acceleration Trim (range 0-255)</label>
         <comment>Additional Acceleration rate info for fine-tuning. (Range 0-255)</comment>
       </variable>
-      <variable label="Deceleration Trim (range 0-255)" CV="24" default="255" item="Consist Deceleration Adjustment" comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
+      <variable CV="24" default="255" item="Consist Deceleration Adjustment" comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
         <decVal min="0" max="255"/>
         <label>Deceleration Trim (range 0-255)</label>
         <comment>Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)</comment>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -105,7 +105,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -116,7 +116,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -127,7 +127,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
             <choice>Don't use Speed Table</choice>
@@ -138,7 +138,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+      <variable CV="29" mask="XXVXXXXX" item="Address Format">
         <enumVal>
           <enumChoice choice="2 digit addressing">
             <choice>2 digit addressing</choice>
@@ -149,7 +149,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-      <variable label="Accel/Decel Trim" CV="50" mask="XXXXXXXV" comment="Governs how loco acts in DC track block">
+      <variable item="Accel/Decel Trim" CV="50" mask="XXXXXXXV" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Accel/Decel trim OFF">
             <choice>Accel/Decel trim OFF</choice>
@@ -161,7 +161,7 @@
         <label>Accel/Decel Trim</label>
         <comment>Governs how loco acts in DC track block</comment>
       </variable>
-      <variable label="Brake Momentum on DC" CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
+      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
@@ -173,7 +173,7 @@
         <label>Brake Momentum on DC</label>
         <comment>Governs how loco acts in DC track block</comment>
       </variable>
-      <variable label="Directional Headlights" CV="51" comment="output A" mask="XXXXXXXV">
+      <variable item="Directional Headlights" CV="51" comment="output A" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
@@ -185,7 +185,7 @@
         <label>Directional Headlights</label>
         <comment>output A</comment>
       </variable>
-      <variable label="Functional Headlight Dimming (F1 if directional, F4 if not)" CV="51" mask="XXXXXXVX" item="Global lighting option 1" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+      <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
         <enumVal>
           <enumChoice choice="Dimming Disabled">
             <choice>Dimming Disabled</choice>
@@ -196,107 +196,107 @@
         </enumVal>
         <label>Functional Headlight Dimming (F1 if directional, F4 if not)</label>
       </variable>
-      <variable label="Enable Front light dimming" CV="51" mask="XXXXXVXX" item="Global lighting option 2" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+      <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Front light dimming</label>
       </variable>
-      <variable label="Enable Rear light dimming" CV="51" mask="XXXXVXXX" item="Global lighting option 3" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+      <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Rear light dimming</label>
       </variable>
-      <variable label="Dimming Value" CV="52" item="Global lighting option 4" default="64">
+      <variable CV="52" item="Global lighting option 4" default="64">
         <decVal/>
         <label>Dimming Value</label>
       </variable>
-      <variable label="Output C, D blink rate" CV="56" item="Function 4 options" default="15" minOut="3">
+      <variable CV="56" item="Function 4 options" default="15" minOut="3">
         <decVal min="0" max="255"/>
         <label>Output C, D blink rate</label>
       </variable>
-      <variable label="Output C blinks" CV="53" minOut="3" item="Function 3 effect generated" mask="XXXXXXXV">
+      <variable CV="53" minOut="3" item="Function 3 effect generated" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output C blinks</label>
       </variable>
-      <variable label="Output D blinks" CV="53" minOut="3" item="Function 4 effect generated" mask="XXXXXXVX">
+      <variable CV="53" minOut="3" item="Function 4 effect generated" mask="XXXXXXVX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output D blinks</label>
       </variable>
-      <variable label="Output C, D are ditch lights" CV="53" minOut="3" item="Function 4 behavior" mask="XXXXXVXX">
+      <variable CV="53" minOut="3" item="Function 4 behavior" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output C, D are ditch lights</label>
       </variable>
-      <variable label="F1 controls output C" CV="54" mask="XXXXXXXV" minOut="3" minFn="1" item="F1 controls output 3" default="1">
+      <variable CV="54" mask="XXXXXXXV" minOut="3" minFn="1" item="F1 controls output 3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output C</label>
       </variable>
-      <variable label="F2 controls output C" CV="54" mask="XXXXXXVX" minOut="3" minFn="2" item="F2 controls output 3">
+      <variable CV="54" mask="XXXXXXVX" minOut="3" minFn="2" item="F2 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output C</label>
       </variable>
-      <variable label="F3 controls output C" CV="54" mask="XXXXXVXX" minOut="3" minFn="3" item="F3 controls output 3">
+      <variable CV="54" mask="XXXXXVXX" minOut="3" minFn="3" item="F3 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output C</label>
       </variable>
-      <variable label="F4 controls output C" CV="54" mask="XXXXVXXX" minOut="3" minFn="4" item="F4 controls output 3">
+      <variable CV="54" mask="XXXXVXXX" minOut="3" minFn="4" item="F4 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output C</label>
       </variable>
-      <variable label="F5 controls output C" CV="54" mask="XXXVXXXX" minOut="3" minFn="5" item="F5 controls output 3">
+      <variable CV="54" mask="XXXVXXXX" minOut="3" minFn="5" item="F5 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output C</label>
       </variable>
-      <variable label="F6 controls output C" CV="54" mask="XXVXXXXX" minOut="3" minFn="6" item="F6 controls output 3">
+      <variable CV="54" mask="XXVXXXXX" minOut="3" minFn="6" item="F6 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output C</label>
       </variable>
-      <variable label="F7 controls output C" CV="54" mask="XVXXXXXX" minOut="3" minFn="7" item="F7 controls output 3">
+      <variable CV="54" mask="XVXXXXXX" minOut="3" minFn="7" item="F7 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output C</label>
       </variable>
-      <variable label="F8 controls output C" CV="54" mask="VXXXXXXX" minOut="3" minFn="8" item="F8 controls output 3">
+      <variable CV="54" mask="VXXXXXXX" minOut="3" minFn="8" item="F8 controls output 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output C</label>
       </variable>
-      <variable label="F1 controls output D" CV="55" mask="XXXXXXXV" minOut="4" minFn="1" item="F1 controls output 4">
+      <variable CV="55" mask="XXXXXXXV" minOut="4" minFn="1" item="F1 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output D</label>
       </variable>
-      <variable label="F2 controls output D" CV="55" mask="XXXXXXVX" minOut="4" minFn="2" item="F2 controls output 4" default="1">
+      <variable CV="55" mask="XXXXXXVX" minOut="4" minFn="2" item="F2 controls output 4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output D</label>
       </variable>
-      <variable label="F3 controls output D" CV="55" mask="XXXXXVXX" minOut="4" minFn="3" item="F3 controls output 4">
+      <variable CV="55" mask="XXXXXVXX" minOut="4" minFn="3" item="F3 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output D</label>
       </variable>
-      <variable label="F4 controls output D" CV="55" mask="XXXXVXXX" minOut="4" minFn="4" item="F4 controls output 4">
+      <variable CV="55" mask="XXXXVXXX" minOut="4" minFn="4" item="F4 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output D</label>
       </variable>
-      <variable label="F5 controls output D" CV="55" mask="XXXVXXXX" minOut="4" minFn="5" item="F5 controls output 4">
+      <variable CV="55" mask="XXXVXXXX" minOut="4" minFn="5" item="F5 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output D</label>
       </variable>
-      <variable label="F6 controls output D" CV="55" mask="XXVXXXXX" minOut="4" minFn="6" item="F6 controls output 4">
+      <variable CV="55" mask="XXVXXXXX" minOut="4" minFn="6" item="F6 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output D</label>
       </variable>
-      <variable label="F7 controls output D" CV="55" mask="XVXXXXXX" minOut="4" minFn="7" item="F7 controls output 4">
+      <variable CV="55" mask="XVXXXXXX" minOut="4" minFn="7" item="F7 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output D</label>
       </variable>
-      <variable label="F8 controls output D" CV="55" mask="VXXXXXXX" minOut="4" minFn="8" item="F8 controls output 4">
+      <variable CV="55" mask="VXXXXXXX" minOut="4" minFn="8" item="F8 controls output 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output D</label>
       </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
+      <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
+      <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
@@ -305,13 +305,13 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
   </decoder>
-  <pane name="Lenz">
+  <pane>
+    <name>Lenz</name>
     <column>
       <display item="Accel/Decel Trim"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
-    <name>Lenz</name>
   </pane>
 </decoder-config>

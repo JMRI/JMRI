@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
 <!-- $Id: MRC_F_Unit.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -23,44 +23,44 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start voltage" CV="2" item="Vstart" default="0" comment="Range 0-32">
+      <variable CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start voltage</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Acceleration" CV="3" item="Accel" default="0" comment="Range 0-32">
+      <variable CV="3" item="Accel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Acceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="4" item="Decel" default="0" comment="Range 0-32">
+      <variable CV="4" item="Decel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Top voltage" CV="5" item="Vhigh" default="32" comment="Range 0-32">
+      <variable CV="5" item="Vhigh" default="32" comment="Range 0-32">
         <decVal max="32"/>
         <label>Top voltage</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Middle Voltage" CV="6" item="Vmid" default="1" comment="Range 0-1">
+      <variable CV="6" item="Vmid" default="1" comment="Range 0-1">
         <decVal max="1"/>
         <label>Middle Voltage</label>
         <comment>Range 0-1</comment>
       </variable>
-      <variable label="Manufacturer version number" CV="7" readOnly="yes" item="Decoder Version" default="32">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="143">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Advanced consist address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Advanced consist address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -71,7 +71,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Functions respond to address" CV="21" mask="XXXXXXXV">
+      <variable item="Functions respond to address" CV="21" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Locomotive address only">
             <choice>Locomotive address only</choice>
@@ -82,7 +82,7 @@
         </enumVal>
         <label>Functions respond to address</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -93,7 +93,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -104,7 +104,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -115,107 +115,107 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Horn type" CV="50" item="Sound Option 2" default="4" comment="Range 0-11 (11 is off)">
+      <variable CV="50" item="Sound Option 2" default="4" comment="Range 0-11 (11 is off)">
         <decVal max="16"/>
         <label>Horn type</label>
         <comment>Range 0-11 (11 is off)</comment>
       </variable>
-      <variable label="Horn volume" CV="51" item="Sound Setting 1" default="3" comment="Range 0-3">
+      <variable CV="51" item="Sound Setting 1" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Horn volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell type" CV="52" item="Sound Option 3" default="3" comment="Range 0-7 (7 is off)">
+      <variable CV="52" item="Sound Option 3" default="3" comment="Range 0-7 (7 is off)">
         <decVal max="7"/>
         <label>Bell type</label>
         <comment>Range 0-7 (7 is off)</comment>
       </variable>
-      <variable label="Bell volume" CV="53" item="Sound Setting 2" default="3" comment="Range 0-3">
+      <variable CV="53" item="Sound Setting 2" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Bell volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell ring rate" CV="54" item="Sound Setting 3" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Setting 3" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell ring rate</label>
         <comment>Range 0-50</comment>
       </variable>
-      <variable label="Diesel volume" CV="55" item="Sound Setting 4" default="3" comment="Range 0-3">
+      <variable CV="55" item="Sound Setting 4" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Diesel volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake squeal volume" CV="56" item="Sound Setting 5" default="3" comment="Range 0-3">
+      <variable CV="56" item="Sound Setting 5" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake squeal volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Dynamic brake volume" item="Sound Setting 6" CV="57" default="3" comment="Range 0-3">
+      <variable item="Sound Setting 6" CV="57" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Dynamic brake volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Air release volume" item="Sound Setting 7" CV="58" default="3" comment="Range 0-3">
+      <variable item="Sound Setting 7" CV="58" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air release volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Air pump volume" CV="59" item="Sound Setting 8" default="3" comment="Range 0-3">
+      <variable CV="59" item="Sound Setting 8" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air pump volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Safety pop valve volume" CV="60" item="Sound Setting 9" default="3" comment="Range 0-3">
+      <variable CV="60" item="Sound Setting 9" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Safety pop valve volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Engine cooling fan volume" CV="61" item="Sound Setting 10" default="3" comment="Range 0-3">
+      <variable CV="61" item="Sound Setting 10" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Engine cooling fan volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Coupling volume" CV="62" item="Sound Setting 11" default="3" comment="Range 0-3">
+      <variable CV="62" item="Sound Setting 11" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Random noise volume" CV="63" item="Sound Setting 12" default="3" comment="Range 0-3">
+      <variable CV="63" item="Sound Setting 12" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Random noise volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Rail wheel clack" CV="64" item="Sound Setting 13" default="3" comment="Range 0-3">
+      <variable CV="64" item="Sound Setting 13" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Rail wheel clack</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="User ID #1" CV="105" item="User Id #1" default="0" comment="Range 0-255">
+      <variable CV="105" item="User Id #1" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #1</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="User ID #2" CV="106" item="User Id #2" default="0" comment="Range 0-255">
+      <variable CV="106" item="User Id #2" default="0" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #2</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Exhaust volume" CV="112" item="Sound Setting 16" default="3" comment="Range 0-3">
+      <variable CV="112" item="Sound Setting 16" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Exhaust volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Coupling fire volume" CV="113" item="Sound Setting 17" default="3" comment="Range 0-3">
+      <variable CV="113" item="Sound Setting 17" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling fire volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake release volume" CV="114" item="Sound Setting 18" default="3" comment="Range 0-3">
+      <variable CV="114" item="Sound Setting 18" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake release volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Auto Brake squeal" item="Sound Option 5" CV="115" default="1">
+      <variable item="Sound Option 5" CV="115" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -226,7 +226,7 @@
         </enumVal>
         <label>Auto Brake squeal</label>
       </variable>
-      <variable label="Coupling Sound Type" item="Sound Option 6" CV="116" default="1">
+      <variable item="Sound Option 6" CV="116" default="1">
         <enumVal>
           <enumChoice choice="Type 0">
             <choice>Type 0</choice>
@@ -245,7 +245,7 @@
       <factReset label="Reset All CVs" CV="125" default="1"/>
     </resets>
   </decoder>
-  <pane name="MRC">
+  <pane>
     <column>
       <display item="Functions Respond To Address"/>
     </column>

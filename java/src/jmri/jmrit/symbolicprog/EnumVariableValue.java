@@ -217,24 +217,28 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // this only makes sense if there are exactly two options
             ComboCheckBox b = new ComboCheckBox(_value, this);
             comboCBs.add(b);
+            if (getReadOnly()) b.setEnabled(false);
             updateRepresentation(b);
             return b;
         }
         else if (format.equals("radiobuttons")) {
             ComboRadioButtons b = new ComboRadioButtons(_value, this);
             comboRBs.add(b);
+            if (getReadOnly()) b.setEnabled(false);
             updateRepresentation(b);
             return b;
         }
         else if (format.equals("onradiobutton")) {
             ComboRadioButtons b = new ComboOnRadioButton(_value, this);
             comboRBs.add(b);
+            if (getReadOnly()) b.setEnabled(false);
             updateRepresentation(b);
             return b;
         }
         else if (format.equals("offradiobutton")) {
             ComboRadioButtons b = new ComboOffRadioButton(_value, this);
             comboRBs.add(b);
+            if (getReadOnly()) b.setEnabled(false);
             updateRepresentation(b);
             return b;
         }
@@ -242,6 +246,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // return a new JComboBox representing the same model
             VarComboBox b = new VarComboBox(_value.getModel(), this);
             comboVars.add(b);
+            if (getReadOnly()) b.setEnabled(false);
             updateRepresentation(b);
             return b;
         }

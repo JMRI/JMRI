@@ -71,6 +71,10 @@ public class HelpUtil {
             helpMenu.add(directories);
             directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
 
+            JMenuItem updates = new JMenuItem(Bundle.getMessage("MenuItemCheckUpdates"));
+            helpMenu.add(updates);
+            updates.addActionListener(new apps.CheckForUpdateAction());
+
             JMenuItem context = new JMenuItem(Bundle.getMessage("MenuItemContext"));
             helpMenu.add(context);
             context.addActionListener(new apps.ReportContextAction());

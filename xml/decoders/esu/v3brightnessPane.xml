@@ -1,58 +1,60 @@
-﻿  <pane name="Brightness" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Brightness Range 0 (dark) - 15 (maximum)">
-            <label xml:lang="fr">Luminosité valeur 0 - 15 (maximum)</label>
-            <label xml:lang="it">Luminosità: 0=spento - 15 (massima)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Brightness Range 0 (dark) - 15 (maximum)</text>
+          <text xml:lang="fr">Luminosité valeur 0 - 15 (maximum)</text>
+          <text xml:lang="it">Luminosità: 0=spento - 15 (massima)</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
 	</column>
-        <column>
-          <display item="F0(f) Bright" layout="below">
+      <column>
+        <display item="F0(f) Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F0(r) Bright" layout="below">
+      </column>
+      <column>
+        <display item="F0(r) Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F1 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F1 Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F2 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F2 Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F3 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F3 Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F4 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F4 Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F5 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F5 Bright" layout="below">
           </display>
-        </column>
-        <column>
-          <display item="F6 Bright" layout="below">
+      </column>
+      <column>
+        <display item="F6 Bright" layout="below">
           </display>
-        </column>
-      </row>
-    </column>
-    <name>Brightness</name>
-  </pane>
+      </column>
+    </row>
+  </column>
+  <name>Brightness</name>
+</pane>

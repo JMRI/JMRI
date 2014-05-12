@@ -11,553 +11,510 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>
-        
-    <decoder>
-        <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000">
-            <model show="maybe" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="4">
-                <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.860" width="0.680" height="0.145" units="inches"/>
-            </model>
-            <model show="maybe" model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="5">
-                <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
-                <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="200 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="200 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="200 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.860" width="0.680" height="0.145" units="inches"/>
-            </model>
-            <model show="maybe" model="ALD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: SD50 SD60"
-                lowVersionID="1" highVersionID="40" productID="19">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.83" width="0.351" height="0.13" units="inches"/>
-            </model>
-            <model show="maybe" model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B"
-                lowVersionID="1" highVersionID="40" productID="20">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.83" width="0.351" height="0.13" units="inches"/>
-            </model>
-            <model show="maybe" model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: GP7 (2006+), GP9 (2006+), GP15-1, GP 30 (2006+)" lowVersionID="1" highVersionID="40" productID="21">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.73" width="0.349" height="0.13" units="inches"/>
-            </model>
-            <model show="maybe" model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions" lowVersionID="1" highVersionID="40" productID="22">
-                <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.834" width="0.361" height="0.101" units="inches"/>
-            </model>
-            <model show="maybe" model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" lowVersionID="1" highVersionID="40" productID="23">
-                <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.73" width="0.36" height="0.15" units="inches"/>
-            </model>
-            <model show="maybe" model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="1">
-                <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0845" width="0.680" height="0.165" units="inches"/>
-            </model>
-            <model show="maybe" model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar" lowVersionID="1" highVersionID="40" productID="2">
-                <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0845" width="0.680" height="0.165" units="inches"/>
-            </model>
-            <model show="maybe" model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="3">
-                <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="44">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-                <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
-                <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.78" width="0.59" height="0.13" units="inches"/>
-            </model>
-            <model show="maybe" model="EUN651" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="European 6 pin connector"
-                lowVersionID="1" highVersionID="40" productID="24">
-                <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0845" width="0.680" height="0.165" units="inches"/>
-            </model>
-            <model show="maybe" model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O"
-                lowVersionID="1" highVersionID="40" productID="18">
-                <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="3.0" width="1.45" height="0.0" units="inches"/>
-            </model>
-            <model show="maybe" model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
-                lowVersionID="1" highVersionID="40" productID="33">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.83" width="0.351" height="0.13" units="inches"/>
-            </model>
-            <model show="maybe" model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="34">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="35">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="36">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="37">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="25">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.53" width="0.542" height="0.155" units="inches"/>
-            </model>
-            <model show="maybe" model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="26">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.53" width="0.542" height="0.155" units="inches"/>
-            </model>
-            <model show="maybe" model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="27">
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.53" width="0.542" height="0.155" units="inches"/>
-            </model>
-            <model show="maybe" model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="28"> 
-                <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.53" width="0.542" height="0.155" units="inches"/>
-            </model>
-            <model show="maybe" model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="29">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.7" width="0.4" height="0.0" units="inches"/>
-            </model>
-            <model show="maybe" model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4"
-                lowVersionID="1" highVersionID="40" productID="30">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.7" width="0.4" height="0.0" units="inches"/>
-            </model>
-            <model show="maybe" model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="31"> 
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.7" width="0.4" height="0.0" units="inches"/>
-            </model>
-            <model show="maybe" model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="32">
-                <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="2.860" width="0.680" height="0.145" units="inches"/>
-            </model>
-            <model show="maybe" model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="43">
-                <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
-                <output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
-                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA"/>
-                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="1.96" width="0.70" height="0.04" units="inches"/>
-            </model>
-            <model show="maybe" model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="8">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.57" width="0.355" height="0.132" units="inches"/>
-            </model>
-            <model show="maybe" model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="9">
-                <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.57" width="0.355" height="0.132" units="inches"/>
-            </model>
-            <model show="maybe" model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="10">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.570" width="0.355" height="0.132" units="inches"/>
-            </model>
-            <model show="maybe" model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="11">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.570" width="0.355" height="0.132" units="inches"/>
-            </model>
-            <model show="maybe" model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="42">
-                <output name="1" label="White" connection="wire" maxcurrent="80 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="80 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="80 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="80 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <size length="0.567" width="0.359" height="0.135" units="inches"/>
-            </model>
-            <model show="maybe" model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="12">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.71" width="0.41" height="0.19" units="inches"/>
-            </model>
-            <model show="maybe" model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="13">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.71" width="0.41" height="0.19" units="inches"/>
-            </model>
-            <model show="maybe" model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15"
-                lowVersionID="1" highVersionID="40" productID="38">
-                <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="MZA4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Z-scale 4 function A format drop in with two LEDs"
-                lowVersionID="1" highVersionID="40" productID="40">
-                <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="T1" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO"
-                lowVersionID="1" highVersionID="40" productID="14">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="0.956" width="0.665" height="0.207" units="inches"/>
-            </model>
-            <model show="maybe" model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="16">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="1.010" width="0.665" height="0.250" units="inches"/>
-            </model>
-            <model show="maybe" model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="17">
-                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-                <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
-                <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-                <size length="1.00" width="0.680" height="0.250" units="inches"/>
-            </model>
-            <model show="maybe" model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000"
-                lowVersionID="1" highVersionID="40" productID="39">
-                <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-            <model show="maybe" model="Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Fits Z thru light duty HO"
-                lowVersionID="1" highVersionID="40" productID="41">
-                <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-                <output name="Dim"/>
-                <output name="Ditch"/>
-                <output name="Motor"/>
-                <output name="BEMF"/>
-                <output name="Brake"/>
-            </model>
-        </family>
-        <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-        <variables>
-            
-            <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_FW01.xml"/>
-            
-            <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV157_FW01.xml"/>
-
-            
-        </variables>
-        <resets>
-            <factReset label="Reset All CVs" CV="8" default="2"/>
-        </resets>
-    </decoder>
-    
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
-    
-    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
-
+  <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>
+  <decoder>
+    <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000">
+      <model show="maybe" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="4">
+        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.860" width="0.680" height="0.145" units="inches"/>
+      </model>
+      <model show="maybe" model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="5">
+        <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="200 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="200 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="200 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.860" width="0.680" height="0.145" units="inches"/>
+      </model>
+      <model show="maybe" model="ALD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: SD50 SD60" lowVersionID="1" highVersionID="40" productID="19">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.83" width="0.351" height="0.13" units="inches"/>
+      </model>
+      <model show="maybe" model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" lowVersionID="1" highVersionID="40" productID="20">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.83" width="0.351" height="0.13" units="inches"/>
+      </model>
+      <model show="maybe" model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: GP7 (2006+), GP9 (2006+), GP15-1, GP 30 (2006+)" lowVersionID="1" highVersionID="40" productID="21">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.73" width="0.349" height="0.13" units="inches"/>
+      </model>
+      <model show="maybe" model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions" lowVersionID="1" highVersionID="40" productID="22">
+        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.834" width="0.361" height="0.101" units="inches"/>
+      </model>
+      <model show="maybe" model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" lowVersionID="1" highVersionID="40" productID="23">
+        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.73" width="0.36" height="0.15" units="inches"/>
+      </model>
+      <model show="maybe" model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="1">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0845" width="0.680" height="0.165" units="inches"/>
+      </model>
+      <model show="maybe" model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar" lowVersionID="1" highVersionID="40" productID="2">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0845" width="0.680" height="0.165" units="inches"/>
+      </model>
+      <model show="maybe" model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="3">
+        <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="44">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
+        <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.78" width="0.59" height="0.13" units="inches"/>
+      </model>
+      <model show="maybe" model="EUN651" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="European 6 pin connector" lowVersionID="1" highVersionID="40" productID="24">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0845" width="0.680" height="0.165" units="inches"/>
+      </model>
+      <model show="maybe" model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O" lowVersionID="1" highVersionID="40" productID="18">
+        <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="3.0" width="1.45" height="0.0" units="inches"/>
+      </model>
+      <model show="maybe" model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="33">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.83" width="0.351" height="0.13" units="inches"/>
+      </model>
+      <model show="maybe" model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="34">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="35">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="36">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="37">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="25">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+      </model>
+      <model show="maybe" model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="26">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+      </model>
+      <model show="maybe" model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="27">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+      </model>
+      <model show="maybe" model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="28">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+      </model>
+      <model show="maybe" model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="29">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+      </model>
+      <model show="maybe" model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" lowVersionID="1" highVersionID="40" productID="30">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+      </model>
+      <model show="maybe" model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="31">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.7" width="0.4" height="0.0" units="inches"/>
+      </model>
+      <model show="maybe" model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="32">
+        <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.860" width="0.680" height="0.145" units="inches"/>
+      </model>
+      <model show="maybe" model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="1" highVersionID="40" productID="43">
+        <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="1.96" width="0.70" height="0.04" units="inches"/>
+      </model>
+      <model show="maybe" model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="8">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.57" width="0.355" height="0.132" units="inches"/>
+      </model>
+      <model show="maybe" model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="9">
+        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.57" width="0.355" height="0.132" units="inches"/>
+      </model>
+      <model show="maybe" model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="10">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.570" width="0.355" height="0.132" units="inches"/>
+      </model>
+      <model show="maybe" model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="11">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.570" width="0.355" height="0.132" units="inches"/>
+      </model>
+      <model show="maybe" model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="42">
+        <output name="1" label="White" connection="wire" maxcurrent="80 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="80 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="80 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="80 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <size length="0.567" width="0.359" height="0.135" units="inches"/>
+      </model>
+      <model show="maybe" model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="12">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.71" width="0.41" height="0.19" units="inches"/>
+      </model>
+      <model show="maybe" model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" lowVersionID="1" highVersionID="40" productID="13">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.71" width="0.41" height="0.19" units="inches"/>
+      </model>
+      <model show="maybe" model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" lowVersionID="1" highVersionID="40" productID="38">
+        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="MZA4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Z-scale 4 function A format drop in with two LEDs" lowVersionID="1" highVersionID="40" productID="40">
+        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="T1" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" lowVersionID="1" highVersionID="40" productID="14">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="0.956" width="0.665" height="0.207" units="inches"/>
+      </model>
+      <model show="maybe" model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="16">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="1.010" width="0.665" height="0.250" units="inches"/>
+      </model>
+      <model show="maybe" model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="1" highVersionID="40" productID="17">
+        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+        <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
+        <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="1.00" width="0.680" height="0.250" units="inches"/>
+      </model>
+      <model show="maybe" model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" lowVersionID="1" highVersionID="40" productID="39">
+        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+      <model show="maybe" model="Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Fits Z thru light duty HO" lowVersionID="1" highVersionID="40" productID="41">
+        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_FW01.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV157_FW01.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 </decoder-config>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

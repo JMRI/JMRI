@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
 <!-- $Id: MRC_sound1902.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -31,22 +31,22 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable label="Start Volts" CV="2" item="Vstart" default="0" comment="Range 0-32">
+      <variable CV="2" item="Vstart" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Start Volts</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Acceleration" CV="3" item="Accel" default="0" comment="Range 0-32">
+      <variable CV="3" item="Accel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Acceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="4" item="Decel" default="0" comment="Range 0-32">
+      <variable CV="4" item="Decel" default="0" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Max Voltage" CV="5" item="Vhigh" default="32" comment="Range 0-32">
+      <variable CV="5" item="Vhigh" default="32" comment="Range 0-32">
         <decVal max="32"/>
         <label>Max Voltage</label>
         <comment>Range 0-63</comment>

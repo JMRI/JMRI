@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007, 2008 All rights reserved -->
 <!-- $Id: Digitrax_Economy.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
@@ -42,19 +42,19 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">ID Versione</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
@@ -68,7 +68,7 @@
         <label>Normal direction of motion</label>
         <label xml:lang="it">Normale Direzione di Marcia</label>
       </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -78,14 +78,14 @@
           </enumChoice>
         </enumVal>
         <label>Speed steps</label>
-        <label xml:lang="it">Step Velocità</label>
+        <label xml:lang="it">Step VelocitÃ </label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
         <label xml:lang="it">Modo Conversione Analogica</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -96,54 +96,54 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-        <label xml:lang="it">Usa Tabella Velocità</label>
+        <label xml:lang="it">Usa Tabella VelocitÃ </label>
       </variable>
-      <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
+      <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
         <label xml:lang="it">Luci di Testa F0F effetto generato</label>
       </variable>
-      <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
+      <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Forward light F0F behavior</label>
         <label xml:lang="it">Luci di Testa F0F comportamento</label>
       </variable>
-      <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
+      <variable CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Reverse light F0R effect generated</label>
         <label xml:lang="it">Luci di coda F0F effetto generato</label>
       </variable>
-      <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
+      <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Reverse light F0R behavior</label>
         <label xml:lang="it">Luci di Coda F0F comportamento</label>
       </variable>
-      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
+      <variable item="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
         <label xml:lang="it">Funzione 1 effetto generato</label>
       </variable>
-      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
+      <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
-      <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
+      <variable item="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 2 effect generated</label>
         <label xml:lang="it">Funzione 2 effetto generato</label>
       </variable>
-      <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
+      <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 2 behavior</label>
         <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
+      <variable CV="61" mask="XXXXXXVX" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
         <label xml:lang="it">Transponding Digitrax</label>
       </variable>
-      <variable label="Split field motor" CV="61" mask="XXXXXVXX">
+      <variable item="Split field motor" CV="61" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="Normal DC motor">
             <choice>Normal DC motor</choice>
@@ -157,40 +157,40 @@
         <label>Split field motor</label>
         <label xml:lang="it">Motore AC</label>
       </variable>
-      <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+      <variable item="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
         <label xml:lang="it">Vstart/Vmid/Vfull in modo 128 step</label>
       </variable>
-      <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+      <variable item="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
         <label xml:lang="it">Protezione Corto-Circuito</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
         <comment xml:lang="it">Funzione non documentata,ocaasionalmente richiesta dal servizio assistenza Digitrax</comment>
       </variable>
-      <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
+      <variable CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
         <decVal max="15"/>
         <label>Lamp keep-alive voltage</label>
         <label xml:lang="it">tensione mantenimento Lampade</label>
         <comment>0 is no keep-alive, use with LEDs</comment>
         <comment xml:lang="it">0=nessuna, usare con LED</comment>
       </variable>
-      <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
+      <variable CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
         <decVal max="15"/>
         <label>FX rate adjust</label>
         <label xml:lang="it">Tasso Aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
         <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato all'inizio</comment>
       </variable>
-      <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+      <variable CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
         <label>Ditch light hold-over time</label>
         <label xml:lang="it">Tempo smorzamento luci Ditch</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
         <comment xml:lang="it">0= nessuno, 40 realistico (5 sec), 255= circa 20 sec.</comment>
       </variable>
-      <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV">
+      <variable item="Switching speed enabled by F6" CV="54" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -202,14 +202,14 @@
           </enumChoice>
         </enumVal>
         <label>Switching speed enabled by F6</label>
-        <label xml:lang="it">Velocità da manovra con F6</label>
+        <label xml:lang="it">VelocitÃ  da manovra con F6</label>
       </variable>
-      <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
+      <variable item="Torque compensation" CV="54" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Torque compensation</label>
         <label xml:lang="it">Compensazione Coppia</label>
       </variable>
-      <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
+      <variable item="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
         <label xml:lang="it">Funzione Blocco decoder</label>
@@ -219,123 +219,123 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
+        <label xml:lang="it">Tabella velocitÃ </label>
       </variable>
       <!-- Define the Function-Output mapping based on NMRA definitions -->
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
         <label xml:lang="it">FL (avanti) Uscita 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
         <label xml:lang="it">FL (avanti) Uscita 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 3</label>
         <label xml:lang="it">FL (avanti) Uscita 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 4</label>
         <label xml:lang="it">FL (avanti) Uscita 4</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 1</label>
         <label xml:lang="it">FL (indietro) Uscita 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 2</label>
         <label xml:lang="it">FL (indietro) Uscita 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 3</label>
         <label xml:lang="it">FL (indietro) Uscita 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 4</label>
         <label xml:lang="it">FL (indietro) Uscita 4</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
         <label xml:lang="it">F1 Uscita 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 2</label>
         <label xml:lang="it">F1 Uscita 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 3</label>
         <label xml:lang="it">F1 Uscita 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 4</label>
         <label xml:lang="it">F1 Uscita 4</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
         <label xml:lang="it">F2 Uscita 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
         <label xml:lang="it">F2 Uscita 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 3</label>
         <label xml:lang="it">F2 Uscita 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 4</label>
         <label xml:lang="it">F2 Uscita 4</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
         <label xml:lang="it">F3 Uscita 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
         <label xml:lang="it">F3 Uscita 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 3</label>
         <label xml:lang="it">F3 Uscita 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 4</label>
         <label xml:lang="it">F3 Uscita 4</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 4</label>
         <label xml:lang="it">F4 Uscita 4</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 4</label>
         <label xml:lang="it">F5 Uscita 4</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 4</label>
         <label xml:lang="it">F6 Uscita 4</label>
@@ -343,16 +343,16 @@
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Ripristino di tutte le CV</label>
       </factReset>
       <factReset label="Reset All CVs except speed table" CV="8" default="9">
-                 <label>Reset All CVs except speed table</label>
-                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocitÃ </label>
       </factReset>
     </resets>
   </decoder>
-  <pane name="Digitrax">
+  <pane>
     <column>
       <display item="Transponding"/>
       <display item="Split field motor"/>

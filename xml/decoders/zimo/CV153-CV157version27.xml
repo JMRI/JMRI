@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable label="Max drive Time after signal loss" CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
   </variable>
-  <variable label="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
+  <variable item="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
@@ -17,7 +17,7 @@
     </enumVal>
     <label>Special Output Configuration</label>
   </variable>
-  <variable label="Shunt Function Key Extension" CV="155" default="0">
+  <variable item="Shunt Function Key Extension" CV="155" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -82,7 +82,7 @@
     </enumVal>
     <label>Shunt Function Key Extension</label>
   </variable>
-  <variable label="Half Speed Key Extension" CV="156" default="0">
+  <variable item="Half Speed Key Extension" CV="156" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -147,7 +147,7 @@
     </enumVal>
     <label>Half Speed Key Extension</label>
   </variable>
-  <variable label="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control">
+  <variable item="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>

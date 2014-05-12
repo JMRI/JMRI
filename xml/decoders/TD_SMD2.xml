@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
 <!-- $Id$ -->
@@ -21,19 +21,19 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Base Address" CV="1" mask="VVVVVVVV" item="Base Address" default="1" tooltip="Range 1-2040">
+      <variable CV="1" mask="VVVVVVVV" item="Base Address" default="1" tooltip="Range 1-2040">
         <splitVal highCV="9" max="7" default="0" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Base Address</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Output 1 Type" CV="3" mask="XXXXXVVV">
+      <variable item="Output 1 Type" CV="3" mask="XXXXXVVV">
         <enumVal>
           <enumChoice choice="Solenoid" value="0">
             <choice>Solenoid</choice>
@@ -50,7 +50,7 @@
         </enumVal>
         <label>Output 1 Type</label>
       </variable>
-      <variable label="Output 2 Type" CV="4" mask="XXXXXVVV">
+      <variable item="Output 2 Type" CV="4" mask="XXXXXVVV">
         <enumVal>
           <enumChoice choice="Solenoid" value="0">
             <choice>Solenoid</choice>
@@ -67,84 +67,84 @@
         </enumVal>
         <label>Output 2 Type</label>
       </variable>
-      <variable label="Output 2 Alternate Address" CV="15" mask="VVVVVVVV" item="Output 2 Alternate Address" default="00" tooltip="Range 1-2040">
+      <variable CV="15" mask="VVVVVVVV" item="Output 2 Alternate Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="16" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Output 2 Alternate Address</label>
       </variable>
-      <variable label="Route 1 Address" CV="17" mask="VVVVVVVV" item="Route 1 Address" default="00" tooltip="Range 1-2040">
+      <variable CV="17" mask="VVVVVVVV" item="Route 1 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="18" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 1 Address</label>
       </variable>
-      <variable label="Route 2 Address" CV="19" mask="VVVVVVVV" item="Route 2 Address" default="00" tooltip="Range 1-2040">
+      <variable CV="19" mask="VVVVVVVV" item="Route 2 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="20" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 2 Address</label>
       </variable>
-      <variable label="Route 3 Address" CV="21" mask="VVVVVVVV" item="Route 3 Address" default="00" tooltip="Range 1-2040">
+      <variable CV="21" mask="VVVVVVVV" item="Route 3 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="22" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 3 Address</label>
       </variable>
-      <variable label="Route 4 Address" CV="23" mask="VVVVVVVV" item="Route 4 Address" default="00" tooltip="Range 1-2040">
+      <variable CV="23" mask="VVVVVVVV" item="Route 4 Address" default="00" tooltip="Range 1-2040">
         <splitVal highCV="24" max="7" factor="1" offset="0" upperMask="XXXXXVVV"/>
         <label>Route 4 Address</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="Addresses">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Base Address" tooltip="Sets the Primary address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Output 2 Alternate Address" tooltip="Sets the address for output 2"/>
-      <label label="Only required for non-sequencial addresses for outputs 1 and 2">
-        <label>Only required for non-sequencial addresses for outputs 1 and 2</label>
+      <label>
+        <text>Only required for non-sequencial addresses for outputs 1 and 2</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
     </column>
     <name>Addresses</name>
   </pane>
-  <pane name="Routes">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route 1 Address" tooltip="Sets the route 1 address"/>
-      <label label="This route sets both outputs to close">
-        <label>This route sets both outputs to close</label>
+      <label>
+        <text>This route sets both outputs to close</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route 2 Address" tooltip="Sets the route 2 address"/>
-      <label label="This route sets both outputs to throw">
-        <label>This route sets both outputs to throw</label>
+      <label>
+        <text>This route sets both outputs to throw</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route 3 Address" tooltip="Sets the route 3 address"/>
-      <label label="This route sets  output 1 to close, output 2 to throw">
-        <label>This route sets  output 1 to close, output 2 to throw</label>
+      <label>
+        <text>This route sets  output 1 to close, output 2 to throw</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route 4 Address" tooltip="Sets the route 4 address"/>
-      <label label="This route sets output 1 to throw, output 2 to close">
-        <label>This route sets output 1 to throw, output 2 to close</label>
+      <label>
+        <text>This route sets output 1 to throw, output 2 to close</text>
       </label>
     </column>
     <name>Routes</name>
   </pane>
-  <pane name="Mfg">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
       <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
@@ -152,17 +152,17 @@
     </column>
     <name>Mfg</name>
   </pane>
-  <pane name="Outputs">
+  <pane>
     <column>
       <display item="Output 1 Type" tooltip="Configures the output for specfic use"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Output 2 Type" tooltip="Configures the output for specfic use"/>
     </column>
     <name>Outputs</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

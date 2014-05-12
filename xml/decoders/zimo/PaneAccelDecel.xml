@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Accel/Decel" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
             <display item="Acceleration"/>
             <display item="Deceleration"/>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
-          <label label="      ">
-            <label>      </label>
+          <label>
+            <text>      </text>
           </label>
           <column>
             <display item="Acceleration Trim"/>
             <display item="Acceleration Trim Sign"/>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
-          <label label="    ">
-            <label>    </label>
+          <label>
+            <text>    </text>
           </label>
           <column>
             <display item="Deceleration Trim"/>
             <display item="Deceleration Trim Sign"/>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
         </row>
@@ -45,8 +45,8 @@
         <display item="BEMF Intensity"/>
       </column>
       <column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
       </column>
       <separator/>
@@ -54,28 +54,28 @@
         <display item="BEMF config"/>
       </column>
       <column>
-        <label label="     ">
-          <label>     </label>
+        <label>
+          <text>     </text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors">
-          <label>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</label>
+        <label>
+          <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
         </label>
-        <label label="Tens digit is the Proportional value, mid value = 5">
-          <label>Tens digit is the Proportional value, mid value = 5</label>
+        <label>
+          <text>Tens digit is the Proportional value, mid value = 5</text>
         </label>
-        <label label="Ones digit is the integral value, mid value = 5">
-          <label>Ones digit is the integral value, mid value = 5</label>
+        <label>
+          <text>Ones digit is the integral value, mid value = 5</text>
         </label>
-        <label label="With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5">
-          <label>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</label>
+        <label>
+          <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
@@ -84,114 +84,114 @@
       <column>
         <display item="Motor Frequency and EMF sample Rate"/>
       </column>
-      <label label="    ">
-        <label>    </label>
+      <label>
+        <text>    </text>
       </label>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz">
-          <label>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</label>
+        <label>
+          <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
         </label>
-        <label label="Tens digit = Sampling rate (1-9) mid value = 5">
-          <label>Tens digit = Sampling rate (1-9) mid value = 5</label>
+        <label>
+          <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
         </label>
-        <label label="Ones digit = EMF sampling time (1-9) mid value = 5">
-          <label>Ones digit = EMF sampling time (1-9) mid value = 5</label>
+        <label>
+          <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
         </label>
-        <label label="100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time">
-          <label>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</label>
+        <label>
+          <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
         </label>
-        <label label="255-176 = Low frequency according to formula;-">
-          <label>255-176 = Low frequency according to formula;-</label>
+        <label>
+          <text>255-176 = Low frequency according to formula;-</text>
         </label>
-        <label label="(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp">
-          <label>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</label>
+        <label>
+          <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
     <row>
-      <label label="Acceleration/Deceleration time (momentum) can be streched in the lower speed range">
-        <label>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</label>
+      <label>
+        <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
       </label>
     </row>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Exponential Acceleration"/>
         <display item="Exponential Deceleration"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="      ">
-          <label>      </label>
+        <label>
+          <text>      </text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="Tens digit = percentage of speed range to be included (0-9)">
-          <label>Tens digit = percentage of speed range to be included (0-9)</label>
+        <label>
+          <text>Tens digit = percentage of speed range to be included (0-9)</text>
         </label>
-        <label label="Ones digit = Exponential curve (0-9)">
-          <label>Ones digit = Exponential curve (0-9)</label>
+        <label>
+          <text>Ones digit = Exponential curve (0-9)</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
     <row>
       <column>
-        <label label="Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance">
-          <label>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</label>
+        <label>
+          <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
         </label>
-        <label label="for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)">
-          <label>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</label>
+        <label>
+          <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
         </label>
       </column>
     </row>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Adaptive Acceleration/Deceleration"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="     ">
-          <label>     </label>
+        <label>
+          <text>     </text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="Tens digit = acceleration (1-9)">
-          <label>Tens digit = acceleration (1-9)</label>
+        <label>
+          <text>Tens digit = acceleration (1-9)</text>
         </label>
-        <label label="Ones digit = deceleration (1-9)">
-          <label>Ones digit = deceleration (1-9)</label>
+        <label>
+          <text>Ones digit = deceleration (1-9)</text>
         </label>
-        <label label="Value 0 = no adaptive acceleration/deceleration">
-          <label>Value 0 = no adaptive acceleration/deceleration</label>
+        <label>
+          <text>Value 0 = no adaptive acceleration/deceleration</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>

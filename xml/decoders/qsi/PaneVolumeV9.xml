@@ -14,15 +14,24 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-<pane name="Component Volume" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Component Volume</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V9"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V9</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <separator/>
@@ -32,167 +41,231 @@
           <display item="CV127.10.0" layout="above" label=""/>
           <display item="CV127.10.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.1" layout="above" label=""/>
           <display item="CV127.10.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.2" layout="above" label=""/>
           <display item="CV127.10.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.10" layout="above" label=""/>
           <display item="CV127.10.10" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.11" layout="above" label=""/>
           <display item="CV127.10.11" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.12" layout="above" label=""/>
           <display item="CV127.10.12" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.20" layout="above" label=""/>
           <display item="CV127.10.20" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.21" layout="above" label=""/>
           <display item="CV127.10.21" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.22" layout="above" label=""/>
           <display item="CV127.10.22" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.30" layout="above" label=""/>
           <display item="CV127.10.30" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.31" layout="above" label=""/>
           <display item="CV127.10.31" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.32" layout="above" label=""/>
           <display item="CV127.10.32" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.60" layout="above" label=""/>
           <display item="CV127.10.60" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.61" layout="above" label=""/>
           <display item="CV127.10.61" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.70" layout="above" label=""/>
           <display item="CV127.10.70" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.10.71" layout="above" label=""/>
           <display item="CV127.10.71" layout="above" format="hslider-percent"/>
         </row>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
         <row>
           <display item="CV127.11.0" layout="above" label=""/>
           <display item="CV127.11.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.1" layout="above" label=""/>
           <display item="CV127.11.1" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.2" layout="above" label=""/>
           <display item="CV127.11.2" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.10" layout="above" label=""/>
           <display item="CV127.11.10" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.11" layout="above" label=""/>
           <display item="CV127.11.11" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.12" layout="above" label=""/>
           <display item="CV127.11.12" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.20" layout="above" label=""/>
           <display item="CV127.11.20" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.21" layout="above" label=""/>
           <display item="CV127.11.21" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.22" layout="above" label=""/>
           <display item="CV127.11.22" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.30" layout="above" label=""/>
           <display item="CV127.11.30" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.31" layout="above" label=""/>
           <display item="CV127.11.31" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.32" layout="above" label=""/>
           <display item="CV127.11.32" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.60" layout="above" label=""/>
           <display item="CV127.11.60" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.61" layout="above" label=""/>
           <display item="CV127.11.61" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.70" layout="above" label=""/>
           <display item="CV127.11.70" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV127.11.71" layout="above" label=""/>
           <display item="CV127.11.71" layout="above" format="hslider-percent"/>
         </row>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
   </column>
 </pane>

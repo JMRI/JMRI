@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
 <!-- $Id: Kato_em13.xml 17977 2011-07-18 17:23:46Z zoo $ -->
@@ -27,7 +27,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
-      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -38,7 +38,7 @@
         </enumVal>
         <label>Consist Address Active For F9</label>
       </variable>
-      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -49,7 +49,7 @@
         </enumVal>
         <label>Consist Address Active For F10</label>
       </variable>
-      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -60,7 +60,7 @@
         </enumVal>
         <label>Consist Address Active For F11</label>
       </variable>
-      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -71,7 +71,7 @@
         </enumVal>
         <label>Consist Address Active For F12</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
@@ -82,7 +82,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -95,37 +95,47 @@
       </variable>
       <!-- Found on my decoders that this bit must be on, if this bit off then get no lights even if others bits are on
 				 also if another bit in on along with this one, then F0f does not turn onthe lights, only the other setting -->
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1" tooltip="Must remain checked">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1" tooltip="Must remain checked">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXVXX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXVXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXVXX" minOut="2" default="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXVXX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXVXX" minOut="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXVXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXVXX" minOut="2">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXVXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 2</label>
       </variable>
-      <variable label="Ditch Light Cycle Time" CV="63" item="Global lighting option 3">
+      <variable CV="63" item="Global lighting option 3">
         <enumVal>
           <enumChoice choice="0.5 Sec">
             <choice>0.5 Sec</choice>

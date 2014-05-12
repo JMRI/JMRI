@@ -12,18 +12,29 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Sound Select" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Sound Select</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <row>
       <column>
@@ -47,7 +58,9 @@
         <display item="CV117.40.1"/>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <row>
       <column>
@@ -64,7 +77,9 @@
           </column>
         </row>
       </column>
-      <label label="        "/>
+      <label>
+        <text>        </text>
+      </label>
       <column>
         <row>
           <column>
@@ -78,7 +93,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV118.10 Sign" format="offradiobutton" label="" layout="left"/>
@@ -103,7 +120,9 @@
             </row>
           </column>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <column>
             <display item="CV118.11 Sign" format="offradiobutton" label="" layout="left"/>

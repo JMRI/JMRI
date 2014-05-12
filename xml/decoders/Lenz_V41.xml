@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003 All rights reserved -->
 <!-- $Id: Lenz_V41.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -31,38 +31,38 @@
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start voltage" CV="2" item="Vstart" comment="Range 1-15" default="4">
+      <variable CV="2" item="Vstart" comment="Range 1-15" default="4">
         <decVal min="1" max="15"/>
         <label>Start voltage</label>
         <comment>Range 1-15</comment>
       </variable>
-      <variable label="Acceleration momentum" CV="3" item="Accel" comment="Range 1-31" default="1">
+      <variable CV="3" item="Accel" comment="Range 1-31" default="1">
         <decVal min="1" max="31"/>
         <label>Acceleration momentum</label>
         <comment>Range 1-31</comment>
       </variable>
-      <variable label="Brake momentum" CV="4" item="Decel" comment="Range 1-31" default="1">
+      <variable CV="4" item="Decel" comment="Range 1-31" default="1">
         <decVal min="1" max="31"/>
         <label>Brake momentum</label>
         <comment>Range 1-31</comment>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Manufacturer ID - Reset" CV="8" default="99">
+      <variable item="Manufacturer ID - Reset" CV="8" default="99">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" default="0">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -73,15 +73,15 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Acceleration Trim" CV="23" item="AccelTrim" default="0">
+      <variable CV="23" item="AccelTrim" default="0">
         <decVal/>
         <label>Acceleration Trim</label>
       </variable>
-      <variable label="Deceleration Trim" CV="24" item="DecelTrim" default="0">
+      <variable CV="24" item="DecelTrim" default="0">
         <decVal/>
         <label>Deceleration Trim</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -92,7 +92,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -103,7 +103,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -114,7 +114,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
         <enumVal>
           <enumChoice choice="Don't use Speed Table">
             <choice>Don't use Speed Table</choice>
@@ -125,7 +125,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="Accel/Decel Trim" CV="50" mask="XXXXXXVX" item="Accel/Decel Trim" default="0" comment="Switch on/off Acceleration/Deceleration trim">
+      <variable CV="50" mask="XXXXXXVX" item="Accel/Decel Trim" default="0" comment="Switch on/off Acceleration/Deceleration trim">
         <enumVal>
           <enumChoice choice="Trim Off">
             <choice>Trim Off</choice>
@@ -137,7 +137,7 @@
         <label>Accel/Decel Trim</label>
         <comment>Switch on/off Acceleration/Deceleration trim</comment>
       </variable>
-      <variable label="Brake Momentum on DC" CV="50" mask="XXXXXVXX" item="DC Brake Momentum" default="0" comment="Governs how loco acts in DC track block">
+      <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum" default="0" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
@@ -149,7 +149,7 @@
         <label>Brake Momentum on DC</label>
         <comment>Governs how loco acts in DC track block</comment>
       </variable>
-      <variable label="Headlight Control" CV="51" mask="XXXXXXXV" item="Directional Headlights" default="0">
+      <variable CV="51" mask="XXXXXXXV" item="Directional Headlights" default="0">
         <enumVal>
           <enumChoice choice="Directional Lights">
             <choice>Directional Lights</choice>
@@ -160,7 +160,7 @@
         </enumVal>
         <label>Headlight Control</label>
       </variable>
-      <variable label="Directional Headlight Dimming" CV="51" mask="XXXXXXVX" item="Global lighting option 1" default="0" comment="Only relevant for 'Directional Lights'">
+      <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1" default="0" comment="Only relevant for 'Directional Lights'">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -172,7 +172,7 @@
         <label>Directional Headlight Dimming</label>
         <comment>Only relevant for 'Directional Lights'</comment>
       </variable>
-      <variable label="Rule 17 Front Light Dimming" CV="51" mask="XXXXXVXX" item="Global lighting option 2" default="0" comment="Only relevant for 'Rule 17 Independent Front/Rear Lights'">
+      <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2" default="0" comment="Only relevant for 'Rule 17 Independent Front/Rear Lights'">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -184,7 +184,7 @@
         <label>Rule 17 Front Light Dimming</label>
         <comment>Only relevant for 'Rule 17 Independent Front/Rear Lights'</comment>
       </variable>
-      <variable label="Rule 17 Rear Light Dimming" CV="51" mask="XXXXVXXX" item="Global lighting option 3" default="0" comment="Only relevant for 'Rule 17 Independent Front/Rear Lights'">
+      <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3" default="0" comment="Only relevant for 'Rule 17 Independent Front/Rear Lights'">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -196,19 +196,19 @@
         <label>Rule 17 Rear Light Dimming</label>
         <comment>Only relevant for 'Rule 17 Independent Front/Rear Lights'</comment>
       </variable>
-      <variable label="Dimming Value" CV="52" item="Global lighting option 4" default="0">
+      <variable CV="52" item="Global lighting option 4" default="0">
         <decVal/>
         <label>Dimming Value</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
+      <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
+      <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
@@ -217,7 +217,7 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
   </decoder>
-  <pane name="Lenz">
+  <pane>
     <column>
       <display item="Accel/Decel Trim"/>
       <display item="AccelTrim"/>

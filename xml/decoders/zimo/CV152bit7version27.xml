@@ -4,8 +4,8 @@
 <!-- version 1.1 15 Aug 11 JES
                  - added minOut
 -->
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable label="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
     <enumVal>
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>

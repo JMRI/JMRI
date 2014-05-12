@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
 <!-- $Id: Haber_u_Koenig.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -31,39 +31,39 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Vstart" CV="2" default="16" comment="Range 0-63">
+      <variable item="Vstart" CV="2" default="16" comment="Range 0-63">
         <decVal max="63"/>
         <label>Vstart</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable label="Acceleration" CV="3" default="16" item="Accel" comment="Range 0-63">
+      <variable CV="3" default="16" item="Accel" comment="Range 0-63">
         <decVal max="63"/>
         <label>Acceleration</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable label="Deceleration" CV="4" default="16" item="Decel" comment="Range 0-63">
+      <variable CV="4" default="16" item="Decel" comment="Range 0-63">
         <decVal max="63"/>
         <label>Deceleration</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable label="Vhigh" CV="5" default="63" comment="Range 0-63">
+      <variable item="Vhigh" CV="5" default="63" comment="Range 0-63">
         <decVal max="63"/>
         <label>Vhigh</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="111">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="111">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Package Timeout" CV="11" default="64" tooltip="stops motor if no DCC packets received after timeout">
+      <variable item="Package Timeout" CV="11" default="64" tooltip="stops motor if no DCC packets received after timeout">
         <decVal/>
         <label>Package Timeout</label>
       </variable>
-      <variable label="Analog Operation Outputs F1" CV="13" mask="XXXXXXXV" default="1" item="Analog Mode Function Status - F1">
+      <variable CV="13" mask="XXXXXXXV" default="1" item="Analog Mode Function Status - F1">
         <enumVal>
           <enumChoice choice="On">
             <choice>On</choice>
@@ -74,7 +74,7 @@
         </enumVal>
         <label>Analog Operation Outputs F1</label>
       </variable>
-      <variable label="Analog Operation Outputs F2" CV="13" mask="XXXXXXVX" default="1" item="Analog Mode Function Status - F2">
+      <variable CV="13" mask="XXXXXXVX" default="1" item="Analog Mode Function Status - F2">
         <enumVal>
           <enumChoice choice="On">
             <choice>On</choice>
@@ -85,7 +85,7 @@
         </enumVal>
         <label>Analog Operation Outputs F2</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -96,7 +96,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -107,7 +107,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="0">
+      <variable item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -118,7 +118,7 @@
         </enumVal>
         <label>Analog (DC) Operation</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
             <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
@@ -130,7 +130,7 @@
         <label>Use Speed Table</label>
       </variable>
       <!-- Funtion Mapping ONLY for F2 and F3, ONLY if extension board fitted to decoder!!!  -->
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -141,7 +141,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -152,7 +152,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -163,7 +163,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -174,7 +174,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -185,7 +185,7 @@
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -196,7 +196,7 @@
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -207,7 +207,7 @@
         </enumVal>
         <label>F2 controls output 7</label>
       </variable>
-      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -218,7 +218,7 @@
         </enumVal>
         <label>F2 controls output 8</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -229,7 +229,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -240,7 +240,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -251,7 +251,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -262,7 +262,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -273,7 +273,7 @@
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -284,7 +284,7 @@
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -295,7 +295,7 @@
         </enumVal>
         <label>F3 controls output 7</label>
       </variable>
-      <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -306,11 +306,11 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-      <variable label="Analog Maximum Speed" CV="49" default="63" item="analog maximum speed">
+      <variable CV="49" default="63" item="analog maximum speed">
         <decVal max="63"/>
         <label>Analog Maximum Speed</label>
       </variable>
-      <variable label="Analog Acceleration and Deceleration" CV="50" default="0" item="CV50, enables/disables CV 3 and 4 in analog mode">
+      <variable CV="50" default="0" item="CV50, enables/disables CV 3 and 4 in analog mode">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -321,7 +321,7 @@
         </enumVal>
         <label>Analog Acceleration and Deceleration</label>
       </variable>
-      <variable label="Automatic Speed Step Detection" CV="51" default="1" tooltip="auto-detection of the decoders speed step configuration">
+      <variable item="Automatic Speed Step Detection" CV="51" default="1" tooltip="auto-detection of the decoders speed step configuration">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -332,73 +332,73 @@
         </enumVal>
         <label>Automatic Speed Step Detection</label>
       </variable>
-      <variable label="BEMF Configuration Slow" CV="52" default="1" item="DC Brake Momentum" tooltip=": 0=OFF, 1=slow speed, 2=OFF, 3=normal speed">
+      <variable CV="52" default="1" item="DC Brake Momentum" tooltip=": 0=OFF, 1=slow speed, 2=OFF, 3=normal speed">
         <decVal max="3"/>
         <label>BEMF Configuration Slow</label>
       </variable>
-      <variable label="Effects Output F1 Dimm Rate-1" CV="53" default="255">
+      <variable item="Effects Output F1 Dimm Rate-1" CV="53" default="255">
         <decVal/>
         <label>Effects Output F1 Dimm Rate-1</label>
       </variable>
-      <variable label="Effects Output F1 Dimm Rate-2" CV="54" default="255">
+      <variable item="Effects Output F1 Dimm Rate-2" CV="54" default="255">
         <decVal/>
         <label>Effects Output F1 Dimm Rate-2</label>
       </variable>
-      <variable label="Effects Output F1 Frequency and Mode" CV="55" default="0">
+      <variable item="Effects Output F1 Frequency and Mode" CV="55" default="0">
         <decVal max="31"/>
         <label>Effects Output F1 Frequency and Mode</label>
       </variable>
-      <variable label="Effects Output F1 Symmetry" CV="56" default="128">
+      <variable item="Effects Output F1 Symmetry" CV="56" default="128">
         <decVal/>
         <label>Effects Output F1 Symmetry</label>
       </variable>
-      <variable label="Running Hour Meter1" CV="57" readOnly="yes">
+      <variable item="Running Hour Meter1" CV="57" readOnly="yes">
         <decVal/>
         <label>Running Hour Meter1</label>
       </variable>
-      <variable label="Running Hour Meter2" CV="58" readOnly="yes">
+      <variable item="Running Hour Meter2" CV="58" readOnly="yes">
         <decVal/>
         <label>Running Hour Meter2</label>
       </variable>
-      <variable label="Running Hour Meter3" CV="59" readOnly="yes">
+      <variable item="Running Hour Meter3" CV="59" readOnly="yes">
         <decVal/>
         <label>Running Hour Meter3</label>
       </variable>
-      <variable label="Decoder Production Date1" CV="60" readOnly="yes">
+      <variable item="Decoder Production Date1" CV="60" readOnly="yes">
         <decVal/>
         <label>Decoder Production Date1</label>
       </variable>
-      <variable label="Decoder Production Date2" CV="61" readOnly="yes">
+      <variable item="Decoder Production Date2" CV="61" readOnly="yes">
         <decVal/>
         <label>Decoder Production Date2</label>
       </variable>
-      <variable label="Decoder Serial Number1" CV="62" readOnly="yes">
+      <variable item="Decoder Serial Number1" CV="62" readOnly="yes">
         <decVal/>
         <label>Decoder Serial Number1</label>
       </variable>
-      <variable label="Decoder Serial Number2" CV="63" readOnly="yes">
+      <variable item="Decoder Serial Number2" CV="63" readOnly="yes">
         <decVal/>
         <label>Decoder Serial Number2</label>
       </variable>
-      <variable label="Decoder Serial Number3" CV="64" readOnly="yes">
+      <variable item="Decoder Serial Number3" CV="64" readOnly="yes">
         <decVal/>
         <label>Decoder Serial Number3</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
+      <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
+      <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="Output Handling">
+  <pane>
     <column>
       <row>
         <column>
@@ -418,22 +418,22 @@
           </display>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Effects Output F1 Frequency and Mode" tooltip="Sets the frequency and mode of F1"/>
     </column>
     <name>Output Handling</name>
   </pane>
-  <pane name="HKE Special">
+  <pane>
     <column>
       <display item="Package Timeout"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Automatic Speed Step Detection"/>
     </column>

@@ -39,12 +39,12 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="User Private ID #1" CV="105" item="User Id #1">
+  <variable CV="105" item="User Id #1">
     <decVal/>
     <label>User Private ID #1</label>
     <label xml:lang="it">ID Utente privato #1</label>
   </variable>
-  <variable label="User Private ID #2" CV="106" item="User Id #2">
+  <variable CV="106" item="User Id #2">
     <decVal/>
     <label>User Private ID #2</label>
     <label xml:lang="it">ID Utente privato #2</label>

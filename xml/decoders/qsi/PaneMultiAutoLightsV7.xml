@@ -14,22 +14,37 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-<pane name="Multi Auto Lights" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Multi Auto Lights</name>
   <column>
     <row>
       <column>
-        <label label=" "/>
-        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
       <column>
-        <label label="Multiple Automatic Lights #1"/>
+        <label>
+          <text>Multiple Automatic Lights #1</text>
+        </label>
         <display item="CV55.136.0 70" format="checkbox"/>
         <display item="CV55.136.0 73" format="checkbox"/>
         <display item="CV55.136.0 76" format="checkbox"/>
@@ -51,7 +66,9 @@
         <display item="CV55.136.2 121" format="checkbox"/>
       </column>
       <column>
-        <label label="  #2"/>
+        <label>
+          <text>  #2</text>
+        </label>
         <display item="CV55.137.0 70" format="checkbox" label=""/>
         <display item="CV55.137.0 73" format="checkbox" label=""/>
         <display item="CV55.137.0 76" format="checkbox" label=""/>
@@ -73,7 +90,9 @@
         <display item="CV55.137.2 121" format="checkbox" label=""/>
       </column>
       <column>
-        <label label="  #3"/>
+        <label>
+          <text>  #3</text>
+        </label>
         <display item="CV55.138.0 70" format="checkbox" label=""/>
         <display item="CV55.138.0 73" format="checkbox" label=""/>
         <display item="CV55.138.0 76" format="checkbox" label=""/>

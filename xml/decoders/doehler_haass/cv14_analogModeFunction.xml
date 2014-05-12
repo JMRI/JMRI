@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -35,29 +35,28 @@
       </revremark>
     </revision>
   </revhistory>
-
-	  <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - FL(f)</label>
-      </variable>
-      <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - FL(r)</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - F9</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - F10</label>
-      </variable>
-	  <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - F11</label>
-      </variable>
-	  <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - F12</label>
-      </variable>
+  <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - FL(f)</label>
+  </variable>
+  <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - FL(r)</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F9</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F10</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F11</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Function Status - F12</label>
+  </variable>
 </variables>

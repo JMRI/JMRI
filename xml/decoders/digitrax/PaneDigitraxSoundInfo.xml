@@ -15,61 +15,81 @@
 <!-- version 1 - Created as a separate file from Digitrax_0SFX.xml   v7     -->
 <!-- 					Alain Le Marchand (2014-04-27)						-->
 <!-- 																		-->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Digitrax Sound Info" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <column>
-      <row>
-        <column>
-          <label label="Read-only Information for Digitrax sound projects"/>            
-          <label label="  "/>
-          <label label="  "/>          
-        </column>
-      </row>
-      <row>
-        <column>            
-          <display item="Sound Project Author ID"/>
-          <display item="Sound Project ID"/>
-          <display item="Variant ID"/>
-          <label label="  "/>
-        </column>
-        <label label="                     "/>
-<!--    Only documented for Series 3 read-only project information    -->		
-        <column>
-          <display item="Software Version"/>
-          <display item="Product Type"/>
-          <display item="Hardware Version"/>
-          <display item="Flash Signature"/>
-          <display item="16KB free blocks"/>
-          <display item="FAT flags"/>
-          <display item="Internal Flags"/>
-          <display item="IPL counter"/>
-          <label label="  "/>
-        </column>
-<!--    /end of only for Series 3     -->	
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <label label="  "/>             
-          <label label="DIGITRAX SOUND DECODER NOTES: ">
-            <label xml:lang="it">NOTE DECODER SUONO DIGITRAX</label>
-          </label>
-          <label label="Sound labels and values are shown for decoders as manufactured.">
-            <label xml:lang="it">Descrizioni e valori visualizzati per decoder nuovi</label>
-          </label>
-          <label label="These labels and values may not match downloaded sound projects.">
-            <label xml:lang="it">Questi possono non corrispondere al progetto scaricato</label>
-          </label>
-          <label label="Please use the CVs pane to adjust downloaded sound projects.">
-            <label xml:lang="it">Usare pannello CV per aggiustare i suoni del progetto</label>
-          </label>
-          <label label="If your locomotive with downloaded sound file is silent,try setting CV 60=0.">
-            <label xml:lang="it">Se la loco è silenziosa con i suoni scaricati, provare  CV60=0</label>
-          </label>
-          <label label="To mute bell or horn, set the sound level = 1, not 0.">
-            <label xml:lang="it">Per silenziare la campana o la tromba impostare livello suoni=1, non 0</label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Digitrax Sound Info</name>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>Read-only Information for Digitrax sound projects</text>
+        </label>
+        <label>
+          <text>  </text>
+        </label>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Sound Project Author ID"/>
+        <display item="Sound Project ID"/>
+        <display item="Variant ID"/>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <label>
+        <text>                     </text>
+      </label>
+      <!--    Only documented for Series 3 read-only project information    -->
+      <column>
+        <display item="Software Version"/>
+        <display item="Product Type"/>
+        <display item="Hardware Version"/>
+        <display item="Flash Signature"/>
+        <display item="16KB free blocks"/>
+        <display item="FAT flags"/>
+        <display item="Internal Flags"/>
+        <display item="IPL counter"/>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <!--    /end of only for Series 3     -->
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+        <label>
+          <text>DIGITRAX SOUND DECODER NOTES: </text>
+          <text xml:lang="it">NOTE DECODER SUONO DIGITRAX</text>
+        </label>
+        <label>
+          <text>Sound labels and values are shown for decoders as manufactured.</text>
+          <text xml:lang="it">Descrizioni e valori visualizzati per decoder nuovi</text>
+        </label>
+        <label>
+          <text>These labels and values may not match downloaded sound projects.</text>
+          <text xml:lang="it">Questi possono non corrispondere al progetto scaricato</text>
+        </label>
+        <label>
+          <text>Please use the CVs pane to adjust downloaded sound projects.</text>
+          <text xml:lang="it">Usare pannello CV per aggiustare i suoni del progetto</text>
+        </label>
+        <label>
+          <text>If your locomotive with downloaded sound file is silent,try setting CV 60=0.</text>
+          <text xml:lang="it">Se la loco è silenziosa con i suoni scaricati, provare  CV60=0</text>
+        </label>
+        <label>
+          <text>To mute bell or horn, set the sound level = 1, not 0.</text>
+          <text xml:lang="it">Per silenziare la campana o la tromba impostare livello suoni=1, non 0</text>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Digitrax Sound Info</name>
 </pane>

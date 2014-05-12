@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- $Id: Uhlenbrock_73900.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
@@ -21,54 +21,54 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version" default="1">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
         <decVal/>
         <label>Manufacturer Version No: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="85">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
       </variable>
-      <variable label="Output A1" CV="13" default="1" mask="XXXXXXXV">
+      <variable item="Output A1" CV="13" default="1" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A1</label>
       </variable>
-      <variable label="Output A2" CV="13" default="1" mask="XXXXXXVX">
+      <variable item="Output A2" CV="13" default="1" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A2</label>
       </variable>
-      <variable label="Output A3" CV="13" default="0" mask="XXXXXVXX">
+      <variable item="Output A3" CV="13" default="0" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A3</label>
       </variable>
-      <variable label="Output A4" CV="13" default="0" mask="XXXXVXXX">
+      <variable item="Output A4" CV="13" default="0" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A4</label>
       </variable>
-      <variable label="Consist Address" CV="19" default="0" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" default="0" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" default="0" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" default="0" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal"/>
           <enumChoice choice="Reversed"/>
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14 speed step format"/>
           <enumChoice choice="28 speed step format"/>
@@ -77,184 +77,192 @@
       </variable>
       <!-- Output Mapping CV35 - 42
   When Function high = 128 then Function low has the DCC range of F0 - F127 -->
-      <variable label="Function A1 high" CV="35" default="128" tooltip="F-low=F0-F255 when F-high=128">
+      <variable item="Function A1 high" CV="35" default="128" tooltip="F-low=F0-F255 when F-high=128">
         <decVal/>
+        <label>Function A1 high</label>
       </variable>
-      <variable label="Function A1 low" CV="36" default="0" tooltip="default is F0">
+      <variable item="Function A1 low" CV="36" default="0" tooltip="default is F0">
         <decVal/>
+        <label>Function A1 low</label>
       </variable>
-      <variable label="Function A2 high" CV="37" default="128" tooltip="F-low=F0-F255 when F-high=128">
+      <variable item="Function A2 high" CV="37" default="128" tooltip="F-low=F0-F255 when F-high=128">
         <decVal/>
+        <label>Function A2 high</label>
       </variable>
-      <variable label="Function A2 low" CV="38" default="0" tooltip="default is F0">
+      <variable item="Function A2 low" CV="38" default="0" tooltip="default is F0">
         <decVal/>
+        <label>Function A2 low</label>
       </variable>
-      <variable label="Function A3 high" CV="39" default="128" tooltip="F-low=F0-F255 when F-high=128">
+      <variable item="Function A3 high" CV="39" default="128" tooltip="F-low=F0-F255 when F-high=128">
         <decVal/>
+        <label>Function A3 high</label>
       </variable>
-      <variable label="Function A3 low" CV="40" default="1" tooltip="default is F1">
+      <variable item="Function A3 low" CV="40" default="1" tooltip="default is F1">
         <decVal/>
+        <label>Function A3 low</label>
       </variable>
-      <variable label="Function A4 high" CV="41" default="128" tooltip="F-low=F0-F255 when F-high=128">
+      <variable item="Function A4 high" CV="41" default="128" tooltip="F-low=F0-F255 when F-high=128">
         <decVal/>
+        <label>Function A4 high</label>
       </variable>
-      <variable label="Function A4 low" CV="42" default="2" tooltip="default is F2">
+      <variable item="Function A4 low" CV="42" default="2" tooltip="default is F2">
         <decVal/>
+        <label>Function A4 low</label>
       </variable>
-      <variable label="DCC protocol select" CV="49" default="0" mask="XXXXVXXX" item="Advanced Group 1 Option 1" tooltip="don't select both DCC only and Motorola only">
+      <variable CV="49" default="0" mask="XXXXVXXX" item="Advanced Group 1 Option 1" tooltip="don't select both DCC only and Motorola only">
         <enumVal>
           <enumChoice choice="DCC and Motorola"/>
           <enumChoice choice="DCC only"/>
         </enumVal>
         <label>Protocol select 1</label>
       </variable>
-      <variable label="Motorola protocol select" CV="49" default="0" mask="XXXVXXXX" item="Advanced Group 1 Option 2" tooltip="don't select both DCC only and Motorola only">
+      <variable CV="49" default="0" mask="XXXVXXXX" item="Advanced Group 1 Option 2" tooltip="don't select both DCC only and Motorola only">
         <enumVal>
           <enumChoice choice="DCC and Motorola"/>
           <enumChoice choice="Motorola only"/>
         </enumVal>
         <label>Protocol select 2</label>
       </variable>
-      <variable label="Light connections" CV="49" default="0" mask="XVXXXXXX" item="Advanced Group 1 Option 4">
+      <variable CV="49" default="0" mask="XVXXXXXX" item="Advanced Group 1 Option 4">
         <enumVal>
           <enumChoice choice="normal"/>
           <enumChoice choice="reverse"/>
         </enumVal>
         <label>Light connections</label>
       </variable>
-      <variable label="Dimming outputs A1 and A2" CV="50" default="32">
+      <variable item="Dimming outputs A1 and A2" CV="50" default="32">
         <decVal min="0" max="63"/>
         <label>Dimming outputs A1 and A2</label>
       </variable>
-      <variable label="Dimming outputs A3 and A4" CV="51" default="32">
+      <variable item="Dimming outputs A3 and A4" CV="51" default="32">
         <decVal min="0" max="63"/>
         <label>Dimming outputs A3 and A4</label>
       </variable>
-      <variable label="Output A1 Direction forward" CV="52" default="0" mask="XXXXXXXV">
+      <variable item="Output A1 Direction forward" CV="52" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A1 Direction forward</label>
       </variable>
-      <variable label="Output A2 Direction forward" CV="52" default="1" mask="XXXXXXVX">
+      <variable item="Output A2 Direction forward" CV="52" default="1" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A2 Direction forward</label>
       </variable>
-      <variable label="Output A3 Direction forward" CV="52" default="0" mask="XXXXXVXX">
+      <variable item="Output A3 Direction forward" CV="52" default="0" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A3 Direction forward</label>
       </variable>
-      <variable label="Output A4 Direction forward" CV="52" default="0" mask="XXXXVXXX">
+      <variable item="Output A4 Direction forward" CV="52" default="0" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A4 Direction forward</label>
       </variable>
-      <variable label="Output A1 Direction rearward" CV="53" default="1" mask="XXXXXXXV">
+      <variable item="Output A1 Direction rearward" CV="53" default="1" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A1 Direction rearward</label>
       </variable>
-      <variable label="Output A2 Direction rearward" CV="53" default="0" mask="XXXXXXVX">
+      <variable item="Output A2 Direction rearward" CV="53" default="0" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A2 Direction rearward</label>
       </variable>
-      <variable label="Output A3 Direction rearward" CV="53" default="0" mask="XXXXXVXX">
+      <variable item="Output A3 Direction rearward" CV="53" default="0" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A3 Direction rearward</label>
       </variable>
-      <variable label="Output A4 Direction rearward" CV="53" default="0" mask="XXXXVXXX">
+      <variable item="Output A4 Direction rearward" CV="53" default="0" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="on"/>
           <enumChoice choice="off"/>
         </enumVal>
         <label>Output A4 Direction rearward</label>
       </variable>
-      <variable label="Output A1 pulse mode" CV="54" default="0" mask="XXXXXXXV" tooltip="off=constant on mode">
+      <variable item="Output A1 pulse mode" CV="54" default="0" mask="XXXXXXXV" tooltip="off=constant on mode">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A1 pulse mode</label>
       </variable>
-      <variable label="Output A2 pulse mode" CV="54" default="0" mask="XXXXXXVX" tooltip="off=constant on mode">
+      <variable item="Output A2 pulse mode" CV="54" default="0" mask="XXXXXXVX" tooltip="off=constant on mode">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A2 pulse mode</label>
       </variable>
-      <variable label="Output A3 pulse mode" CV="54" default="0" mask="XXXXXVXX" tooltip="off=constant on mode">
+      <variable item="Output A3 pulse mode" CV="54" default="0" mask="XXXXXVXX" tooltip="off=constant on mode">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A3 pulse mode</label>
       </variable>
-      <variable label="Output A4 pulse mode" CV="54" default="0" mask="XXXXVXXX" tooltip="off=constant on mode">
+      <variable item="Output A4 pulse mode" CV="54" default="0" mask="XXXXVXXX" tooltip="off=constant on mode">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A4 pulse mode</label>
       </variable>
-      <variable label="Pulse duration" CV="55" default="2" tooltip="Multiples of 0.5 sec">
+      <variable item="Pulse duration" CV="55" default="2" tooltip="Multiples of 0.5 sec">
         <decVal/>
         <label>Pulse duration</label>
       </variable>
-      <variable label="Output A1 blinking" CV="56" default="0" mask="XXXXXXXV">
+      <variable item="Output A1 blinking" CV="56" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A1 blinking</label>
       </variable>
-      <variable label="Output A2 blinking" CV="56" default="0" mask="XXXXXXVX">
+      <variable item="Output A2 blinking" CV="56" default="0" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A2 blinking</label>
       </variable>
-      <variable label="Output A3 blinking" CV="56" default="0" mask="XXXXXVXX">
+      <variable item="Output A3 blinking" CV="56" default="0" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A3 blinking</label>
       </variable>
-      <variable label="Output A4 blinking" CV="56" default="0" mask="XXXXVXXX">
+      <variable item="Output A4 blinking" CV="56" default="0" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
         <label>Output A4 blinking</label>
       </variable>
-      <variable label="Blinking time_constant" CV="57" default="10" tooltip="Steps of 100msec, 10 = 1Hz">
+      <variable item="Blinking time_constant" CV="57" default="10" tooltip="Steps of 100msec, 10 = 1Hz">
         <decVal/>
         <label>Blinking time_constant</label>
       </variable>
-      <variable label="Offset Register" CV="65" default="0" readOnly="yes" item="Advanced Group 2 Option 1" tooltip="read only,used with Motorola programming">
+      <variable CV="65" default="0" readOnly="yes" item="Advanced Group 2 Option 1" tooltip="read only,used with Motorola programming">
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable label="Page Register" CV="66" default="0" readOnly="yes" item="Advanced Group 2 Option 2" tooltip="read only,used with Motorola programming">
+      <variable CV="66" default="0" readOnly="yes" item="Advanced Group 2 Option 2" tooltip="read only,used with Motorola programming">
         <decVal/>
         <label>Page Register</label>
       </variable>
@@ -263,7 +271,7 @@
       <factReset label="Reset All CVs" CV="59" default="1"/>
     </resets>
   </decoder>
-  <pane name="Outputs">
+  <pane>
     <column>
       <separator/>
       <display item="Output A1"/>
@@ -305,11 +313,11 @@
       <display item="Dimming outputs A3 and A4"/>
     </column>
     <column>
-      <label label="   For all outputs:  ">
-        <label>   For all outputs:  </label>
+      <label>
+        <text>   For all outputs:  </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Pulse duration"/>
       <display item="Blinking time_constant"/>

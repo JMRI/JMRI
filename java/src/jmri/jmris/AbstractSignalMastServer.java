@@ -76,7 +76,7 @@ abstract public class AbstractSignalMastServer {
 
     public void dispose() {
         for (Map.Entry<String, SignalMastListener> signalMast : this.signalMasts.entrySet()) {
-            InstanceManager.signalHeadManagerInstance().getSignalHead(signalMast.getKey()).removePropertyChangeListener(signalMast.getValue());
+            InstanceManager.signalMastManagerInstance().getSignalMast(signalMast.getKey()).removePropertyChangeListener(signalMast.getValue());
         }
         this.signalMasts.clear();
     }

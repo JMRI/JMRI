@@ -156,7 +156,8 @@
   </resets>
 </decoder>
 
-<pane name="Testing">
+<pane>
+  <name>Testing</name>
   <column>
     <display item="Minor Version Number" />
     <display item="Primary Address" />

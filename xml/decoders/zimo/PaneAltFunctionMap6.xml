@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Alt Function Map" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <display item="FO3 + FO4 directional setting"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Special Function Mapping" format="radiobuttons"/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="           Description                                      Output wire or operation">
-      <label>           Description                                      Output wire or operation</label>
+    <label>
+      <text>           Description                                      Output wire or operation</text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
-        <label label="                                               1">
-          <label>                                               1</label>
+        <label>
+          <text>                                               1</text>
         </label>
-        <label label="                                           Front  ">
-          <label>                                           Front  </label>
+        <label>
+          <text>                                           Front  </text>
         </label>
-        <label label="                                           Light  ">
-          <label>                                           Light  </label>
+        <label>
+          <text>                                           Light  </text>
         </label>
         <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
           <label>Forward Headlight F0(f)</label>
@@ -75,14 +75,14 @@
         </display>
       </column>
       <column>
-        <label label="    2 ">
-          <label>    2 </label>
+        <label>
+          <text>    2 </text>
         </label>
-        <label label=" Rear ">
-          <label> Rear </label>
+        <label>
+          <text> Rear </text>
         </label>
-        <label label=" Light ">
-          <label> Light </label>
+        <label>
+          <text> Light </text>
         </label>
         <display item="FL(f) controls output 2" format="checkbox" label="">
           <label/>
@@ -128,14 +128,14 @@
         </display>
       </column>
       <column>
-        <label label="    3 ">
-          <label>    3 </label>
+        <label>
+          <text>    3 </text>
         </label>
-        <label label="  FO 1 ">
-          <label>  FO 1 </label>
+        <label>
+          <text>  FO 1 </text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="FL(f) controls output 3" format="checkbox" label="">
           <label/>
@@ -181,14 +181,14 @@
         </display>
       </column>
       <column>
-        <label label="    4 ">
-          <label>    4 </label>
+        <label>
+          <text>    4 </text>
         </label>
-        <label label=" FO 2 ">
-          <label> FO 2 </label>
+        <label>
+          <text> FO 2 </text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="FL(f) controls output 4" format="checkbox" label="">
           <label/>
@@ -234,14 +234,14 @@
         </display>
       </column>
       <column>
-        <label label="     5 ">
-          <label>     5 </label>
+        <label>
+          <text>     5 </text>
         </label>
-        <label label=" FO 3 ">
-          <label> FO 3 </label>
+        <label>
+          <text> FO 3 </text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="FL(f) controls output 5" format="checkbox" label="">
           <label/>
@@ -287,14 +287,14 @@
         </display>
       </column>
       <column>
-        <label label="    6">
-          <label>    6</label>
+        <label>
+          <text>    6</text>
         </label>
-        <label label=" FO 4">
-          <label> FO 4</label>
+        <label>
+          <text> FO 4</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="FL(f) controls output 6" format="checkbox" label="">
           <label/>

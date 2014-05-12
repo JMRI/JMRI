@@ -39,48 +39,46 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-
-      <variable label="Light short-circuit" CV="30" mask="XXXXXXXV" item="Light Short">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-            <choice xml:lang="it">OK</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-            <choice xml:lang="it">Guasto</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Light short-circuit</label>
-        <label xml:lang="it">Luce per corto-circuito</label>
-      </variable>
-      <variable label="Overheating" CV="30" mask="XXXXXXVX" item="Overheating" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-            <choice xml:lang="it">OK</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-            <choice xml:lang="it">Guasto</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Overheating</label>
-        <label xml:lang="it">Sovratemperatura</label>
-      </variable>
-      <variable label="Motor short-circuit" CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-            <choice xml:lang="it">OK</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-            <choice xml:lang="it">Guasto</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor short-circuit</label>
-        <label xml:lang="it">Corto circuito Motore</label>
-      </variable>
-
+  <variable CV="30" mask="XXXXXXXV" item="Light Short">
+    <enumVal>
+      <enumChoice choice="Okay">
+        <choice>Okay</choice>
+        <choice xml:lang="it">OK</choice>
+      </enumChoice>
+      <enumChoice choice="Fault">
+        <choice>Fault</choice>
+        <choice xml:lang="it">Guasto</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Light short-circuit</label>
+    <label xml:lang="it">Luce per corto-circuito</label>
+  </variable>
+  <variable CV="30" mask="XXXXXXVX" item="Overheating" default="0">
+    <enumVal>
+      <enumChoice choice="Okay">
+        <choice>Okay</choice>
+        <choice xml:lang="it">OK</choice>
+      </enumChoice>
+      <enumChoice choice="Fault">
+        <choice>Fault</choice>
+        <choice xml:lang="it">Guasto</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Overheating</label>
+    <label xml:lang="it">Sovratemperatura</label>
+  </variable>
+  <variable CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
+    <enumVal>
+      <enumChoice choice="Okay">
+        <choice>Okay</choice>
+        <choice xml:lang="it">OK</choice>
+      </enumChoice>
+      <enumChoice choice="Fault">
+        <choice>Fault</choice>
+        <choice xml:lang="it">Guasto</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motor short-circuit</label>
+    <label xml:lang="it">Corto circuito Motore</label>
+  </variable>
 </variables>

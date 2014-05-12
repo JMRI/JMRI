@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
-import jmri.JmriException;
 
 /**
  * Implement light manager for XBee connections
@@ -43,7 +42,7 @@ public class XBeeLightManager extends AbstractLightManager {
               // if there was a number format exception, we couldn't
               // find the node.
               curNode = null;
-              log.debug("failed to create light " +systemName);
+              log.debug("failed to create light {}", systemName);
               return null;
             }
         int pin = pinFromSystemName(systemName);
@@ -52,7 +51,7 @@ public class XBeeLightManager extends AbstractLightManager {
            curNode.setPinBean(pin,new XBeeLight(systemName, userName,tc));
            return (XBeeLight) curNode.getPinBean(pin);
         } else {
-           log.debug("failed to create light " +systemName);
+           log.debug("failed to create light {}", systemName);
            return null;
         }
     }
@@ -92,7 +91,7 @@ public class XBeeLightManager extends AbstractLightManager {
          } else {
             encoderAddress=systemName.substring(getSystemPrefix().length()+1,systemName.length()-1);
         }
-        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to hardware address " + encoderAddress);
+        log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         return encoderAddress;
     }
 
@@ -106,7 +105,7 @@ public class XBeeLightManager extends AbstractLightManager {
             try {
                 input = Integer.valueOf(systemName.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
                 return -1;
             }
          } else {
@@ -114,11 +113,11 @@ public class XBeeLightManager extends AbstractLightManager {
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length()+1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                log.debug("Unable to convert {} Hardware Address to a number", systemName);
                 return -1;
             }
         }
-        if (log.isDebugEnabled()) log.debug("Converted " + systemName + " to pin number" + input);
+        log.debug("Converted {} to pin number {}", systemName, input);
         return input;
     }
 

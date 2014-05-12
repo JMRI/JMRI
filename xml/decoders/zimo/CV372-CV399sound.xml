@@ -2,8 +2,8 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software, Nigel Cliffe 17 Nov 2012 -->
 <!-- For Version 32+ Zimo firmware -->
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable label="Function Key for Coasting" CV="374" default="0">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Function Key for Coasting" CV="374" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -93,8 +93,9 @@
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
+    <label>Function Key for Coasting</label>
   </variable>
-  <variable label="Sound Slot during Coasting" CV="375" default="0">
+  <variable item="Sound Slot during Coasting" CV="375" default="0">
     <enumVal>
       <enumChoice choice="0">
         <choice>0</choice>
@@ -130,5 +131,6 @@
         <choice>10</choice>
       </enumChoice>
     </enumVal>
+    <label>Sound Slot during Coasting</label>
   </variable>
 </variables>

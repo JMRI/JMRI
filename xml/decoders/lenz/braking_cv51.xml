@@ -39,25 +39,21 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-
-      <variable label="Constant Braking Distance" CV="51" mask="XXXXXXXV" item="Constant Braking" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Constant Braking Distance</label>
-        <label xml:lang="it">Distanza Frenata Costante</label>
-      </variable>
-
-      <variable label="Stop on DC (RailCom off only)" CV="51" mask="XXVXXXXX" item="Stop on DC" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Stop on DC (RailCom off only)</label>
-        <label xml:lang="it">Stop in Analogica (Solo con RailCom=off)</label>
-      </variable>
-
-      <variable label="Braking Distance in Constant Mode (0-255)" CV="52" item="Braking Distance" default="50" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Braking Distance in Constant Mode (0-255)</label>
-        <label xml:lang="it">Distanza Frenata in modalità Costante (0-255)</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-      </variable>
-
+  <variable CV="51" mask="XXXXXXXV" item="Constant Braking" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Constant Braking Distance</label>
+    <label xml:lang="it">Distanza Frenata Costante</label>
+  </variable>
+  <variable CV="51" mask="XXVXXXXX" item="Stop on DC" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Stop on DC (RailCom off only)</label>
+    <label xml:lang="it">Stop in Analogica (Solo con RailCom=off)</label>
+  </variable>
+  <variable CV="52" item="Braking Distance" default="50" comment="Range 0-255">
+    <decVal min="0" max="255"/>
+    <label>Braking Distance in Constant Mode (0-255)</label>
+    <label xml:lang="it">Distanza Frenata in modalità Costante (0-255)</label>
+    <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+  </variable>
 </variables>

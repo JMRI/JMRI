@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
 <!-- $Id$ -->
@@ -22,31 +22,31 @@
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
     <variables>
-      <variable label="Servo 1 Address" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
+      <variable item="Servo 1 Address" CV="1" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
         <splitVal highCV="9" upperMask="XXXXVVVV"/>
         <label>Servo 1 Address</label>
       </variable>
-      <variable label="On Time CV value" CV="2" mask="XVVVVVVV" default="31">
+      <variable item="On Time CV value" CV="2" mask="XVVVVVVV" default="31">
         <decVal min="1" max="127"/>
         <label>On Time CV value</label>
       </variable>
-      <variable label="Servo 1 Move Range" CV="3" mask="XVVVVVVV" default="15">
+      <variable item="Servo 1 Move Range" CV="3" mask="XVVVVVVV" default="15">
         <decVal min="1" max="127"/>
         <label>Servo 1 Move Range</label>
       </variable>
-      <variable label="Servo 2 Move Range" CV="4" mask="XVVVVVVV" default="15">
+      <variable item="Servo 2 Move Range" CV="4" mask="XVVVVVVV" default="15">
         <decVal min="1" max="127"/>
         <label>Servo 2 Move Range</label>
       </variable>
-      <variable label="Servo 3 Move Range" CV="5" mask="XVVVVVVV" default="15">
+      <variable item="Servo 3 Move Range" CV="5" mask="XVVVVVVV" default="15">
         <decVal min="1" max="127"/>
         <label>Servo 3 Move Range</label>
       </variable>
-      <variable label="Servo 4 Move Range" CV="6" mask="XVVVVVVV" default="15">
+      <variable item="Servo 4 Move Range" CV="6" mask="XVVVVVVV" default="15">
         <decVal min="1" max="127"/>
         <label>Servo 4 Move Range</label>
       </variable>
-      <variable label="Test State" CV="7" mask="XXXXXVVV" default="00">
+      <variable item="Test State" CV="7" mask="XXXXXVVV" default="00">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -69,59 +69,59 @@
         </enumVal>
         <label>Test State</label>
       </variable>
-      <variable label="Version ID" CV="7" item="Decoder Version">
+      <variable CV="7" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" item="Manufacturer" default="25">
+      <variable CV="8" item="Manufacturer" default="25">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Servo 1 Center Posiion" CV="10" mask="XVVVVVVV" default="62">
+      <variable item="Servo 1 Center Posiion" CV="10" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
         <label>Servo 1 Center Posiion</label>
       </variable>
-      <variable label="Servo 2 Center Posiion" CV="11" mask="XVVVVVVV" default="62">
+      <variable item="Servo 2 Center Posiion" CV="11" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
         <label>Servo 2 Center Posiion</label>
       </variable>
-      <variable label="Servo 3 Center Posiion" CV="12" mask="XVVVVVVV" default="62">
+      <variable item="Servo 3 Center Posiion" CV="12" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
         <label>Servo 3 Center Posiion</label>
       </variable>
-      <variable label="Servo 4 Center Posiion" CV="13" mask="XVVVVVVV" default="62">
+      <variable item="Servo 4 Center Posiion" CV="13" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
         <label>Servo 4 Center Posiion</label>
       </variable>
-      <variable label="Servo 2 Address" CV="14" mask="VVVVVVVV" default="2" tooltip="Range 1-2040">
+      <variable item="Servo 2 Address" CV="14" mask="VVVVVVVV" default="2" tooltip="Range 1-2040">
         <splitVal highCV="15" upperMask="XXXXVVVV"/>
         <label>Servo 2 Address</label>
       </variable>
-      <variable label="Servo 3 Address" CV="16" mask="VVVVVVVV" default="3" tooltip="Range 1-2040">
+      <variable item="Servo 3 Address" CV="16" mask="VVVVVVVV" default="3" tooltip="Range 1-2040">
         <splitVal highCV="17" upperMask="XXXXVVVV"/>
         <label>Servo 3 Address</label>
       </variable>
-      <variable label="Servo 4 Address" CV="18" mask="VVVVVVVV" default="4" tooltip="Range 1-2040">
+      <variable item="Servo 4 Address" CV="18" mask="VVVVVVVV" default="4" tooltip="Range 1-2040">
         <splitVal highCV="19" upperMask="XXXXVVVV"/>
         <label>Servo 4 Address</label>
       </variable>
-      <variable label="Output 5 Address" CV="20" mask="VVVVVVVV" default="5" tooltip="Range 1-2040">
+      <variable item="Output 5 Address" CV="20" mask="VVVVVVVV" default="5" tooltip="Range 1-2040">
         <splitVal highCV="21" upperMask="XXXXVVVV"/>
         <label>Output 5 Address</label>
       </variable>
-      <variable label="Output 6 Address" CV="22" mask="VVVVVVVV" default="6" tooltip="Range 1-2040">
+      <variable item="Output 6 Address" CV="22" mask="VVVVVVVV" default="6" tooltip="Range 1-2040">
         <splitVal highCV="23" upperMask="XXXXVVVV"/>
         <label>Output 6 Address</label>
       </variable>
-      <variable label="Output 7 Address" CV="24" mask="VVVVVVVV" default="7" tooltip="Range 1-2040">
+      <variable item="Output 7 Address" CV="24" mask="VVVVVVVV" default="7" tooltip="Range 1-2040">
         <splitVal highCV="25" upperMask="XXXXVVVV"/>
         <label>Output 7 Address</label>
       </variable>
-      <variable label="Output 8 Address" CV="26" mask="VVVVVVVV" default="8" tooltip="Range 1-2040">
+      <variable item="Output 8 Address" CV="26" mask="VVVVVVVV" default="8" tooltip="Range 1-2040">
         <splitVal highCV="27" upperMask="XXXXVVVV"/>
         <label>Output 8 Address</label>
       </variable>
-      <variable label="Mode" CV="29" mask="XXXXXVVV" default="00">
+      <variable item="Mode" CV="29" mask="XXXXXVVV" default="00">
         <enumVal>
           <enumChoice choice="Mode 1 - Servos 2 Pos, all outputs unique address">
             <choice>Mode 1 - Servos 2 Pos, all outputs unique address</choice>
@@ -141,7 +141,7 @@
         </enumVal>
         <label>Mode</label>
       </variable>
-      <variable label="Option 1" CV="29" mask="XXXXVXXX">
+      <variable item="Option 1" CV="29" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -152,7 +152,7 @@
         </enumVal>
         <label>Option 1</label>
       </variable>
-      <variable label="Option 2" CV="29" mask="XXXVXXXX">
+      <variable item="Option 2" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -163,7 +163,7 @@
         </enumVal>
         <label>Option 2</label>
       </variable>
-      <variable label="Option 3" CV="29" mask="XXVXXXXX">
+      <variable item="Option 3" CV="29" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -174,12 +174,12 @@
         </enumVal>
         <label>Option 3</label>
       </variable>
-      <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
+      <variable CV="31" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
         <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
-      <variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="3">
+      <variable item="OS1" CV="33" mask="XXXXXXVV" default="3">
         <enumVal>
           <enumChoice choice="b" value="3">
             <choice>b</choice>
@@ -193,7 +193,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS2" CV="33" mask="XXXXVVXX" default="3">
+      <variable item="OS2" CV="33" mask="XXXXVVXX" default="3">
         <enumVal>
           <enumChoice choice="b" value="3">
             <choice>b</choice>
@@ -207,7 +207,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS3" CV="33" mask="XXVVXXXX" default="3">
+      <variable item="OS3" CV="33" mask="XXVVXXXX" default="3">
         <enumVal>
           <enumChoice choice="b" value="3">
             <choice>b</choice>
@@ -221,7 +221,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS4" CV="33" mask="VVXXXXXX" default="3">
+      <variable item="OS4" CV="33" mask="VVXXXXXX" default="3">
         <enumVal>
           <enumChoice choice="b" value="3">
             <choice>b</choice>
@@ -235,7 +235,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS5" CV="34" mask="XXXXXXVV" default="2">
+      <variable item="OS5" CV="34" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="t" value="1">
             <choice>t</choice>
@@ -246,7 +246,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS6" CV="34" mask="XXXXVVXX" default="2">
+      <variable item="OS6" CV="34" mask="XXXXVVXX" default="2">
         <enumVal>
           <enumChoice choice="t" value="1">
             <choice>t</choice>
@@ -257,7 +257,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS7" CV="34" mask="XXVVXXXX" default="2">
+      <variable item="OS7" CV="34" mask="XXVVXXXX" default="2">
         <enumVal>
           <enumChoice choice="t" value="1">
             <choice>t</choice>
@@ -268,7 +268,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="OS8" CV="34" mask="VVXXXXXX" default="2">
+      <variable item="OS8" CV="34" mask="VVXXXXXX" default="2">
         <enumVal>
           <enumChoice choice="t" value="1">
             <choice>t</choice>
@@ -280,11 +280,11 @@
         <label/>
       </variable>
       <!-- Begin primary input variable definition -->
-      <variable label="Route Number" item="Rte Num P1" CV="35" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num P1" CV="35" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition P1" CV="36" mask="XXXXXXVV" default="2">
+      <variable item="Transition P1" CV="36" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -301,11 +301,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num P1" CV="36" mask="VVVVXXXX" default="1">
+      <variable item="Out Num P1" CV="36" mask="VVVVXXXX" default="1">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State P1" CV="36" mask="XXXXVVXX" default="1">
+      <variable item="Out State P1" CV="36" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -319,11 +319,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num P2" CV="37" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num P2" CV="37" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition P2" CV="38" mask="XXXXXXVV" default="2">
+      <variable item="Transition P2" CV="38" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -340,11 +340,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num P2" CV="38" mask="VVVVXXXX" default="2">
+      <variable item="Out Num P2" CV="38" mask="VVVVXXXX" default="2">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State P2" CV="38" mask="XXXXVVXX" default="1">
+      <variable item="Out State P2" CV="38" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -358,11 +358,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num P3" CV="39" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num P3" CV="39" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition P3" CV="40" mask="XXXXXXVV" default="2">
+      <variable item="Transition P3" CV="40" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -379,11 +379,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num P3" CV="40" mask="VVVVXXXX" default="3">
+      <variable item="Out Num P3" CV="40" mask="VVVVXXXX" default="3">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State P3" CV="40" mask="XXXXVVXX" default="1">
+      <variable item="Out State P3" CV="40" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -397,11 +397,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num P4" CV="41" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num P4" CV="41" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition P4" CV="42" mask="XXXXXXVV" default="2">
+      <variable item="Transition P4" CV="42" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -418,11 +418,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num P4" CV="42" mask="VVVVXXXX" default="4">
+      <variable item="Out Num P4" CV="42" mask="VVVVXXXX" default="4">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State P4" CV="42" mask="XXXXVVXX" default="1">
+      <variable item="Out State P4" CV="42" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -437,11 +437,11 @@
         <label>   Output State</label>
       </variable>
       <!-- Begin secondary input variable definition -->
-      <variable label="Route Number" item="Rte Num S1" CV="43" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num S1" CV="43" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition S1" CV="44" mask="XXXXXXVV" default="2">
+      <variable item="Transition S1" CV="44" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -458,11 +458,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num S1" CV="44" mask="VVVVXXXX" default="5">
+      <variable item="Out Num S1" CV="44" mask="VVVVXXXX" default="5">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State S1" CV="44" mask="XXXXVVXX" default="1">
+      <variable item="Out State S1" CV="44" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -476,11 +476,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num S2" CV="45" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num S2" CV="45" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition S2" CV="46" mask="XXXXXXVV" default="2">
+      <variable item="Transition S2" CV="46" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -497,11 +497,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num S2" CV="46" mask="VVVVXXXX" default="6">
+      <variable item="Out Num S2" CV="46" mask="VVVVXXXX" default="6">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State S2" CV="46" mask="XXXXVVXX" default="1">
+      <variable item="Out State S2" CV="46" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -515,11 +515,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num S3" CV="47" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num S3" CV="47" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition S3" CV="48" mask="XXXXXXVV" default="2">
+      <variable item="Transition S3" CV="48" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -536,11 +536,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num S3" CV="48" mask="VVVVXXXX" default="7">
+      <variable item="Out Num S3" CV="48" mask="VVVVXXXX" default="7">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State S3" CV="48" mask="XXXXVVXX" default="1">
+      <variable item="Out State S3" CV="48" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -554,11 +554,11 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-      <variable label="Route Number" item="Rte Num S4" CV="49" mask="XXXVVVVV" default="0">
+      <variable item="Rte Num S4" CV="49" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
       </variable>
-      <variable label="Transition" item="Transition S4" CV="50" mask="XXXXXXVV" default="2">
+      <variable item="Transition S4" CV="50" mask="XXXXXXVV" default="2">
         <enumVal>
           <enumChoice choice="Input Disabled">
             <choice>Input Disabled</choice>
@@ -575,11 +575,11 @@
         </enumVal>
         <label>Transition</label>
       </variable>
-      <variable label="Output Number" item="Out Num S4" CV="50" mask="VVVVXXXX" default="8">
+      <variable item="Out Num S4" CV="50" mask="VVVVXXXX" default="8">
         <decVal/>
         <label>Output Number</label>
       </variable>
-      <variable label="   Output State" item="Out State S4" CV="50" mask="XXXXVVXX" default="1">
+      <variable item="Out State S4" CV="50" mask="XXXXVVXX" default="1">
         <enumVal>
           <enumChoice choice="Close" value="0">
             <choice>Close</choice>
@@ -594,23 +594,23 @@
         <label>   Output State</label>
       </variable>
       <!-- Begin servo speed variable definition -->
-      <variable label="Servo 1 Move Speed" CV="67" mask="XVVVVVVV" default="18">
+      <variable item="Servo 1 Move Speed" CV="67" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
         <label>Servo 1 Move Speed</label>
       </variable>
-      <variable label="Servo 2 Move Speed" CV="68" mask="XVVVVVVV" default="18">
+      <variable item="Servo 2 Move Speed" CV="68" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
         <label>Servo 2 Move Speed</label>
       </variable>
-      <variable label="Servo 3 Move Speed" CV="69" mask="XVVVVVVV" default="18">
+      <variable item="Servo 3 Move Speed" CV="69" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
         <label>Servo 3 Move Speed</label>
       </variable>
-      <variable label="Servo 4 Move Speed" CV="70" mask="XVVVVVVV" default="18">
+      <variable item="Servo 4 Move Speed" CV="70" mask="XVVVVVVV" default="18">
         <decVal min="1" max="127"/>
         <label>Servo 4 Move Speed</label>
       </variable>
-      <variable label="Servo 1 Behavior" CV="71" mask="XXXXXXVV" default="0">
+      <variable item="Servo 1 Behavior" CV="71" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -624,7 +624,7 @@
         </enumVal>
         <label>Servo 1 Behavior</label>
       </variable>
-      <variable label="Reverse" item="Rev1" CV="71" mask="VXXXXXXX" default="0">
+      <variable item="Rev1" CV="71" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -635,7 +635,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable label="Servo 2 Behavior" CV="72" mask="VXXXXXVV" default="0">
+      <variable item="Servo 2 Behavior" CV="72" mask="VXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -649,7 +649,7 @@
         </enumVal>
         <label>Servo 2 Behavior</label>
       </variable>
-      <variable label="Reverse" item="Rev2" CV="72" mask="VXXXXXXX" default="0">
+      <variable item="Rev2" CV="72" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -660,7 +660,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable label="Servo 3 Behavior" CV="73" mask="VXXXXXVV" default="0">
+      <variable item="Servo 3 Behavior" CV="73" mask="VXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -674,7 +674,7 @@
         </enumVal>
         <label>Servo 3 Behavior</label>
       </variable>
-      <variable label="Reverse" item="Rev3" CV="73" mask="VXXXXXXX" default="0">
+      <variable item="Rev3" CV="73" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -685,7 +685,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable label="Servo 4 Behavior" CV="74" mask="VXXXXXVV" default="0">
+      <variable item="Servo 4 Behavior" CV="74" mask="VXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -699,7 +699,7 @@
         </enumVal>
         <label>Servo 4 Behavior</label>
       </variable>
-      <variable label="Reverse" item="Rev4" CV="74" mask="VXXXXXXX" default="0">
+      <variable item="Rev4" CV="74" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -710,7 +710,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable label="Output 5" CV="75" mask="XXXXXXVV" default="00">
+      <variable item="Output 5" CV="75" mask="XXXXXXVV" default="00">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -724,7 +724,7 @@
         </enumVal>
         <label>Output 5</label>
       </variable>
-      <variable label="Output 6" CV="75" mask="XXXXXVXX">
+      <variable item="Output 6" CV="75" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -735,7 +735,7 @@
         </enumVal>
         <label>Output 6</label>
       </variable>
-      <variable label="Output 7" CV="75" mask="XXXXVXXX">
+      <variable item="Output 7" CV="75" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -746,7 +746,7 @@
         </enumVal>
         <label>Output 7</label>
       </variable>
-      <variable label="Output 8" CV="75" mask="XXXVXXXX">
+      <variable item="Output 8" CV="75" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -758,15 +758,15 @@
         <label>Output 8</label>
       </variable>
       <!-- Begin route variable definition -->
-      <variable label="Route Group 1-8 Address" CV="77" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
+      <variable item="Route Group 1-8 Address" CV="77" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
         <splitVal highCV="78" upperMask="XXXXVVVV"/>
         <label>Route Group 1-8 Address</label>
       </variable>
-      <variable label="Route Group 9-16 Address" CV="79" mask="VVVVVVVV" default="0" tooltip="Range 1-2040">
+      <variable item="Route Group 9-16 Address" CV="79" mask="VVVVVVVV" default="0" tooltip="Range 1-2040">
         <splitVal highCV="80" upperMask="XXXXVVVV"/>
         <label>Route Group 9-16 Address</label>
       </variable>
-      <variable label="" item="R1 Out1" CV="81" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out1" CV="81" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -777,7 +777,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out2" CV="81" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out2" CV="81" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -788,7 +788,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out3" CV="81" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out3" CV="81" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -799,7 +799,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out4" CV="81" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out4" CV="81" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -810,7 +810,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out5" CV="81" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out5" CV="81" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -821,7 +821,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out6" CV="81" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out6" CV="81" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -832,7 +832,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out7" CV="81" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out7" CV="81" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -843,7 +843,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 Out8" CV="81" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R1 Out8" CV="81" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -854,7 +854,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S1" CV="82" mask="XXXXXXXV" default="0">
+      <variable item="R1 S1" CV="82" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -865,7 +865,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S2" CV="82" mask="XXXXXXVX" default="0">
+      <variable item="R1 S2" CV="82" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -876,7 +876,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S3" CV="82" mask="XXXXXVXX" default="0">
+      <variable item="R1 S3" CV="82" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -887,7 +887,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S4" CV="82" mask="XXXXVXXX" default="0">
+      <variable item="R1 S4" CV="82" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -898,7 +898,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S5" CV="82" mask="XXXVXXXX" default="0">
+      <variable item="R1 S5" CV="82" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -909,7 +909,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S6" CV="31" mask="XXVXXXXX" default="0">
+      <variable item="R1 S6" CV="31" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -920,7 +920,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S7" CV="82" mask="XVXXXXXX" default="0">
+      <variable item="R1 S7" CV="82" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -931,7 +931,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R1 S8" CV="82" mask="VXXXXXXX" default="0">
+      <variable item="R1 S8" CV="82" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -942,7 +942,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out1" CV="83" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out1" CV="83" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -953,7 +953,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out2" CV="83" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out2" CV="83" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -964,7 +964,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out3" CV="83" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out3" CV="83" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -975,7 +975,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out4" CV="83" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out4" CV="83" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -986,7 +986,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out5" CV="83" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out5" CV="83" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -997,7 +997,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out6" CV="83" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out6" CV="83" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1008,7 +1008,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out7" CV="83" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out7" CV="83" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1019,7 +1019,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 Out8" CV="83" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R2 Out8" CV="83" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1030,7 +1030,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S1" CV="84" mask="XXXXXXXV" default="0">
+      <variable item="R2 S1" CV="84" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1041,7 +1041,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S2" CV="84" mask="XXXXXXVX" default="0">
+      <variable item="R2 S2" CV="84" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1052,7 +1052,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S3" CV="84" mask="XXXXXVXX" default="0">
+      <variable item="R2 S3" CV="84" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1063,7 +1063,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S4" CV="84" mask="XXXXVXXX" default="0">
+      <variable item="R2 S4" CV="84" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1074,7 +1074,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S5" CV="84" mask="XXXVXXXX" default="0">
+      <variable item="R2 S5" CV="84" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1085,7 +1085,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S6" CV="84" mask="XXVXXXXX" default="0">
+      <variable item="R2 S6" CV="84" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1096,7 +1096,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S7" CV="84" mask="XVXXXXXX" default="0">
+      <variable item="R2 S7" CV="84" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1107,7 +1107,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R2 S8" CV="84" mask="VXXXXXXX" default="0">
+      <variable item="R2 S8" CV="84" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1118,7 +1118,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out1" CV="85" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out1" CV="85" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1129,7 +1129,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out2" CV="85" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out2" CV="85" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1140,7 +1140,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out3" CV="85" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out3" CV="85" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1151,7 +1151,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out4" CV="85" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out4" CV="85" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1162,7 +1162,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out5" CV="85" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out5" CV="85" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1173,7 +1173,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out6" CV="85" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out6" CV="85" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1184,7 +1184,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out7" CV="85" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out7" CV="85" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1195,7 +1195,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 Out8" CV="85" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R3 Out8" CV="85" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1206,7 +1206,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S1" CV="86" mask="XXXXXXXV" default="0">
+      <variable item="R3 S1" CV="86" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1217,7 +1217,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S2" CV="86" mask="XXXXXXVX" default="0">
+      <variable item="R3 S2" CV="86" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1228,7 +1228,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S3" CV="86" mask="XXXXXVXX" default="0">
+      <variable item="R3 S3" CV="86" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1239,7 +1239,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S4" CV="86" mask="XXXXVXXX" default="0">
+      <variable item="R3 S4" CV="86" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1250,7 +1250,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S5" CV="86" mask="XXXVXXXX" default="0">
+      <variable item="R3 S5" CV="86" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1261,7 +1261,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S6" CV="86" mask="XXVXXXXX" default="0">
+      <variable item="R3 S6" CV="86" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1272,7 +1272,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S7" CV="86" mask="XVXXXXXX" default="0">
+      <variable item="R3 S7" CV="86" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1283,7 +1283,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R3 S8" CV="86" mask="VXXXXXXX" default="0">
+      <variable item="R3 S8" CV="86" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1294,7 +1294,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out1" CV="87" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out1" CV="87" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1305,7 +1305,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out2" CV="87" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out2" CV="87" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1316,7 +1316,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out3" CV="87" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out3" CV="87" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1327,7 +1327,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out4" CV="87" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out4" CV="87" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1338,7 +1338,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out5" CV="87" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out5" CV="87" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1349,7 +1349,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out6" CV="87" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out6" CV="87" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1360,7 +1360,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out7" CV="87" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out7" CV="87" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1371,7 +1371,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 Out8" CV="87" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R4 Out8" CV="87" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1382,7 +1382,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S1" CV="88" mask="XXXXXXXV" default="0">
+      <variable item="R4 S1" CV="88" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1393,7 +1393,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S2" CV="88" mask="XXXXXXVX" default="0">
+      <variable item="R4 S2" CV="88" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1404,7 +1404,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S3" CV="88" mask="XXXXXVXX" default="0">
+      <variable item="R4 S3" CV="88" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1415,7 +1415,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S4" CV="88" mask="XXXXVXXX" default="0">
+      <variable item="R4 S4" CV="88" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1426,7 +1426,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S5" CV="88" mask="XXXVXXXX" default="0">
+      <variable item="R4 S5" CV="88" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1437,7 +1437,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S6" CV="88" mask="XXVXXXXX" default="0">
+      <variable item="R4 S6" CV="88" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1448,7 +1448,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S7" CV="88" mask="XVXXXXXX" default="0">
+      <variable item="R4 S7" CV="88" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1459,7 +1459,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R4 S8" CV="88" mask="VXXXXXXX" default="0">
+      <variable item="R4 S8" CV="88" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1470,7 +1470,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out1" CV="89" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out1" CV="89" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1481,7 +1481,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out2" CV="89" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out2" CV="89" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1492,7 +1492,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out3" CV="89" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out3" CV="89" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1503,7 +1503,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out4" CV="89" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out4" CV="89" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1514,7 +1514,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out5" CV="89" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out5" CV="89" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1525,7 +1525,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out6" CV="89" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out6" CV="89" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1536,7 +1536,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out7" CV="89" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out7" CV="89" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1547,7 +1547,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 Out8" CV="89" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R5 Out8" CV="89" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1558,7 +1558,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S1" CV="90" mask="XXXXXXXV" default="0">
+      <variable item="R5 S1" CV="90" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1569,7 +1569,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S2" CV="90" mask="XXXXXXVX" default="0">
+      <variable item="R5 S2" CV="90" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1580,7 +1580,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S3" CV="90" mask="XXXXXVXX" default="0">
+      <variable item="R5 S3" CV="90" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1591,7 +1591,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S4" CV="90" mask="XXXXVXXX" default="0">
+      <variable item="R5 S4" CV="90" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1602,7 +1602,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S5" CV="90" mask="XXXVXXXX" default="0">
+      <variable item="R5 S5" CV="90" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1613,7 +1613,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S6" CV="90" mask="XXVXXXXX" default="0">
+      <variable item="R5 S6" CV="90" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1624,7 +1624,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S7" CV="90" mask="XVXXXXXX" default="0">
+      <variable item="R5 S7" CV="90" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1635,7 +1635,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R5 S8" CV="90" mask="VXXXXXXX" default="0">
+      <variable item="R5 S8" CV="90" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1646,7 +1646,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out1" CV="91" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out1" CV="91" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1657,7 +1657,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out2" CV="91" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out2" CV="91" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1668,7 +1668,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out3" CV="91" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out3" CV="91" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1679,7 +1679,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out4" CV="91" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out4" CV="91" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1690,7 +1690,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out5" CV="91" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out5" CV="91" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1701,7 +1701,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out6" CV="91" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out6" CV="91" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1712,7 +1712,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out7" CV="91" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out7" CV="91" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1723,7 +1723,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 Out8" CV="91" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R6 Out8" CV="91" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1734,7 +1734,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S1" CV="92" mask="XXXXXXXV" default="0">
+      <variable item="R6 S1" CV="92" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1745,7 +1745,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S2" CV="92" mask="XXXXXXVX" default="0">
+      <variable item="R6 S2" CV="92" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1756,7 +1756,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S3" CV="92" mask="XXXXXVXX" default="0">
+      <variable item="R6 S3" CV="92" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1767,7 +1767,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S4" CV="92" mask="XXXXVXXX" default="0">
+      <variable item="R6 S4" CV="92" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1778,7 +1778,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S5" CV="92" mask="XXXVXXXX" default="0">
+      <variable item="R6 S5" CV="92" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1789,7 +1789,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S6" CV="92" mask="XXVXXXXX" default="0">
+      <variable item="R6 S6" CV="92" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1800,7 +1800,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S7" CV="92" mask="XVXXXXXX" default="0">
+      <variable item="R6 S7" CV="92" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1811,7 +1811,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R6 S8" CV="92" mask="VXXXXXXX" default="0">
+      <variable item="R6 S8" CV="92" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1822,7 +1822,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out1" CV="93" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out1" CV="93" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1833,7 +1833,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out2" CV="93" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out2" CV="93" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1844,7 +1844,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out3" CV="93" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out3" CV="93" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1855,7 +1855,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out4" CV="93" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out4" CV="93" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1866,7 +1866,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out5" CV="93" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out5" CV="93" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1877,7 +1877,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out6" CV="93" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out6" CV="93" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1888,7 +1888,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out7" CV="93" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out7" CV="93" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1899,7 +1899,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 Out8" CV="93" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R7 Out8" CV="93" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -1910,7 +1910,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S1" CV="94" mask="XXXXXXXV" default="0">
+      <variable item="R7 S1" CV="94" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1921,7 +1921,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S2" CV="94" mask="XXXXXXVX" default="0">
+      <variable item="R7 S2" CV="94" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1932,7 +1932,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S3" CV="94" mask="XXXXXVXX" default="0">
+      <variable item="R7 S3" CV="94" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1943,7 +1943,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S4" CV="94" mask="XXXXVXXX" default="0">
+      <variable item="R7 S4" CV="94" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1954,7 +1954,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S5" CV="94" mask="XXXVXXXX" default="0">
+      <variable item="R7 S5" CV="94" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1965,7 +1965,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S6" CV="94" mask="XXVXXXXX" default="0">
+      <variable item="R7 S6" CV="94" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1976,7 +1976,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S7" CV="94" mask="XVXXXXXX" default="0">
+      <variable item="R7 S7" CV="94" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1987,7 +1987,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R7 S8" CV="94" mask="VXXXXXXX" default="0">
+      <variable item="R7 S8" CV="94" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -1998,7 +1998,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out1" CV="95" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out1" CV="95" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2009,7 +2009,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out2" CV="95" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out2" CV="95" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2020,7 +2020,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out3" CV="95" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out3" CV="95" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2031,7 +2031,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out4" CV="95" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out4" CV="95" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2042,7 +2042,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out5" CV="95" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out5" CV="95" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2053,7 +2053,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out6" CV="95" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out6" CV="95" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2064,7 +2064,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out7" CV="95" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out7" CV="95" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2075,7 +2075,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 Out8" CV="95" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R8 Out8" CV="95" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2086,7 +2086,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S1" CV="96" mask="XXXXXXXV" default="0">
+      <variable item="R8 S1" CV="96" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2097,7 +2097,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S2" CV="96" mask="XXXXXXVX" default="0">
+      <variable item="R8 S2" CV="96" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2108,7 +2108,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S3" CV="96" mask="XXXXXVXX" default="0">
+      <variable item="R8 S3" CV="96" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2119,7 +2119,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S4" CV="96" mask="XXXXVXXX" default="0">
+      <variable item="R8 S4" CV="96" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2130,7 +2130,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S5" CV="96" mask="XXXVXXXX" default="0">
+      <variable item="R8 S5" CV="96" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2141,7 +2141,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S6" CV="96" mask="XXVXXXXX" default="0">
+      <variable item="R8 S6" CV="96" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2152,7 +2152,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S7" CV="96" mask="XVXXXXXX" default="0">
+      <variable item="R8 S7" CV="96" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2163,7 +2163,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R8 S8" CV="96" mask="VXXXXXXX" default="0">
+      <variable item="R8 S8" CV="96" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2174,7 +2174,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out1" CV="97" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out1" CV="97" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2185,7 +2185,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out2" CV="97" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out2" CV="97" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2196,7 +2196,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out3" CV="97" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out3" CV="97" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2207,7 +2207,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out4" CV="97" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out4" CV="97" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2218,7 +2218,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out5" CV="97" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out5" CV="97" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2229,7 +2229,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out6" CV="97" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out6" CV="97" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2240,7 +2240,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out7" CV="97" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out7" CV="97" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2251,7 +2251,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 Out8" CV="97" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R9 Out8" CV="97" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2262,7 +2262,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S1" CV="98" mask="XXXXXXXV" default="0">
+      <variable item="R9 S1" CV="98" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2273,7 +2273,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S2" CV="98" mask="XXXXXXVX" default="0">
+      <variable item="R9 S2" CV="98" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2284,7 +2284,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S3" CV="98" mask="XXXXXVXX" default="0">
+      <variable item="R9 S3" CV="98" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2295,7 +2295,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S4" CV="98" mask="XXXXVXXX" default="0">
+      <variable item="R9 S4" CV="98" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2306,7 +2306,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S5" CV="98" mask="XXXVXXXX" default="0">
+      <variable item="R9 S5" CV="98" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2317,7 +2317,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S6" CV="98" mask="XXVXXXXX" default="0">
+      <variable item="R9 S6" CV="98" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2328,7 +2328,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S7" CV="98" mask="XVXXXXXX" default="0">
+      <variable item="R9 S7" CV="98" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2339,7 +2339,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R9 S8" CV="98" mask="VXXXXXXX" default="0">
+      <variable item="R9 S8" CV="98" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2350,7 +2350,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out1" CV="99" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out1" CV="99" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2361,7 +2361,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out2" CV="99" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out2" CV="99" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2372,7 +2372,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out3" CV="99" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out3" CV="99" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2383,7 +2383,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out4" CV="99" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out4" CV="99" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2394,7 +2394,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out5" CV="99" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out5" CV="99" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2405,7 +2405,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out6" CV="99" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out6" CV="99" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2416,7 +2416,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out7" CV="99" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out7" CV="99" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2427,7 +2427,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 Out8" CV="99" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R10 Out8" CV="99" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2438,7 +2438,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S1" CV="100" mask="XXXXXXXV" default="0">
+      <variable item="R10 S1" CV="100" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2449,7 +2449,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S2" CV="100" mask="XXXXXXVX" default="0">
+      <variable item="R10 S2" CV="100" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2460,7 +2460,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S3" CV="100" mask="XXXXXVXX" default="0">
+      <variable item="R10 S3" CV="100" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2471,7 +2471,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S4" CV="100" mask="XXXXVXXX" default="0">
+      <variable item="R10 S4" CV="100" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2482,7 +2482,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S5" CV="100" mask="XXXVXXXX" default="0">
+      <variable item="R10 S5" CV="100" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2493,7 +2493,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S6" CV="100" mask="XXVXXXXX" default="0">
+      <variable item="R10 S6" CV="100" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2504,7 +2504,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S7" CV="100" mask="XVXXXXXX" default="0">
+      <variable item="R10 S7" CV="100" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2515,7 +2515,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R10 S8" CV="100" mask="VXXXXXXX" default="0">
+      <variable item="R10 S8" CV="100" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2526,7 +2526,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out1" CV="101" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out1" CV="101" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2537,7 +2537,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out2" CV="101" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out2" CV="101" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2548,7 +2548,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out3" CV="101" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out3" CV="101" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2559,7 +2559,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out4" CV="101" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out4" CV="101" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2570,7 +2570,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out5" CV="101" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out5" CV="101" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2581,7 +2581,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out6" CV="101" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out6" CV="101" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2592,7 +2592,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out7" CV="101" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out7" CV="101" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2603,7 +2603,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 Out8" CV="101" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R11 Out8" CV="101" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2614,7 +2614,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S1" CV="102" mask="XXXXXXXV" default="0">
+      <variable item="R11 S1" CV="102" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2625,7 +2625,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S2" CV="102" mask="XXXXXXVX" default="0">
+      <variable item="R11 S2" CV="102" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2636,7 +2636,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S3" CV="102" mask="XXXXXVXX" default="0">
+      <variable item="R11 S3" CV="102" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2647,7 +2647,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S4" CV="102" mask="XXXXVXXX" default="0">
+      <variable item="R11 S4" CV="102" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2658,7 +2658,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S5" CV="102" mask="XXXVXXXX" default="0">
+      <variable item="R11 S5" CV="102" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2669,7 +2669,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S6" CV="102" mask="XXVXXXXX" default="0">
+      <variable item="R11 S6" CV="102" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2680,7 +2680,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S7" CV="102" mask="XVXXXXXX" default="0">
+      <variable item="R11 S7" CV="102" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2691,7 +2691,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R11 S8" CV="102" mask="VXXXXXXX" default="0">
+      <variable item="R11 S8" CV="102" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2702,7 +2702,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out1" CV="103" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out1" CV="103" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2713,7 +2713,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out2" CV="103" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out2" CV="103" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2724,7 +2724,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out3" CV="103" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out3" CV="103" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2735,7 +2735,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out4" CV="103" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out4" CV="103" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2746,7 +2746,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out5" CV="103" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out5" CV="103" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2757,7 +2757,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out6" CV="103" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out6" CV="103" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2768,7 +2768,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out7" CV="103" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out7" CV="103" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2779,7 +2779,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 Out8" CV="103" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R12 Out8" CV="103" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2790,7 +2790,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S1" CV="104" mask="XXXXXXXV" default="0">
+      <variable item="R12 S1" CV="104" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2801,7 +2801,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S2" CV="104" mask="XXXXXXVX" default="0">
+      <variable item="R12 S2" CV="104" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2812,7 +2812,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S3" CV="104" mask="XXXXXVXX" default="0">
+      <variable item="R12 S3" CV="104" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2823,7 +2823,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S4" CV="104" mask="XXXXVXXX" default="0">
+      <variable item="R12 S4" CV="104" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2834,7 +2834,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S5" CV="104" mask="XXXVXXXX" default="0">
+      <variable item="R12 S5" CV="104" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2845,7 +2845,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S6" CV="104" mask="XXVXXXXX" default="0">
+      <variable item="R12 S6" CV="104" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2856,7 +2856,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S7" CV="104" mask="XVXXXXXX" default="0">
+      <variable item="R12 S7" CV="104" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2867,7 +2867,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R12 S8" CV="104" mask="VXXXXXXX" default="0">
+      <variable item="R12 S8" CV="104" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2878,7 +2878,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out1" CV="105" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out1" CV="105" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2889,7 +2889,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out2" CV="105" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out2" CV="105" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2900,7 +2900,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out3" CV="105" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out3" CV="105" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2911,7 +2911,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out4" CV="105" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out4" CV="105" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2922,7 +2922,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out5" CV="105" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out5" CV="105" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2933,7 +2933,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out6" CV="105" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out6" CV="105" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2944,7 +2944,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out7" CV="105" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out7" CV="105" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2955,7 +2955,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 Out8" CV="105" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R13 Out8" CV="105" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2966,7 +2966,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S1" CV="106" mask="XXXXXXXV" default="0">
+      <variable item="R13 S1" CV="106" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2977,7 +2977,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S2" CV="106" mask="XXXXXXVX" default="0">
+      <variable item="R13 S2" CV="106" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2988,7 +2988,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S3" CV="106" mask="XXXXXVXX" default="0">
+      <variable item="R13 S3" CV="106" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -2999,7 +2999,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S4" CV="106" mask="XXXXVXXX" default="0">
+      <variable item="R13 S4" CV="106" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3010,7 +3010,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S5" CV="106" mask="XXXVXXXX" default="0">
+      <variable item="R13 S5" CV="106" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3021,7 +3021,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S6" CV="106" mask="XXVXXXXX" default="0">
+      <variable item="R13 S6" CV="106" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3032,7 +3032,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S7" CV="106" mask="XVXXXXXX" default="0">
+      <variable item="R13 S7" CV="106" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3043,7 +3043,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R13 S8" CV="106" mask="VXXXXXXX" default="0">
+      <variable item="R13 S8" CV="106" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3054,7 +3054,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out1" CV="107" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out1" CV="107" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3065,7 +3065,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out2" CV="107" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out2" CV="107" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3076,7 +3076,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out3" CV="107" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out3" CV="107" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3087,7 +3087,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out4" CV="107" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out4" CV="107" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3098,7 +3098,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out5" CV="107" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out5" CV="107" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3109,7 +3109,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out6" CV="107" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out6" CV="107" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3120,7 +3120,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out7" CV="107" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out7" CV="107" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3131,7 +3131,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 Out8" CV="107" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R14 Out8" CV="107" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3142,7 +3142,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S1" CV="108" mask="XXXXXXXV" default="0">
+      <variable item="R14 S1" CV="108" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3153,7 +3153,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S2" CV="108" mask="XXXXXXVX" default="0">
+      <variable item="R14 S2" CV="108" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3164,7 +3164,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S3" CV="108" mask="XXXXXVXX" default="0">
+      <variable item="R14 S3" CV="108" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3175,7 +3175,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S4" CV="108" mask="XXXXVXXX" default="0">
+      <variable item="R14 S4" CV="108" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3186,7 +3186,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S5" CV="108" mask="XXXVXXXX" default="0">
+      <variable item="R14 S5" CV="108" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3197,7 +3197,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S6" CV="108" mask="XXVXXXXX" default="0">
+      <variable item="R14 S6" CV="108" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3208,7 +3208,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S7" CV="108" mask="XVXXXXXX" default="0">
+      <variable item="R14 S7" CV="108" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3219,7 +3219,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R14 S8" CV="108" mask="VXXXXXXX" default="0">
+      <variable item="R14 S8" CV="108" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3230,7 +3230,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out1" CV="109" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out1" CV="109" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3241,7 +3241,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out2" CV="109" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out2" CV="109" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3252,7 +3252,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out3" CV="109" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out3" CV="109" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3263,7 +3263,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out4" CV="109" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out4" CV="109" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3274,7 +3274,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out5" CV="109" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out5" CV="109" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3285,7 +3285,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out6" CV="109" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out6" CV="109" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3296,7 +3296,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out7" CV="109" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out7" CV="109" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3307,7 +3307,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 Out8" CV="109" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R15 Out8" CV="109" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3318,7 +3318,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S1" CV="110" mask="XXXXXXXV" default="0">
+      <variable item="R15 S1" CV="110" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3329,7 +3329,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S2" CV="110" mask="XXXXXXVX" default="0">
+      <variable item="R15 S2" CV="110" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3340,7 +3340,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S3" CV="110" mask="XXXXXVXX" default="0">
+      <variable item="R15 S3" CV="110" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3351,7 +3351,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S4" CV="110" mask="XXXXVXXX" default="0">
+      <variable item="R15 S4" CV="110" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3362,7 +3362,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S5" CV="110" mask="XXXVXXXX" default="0">
+      <variable item="R15 S5" CV="110" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3373,7 +3373,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S6" CV="110" mask="XXVXXXXX" default="0">
+      <variable item="R15 S6" CV="110" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3384,7 +3384,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S7" CV="110" mask="XVXXXXXX" default="0">
+      <variable item="R15 S7" CV="110" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3395,7 +3395,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R15 S8" CV="110" mask="VXXXXXXX" default="0">
+      <variable item="R15 S8" CV="110" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3406,7 +3406,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out1" CV="111" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out1" CV="111" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3417,7 +3417,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out2" CV="111" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out2" CV="111" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3428,7 +3428,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out3" CV="111" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out3" CV="111" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3439,7 +3439,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out4" CV="111" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out4" CV="111" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3450,7 +3450,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out5" CV="111" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out5" CV="111" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3461,7 +3461,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out6" CV="111" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out6" CV="111" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3472,7 +3472,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out7" CV="111" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out7" CV="111" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3483,7 +3483,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 Out8" CV="111" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
+      <variable item="R16 Out8" CV="111" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -3494,7 +3494,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S1" CV="112" mask="XXXXXXXV" default="0">
+      <variable item="R16 S1" CV="112" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3505,7 +3505,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S2" CV="112" mask="XXXXXXVX" default="0">
+      <variable item="R16 S2" CV="112" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3516,7 +3516,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S3" CV="112" mask="XXXXXVXX" default="0">
+      <variable item="R16 S3" CV="112" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3527,7 +3527,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S4" CV="112" mask="XXXXVXXX" default="0">
+      <variable item="R16 S4" CV="112" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3538,7 +3538,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S5" CV="112" mask="XXXVXXXX" default="0">
+      <variable item="R16 S5" CV="112" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3549,7 +3549,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S6" CV="112" mask="XXVXXXXX" default="0">
+      <variable item="R16 S6" CV="112" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3560,7 +3560,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S7" CV="112" mask="XVXXXXXX" default="0">
+      <variable item="R16 S7" CV="112" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3571,7 +3571,7 @@
         </enumVal>
         <label/>
       </variable>
-      <variable label="" item="R16 S8" CV="112" mask="VXXXXXXX" default="0">
+      <variable item="R16 S8" CV="112" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="c">
             <choice>c</choice>
@@ -3584,129 +3584,129 @@
       </variable>
     </variables>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
-      <label label="------  SMC4 Output Addresses  ------ ">
-        <label>------  SMC4 Output Addresses  ------ </label>
+      <label>
+        <text>------  SMC4 Output Addresses  ------ </text>
       </label>
-      <label label="Use this number to set the address number">
-        <label>Use this number to set the address number</label>
+      <label>
+        <text>Use this number to set the address number</text>
       </label>
-      <label label="of the device the output is connected to.">
-        <label>of the device the output is connected to.</label>
+      <label>
+        <text>of the device the output is connected to.</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Servo 1 Address"/>
       <display item="Servo 2 Address"/>
       <display item="Servo 3 Address"/>
       <display item="Servo 4 Address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Output 5 Address"/>
       <display item="Output 6 Address"/>
       <display item="Output 7 Address"/>
       <display item="Output 8 Address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Special Functions  ------ ">
-        <label>------  Special Functions  ------ </label>
+      <label>
+        <text>------  Special Functions  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Mode"/>
       <display item="Option 1" tooltip="Enables fixed output state at power on" format="checkbox"/>
       <display item="Option 2" tooltip="Disable power save" format="checkbox"/>
       <display item="Option 3" tooltip="Enables ops mode" format="checkbox"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Ops Mode Address" tooltip="Sets the Ops Mode address"/>
-      <label label="This is the same as a Loco address">
-        <label>This is the same as a Loco address</label>
+      <label>
+        <text>This is the same as a Loco address</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Notes:  ------ ">
-        <label>------  Notes:  ------ </label>
+      <label>
+        <text>------  Notes:  ------ </text>
       </label>
-      <label label="The Custom Programmer format is recommended">
-        <label>The Custom Programmer format is recommended</label>
+      <label>
+        <text>The Custom Programmer format is recommended</text>
       </label>
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Mfg">
+  <pane>
     <column>
-      <label label="---- Sets the SMC4 to a paricular test state - Use to help adjust servos ----">
-        <label>---- Sets the SMC4 to a paricular test state - Use to help adjust servos ----</label>
+      <label>
+        <text>---- Sets the SMC4 to a paricular test state - Use to help adjust servos ----</text>
       </label>
-      <label label="            Only works in Ops mode">
-        <label>            Only works in Ops mode</label>
+      <label>
+        <text>            Only works in Ops mode</text>
       </label>
-      <label label="            Changes the value of CV7 (Version ID) as displayed in DP">
-        <label>            Changes the value of CV7 (Version ID) as displayed in DP</label>
+      <label>
+        <text>            Changes the value of CV7 (Version ID) as displayed in DP</text>
       </label>
-      <label label="            Test State may change when Version ID is read">
-        <label>            Test State may change when Version ID is read</label>
+      <label>
+        <text>            Test State may change when Version ID is read</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Test State"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
       <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
     </column>
     <name>Mfg</name>
   </pane>
-  <pane name="Inputs">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Primary Input Control 1  ------ ">
-        <label>------  Primary Input Control 1  ------ </label>
+      <label>
+        <text>------  Primary Input Control 1  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition P1"/>
       <row>
@@ -3718,14 +3718,14 @@
         </column>
       </row>
       <display item="Rte Num P1" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Primary Input Control 2  ------ ">
-        <label>------  Primary Input Control 2  ------ </label>
+      <label>
+        <text>------  Primary Input Control 2  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition P2"/>
       <row>
@@ -3737,14 +3737,14 @@
         </column>
       </row>
       <display item="Rte Num P2" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Primary Input Control 3  ------ ">
-        <label>------  Primary Input Control 3  ------ </label>
+      <label>
+        <text>------  Primary Input Control 3  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition P3"/>
       <row>
@@ -3756,14 +3756,14 @@
         </column>
       </row>
       <display item="Rte Num P3" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Primary Input Control 4  ------ ">
-        <label>------  Primary Input Control 4  ------ </label>
+      <label>
+        <text>------  Primary Input Control 4  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition P4"/>
       <row>
@@ -3777,14 +3777,14 @@
       <display item="Rte Num P4" tooltip="Range 1-16, disables toggles/single output actions"/>
     </column>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Secondary Input Control 1  ------ ">
-        <label>------  Secondary Input Control 1  ------ </label>
+      <label>
+        <text>------  Secondary Input Control 1  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition S1"/>
       <row>
@@ -3796,14 +3796,14 @@
         </column>
       </row>
       <display item="Rte Num S1" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Secondary Input Control 2  ------ ">
-        <label>------  Secondary Input Control 2  ------ </label>
+      <label>
+        <text>------  Secondary Input Control 2  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition S2"/>
       <row>
@@ -3815,14 +3815,14 @@
         </column>
       </row>
       <display item="Rte Num S2" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Secondary Input Control 3  ------ ">
-        <label>------  Secondary Input Control 3  ------ </label>
+      <label>
+        <text>------  Secondary Input Control 3  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition S3"/>
       <row>
@@ -3834,14 +3834,14 @@
         </column>
       </row>
       <display item="Rte Num S3" tooltip="Range 1-16, disables toggles/single output actions"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="------  Secondary Input Control 4  ------ ">
-        <label>------  Secondary Input Control 4  ------ </label>
+      <label>
+        <text>------  Secondary Input Control 4  ------ </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Transition S4"/>
       <row>
@@ -3856,13 +3856,13 @@
     </column>
     <name>Inputs</name>
   </pane>
-  <pane name="Outputs">
+  <pane>
     <column>
-      <label label="---- Servo Configuration ----">
-        <label>---- Servo Configuration ----</label>
+      <label>
+        <text>---- Servo Configuration ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3879,8 +3879,8 @@
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3897,8 +3897,8 @@
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3915,8 +3915,8 @@
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -3933,133 +3933,133 @@
           </row>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Output Flashing ----">
-        <label>---- Output Flashing ----</label>
+      <label>
+        <text>---- Output Flashing ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Output 5"/>
       <display item="Output 6" tooltip="Will flash when issued a throw command" format="checkbox"/>
       <display item="Output 7" tooltip="Will flash when issued a throw command" format="checkbox"/>
       <display item="Output 8" tooltip="Will flash when issued a throw command" format="checkbox"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Sets the output state to always be the same at power on ----">
-        <label>---- Sets the output state to always be the same at power on ----</label>
+      <label>
+        <text>---- Sets the output state to always be the same at power on ----</text>
       </label>
-      <label label="              Only applies if Option 1 is selected">
-        <label>              Only applies if Option 1 is selected</label>
+      <label>
+        <text>              Only applies if Option 1 is selected</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="Output#">
-            <label>Output#</label>
-          </label>
-          <label label="   Both">
-            <label>   Both</label>
-          </label>
-          <label label="  Throw">
-            <label>  Throw</label>
-          </label>
-          <label label="  Close">
-            <label>  Close</label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   1">
-            <label>   1</label>
+          <label>
+            <text>Output#</text>
+          </label>
+          <label>
+            <text>   Both</text>
+          </label>
+          <label>
+            <text>  Throw</text>
+          </label>
+          <label>
+            <text>  Close</text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>   1</text>
           </label>
           <display item="OS1" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   2">
-            <label>   2</label>
+          <label>
+            <text>   2</text>
           </label>
           <display item="OS2" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   3">
-            <label>   3</label>
+          <label>
+            <text>   3</text>
           </label>
           <display item="OS3" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   4">
-            <label>   4</label>
+          <label>
+            <text>   4</text>
           </label>
           <display item="OS4" format="radiobuttons"/>
         </column>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="Output#">
-            <label>Output#</label>
-          </label>
-          <label label="  Throw">
-            <label>  Throw</label>
-          </label>
-          <label label="  Close">
-            <label>  Close</label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   5">
-            <label>   5</label>
+          <label>
+            <text>Output#</text>
+          </label>
+          <label>
+            <text>  Throw</text>
+          </label>
+          <label>
+            <text>  Close</text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>   5</text>
           </label>
           <display item="OS5" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   6">
-            <label>   6</label>
+          <label>
+            <text>   6</text>
           </label>
           <display item="OS6" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   7">
-            <label>   7</label>
+          <label>
+            <text>   7</text>
           </label>
           <display item="OS7" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   8">
-            <label>   8</label>
+          <label>
+            <text>   8</text>
           </label>
           <display item="OS8" format="radiobuttons"/>
         </column>
@@ -4067,20 +4067,20 @@
     </column>
     <name>Outputs</name>
   </pane>
-  <pane name="Route Group 1-8">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Remote Control Route Address ----">
-        <label>---- Remote Control Route Address ----</label>
+      <label>
+        <text>---- Remote Control Route Address ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route Group 1-8 Address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -4094,270 +4094,270 @@
           </display>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Examples of address calculation">
-        <label>Examples of address calculation</label>
+      <label>
+        <text>Examples of address calculation</text>
       </label>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label="CV77 = 1">
-            <label>CV77 = 1</label>
+          <label>
+            <text>CV77 = 1</text>
           </label>
           <separator/>
-          <label label="CV77 = 5">
-            <label>CV77 = 5</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" Route# ">
-            <label> Route# </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
+          <label>
+            <text>CV77 = 5</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  1">
-            <label>  1</label>
+          <label>
+            <text> Route# </text>
           </label>
           <separator/>
-          <label label="  1t">
-            <label>  1t</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
-          <label label="  5t">
-            <label>  5t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  2">
-            <label>  2</label>
-          </label>
-          <separator/>
-          <label label="  1c">
-            <label>  1c</label>
-          </label>
-          <separator/>
-          <label label="  5c">
-            <label>  5c</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  3">
-            <label>  3</label>
+          <label>
+            <text>  1</text>
           </label>
           <separator/>
-          <label label="  2t">
-            <label>  2t</label>
+          <label>
+            <text>  1t</text>
           </label>
           <separator/>
-          <label label="  6t">
-            <label>  6t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  4">
-            <label>  4</label>
-          </label>
-          <separator/>
-          <label label="  2c">
-            <label>  2c</label>
-          </label>
-          <separator/>
-          <label label="  6c">
-            <label>  6c</label>
+          <label>
+            <text>  5t</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  5">
-            <label>  5</label>
+          <label>
+            <text>  2</text>
           </label>
           <separator/>
-          <label label="  3t">
-            <label>  3t</label>
+          <label>
+            <text>  1c</text>
           </label>
           <separator/>
-          <label label="  7t">
-            <label>  7t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  6">
-            <label>  6</label>
-          </label>
-          <separator/>
-          <label label="  3c">
-            <label>  3c</label>
-          </label>
-          <separator/>
-          <label label="  7c">
-            <label>  7c</label>
+          <label>
+            <text>  5c</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  7">
-            <label>  7</label>
+          <label>
+            <text>  3</text>
           </label>
           <separator/>
-          <label label="  4t">
-            <label>  4t</label>
+          <label>
+            <text>  2t</text>
           </label>
           <separator/>
-          <label label="  8t">
-            <label>  8t</label>
+          <label>
+            <text>  6t</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  8">
-            <label>  8</label>
+          <label>
+            <text>  4</text>
           </label>
           <separator/>
-          <label label="  4c">
-            <label>  4c</label>
+          <label>
+            <text>  2c</text>
           </label>
           <separator/>
-          <label label="  8c">
-            <label>  8c</label>
+          <label>
+            <text>  6c</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  5</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  3t</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  7t</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  6</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  3c</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  7c</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  7</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  4t</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  8t</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  8</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  4c</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  8c</text>
           </label>
           <separator/>
         </column>
         <separator/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Remote Control Routes ----">
-        <label>---- Remote Control Routes ----</label>
+      <label>
+        <text>---- Remote Control Routes ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="               Output#">
-            <label>               Output#</label>
+          <label>
+            <text>               Output#</text>
           </label>
-          <label label="     Route 1 Selection ">
-            <label>     Route 1 Selection </label>
+          <label>
+            <text>     Route 1 Selection </text>
           </label>
-          <label label="Route 1 Switch State ">
-            <label>Route 1 Switch State </label>
+          <label>
+            <text>Route 1 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   1">
-            <label>   1</label>
+          <label>
+            <text>   1</text>
           </label>
           <display item="R1 Out1" format="checkbox"/>
           <display item="R1 S1" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   2">
-            <label>   2</label>
+          <label>
+            <text>   2</text>
           </label>
           <display item="R1 Out2" format="checkbox"/>
           <display item="R1 S2" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   3">
-            <label>   3</label>
+          <label>
+            <text>   3</text>
           </label>
           <display item="R1 Out3" format="checkbox"/>
           <display item="R1 S3" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   4">
-            <label>   4</label>
+          <label>
+            <text>   4</text>
           </label>
           <display item="R1 Out4" format="checkbox"/>
           <display item="R1 S4" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   5">
-            <label>   5</label>
+          <label>
+            <text>   5</text>
           </label>
           <display item="R1 Out5" format="checkbox"/>
           <display item="R1 S5" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   6">
-            <label>   6</label>
+          <label>
+            <text>   6</text>
           </label>
           <display item="R1 Out6" format="checkbox"/>
           <display item="R1 S6" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   7">
-            <label>   7</label>
+          <label>
+            <text>   7</text>
           </label>
           <display item="R1 Out7" format="checkbox"/>
           <display item="R1 S7" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   8">
-            <label>   8</label>
+          <label>
+            <text>   8</text>
           </label>
           <display item="R1 Out8" format="checkbox"/>
           <display item="R1 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 2 Selection ">
-            <label>     Route 2 Selection </label>
+          <label>
+            <text>     Route 2 Selection </text>
           </label>
-          <label label="Route 2 Switch State ">
-            <label>Route 2 Switch State </label>
+          <label>
+            <text>Route 2 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4393,19 +4393,19 @@
           <display item="R2 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 3 Selection ">
-            <label>     Route 3 Selection </label>
+          <label>
+            <text>     Route 3 Selection </text>
           </label>
-          <label label="Route 3 Switch State ">
-            <label>Route 3 Switch State </label>
+          <label>
+            <text>Route 3 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4441,19 +4441,19 @@
           <display item="R3 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 4 Selection ">
-            <label>     Route 4 Selection </label>
+          <label>
+            <text>     Route 4 Selection </text>
           </label>
-          <label label="Route 4 Switch State ">
-            <label>Route 4 Switch State </label>
+          <label>
+            <text>Route 4 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4489,19 +4489,19 @@
           <display item="R4 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 5 Selection ">
-            <label>     Route 5 Selection </label>
+          <label>
+            <text>     Route 5 Selection </text>
           </label>
-          <label label="Route 5 Switch State ">
-            <label>Route 5 Switch State </label>
+          <label>
+            <text>Route 5 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4537,19 +4537,19 @@
           <display item="R5 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 6 Selection ">
-            <label>     Route 6 Selection </label>
+          <label>
+            <text>     Route 6 Selection </text>
           </label>
-          <label label="Route 6 Switch State ">
-            <label>Route 6 Switch State </label>
+          <label>
+            <text>Route 6 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4585,19 +4585,19 @@
           <display item="R6 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 7 Selection ">
-            <label>     Route 7 Selection </label>
+          <label>
+            <text>     Route 7 Selection </text>
           </label>
-          <label label="Route 7 Switch State ">
-            <label>Route 7 Switch State </label>
+          <label>
+            <text>Route 7 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4633,19 +4633,19 @@
           <display item="R7 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 8 Selection ">
-            <label>     Route 8 Selection </label>
+          <label>
+            <text>     Route 8 Selection </text>
           </label>
-          <label label="Route 8 Switch State ">
-            <label>Route 8 Switch State </label>
+          <label>
+            <text>Route 8 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -4684,20 +4684,20 @@
     </column>
     <name>Route Group 1-8</name>
   </pane>
-  <pane name="Route Group 9-16">
+  <pane>
     <column>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Remote Control Route Address ----">
-        <label>---- Remote Control Route Address ----</label>
+      <label>
+        <text>---- Remote Control Route Address ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Route Group 9-16 Address"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
@@ -4711,270 +4711,270 @@
           </display>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="Examples of address calculation">
-        <label>Examples of address calculation</label>
+      <label>
+        <text>Examples of address calculation</text>
       </label>
       <row>
         <column>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <separator/>
-          <label label="CV79 = 1">
-            <label>CV79 = 1</label>
+          <label>
+            <text>CV79 = 1</text>
           </label>
           <separator/>
-          <label label="CV79 = 5">
-            <label>CV79 = 5</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label=" Route# ">
-            <label> Route# </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
-          </label>
-          <separator/>
-          <label label=" Address ">
-            <label> Address </label>
+          <label>
+            <text>CV79 = 5</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  1">
-            <label>  1</label>
+          <label>
+            <text> Route# </text>
           </label>
           <separator/>
-          <label label="  1t">
-            <label>  1t</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
-          <label label="  5t">
-            <label>  5t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  2">
-            <label>  2</label>
-          </label>
-          <separator/>
-          <label label="  1c">
-            <label>  1c</label>
-          </label>
-          <separator/>
-          <label label="  5c">
-            <label>  5c</label>
+          <label>
+            <text> Address </text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  3">
-            <label>  3</label>
+          <label>
+            <text>  1</text>
           </label>
           <separator/>
-          <label label="  2t">
-            <label>  2t</label>
+          <label>
+            <text>  1t</text>
           </label>
           <separator/>
-          <label label="  6t">
-            <label>  6t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  4">
-            <label>  4</label>
-          </label>
-          <separator/>
-          <label label="  2c">
-            <label>  2c</label>
-          </label>
-          <separator/>
-          <label label="  6c">
-            <label>  6c</label>
+          <label>
+            <text>  5t</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  5">
-            <label>  5</label>
+          <label>
+            <text>  2</text>
           </label>
           <separator/>
-          <label label="  3t">
-            <label>  3t</label>
+          <label>
+            <text>  1c</text>
           </label>
           <separator/>
-          <label label="  7t">
-            <label>  7t</label>
-          </label>
-          <separator/>
-        </column>
-        <separator/>
-        <column>
-          <separator/>
-          <label label="  6">
-            <label>  6</label>
-          </label>
-          <separator/>
-          <label label="  3c">
-            <label>  3c</label>
-          </label>
-          <separator/>
-          <label label="  7c">
-            <label>  7c</label>
+          <label>
+            <text>  5c</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  7">
-            <label>  7</label>
+          <label>
+            <text>  3</text>
           </label>
           <separator/>
-          <label label="  4t">
-            <label>  4t</label>
+          <label>
+            <text>  2t</text>
           </label>
           <separator/>
-          <label label="  8t">
-            <label>  8t</label>
+          <label>
+            <text>  6t</text>
           </label>
           <separator/>
         </column>
         <separator/>
         <column>
           <separator/>
-          <label label="  8">
-            <label>  8</label>
+          <label>
+            <text>  4</text>
           </label>
           <separator/>
-          <label label="  4c">
-            <label>  4c</label>
+          <label>
+            <text>  2c</text>
           </label>
           <separator/>
-          <label label="  8c">
-            <label>  8c</label>
+          <label>
+            <text>  6c</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  5</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  3t</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  7t</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  6</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  3c</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  7c</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  7</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  4t</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  8t</text>
+          </label>
+          <separator/>
+        </column>
+        <separator/>
+        <column>
+          <separator/>
+          <label>
+            <text>  8</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  4c</text>
+          </label>
+          <separator/>
+          <label>
+            <text>  8c</text>
           </label>
           <separator/>
         </column>
         <separator/>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
-      <label label="---- Remote Control Routes ----">
-        <label>---- Remote Control Routes ----</label>
+      <label>
+        <text>---- Remote Control Routes ----</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="                 Output#">
-            <label>                 Output#</label>
+          <label>
+            <text>                 Output#</text>
           </label>
-          <label label="       Route 9 Selection ">
-            <label>       Route 9 Selection </label>
+          <label>
+            <text>       Route 9 Selection </text>
           </label>
-          <label label="  Route 9 Switch State ">
-            <label>  Route 9 Switch State </label>
+          <label>
+            <text>  Route 9 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
-          <label label="   1">
-            <label>   1</label>
+          <label>
+            <text>   1</text>
           </label>
           <display item="R9 Out1" format="checkbox"/>
           <display item="R9 S1" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   2">
-            <label>   2</label>
+          <label>
+            <text>   2</text>
           </label>
           <display item="R9 Out2" format="checkbox"/>
           <display item="R9 S2" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   3">
-            <label>   3</label>
+          <label>
+            <text>   3</text>
           </label>
           <display item="R9 Out3" format="checkbox"/>
           <display item="R9 S3" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   4">
-            <label>   4</label>
+          <label>
+            <text>   4</text>
           </label>
           <display item="R9 Out4" format="checkbox"/>
           <display item="R9 S4" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   5">
-            <label>   5</label>
+          <label>
+            <text>   5</text>
           </label>
           <display item="R9 Out5" format="checkbox"/>
           <display item="R9 S5" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   6">
-            <label>   6</label>
+          <label>
+            <text>   6</text>
           </label>
           <display item="R9 Out6" format="checkbox"/>
           <display item="R9 S6" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   7">
-            <label>   7</label>
+          <label>
+            <text>   7</text>
           </label>
           <display item="R9 Out7" format="checkbox"/>
           <display item="R9 S7" format="radiobuttons"/>
         </column>
         <column>
-          <label label="   8">
-            <label>   8</label>
+          <label>
+            <text>   8</text>
           </label>
           <display item="R9 Out8" format="checkbox"/>
           <display item="R9 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 10 Selection ">
-            <label>     Route 10 Selection </label>
+          <label>
+            <text>     Route 10 Selection </text>
           </label>
-          <label label="Route 10 Switch State ">
-            <label>Route 10 Switch State </label>
+          <label>
+            <text>Route 10 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5010,19 +5010,19 @@
           <display item="R10 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 11 Selection ">
-            <label>     Route 11 Selection </label>
+          <label>
+            <text>     Route 11 Selection </text>
           </label>
-          <label label="Route 11 Switch State ">
-            <label>Route 11 Switch State </label>
+          <label>
+            <text>Route 11 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5058,19 +5058,19 @@
           <display item="R11 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 12 Selection ">
-            <label>     Route 12 Selection </label>
+          <label>
+            <text>     Route 12 Selection </text>
           </label>
-          <label label="Route 12 Switch State ">
-            <label>Route 12 Switch State </label>
+          <label>
+            <text>Route 12 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5106,19 +5106,19 @@
           <display item="R12 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 13 Selection ">
-            <label>     Route 13 Selection </label>
+          <label>
+            <text>     Route 13 Selection </text>
           </label>
-          <label label="Route 13 Switch State ">
-            <label>Route 13 Switch State </label>
+          <label>
+            <text>Route 13 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5154,19 +5154,19 @@
           <display item="R13 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 14 Selection ">
-            <label>     Route 14 Selection </label>
+          <label>
+            <text>     Route 14 Selection </text>
           </label>
-          <label label="Route 14 Switch State ">
-            <label>Route 14 Switch State </label>
+          <label>
+            <text>Route 14 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5202,19 +5202,19 @@
           <display item="R14 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 15 Selection ">
-            <label>     Route 15 Selection </label>
+          <label>
+            <text>     Route 15 Selection </text>
           </label>
-          <label label="Route 15 Switch State ">
-            <label>Route 15 Switch State </label>
+          <label>
+            <text>Route 15 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5250,19 +5250,19 @@
           <display item="R15 S8" format="radiobuttons"/>
         </column>
       </row>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <row>
         <column>
-          <label label="     Route 16 Selection ">
-            <label>     Route 16 Selection </label>
+          <label>
+            <text>     Route 16 Selection </text>
           </label>
-          <label label="Route 16 Switch State ">
-            <label>Route 16 Switch State </label>
+          <label>
+            <text>Route 16 Switch State </text>
           </label>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
         </column>
         <column>
@@ -5301,7 +5301,7 @@
     </column>
     <name>Route Group 9-16</name>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

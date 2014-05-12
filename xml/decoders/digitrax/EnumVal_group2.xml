@@ -13,36 +13,36 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-            <choice xml:lang="it">Commuta Uscita</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-            <choice xml:lang="it">Nessun cambio stato</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-            <choice xml:lang="it">Uscita Girata</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-            <choice xml:lang="it">Uscita Chiusa</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-            <choice xml:lang="it">Entrambe le Uscite Off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-            <choice xml:lang="it">Ripristina ultimo stato</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-            <choice xml:lang="it">Esegui percorso Locale</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-            <choice xml:lang="it">Uscita segue l'ingresso</choice>
-          </enumChoice>
-        </enumVal>
+  <enumChoice choice="Output toggle">
+    <choice>Output toggle</choice>
+    <choice xml:lang="it">Commuta Uscita</choice>
+  </enumChoice>
+  <enumChoice choice="No output change">
+    <choice>No output change</choice>
+    <choice xml:lang="it">Nessun cambio stato</choice>
+  </enumChoice>
+  <enumChoice choice="Output thrown">
+    <choice>Output thrown</choice>
+    <choice xml:lang="it">Uscita Girata</choice>
+  </enumChoice>
+  <enumChoice choice="Output closed">
+    <choice>Output closed</choice>
+    <choice xml:lang="it">Uscita Chiusa</choice>
+  </enumChoice>
+  <enumChoice choice="Both outputs off">
+    <choice>Both outputs off</choice>
+    <choice xml:lang="it">Entrambe le Uscite Off</choice>
+  </enumChoice>
+  <enumChoice choice="Restore to last state">
+    <choice>Restore to last state</choice>
+    <choice xml:lang="it">Ripristina ultimo stato</choice>
+  </enumChoice>
+  <enumChoice choice="Execute local route">
+    <choice>Execute local route</choice>
+    <choice xml:lang="it">Esegui percorso Locale</choice>
+  </enumChoice>
+  <enumChoice choice="Output follows input">
+    <choice>Output follows input</choice>
+    <choice xml:lang="it">Uscita segue l'ingresso</choice>
+  </enumChoice>
+</enumVal>

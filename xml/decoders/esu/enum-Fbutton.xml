@@ -15,37 +15,36 @@
 <!-- function choices for selection matrix -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="OFF/ON"/>
-
   <enumChoice choice="Acceleration on/off">
     <choice>Acceleration on/off</choice>
     <choice xml:lang="it">Accellerazione on/off</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Shunting Mode on/off">
     <choice>Shunting Mode on/off</choice>
     <choice xml:lang="it">Modalità Manovra on/off</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Sound on/off">
     <choice>Sound on/off</choice>
     <choice xml:lang="it">Suono on/off</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Shift Mode">
     <choice>Shift Mode</choice>
     <choice xml:lang="it">Modo Ritardato</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Blower Sound">
     <choice>Blower Sound</choice>
     <choice xml:lang="it">Suono Turbina</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Doppler on Slot 1">
     <choice>Doppler on Slot 1</choice>
     <choice xml:lang="it">Doppler in Slot 1</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Mute/Volume Control">
     <choice>Mute/Volume Control</choice>
     <choice xml:lang="it">Controllo Muto/Volume</choice>
- </enumChoice>
+  </enumChoice>
   <enumChoice choice="Dynamic Brake">
     <choice>Dynamic Brake</choice>
     <choice xml:lang="it">Frenata Dinamica</choice>
- </enumChoice>
+  </enumChoice>
 </enumVal>

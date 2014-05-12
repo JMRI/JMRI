@@ -14,16 +14,27 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add support for V8 -->
-<pane name="Volume" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Volume</name>
   <column>
     <row>
       <column>
-        <label label="JMRI 2.9.5 or later is required for QSI V7"/>
-        <label label="JMRI 2.13.2 or later is required for QSI V8"/>
-        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-        <label label=" "/>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
         <display item="CV56.254.6"/>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
     <row>
@@ -33,20 +44,28 @@
           <display item="CV51.0" layout="above" format="hslider-percent" tooltip="(0 - 127)"/>
         </row>
       </column>
-      <label label="      "/>
+      <label>
+        <text>      </text>
+      </label>
       <column>
         <row>
           <display item="CV51.1" layout="above" label=""/>
           <display item="CV51.1" layout="above" format="hslider-percent"/>
         </row>
       </column>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <row>
       <column>
-        <label label="Individual Sound Volumes "/>
+        <label>
+          <text>Individual Sound Volumes </text>
+        </label>
       </column>
     </row>
     <row>
@@ -55,117 +74,163 @@
           <display item="CV52.0" layout="above" label=""/>
           <display item="CV52.0" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.8" layout="above" label=""/>
           <display item="CV52.8" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.10" layout="above" label=""/>
           <display item="CV52.10" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.11" layout="above" label=""/>
           <display item="CV52.11" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.13" layout="above" label=""/>
           <display item="CV52.13" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.14" layout="above" label=""/>
           <display item="CV52.14" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.15" layout="above" label=""/>
           <display item="CV52.15" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.16" layout="above" label=""/>
           <display item="CV52.16" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.17" layout="above" label=""/>
           <display item="CV52.17" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.19" layout="above" label=""/>
           <display item="CV52.19" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.21" layout="above" label=""/>
           <display item="CV52.21" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.22" layout="above" label=""/>
           <display item="CV52.22" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
         <row>
           <display item="CV52.24" layout="above" label=""/>
           <display item="CV52.24" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.26" layout="above" label=""/>
           <display item="CV52.26" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.28" layout="above" label=""/>
           <display item="CV52.28" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.29" layout="above" label=""/>
           <display item="CV52.29" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.30" layout="above" label=""/>
           <display item="CV52.30" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.31" layout="above" label=""/>
           <display item="CV52.31" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.32" layout="above" label=""/>
           <display item="CV52.32" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.34" layout="above" label=""/>
           <display item="CV52.34" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.37" layout="above" label=""/>
           <display item="CV52.37" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.40" layout="above" label=""/>
           <display item="CV52.40" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.46" layout="above" label=""/>
           <display item="CV52.46" layout="above" format="hslider-percent"/>
@@ -174,79 +239,111 @@
           <display item="CV52.47" layout="above" label=""/>
           <display item="CV52.47" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.50" layout="above" label=""/>
           <display item="CV52.50" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
       <column>
-        <label label="        "/>
+        <label>
+          <text>        </text>
+        </label>
       </column>
       <column>
         <row>
           <display item="CV52.53" layout="above" label=""/>
           <display item="CV52.53" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.54" layout="above" label=""/>
           <display item="CV52.54" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.55" layout="above" label=""/>
           <display item="CV52.55" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.56" layout="above" label=""/>
           <display item="CV52.56" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.57" layout="above" label=""/>
           <display item="CV52.57" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.58" layout="above" label=""/>
           <display item="CV52.58" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.59" layout="above" label=""/>
           <display item="CV52.59" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.60" layout="above" label=""/>
           <display item="CV52.60" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.61" layout="above" label=""/>
           <display item="CV52.61" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.62" layout="above" label=""/>
           <display item="CV52.62" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.64" layout="above" label=""/>
           <display item="CV52.64" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
         <row>
           <display item="CV52.65" layout="above" label=""/>
           <display item="CV52.65" layout="above" format="hslider-percent"/>
         </row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </column>
     </row>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
   </column>
 </pane>

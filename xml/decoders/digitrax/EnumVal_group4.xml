@@ -13,12 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-            <choice xml:lang="it">Non Inviare Messaggio</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-            <choice xml:lang="it">Invia Messaggio uscita</choice>
-          </enumChoice>
-        </enumVal>
+  <enumChoice choice="Don't send a message">
+    <choice>Don't send a message</choice>
+    <choice xml:lang="it">Non Inviare Messaggio</choice>
+  </enumChoice>
+  <enumChoice choice="Send output message">
+    <choice>Send output message</choice>
+    <choice xml:lang="it">Invia Messaggio uscita</choice>
+  </enumChoice>
+</enumVal>

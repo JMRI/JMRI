@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
 <!-- $Id: CT_Elektronik_Sound_SL_v40.xml,v 1.4 2010/06/26 20:49:28 jacobsen Exp $ -->
@@ -85,7 +85,7 @@
         <output name="G7" label="Slot 7/15"/>
         <output name="G8" label="Slot 8/16"/>
       </model>
-	  <model model="GE 75" numOuts="2" numFns="14" productID="GE75">
+      <model model="GE 75" numOuts="2" numFns="14" productID="GE75">
         <versionCV lowVersionID="100" highVersionID="125"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
@@ -101,8 +101,7 @@
         <output name="G7" label="Slot 7/15"/>
         <output name="G8" label="Slot 8/16"/>
       </model>
-
-	  <model model="SL 76" numOuts="4" numFns="14" productID="SL76">
+      <model model="SL 76" numOuts="4" numFns="14" productID="SL76">
         <versionCV lowVersionID="127"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
@@ -120,7 +119,7 @@
         <output name="G7" label="Slot 7/15"/>
         <output name="G8" label="Slot 8/16"/>
       </model>
-	  <model model="GE 76" numOuts="4" numFns="14" productID="GE76">
+      <model model="GE 76" numOuts="4" numFns="14" productID="GE76">
         <versionCV lowVersionID="127"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
@@ -138,7 +137,7 @@
         <output name="G7" label="Slot 7/15"/>
         <output name="G8" label="Slot 8/16"/>
       </model>
-	  <model model="SL82" numOuts="9" numFns="14" productID="SL82" maxMotorCurrent="4A / 2.5A" maxTotalCurrent="4A">
+      <model model="SL82" numOuts="9" numFns="14" productID="SL82" maxMotorCurrent="4A / 2.5A" maxTotalCurrent="4A">
         <versionCV lowVersionID="100"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
@@ -165,42 +164,42 @@
     <programming direct="yes" paged="no" register="no" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Voltage" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+      <variable CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Start Voltage</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel">
+      <variable CV="3" item="Accel">
         <decVal/>
         <label>Acceleration Rate</label>
       </variable>
-      <variable label="Braking Rate" CV="4" item="Decel">
+      <variable CV="4" item="Decel">
         <decVal/>
         <label>Braking Rate</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="0" comment="Maximum Speed">
+      <variable item="Vhigh" CV="5" default="0" comment="Maximum Speed">
         <decVal/>
         <label>Vhigh</label>
         <comment>Maximum Speed</comment>
       </variable>
-      <variable label="Vmid" CV="6" default="0">
+      <variable item="Vmid" CV="6" default="0">
         <decVal/>
         <label>Vmid</label>
       </variable>
-      <variable label="Decoder Version" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version</label>
       </variable>
-      <variable label="Manufacturer" CV="8" default="117" readOnly="yes" item="Manufacturer">
+      <variable CV="8" default="117" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer</label>
       </variable>
-      <variable label="Total PWM Period" CV="9" default="134" tooltip="13-63=30-150Hz, 141-191=16kHz" comment="Range 13-63/141-191">
+      <variable item="Total PWM Period" CV="9" default="134" tooltip="13-63=30-150Hz, 141-191=16kHz" comment="Range 13-63/141-191">
         <decVal/>
         <label>Total PWM Period</label>
         <comment>Range 13-63/141-191</comment>
       </variable>
-      <variable label="Output FL(f) ON in analog mode" CV="13" default="0" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
+      <variable CV="13" default="0" mask="XXXXXXXV" item="Analog Mode Function Status - FL(f)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -211,7 +210,7 @@
         </enumVal>
         <label>Output FL(f) ON in analog mode</label>
       </variable>
-      <variable label="Output FL(r) ON in analog mode" CV="13" default="0" mask="XXXXXXVX" item="Analog Mode Function Status - FL(r)">
+      <variable CV="13" default="0" mask="XXXXXXVX" item="Analog Mode Function Status - FL(r)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -222,7 +221,7 @@
         </enumVal>
         <label>Output FL(r) ON in analog mode</label>
       </variable>
-      <variable label="Output F 1 ON in analog mode" CV="13" default="0" mask="XXXXXVXX" item="Analog Mode Function Status - F1">
+      <variable CV="13" default="0" mask="XXXXXVXX" item="Analog Mode Function Status - F1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -233,7 +232,7 @@
         </enumVal>
         <label>Output F 1 ON in analog mode</label>
       </variable>
-      <variable label="Output F 2 ON in analog mode" CV="13" default="0" mask="XXXXVXXX" item="Analog Mode Function Status - F2">
+      <variable CV="13" default="0" mask="XXXXVXXX" item="Analog Mode Function Status - F2">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -244,7 +243,7 @@
         </enumVal>
         <label>Output F 2 ON in analog mode</label>
       </variable>
-      <variable label="Output F 3 ON in analog mode" CV="13" default="0" mask="XXXVXXXX" item="Analog Mode Function Status - F3">
+      <variable CV="13" default="0" mask="XXXVXXXX" item="Analog Mode Function Status - F3">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -255,7 +254,7 @@
         </enumVal>
         <label>Output F 3 ON in analog mode</label>
       </variable>
-      <variable label="Output F 4 ON in analog mode" CV="13" default="0" mask="XXVXXXXX" item="Analog Mode Function Status - F4">
+      <variable CV="13" default="0" mask="XXVXXXXX" item="Analog Mode Function Status - F4">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -266,7 +265,7 @@
         </enumVal>
         <label>Output F 4 ON in analog mode</label>
       </variable>
-      <variable label="Output F 5 ON in analog mode" CV="13" default="0" mask="XVXXXXXX" item="Analog Mode Function Status - F5">
+      <variable CV="13" default="0" mask="XVXXXXXX" item="Analog Mode Function Status - F5">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -277,7 +276,7 @@
         </enumVal>
         <label>Output F 5 ON in analog mode</label>
       </variable>
-      <variable label="Output F 6 ON in analog mode" CV="13" default="0" mask="VXXXXXXX" item="Analog Mode Function Status - F6">
+      <variable CV="13" default="0" mask="VXXXXXXX" item="Analog Mode Function Status - F6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -288,11 +287,11 @@
         </enumVal>
         <label>Output F 6 ON in analog mode</label>
       </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -303,7 +302,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -314,7 +313,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode">
+      <variable CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -325,7 +324,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1">
+      <variable item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -336,7 +335,7 @@
         </enumVal>
         <label>Analog (DC) Operation</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)">
             <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
@@ -347,12 +346,12 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="Error Diagnosis" CV="30" readOnly="yes" default="0">
+      <variable item="Error Diagnosis" CV="30" readOnly="yes" default="0">
         <decVal min="0" max="3"/>
         <label>Error Diagnosis</label>
       </variable>
       <!--	NMRA Function Mapping	-->
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -363,7 +362,7 @@
         </enumVal>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -374,7 +373,7 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -385,7 +384,7 @@
         </enumVal>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -396,7 +395,7 @@
         </enumVal>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -407,7 +406,7 @@
         </enumVal>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -418,7 +417,7 @@
         </enumVal>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -429,7 +428,7 @@
         </enumVal>
         <label>FL(f) controls output 7</label>
       </variable>
-      <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -440,7 +439,7 @@
         </enumVal>
         <label>FL(f) controls output 8</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -451,7 +450,7 @@
         </enumVal>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -462,7 +461,7 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -473,7 +472,7 @@
         </enumVal>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -484,7 +483,7 @@
         </enumVal>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -495,7 +494,7 @@
         </enumVal>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -506,7 +505,7 @@
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -517,7 +516,7 @@
         </enumVal>
         <label>FL(r) controls output 7</label>
       </variable>
-      <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -528,7 +527,7 @@
         </enumVal>
         <label>FL(r) controls output 8</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -539,7 +538,7 @@
         </enumVal>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -550,7 +549,7 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -561,7 +560,7 @@
         </enumVal>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -572,7 +571,7 @@
         </enumVal>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -583,7 +582,7 @@
         </enumVal>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -594,7 +593,7 @@
         </enumVal>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -605,7 +604,7 @@
         </enumVal>
         <label>F1 controls output 7</label>
       </variable>
-      <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -616,7 +615,7 @@
         </enumVal>
         <label>F1 controls output 8</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -627,7 +626,7 @@
         </enumVal>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -638,7 +637,7 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -649,7 +648,7 @@
         </enumVal>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -660,7 +659,7 @@
         </enumVal>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -671,7 +670,7 @@
         </enumVal>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -682,7 +681,7 @@
         </enumVal>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -693,7 +692,7 @@
         </enumVal>
         <label>F2 controls output 7</label>
       </variable>
-      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -704,7 +703,7 @@
         </enumVal>
         <label>F2 controls output 8</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -715,7 +714,7 @@
         </enumVal>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -726,7 +725,7 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -737,7 +736,7 @@
         </enumVal>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -748,7 +747,7 @@
         </enumVal>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3">
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -759,7 +758,7 @@
         </enumVal>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -770,7 +769,7 @@
         </enumVal>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -781,7 +780,7 @@
         </enumVal>
         <label>F3 controls output 7</label>
       </variable>
-      <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -792,7 +791,7 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -803,7 +802,7 @@
         </enumVal>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -814,7 +813,7 @@
         </enumVal>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4">
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -825,7 +824,7 @@
         </enumVal>
         <label>F4 controls output 6</label>
       </variable>
-      <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -836,7 +835,7 @@
         </enumVal>
         <label>F4 controls output 7</label>
       </variable>
-      <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -847,7 +846,7 @@
         </enumVal>
         <label>F4 controls output 8</label>
       </variable>
-      <variable label="F4 controls output Ra" CV="38" mask="XXVXXXXX" minFn="4">
+      <variable item="F4 controls output Ra" CV="38" mask="XXVXXXXX" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -858,7 +857,7 @@
         </enumVal>
         <label>F4 controls output Ra</label>
       </variable>
-      <variable label="F4 controls output Se" CV="38" mask="XVXXXXXX" minFn="4">
+      <variable item="F4 controls output Se" CV="38" mask="XVXXXXXX" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -869,7 +868,7 @@
         </enumVal>
         <label>F4 controls output Se</label>
       </variable>
-      <variable label="F4 controls output Alt" CV="38" mask="VXXXXXXX" minFn="4">
+      <variable item="F4 controls output Alt" CV="38" mask="VXXXXXXX" minFn="4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -880,7 +879,7 @@
         </enumVal>
         <label>F4 controls output Alt</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -891,7 +890,7 @@
         </enumVal>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -902,7 +901,7 @@
         </enumVal>
         <label>F5 controls output 5</label>
       </variable>
-      <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
+      <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -913,7 +912,7 @@
         </enumVal>
         <label>F5 controls output 6</label>
       </variable>
-      <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5">
+      <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -924,7 +923,7 @@
         </enumVal>
         <label>F5 controls output 7</label>
       </variable>
-      <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
+      <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -935,7 +934,7 @@
         </enumVal>
         <label>F5 controls output 8</label>
       </variable>
-      <variable label="F5 controls output Ra" CV="39" mask="XXVXXXXX" minFn="5">
+      <variable item="F5 controls output Ra" CV="39" mask="XXVXXXXX" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -946,7 +945,7 @@
         </enumVal>
         <label>F5 controls output Ra</label>
       </variable>
-      <variable label="F5 controls output Se" CV="39" mask="XVXXXXXX" minFn="5">
+      <variable item="F5 controls output Se" CV="39" mask="XVXXXXXX" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -957,7 +956,7 @@
         </enumVal>
         <label>F5 controls output Se</label>
       </variable>
-      <variable label="F5 controls output Alt" CV="39" mask="VXXXXXXX" minFn="5">
+      <variable item="F5 controls output Alt" CV="39" mask="VXXXXXXX" minFn="5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -968,7 +967,7 @@
         </enumVal>
         <label>F5 controls output Alt</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -979,7 +978,7 @@
         </enumVal>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -990,7 +989,7 @@
         </enumVal>
         <label>F6 controls output 5</label>
       </variable>
-      <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
+      <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1001,7 +1000,7 @@
         </enumVal>
         <label>F6 controls output 6</label>
       </variable>
-      <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
+      <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1012,7 +1011,7 @@
         </enumVal>
         <label>F6 controls output 7</label>
       </variable>
-      <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6">
+      <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1023,7 +1022,7 @@
         </enumVal>
         <label>F6 controls output 8</label>
       </variable>
-      <variable label="F6 controls output Ra" CV="40" mask="XXVXXXXX" minFn="6">
+      <variable item="F6 controls output Ra" CV="40" mask="XXVXXXXX" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1034,7 +1033,7 @@
         </enumVal>
         <label>F6 controls output Ra</label>
       </variable>
-      <variable label="F6 controls output Se" CV="40" mask="XVXXXXXX" minFn="6">
+      <variable item="F6 controls output Se" CV="40" mask="XVXXXXXX" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1045,7 +1044,7 @@
         </enumVal>
         <label>F6 controls output Se</label>
       </variable>
-      <variable label="F6 controls output Alt" CV="40" mask="VXXXXXXX" minFn="6">
+      <variable item="F6 controls output Alt" CV="40" mask="VXXXXXXX" minFn="6">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1056,7 +1055,7 @@
         </enumVal>
         <label>F6 controls output Alt</label>
       </variable>
-      <variable label="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
+      <variable item="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1067,7 +1066,7 @@
         </enumVal>
         <label>F7 controls output 4</label>
       </variable>
-      <variable label="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
+      <variable item="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1078,7 +1077,7 @@
         </enumVal>
         <label>F7 controls output 5</label>
       </variable>
-      <variable label="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
+      <variable item="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1089,7 +1088,7 @@
         </enumVal>
         <label>F7 controls output 6</label>
       </variable>
-      <variable label="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
+      <variable item="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1100,7 +1099,7 @@
         </enumVal>
         <label>F7 controls output 7</label>
       </variable>
-      <variable label="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
+      <variable item="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1111,7 +1110,7 @@
         </enumVal>
         <label>F7 controls output 8</label>
       </variable>
-      <variable label="F7 controls output Ra" CV="41" mask="XXVXXXXX" minFn="7">
+      <variable item="F7 controls output Ra" CV="41" mask="XXVXXXXX" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1122,7 +1121,7 @@
         </enumVal>
         <label>F7 controls output Ra</label>
       </variable>
-      <variable label="F7 controls output Se" CV="41" mask="XVXXXXXX" minFn="7">
+      <variable item="F7 controls output Se" CV="41" mask="XVXXXXXX" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1133,7 +1132,7 @@
         </enumVal>
         <label>F7 controls output Se</label>
       </variable>
-      <variable label="F7 controls output Alt" CV="41" mask="VXXXXXXX" minFn="7">
+      <variable item="F7 controls output Alt" CV="41" mask="VXXXXXXX" minFn="7">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1144,7 +1143,7 @@
         </enumVal>
         <label>F7 controls output Alt</label>
       </variable>
-      <variable label="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
+      <variable item="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1155,7 +1154,7 @@
         </enumVal>
         <label>F8 controls output 4</label>
       </variable>
-      <variable label="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
+      <variable item="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1166,7 +1165,7 @@
         </enumVal>
         <label>F8 controls output 5</label>
       </variable>
-      <variable label="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
+      <variable item="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1177,7 +1176,7 @@
         </enumVal>
         <label>F8 controls output 6</label>
       </variable>
-      <variable label="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
+      <variable item="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1188,7 +1187,7 @@
         </enumVal>
         <label>F8 controls output 7</label>
       </variable>
-      <variable label="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
+      <variable item="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1199,7 +1198,7 @@
         </enumVal>
         <label>F8 controls output 8</label>
       </variable>
-      <variable label="F8 controls output Ra" CV="42" mask="XXVXXXXX" minFn="8">
+      <variable item="F8 controls output Ra" CV="42" mask="XXVXXXXX" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1210,7 +1209,7 @@
         </enumVal>
         <label>F8 controls output Ra</label>
       </variable>
-      <variable label="F8 controls output Se" CV="42" mask="XVXXXXXX" minFn="8">
+      <variable item="F8 controls output Se" CV="42" mask="XVXXXXXX" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1221,7 +1220,7 @@
         </enumVal>
         <label>F8 controls output Se</label>
       </variable>
-      <variable label="F8 controls output Alt" CV="42" mask="VXXXXXXX" minFn="8">
+      <variable item="F8 controls output Alt" CV="42" mask="VXXXXXXX" minFn="8">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1232,7 +1231,7 @@
         </enumVal>
         <label>F8 controls output Alt</label>
       </variable>
-      <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
+      <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1243,7 +1242,7 @@
         </enumVal>
         <label>F9 controls output 7</label>
       </variable>
-      <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
+      <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1254,7 +1253,7 @@
         </enumVal>
         <label>F9 controls output 8</label>
       </variable>
-      <variable label="F9 controls output Ra" CV="43" mask="XXXXXVXX" minFn="9">
+      <variable item="F9 controls output Ra" CV="43" mask="XXXXXVXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1265,7 +1264,7 @@
         </enumVal>
         <label>F9 controls output Ra</label>
       </variable>
-      <variable label="F9 controls output Se" CV="43" mask="XXXXVXXX" minFn="9">
+      <variable item="F9 controls output Se" CV="43" mask="XXXXVXXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1276,7 +1275,7 @@
         </enumVal>
         <label>F9 controls output Se</label>
       </variable>
-      <variable label="F9 controls output Alt" CV="43" mask="XXXVXXXX" minFn="9">
+      <variable item="F9 controls output Alt" CV="43" mask="XXXVXXXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1287,7 +1286,7 @@
         </enumVal>
         <label>F9 controls output Alt</label>
       </variable>
-      <variable label="F9 controls output G1" CV="43" mask="XXVXXXXX" minFn="9">
+      <variable item="F9 controls output G1" CV="43" mask="XXVXXXXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1298,7 +1297,7 @@
         </enumVal>
         <label>F9 controls output G1</label>
       </variable>
-      <variable label="F9 controls output G2" CV="43" mask="XVXXXXXX" minFn="9">
+      <variable item="F9 controls output G2" CV="43" mask="XVXXXXXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1309,7 +1308,7 @@
         </enumVal>
         <label>F9 controls output G2</label>
       </variable>
-      <variable label="F9 controls output G3" CV="43" mask="VXXXXXXX" minFn="9">
+      <variable item="F9 controls output G3" CV="43" mask="VXXXXXXX" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1320,7 +1319,7 @@
         </enumVal>
         <label>F9 controls output G3</label>
       </variable>
-      <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
+      <variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1331,7 +1330,7 @@
         </enumVal>
         <label>F10 controls output 7</label>
       </variable>
-      <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
+      <variable item="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1342,7 +1341,7 @@
         </enumVal>
         <label>F10 controls output 8</label>
       </variable>
-      <variable label="F10 controls output Ra" CV="44" mask="XXXXXVXX" minFn="10">
+      <variable item="F10 controls output Ra" CV="44" mask="XXXXXVXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1353,7 +1352,7 @@
         </enumVal>
         <label>F10 controls output Ra</label>
       </variable>
-      <variable label="F10 controls output Se" CV="44" mask="XXXXVXXX" minFn="10">
+      <variable item="F10 controls output Se" CV="44" mask="XXXXVXXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1364,7 +1363,7 @@
         </enumVal>
         <label>F10 controls output Se</label>
       </variable>
-      <variable label="F10 controls output Alt" CV="44" mask="XXXVXXXX" minFn="10">
+      <variable item="F10 controls output Alt" CV="44" mask="XXXVXXXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1375,7 +1374,7 @@
         </enumVal>
         <label>F10 controls output Alt</label>
       </variable>
-      <variable label="F10 controls output G1" CV="44" mask="XXVXXXXX" minFn="10">
+      <variable item="F10 controls output G1" CV="44" mask="XXVXXXXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1386,7 +1385,7 @@
         </enumVal>
         <label>F10 controls output G1</label>
       </variable>
-      <variable label="F10 controls output G2" CV="44" mask="XVXXXXXX" minFn="10">
+      <variable item="F10 controls output G2" CV="44" mask="XVXXXXXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1397,7 +1396,7 @@
         </enumVal>
         <label>F10 controls output G2</label>
       </variable>
-      <variable label="F10 controls output G3" CV="44" mask="VXXXXXXX" minFn="10">
+      <variable item="F10 controls output G3" CV="44" mask="VXXXXXXX" minFn="10">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1408,7 +1407,7 @@
         </enumVal>
         <label>F10 controls output G3</label>
       </variable>
-      <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
+      <variable item="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1419,7 +1418,7 @@
         </enumVal>
         <label>F11 controls output 7</label>
       </variable>
-      <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
+      <variable item="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1430,7 +1429,7 @@
         </enumVal>
         <label>F11 controls output 8</label>
       </variable>
-      <variable label="F11 controls output Ra" CV="45" mask="XXXXXVXX" minFn="11">
+      <variable item="F11 controls output Ra" CV="45" mask="XXXXXVXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1441,7 +1440,7 @@
         </enumVal>
         <label>F11 controls output Ra</label>
       </variable>
-      <variable label="F11 controls output Se" CV="45" mask="XXXXVXXX" minFn="11">
+      <variable item="F11 controls output Se" CV="45" mask="XXXXVXXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1452,7 +1451,7 @@
         </enumVal>
         <label>F11 controls output Se</label>
       </variable>
-      <variable label="F11 controls output Alt" CV="45" mask="XXXVXXXX" minFn="11">
+      <variable item="F11 controls output Alt" CV="45" mask="XXXVXXXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1463,7 +1462,7 @@
         </enumVal>
         <label>F11 controls output Alt</label>
       </variable>
-      <variable label="F11 controls output G1" CV="45" mask="XXVXXXXX" minFn="11">
+      <variable item="F11 controls output G1" CV="45" mask="XXVXXXXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1474,7 +1473,7 @@
         </enumVal>
         <label>F11 controls output G1</label>
       </variable>
-      <variable label="F11 controls output G2" CV="45" mask="XVXXXXXX" minFn="11">
+      <variable item="F11 controls output G2" CV="45" mask="XVXXXXXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1485,7 +1484,7 @@
         </enumVal>
         <label>F11 controls output G2</label>
       </variable>
-      <variable label="F11 controls output G3" CV="45" mask="VXXXXXXX" minFn="11">
+      <variable item="F11 controls output G3" CV="45" mask="VXXXXXXX" minFn="11">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1496,7 +1495,7 @@
         </enumVal>
         <label>F11 controls output G3</label>
       </variable>
-      <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
+      <variable item="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1507,7 +1506,7 @@
         </enumVal>
         <label>F12 controls output 7</label>
       </variable>
-      <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
+      <variable item="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1518,7 +1517,7 @@
         </enumVal>
         <label>F12 controls output 8</label>
       </variable>
-      <variable label="F12 controls output Ra" CV="46" mask="XXXXXVXX" minFn="12">
+      <variable item="F12 controls output Ra" CV="46" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1529,7 +1528,7 @@
         </enumVal>
         <label>F12 controls output Ra</label>
       </variable>
-      <variable label="F12 controls output Se" CV="46" mask="XXXXVXXX" minFn="12">
+      <variable item="F12 controls output Se" CV="46" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1540,7 +1539,7 @@
         </enumVal>
         <label>F12 controls output Se</label>
       </variable>
-      <variable label="F12 controls output Alt" CV="46" mask="XXXVXXXX" minFn="12">
+      <variable item="F12 controls output Alt" CV="46" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1551,7 +1550,7 @@
         </enumVal>
         <label>F12 controls output Alt</label>
       </variable>
-      <variable label="F12 controls output G1" CV="46" mask="XXVXXXXX" minFn="12">
+      <variable item="F12 controls output G1" CV="46" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1562,7 +1561,7 @@
         </enumVal>
         <label>F12 controls output G1</label>
       </variable>
-      <variable label="F12 controls output G2" CV="46" mask="XVXXXXXX" minFn="12">
+      <variable item="F12 controls output G2" CV="46" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1573,7 +1572,7 @@
         </enumVal>
         <label>F12 controls output G2</label>
       </variable>
-      <variable label="F12 controls output G3" CV="46" mask="VXXXXXXX" minFn="12">
+      <variable item="F12 controls output G3" CV="46" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1602,7 +1601,7 @@
 			<enumVal><enumChoice choice="Off"/><enumChoice choice="On"/></enumVal>
 		</variable>
 -->
-      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL51,SL74" default="4">
+      <variable item="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL51,SL74" default="4">
         <enumVal>
           <enumChoice choice="4 cyl steam, auto pulse" value="0">
             <choice>4 cyl steam, auto pulse</choice>
@@ -1622,7 +1621,7 @@
         </enumVal>
         <label>Steam/Diesel sound types</label>
       </variable>
-      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75,SL76,GE75,GE76,SL82" default="0">
+      <variable item="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75,SL76,GE75,GE76,SL82" default="0">
         <enumVal>
           <enumChoice choice="4 Cylinder steam, auto pulse">
             <choice>4 Cylinder steam, auto pulse</choice>
@@ -1642,14 +1641,14 @@
           <enumChoice choice="3 Cylinder Steam, auto pulse" value="8">
             <choice>3 Cylinder Steam, auto pulse</choice>
           </enumChoice>
-		  <!-- value CV49=10 information from John Gymer at YouChoos.co.uk, it gives better behaviour than CV49=2 -->
-		  <enumChoice choice="Diesel Electric (variable speed)" value="10">
+          <!-- value CV49=10 information from John Gymer at YouChoos.co.uk, it gives better behaviour than CV49=2 -->
+          <enumChoice choice="Diesel Electric (variable speed)" value="10">
             <choice>3 Cylinder Steam, auto pulse</choice>
           </enumChoice>
         </enumVal>
         <label>Steam/Diesel sound types</label>
       </variable>
-      <variable label="No Steam Exhaust Downhill" CV="49" mask="XXXVXXXX" default="0">
+      <variable item="No Steam Exhaust Downhill" CV="49" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1660,7 +1659,7 @@
         </enumVal>
         <label>No Steam Exhaust Downhill</label>
       </variable>
-      <variable label="Continuous Sound CV 10, F 1" CV="49" mask="XXVXXXXX" default="0">
+      <variable item="Continuous Sound CV 10, F 1" CV="49" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1671,7 +1670,7 @@
         </enumVal>
         <label>Continuous Sound CV 10, F 1</label>
       </variable>
-      <variable label="No Sound stop to moving (whistle)" CV="49" mask="XVXXXXXX" default="0">
+      <variable item="No Sound stop to moving (whistle)" CV="49" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1682,7 +1681,7 @@
         </enumVal>
         <label>No Sound stop to moving (whistle)</label>
       </variable>
-      <variable label="No Sound moving to stop (brake squeal)" CV="49" mask="VXXXXXXX" default="0">
+      <variable item="No Sound moving to stop (brake squeal)" CV="49" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1693,40 +1692,40 @@
         </enumVal>
         <label>No Sound moving to stop (brake squeal)</label>
       </variable>
-      <variable label="BEMF Pull" CV="50" default="255" item="EMF Feedback Cutout" tooltip="BEMF Pull" comment="Controls how much BEMF (0-no BEMF to 255-max)">
+      <variable CV="50" default="255" item="EMF Feedback Cutout" tooltip="BEMF Pull" comment="Controls how much BEMF (0-no BEMF to 255-max)">
         <decVal min="0" max="255"/>
         <label>BEMF Pull</label>
         <comment>Controls how much BEMF (0-no BEMF to 255-max)</comment>
       </variable>
-      <variable label="P adjustment" CV="51" default="80" item="EMF Static Config" tooltip="P adjustment, 0-255" comment="Range 0-255">
+      <variable CV="51" default="80" item="EMF Static Config" tooltip="P adjustment, 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>P adjustment</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="I adjustment" CV="52" default="35" item="EMF Dynamic Config" tooltip="I adjustment, 0-255" comment="Range 0-255">
+      <variable CV="52" default="35" item="EMF Dynamic Config" tooltip="I adjustment, 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>I adjustment</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Decoder Lock" CV="53" default="0" tooltip="Lock=66 Unlock=77" comment="also used for Lokmouse programming">
+      <variable item="Decoder Lock" CV="53" default="0" tooltip="Lock=66 Unlock=77" comment="also used for Lokmouse programming">
         <decVal/>
         <label>Decoder Lock</label>
         <comment>also used for Lokmouse programming</comment>
       </variable>
-      <variable label="PWM Function Outputs" CV="54" default="50" tooltip="Dimming Outputs 0 - 100%">
+      <variable item="PWM Function Outputs" CV="54" default="50" tooltip="Dimming Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Function Outputs</label>
       </variable>
-      <variable label="Reduced Holding Current" CV="55" default="32" comment="Range 0-100">
+      <variable item="Reduced Holding Current" CV="55" default="32" comment="Range 0-100">
         <decVal min="0" max="100"/>
         <label>Reduced Holding Current</label>
         <comment>Range 0-100</comment>
       </variable>
-      <variable label="Initial Full Power Time" CV="56" default="60">
+      <variable item="Initial Full Power Time" CV="56" default="60">
         <decVal/>
         <label>Initial Full Power Time</label>
       </variable>
-      <variable label="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0">
+      <variable item="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1737,7 +1736,7 @@
         </enumVal>
         <label>Dimming Output FL(f)</label>
       </variable>
-      <variable label="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0">
+      <variable item="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1748,7 +1747,7 @@
         </enumVal>
         <label>Dimming Output FL(r)</label>
       </variable>
-      <variable label="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0">
+      <variable item="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1759,7 +1758,7 @@
         </enumVal>
         <label>Dimming Output F 1</label>
       </variable>
-      <variable label="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0">
+      <variable item="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1770,7 +1769,7 @@
         </enumVal>
         <label>Dimming Output F 2</label>
       </variable>
-      <variable label="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0">
+      <variable item="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1781,7 +1780,7 @@
         </enumVal>
         <label>Dimming Output F 3</label>
       </variable>
-      <variable label="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0">
+      <variable item="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1792,7 +1791,7 @@
         </enumVal>
         <label>Dimming Output F 4</label>
       </variable>
-      <variable label="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0">
+      <variable item="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1803,7 +1802,7 @@
         </enumVal>
         <label>Dimming Output F 5</label>
       </variable>
-      <variable label="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0">
+      <variable item="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1814,7 +1813,7 @@
         </enumVal>
         <label>Dimming Output F 6</label>
       </variable>
-      <variable label="Reduced Power Output 1 (White)" CV="58" mask="XXXXXXXV" default="0">
+      <variable item="Reduced Power Output 1 (White)" CV="58" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1825,7 +1824,7 @@
         </enumVal>
         <label>Output Uncoupler FL(f)</label>
       </variable>
-      <variable label="Reduced Power Output 2 (Yellow)" CV="58" mask="XXXXXXVX" default="0">
+      <variable item="Reduced Power Output 2 (Yellow)" CV="58" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1836,7 +1835,7 @@
         </enumVal>
         <label>Output Uncoupler FL(r)</label>
       </variable>
-      <variable label="Reduced Power Output 3 (Green)" CV="58" mask="XXXXXVXX" default="0">
+      <variable item="Reduced Power Output 3 (Green)" CV="58" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1847,7 +1846,7 @@
         </enumVal>
         <label>Output Uncoupler F 1</label>
       </variable>
-      <variable label="Reduced Power Output 4 (Purple)" CV="58" mask="XXXXVXXX" default="0">
+      <variable item="Reduced Power Output 4 (Purple)" CV="58" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1858,7 +1857,7 @@
         </enumVal>
         <label>Output Uncoupler F 2</label>
       </variable>
-      <variable label="Reduced Power Output 5" CV="58" mask="XXXVXXXX" default="0">
+      <variable item="Reduced Power Output 5" CV="58" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1869,7 +1868,7 @@
         </enumVal>
         <label>Output Uncoupler F 3</label>
       </variable>
-      <variable label="Reduced Power Output 6" CV="58" mask="XXVXXXXX" default="0">
+      <variable item="Reduced Power Output 6" CV="58" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1880,7 +1879,7 @@
         </enumVal>
         <label>Output Uncoupler F 4</label>
       </variable>
-      <variable label="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0">
+      <variable item="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1891,7 +1890,7 @@
         </enumVal>
         <label>Output Uncoupler F 5</label>
       </variable>
-      <variable label="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0">
+      <variable item="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1902,67 +1901,67 @@
         </enumVal>
         <label>Output Uncoupler F 6</label>
       </variable>
-      <variable label="ZIMO Signal Controlled Speed L" CV="59" default="168" comment="Zimo Only">
+      <variable item="ZIMO Signal Controlled Speed L" CV="59" default="168" comment="Zimo Only">
         <decVal/>
         <label>ZIMO Signal Controlled Speed L</label>
         <comment>Zimo Only</comment>
       </variable>
-      <variable label="ZIMO Signal Controlled Speed U" CV="60" default="84" comment="Zimo Only">
+      <variable item="ZIMO Signal Controlled Speed U" CV="60" default="84" comment="Zimo Only">
         <decVal/>
         <label>ZIMO Signal Controlled Speed U</label>
         <comment>Zimo Only</comment>
       </variable>
-      <variable label="ZIMO Signal Controlled Acc Reaction" CV="61">
+      <variable item="ZIMO Signal Controlled Acc Reaction" CV="61">
         <decVal/>
         <label>ZIMO Signal Controlled Acc Reaction</label>
       </variable>
-      <variable label="Brake Sound Trigger" CV="62" default="00" tooltip="rate of speed change to trigger brake noise slots 120 to 122">
+      <variable item="Brake Sound Trigger" CV="62" default="00" tooltip="rate of speed change to trigger brake noise slots 120 to 122">
         <decVal max="255"/>
         <label>Brake Sound Trigger</label>
       </variable>
-      <variable label="Track Voltage Reference" CV="64" default="160" item="EMF Droop Config" comment="160=16v track volts, appears to be percentage in reality, 100=normal, values 1-255 are legal. Alters top speed better than CV5">
+      <variable CV="64" default="160" item="EMF Droop Config" comment="160=16v track volts, appears to be percentage in reality, 100=normal, values 1-255 are legal. Alters top speed better than CV5">
         <decVal/>
         <label>Track Voltage Reference</label>
         <comment>160=16v track volts, appears to be percentage in reality, 100=normal, values 1-255 are legal. Alters top speed better than CV5</comment>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="ZIMO Course influence F-L" CV="96" tooltip="selected speed between F L (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable item="ZIMO Course influence F-L" CV="96" tooltip="selected speed between F L (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence F-L</label>
       </variable>
-      <variable label="ZIMO Course influence L-U" CV="97" tooltip="selected speed between L U (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable item="ZIMO Course influence L-U" CV="97" tooltip="selected speed between L U (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence L-U</label>
       </variable>
-      <variable label="ZIMO Course influence U" CV="98" tooltip="selected speed between U Stop (MX9 and/or HLU) from version 52, see CV59, 60">
+      <variable item="ZIMO Course influence U" CV="98" tooltip="selected speed between U Stop (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence U</label>
       </variable>
-      <variable label="Braking Threshold Finish" CV="104" tooltip="some elements from version 100">
+      <variable item="Braking Threshold Finish" CV="104" tooltip="some elements from version 100">
         <decVal/>
         <label>Braking Threshold Finish</label>
       </variable>
-      <variable label="User Identification #1" CV="105" default="0" item="User Id #1">
+      <variable CV="105" default="0" item="User Id #1">
         <decVal/>
         <label>User Identification #1</label>
       </variable>
-      <variable label="User Identification #2" CV="106" default="0" item="User Id #2">
+      <variable CV="106" default="0" item="User Id #2">
         <decVal/>
         <label>User Identification #2</label>
       </variable>
-      <variable label="Brake Threshold" CV="107" default="0" comment="Range 0-255">
+      <variable item="Brake Threshold" CV="107" default="0" comment="Range 0-255">
         <decVal/>
         <label>Brake Threshold</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="LGB Continuous Manual Sound Bitmask" CV="108" default="0">
+      <variable item="LGB Continuous Manual Sound Bitmask" CV="108" default="0">
         <decVal/>
         <label>LGB Continuous Manual Sound Bitmask</label>
       </variable>
-      <variable label="Select CV Set 1 or 2" CV="109" mask="XXXXXXXV" default="0">
+      <variable item="Select CV Set 1 or 2" CV="109" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1973,19 +1972,19 @@
         </enumVal>
         <label>Select CV Set 1 or 2</label>
       </variable>
-      <variable label="Load Dependant Sound Variation" CV="110" default="4">
+      <variable item="Load Dependant Sound Variation" CV="110" default="4">
         <decVal min="0" max="15"/>
         <label>Load Dependant Sound Variation</label>
       </variable>
-      <variable label="ACK Pulse" CV="111" default="255">
+      <variable item="ACK Pulse" CV="111" default="255">
         <decVal/>
         <label>ACK Pulse</label>
       </variable>
-      <variable label="Random Aux Sound 1 Idling" CV="112">
+      <variable item="Random Aux Sound 1 Idling" CV="112">
         <decVal/>
         <label>Random Aux Sound 1 Idling</label>
       </variable>
-      <variable label="Random Idling Slot 1" CV="112" mask="XXXXXXXV" default="0">
+      <variable item="Random Idling Slot 1" CV="112" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1996,7 +1995,7 @@
         </enumVal>
         <label>Random Idling Slot 1</label>
       </variable>
-      <variable label="Random Idling Slot 2" CV="112" mask="XXXXXXVX" default="0">
+      <variable item="Random Idling Slot 2" CV="112" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2007,7 +2006,7 @@
         </enumVal>
         <label>Random Idling Slot 2</label>
       </variable>
-      <variable label="Random Idling Slot 3" CV="112" mask="XXXXXVXX" default="0">
+      <variable item="Random Idling Slot 3" CV="112" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2018,7 +2017,7 @@
         </enumVal>
         <label>Random Idling Slot 3</label>
       </variable>
-      <variable label="Random Idling Slot 4" CV="112" mask="XXXXVXXX" default="0">
+      <variable item="Random Idling Slot 4" CV="112" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2029,7 +2028,7 @@
         </enumVal>
         <label>Random Idling Slot 4</label>
       </variable>
-      <variable label="Random Idling Slot 5" CV="112" mask="XXXVXXXX" default="0">
+      <variable item="Random Idling Slot 5" CV="112" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2040,7 +2039,7 @@
         </enumVal>
         <label>Random Idling Slot 5</label>
       </variable>
-      <variable label="Random Idling Slot 6" CV="112" mask="XXVXXXXX" default="0">
+      <variable item="Random Idling Slot 6" CV="112" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2051,7 +2050,7 @@
         </enumVal>
         <label>Random Idling Slot 6</label>
       </variable>
-      <variable label="Random Idling Slot 7" CV="112" mask="XVXXXXXX" default="0">
+      <variable item="Random Idling Slot 7" CV="112" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2062,7 +2061,7 @@
         </enumVal>
         <label>Random Idling Slot 7</label>
       </variable>
-      <variable label="Random Idling Slot 8" CV="112" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
+      <variable item="Random Idling Slot 8" CV="112" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2073,11 +2072,11 @@
         </enumVal>
         <label>Random Idling Slot 8</label>
       </variable>
-      <variable label="Random Aux Sound 2 Running" CV="113">
+      <variable item="Random Aux Sound 2 Running" CV="113">
         <decVal/>
         <label>Random Aux Sound 2 Running</label>
       </variable>
-      <variable label="Random Running Slot 1" CV="113" mask="XXXXXXXV" default="0">
+      <variable item="Random Running Slot 1" CV="113" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2088,7 +2087,7 @@
         </enumVal>
         <label>Random Running Slot 1</label>
       </variable>
-      <variable label="Random Running Slot 2" CV="113" mask="XXXXXXVX" default="0">
+      <variable item="Random Running Slot 2" CV="113" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2099,7 +2098,7 @@
         </enumVal>
         <label>Random Running Slot 2</label>
       </variable>
-      <variable label="Random Running Slot 3" CV="113" mask="XXXXXVXX" default="0">
+      <variable item="Random Running Slot 3" CV="113" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2110,7 +2109,7 @@
         </enumVal>
         <label>Random Running Slot 3</label>
       </variable>
-      <variable label="Random Running Slot 4" CV="113" mask="XXXXVXXX" default="0">
+      <variable item="Random Running Slot 4" CV="113" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2121,7 +2120,7 @@
         </enumVal>
         <label>Random Running Slot 4</label>
       </variable>
-      <variable label="Random Running Slot 5" CV="113" mask="XXXVXXXX" default="0">
+      <variable item="Random Running Slot 5" CV="113" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2132,7 +2131,7 @@
         </enumVal>
         <label>Random Running Slot 5</label>
       </variable>
-      <variable label="Random Running Slot 6" CV="113" mask="XXVXXXXX" default="0">
+      <variable item="Random Running Slot 6" CV="113" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2143,7 +2142,7 @@
         </enumVal>
         <label>Random Running Slot 6</label>
       </variable>
-      <variable label="Random Running Slot 7" CV="113" mask="XVXXXXXX" default="0">
+      <variable item="Random Running Slot 7" CV="113" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2154,7 +2153,7 @@
         </enumVal>
         <label>Random Running Slot 7</label>
       </variable>
-      <variable label="Random Running Slot 8" CV="113" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
+      <variable item="Random Running Slot 8" CV="113" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2165,15 +2164,15 @@
         </enumVal>
         <label>Random Running Slot 8</label>
       </variable>
-      <variable label="PWM Light Effects Outputs" CV="114" default="0" tooltip="Dimming Light Effects Outputs 0 - 100%">
+      <variable item="PWM Light Effects Outputs" CV="114" default="0" tooltip="Dimming Light Effects Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Light Effects Outputs</label>
       </variable>
-      <variable label="Time Between Effects" CV="115" default="0" tooltip="Time Between Effects">
+      <variable item="Time Between Effects" CV="115" default="0" tooltip="Time Between Effects">
         <decVal/>
         <label>Time Between Effects</label>
       </variable>
-      <variable label="Switching 1" CV="116" mask="XXXXXXXV" default="0">
+      <variable item="Switching 1" CV="116" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2184,7 +2183,7 @@
         </enumVal>
         <label>Switching 1</label>
       </variable>
-      <variable label="Switching 2" CV="116" mask="XXXXXXVX" default="0">
+      <variable item="Switching 2" CV="116" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2195,7 +2194,7 @@
         </enumVal>
         <label>Switching 2</label>
       </variable>
-      <variable label="Switching 3" CV="116" mask="XXXXXVXX" default="0">
+      <variable item="Switching 3" CV="116" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2212,7 +2211,7 @@ CV116 = 0 is not used, must always be 0 (when using the brake module also allows
 CV116 = 64 means that the Rangierfunktion acts as a command button that is, that the ATC has (or braking diode and HLU) NOT! (equivalent to the MAN key = manual) 
 CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself. Sound speed back to normal
 -->
-      <variable label="Diode Braking" CV="116" mask="XXXXVXXX" default="0" tooltip="diode brake (ABC)">
+      <variable item="Diode Braking" CV="116" mask="XXXXVXXX" default="0" tooltip="diode brake (ABC)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2223,7 +2222,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Diode Braking</label>
       </variable>
-      <variable label="Diode Braking non-Directional" CV="116" mask="XXXVXXXX" default="0">
+      <variable item="Diode Braking non-Directional" CV="116" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2234,7 +2233,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Diode Braking non-Directional</label>
       </variable>
-      <variable label="Yard Mode disable auto braking" CV="116" mask="XVXXXXXX" default="0">
+      <variable item="Yard Mode disable auto braking" CV="116" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2245,7 +2244,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Yard Mode disable auto braking</label>
       </variable>
-      <variable label="F-Button Used For Dimming" CV="117" default="0" tooltip="F-Button Used For Dimming">
+      <variable item="F-Button Used For Dimming" CV="117" default="0" tooltip="F-Button Used For Dimming">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2289,7 +2288,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>F-Button Used For Dimming</label>
       </variable>
-      <variable label="Dim FL(f)" CV="118" mask="XXXXXXXV" default="0">
+      <variable item="Dim FL(f)" CV="118" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -2300,7 +2299,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim FL(f)</label>
       </variable>
-      <variable label="Dim FL(r)" CV="118" mask="XXXXXXVX" default="0">
+      <variable item="Dim FL(r)" CV="118" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -2311,7 +2310,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim FL(r)</label>
       </variable>
-      <variable label="Dim F 1" CV="118" minOut="3" mask="XXXXXVXX" default="0">
+      <variable item="Dim F 1" CV="118" minOut="3" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -2322,7 +2321,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 1</label>
       </variable>
-      <variable label="Dim F 2" CV="118" minOut="4" mask="XXXXVXXX" default="0">
+      <variable item="Dim F 2" CV="118" minOut="4" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -2333,7 +2332,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 2</label>
       </variable>
-      <variable label="Dim F 3" CV="118" minOut="5" mask="XXXVXXXX" default="0">
+      <variable item="Dim F 3" CV="118" minOut="5" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2344,7 +2343,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 3</label>
       </variable>
-      <variable label="Dim F 4" CV="118" minOut="6" mask="XXVXXXXX" default="0">
+      <variable item="Dim F 4" CV="118" minOut="6" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2355,7 +2354,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 4</label>
       </variable>
-      <variable label="Dim F 5" CV="118" minOut="7" mask="XVXXXXXX" default="0">
+      <variable item="Dim F 5" CV="118" minOut="7" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2366,7 +2365,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 5</label>
       </variable>
-      <variable label="Dim F 6" CV="118" minOut="8" mask="VXXXXXXX" default="0">
+      <variable item="Dim F 6" CV="118" minOut="8" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2377,19 +2376,19 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Dim F 6</label>
       </variable>
-      <variable label="PWM Dimming" CV="119" default="0" tooltip="PWM Dimming 0 - 100%">
+      <variable item="PWM Dimming" CV="119" default="0" tooltip="PWM Dimming 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Dimming</label>
       </variable>
-      <variable label="Time Effect ON" CV="120" default="0" tooltip="Time Effect ON">
+      <variable item="Time Effect ON" CV="120" default="0" tooltip="Time Effect ON">
         <decVal/>
         <label>Time Effect ON</label>
       </variable>
-      <variable label="Main Running Sound Level" CV="121" default="3">
+      <variable item="Main Running Sound Level" CV="121" default="3">
         <decVal/>
         <label>Main Running Sound Level</label>
       </variable>
-      <variable label="Sound slot 1 volume" CV="122" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 1 volume" CV="122" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2406,7 +2405,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 1 volume</label>
       </variable>
-      <variable label="Sound slot 1 auto repetition" CV="122" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 1 auto repetition" CV="122" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2435,7 +2434,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 1 auto repetition</label>
       </variable>
-      <variable label="Sound slot 1 function repetition" CV="122" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 1 function repetition" CV="122" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2464,7 +2463,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 1 function repetition</label>
       </variable>
-      <variable label="Sound slot 2 volume" CV="123" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 2 volume" CV="123" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2481,7 +2480,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 2 volume</label>
       </variable>
-      <variable label="Sound slot 2 auto repetition" CV="123" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 2 auto repetition" CV="123" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2510,7 +2509,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 2 auto repetition</label>
       </variable>
-      <variable label="Sound slot 2 function repetition" CV="123" mask="VVVXXXXX" default="1">
+      <variable item="Sound slot 2 function repetition" CV="123" mask="VVVXXXXX" default="1">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2539,7 +2538,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 2 function repetition</label>
       </variable>
-      <variable label="Sound slot 3 volume" CV="124" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 3 volume" CV="124" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2556,7 +2555,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 3 volume</label>
       </variable>
-      <variable label="Sound slot 3 auto repetition" CV="124" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 3 auto repetition" CV="124" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2585,7 +2584,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 3 auto repetition</label>
       </variable>
-      <variable label="Sound slot 3 function repetition" CV="124" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 3 function repetition" CV="124" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2614,7 +2613,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 3 function repetition</label>
       </variable>
-      <variable label="Sound slot 4 volume" CV="125" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 4 volume" CV="125" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2631,7 +2630,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 4 volume</label>
       </variable>
-      <variable label="Sound slot 4 auto repetition" CV="125" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 4 auto repetition" CV="125" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2660,7 +2659,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 4 auto repetition</label>
       </variable>
-      <variable label="Sound slot 4 function repetition" CV="125" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 4 function repetition" CV="125" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2689,7 +2688,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 4 function repetition</label>
       </variable>
-      <variable label="Sound slot 5 volume" CV="126" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 5 volume" CV="126" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2706,7 +2705,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 5 volume</label>
       </variable>
-      <variable label="Sound slot 5 auto repetition" CV="126" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 5 auto repetition" CV="126" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2735,7 +2734,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 5 auto repetition</label>
       </variable>
-      <variable label="Sound slot 5 function repetition" CV="126" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 5 function repetition" CV="126" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2764,7 +2763,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 5 function repetition</label>
       </variable>
-      <variable label="Sound slot 6 volume" CV="127" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 6 volume" CV="127" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2781,7 +2780,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 6 volume</label>
       </variable>
-      <variable label="Sound slot 6 auto repetition" CV="127" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 6 auto repetition" CV="127" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2810,7 +2809,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 6 auto repetition</label>
       </variable>
-      <variable label="Sound slot 6 function repetition" CV="127" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 6 function repetition" CV="127" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2839,7 +2838,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 6 function repetition</label>
       </variable>
-      <variable label="Sound slot 7 volume" CV="128" mask="XXXXXXVV" default="0">
+      <variable item="Sound slot 7 volume" CV="128" mask="XXXXXXVV" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2856,7 +2855,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 7 volume</label>
       </variable>
-      <variable label="Sound slot 7 auto repetition" CV="128" mask="XXXVVVXX" default="0">
+      <variable item="Sound slot 7 auto repetition" CV="128" mask="XXXVVVXX" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2885,7 +2884,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 7 auto repetition</label>
       </variable>
-      <variable label="Sound slot 7 function repetition" CV="128" mask="VVVXXXXX" default="3">
+      <variable item="Sound slot 7 function repetition" CV="128" mask="VVVXXXXX" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2915,7 +2914,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Sound slot 7 function repetition</label>
       </variable>
       <!-- CV129 changed in V40, see also CV146 -->
-      <variable label="Sound slot 8 volume" CV="129" mask="XXXXXXVV" include="SL75,SL76,GE75,GE76,SL82" default="0">
+      <variable item="Sound slot 8 volume" CV="129" mask="XXXXXXVV" include="SL75,SL76,GE75,GE76,SL82" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2932,7 +2931,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 8 volume</label>
       </variable>
-      <variable label="Sound slot 8 auto repetition" CV="129" mask="XXXVVVXX" include="SL75,SL76,GE75,GE76,SL82" default="0">
+      <variable item="Sound slot 8 auto repetition" CV="129" mask="XXXVVVXX" include="SL75,SL76,GE75,GE76,SL82" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2961,7 +2960,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 8 auto repetition</label>
       </variable>
-      <variable label="Sound slot 8 function repetition" CV="129" mask="VVVXXXXX" include="SL75,SL76,GE75,GE76,SL82" default="3">
+      <variable item="Sound slot 8 function repetition" CV="129" mask="VVVXXXXX" include="SL75,SL76,GE75,GE76,SL82" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2991,50 +2990,50 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Sound slot 8 function repetition</label>
       </variable>
       <!-- CV129 moved to CV146 SL75 from V40 upwards !! -->
-      <variable label="Strong Time" CV="129" default="4" include="SL51,SL74" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
+      <variable item="Strong Time" CV="129" default="4" include="SL51,SL74" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
       <!-- See also CV129/146 for matching CV for "strong" time -->
-      <variable label="Weak Time" CV="130" default="4" comment="Position 08-11 in Filelist" tooltip="Slightly reduction of sound after breaking, Position 08-11 in Filelist">
+      <variable item="Weak Time" CV="130" default="4" comment="Position 08-11 in Filelist" tooltip="Slightly reduction of sound after breaking, Position 08-11 in Filelist">
         <decVal/>
         <label>Weak Time</label>
         <comment>Position 08-11 in Filelist</comment>
       </variable>
-      <variable label="Random Interval Aux Sounds" CV="131" default="20" comment="Unit=0.5secs">
+      <variable item="Random Interval Aux Sounds" CV="131" default="20" comment="Unit=0.5secs">
         <decVal/>
         <label>Random Interval Aux Sounds</label>
         <comment>Unit=0.5secs</comment>
       </variable>
-      <variable label="Full Speed Exhaust Interval" CV="132" default="100" comment="Time between Exhaust Beats">
+      <variable item="Full Speed Exhaust Interval" CV="132" default="100" comment="Time between Exhaust Beats">
         <decVal/>
         <label>Full Speed Exhaust Interval</label>
         <comment>Time between Exhaust Beats</comment>
       </variable>
-      <variable label="Logical Exhaust Interval" CV="133" default="0" comment="LowByte">
+      <variable item="Logical Exhaust Interval" CV="133" default="0" comment="LowByte">
         <decVal/>
         <label>Logical Exhaust Interval</label>
         <comment>LowByte</comment>
       </variable>
-      <variable label="Time Between Beats" CV="134" default="0" comment="HighByte">
+      <variable item="Time Between Beats" CV="134" default="0" comment="HighByte">
         <decVal/>
         <label>Time Between Beats</label>
         <comment>HighByte</comment>
       </variable>
-      <variable label="Speed Step 1 Exhaust Interval" CV="133" default="153" tooltip="&lt;html&gt;Time between exhausts at speed step 1, 1476/time,&lt;br&gt;    range 1-65535, lower = fewer beats per second.&lt;/html&gt;">
+      <variable item="Speed Step 1 Exhaust Interval" CV="133" default="153" tooltip="&lt;html&gt;Time between exhausts at speed step 1, 1476/time,&lt;br&gt;    range 1-65535, lower = fewer beats per second.&lt;/html&gt;">
         <splitVal highCV="134" upperMask="VVVVVVVV" factor="1"/>
         <label>Speed Step 1 Exhaust Interval</label>
       </variable>
-      <variable label="Low Frequency Limit" CV="135" default="64">
+      <variable item="Low Frequency Limit" CV="135" default="64">
         <decVal/>
         <label>Low Frequency Limit</label>
       </variable>
-      <variable label="High Frequency Limit" CV="136" default="128">
+      <variable item="High Frequency Limit" CV="136" default="128">
         <decVal/>
         <label>High Frequency Limit</label>
       </variable>
-      <variable label="Function selection 8 or 14/MAN Bit" CV="137" mask="XXXXXXXV" default="0" comment="8 or 14 functions">
+      <variable item="Function selection 8 or 14/MAN Bit" CV="137" mask="XXXXXXXV" default="0" comment="8 or 14 functions">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3046,7 +3045,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Function selection 8 or 14/MAN Bit</label>
         <comment>8 or 14 functions</comment>
       </variable>
-      <variable label="Zimo address pulse" CV="137" mask="XXXXXXVX" default="0" comment="Zimo only">
+      <variable item="Zimo address pulse" CV="137" mask="XXXXXXVX" default="0" comment="Zimo only">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3058,7 +3057,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Zimo address pulse</label>
         <comment>Zimo only</comment>
       </variable>
-      <variable label="F1 strong/normal/weak if CV110 active" CV="137" mask="XXXXXVXX" default="0" comment="load dependent F1 output dimming">
+      <variable item="F1 strong/normal/weak if CV110 active" CV="137" mask="XXXXXVXX" default="0" comment="load dependent F1 output dimming">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3070,7 +3069,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>F1 strong/normal/weak if CV110 active</label>
         <comment>load dependent F1 output dimming</comment>
       </variable>
-      <variable label="F2 strong/normal/weak if CV110 active" CV="137" mask="XXXXVXXX" default="0" comment="load dependent F2 output dimming">
+      <variable item="F2 strong/normal/weak if CV110 active" CV="137" mask="XXXXVXXX" default="0" comment="load dependent F2 output dimming">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3082,7 +3081,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>F2 strong/normal/weak if CV110 active</label>
         <comment>load dependent F2 output dimming</comment>
       </variable>
-      <variable label="Zimo speed control HLU" CV="137" mask="XXXVXXXX" default="0" comment="Zimo HLU">
+      <variable item="Zimo speed control HLU" CV="137" mask="XXXVXXXX" default="0" comment="Zimo HLU">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3094,7 +3093,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Zimo speed control HLU</label>
         <comment>Zimo HLU</comment>
       </variable>
-      <variable label="Start Sound before motor" CV="137" default="0" mask="XXVXXXXX">
+      <variable item="Start Sound before motor" CV="137" default="0" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -3105,7 +3104,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Start Sound before motor</label>
       </variable>
-      <variable label="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX">
+      <variable item="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -3116,7 +3115,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>LGB F4 Impulse</label>
       </variable>
-      <variable label="CV137 Motor frequency" CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX" comment="using DC Brake Momentum as feature to get this option onto Motor control pane">
+      <variable CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX" comment="using DC Brake Momentum as feature to get this option onto Motor control pane">
         <enumVal>
           <enumChoice choice="Std 150Hz/16kHz">
             <choice>Std 150Hz/16kHz</choice>
@@ -3128,45 +3127,45 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>CV137 Motor frequency</label>
         <comment>using DC Brake Momentum as feature to get this option onto Motor control pane</comment>
       </variable>
-      <variable label="ZIMO Brake Time HLU" CV="138" default="3" comment="Zimo Only">
+      <variable item="ZIMO Brake Time HLU" CV="138" default="3" comment="Zimo Only">
         <decVal/>
         <label>ZIMO Brake Time HLU</label>
         <comment>Zimo Only</comment>
       </variable>
-      <variable label="Direct Cut Off Function Outputs" CV="139" default="35">
+      <variable item="Direct Cut Off Function Outputs" CV="139" default="35">
         <decVal/>
         <label>Direct Cut Off Function Outputs</label>
       </variable>
-      <variable label="Fast Cut Off Function Outputs" CV="140" default="30" comment="Fast Cut off Functions">
+      <variable item="Fast Cut Off Function Outputs" CV="140" default="30" comment="Fast Cut off Functions">
         <decVal/>
         <label>Fast Cut Off Function Outputs</label>
         <comment>Fast Cut off Functions</comment>
       </variable>
-      <variable label="Slow Cut Off Function Outputs" CV="141" default="25" comment="Slow Cut off Functions">
+      <variable item="Slow Cut Off Function Outputs" CV="141" default="25" comment="Slow Cut off Functions">
         <decVal/>
         <label>Slow Cut Off Function Outputs</label>
         <comment>Slow Cut off Functions</comment>
       </variable>
-      <variable label="Direct Cut Off Motor" CV="142" default="150" comment="Direct Cut off Motor">
+      <variable item="Direct Cut Off Motor" CV="142" default="150" comment="Direct Cut off Motor">
         <decVal/>
         <label>Direct Cut Off Motor</label>
         <comment>Direct Cut off Motor</comment>
       </variable>
-      <variable label="Fast Cut Off Motor" CV="143" default="130" comment="Fast Cut Off Motor">
+      <variable item="Fast Cut Off Motor" CV="143" default="130" comment="Fast Cut Off Motor">
         <decVal/>
         <label>Fast Cut Off Motor</label>
         <comment>Fast Cut Off Motor</comment>
       </variable>
-      <variable label="Slow Cut Off Motor" CV="144" default="120" comment="Slow Cut off Motor">
+      <variable item="Slow Cut Off Motor" CV="144" default="120" comment="Slow Cut off Motor">
         <decVal/>
         <label>Slow Cut Off Motor</label>
         <comment>Slow Cut off Motor</comment>
       </variable>
-      <variable label="Sound Loop" CV="145" default="0" tooltip="bitwise looping of sound slots if sound is spread over five elements, see manual">
+      <variable item="Sound Loop" CV="145" default="0" tooltip="bitwise looping of sound slots if sound is spread over five elements, see manual">
         <decVal/>
         <label>Sound Loop</label>
       </variable>
-      <variable label="Loop Sound Slot 1" CV="145" mask="XXXXXXXV" default="0">
+      <variable item="Loop Sound Slot 1" CV="145" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3177,7 +3176,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 1</label>
       </variable>
-      <variable label="Loop Sound Slot 2" CV="145" mask="XXXXXXVX" default="0">
+      <variable item="Loop Sound Slot 2" CV="145" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3188,7 +3187,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 2</label>
       </variable>
-      <variable label="Loop Sound Slot 3" CV="145" mask="XXXXXVXX" default="0">
+      <variable item="Loop Sound Slot 3" CV="145" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3199,7 +3198,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 3</label>
       </variable>
-      <variable label="Loop Sound Slot 4" CV="145" mask="XXXXVXXX" default="0">
+      <variable item="Loop Sound Slot 4" CV="145" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3210,7 +3209,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 4</label>
       </variable>
-      <variable label="Loop Sound Slot 5" CV="145" mask="XXXVXXXX" default="0">
+      <variable item="Loop Sound Slot 5" CV="145" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3221,7 +3220,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 5</label>
       </variable>
-      <variable label="Loop Sound Slot 6" CV="145" mask="XXVXXXXX" default="0">
+      <variable item="Loop Sound Slot 6" CV="145" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3232,7 +3231,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 6</label>
       </variable>
-      <variable label="Loop Sound Slot 7" CV="145" mask="XVXXXXXX" default="0">
+      <variable item="Loop Sound Slot 7" CV="145" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3243,7 +3242,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 7</label>
       </variable>
-      <variable label="Loop Sound Slot 8" CV="145" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
+      <variable item="Loop Sound Slot 8" CV="145" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3288,29 +3287,29 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 		   <enumVal><enumChoice choice="Off"/><enumChoice choice="Yes"/></enumVal></variable>
 -->
       <!-- SL75 manual implies CV146 is replacement for CV129 from V40 onwards -->
-      <variable label="Strong Time" CV="146" default="4" include="SL75,SL76,GE75,GE76,SL82" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
+      <variable item="Strong Time" CV="146" default="4" include="SL75,SL76,GE75,GE76,SL82" comment="Position 00-03 in Filelist" tooltip="Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
       </variable>
       <!-- Special CVs for automatically uncoupling, available from version 33 -->
-      <variable label="Speed Step Coupling Release" CV="147" default="20">
+      <variable item="Speed Step Coupling Release" CV="147" default="20">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
       </variable>
-      <variable label="Speed Step Uncoupled" CV="148" default="50">
+      <variable item="Speed Step Uncoupled" CV="148" default="50">
         <decVal max="127"/>
         <label>Speed Step Uncoupled</label>
       </variable>
-      <variable label="Time Driving Backwards" CV="149" default="5" tooltip="Unit 0.1 sec">
+      <variable item="Time Driving Backwards" CV="149" default="5" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Backwards</label>
       </variable>
-      <variable label="Time Driving Forwards" CV="150" default="10" tooltip="Unit 0.1 sec">
+      <variable item="Time Driving Forwards" CV="150" default="10" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Forwards</label>
       </variable>
-      <variable label="F-Button Used to Trigger Auto Uncoupling" CV="151" default="3" tooltip="Functions 1 to 12 possible">
+      <variable item="F-Button Used to Trigger Auto Uncoupling" CV="151" default="3" tooltip="Functions 1 to 12 possible">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -3354,7 +3353,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F-Button Used to Trigger Auto Uncoupling</label>
       </variable>
-      <variable label="Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for rear uncoupler">
+      <variable item="Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for rear uncoupler">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -3380,7 +3379,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Loco travel FWD, rear coupler</label>
       </variable>
-      <variable label="Loco travel BWD, front coupler" CV="153" tooltip="select output wire for front uncoupler">
+      <variable item="Loco travel BWD, front coupler" CV="153" tooltip="select output wire for front uncoupler">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -3407,39 +3406,39 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         <label>Loco travel BWD, front coupler</label>
       </variable>
       <!-- Tran Light Effects  -->
-      <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="Light Effects FL(f), see manual">
+      <variable item="Light Effects FL(f)" CV="154" default="0" tooltip="Light Effects FL(f), see manual">
         <decVal/>
         <label>Light Effects FL(f)</label>
       </variable>
-      <variable label="Light Effects FL(r)" CV="155" default="0" tooltip="Light Effects FL(r), see manual">
+      <variable item="Light Effects FL(r)" CV="155" default="0" tooltip="Light Effects FL(r), see manual">
         <decVal/>
         <label>Light Effects FL(r)</label>
       </variable>
-      <variable label="Light Effects F 1" CV="156" default="0" tooltip="Light Effects F 1, see manual">
+      <variable item="Light Effects F 1" CV="156" default="0" tooltip="Light Effects F 1, see manual">
         <decVal/>
         <label>Light Effects F 1</label>
       </variable>
-      <variable label="Light Effects F 2" CV="157" default="0" tooltip="Light Effects F 2, see manual">
+      <variable item="Light Effects F 2" CV="157" default="0" tooltip="Light Effects F 2, see manual">
         <decVal/>
         <label>Light Effects F 2</label>
       </variable>
-      <variable label="Light Effects F 3" CV="158" default="0" tooltip="Light Effects F 3, see manual">
+      <variable item="Light Effects F 3" CV="158" default="0" tooltip="Light Effects F 3, see manual">
         <decVal/>
         <label>Light Effects F 3</label>
       </variable>
-      <variable label="Light Effects F 4" CV="159" default="0" tooltip="Light Effects F 4, see manual">
+      <variable item="Light Effects F 4" CV="159" default="0" tooltip="Light Effects F 4, see manual">
         <decVal/>
         <label>Light Effects F 4</label>
       </variable>
-      <variable label="Light Effects F 5" CV="160" default="0" tooltip="Light Effects F 5, see manual">
+      <variable item="Light Effects F 5" CV="160" default="0" tooltip="Light Effects F 5, see manual">
         <decVal/>
         <label>Light Effects F 5</label>
       </variable>
-      <variable label="Light Effects F 6" CV="161" default="0" tooltip="Light Effects F 6, see manual">
+      <variable item="Light Effects F 6" CV="161" default="0" tooltip="Light Effects F 6, see manual">
         <decVal/>
         <label>Light Effects F 6</label>
       </variable>
-      <variable label="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="Effects on F0F">
+      <variable item="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="Effects on F0F">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3480,7 +3479,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F0F</label>
       </variable>
-      <variable label="Light Effects Direction F0F" CV="154" mask="VVXXXXXX">
+      <variable item="Light Effects Direction F0F" CV="154" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3494,7 +3493,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F0F</label>
       </variable>
-      <variable label="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="Effects on F0R">
+      <variable item="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="Effects on F0R">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3535,7 +3534,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F0R</label>
       </variable>
-      <variable label="Light Effects Direction F0R" CV="155" mask="VVXXXXXX">
+      <variable item="Light Effects Direction F0R" CV="155" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3549,7 +3548,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F0R</label>
       </variable>
-      <variable label="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="Effects on F1" minOut="3">
+      <variable item="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="Effects on F1" minOut="3">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3590,7 +3589,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F1</label>
       </variable>
-      <variable label="Light Effects Direction F1" CV="156" mask="VVXXXXXX" minOut="3">
+      <variable item="Light Effects Direction F1" CV="156" mask="VVXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3604,7 +3603,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F1</label>
       </variable>
-      <variable label="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="Effects on F2">
+      <variable item="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="Effects on F2">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -3645,7 +3644,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects F2</label>
       </variable>
-      <variable label="Light Effects Direction F2" CV="157" mask="VVXXXXXX" minOut="4">
+      <variable item="Light Effects Direction F2" CV="157" mask="VVXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -3659,12 +3658,12 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>Light Effects Direction F2</label>
       </variable>
-      <variable label="Diode Sensitivity" CV="162" default="0" tooltip="diode sensitivity for Diode Braking (suggest 10-20)">
+      <variable item="Diode Sensitivity" CV="162" default="0" tooltip="diode sensitivity for Diode Braking (suggest 10-20)">
         <decVal max="255"/>
         <label>Diode Sensitivity</label>
       </variable>
       <!--  remainder of Tran Function Mapping -->
-      <variable label="FL(f) controls output Ra" CV="163" mask="XXXXXXXV" minFn="12">
+      <variable item="FL(f) controls output Ra" CV="163" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3675,7 +3674,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output Ra</label>
       </variable>
-      <variable label="FL(f) controls output Se" CV="163" mask="XXXXXXVX" minFn="12">
+      <variable item="FL(f) controls output Se" CV="163" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3686,7 +3685,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output Se</label>
       </variable>
-      <variable label="FL(f) controls output Alt" CV="163" mask="XXXXXVXX" minFn="12">
+      <variable item="FL(f) controls output Alt" CV="163" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3697,7 +3696,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output Alt</label>
       </variable>
-      <variable label="FL(f) controls output G1" CV="163" mask="XXXXVXXX" minFn="12">
+      <variable item="FL(f) controls output G1" CV="163" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3708,7 +3707,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output G1</label>
       </variable>
-      <variable label="FL(f) controls output G2" CV="163" mask="XXXVXXXX" minFn="12">
+      <variable item="FL(f) controls output G2" CV="163" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3719,7 +3718,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output G2</label>
       </variable>
-      <variable label="FL(f) controls output G3" CV="163" mask="XXVXXXXX" minFn="12">
+      <variable item="FL(f) controls output G3" CV="163" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3730,7 +3729,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output G3</label>
       </variable>
-      <variable label="FL(f) controls output G4" CV="163" mask="XVXXXXXX" minFn="12">
+      <variable item="FL(f) controls output G4" CV="163" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3741,7 +3740,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output G4</label>
       </variable>
-      <variable label="FL(f) controls output G5" CV="163" mask="VXXXXXXX" minFn="12">
+      <variable item="FL(f) controls output G5" CV="163" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3752,7 +3751,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(f) controls output G5</label>
       </variable>
-      <variable label="FL(r) controls output Ra" CV="164" mask="XXXXXXXV" minFn="12">
+      <variable item="FL(r) controls output Ra" CV="164" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3763,7 +3762,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output Ra</label>
       </variable>
-      <variable label="FL(r) controls output Se" CV="164" mask="XXXXXXVX" minFn="12">
+      <variable item="FL(r) controls output Se" CV="164" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3774,7 +3773,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output Se</label>
       </variable>
-      <variable label="FL(r) controls output Alt" CV="164" mask="XXXXXVXX" minFn="12">
+      <variable item="FL(r) controls output Alt" CV="164" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3785,7 +3784,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output Alt</label>
       </variable>
-      <variable label="FL(r) controls output G1" CV="164" mask="XXXXVXXX" minFn="12">
+      <variable item="FL(r) controls output G1" CV="164" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3796,7 +3795,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output G1</label>
       </variable>
-      <variable label="FL(r) controls output G2" CV="164" mask="XXXVXXXX" minFn="12">
+      <variable item="FL(r) controls output G2" CV="164" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3807,7 +3806,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output G2</label>
       </variable>
-      <variable label="FL(r) controls output G3" CV="164" mask="XXVXXXXX" minFn="12">
+      <variable item="FL(r) controls output G3" CV="164" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3818,7 +3817,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output G3</label>
       </variable>
-      <variable label="FL(r) controls output G4" CV="164" mask="XVXXXXXX" minFn="12">
+      <variable item="FL(r) controls output G4" CV="164" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3829,7 +3828,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output G4</label>
       </variable>
-      <variable label="FL(r) controls output G5" CV="164" mask="VXXXXXXX" minFn="12">
+      <variable item="FL(r) controls output G5" CV="164" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3840,7 +3839,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>FL(r) controls output G5</label>
       </variable>
-      <variable label="F1 controls output Ra" CV="165" mask="XXXXXXXV" minFn="12">
+      <variable item="F1 controls output Ra" CV="165" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3851,7 +3850,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output Ra</label>
       </variable>
-      <variable label="F1 controls output Se" CV="165" mask="XXXXXXVX" minFn="12">
+      <variable item="F1 controls output Se" CV="165" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3862,7 +3861,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output Se</label>
       </variable>
-      <variable label="F1 controls output Alt" CV="165" mask="XXXXXVXX" minFn="12">
+      <variable item="F1 controls output Alt" CV="165" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3873,7 +3872,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output Alt</label>
       </variable>
-      <variable label="F1 controls output G1" CV="165" mask="XXXXVXXX" minFn="12">
+      <variable item="F1 controls output G1" CV="165" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3884,7 +3883,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output G1</label>
       </variable>
-      <variable label="F1 controls output G2" CV="165" mask="XXXVXXXX" minFn="12">
+      <variable item="F1 controls output G2" CV="165" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3895,7 +3894,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output G2</label>
       </variable>
-      <variable label="F1 controls output G3" CV="165" mask="XXVXXXXX" minFn="12">
+      <variable item="F1 controls output G3" CV="165" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3906,7 +3905,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output G3</label>
       </variable>
-      <variable label="F1 controls output G4" CV="165" mask="XVXXXXXX" minFn="12">
+      <variable item="F1 controls output G4" CV="165" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3917,7 +3916,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output G4</label>
       </variable>
-      <variable label="F1 controls output G5" CV="165" mask="VXXXXXXX" minFn="12">
+      <variable item="F1 controls output G5" CV="165" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3928,7 +3927,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F1 controls output G5</label>
       </variable>
-      <variable label="F2 controls output Ra" CV="166" mask="XXXXXXXV" minFn="12">
+      <variable item="F2 controls output Ra" CV="166" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3939,7 +3938,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output Ra</label>
       </variable>
-      <variable label="F2 controls output Se" CV="166" mask="XXXXXXVX" minFn="12">
+      <variable item="F2 controls output Se" CV="166" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3950,7 +3949,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output Se</label>
       </variable>
-      <variable label="F2 controls output Alt" CV="166" mask="XXXXXVXX" minFn="12">
+      <variable item="F2 controls output Alt" CV="166" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3961,7 +3960,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output Alt</label>
       </variable>
-      <variable label="F2 controls output G1" CV="166" mask="XXXXVXXX" minFn="12">
+      <variable item="F2 controls output G1" CV="166" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3972,7 +3971,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output G1</label>
       </variable>
-      <variable label="F2 controls output G2" CV="166" mask="XXXVXXXX" minFn="12">
+      <variable item="F2 controls output G2" CV="166" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3983,7 +3982,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output G2</label>
       </variable>
-      <variable label="F2 controls output G3" CV="166" mask="XXVXXXXX" minFn="12">
+      <variable item="F2 controls output G3" CV="166" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -3994,7 +3993,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output G3</label>
       </variable>
-      <variable label="F2 controls output G4" CV="166" mask="XVXXXXXX" minFn="12">
+      <variable item="F2 controls output G4" CV="166" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4005,7 +4004,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output G4</label>
       </variable>
-      <variable label="F2 controls output G5" CV="166" mask="VXXXXXXX" minFn="12">
+      <variable item="F2 controls output G5" CV="166" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4016,7 +4015,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F2 controls output G5</label>
       </variable>
-      <variable label="F3 controls output Ra" CV="167" mask="XXXXXXXV" minFn="12">
+      <variable item="F3 controls output Ra" CV="167" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4027,7 +4026,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output Ra</label>
       </variable>
-      <variable label="F3 controls output Se" CV="167" mask="XXXXXXVX" minFn="12">
+      <variable item="F3 controls output Se" CV="167" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4038,7 +4037,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output Se</label>
       </variable>
-      <variable label="F3 controls output Alt" CV="167" mask="XXXXXVXX" minFn="12">
+      <variable item="F3 controls output Alt" CV="167" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4049,7 +4048,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output Alt</label>
       </variable>
-      <variable label="F3 controls output G1" CV="167" mask="XXXXVXXX" minFn="12">
+      <variable item="F3 controls output G1" CV="167" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4060,7 +4059,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output G1</label>
       </variable>
-      <variable label="F3 controls output G2" CV="167" mask="XXXVXXXX" minFn="12">
+      <variable item="F3 controls output G2" CV="167" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4071,7 +4070,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output G2</label>
       </variable>
-      <variable label="F3 controls output G3" CV="167" mask="XXVXXXXX" minFn="12">
+      <variable item="F3 controls output G3" CV="167" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4082,7 +4081,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output G3</label>
       </variable>
-      <variable label="F3 controls output G4" CV="167" mask="XVXXXXXX" minFn="12">
+      <variable item="F3 controls output G4" CV="167" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4093,7 +4092,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output G4</label>
       </variable>
-      <variable label="F3 controls output G5" CV="167" mask="VXXXXXXX" minFn="12">
+      <variable item="F3 controls output G5" CV="167" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4104,7 +4103,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F3 controls output G5</label>
       </variable>
-      <variable label="F4 controls output G1" CV="168" mask="XXXXXXXV" minFn="12">
+      <variable item="F4 controls output G1" CV="168" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4115,7 +4114,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G1</label>
       </variable>
-      <variable label="F4 controls output G2" CV="168" mask="XXXXXXVX" minFn="12">
+      <variable item="F4 controls output G2" CV="168" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4126,7 +4125,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G2</label>
       </variable>
-      <variable label="F4 controls output G3" CV="168" mask="XXXXXVXX" minFn="12">
+      <variable item="F4 controls output G3" CV="168" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4137,7 +4136,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G3</label>
       </variable>
-      <variable label="F4 controls output G4" CV="168" mask="XXXXVXXX" minFn="12">
+      <variable item="F4 controls output G4" CV="168" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4148,7 +4147,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G4</label>
       </variable>
-      <variable label="F4 controls output G5" CV="168" mask="XXXVXXXX" minFn="12">
+      <variable item="F4 controls output G5" CV="168" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4159,7 +4158,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G5</label>
       </variable>
-      <variable label="F4 controls output G6" CV="168" mask="XXVXXXXX" minFn="12">
+      <variable item="F4 controls output G6" CV="168" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4170,7 +4169,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G6</label>
       </variable>
-      <variable label="F4 controls output G7" CV="168" mask="XVXXXXXX" minFn="12">
+      <variable item="F4 controls output G7" CV="168" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4181,7 +4180,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G7</label>
       </variable>
-      <variable label="F4 controls output G8" CV="168" mask="VXXXXXXX" minFn="12">
+      <variable item="F4 controls output G8" CV="168" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4192,7 +4191,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F4 controls output G8</label>
       </variable>
-      <variable label="F5 controls output G1" CV="169" mask="XXXXXXXV" minFn="12">
+      <variable item="F5 controls output G1" CV="169" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4203,7 +4202,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G1</label>
       </variable>
-      <variable label="F5 controls output G2" CV="169" mask="XXXXXXVX" minFn="12">
+      <variable item="F5 controls output G2" CV="169" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4214,7 +4213,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G2</label>
       </variable>
-      <variable label="F5 controls output G3" CV="169" mask="XXXXXVXX" minFn="12">
+      <variable item="F5 controls output G3" CV="169" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4225,7 +4224,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G3</label>
       </variable>
-      <variable label="F5 controls output G4" CV="169" mask="XXXXVXXX" minFn="12">
+      <variable item="F5 controls output G4" CV="169" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4236,7 +4235,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G4</label>
       </variable>
-      <variable label="F5 controls output G5" CV="169" mask="XXXVXXXX" minFn="12">
+      <variable item="F5 controls output G5" CV="169" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4247,7 +4246,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G5</label>
       </variable>
-      <variable label="F5 controls output G6" CV="169" mask="XXVXXXXX" minFn="12">
+      <variable item="F5 controls output G6" CV="169" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4258,7 +4257,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G6</label>
       </variable>
-      <variable label="F5 controls output G7" CV="169" mask="XVXXXXXX" minFn="12">
+      <variable item="F5 controls output G7" CV="169" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4269,7 +4268,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G7</label>
       </variable>
-      <variable label="F5 controls output G8" CV="169" mask="VXXXXXXX" minFn="12">
+      <variable item="F5 controls output G8" CV="169" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4280,7 +4279,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F5 controls output G8</label>
       </variable>
-      <variable label="F6 controls output G1" CV="170" mask="XXXXXXXV" minFn="12">
+      <variable item="F6 controls output G1" CV="170" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4291,7 +4290,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G1</label>
       </variable>
-      <variable label="F6 controls output G2" CV="170" mask="XXXXXXVX" minFn="12">
+      <variable item="F6 controls output G2" CV="170" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4302,7 +4301,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G2</label>
       </variable>
-      <variable label="F6 controls output G3" CV="170" mask="XXXXXVXX" minFn="12">
+      <variable item="F6 controls output G3" CV="170" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4313,7 +4312,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G3</label>
       </variable>
-      <variable label="F6 controls output G4" CV="170" mask="XXXXVXXX" minFn="12">
+      <variable item="F6 controls output G4" CV="170" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4324,7 +4323,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G4</label>
       </variable>
-      <variable label="F6 controls output G5" CV="170" mask="XXXVXXXX" minFn="12">
+      <variable item="F6 controls output G5" CV="170" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4335,7 +4334,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G5</label>
       </variable>
-      <variable label="F6 controls output G6" CV="170" mask="XXVXXXXX" minFn="12">
+      <variable item="F6 controls output G6" CV="170" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4346,7 +4345,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G6</label>
       </variable>
-      <variable label="F6 controls output G7" CV="170" mask="XVXXXXXX" minFn="12">
+      <variable item="F6 controls output G7" CV="170" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4357,7 +4356,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G7</label>
       </variable>
-      <variable label="F6 controls output G8" CV="170" mask="VXXXXXXX" minFn="12">
+      <variable item="F6 controls output G8" CV="170" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4368,7 +4367,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F6 controls output G8</label>
       </variable>
-      <variable label="F7 controls output G1" CV="171" mask="XXXXXXXV" minFn="12">
+      <variable item="F7 controls output G1" CV="171" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4379,7 +4378,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G1</label>
       </variable>
-      <variable label="F7 controls output G2" CV="171" mask="XXXXXXVX" minFn="12">
+      <variable item="F7 controls output G2" CV="171" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4390,7 +4389,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G2</label>
       </variable>
-      <variable label="F7 controls output G3" CV="171" mask="XXXXXVXX" minFn="12">
+      <variable item="F7 controls output G3" CV="171" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4401,7 +4400,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G3</label>
       </variable>
-      <variable label="F7 controls output G4" CV="171" mask="XXXXVXXX" minFn="12">
+      <variable item="F7 controls output G4" CV="171" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4412,7 +4411,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G4</label>
       </variable>
-      <variable label="F7 controls output G5" CV="171" mask="XXXVXXXX" minFn="12">
+      <variable item="F7 controls output G5" CV="171" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4423,7 +4422,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G5</label>
       </variable>
-      <variable label="F7 controls output G6" CV="171" mask="XXVXXXXX" minFn="12">
+      <variable item="F7 controls output G6" CV="171" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4434,7 +4433,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G6</label>
       </variable>
-      <variable label="F7 controls output G7" CV="171" mask="XVXXXXXX" minFn="12">
+      <variable item="F7 controls output G7" CV="171" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4445,7 +4444,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G7</label>
       </variable>
-      <variable label="F7 controls output G8" CV="171" mask="VXXXXXXX" minFn="12">
+      <variable item="F7 controls output G8" CV="171" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4456,7 +4455,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F7 controls output G8</label>
       </variable>
-      <variable label="F8 controls output G1" CV="172" mask="XXXXXXXV" minFn="12">
+      <variable item="F8 controls output G1" CV="172" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4467,7 +4466,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G1</label>
       </variable>
-      <variable label="F8 controls output G2" CV="172" mask="XXXXXXVX" minFn="12">
+      <variable item="F8 controls output G2" CV="172" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4478,7 +4477,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G2</label>
       </variable>
-      <variable label="F8 controls output G3" CV="172" mask="XXXXXVXX" minFn="12">
+      <variable item="F8 controls output G3" CV="172" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4489,7 +4488,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G3</label>
       </variable>
-      <variable label="F8 controls output G4" CV="172" mask="XXXXVXXX" minFn="12">
+      <variable item="F8 controls output G4" CV="172" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4500,7 +4499,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G4</label>
       </variable>
-      <variable label="F8 controls output G5" CV="172" mask="XXXVXXXX" minFn="12">
+      <variable item="F8 controls output G5" CV="172" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4511,7 +4510,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G5</label>
       </variable>
-      <variable label="F8 controls output G6" CV="172" mask="XXVXXXXX" minFn="12">
+      <variable item="F8 controls output G6" CV="172" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4522,7 +4521,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G6</label>
       </variable>
-      <variable label="F8 controls output G7" CV="172" mask="XVXXXXXX" minFn="12">
+      <variable item="F8 controls output G7" CV="172" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4533,7 +4532,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G7</label>
       </variable>
-      <variable label="F8 controls output G8" CV="172" mask="VXXXXXXX" minFn="12">
+      <variable item="F8 controls output G8" CV="172" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4544,7 +4543,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F8 controls output G8</label>
       </variable>
-      <variable label="F9 controls output G4" CV="173" mask="XXXXXXXV" minFn="12">
+      <variable item="F9 controls output G4" CV="173" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4555,7 +4554,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output G4</label>
       </variable>
-      <variable label="F9 controls output G5" CV="173" mask="XXXXXXVX" minFn="12">
+      <variable item="F9 controls output G5" CV="173" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4566,7 +4565,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output G5</label>
       </variable>
-      <variable label="F9 controls output G6" CV="173" mask="XXXXXVXX" minFn="12">
+      <variable item="F9 controls output G6" CV="173" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4577,7 +4576,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output G6</label>
       </variable>
-      <variable label="F9 controls output G7" CV="173" mask="XXXXVXXX" minFn="12">
+      <variable item="F9 controls output G7" CV="173" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4588,7 +4587,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output G7</label>
       </variable>
-      <variable label="F9 controls output G8" CV="173" mask="XXXVXXXX" minFn="12">
+      <variable item="F9 controls output G8" CV="173" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4599,7 +4598,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output G8</label>
       </variable>
-      <variable label="F9 controls output Z7" CV="173" mask="XXVXXXXX" minFn="12">
+      <variable item="F9 controls output Z7" CV="173" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4610,7 +4609,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output Z7</label>
       </variable>
-      <variable label="F9 controls output Z8" CV="173" mask="XVXXXXXX" minFn="12">
+      <variable item="F9 controls output Z8" CV="173" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4621,7 +4620,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output Z8</label>
       </variable>
-      <variable label="F9 controls output Z9" CV="173" mask="VXXXXXXX" minFn="12">
+      <variable item="F9 controls output Z9" CV="173" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4632,7 +4631,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F9 controls output Z9</label>
       </variable>
-      <variable label="F10 controls output G4" CV="174" mask="XXXXXXXV" minFn="12">
+      <variable item="F10 controls output G4" CV="174" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4643,7 +4642,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output G4</label>
       </variable>
-      <variable label="F10 controls output G5" CV="174" mask="XXXXXXVX" minFn="12">
+      <variable item="F10 controls output G5" CV="174" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4654,7 +4653,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output G5</label>
       </variable>
-      <variable label="F10 controls output G6" CV="174" mask="XXXXXVXX" minFn="12">
+      <variable item="F10 controls output G6" CV="174" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4665,7 +4664,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output G6</label>
       </variable>
-      <variable label="F10 controls output G7" CV="174" mask="XXXXVXXX" minFn="12">
+      <variable item="F10 controls output G7" CV="174" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4676,7 +4675,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output G7</label>
       </variable>
-      <variable label="F10 controls output G8" CV="174" mask="XXXVXXXX" minFn="12">
+      <variable item="F10 controls output G8" CV="174" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4687,7 +4686,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output G8</label>
       </variable>
-      <variable label="F10 controls output Z7" CV="174" mask="XXVXXXXX" minFn="12">
+      <variable item="F10 controls output Z7" CV="174" mask="XXVXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4698,7 +4697,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output Z7</label>
       </variable>
-      <variable label="F10 controls output Z8" CV="174" mask="XVXXXXXX" minFn="12">
+      <variable item="F10 controls output Z8" CV="174" mask="XVXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4709,7 +4708,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output Z8</label>
       </variable>
-      <variable label="F10 controls output Z9" CV="174" mask="VXXXXXXX" minFn="12">
+      <variable item="F10 controls output Z9" CV="174" mask="VXXXXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4720,7 +4719,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output Z9</label>
       </variable>
-      <variable label="F11 controls output G4" CV="175" mask="XXXXXXXV" minFn="12">
+      <variable item="F11 controls output G4" CV="175" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4731,7 +4730,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G4</label>
       </variable>
-      <variable label="F11 controls output G5" CV="175" mask="XXXXXXVX" minFn="12">
+      <variable item="F11 controls output G5" CV="175" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4742,7 +4741,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G5</label>
       </variable>
-      <variable label="F11 controls output G6" CV="175" mask="XXXXXVXX" minFn="12">
+      <variable item="F11 controls output G6" CV="175" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4753,7 +4752,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G6</label>
       </variable>
-      <variable label="F11 controls output G7" CV="175" mask="XXXXVXXX" minFn="12">
+      <variable item="F11 controls output G7" CV="175" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4764,7 +4763,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G7</label>
       </variable>
-      <variable label="F11 controls output G8" CV="175" mask="XXXVXXXX" minFn="12">
+      <variable item="F11 controls output G8" CV="175" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4775,7 +4774,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F11 controls output G8</label>
       </variable>
-      <variable label="F12 controls output G4" CV="176" mask="XXXXXXXV" minFn="12">
+      <variable item="F12 controls output G4" CV="176" mask="XXXXXXXV" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4786,7 +4785,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G4</label>
       </variable>
-      <variable label="F12 controls output G5" CV="176" mask="XXXXXXVX" minFn="12">
+      <variable item="F12 controls output G5" CV="176" mask="XXXXXXVX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4797,7 +4796,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G5</label>
       </variable>
-      <variable label="F12 controls output G6" CV="176" mask="XXXXXVXX" minFn="12">
+      <variable item="F12 controls output G6" CV="176" mask="XXXXXVXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4808,7 +4807,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G6</label>
       </variable>
-      <variable label="F12 controls output G7" CV="176" mask="XXXXVXXX" minFn="12">
+      <variable item="F12 controls output G7" CV="176" mask="XXXXVXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4819,7 +4818,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G7</label>
       </variable>
-      <variable label="F12 controls output G8" CV="176" mask="XXXVXXXX" minFn="12">
+      <variable item="F12 controls output G8" CV="176" mask="XXXVXXXX" minFn="12">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -4830,61 +4829,61 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F12 controls output G8</label>
       </variable>
-      <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="rate of speed change to trigger accel noise slots 123-125">
+      <variable item="Acceleration Sound Trigger" CV="177" default="00" tooltip="rate of speed change to trigger accel noise slots 123-125">
         <decVal max="255"/>
         <label>Acceleration Sound Trigger</label>
       </variable>
     </variables>
   </decoder>
-  <pane name="Sound Config">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label=" Note, this pane is still work in progress.  ">
-            <label> Note, this pane is still work in progress.  </label>
+          <label>
+            <text> Note, this pane is still work in progress.  </text>
           </label>
-          <label label=" Particularly note that strong time for SL75,SL76,GE75,GE76 is CV146, previous decoders were CV129. ">
-            <label> Particularly note that strong time for SL75,SL76,GE75,GE76 is CV146, previous decoders were CV129. </label>
+          <label>
+            <text> Particularly note that strong time for SL75,SL76,GE75,GE76 is CV146, previous decoders were CV129. </text>
           </label>
-          <label label=" Recommend care when changing settings, and take notes.  Information on how this pane with">
-            <label> Recommend care when changing settings, and take notes.  Information on how this pane with</label>
+          <label>
+            <text> Recommend care when changing settings, and take notes.  Information on how this pane with</text>
           </label>
-          <label label=" works with different decoders would be welcome. ">
-            <label> works with different decoders would be welcome. </label>
+          <label>
+            <text> works with different decoders would be welcome. </text>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
       </row>
       <row>
         <column>
-          <label label="Sound type selection">
-            <label>Sound type selection</label>
+          <label>
+            <text>Sound type selection</text>
           </label>
           <display item="Steam/Diesel sound types" label="Sound type ">
             <label>Sound type </label>
           </display>
           <!-- new drop-down -->
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Full speed rate, or if chuff sensor used,">
-            <label>Full speed rate, or if chuff sensor used,</label>
+          <label>
+            <text>Full speed rate, or if chuff sensor used,</text>
           </label>
-          <label label="divider for number of chuff pulses per wheel revolution">
-            <label>divider for number of chuff pulses per wheel revolution</label>
+          <label>
+            <text>divider for number of chuff pulses per wheel revolution</text>
           </label>
           <display item="Full Speed Exhaust Interval"/>
           <!-- <display item="Full Speed Exhaust Interval" format="hslider" label="" />  -->
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Low speed chuff rate (two byte number)">
-            <label>Low speed chuff rate (two byte number)</label>
+          <label>
+            <text>Low speed chuff rate (two byte number)</text>
           </label>
           <display item="Speed Step 1 Exhaust Interval"/>
           <display item="Logical Exhaust Interval" tooltip="lowbytes" label="lowbytes of above">
@@ -4895,25 +4894,25 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
             <label>highbytes of above</label>
           </display>
           <!-- <display item="Time Between Beats" tooltip="highbytes" format="hslider" label="" />  -->
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Strong and Weak time sets period for acceleration">
-            <label>Strong and Weak time sets period for acceleration</label>
+          <label>
+            <text>Strong and Weak time sets period for acceleration</text>
           </label>
-          <label label="and decelleration sounds to be heard  ">
-            <label>and decelleration sounds to be heard  </label>
+          <label>
+            <text>and decelleration sounds to be heard  </text>
           </label>
           <display item="Strong Time" tooltip="acceleration noise triggered by this setting"/>
           <!-- <display item="Strong Time" format="hslider" label="" tooltip="Sets the switch ON dimming of F1" /> -->
           <!-- <label label="  "/>  -->
           <display item="Weak Time" tooltip="coasting noise triggered by this setting"/>
           <!-- <display item="Weak Time" format="hslider" label="" tooltip="Sets the symmetry of F1" /> -->
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Brake and Acceleration Sounds ">
-            <label>Brake and Acceleration Sounds </label>
+          <label>
+            <text>Brake and Acceleration Sounds </text>
           </label>
           <display item="Brake Sound Trigger" label="Brake Sound Steps (brake squeal)">
             <label>Brake Sound Steps (brake squeal)</label>
@@ -4922,13 +4921,13 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <display item="Acceleration Sound Trigger" label="Acceleration Sound Steps (whistle)">
             <label>Acceleration Sound Steps (whistle)</label>
           </display>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
-          <label label="            ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
         <column>
@@ -4939,8 +4938,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 				<display item="2 Cylinder Steam" tooltip=":OFF/ON"  format="checkbox" />
 				<display item="3 Cylinder Steam" tooltip=":OFF/ON"  format="checkbox" />
 				-->
-          <label label="Sound options">
-            <label>Sound options</label>
+          <label>
+            <text>Sound options</text>
           </label>
           <display item="No Steam Exhaust Downhill" tooltip=":OFF/ON" format="checkbox"/>
           <display item="Continuous Sound CV 10, F 1" label="evaluate the LGB-pulse from F1" tooltip=":OFF/ON" format="checkbox">
@@ -4948,90 +4947,94 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           </display>
           <display item="No Sound stop to moving (whistle)" format="checkbox"/>
           <display item="No Sound moving to stop (brake squeal)" format="checkbox"/>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
           <display item="Start Sound before motor" format="checkbox"/>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Sound Frequency, alters apparent size of locomotive">
-            <label>Sound Frequency, alters apparent size of locomotive</label>
+          <label>
+            <text>Sound Frequency, alters apparent size of locomotive</text>
           </label>
           <display item="High Frequency Limit"/>
           <display item="Low Frequency Limit"/>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
           <display item="Load Dependant Sound Variation" tooltip="values 0 - 15"/>
           <display item="F1 strong/normal/weak if CV110 active" format="checkbox"/>
           <display item="F2 strong/normal/weak if CV110 active" format="checkbox"/>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
       </row>
     </column>
     <name>Sound Config</name>
   </pane>
-  <pane name="Sound Slots and Repetition">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
           <display item="Main Running Sound Level"/>
-          <label label="Values 0(max) to 3 for older firmware, 0 to 64 for newer firmware  "/>
-          <label label="  "/>
-          <label label="Set function keys to turn on/off main sound and sound slots in Function Map">
-            <label>Set function keys to turn on/off main sound and sound slots in Function Map</label>
+          <label>
+            <text>Values 0(max) to 3 for older firmware, 0 to 64 for newer firmware  </text>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text>  </text>
+          </label>
+          <label>
+            <text>Set function keys to turn on/off main sound and sound slots in Function Map</text>
+          </label>
+          <label>
+            <text/>
           </label>
           <separator/>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
-          <label label="Slot Sound Levels, automatic and function key repetition rates, CV's 112, 113, 122 to 128, 145">
-            <label>Slot Sound Levels, automatic and function key repetition rates, CV's 112, 113, 122 to 128, 145</label>
+          <label>
+            <text>Slot Sound Levels, automatic and function key repetition rates, CV's 112, 113, 122 to 128, 145</text>
           </label>
-          <label label="Each slot can play randomly when standing or when moving. Set with checkboxes below.  ">
-            <label>Each slot can play randomly when standing or when moving. Set with checkboxes below.  </label>
+          <label>
+            <text>Each slot can play randomly when standing or when moving. Set with checkboxes below.  </text>
           </label>
-          <label label="Sounds can also be played by function key (set in function map), with repetitions and if sound">
-            <label>Sounds can also be played by function key (set in function map), with repetitions and if sound</label>
+          <label>
+            <text>Sounds can also be played by function key (set in function map), with repetitions and if sound</text>
           </label>
-          <label label="is made of five components can be made to loop for continuous sounds (see CT manuals)">
-            <label>is made of five components can be made to loop for continuous sounds (see CT manuals)</label>
+          <label>
+            <text>is made of five components can be made to loop for continuous sounds (see CT manuals)</text>
           </label>
-          <label label="The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16">
-            <label>The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16</label>
+          <label>
+            <text>The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16</text>
           </label>
-          <label label="are played in place of slots 1-8, with the same key and repetition options for each bank of slots">
-            <label>are played in place of slots 1-8, with the same key and repetition options for each bank of slots</label>
+          <label>
+            <text>are played in place of slots 1-8, with the same key and repetition options for each bank of slots</text>
           </label>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
           <display item="Random Interval Aux Sounds" label="Random time between sounds selected below (0.5sec)">
             <label>Random time between sounds selected below (0.5sec)</label>
           </display>
-          <label label="  ">
-            <label/>
+          <label>
+            <text/>
           </label>
         </column>
       </row>
@@ -5294,10 +5297,10 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
     </column>
     <name>Sound Slots and Repetition</name>
   </pane>
-  <pane name="Yard mode and Auto Uncoupling">
+  <pane>
     <column>
-      <label label="Yard Mode (select function key in function map)">
-        <label>Yard Mode (select function key in function map)</label>
+      <label>
+        <text>Yard Mode (select function key in function map)</text>
       </label>
       <separator/>
       <display item="Switching 1" label="Shunting CV3 and 4 disabled" format="checkbox">
@@ -5309,56 +5312,56 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode" format="checkbox">
         <label>Rev.max.speed 65% indep. of Yard mode</label>
       </display>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="Diode Braking. Applies certain hardware only.">
-        <label>Diode Braking. Applies certain hardware only.</label>
+      <label>
+        <text>Diode Braking. Applies certain hardware only.</text>
       </label>
-      <label label="(Lenz ABC)">
-        <label>(Lenz ABC)</label>
+      <label>
+        <text>(Lenz ABC)</text>
       </label>
       <display item="Diode Braking" format="checkbox"/>
       <display item="Diode Braking non-Directional" format="checkbox"/>
       <display item="Yard Mode disable auto braking" format="checkbox"/>
       <display item="Diode Sensitivity"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
     </column>
     <column>
-      <label label="Automatic Uncoupling">
-        <label>Automatic Uncoupling</label>
+      <label>
+        <text>Automatic Uncoupling</text>
       </label>
       <separator/>
       <display item="F-Button Used to Trigger Auto Uncoupling" label="F-Button Used to Trigger Auto Uncoupling">
         <label>F-Button Used to Trigger Auto Uncoupling</label>
       </display>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="Backup to Release Coupling Tension">
-        <label>Backup to Release Coupling Tension</label>
+      <label>
+        <text>Backup to Release Coupling Tension</text>
       </label>
       <display item="Speed Step Coupling Release"/>
       <display item="Time Driving Backwards"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="Drive forwards to clear train">
-        <label>Drive forwards to clear train</label>
+      <label>
+        <text>Drive forwards to clear train</text>
       </label>
       <display item="Speed Step Uncoupled"/>
       <display item="Time Driving Forwards"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="Output wires for Couplers">
-        <label>Output wires for Couplers</label>
+      <label>
+        <text>Output wires for Couplers</text>
       </label>
       <display item="Loco travel FWD, rear coupler" label="Loco going fwd, rear coupler">
         <label>Loco going fwd, rear coupler</label>
@@ -5368,23 +5371,23 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </display>
     </column>
     <column>
-      <label label="Output Reducing">
-        <label>Output Reducing</label>
+      <label>
+        <text>Output Reducing</text>
       </label>
       <separator/>
-      <label label="Used to reduce output after an initial full power pulse">
-        <label>Used to reduce output after an initial full power pulse</label>
+      <label>
+        <text>Used to reduce output after an initial full power pulse</text>
       </label>
-      <label label="Can be used for couplers and other devices">
-        <label>Can be used for couplers and other devices</label>
+      <label>
+        <text>Can be used for couplers and other devices</text>
       </label>
       <display item="Reduced Holding Current" tooltip="reduced current or off if 0"/>
       <display item="Initial Full Power Time" tooltip="initial full current time in 0.1 sec"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
-      <label label="Reduced Power Mask - set if holding current is non 0">
-        <label>Reduced Power Mask - set if holding current is non 0</label>
+      <label>
+        <text>Reduced Power Mask - set if holding current is non 0</text>
       </label>
       <display item="Reduced Power Output 1 (White)" format="checkbox"/>
       <display item="Reduced Power Output 2 (Yellow)" format="checkbox"/>
@@ -5392,23 +5395,23 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Reduced Power Output 4 (Purple)" format="checkbox"/>
       <display item="Reduced Power Output 5" format="checkbox"/>
       <display item="Reduced Power Output 6" format="checkbox"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
     </column>
     <name>Yard mode and Auto Uncoupling</name>
   </pane>
-  <pane name="Output Dimming and Light Effects">
+  <pane>
     <column>
-      <label label="Output Dimming">
-        <label>Output Dimming</label>
+      <label>
+        <text>Output Dimming</text>
       </label>
       <separator/>
       <display item="PWM Function Outputs" label="Output Level (0-100)">
         <label>Output Level (0-100)</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Dimming Output FL(f)" format="checkbox"/>
       <display item="Dimming Output FL(r)" format="checkbox"/>
@@ -5420,33 +5423,33 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Dimming Output F 6" format="checkbox"/>
     </column>
     <column>
-      <label label="Function Key Controlled Dimming">
-        <label>Function Key Controlled Dimming</label>
+      <label>
+        <text>Function Key Controlled Dimming</text>
       </label>
-      <label label="CV 116-118">
-        <label>CV 116-118</label>
+      <label>
+        <text>CV 116-118</text>
       </label>
       <separator/>
-      <label label="Note, Function Key 'on' will remove">
-        <label>Note, Function Key 'on' will remove</label>
+      <label>
+        <text>Note, Function Key 'on' will remove</text>
       </label>
-      <label label="the dimming from a lamp.">
-        <label>the dimming from a lamp.</label>
+      <label>
+        <text>the dimming from a lamp.</text>
       </label>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="F-Button Used For Dimming" label="F-Key For Dimming">
         <label>F-Key For Dimming</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="PWM Dimming" label="Dimming level (0-100)">
         <label>Dimming level (0-100)</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Dim FL(f)" label="F-Key Dims FL(f)" format="checkbox">
         <label>F-Key Dims FL(f)</label>
@@ -5462,11 +5465,11 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </display>
     </column>
     <column>
-      <label label="Light Effects">
-        <label>Light Effects</label>
+      <label>
+        <text>Light Effects</text>
       </label>
-      <label label="CV 114/115 and CV 154-157">
-        <label>CV 114/115 and CV 154-157</label>
+      <label>
+        <text>CV 114/115 and CV 154-157</text>
       </label>
       <separator/>
       <!--  NC replaces text entry with drop-downs, v1.5
@@ -5480,8 +5483,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 			<display item="Light Effects F 6" />
 			<label label="  "/>
 			-->
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="PWM Light Effects Outputs" label="Dimming of Effect (0-100)">
         <label>Dimming of Effect (0-100)</label>
@@ -5489,8 +5492,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Time Between Effects" label="Time Between Effects (0-255)">
         <label>Time Between Effects (0-255)</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Light Effects F0F" label="Effect FL(f) (white)">
         <label>Effect FL(f) (white)</label>
@@ -5498,8 +5501,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Light Effects Direction F0F" label="Direction">
         <label>Direction</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Light Effects F0R" label="Effect FL(r) (yellow)">
         <label>Effect FL(r) (yellow)</label>
@@ -5507,8 +5510,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Light Effects Direction F0R" label="Direction">
         <label>Direction</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Light Effects F1" label="Effect F1 (green)">
         <label>Effect F1 (green)</label>
@@ -5516,8 +5519,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       <display item="Light Effects Direction F1" label="Direction">
         <label>Direction</label>
       </display>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Light Effects F2" label="Effect F2 (purple)">
         <label>Effect F2 (purple)</label>
@@ -5528,52 +5531,52 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
     </column>
     <name>Output Dimming and Lighting Effects</name>
   </pane>
-  <pane name="Roco LGB Zimo CT">
+  <pane>
     <column>
-      <label label="Zimo Features">
-        <label>Zimo Features</label>
+      <label>
+        <text>Zimo Features</text>
       </label>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="ZIMO Signal Controlled Speed L"/>
       <display item="ZIMO Signal Controlled Speed U"/>
       <display item="ZIMO Signal Controlled Acc Reaction"/>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="ZIMO Course influence F-L"/>
       <display item="ZIMO Course influence L-U"/>
       <display item="ZIMO Course influence U"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Function selection 8 or 14/MAN Bit"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Zimo address pulse"/>
       <display item="Zimo speed control HLU"/>
       <display item="ZIMO Brake Time HLU"/>
     </column>
     <column>
-      <label label="LGB Features">
-        <label>LGB Features</label>
+      <label>
+        <text>LGB Features</text>
       </label>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="LGB Continuous Manual Sound Bitmask"/>
       <display item="LGB F4 Impulse"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
-      <label label="CT Alternative CV Set">
-        <label>CT Alternative CV Set</label>
+      <label>
+        <text>CT Alternative CV Set</text>
       </label>
-      <label label=" ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Select CV Set 1 or 2" tooltip=" Selects CV Set 1(OFF) or 2(ON)"/>
     </column>
@@ -5583,34 +5586,34 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
     </column>
     <name>Roco LGB Zimo CT</name>
   </pane>
-  <pane name="Lock and Shortcircuit Threshholds">
+  <pane>
     <column>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Decoder Lock"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Direct Cut Off Function Outputs"/>
       <display item="Fast Cut Off Function Outputs"/>
       <display item="Slow Cut Off Function Outputs"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <separator/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
       <display item="Direct Cut Off Motor"/>
       <display item="Fast Cut Off Motor"/>
       <display item="Slow Cut Off Motor"/>
-      <label label="  ">
-        <label/>
+      <label>
+        <text/>
       </label>
     </column>
     <name>Lock and Shortcircuit Threshholds</name>

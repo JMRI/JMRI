@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008 All rights reserved -->
 <!-- $Id: Tam Valley Depot QuadLn.xml,v 1.17 2010/10/03 21:01:25 jacobsen Exp $ -->
@@ -21,108 +21,140 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" comment="Short address" item="Short Address" default="1">
+      <variable CV="1" comment="Short address" item="Short Address" default="1">
         <shortAddressVal/>
         <comment>Short address</comment>
+        <label>Short Address</label>
       </variable>
-      <variable label="Long Address" CV="17" default="11000" item="Long Address" comment="Range 1-16383">
+      <variable CV="17" default="11000" item="Long Address" comment="Range 1-16383">
         <longAddressVal/>
+        <label>Long Address</label>
       </variable>
-      <variable label="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
+      <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
         <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1"/>
+        <label>Servo Start Address</label>
       </variable>
-      <variable label="Servo Base Block Lo Change" CV="254" mask="XXXXXXXX" default="0">
+      <variable item="Servo Base Block Lo Change" CV="254" mask="XXXXXXXX" default="0">
         <splitVal highCV="2" upperMask="VVVVVVVV"/>
+        <label>Servo Base Block Lo Change</label>
       </variable>
-      <variable label="Servo Base Block Hi Change" CV="255" mask="XXXXXXXX" default="0">
+      <variable item="Servo Base Block Hi Change" CV="255" mask="XXXXXXXX" default="0">
         <splitVal highCV="3" upperMask="VVVVVVVV"/>
+        <label>Servo Base Block Hi Change</label>
       </variable>
-      <variable label="Servo1 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="1">
+      <variable item="Servo1 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="1">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="1"/>
+        <label>Servo1 Addr</label>
       </variable>
-      <variable label="Servo2 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="2">
+      <variable item="Servo2 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="2">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="2"/>
+        <label>Servo2 Addr</label>
       </variable>
-      <variable label="Servo3 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="3">
+      <variable item="Servo3 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="3">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="3"/>
+        <label>Servo3 Addr</label>
       </variable>
-      <variable label="Servo4 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="4">
+      <variable item="Servo4 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="4">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="4"/>
+        <label>Servo4 Addr</label>
       </variable>
-      <variable label="Servo5 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="5">
+      <variable item="Servo5 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="5">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="5"/>
+        <label>Servo5 Addr</label>
       </variable>
-      <variable label="Servo6 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="6">
+      <variable item="Servo6 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="6">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="6"/>
+        <label>Servo6 Addr</label>
       </variable>
-      <variable label="Servo7 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="7">
+      <variable item="Servo7 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="7">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="7"/>
+        <label>Servo7 Addr</label>
       </variable>
-      <variable label="Servo8 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="8">
+      <variable item="Servo8 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="8">
         <splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="8"/>
+        <label>Servo8 Addr</label>
       </variable>
-      <variable label="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
+      <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
         <decVal/>
+        <label>Major Version</label>
       </variable>
-      <variable label="Minor Version" CV="4" mask="XXXXVVVV" readOnly="yes" default="0">
+      <variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="yes" default="0">
         <decVal/>
+        <label>Minor Version</label>
       </variable>
-      <variable label="Build Num" CV="5" readOnly="yes" default="1">
+      <variable item="Build Num" CV="5" readOnly="yes" default="1">
         <decVal/>
+        <label>Build Num</label>
       </variable>
-      <variable label="Hardware Rev" CV="6" readOnly="yes" default="1">
+      <variable item="Hardware Rev" CV="6" readOnly="yes" default="1">
         <decVal/>
+        <label>Hardware Rev</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Quad-LN Product ID" default="47">
+      <variable CV="7" readOnly="yes" item="Quad-LN Product ID" default="47">
         <decVal/>
+        <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="59">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="59">
         <decVal/>
+        <label>Manufacturer ID</label>
       </variable>
-      <variable label="Sensor Start Address" CV="10" mask="VVVVVVVV" default="0">
+      <variable item="Sensor Start Address" CV="10" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="1"/>
+        <label>Sensor Start Address</label>
       </variable>
-      <variable label="Sensor Base Block Lo Change" CV="252" mask="XXXXXXXX" default="0">
+      <variable item="Sensor Base Block Lo Change" CV="252" mask="XXXXXXXX" default="0">
         <splitVal highCV="10" upperMask="VVVVVVVV"/>
+        <label>Sensor Base Block Lo Change</label>
       </variable>
-      <variable label="Sensor Base Block Hi Change" CV="253" mask="XXXXXXXX" default="0">
+      <variable item="Sensor Base Block Hi Change" CV="253" mask="XXXXXXXX" default="0">
         <splitVal highCV="11" upperMask="VVVVVVVV"/>
+        <label>Sensor Base Block Hi Change</label>
       </variable>
-      <variable label="Sensor1 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="1">
+      <variable item="Sensor1 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="1">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="1"/>
+        <label>Sensor1 Addr</label>
       </variable>
-      <variable label="Sensor2 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="2">
+      <variable item="Sensor2 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="2">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="2"/>
+        <label>Sensor2 Addr</label>
       </variable>
-      <variable label="Sensor3 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="3">
+      <variable item="Sensor3 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="3">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="3"/>
+        <label>Sensor3 Addr</label>
       </variable>
-      <variable label="Sensor4 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="4">
+      <variable item="Sensor4 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="4">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="4"/>
+        <label>Sensor4 Addr</label>
       </variable>
-      <variable label="Sensor5 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="5">
+      <variable item="Sensor5 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="5">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="5"/>
+        <label>Sensor5 Addr</label>
       </variable>
-      <variable label="Sensor6 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="6">
+      <variable item="Sensor6 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="6">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="6"/>
+        <label>Sensor6 Addr</label>
       </variable>
-      <variable label="Sensor7 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="7">
+      <variable item="Sensor7 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="7">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="7"/>
+        <label>Sensor7 Addr</label>
       </variable>
-      <variable label="Sensor8 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="8">
+      <variable item="Sensor8 Addr" CV="10" infoOnly="yes" mask="VVVVVVVV" default="8">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="8"/>
+        <label>Sensor8 Addr</label>
       </variable>
-      <variable label="Sensor Addr Block" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
+      <variable item="Sensor Addr Block" CV="10" infoOnly="yes" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="0"/>
+        <label>Sensor Addr Block</label>
       </variable>
-      <variable label="AutoAlign Current" CV="19" item="AutoAlign Current" default="0">
+      <variable CV="19" item="AutoAlign Current" default="0">
         <decVal min="0" max="78"/>
+        <label>AutoAlign Current</label>
       </variable>
-      <variable label="Reserved" CV="20" readOnly="yes">
+      <variable item="Reserved" CV="20" readOnly="yes">
         <decVal/>
         <label>Reserved</label>
       </variable>
-      <variable label="Servo State Memory" CV="21" mask="XXXXXXXV" default="1">
+      <variable item="Servo State Memory" CV="21" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -133,7 +165,7 @@
         </enumVal>
         <label>Port State Memory</label>
       </variable>
-      <variable label="Send Output Off" CV="21" mask="XXXXXXVX" default="0">
+      <variable item="Send Output Off" CV="21" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -144,7 +176,7 @@
         </enumVal>
         <label>Send Output Off</label>
       </variable>
-      <variable label="Input Interrogate" CV="21" mask="XXXXXVXX" default="1">
+      <variable item="Input Interrogate" CV="21" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -155,7 +187,7 @@
         </enumVal>
         <label>Input Interrogate</label>
       </variable>
-      <variable label="Local Actions" CV="21" mask="XXXXVXXX" default="1">
+      <variable item="Local Actions" CV="21" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="Perform Internally">
             <choice>Perform Internally</choice>
@@ -166,7 +198,7 @@
         </enumVal>
         <label>Output Interrogate</label>
       </variable>
-      <variable label="GPON Interrogate" CV="21" mask="XXXVXXXX" default="0">
+      <variable item="GPON Interrogate" CV="21" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -177,7 +209,7 @@
         </enumVal>
         <label>GPON Interrogate</label>
       </variable>
-      <variable label="Addressing Mode" CV="21" mask="XXVXXXXX" item="Address Format" default="1">
+      <variable CV="21" mask="XXVXXXXX" item="Address Format" default="1">
         <enumVal>
           <enumChoice choice="Use Short Address">
             <choice>Short</choice>
@@ -188,7 +220,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-      <variable label="Lock Indicator" CV="21" mask="XVXXXXXX" item="Lock Indicator" default="0">
+      <variable CV="21" mask="XVXXXXXX" item="Lock Indicator" default="0">
         <enumVal>
           <enumChoice choice="Blink when Locked">
             <choice>Locked</choice>
@@ -199,7 +231,7 @@
         </enumVal>
         <label>Lock Indicator</label>
       </variable>
-      <variable label="DCC Busy Retry" CV="21" mask="VXXXXXXX" default="1">
+      <variable item="DCC Busy Retry" CV="21" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -210,17 +242,17 @@
         </enumVal>
         <label>DCC Busy Retry</label>
       </variable>
-      <variable label="Servo1 Closed" CV="33" item="Servo1 Closed" default="1260">
+      <variable CV="33" item="Servo1 Closed" default="1260">
         <splitVal highCV="34" upperMask="XXXXVVVV"/>
         <label>Servo1 Closed</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo1 Thrown" CV="35" item="Servo1 Thrown" default="1140">
+      <variable CV="35" item="Servo1 Thrown" default="1140">
         <splitVal highCV="36" upperMask="XXXXVVVV"/>
         <label>Servo1 Thrown</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo1 RapidStart" CV="37" mask="VVXXXXXX" item="Servo1 RapidStart" default="0">
+      <variable CV="37" mask="VVXXXXXX" item="Servo1 RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -237,12 +269,12 @@
         </enumVal>
         <label>Servo1 RapidStart</label>
       </variable>
-      <variable label="Servo1 Speed" CV="37" mask="XXVVVVVV" item="Servo1 Speed" default="4">
+      <variable CV="37" mask="XXVVVVVV" item="Servo1 Speed" default="4">
         <decVal/>
         <label>Servo1 Speed</label>
         <comment>Speed Range: 0-63</comment>
       </variable>
-      <variable label="Servo1 Swap Endpoints" CV="38" mask="VXXXXXXX" item="Servo1 Swap Endpoints" default="0">
+      <variable CV="38" mask="VXXXXXXX" item="Servo1 Swap Endpoints" default="0">
         <enumVal>
           <enumChoice choice="Normal Endpoints">
             <choice>Normal Endpoints</choice>
@@ -254,7 +286,7 @@
         <label>Servo1 Swap Endpoints</label>
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
-      <variable label="Servo1 Directional Speed" CV="38" mask="XXXVXXXX" item="Servo1 Directional Speed" default="0">
+      <variable CV="38" mask="XXXVXXXX" item="Servo1 Directional Speed" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -265,7 +297,7 @@
         </enumVal>
         <label>Servo1 Directional Speed</label>
       </variable>
-      <variable label="Servo1 Thrown RapidStart" CV="51" mask="VVXXXXXX" item="Servo1 Thrown RapidStart" default="0">
+      <variable CV="51" mask="VVXXXXXX" item="Servo1 Thrown RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -287,7 +319,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo1 Thrown Speed" CV="51" mask="XXVVVVVV" item="Servo1 Thrown Speed" default="4">
+      <variable CV="51" mask="XXVVVVVV" item="Servo1 Thrown Speed" default="4">
         <decVal/>
         <label>Servo1 Thrown Speed</label>
         <comment>Speed Range: 0-63</comment>
@@ -297,7 +329,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo1 Lock" CV="38" mask="XXVXXXXX" item="Servo1 Lock" default="1">
+      <variable CV="38" mask="XXVXXXXX" item="Servo1 Lock" default="1">
         <enumVal>
           <enumChoice choice="Not Lockable">
             <choice>Not Lockable</choice>
@@ -308,7 +340,7 @@
         </enumVal>
         <label>Servo1 Lock</label>
       </variable>
-      <variable label="Servo1 Mid" CV="38" mask="XVXXXXXX" item="Servo1 Mid" default="0">
+      <variable CV="38" mask="XVXXXXXX" item="Servo1 Mid" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable </choice>
@@ -319,7 +351,7 @@
         </enumVal>
         <label>Servo1 Mid</label>
       </variable>
-      <variable label="Servo1 Output Message" CV="38" mask="XXXXXXVV" item="Servo1 Output Message" default="2">
+      <variable CV="38" mask="XXXXXXVV" item="Servo1 Output Message" default="2">
         <enumVal>
           <enumChoice choice="No output feedback">
             <choice>None</choice>
@@ -333,7 +365,7 @@
         </enumVal>
         <label>Servo1 Output Message</label>
       </variable>
-      <variable label="Servo1 Cascade Trigger" CV="38" mask="XXXXVVXX" item="Servo1 Cascade Trigger" default="0">
+      <variable CV="38" mask="XXXXVVXX" item="Servo1 Cascade Trigger" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -348,12 +380,13 @@
             <choice>Closed or Thrown</choice>
           </enumChoice>
         </enumVal>
+        <label>Servo1 Cascade Trigger</label>
       </variable>
-      <variable label="Servo1 Cascade Turnout" CV="39" item="Servo1 Cascade Turnout" default="0">
+      <variable CV="39" item="Servo1 Cascade Turnout" default="0">
         <splitVal highCV="40" upperMask="XXXXXVVV"/>
         <label>Servo1 Cascade Turnout</label>
       </variable>
-      <variable label="Servo1 Cascade Action" CV="40" mask="XXVVXXXX" item="Servo1 Cascade Action" default="0">
+      <variable CV="40" mask="XXVVXXXX" item="Servo1 Cascade Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -370,7 +403,7 @@
         </enumVal>
         <label>Servo1 Cascade Action</label>
       </variable>
-      <variable label="GPIO2 Trigger" CV="41" mask="XXXXXXVV" item="GPIO2 Trigger" default="2">
+      <variable CV="41" mask="XXXXXXVV" item="GPIO2 Trigger" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -387,7 +420,7 @@
         </enumVal>
         <label>GPIO2 Trigger</label>
       </variable>
-      <variable label="GPIO2 Message" CV="41" mask="XXXXXVXX" item="GPIO2 Message" default="0">
+      <variable CV="41" mask="XXXXXVXX" item="GPIO2 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -398,7 +431,7 @@
         </enumVal>
         <label>GPIO2 Message</label>
       </variable>
-      <variable label="GPIO2 LED Mode" CV="41" mask="XXVVVXXX" item="GPIO2 LED Mode" default="2">
+      <variable CV="41" mask="XXVVVXXX" item="GPIO2 LED Mode" default="2">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -421,7 +454,7 @@
         </enumVal>
         <label>GPIO2 LED Mode</label>
       </variable>
-      <variable label="GPIO2 LED Sense" CV="41" mask="XVXXXXXX" item="GPIO2 LED Sense" default="0">
+      <variable CV="41" mask="XVXXXXXX" item="GPIO2 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -432,7 +465,7 @@
         </enumVal>
         <label>GPIO2 LED Sense</label>
       </variable>
-      <variable label="GPIO2 Freeze" CV="41" mask="VXXXXXXX" item="GPIO2 Freeze" default="0">
+      <variable CV="41" mask="VXXXXXXX" item="GPIO2 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -443,7 +476,7 @@
         </enumVal>
         <label>GPIO2 Freeze</label>
       </variable>
-      <variable label="GPIO2 Action: Servo1" CV="42" mask="XXXXVVVV" item="GPIO2 Action: Servo1" default="1">
+      <variable CV="42" mask="XXXXVVVV" item="GPIO2 Action: Servo1" default="1">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -481,7 +514,7 @@
         </enumVal>
         <label>GPIO2 Action: Servo1</label>
       </variable>
-      <variable label="GPIO2 Action: Servo2" CV="42" mask="VVVVXXXX" item="GPIO2 Action: Servo2" default="0">
+      <variable CV="42" mask="VVVVXXXX" item="GPIO2 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -519,7 +552,7 @@
         </enumVal>
         <label>GPIO2 Action: Servo2</label>
       </variable>
-      <variable label="GPIO2 Action: Servo3" CV="43" mask="XXXXVVVV" item="GPIO2 Action: Servo3" default="0">
+      <variable CV="43" mask="XXXXVVVV" item="GPIO2 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -557,7 +590,7 @@
         </enumVal>
         <label>GPIO2 Action: Servo3</label>
       </variable>
-      <variable label="GPIO2 Action: Servo4" CV="43" mask="VVVVXXXX" item="GPIO2 Action: Servo4" default="0">
+      <variable CV="43" mask="VVVVXXXX" item="GPIO2 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -595,11 +628,11 @@
         </enumVal>
         <label>GPIO2 Action: Servo4</label>
       </variable>
-      <variable label="GPIO2 Msg2 Addr" CV="44" item="GPIO2 Msg2 Addr" default="0">
+      <variable CV="44" item="GPIO2 Msg2 Addr" default="0">
         <splitVal highCV="45" upperMask="XXXXVVVV"/>
         <label>GPIO2 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO2 Msg2 Condition" CV="45" mask="XXVVXXXX" item="GPIO2 Msg2 Condition" default="0">
+      <variable CV="45" mask="XXVVXXXX" item="GPIO2 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -616,7 +649,7 @@
         </enumVal>
         <label>GPIO2 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO2 Msg2 Device" CV="45" mask="XVXXXXXX" item="GPIO2 Msg2 Device" default="0">
+      <variable CV="45" mask="XVXXXXXX" item="GPIO2 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -627,7 +660,7 @@
         </enumVal>
         <label>GPIO2 Msg2 Device</label>
       </variable>
-      <variable label="GPIO2 Msg2 Action" CV="45" mask="VXXXXXXX" item="GPIO2 Msg2 Action" default="0">
+      <variable CV="45" mask="VXXXXXXX" item="GPIO2 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -638,7 +671,7 @@
         </enumVal>
         <label>GPIO2 Msg2 Action</label>
       </variable>
-      <variable label="GPIO1 Trigger" CV="46" mask="XXXXXXVV" item="GPIO1 Trigger" default="3">
+      <variable CV="46" mask="XXXXXXVV" item="GPIO1 Trigger" default="3">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -655,7 +688,7 @@
         </enumVal>
         <label>GPIO1 Trigger</label>
       </variable>
-      <variable label="GPIO1 Message" CV="46" mask="XXXXXVXX" item="GPIO1 Message" default="0">
+      <variable CV="46" mask="XXXXXVXX" item="GPIO1 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -666,7 +699,7 @@
         </enumVal>
         <label>GPIO1 Message</label>
       </variable>
-      <variable label="GPIO1 LED Mode" CV="46" mask="XXVVVXXX" item="GPIO1 LED Mode" default="1">
+      <variable CV="46" mask="XXVVVXXX" item="GPIO1 LED Mode" default="1">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -689,7 +722,7 @@
         </enumVal>
         <label>GPIO1 LED Mode</label>
       </variable>
-      <variable label="GPIO1 LED Sense" CV="46" mask="XVXXXXXX" item="GPIO1 LED Sense" default="0">
+      <variable CV="46" mask="XVXXXXXX" item="GPIO1 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -700,7 +733,7 @@
         </enumVal>
         <label>GPIO1 LED Sense</label>
       </variable>
-      <variable label="GPIO1 Freeze" CV="46" mask="VXXXXXXX" item="GPIO1 Freeze" default="0">
+      <variable CV="46" mask="VXXXXXXX" item="GPIO1 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -711,7 +744,7 @@
         </enumVal>
         <label>GPIO1 Freeze</label>
       </variable>
-      <variable label="GPIO1 Action: Servo1" CV="47" mask="XXXXVVVV" item="GPIO1 Action: Servo1" default="2">
+      <variable CV="47" mask="XXXXVVVV" item="GPIO1 Action: Servo1" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -749,7 +782,7 @@
         </enumVal>
         <label>GPIO1 Action: Servo1</label>
       </variable>
-      <variable label="GPIO1 Action: Servo2" CV="47" mask="VVVVXXXX" item="GPIO1 Action: Servo2" default="0">
+      <variable CV="47" mask="VVVVXXXX" item="GPIO1 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -787,7 +820,7 @@
         </enumVal>
         <label>GPIO1 Action: Servo2</label>
       </variable>
-      <variable label="GPIO1 Action: Servo3" CV="48" mask="XXXXVVVV" item="GPIO1 Action: Servo3" default="0">
+      <variable CV="48" mask="XXXXVVVV" item="GPIO1 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -825,7 +858,7 @@
         </enumVal>
         <label>GPIO1 Action: Servo3</label>
       </variable>
-      <variable label="GPIO1 Action: Servo4" CV="48" mask="VVVVXXXX" item="GPIO1 Action: Servo4" default="0">
+      <variable CV="48" mask="VVVVXXXX" item="GPIO1 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -863,11 +896,11 @@
         </enumVal>
         <label>GPIO1 Action: Servo4</label>
       </variable>
-      <variable label="GPIO1 Msg2 Addr" CV="49" item="GPIO1 Msg2 Addr" default="0">
+      <variable CV="49" item="GPIO1 Msg2 Addr" default="0">
         <splitVal highCV="50" upperMask="XXXXVVVV"/>
         <label>GPIO1 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO1 Msg2 Condition" CV="50" mask="XXVVXXXX" item="GPIO1 Msg2 Condition" default="0">
+      <variable CV="50" mask="XXVVXXXX" item="GPIO1 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -884,7 +917,7 @@
         </enumVal>
         <label>GPIO1 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO1 Msg2 Device" CV="50" mask="XVXXXXXX" item="GPIO1 Msg2 Device" default="0">
+      <variable CV="50" mask="XVXXXXXX" item="GPIO1 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -895,7 +928,7 @@
         </enumVal>
         <label>GPIO1 Msg2 Device</label>
       </variable>
-      <variable label="GPIO1 Msg2 Action" CV="50" mask="VXXXXXXX" item="GPIO1 Msg2 Action" default="0">
+      <variable CV="50" mask="VXXXXXXX" item="GPIO1 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -906,17 +939,17 @@
         </enumVal>
         <label>GPIO1 Msg2 Action</label>
       </variable>
-      <variable label="Servo2 Closed" CV="55" item="Servo2 Closed" default="1260">
+      <variable CV="55" item="Servo2 Closed" default="1260">
         <splitVal highCV="56" upperMask="XXXXVVVV"/>
         <label>Servo2 Closed</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo2 Thrown" CV="57" item="Servo2 Thrown" default="1140">
+      <variable CV="57" item="Servo2 Thrown" default="1140">
         <splitVal highCV="58" upperMask="XXXXVVVV"/>
         <label>Servo2 Thrown</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo2 RapidStart" CV="59" mask="VVXXXXXX" item="Servo2 RapidStart" default="0">
+      <variable CV="59" mask="VVXXXXXX" item="Servo2 RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -933,12 +966,12 @@
         </enumVal>
         <label>Servo2 RapidStart</label>
       </variable>
-      <variable label="Servo2 Speed" CV="59" mask="XXVVVVVV" item="Servo2 Speed" default="4">
+      <variable CV="59" mask="XXVVVVVV" item="Servo2 Speed" default="4">
         <decVal/>
         <label>Servo2 Speed</label>
         <comment>Speed Range: 0-63</comment>
       </variable>
-      <variable label="Servo2 Swap Endpoints" CV="60" mask="VXXXXXXX" item="Servo2 Swap Endpoints" default="0">
+      <variable CV="60" mask="VXXXXXXX" item="Servo2 Swap Endpoints" default="0">
         <enumVal>
           <enumChoice choice="Normal Endpoints">
             <choice>Normal Endpoints</choice>
@@ -950,7 +983,7 @@
         <label>Servo2 Swap Endpoints</label>
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
-      <variable label="Servo2 Directional Speed" CV="60" mask="XXXVXXXX" item="Servo2 Directional Speed" default="0">
+      <variable CV="60" mask="XXXVXXXX" item="Servo2 Directional Speed" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -961,7 +994,7 @@
         </enumVal>
         <label>Servo2 Directional Speed</label>
       </variable>
-      <variable label="Servo2 Thrown RapidStart" CV="73" mask="VVXXXXXX" item="Servo2 Thrown RapidStart" default="0">
+      <variable CV="73" mask="VVXXXXXX" item="Servo2 Thrown RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -983,7 +1016,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo2 Thrown Speed" CV="73" mask="XXVVVVVV" item="Servo2 Thrown Speed" default="4">
+      <variable CV="73" mask="XXVVVVVV" item="Servo2 Thrown Speed" default="4">
         <decVal/>
         <label>Servo2 Thrown Speed</label>
         <comment>Speed Range: 0-63</comment>
@@ -993,7 +1026,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo2 Lock" CV="60" mask="XXVXXXXX" item="Servo2 Lock" default="1">
+      <variable CV="60" mask="XXVXXXXX" item="Servo2 Lock" default="1">
         <enumVal>
           <enumChoice choice="Not Lockable">
             <choice>Not Lockable</choice>
@@ -1004,7 +1037,7 @@
         </enumVal>
         <label>Servo2 Lock</label>
       </variable>
-      <variable label="Servo2 Mid" CV="60" mask="XVXXXXXX" item="Servo2 Mid" default="0">
+      <variable CV="60" mask="XVXXXXXX" item="Servo2 Mid" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable </choice>
@@ -1015,7 +1048,7 @@
         </enumVal>
         <label>Servo2 Mid</label>
       </variable>
-      <variable label="Servo2 Output Message" CV="60" mask="XXXXXXVV" item="Servo2 Output Message" default="2">
+      <variable CV="60" mask="XXXXXXVV" item="Servo2 Output Message" default="2">
         <enumVal>
           <enumChoice choice="No output feedback">
             <choice>None</choice>
@@ -1029,7 +1062,7 @@
         </enumVal>
         <label>Servo2 Output Message</label>
       </variable>
-      <variable label="Servo2 Cascade Trigger" CV="60" mask="XXXXVVXX" item="Servo2 Cascade Trigger" default="0">
+      <variable CV="60" mask="XXXXVVXX" item="Servo2 Cascade Trigger" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1044,12 +1077,13 @@
             <choice>Closed or Thrown</choice>
           </enumChoice>
         </enumVal>
+        <label>Servo2 Cascade Trigger</label>
       </variable>
-      <variable label="Servo2 Cascade Turnout" CV="61" item="Servo2 Cascade Turnout" default="0">
+      <variable CV="61" item="Servo2 Cascade Turnout" default="0">
         <splitVal highCV="62" upperMask="XXXXXVVV"/>
         <label>Servo2 Cascade Turnout</label>
       </variable>
-      <variable label="Servo2 Cascade Action" CV="62" mask="XXVVXXXX" item="Servo2 Cascade Action" default="0">
+      <variable CV="62" mask="XXVVXXXX" item="Servo2 Cascade Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -1066,7 +1100,7 @@
         </enumVal>
         <label>Servo2 Cascade Action</label>
       </variable>
-      <variable label="GPIO4 Trigger" CV="63" mask="XXXXXXVV" item="GPIO4 Trigger" default="2">
+      <variable CV="63" mask="XXXXXXVV" item="GPIO4 Trigger" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1083,7 +1117,7 @@
         </enumVal>
         <label>GPIO4 Trigger</label>
       </variable>
-      <variable label="GPIO4 Message" CV="63" mask="XXXXXVXX" item="GPIO4 Message" default="0">
+      <variable CV="63" mask="XXXXXVXX" item="GPIO4 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -1094,7 +1128,7 @@
         </enumVal>
         <label>GPIO4 Message</label>
       </variable>
-      <variable label="GPIO4 LED Mode" CV="63" mask="XXVVVXXX" item="GPIO4 LED Mode" default="2">
+      <variable CV="63" mask="XXVVVXXX" item="GPIO4 LED Mode" default="2">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -1117,7 +1151,7 @@
         </enumVal>
         <label>GPIO4 LED Mode</label>
       </variable>
-      <variable label="GPIO4 LED Sense" CV="63" mask="XVXXXXXX" item="GPIO4 LED Sense" default="0">
+      <variable CV="63" mask="XVXXXXXX" item="GPIO4 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -1128,7 +1162,7 @@
         </enumVal>
         <label>GPIO4 LED Sense</label>
       </variable>
-      <variable label="GPIO4 Freeze" CV="63" mask="VXXXXXXX" item="GPIO4 Freeze" default="0">
+      <variable CV="63" mask="VXXXXXXX" item="GPIO4 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -1139,7 +1173,7 @@
         </enumVal>
         <label>GPIO4 Freeze</label>
       </variable>
-      <variable label="GPIO4 Action: Servo1" CV="64" mask="XXXXVVVV" item="GPIO4 Action: Servo1" default="0">
+      <variable CV="64" mask="XXXXVVVV" item="GPIO4 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1177,7 +1211,7 @@
         </enumVal>
         <label>GPIO4 Action: Servo1</label>
       </variable>
-      <variable label="GPIO4 Action: Servo2" CV="64" mask="VVVVXXXX" item="GPIO4 Action: Servo2" default="1">
+      <variable CV="64" mask="VVVVXXXX" item="GPIO4 Action: Servo2" default="1">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1215,7 +1249,7 @@
         </enumVal>
         <label>GPIO4 Action: Servo2</label>
       </variable>
-      <variable label="GPIO4 Action: Servo3" CV="65" mask="XXXXVVVV" item="GPIO4 Action: Servo3" default="0">
+      <variable CV="65" mask="XXXXVVVV" item="GPIO4 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1253,7 +1287,7 @@
         </enumVal>
         <label>GPIO4 Action: Servo3</label>
       </variable>
-      <variable label="GPIO4 Action: Servo4" CV="65" mask="VVVVXXXX" item="GPIO4 Action: Servo4" default="0">
+      <variable CV="65" mask="VVVVXXXX" item="GPIO4 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1291,11 +1325,11 @@
         </enumVal>
         <label>GPIO4 Action: Servo4</label>
       </variable>
-      <variable label="GPIO4 Msg2 Addr" CV="66" item="GPIO4 Msg2 Addr" default="0">
+      <variable CV="66" item="GPIO4 Msg2 Addr" default="0">
         <splitVal highCV="67" upperMask="XXXXVVVV"/>
         <label>GPIO4 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO4 Msg2 Condition" CV="67" mask="XXVVXXXX" item="GPIO4 Msg2 Condition" default="0">
+      <variable CV="67" mask="XXVVXXXX" item="GPIO4 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1312,7 +1346,7 @@
         </enumVal>
         <label>GPIO4 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO4 Msg2 Device" CV="67" mask="XVXXXXXX" item="GPIO4 Msg2 Device" default="0">
+      <variable CV="67" mask="XVXXXXXX" item="GPIO4 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -1323,7 +1357,7 @@
         </enumVal>
         <label>GPIO4 Msg2 Device</label>
       </variable>
-      <variable label="GPIO4 Msg2 Action" CV="67" mask="VXXXXXXX" item="GPIO4 Msg2 Action" default="0">
+      <variable CV="67" mask="VXXXXXXX" item="GPIO4 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -1334,7 +1368,7 @@
         </enumVal>
         <label>GPIO4 Msg2 Action</label>
       </variable>
-      <variable label="GPIO3 Trigger" CV="68" mask="XXXXXXVV" item="GPIO3 Trigger" default="3">
+      <variable CV="68" mask="XXXXXXVV" item="GPIO3 Trigger" default="3">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1351,7 +1385,7 @@
         </enumVal>
         <label>GPIO3 Trigger</label>
       </variable>
-      <variable label="GPIO3 Message" CV="68" mask="XXXXXVXX" item="GPIO3 Message" default="0">
+      <variable CV="68" mask="XXXXXVXX" item="GPIO3 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -1362,7 +1396,7 @@
         </enumVal>
         <label>GPIO3 Message</label>
       </variable>
-      <variable label="GPIO3 LED Mode" CV="68" mask="XXVVVXXX" item="GPIO3 LED Mode" default="1">
+      <variable CV="68" mask="XXVVVXXX" item="GPIO3 LED Mode" default="1">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -1385,7 +1419,7 @@
         </enumVal>
         <label>GPIO3 LED Mode</label>
       </variable>
-      <variable label="GPIO3 LED Sense" CV="68" mask="XVXXXXXX" item="GPIO3 LED Sense" default="0">
+      <variable CV="68" mask="XVXXXXXX" item="GPIO3 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -1396,7 +1430,7 @@
         </enumVal>
         <label>GPIO3 LED Sense</label>
       </variable>
-      <variable label="GPIO3 Freeze" CV="68" mask="VXXXXXXX" item="GPIO3 Freeze" default="0">
+      <variable CV="68" mask="VXXXXXXX" item="GPIO3 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -1407,7 +1441,7 @@
         </enumVal>
         <label>GPIO3 Freeze</label>
       </variable>
-      <variable label="GPIO3 Action: Servo1" CV="69" mask="XXXXVVVV" item="GPIO3 Action: Servo1" default="0">
+      <variable CV="69" mask="XXXXVVVV" item="GPIO3 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1445,7 +1479,7 @@
         </enumVal>
         <label>GPIO3 Action: Servo1</label>
       </variable>
-      <variable label="GPIO3 Action: Servo2" CV="69" mask="VVVVXXXX" item="GPIO3 Action: Servo2" default="2">
+      <variable CV="69" mask="VVVVXXXX" item="GPIO3 Action: Servo2" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1483,7 +1517,7 @@
         </enumVal>
         <label>GPIO3 Action: Servo2</label>
       </variable>
-      <variable label="GPIO3 Action: Servo3" CV="70" mask="XXXXVVVV" item="GPIO3 Action: Servo3" default="0">
+      <variable CV="70" mask="XXXXVVVV" item="GPIO3 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1521,7 +1555,7 @@
         </enumVal>
         <label>GPIO3 Action: Servo3</label>
       </variable>
-      <variable label="GPIO3 Action: Servo4" CV="70" mask="VVVVXXXX" item="GPIO3 Action: Servo4" default="0">
+      <variable CV="70" mask="VVVVXXXX" item="GPIO3 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1559,11 +1593,11 @@
         </enumVal>
         <label>GPIO3 Action: Servo4</label>
       </variable>
-      <variable label="GPIO3 Msg2 Addr" CV="71" item="GPIO3 Msg2 Addr" default="0">
+      <variable CV="71" item="GPIO3 Msg2 Addr" default="0">
         <splitVal highCV="72" upperMask="XXXXVVVV"/>
         <label>GPIO3 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO3 Msg2 Condition" CV="72" mask="XXVVXXXX" item="GPIO3 Msg2 Condition" default="0">
+      <variable CV="72" mask="XXVVXXXX" item="GPIO3 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1580,7 +1614,7 @@
         </enumVal>
         <label>GPIO3 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO3 Msg2 Device" CV="72" mask="XVXXXXXX" item="GPIO3 Msg2 Device" default="0">
+      <variable CV="72" mask="XVXXXXXX" item="GPIO3 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -1591,7 +1625,7 @@
         </enumVal>
         <label>GPIO3 Msg2 Device</label>
       </variable>
-      <variable label="GPIO3 Msg2 Action" CV="72" mask="VXXXXXXX" item="GPIO3 Msg2 Action" default="0">
+      <variable CV="72" mask="VXXXXXXX" item="GPIO3 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -1602,17 +1636,17 @@
         </enumVal>
         <label>GPIO3 Msg2 Action</label>
       </variable>
-      <variable label="Servo3 Closed" CV="77" item="Servo3 Closed" default="1260">
+      <variable CV="77" item="Servo3 Closed" default="1260">
         <splitVal highCV="78" upperMask="XXXXVVVV"/>
         <label>Servo3 Closed</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo3 Thrown" CV="79" item="Servo3 Thrown" default="1140">
+      <variable CV="79" item="Servo3 Thrown" default="1140">
         <splitVal highCV="80" upperMask="XXXXVVVV"/>
         <label>Servo3 Thrown</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo3 RapidStart" CV="81" mask="VVXXXXXX" item="Servo3 RapidStart" default="0">
+      <variable CV="81" mask="VVXXXXXX" item="Servo3 RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1629,12 +1663,12 @@
         </enumVal>
         <label>Servo3 RapidStart</label>
       </variable>
-      <variable label="Servo3 Speed" CV="81" mask="XXVVVVVV" item="Servo3 Speed" default="4">
+      <variable CV="81" mask="XXVVVVVV" item="Servo3 Speed" default="4">
         <decVal/>
         <label>Servo3 Speed</label>
         <comment>Speed Range: 0-63</comment>
       </variable>
-      <variable label="Servo3 Swap Endpoints" CV="82" mask="VXXXXXXX" item="Servo3 Swap Endpoints" default="0">
+      <variable CV="82" mask="VXXXXXXX" item="Servo3 Swap Endpoints" default="0">
         <enumVal>
           <enumChoice choice="Normal Endpoints">
             <choice>Normal Endpoints</choice>
@@ -1646,7 +1680,7 @@
         <label>Servo3 Swap Endpoints</label>
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
-      <variable label="Servo3 Directional Speed" CV="82" mask="XXXVXXXX" item="Servo3 Directional Speed" default="0">
+      <variable CV="82" mask="XXXVXXXX" item="Servo3 Directional Speed" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -1657,7 +1691,7 @@
         </enumVal>
         <label>Servo3  Directional Speed</label>
       </variable>
-      <variable label="Servo3 Thrown RapidStart" CV="95" mask="VVXXXXXX" item="Servo3 Thrown RapidStart" default="0">
+      <variable CV="95" mask="VVXXXXXX" item="Servo3 Thrown RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1679,7 +1713,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo3 Thrown Speed" CV="95" mask="XXVVVVVV" item="Servo3 Thrown Speed" default="4">
+      <variable CV="95" mask="XXVVVVVV" item="Servo3 Thrown Speed" default="4">
         <decVal/>
         <label>Servo3 Thrown Speed</label>
         <comment>Speed Range: 0-63</comment>
@@ -1689,7 +1723,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo3 Lock" CV="82" mask="XXVXXXXX" item="Servo3 Lock" default="1">
+      <variable CV="82" mask="XXVXXXXX" item="Servo3 Lock" default="1">
         <enumVal>
           <enumChoice choice="Not Lockable">
             <choice>Not Lockable</choice>
@@ -1700,7 +1734,7 @@
         </enumVal>
         <label>Servo3 Lock</label>
       </variable>
-      <variable label="Servo3 Mid" CV="82" mask="XVXXXXXX" item="Servo3 Mid" default="0">
+      <variable CV="82" mask="XVXXXXXX" item="Servo3 Mid" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable </choice>
@@ -1711,7 +1745,7 @@
         </enumVal>
         <label>Servo3 Mid</label>
       </variable>
-      <variable label="Servo3 Output Message" CV="82" mask="XXXXXXVV" item="Servo3 Output Message" default="2">
+      <variable CV="82" mask="XXXXXXVV" item="Servo3 Output Message" default="2">
         <enumVal>
           <enumChoice choice="No output feedback">
             <choice>None</choice>
@@ -1725,7 +1759,7 @@
         </enumVal>
         <label>Servo3 Output Message</label>
       </variable>
-      <variable label="Servo3 Cascade Trigger" CV="82" mask="XXXXVVXX" item="Servo3 Cascade Trigger" default="0">
+      <variable CV="82" mask="XXXXVVXX" item="Servo3 Cascade Trigger" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1740,12 +1774,13 @@
             <choice>Closed or Thrown</choice>
           </enumChoice>
         </enumVal>
+        <label>Servo3 Cascade Trigger</label>
       </variable>
-      <variable label="Servo3 Cascade Turnout" CV="83" item="Servo3 Cascade Turnout" default="0">
+      <variable CV="83" item="Servo3 Cascade Turnout" default="0">
         <splitVal highCV="84" upperMask="XXXXXVVV"/>
         <label>Servo3 Cascade Turnout</label>
       </variable>
-      <variable label="Servo3 Cascade Action" CV="84" mask="XXVVXXXX" item="Servo3 Cascade Action" default="0">
+      <variable CV="84" mask="XXVVXXXX" item="Servo3 Cascade Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -1762,7 +1797,7 @@
         </enumVal>
         <label>Servo3 Cascade Action</label>
       </variable>
-      <variable label="GPIO6 Trigger" CV="85" mask="XXXXXXVV" item="GPIO6 Trigger" default="2">
+      <variable CV="85" mask="XXXXXXVV" item="GPIO6 Trigger" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1779,7 +1814,7 @@
         </enumVal>
         <label>GPIO6 Trigger</label>
       </variable>
-      <variable label="GPIO6 Message" CV="85" mask="XXXXXVXX" item="GPIO6 Message" default="0">
+      <variable CV="85" mask="XXXXXVXX" item="GPIO6 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -1790,7 +1825,7 @@
         </enumVal>
         <label>GPIO6 Message</label>
       </variable>
-      <variable label="GPIO6 LED Mode" CV="85" mask="XXVVVXXX" item="GPIO6 LED Mode" default="2">
+      <variable CV="85" mask="XXVVVXXX" item="GPIO6 LED Mode" default="2">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -1813,7 +1848,7 @@
         </enumVal>
         <label>GPIO6 LED Mode</label>
       </variable>
-      <variable label="GPIO6 LED Sense" CV="85" mask="XVXXXXXX" item="GPIO6 LED Sense" default="0">
+      <variable CV="85" mask="XVXXXXXX" item="GPIO6 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -1824,7 +1859,7 @@
         </enumVal>
         <label>GPIO6 LED Sense</label>
       </variable>
-      <variable label="GPIO6 Freeze" CV="85" mask="VXXXXXXX" item="GPIO6 Freeze" default="0">
+      <variable CV="85" mask="VXXXXXXX" item="GPIO6 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -1835,7 +1870,7 @@
         </enumVal>
         <label>GPIO6 Freeze</label>
       </variable>
-      <variable label="GPIO6 Action: Servo1" CV="86" mask="XXXXVVVV" item="GPIO6 Action: Servo1" default="0">
+      <variable CV="86" mask="XXXXVVVV" item="GPIO6 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1873,7 +1908,7 @@
         </enumVal>
         <label>GPIO6 Action: Servo1</label>
       </variable>
-      <variable label="GPIO6 Action: Servo2" CV="86" mask="VVVVXXXX" item="GPIO6 Action: Servo2" default="0">
+      <variable CV="86" mask="VVVVXXXX" item="GPIO6 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1911,7 +1946,7 @@
         </enumVal>
         <label>GPIO6 Action: Servo2</label>
       </variable>
-      <variable label="GPIO6 Action: Servo3" CV="87" mask="XXXXVVVV" item="GPIO6 Action: Servo3" default="1">
+      <variable CV="87" mask="XXXXVVVV" item="GPIO6 Action: Servo3" default="1">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1949,7 +1984,7 @@
         </enumVal>
         <label>GPIO6 Action: Servo3</label>
       </variable>
-      <variable label="GPIO6 Action: Servo4" CV="87" mask="VVVVXXXX" item="GPIO6 Action: Servo4" default="0">
+      <variable CV="87" mask="VVVVXXXX" item="GPIO6 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1987,11 +2022,11 @@
         </enumVal>
         <label>GPIO6 Action: Servo4</label>
       </variable>
-      <variable label="GPIO6 Msg2 Addr" CV="88" item="GPIO6 Msg2 Addr" default="0">
+      <variable CV="88" item="GPIO6 Msg2 Addr" default="0">
         <splitVal highCV="89" upperMask="XXXXVVVV"/>
         <label>GPIO6 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO6 Msg2 Condition" CV="89" mask="XXVVXXXX" item="GPIO6 Msg2 Condition" default="0">
+      <variable CV="89" mask="XXVVXXXX" item="GPIO6 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2008,7 +2043,7 @@
         </enumVal>
         <label>GPIO6 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO6 Msg2 Device" CV="89" mask="XVXXXXXX" item="GPIO6 Msg2 Device" default="0">
+      <variable CV="89" mask="XVXXXXXX" item="GPIO6 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -2019,7 +2054,7 @@
         </enumVal>
         <label>GPIO6 Msg2 Device</label>
       </variable>
-      <variable label="GPIO6 Msg2 Action" CV="89" mask="VXXXXXXX" item="GPIO6 Msg2 Action" default="0">
+      <variable CV="89" mask="VXXXXXXX" item="GPIO6 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -2030,7 +2065,7 @@
         </enumVal>
         <label>GPIO6 Msg2 Action</label>
       </variable>
-      <variable label="GPIO5 Trigger" CV="90" mask="XXXXXXVV" item="GPIO5 Trigger" default="3">
+      <variable CV="90" mask="XXXXXXVV" item="GPIO5 Trigger" default="3">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2047,7 +2082,7 @@
         </enumVal>
         <label>GPIO5 Trigger</label>
       </variable>
-      <variable label="GPIO5 Message" CV="90" mask="XXXXXVXX" item="GPIO5 Message" default="0">
+      <variable CV="90" mask="XXXXXVXX" item="GPIO5 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -2058,7 +2093,7 @@
         </enumVal>
         <label>GPIO5 Message</label>
       </variable>
-      <variable label="GPIO5 LED Mode" CV="90" mask="XXVVVXXX" item="GPIO5 LED Mode" default="1">
+      <variable CV="90" mask="XXVVVXXX" item="GPIO5 LED Mode" default="1">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -2081,7 +2116,7 @@
         </enumVal>
         <label>GPIO5 LED Mode</label>
       </variable>
-      <variable label="GPIO5 LED Sense" CV="90" mask="XVXXXXXX" item="GPIO5 LED Sense" default="0">
+      <variable CV="90" mask="XVXXXXXX" item="GPIO5 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -2092,7 +2127,7 @@
         </enumVal>
         <label>GPIO5 LED Sense</label>
       </variable>
-      <variable label="GPIO5 Freeze" CV="90" mask="VXXXXXXX" item="GPIO5 Freeze" default="0">
+      <variable CV="90" mask="VXXXXXXX" item="GPIO5 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -2103,7 +2138,7 @@
         </enumVal>
         <label>GPIO5 Freeze</label>
       </variable>
-      <variable label="GPIO5 Action: Servo1" CV="91" mask="XXXXVVVV" item="GPIO5 Action: Servo1" default="0">
+      <variable CV="91" mask="XXXXVVVV" item="GPIO5 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2141,7 +2176,7 @@
         </enumVal>
         <label>GPIO5 Action: Servo1</label>
       </variable>
-      <variable label="GPIO5 Action: Servo2" CV="91" mask="VVVVXXXX" item="GPIO5 Action: Servo2" default="0">
+      <variable CV="91" mask="VVVVXXXX" item="GPIO5 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2179,7 +2214,7 @@
         </enumVal>
         <label>GPIO5 Action: Servo2</label>
       </variable>
-      <variable label="GPIO5 Action: Servo3" CV="92" mask="XXXXVVVV" item="GPIO5 Action: Servo3" default="2">
+      <variable CV="92" mask="XXXXVVVV" item="GPIO5 Action: Servo3" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2217,7 +2252,7 @@
         </enumVal>
         <label>GPIO5 Action: Servo3</label>
       </variable>
-      <variable label="GPIO5 Action: Servo4" CV="92" mask="VVVVXXXX" item="GPIO5 Action: Servo4" default="0">
+      <variable CV="92" mask="VVVVXXXX" item="GPIO5 Action: Servo4" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2255,11 +2290,11 @@
         </enumVal>
         <label>GPIO5 Action: Servo4</label>
       </variable>
-      <variable label="GPIO5 Msg2 Addr" CV="93" item="GPIO5 Msg2 Addr" default="0">
+      <variable CV="93" item="GPIO5 Msg2 Addr" default="0">
         <splitVal highCV="94" upperMask="XXXXVVVV"/>
         <label>GPIO5 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO5 Msg2 Condition" CV="94" mask="XXVVXXXX" item="GPIO5 Msg2 Condition" default="0">
+      <variable CV="94" mask="XXVVXXXX" item="GPIO5 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2276,7 +2311,7 @@
         </enumVal>
         <label>GPIO5 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO5 Msg2 Device" CV="94" mask="XVXXXXXX" item="GPIO5 Msg2 Device" default="0">
+      <variable CV="94" mask="XVXXXXXX" item="GPIO5 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -2287,7 +2322,7 @@
         </enumVal>
         <label>GPIO5 Msg2 Device</label>
       </variable>
-      <variable label="GPIO5 Msg2 Action" CV="94" mask="VXXXXXXX" item="GPIO5 Msg2 Action" default="0">
+      <variable CV="94" mask="VXXXXXXX" item="GPIO5 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -2298,17 +2333,17 @@
         </enumVal>
         <label>GPIO5 Msg2 Action</label>
       </variable>
-      <variable label="Servo4 Closed" CV="99" item="Servo4 Closed" default="1260">
+      <variable CV="99" item="Servo4 Closed" default="1260">
         <splitVal highCV="100" upperMask="XXXXVVVV"/>
         <label>Servo4 Closed</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo4 Thrown" CV="101" item="Servo4 Thrown" default="1140">
+      <variable CV="101" item="Servo4 Thrown" default="1140">
         <splitVal highCV="102" upperMask="XXXXVVVV"/>
         <label>Servo4 Thrown</label>
         <comment>Position Range: 0-2400</comment>
       </variable>
-      <variable label="Servo4 RapidStart" CV="103" mask="VVXXXXXX" item="Servo4 RapidStart" default="0">
+      <variable CV="103" mask="VVXXXXXX" item="Servo4 RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2325,12 +2360,12 @@
         </enumVal>
         <label>Servo4 RapidStart</label>
       </variable>
-      <variable label="Servo4 Speed" CV="103" mask="XXVVVVVV" item="Servo4 Speed" default="4">
+      <variable CV="103" mask="XXVVVVVV" item="Servo4 Speed" default="4">
         <decVal/>
         <label>Servo4 Speed</label>
         <comment>Speed Range: 0-63</comment>
       </variable>
-      <variable label="Servo4 Swap Endpoints" CV="104" mask="VXXXXXXX" item="Servo4 Swap Endpoints" default="0">
+      <variable CV="104" mask="VXXXXXXX" item="Servo4 Swap Endpoints" default="0">
         <enumVal>
           <enumChoice choice="Normal Endpoints">
             <choice>Normal Endpoints</choice>
@@ -2342,7 +2377,7 @@
         <label>Servo4 Swap Endpoints</label>
         <comment>Matches Closed/Thrown commands to the desired endpoints</comment>
       </variable>
-      <variable label="Servo4 Directional Speed" CV="104" mask="XXXVXXXX" item="Servo4 Directional Speed" default="0">
+      <variable CV="104" mask="XXXVXXXX" item="Servo4 Directional Speed" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -2353,7 +2388,7 @@
         </enumVal>
         <label>Servo4  Directional Speed</label>
       </variable>
-      <variable label="Servo4 Thrown RapidStart" CV="117" mask="VVXXXXXX" item="Servo4 Thrown RapidStart" default="0">
+      <variable CV="117" mask="VVXXXXXX" item="Servo4 Thrown RapidStart" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2375,7 +2410,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo4 Thrown Speed" CV="117" mask="XXVVVVVV" item="Servo4 Thrown Speed" default="4">
+      <variable CV="117" mask="XXVVVVVV" item="Servo4 Thrown Speed" default="4">
         <decVal/>
         <label>Servo4 Thrown Speed</label>
         <comment>Speed Range: 0-63</comment>
@@ -2385,7 +2420,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-      <variable label="Servo4 Lock" CV="104" mask="XXVXXXXX" item="Servo4 Lock" default="1">
+      <variable CV="104" mask="XXVXXXXX" item="Servo4 Lock" default="1">
         <enumVal>
           <enumChoice choice="Not Lockable">
             <choice>Not Lockable</choice>
@@ -2396,7 +2431,7 @@
         </enumVal>
         <label>Servo4 Lock</label>
       </variable>
-      <variable label="Servo4 Mid" CV="104" mask="XVXXXXXX" item="Servo4 Mid" default="0">
+      <variable CV="104" mask="XVXXXXXX" item="Servo4 Mid" default="0">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable </choice>
@@ -2407,7 +2442,7 @@
         </enumVal>
         <label>Servo4 Mid</label>
       </variable>
-      <variable label="Servo4 Output Message" CV="104" mask="XXXXXXVV" item="Servo4 Output Message" default="2">
+      <variable CV="104" mask="XXXXXXVV" item="Servo4 Output Message" default="2">
         <enumVal>
           <enumChoice choice="No output feedback">
             <choice>None</choice>
@@ -2421,7 +2456,7 @@
         </enumVal>
         <label>Servo4 Output Message</label>
       </variable>
-      <variable label="Servo4 Cascade Trigger" CV="104" mask="XXXXVVXX" item="Servo4 Cascade Trigger" default="0">
+      <variable CV="104" mask="XXXXVVXX" item="Servo4 Cascade Trigger" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2436,12 +2471,13 @@
             <choice>Closed or Thrown</choice>
           </enumChoice>
         </enumVal>
+        <label>Servo4 Cascade Trigger</label>
       </variable>
-      <variable label="Servo4 Cascade Turnout" CV="105" item="Servo4 Cascade Turnout" default="0">
+      <variable CV="105" item="Servo4 Cascade Turnout" default="0">
         <splitVal highCV="106" upperMask="XXXXXVVV"/>
         <label>Servo4 Cascade Turnout</label>
       </variable>
-      <variable label="Servo4 Cascade Action" CV="106" mask="XXVVXXXX" item="Servo4 Cascade Action" default="0">
+      <variable CV="106" mask="XXVVXXXX" item="Servo4 Cascade Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -2458,7 +2494,7 @@
         </enumVal>
         <label>Servo4 Cascade Action</label>
       </variable>
-      <variable label="GPIO8 Trigger" CV="107" mask="XXXXXXVV" item="GPIO8 Trigger" default="2">
+      <variable CV="107" mask="XXXXXXVV" item="GPIO8 Trigger" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2475,7 +2511,7 @@
         </enumVal>
         <label>GPIO8 Trigger</label>
       </variable>
-      <variable label="GPIO8 Message" CV="107" mask="XXXXXVXX" item="GPIO8 Message" default="0">
+      <variable CV="107" mask="XXXXXVXX" item="GPIO8 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -2486,7 +2522,7 @@
         </enumVal>
         <label>GPIO8 Message</label>
       </variable>
-      <variable label="GPIO8 LED Mode" CV="107" mask="XXVVVXXX" item="GPIO8 LED Mode" default="2">
+      <variable CV="107" mask="XXVVVXXX" item="GPIO8 LED Mode" default="2">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -2509,7 +2545,7 @@
         </enumVal>
         <label>GPIO8 LED Mode</label>
       </variable>
-      <variable label="GPIO8 LED Sense" CV="107" mask="XVXXXXXX" item="GPIO8 LED Sense" default="0">
+      <variable CV="107" mask="XVXXXXXX" item="GPIO8 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -2520,7 +2556,7 @@
         </enumVal>
         <label>GPIO8 LED Sense</label>
       </variable>
-      <variable label="GPIO8 Freeze" CV="107" mask="VXXXXXXX" item="GPIO8 Freeze" default="0">
+      <variable CV="107" mask="VXXXXXXX" item="GPIO8 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -2531,7 +2567,7 @@
         </enumVal>
         <label>GPIO8 Freeze</label>
       </variable>
-      <variable label="GPIO8 Action: Servo1" CV="108" mask="XXXXVVVV" item="GPIO8 Action: Servo1" default="0">
+      <variable CV="108" mask="XXXXVVVV" item="GPIO8 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2569,7 +2605,7 @@
         </enumVal>
         <label>GPIO8 Action: Servo1</label>
       </variable>
-      <variable label="GPIO8 Action: Servo2" CV="108" mask="VVVVXXXX" item="GPIO8 Action: Servo2" default="0">
+      <variable CV="108" mask="VVVVXXXX" item="GPIO8 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2607,7 +2643,7 @@
         </enumVal>
         <label>GPIO8 Action: Servo2</label>
       </variable>
-      <variable label="GPIO8 Action: Servo3" CV="109" mask="XXXXVVVV" item="GPIO8 Action: Servo3" default="0">
+      <variable CV="109" mask="XXXXVVVV" item="GPIO8 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2645,7 +2681,7 @@
         </enumVal>
         <label>GPIO8 Action: Servo3</label>
       </variable>
-      <variable label="GPIO8 Action: Servo4" CV="109" mask="VVVVXXXX" item="GPIO8 Action: Servo4" default="1">
+      <variable CV="109" mask="VVVVXXXX" item="GPIO8 Action: Servo4" default="1">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2683,11 +2719,11 @@
         </enumVal>
         <label>GPIO8 Action: Servo4</label>
       </variable>
-      <variable label="GPIO8 Msg2 Addr" CV="110" item="GPIO8 Msg2 Addr" default="0">
+      <variable CV="110" item="GPIO8 Msg2 Addr" default="0">
         <splitVal highCV="111" upperMask="XXXXVVVV"/>
         <label>GPIO8 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO8 Msg2 Condition" CV="111" mask="XXVVXXXX" item="GPIO8 Msg2 Condition" default="0">
+      <variable CV="111" mask="XXVVXXXX" item="GPIO8 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2704,7 +2740,7 @@
         </enumVal>
         <label>GPIO8 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO8 Msg2 Device" CV="111" mask="XVXXXXXX" item="GPIO8 Msg2 Device" default="0">
+      <variable CV="111" mask="XVXXXXXX" item="GPIO8 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -2715,7 +2751,7 @@
         </enumVal>
         <label>GPIO8 Msg2 Device</label>
       </variable>
-      <variable label="GPIO8 Msg2 Action" CV="111" mask="VXXXXXXX" item="GPIO8 Msg2 Action" default="0">
+      <variable CV="111" mask="VXXXXXXX" item="GPIO8 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -2726,7 +2762,7 @@
         </enumVal>
         <label>GPIO8 Msg2 Action</label>
       </variable>
-      <variable label="GPIO7 Trigger" CV="112" mask="XXXXXXVV" item="GPIO7 Trigger" default="3">
+      <variable CV="112" mask="XXXXXXVV" item="GPIO7 Trigger" default="3">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2743,7 +2779,7 @@
         </enumVal>
         <label>GPIO7 Trigger</label>
       </variable>
-      <variable label="GPIO7 Message" CV="112" mask="XXXXXVXX" item="GPIO7 Message" default="0">
+      <variable CV="112" mask="XXXXXVXX" item="GPIO7 Message" default="0">
         <enumVal>
           <enumChoice choice="General Sensor">
             <choice>General Sensor</choice>
@@ -2754,7 +2790,7 @@
         </enumVal>
         <label>GPIO7 Message</label>
       </variable>
-      <variable label="GPIO7 LED Mode" CV="112" mask="XXVVVXXX" item="GPIO7 LED Mode" default="1">
+      <variable CV="112" mask="XXVVVXXX" item="GPIO7 LED Mode" default="1">
         <enumVal>
           <enumChoice choice="Disable - Input only">
             <choice>Disable</choice>
@@ -2777,7 +2813,7 @@
         </enumVal>
         <label>GPIO7 LED Mode</label>
       </variable>
-      <variable label="GPIO7 LED Sense" CV="112" mask="XVXXXXXX" item="GPIO7 LED Sense" default="0">
+      <variable CV="112" mask="XVXXXXXX" item="GPIO7 LED Sense" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -2788,7 +2824,7 @@
         </enumVal>
         <label>GPIO7 LED Sense</label>
       </variable>
-      <variable label="GPIO7 Freeze" CV="112" mask="VXXXXXXX" item="GPIO7 Freeze" default="0">
+      <variable CV="112" mask="VXXXXXXX" item="GPIO7 Freeze" default="0">
         <enumVal>
           <enumChoice choice="Always live">
             <choice>Always live</choice>
@@ -2799,7 +2835,7 @@
         </enumVal>
         <label>GPIO7 Freeze</label>
       </variable>
-      <variable label="GPIO7 Action: Servo1" CV="113" mask="XXXXVVVV" item="GPIO7 Action: Servo1" default="0">
+      <variable CV="113" mask="XXXXVVVV" item="GPIO7 Action: Servo1" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2837,7 +2873,7 @@
         </enumVal>
         <label>GPIO7 Action: Servo1</label>
       </variable>
-      <variable label="GPIO7 Action: Servo2" CV="113" mask="VVVVXXXX" item="GPIO7 Action: Servo2" default="0">
+      <variable CV="113" mask="VVVVXXXX" item="GPIO7 Action: Servo2" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2875,7 +2911,7 @@
         </enumVal>
         <label>GPIO7 Action: Servo2</label>
       </variable>
-      <variable label="GPIO7 Action: Servo3" CV="114" mask="XXXXVVVV" item="GPIO7 Action: Servo3" default="0">
+      <variable CV="114" mask="XXXXVVVV" item="GPIO7 Action: Servo3" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2913,7 +2949,7 @@
         </enumVal>
         <label>GPIO7 Action: Servo3</label>
       </variable>
-      <variable label="GPIO7 Action: Servo4" CV="114" mask="VVVVXXXX" item="GPIO7 Action: Servo4" default="2">
+      <variable CV="114" mask="VVVVXXXX" item="GPIO7 Action: Servo4" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2951,11 +2987,11 @@
         </enumVal>
         <label>GPIO7 Action: Servo4</label>
       </variable>
-      <variable label="GPIO7 Msg2 Addr" CV="115" item="GPIO7 Msg2 Addr" default="0">
+      <variable CV="115" item="GPIO7 Msg2 Addr" default="0">
         <splitVal highCV="116" upperMask="XXXXVVVV"/>
         <label>GPIO7 Msg2 Addr</label>
       </variable>
-      <variable label="GPIO7 Msg2 Condition" CV="116" mask="XXVVXXXX" item="GPIO7 Msg2 Condition" default="0">
+      <variable CV="116" mask="XXVVXXXX" item="GPIO7 Msg2 Condition" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2972,7 +3008,7 @@
         </enumVal>
         <label>GPIO7 Msg2 Condition</label>
       </variable>
-      <variable label="GPIO7 Msg2 Device" CV="116" mask="XVXXXXXX" item="GPIO7 Msg2 Device" default="0">
+      <variable CV="116" mask="XVXXXXXX" item="GPIO7 Msg2 Device" default="0">
         <enumVal>
           <enumChoice choice="Turnout">
             <choice>Turnout</choice>
@@ -2983,7 +3019,7 @@
         </enumVal>
         <label>GPIO7 Msg2 Device</label>
       </variable>
-      <variable label="GPIO7 Msg2 Action" CV="116" mask="VXXXXXXX" item="GPIO7 Msg2 Action" default="0">
+      <variable CV="116" mask="VXXXXXXX" item="GPIO7 Msg2 Action" default="0">
         <enumVal>
           <enumChoice choice="Trigger on this message">
             <choice>Trigger on this message</choice>
@@ -2994,11 +3030,11 @@
         </enumVal>
         <label>GPIO7 Msg2 Action</label>
       </variable>
-      <variable label="Route1 Turnout1" CV="129" item="Route1 Turnout1" default="0">
+      <variable CV="129" item="Route1 Turnout1" default="0">
         <splitVal highCV="130" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout1</label>
       </variable>
-      <variable label="Route1 Type" CV="130" mask="VVXXXXXX" item="Route1 Type" default="0">
+      <variable CV="130" mask="VVXXXXXX" item="Route1 Type" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -3012,7 +3048,7 @@
         </enumVal>
         <label>Route1 Type</label>
       </variable>
-      <variable label="Route1 Turnout1 Action" CV="130" mask="XXVVXXXX" item="Route1 Turnout1 Action" default="0">
+      <variable CV="130" mask="XXVVXXXX" item="Route1 Turnout1 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3029,11 +3065,11 @@
         </enumVal>
         <label>Route1 Turnout1 Action</label>
       </variable>
-      <variable label="Route1 Turnout2" CV="131" item="Route1 Turnout2" default="0">
+      <variable CV="131" item="Route1 Turnout2" default="0">
         <splitVal highCV="132" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout2</label>
       </variable>
-      <variable label="Route1 Turnout2 Action" CV="132" mask="XXVVXXXX" item="Route1 Turnout2 Action" default="0">
+      <variable CV="132" mask="XXVVXXXX" item="Route1 Turnout2 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3050,11 +3086,11 @@
         </enumVal>
         <label>Route1 Turnout2 Action</label>
       </variable>
-      <variable label="Route1 Turnout3" CV="133" item="Route1 Turnout3" default="0">
+      <variable CV="133" item="Route1 Turnout3" default="0">
         <splitVal highCV="134" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout3</label>
       </variable>
-      <variable label="Route1 Turnout3 Action" CV="134" mask="XXVVXXXX" item="Route1 Turnout3 Action" default="0">
+      <variable CV="134" mask="XXVVXXXX" item="Route1 Turnout3 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3071,11 +3107,11 @@
         </enumVal>
         <label>Route1 Turnout3 Action</label>
       </variable>
-      <variable label="Route1 Turnout4" CV="135" item="Route1 Turnout4" default="0">
+      <variable CV="135" item="Route1 Turnout4" default="0">
         <splitVal highCV="136" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout4</label>
       </variable>
-      <variable label="Route1 Turnout4 Action" CV="136" mask="XXVVXXXX" item="Route1 Turnout4 Action" default="0">
+      <variable CV="136" mask="XXVVXXXX" item="Route1 Turnout4 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3092,11 +3128,11 @@
         </enumVal>
         <label>Route1 Turnout4 Action</label>
       </variable>
-      <variable label="Route1 Turnout5" CV="137" item="Route1 Turnout5" default="0">
+      <variable CV="137" item="Route1 Turnout5" default="0">
         <splitVal highCV="138" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout5</label>
       </variable>
-      <variable label="Route1 Turnout5 Action" CV="138" mask="XXVVXXXX" item="Route1 Turnout5 Action" default="0">
+      <variable CV="138" mask="XXVVXXXX" item="Route1 Turnout5 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3113,11 +3149,11 @@
         </enumVal>
         <label>Route1 Turnout5 Action</label>
       </variable>
-      <variable label="Route1 Turnout6" CV="139" item="Route1 Turnout6" default="0">
+      <variable CV="139" item="Route1 Turnout6" default="0">
         <splitVal highCV="140" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout6</label>
       </variable>
-      <variable label="Route1 Turnout6 Action" CV="140" mask="XXVVXXXX" item="Route1 Turnout6 Action" default="0">
+      <variable CV="140" mask="XXVVXXXX" item="Route1 Turnout6 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3134,11 +3170,11 @@
         </enumVal>
         <label>Route1 Turnout6 Action</label>
       </variable>
-      <variable label="Route1 Turnout7" CV="141" item="Route1 Turnout7" default="0">
+      <variable CV="141" item="Route1 Turnout7" default="0">
         <splitVal highCV="142" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout7</label>
       </variable>
-      <variable label="Route1 Turnout7 Action" CV="142" mask="XXVVXXXX" item="Route1 Turnout7 Action" default="0">
+      <variable CV="142" mask="XXVVXXXX" item="Route1 Turnout7 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3155,11 +3191,11 @@
         </enumVal>
         <label>Route1 Turnout7 Action</label>
       </variable>
-      <variable label="Route1 Turnout8" CV="143" item="Route1 Turnout8" default="0">
+      <variable CV="143" item="Route1 Turnout8" default="0">
         <splitVal highCV="144" upperMask="XXXXVVVV"/>
         <label>Route1 Turnout8</label>
       </variable>
-      <variable label="Route1 Turnout8 Action" CV="144" mask="XXVVXXXX" item="Route1 Turnout8 Action" default="0">
+      <variable CV="144" mask="XXVVXXXX" item="Route1 Turnout8 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3176,11 +3212,11 @@
         </enumVal>
         <label>Route1 Turnout8 Action</label>
       </variable>
-      <variable label="Route2 Turnout1" CV="145" item="Route2 Turnout1" default="0">
+      <variable CV="145" item="Route2 Turnout1" default="0">
         <splitVal highCV="146" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout1</label>
       </variable>
-      <variable label="Route2 Type" CV="146" mask="VVXXXXXX" item="Route2 Type" default="0">
+      <variable CV="146" mask="VVXXXXXX" item="Route2 Type" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -3197,7 +3233,7 @@
         </enumVal>
         <label>Route2 Type</label>
       </variable>
-      <variable label="Route2 Turnout1 Action" CV="146" mask="XXVVXXXX" item="Route2 Turnout1 Action" default="0">
+      <variable CV="146" mask="XXVVXXXX" item="Route2 Turnout1 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3214,11 +3250,11 @@
         </enumVal>
         <label>Route2 Turnout1 Action</label>
       </variable>
-      <variable label="Route2 Turnout2" CV="147" item="Route2 Turnout2" default="0">
+      <variable CV="147" item="Route2 Turnout2" default="0">
         <splitVal highCV="148" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout2</label>
       </variable>
-      <variable label="Route2 Turnout2 Action" CV="148" mask="XXVVXXXX" item="Route2 Turnout2 Action" default="0">
+      <variable CV="148" mask="XXVVXXXX" item="Route2 Turnout2 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3235,11 +3271,11 @@
         </enumVal>
         <label>Route2 Turnout2 Action</label>
       </variable>
-      <variable label="Route2 Turnout3" CV="149" item="Route2 Turnout3" default="0">
+      <variable CV="149" item="Route2 Turnout3" default="0">
         <splitVal highCV="150" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout3</label>
       </variable>
-      <variable label="Route2 Turnout3 Action" CV="150" mask="XXVVXXXX" item="Route2 Turnout3 Action" default="0">
+      <variable CV="150" mask="XXVVXXXX" item="Route2 Turnout3 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3256,11 +3292,11 @@
         </enumVal>
         <label>Route2 Turnout3 Action</label>
       </variable>
-      <variable label="Route2 Turnout4" CV="151" item="Route2 Turnout4" default="0">
+      <variable CV="151" item="Route2 Turnout4" default="0">
         <splitVal highCV="152" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout4</label>
       </variable>
-      <variable label="Route2 Turnout4 Action" CV="152" mask="XXVVXXXX" item="Route2 Turnout4 Action" default="0">
+      <variable CV="152" mask="XXVVXXXX" item="Route2 Turnout4 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3277,11 +3313,11 @@
         </enumVal>
         <label>Route2 Turnout4 Action</label>
       </variable>
-      <variable label="Route2 Turnout5" CV="153" item="Route2 Turnout5" default="0">
+      <variable CV="153" item="Route2 Turnout5" default="0">
         <splitVal highCV="154" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout5</label>
       </variable>
-      <variable label="Route2 Turnout5 Action" CV="154" mask="XXVVXXXX" item="Route2 Turnout5 Action" default="0">
+      <variable CV="154" mask="XXVVXXXX" item="Route2 Turnout5 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3298,11 +3334,11 @@
         </enumVal>
         <label>Route2 Turnout5 Action</label>
       </variable>
-      <variable label="Route2 Turnout6" CV="155" item="Route2 Turnout6" default="0">
+      <variable CV="155" item="Route2 Turnout6" default="0">
         <splitVal highCV="156" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout6</label>
       </variable>
-      <variable label="Route2 Turnout6 Action" CV="156" mask="XXVVXXXX" item="Route2 Turnout6 Action" default="0">
+      <variable CV="156" mask="XXVVXXXX" item="Route2 Turnout6 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3319,11 +3355,11 @@
         </enumVal>
         <label>Route2 Turnout6 Action</label>
       </variable>
-      <variable label="Route2 Turnout7" CV="157" item="Route2 Turnout7" default="0">
+      <variable CV="157" item="Route2 Turnout7" default="0">
         <splitVal highCV="158" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout7</label>
       </variable>
-      <variable label="Route2 Turnout7 Action" CV="158" mask="XXVVXXXX" item="Route2 Turnout7 Action" default="0">
+      <variable CV="158" mask="XXVVXXXX" item="Route2 Turnout7 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3340,11 +3376,11 @@
         </enumVal>
         <label>Route2 Turnout7 Action</label>
       </variable>
-      <variable label="Route2 Turnout8" CV="159" item="Route2 Turnout8" default="0">
+      <variable CV="159" item="Route2 Turnout8" default="0">
         <splitVal highCV="160" upperMask="XXXXVVVV"/>
         <label>Route2 Turnout8</label>
       </variable>
-      <variable label="Route2 Turnout8 Action" CV="160" mask="XXVVXXXX" item="Route2 Turnout8 Action" default="0">
+      <variable CV="160" mask="XXVVXXXX" item="Route2 Turnout8 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3361,11 +3397,11 @@
         </enumVal>
         <label>Route2 Turnout8 Action</label>
       </variable>
-      <variable label="Route3 Turnout1" CV="161" item="Route3 Turnout1" default="0">
+      <variable CV="161" item="Route3 Turnout1" default="0">
         <splitVal highCV="162" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout1</label>
       </variable>
-      <variable label="Route3 Type" CV="162" mask="VVXXXXXX" item="Route3 Type" default="0">
+      <variable CV="162" mask="VVXXXXXX" item="Route3 Type" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -3382,7 +3418,7 @@
         </enumVal>
         <label>Route3 Type</label>
       </variable>
-      <variable label="Route3 Turnout1 Action" CV="162" mask="XXVVXXXX" item="Route3 Turnout1 Action" default="0">
+      <variable CV="162" mask="XXVVXXXX" item="Route3 Turnout1 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3399,11 +3435,11 @@
         </enumVal>
         <label>Route3 Turnout1 Action</label>
       </variable>
-      <variable label="Route3 Turnout2" CV="163" item="Route3 Turnout2" default="0">
+      <variable CV="163" item="Route3 Turnout2" default="0">
         <splitVal highCV="164" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout2</label>
       </variable>
-      <variable label="Route3 Turnout2 Action" CV="164" mask="XXVVXXXX" item="Route3 Turnout2 Action" default="0">
+      <variable CV="164" mask="XXVVXXXX" item="Route3 Turnout2 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3420,11 +3456,11 @@
         </enumVal>
         <label>Route3 Turnout2 Action</label>
       </variable>
-      <variable label="Route3 Turnout3" CV="165" item="Route3 Turnout3" default="0">
+      <variable CV="165" item="Route3 Turnout3" default="0">
         <splitVal highCV="166" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout3</label>
       </variable>
-      <variable label="Route3 Turnout3 Action" CV="166" mask="XXVVXXXX" item="Route3 Turnout3 Action" default="0">
+      <variable CV="166" mask="XXVVXXXX" item="Route3 Turnout3 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3441,11 +3477,11 @@
         </enumVal>
         <label>Route3 Turnout3 Action</label>
       </variable>
-      <variable label="Route3 Turnout4" CV="167" item="Route3 Turnout4" default="0">
+      <variable CV="167" item="Route3 Turnout4" default="0">
         <splitVal highCV="168" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout4</label>
       </variable>
-      <variable label="Route3 Turnout4 Action" CV="168" mask="XXVVXXXX" item="Route3 Turnout4 Action" default="0">
+      <variable CV="168" mask="XXVVXXXX" item="Route3 Turnout4 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3462,11 +3498,11 @@
         </enumVal>
         <label>Route3 Turnout4 Action</label>
       </variable>
-      <variable label="Route3 Turnout5" CV="169" item="Route3 Turnout5" default="0">
+      <variable CV="169" item="Route3 Turnout5" default="0">
         <splitVal highCV="170" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout5</label>
       </variable>
-      <variable label="Route3 Turnout5 Action" CV="170" mask="XXVVXXXX" item="Route3 Turnout5 Action" default="0">
+      <variable CV="170" mask="XXVVXXXX" item="Route3 Turnout5 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3483,11 +3519,11 @@
         </enumVal>
         <label>Route3 Turnout5 Action</label>
       </variable>
-      <variable label="Route3 Turnout6" CV="171" item="Route3 Turnout6" default="0">
+      <variable CV="171" item="Route3 Turnout6" default="0">
         <splitVal highCV="172" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout6</label>
       </variable>
-      <variable label="Route3 Turnout6 Action" CV="172" mask="XXVVXXXX" item="Route3 Turnout6 Action" default="0">
+      <variable CV="172" mask="XXVVXXXX" item="Route3 Turnout6 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3504,11 +3540,11 @@
         </enumVal>
         <label>Route3 Turnout6 Action</label>
       </variable>
-      <variable label="Route3 Turnout7" CV="173" item="Route3 Turnout7" default="0">
+      <variable CV="173" item="Route3 Turnout7" default="0">
         <splitVal highCV="174" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout7</label>
       </variable>
-      <variable label="Route3 Turnout7 Action" CV="174" mask="XXVVXXXX" item="Route3 Turnout7 Action" default="0">
+      <variable CV="174" mask="XXVVXXXX" item="Route3 Turnout7 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3525,11 +3561,11 @@
         </enumVal>
         <label>Route3 Turnout7 Action</label>
       </variable>
-      <variable label="Route3 Turnout8" CV="175" item="Route3 Turnout8" default="0">
+      <variable CV="175" item="Route3 Turnout8" default="0">
         <splitVal highCV="176" upperMask="XXXXVVVV"/>
         <label>Route3 Turnout8</label>
       </variable>
-      <variable label="Route3 Turnout8 Action" CV="176" mask="XXVVXXXX" item="Route3 Turnout8 Action" default="0">
+      <variable CV="176" mask="XXVVXXXX" item="Route3 Turnout8 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3546,11 +3582,11 @@
         </enumVal>
         <label>Route3 Turnout8 Action</label>
       </variable>
-      <variable label="Route4 Turnout1" CV="177" item="Route4 Turnout1" default="0">
+      <variable CV="177" item="Route4 Turnout1" default="0">
         <splitVal highCV="178" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout1</label>
       </variable>
-      <variable label="Route4 Type" CV="178" mask="VVXXXXXX" item="Route4 Type" default="0">
+      <variable CV="178" mask="VVXXXXXX" item="Route4 Type" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -3567,7 +3603,7 @@
         </enumVal>
         <label>Route4 Type</label>
       </variable>
-      <variable label="Route4 Turnout1 Action" CV="178" mask="XXVVXXXX" item="Route4 Turnout1 Action" default="0">
+      <variable CV="178" mask="XXVVXXXX" item="Route4 Turnout1 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3584,11 +3620,11 @@
         </enumVal>
         <label>Route4 Turnout1 Action</label>
       </variable>
-      <variable label="Route4 Turnout2" CV="179" item="Route4 Turnout2" default="0">
+      <variable CV="179" item="Route4 Turnout2" default="0">
         <splitVal highCV="180" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout2</label>
       </variable>
-      <variable label="Route4 Turnout2 Action" CV="180" mask="XXVVXXXX" item="Route4 Turnout2 Action" default="0">
+      <variable CV="180" mask="XXVVXXXX" item="Route4 Turnout2 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3605,11 +3641,11 @@
         </enumVal>
         <label>Route4 Turnout2 Action</label>
       </variable>
-      <variable label="Route4 Turnout3" CV="181" item="Route4 Turnout3" default="0">
+      <variable CV="181" item="Route4 Turnout3" default="0">
         <splitVal highCV="182" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout3</label>
       </variable>
-      <variable label="Route4 Turnout3 Action" CV="182" mask="XXVVXXXX" item="Route4 Turnout3 Action" default="0">
+      <variable CV="182" mask="XXVVXXXX" item="Route4 Turnout3 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3626,11 +3662,11 @@
         </enumVal>
         <label>Route4 Turnout3 Action</label>
       </variable>
-      <variable label="Route4 Turnout4" CV="183" item="Route4 Turnout4" default="0">
+      <variable CV="183" item="Route4 Turnout4" default="0">
         <splitVal highCV="184" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout4</label>
       </variable>
-      <variable label="Route4 Turnout4 Action" CV="184" mask="XXVVXXXX" item="Route4 Turnout4 Action" default="0">
+      <variable CV="184" mask="XXVVXXXX" item="Route4 Turnout4 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3647,11 +3683,11 @@
         </enumVal>
         <label>Route4 Turnout4 Action</label>
       </variable>
-      <variable label="Route4 Turnout5" CV="185" item="Route4 Turnout5" default="0">
+      <variable CV="185" item="Route4 Turnout5" default="0">
         <splitVal highCV="186" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout5</label>
       </variable>
-      <variable label="Route4 Turnout5 Action" CV="186" mask="XXVVXXXX" item="Route4 Turnout5 Action" default="0">
+      <variable CV="186" mask="XXVVXXXX" item="Route4 Turnout5 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3668,11 +3704,11 @@
         </enumVal>
         <label>Route4 Turnout5 Action</label>
       </variable>
-      <variable label="Route4 Turnout6" CV="187" item="Route4 Turnout6" default="0">
+      <variable CV="187" item="Route4 Turnout6" default="0">
         <splitVal highCV="188" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout6</label>
       </variable>
-      <variable label="Route4 Turnout6 Action" CV="188" mask="XXVVXXXX" item="Route4 Turnout6 Action" default="0">
+      <variable CV="188" mask="XXVVXXXX" item="Route4 Turnout6 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3689,11 +3725,11 @@
         </enumVal>
         <label>Route4 Turnout6 Action</label>
       </variable>
-      <variable label="Route4 Turnout7" CV="189" item="Route4 Turnout7" default="0">
+      <variable CV="189" item="Route4 Turnout7" default="0">
         <splitVal highCV="190" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout7</label>
       </variable>
-      <variable label="Route4 Turnout7 Action" CV="190" mask="XXVVXXXX" item="Route4 Turnout7 Action" default="0">
+      <variable CV="190" mask="XXVVXXXX" item="Route4 Turnout7 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3710,11 +3746,11 @@
         </enumVal>
         <label>Route4 Turnout7 Action</label>
       </variable>
-      <variable label="Route4 Turnout8" CV="191" item="Route4 Turnout8" default="0">
+      <variable CV="191" item="Route4 Turnout8" default="0">
         <splitVal highCV="192" upperMask="XXXXVVVV"/>
         <label>Route4 Turnout8</label>
       </variable>
-      <variable label="Route4 Turnout8 Action" CV="192" mask="XXVVXXXX" item="Route4 Turnout8 Action" default="0">
+      <variable CV="192" mask="XXVVXXXX" item="Route4 Turnout8 Action" default="0">
         <enumVal>
           <enumChoice choice="Closed">
             <choice>Closed</choice>
@@ -3738,33 +3774,45 @@
       <factReset label="Restore Servo and Input CVs to Factory Defaults" CV="8" default="10"/>
     </resets>
   </decoder>
-  <pane name="Quad-LN">
+  <pane>
     <column>
       <row>
         <column>
           <display item="Long Address" label="Long Address" tooltip="0-16383: 5 digit number suggested">
             <label>Long Address</label>
           </display>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
           <display item="Servo Start Address" label="Desired Servo Start Address" tooltip="Desired address of first servo.  Entry will be rounded down to a block-of-eight boundary (1, 9 ,... 2033).">
             <label>Servo Start Address</label>
           </display>
           <display item="Sensor Start Address" label="Desired Sensor Start Address" tooltip="Desired address of first sensor.  Entry will be rounded down block-of-eight boundary (1, 9, ... 4089).">
             <label>Sensor Start Address</label>
           </display>
-          <label label=" "/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="AutoAlign Current" label="AutoAlign Current" tooltip="Current limit for AutoAlignment: 10-80 (typ) or 0 for manual preset selection">
             <label>AutoAlign Current</label>
           </display>
           <display item="Lock Indicator" label="Lock Indicator" tooltip="Lock state to indicate on LED">
             <label>Lock Indicator</label>
           </display>
-          <label label=" "/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
         <column>
-          <label label="   "/>
+          <label>
+            <text>   </text>
+          </label>
         </column>
         <column>
           <display item="Input Interrogate" label="Input Interrogate" tooltip="Report input states">
@@ -3785,9 +3833,15 @@
           <display item="Local Actions" label="Local Actions" tooltip="Provide visibililty on Loconet for local actions">
             <label>Local Actions</label>
           </display>
-          <label label=" "/>
-          <label label=" "/>
-          <label label=" "/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
         </column>
       </row>
       <row>
@@ -3802,7 +3856,9 @@
         </column>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
         <column>
@@ -3816,20 +3872,32 @@
         </column>
       </row>
       <row>
-        <label label=" "/>
+        <label>
+          <text> </text>
+        </label>
       </row>
       <row>
         <column>
-          <label label="Decoder File Version: 1.02">
-            <label>Decoder File Version: 1.02</label>
+          <label>
+            <text>Decoder File Version: 1.02</text>
           </label>
         </column>
       </row>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label="***JMRI INTERNAL USE ONLY BELOW THIS POINT***  To change the Servo or Sensor Start Address edit the Desired Start Address variable above."/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>***JMRI INTERNAL USE ONLY BELOW THIS POINT***  To change the Servo or Sensor Start Address edit the Desired Start Address variable above.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Servo Base Block Hi Change" label="Servo Base Hi Block" tooltip="DO NOT EDIT HERE">
@@ -3851,20 +3919,28 @@
     </column>
     <name>Quad-LN</name>
   </pane>
-  <pane name="Group 1">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="                                 SERVO 1                                      "/>
-          <label label=" "/>
+          <label>
+            <text>                                 SERVO 1                                      </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Servo1 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
           <display item="Servo5 Addr" label="Lock  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                                 TRAVEL"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                 TRAVEL</text>
+          </label>
           <display item="Servo1 Closed" label="Closed Position" tooltip="0=full CCW, 2400=full CW">
             <label>Closed Position</label>
           </display>
@@ -3889,21 +3965,33 @@
           <display item="Servo1 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
             <label>Thrown RapidStart</label>
           </display>
-          <label label=" "/>
-          <label label="                                  LOCK"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  LOCK</text>
+          </label>
           <display item="Servo1 Lock" label="Mode" tooltip="Controls Lock via Turnout at addr of servo + 4">
             <label>Mode</label>
           </display>
           <display item="Servo1 Mid" label="Midpoint" tooltip="Enables move to midpoint when Lock Turnout is Thrown">
             <label>Mode</label>
           </display>
-          <label label=" "/>
-          <label label="                                  MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  MESSAGE</text>
+          </label>
           <display item="Servo1 Output Message" label="Output Msg" tooltip="Report turnout state without position feedback sensors">
             <label>Output Msg</label>
           </display>
-          <label label=" "/>
-          <label label="                                  CASCADE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  CASCADE</text>
+          </label>
           <display item="Servo1 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
@@ -3915,16 +4003,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         MAIN IO 1"/>
-          <label label=" "/>
+          <label>
+            <text>                         MAIN IO 1</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor2 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO2 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -3934,16 +4032,24 @@
           <display item="GPIO2 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 1 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 1 INDICATION</text>
+          </label>
           <display item="GPIO2 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO2 LED Sense" label="LED Sense" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Sense</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO2 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -3968,8 +4074,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO2 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -3984,16 +4094,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         AUX IO 1"/>
-          <label label=" "/>
+          <label>
+            <text>                         AUX IO 1</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor1 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO1 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4003,16 +4123,24 @@
           <display item="GPIO1 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 1 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 1 INDICATION</text>
+          </label>
           <display item="GPIO1 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO1 LED Sense" label="LED Drive" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Drive</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO1 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4037,8 +4165,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO1 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4056,20 +4188,28 @@
     </column>
     <name>Group 1</name>
   </pane>
-  <pane name="Group 2">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="                                 SERVO 2                                      "/>
-          <label label=" "/>
+          <label>
+            <text>                                 SERVO 2                                      </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Servo2 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
           <display item="Servo6 Addr" label="Lock  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                                 TRAVEL"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                 TRAVEL</text>
+          </label>
           <display item="Servo2 Closed" label="Closed Position" tooltip="0=full CCW, 2400=full CW">
             <label>Closed Position</label>
           </display>
@@ -4094,21 +4234,33 @@
           <display item="Servo2 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
             <label>Thrown RapidStart</label>
           </display>
-          <label label=" "/>
-          <label label="                                  LOCK"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  LOCK</text>
+          </label>
           <display item="Servo2 Lock" label="Mode" tooltip="Controls Lock via Turnout at addr of servo + 4">
             <label>Mode</label>
           </display>
           <display item="Servo2 Mid" label="Midpoint" tooltip="Enables move to midpoint when Lock Turnout is Thrown">
             <label>Mode</label>
           </display>
-          <label label=" "/>
-          <label label="                                  MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  MESSAGE</text>
+          </label>
           <display item="Servo2 Output Message" label="Output Msg" tooltip="Report turnout state without position feedback sensors">
             <label>Output Msg</label>
           </display>
-          <label label=" "/>
-          <label label="                                  CASCADE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  CASCADE</text>
+          </label>
           <display item="Servo2 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
@@ -4120,16 +4272,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         MAIN IO 2"/>
-          <label label=" "/>
+          <label>
+            <text>                         MAIN IO 2</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor4 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO4 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4139,16 +4301,24 @@
           <display item="GPIO4 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 2 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 2 INDICATION</text>
+          </label>
           <display item="GPIO4 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO4 LED Sense" label="LED Sense" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Sense</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO4 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4173,8 +4343,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO4 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4189,16 +4363,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         AUX IO 2"/>
-          <label label=" "/>
+          <label>
+            <text>                         AUX IO 2</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor3 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO3 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4208,16 +4392,24 @@
           <display item="GPIO3 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 2 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 2 INDICATION</text>
+          </label>
           <display item="GPIO3 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO3 LED Sense" label="LED Drive" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Drive</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO3 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4242,8 +4434,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO3 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4261,20 +4457,28 @@
     </column>
     <name>Group 2</name>
   </pane>
-  <pane name="Group 3">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="                                 SERVO 3                                      "/>
-          <label label=" "/>
+          <label>
+            <text>                                 SERVO 3                                      </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Servo3 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
           <display item="Servo7 Addr" label="Lock  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                                 TRAVEL"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                 TRAVEL</text>
+          </label>
           <display item="Servo3 Closed" label="Closed Position" tooltip="0=full CCW, 2400=full CW">
             <label>Closed Position</label>
           </display>
@@ -4299,21 +4503,33 @@
           <display item="Servo3 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
             <label>Thrown RapidStart</label>
           </display>
-          <label label=" "/>
-          <label label="                                  LOCK"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  LOCK</text>
+          </label>
           <display item="Servo3 Lock" label="Mode" tooltip="Controls Lock via Turnout at addr of servo + 4">
             <label>Mode</label>
           </display>
           <display item="Servo3 Mid" label="Midpoint" tooltip="Enables move to midpoint when Lock Turnout is Thrown">
             <label>Mode</label>
           </display>
-          <label label=" "/>
-          <label label="                                  MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  MESSAGE</text>
+          </label>
           <display item="Servo3 Output Message" label="Output Msg" tooltip="Report turnout state without position feedback sensors">
             <label>Output Msg</label>
           </display>
-          <label label=" "/>
-          <label label="                                  CASCADE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  CASCADE</text>
+          </label>
           <display item="Servo3 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
@@ -4325,16 +4541,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         MAIN IO 3"/>
-          <label label=" "/>
+          <label>
+            <text>                         MAIN IO 3</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor6 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO6 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4344,16 +4570,24 @@
           <display item="GPIO6 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 3 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 3 INDICATION</text>
+          </label>
           <display item="GPIO6 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO6 LED Sense" label="LED Sense" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Sense</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO6 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4378,8 +4612,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO6 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4394,16 +4632,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         AUX IO 3"/>
-          <label label=" "/>
+          <label>
+            <text>                         AUX IO 3</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor5 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO5 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4413,16 +4661,24 @@
           <display item="GPIO5 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 3 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 3 INDICATION</text>
+          </label>
           <display item="GPIO5 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO5 LED Sense" label="LED Drive" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Drive</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO5 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4447,8 +4703,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO5 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4466,20 +4726,28 @@
     </column>
     <name>Group 3</name>
   </pane>
-  <pane name="Group 4">
+  <pane>
     <column>
       <row>
         <column>
-          <label label="                                 SERVO 4                                      "/>
-          <label label=" "/>
+          <label>
+            <text>                                 SERVO 4                                      </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Servo4 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
           <display item="Servo8 Addr" label="Lock  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                                 TRAVEL"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                 TRAVEL</text>
+          </label>
           <display item="Servo4 Closed" label="Closed Position" tooltip="0=full CCW, 2400=full CW">
             <label>Closed Position</label>
           </display>
@@ -4504,21 +4772,33 @@
           <display item="Servo4 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
             <label>Thrown RapidStart</label>
           </display>
-          <label label=" "/>
-          <label label="                                  LOCK"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  LOCK</text>
+          </label>
           <display item="Servo4 Lock" label="Mode" tooltip="Controls Lock via Turnout at addr of servo + 4">
             <label>Mode</label>
           </display>
           <display item="Servo4 Mid" label="Midpoint" tooltip="Enables move to midpoint when Lock Turnout is Thrown">
             <label>Mode</label>
           </display>
-          <label label=" "/>
-          <label label="                                  MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  MESSAGE</text>
+          </label>
           <display item="Servo4 Output Message" label="Output Msg" tooltip="Report turnout state without position feedback sensors">
             <label>Output Msg</label>
           </display>
-          <label label=" "/>
-          <label label="                                  CASCADE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                                  CASCADE</text>
+          </label>
           <display item="Servo4 Cascade Trigger" label="Trigger">
             <label>Trigger</label>
           </display>
@@ -4530,16 +4810,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         MAIN IO 4"/>
-          <label label=" "/>
+          <label>
+            <text>                         MAIN IO 4</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor8 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO8 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4549,16 +4839,24 @@
           <display item="GPIO8 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 4 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 4 INDICATION</text>
+          </label>
           <display item="GPIO8 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO8 LED Sense" label="LED Sense" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Sense</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO8 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4583,8 +4881,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO8 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4599,16 +4901,26 @@
           </display>
         </column>
         <column>
-          <label label="            "/>
+          <label>
+            <text>            </text>
+          </label>
         </column>
         <column>
-          <label label="                         AUX IO 4"/>
-          <label label=" "/>
+          <label>
+            <text>                         AUX IO 4</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
           <display item="Sensor7 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
             <label>Address</label>
           </display>
-          <label label=" "/>
-          <label label="                          INPUT"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          INPUT</text>
+          </label>
           <display item="GPIO7 Trigger" label="Trigger" tooltip="Change on input that triggers Action and Message">
             <label>Trigger</label>
           </display>
@@ -4618,16 +4930,24 @@
           <display item="GPIO7 Message" label="Message" tooltip="Message sent when local input triggers">
             <label>Message</label>
           </display>
-          <label label=" "/>
-          <label label="                          SERVO 4 INDICATION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SERVO 4 INDICATION</text>
+          </label>
           <display item="GPIO7 LED Mode" label="LED Mode" tooltip="Enables LED drive and blinking options">
             <label>LED Mode</label>
           </display>
           <display item="GPIO7 LED Sense" label="LED Drive" tooltip="Swaps LED drive so panel matches turnout">
             <label>LED Drive</label>
           </display>
-          <label label=" "/>
-          <label label="                          ACTION"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          ACTION</text>
+          </label>
           <row>
             <column>
               <display item="GPIO7 Action: Servo1" label="          Servo1" tooltip="Servo1 action">
@@ -4652,8 +4972,12 @@
               </display>
             </column>
           </row>
-          <label label=" "/>
-          <label label="                          SECONDARY MESSAGE"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>                          SECONDARY MESSAGE</text>
+          </label>
           <display item="GPIO7 Msg2 Action" label="Type" tooltip="Trigger on this message or send this message">
             <label>Type</label>
           </display>
@@ -4671,14 +4995,20 @@
     </column>
     <name>Group 4</name>
   </pane>
-  <pane name="Routes">
+  <pane>
     <column>
-      <label label="                  ROUTE 1"/>
-      <label label=" "/>
+      <label>
+        <text>                  ROUTE 1</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Route1 Type" label="Type" tooltip="Type of route">
         <label>Route1 Type</label>
       </display>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route1 Turnout1" label="" tooltip="Turnout or Sensor number">
@@ -4691,7 +5021,9 @@
           </display>
         </column>
       </row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route1 Turnout2" label="" tooltip="Turnout or Sensor number">
@@ -4778,12 +5110,18 @@
       </row>
     </column>
     <column>
-      <label label="                  ROUTE 2"/>
-      <label label=" "/>
+      <label>
+        <text>                  ROUTE 2</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Route2 Type" label="Type" tooltip="Type of route">
         <label>Route2 Type</label>
       </display>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route2 Turnout1" label="" tooltip="Turnout or Sensor number">
@@ -4796,7 +5134,9 @@
           </display>
         </column>
       </row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route2 Turnout2" label="" tooltip="Turnout or Sensor number">
@@ -4883,12 +5223,18 @@
       </row>
     </column>
     <column>
-      <label label="                  ROUTE 3"/>
-      <label label=" "/>
+      <label>
+        <text>                  ROUTE 3</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Route3 Type" label="Type" tooltip="Type of route">
         <label>Route3 Type</label>
       </display>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route3 Turnout1" label="" tooltip="Turnout or Sensor number">
@@ -4901,7 +5247,9 @@
           </display>
         </column>
       </row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route3 Turnout2" label="" tooltip="Turnout or Sensor number">
@@ -4988,12 +5336,18 @@
       </row>
     </column>
     <column>
-      <label label="                  ROUTE 4"/>
-      <label label=" "/>
+      <label>
+        <text>                  ROUTE 4</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Route4 Type" label="Type" tooltip="Type of route">
         <label>Route4 Type</label>
       </display>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route4 Turnout1" label="" tooltip="Turnout or Sensor number">
@@ -5006,7 +5360,9 @@
           </display>
         </column>
       </row>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
           <display item="Route4 Turnout2" label="" tooltip="Turnout or Sensor number">

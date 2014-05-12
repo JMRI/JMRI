@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
 <!-- $Id: SoundTraxx_MC.xml 22121 2012-12-30 02:57:59Z jacobsen $ -->
@@ -71,44 +71,44 @@
     <!-- Configuration Variable (CV) information follows -->
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
+      <variable CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start Voltage (0-255)</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
       </variable>
-      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
       </variable>
-      <variable label="Max Voltage (0-255)" CV="5" default="0" item="Vhigh" include="852002,852003,852004">
+      <variable CV="5" default="0" item="Vhigh" include="852002,852003,852004">
         <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Mid Voltage (0-255)" CV="6" default="0" item="Vmid" include="852002,852003,852004">
+      <variable CV="6" default="0" item="Vmid" include="852002,852003,852004">
         <decVal/>
         <label>Vmid</label>
       </variable>
-      <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
+      <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
         <decVal/>
         <label>Manufacturer Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+      <variable CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="BEMF Cutout (0-127 or 128-255)" CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
+      <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
       </variable>
-      <variable label="Packet Time Out Value (0-255)" CV="11" item="Packet Time-out Value" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;      addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
+      <variable CV="11" item="Packet Time-out Value" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;      addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Packet Time Out Value (0-255)</label>
       </variable>
-      <variable label="Power Source Conversion Type" CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1" include="852002,852003,852004" tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;      switch to whenever a DCC signal is not present.&lt;br&gt;      (Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
+      <variable CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1" include="852002,852003,852004" tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;      switch to whenever a DCC signal is not present.&lt;br&gt;      (Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="No alternate power source available">
             <choice>No alternate power source available</choice>
@@ -119,77 +119,77 @@
         </enumVal>
         <label>Power Source Conversion Type</label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" include="852002,852003,852004" tooltip="Check to enable function F1 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" include="852002,852003,852004" tooltip="Check to enable function F1 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F1</label>
       </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" include="852002,852003,852004" tooltip="Check to enable function F2 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" include="852002,852003,852004" tooltip="Check to enable function F2 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F2</label>
       </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F3 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F3 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F3</label>
       </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F4 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F4 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F7</label>
       </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F8 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F8 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F0(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F0(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F9 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F9 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F9</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F10 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F10 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F10</label>
       </variable>
-      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F11 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F11 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F11</label>
       </variable>
-      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F12 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F12 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F12</label>
       </variable>
-      <variable label="CV Unlock Register (0-7)" CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;      (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
+      <variable CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;      (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
         <decVal/>
         <label>CV Unlock Register (0-7)</label>
       </variable>
-      <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
+      <variable CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
         <label>Consist Address (0-127)</label>
         <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
       </variable>
-      <variable label="Loco Direction In Consist" CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
+      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -201,7 +201,7 @@
         <label>Loco Direction In Consist</label>
         <comment>A consist address over 127 will also set this bit</comment>
       </variable>
-      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
+      <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -212,7 +212,7 @@
         </enumVal>
         <label>Consist Address Activation for F1</label>
       </variable>
-      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
+      <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -223,7 +223,7 @@
         </enumVal>
         <label>Consist Address Activation for F2</label>
       </variable>
-      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
+      <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -234,7 +234,7 @@
         </enumVal>
         <label>Consist Address Activation for F3</label>
       </variable>
-      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
+      <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -245,7 +245,7 @@
         </enumVal>
         <label>Consist Address Activation for F4</label>
       </variable>
-      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
+      <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -256,7 +256,7 @@
         </enumVal>
         <label>Consist Address Activation for F5</label>
       </variable>
-      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
+      <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -267,7 +267,7 @@
         </enumVal>
         <label>Consist Address Activation for F6</label>
       </variable>
-      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
+      <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -278,7 +278,7 @@
         </enumVal>
         <label>Consist Address Activation for F7</label>
       </variable>
-      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
+      <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -289,7 +289,7 @@
         </enumVal>
         <label>Consist Address Activation for F8</label>
       </variable>
-      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
+      <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -300,7 +300,7 @@
         </enumVal>
         <label>Consist Address Activation for F0(f) in Forward</label>
       </variable>
-      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+      <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -311,7 +311,7 @@
         </enumVal>
         <label>Consist Address Activation for F0(r) in Reverse</label>
       </variable>
-      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
+      <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -322,7 +322,7 @@
         </enumVal>
         <label>Consist Address Activation for F9</label>
       </variable>
-      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
+      <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -333,7 +333,7 @@
         </enumVal>
         <label>Consist Address Activation for F10</label>
       </variable>
-      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
+      <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -344,7 +344,7 @@
         </enumVal>
         <label>Consist Address Activation for F11</label>
       </variable>
-      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
+      <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -355,12 +355,12 @@
         </enumVal>
         <label>Consist Address Activation for F12</label>
       </variable>
-      <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
+      <variable CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
         <decVal max="127"/>
         <label>Consist Acceleration Rate (0-127)</label>
         <comment>Additional consist acceleration (combined with CV3)</comment>
       </variable>
-      <variable label="Consist Acceleration Sign" CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="0">
+      <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="0">
         <enumVal>
           <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
             <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
@@ -371,12 +371,12 @@
         </enumVal>
         <label>Consist Acceleration Sign</label>
       </variable>
-      <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
+      <variable CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>Consist Braking Rate (0-127)</label>
         <comment>Additional consist braking (combined with CV4)</comment>
       </variable>
-      <variable label="Consist Braking Sign" CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
+      <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <enumVal>
           <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
             <choice>Add value to baseline braking rate (increases braking delay)</choice>
@@ -387,7 +387,7 @@
         </enumVal>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
+      <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used">
             <choice>Disabled, Speed Curves not used</choice>
@@ -443,7 +443,7 @@
         </enumVal>
         <label>Speed Table Selection</label>
       </variable>
-      <variable label="Locomotive's Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -454,7 +454,7 @@
         </enumVal>
         <label>Locomotive's Normal Direction of Motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -465,7 +465,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Alternate Power Source Enable" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
+      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
         <enumVal>
           <enumChoice choice="NMRA Digital Only">
             <choice>NMRA Digital Only</choice>
@@ -476,7 +476,7 @@
         </enumVal>
         <label>Alternate Power Source Enable</label>
       </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
         <enumVal>
           <enumChoice choice="Use Start Voltage (Vstart)">
             <choice>Use Start Voltage (Vstart)</choice>
@@ -487,7 +487,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      <variable label="CV Lock Enable" CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
+      <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <enumVal>
           <enumChoice choice="Normal operation (no locking)">
             <choice>Normal operation (no locking)</choice>
@@ -498,7 +498,7 @@
         </enumVal>
         <label>CV Lock Enable</label>
       </variable>
-      <variable label="CV Clear (CVCLR)" CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
+      <variable CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
         <enumVal>
           <enumChoice choice="Normal operation">
             <choice>Normal operation</choice>
@@ -509,7 +509,7 @@
         </enumVal>
         <label>CV Clear (CVCLR)</label>
       </variable>
-      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+      <variable CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -521,184 +521,184 @@
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
       <!-- Function Mapping follows -->
-      <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
+      <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Headlight</label>
       </variable>
-      <variable label="FL(f) controls Backup Light" CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" default="0">
+      <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
-      <variable label="FL(f) controls output Xing Logic" CV="33" mask="XXXXXVXX" minOut="1" default="0">
+      <variable item="FL(f) controls output Xing Logic" CV="33" mask="XXXXXVXX" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Xing Logic</label>
       </variable>
-      <variable label="FL(f) controls output FX5" CV="33" mask="XXXVXXXX" item="FL(f) controls output 3" minOut="1" default="0">
+      <variable CV="33" mask="XXXVXXXX" item="FL(f) controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output FX5</label>
       </variable>
-      <variable label="FL(f) controls output FX6" CV="33" mask="XXVXXXXX" item="FL(f) controls output 4" minOut="2" default="0">
+      <variable CV="33" mask="XXVXXXXX" item="FL(f) controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output FX6</label>
       </variable>
-      <variable label="FL(r) controls Headlight" CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" default="0">
+      <variable CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls Headlight</label>
       </variable>
-      <variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
+      <variable CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls Backup Light</label>
       </variable>
-      <variable label="FL(r) controls output Xing Logic" CV="34" mask="XXXXXVXX" default="0">
+      <variable item="FL(r) controls output Xing Logic" CV="34" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output Xing Logic</label>
       </variable>
-      <variable label="FL(r) controls output FX5" CV="34" mask="XXXVXXXX" item="FL(r) controls output 3" minOut="1" default="0">
+      <variable CV="34" mask="XXXVXXXX" item="FL(r) controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output FX5</label>
       </variable>
-      <variable label="FL(r) controls output FX6" CV="34" mask="XXVXXXXX" item="FL(r) controls output 4" minOut="2" default="0">
+      <variable CV="34" mask="XXVXXXXX" item="FL(r) controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output FX6</label>
       </variable>
-      <variable label="F1 controls Headlight" CV="35" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
+      <variable CV="35" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls Headlight</label>
       </variable>
-      <variable label="F1 controls Backup Light" CV="35" mask="XXXXXXVX" item="F1 controls output 2" minOut="2" default="0">
+      <variable CV="35" mask="XXXXXXVX" item="F1 controls output 2" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls Backup Light</label>
       </variable>
-      <variable label="F1 controls output Xing Logic" CV="35" mask="XXXXXVXX" default="0">
+      <variable item="F1 controls output Xing Logic" CV="35" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output Xing Logic</label>
       </variable>
-      <variable label="F1 controls output FX5" CV="35" mask="XXXVXXXX" item="F1 controls output 3" minOut="1" default="0">
+      <variable CV="35" mask="XXXVXXXX" item="F1 controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output FX5</label>
       </variable>
-      <variable label="F1 controls output FX6" CV="35" mask="XXVXXXXX" item="F1 controls output 4" minOut="2" default="0">
+      <variable CV="35" mask="XXVXXXXX" item="F1 controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output FX6</label>
       </variable>
-      <variable label="F2 controls Headlight" CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" default="0">
+      <variable CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls Headlight</label>
       </variable>
-      <variable label="F2 controls Backup Light" CV="36" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
+      <variable CV="36" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls Backup Light</label>
       </variable>
-      <variable label="F2 controls output Xing Logic" CV="36" mask="XXXXXVXX" default="1">
+      <variable item="F2 controls output Xing Logic" CV="36" mask="XXXXXVXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output Xing Logic</label>
       </variable>
-      <variable label="F2 controls output FX5" CV="36" mask="XXXVXXXX" item="F2 controls output 3" minOut="1" default="0">
+      <variable CV="36" mask="XXXVXXXX" item="F2 controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output FX5</label>
       </variable>
-      <variable label="F2 controls output FX6" CV="36" mask="XXVXXXXX" item="F2 controls output 4" minOut="2" default="0">
+      <variable CV="36" mask="XXVXXXXX" item="F2 controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output FX6</label>
       </variable>
-      <variable label="F3 controls output FX5" CV="37" mask="XXXXXXVX" item="F3 controls output 3" minOut="1" default="0">
+      <variable CV="37" mask="XXXXXXVX" item="F3 controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output FX5</label>
       </variable>
-      <variable label="F3 controls output FX6" CV="37" mask="XXXXXVXX" item="F3 controls output 4" minOut="2" default="0">
+      <variable CV="37" mask="XXXXXVXX" item="F3 controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output FX6</label>
       </variable>
-      <variable label="F3 controls output Dimmer" CV="37" mask="VXXXXXXX" default="0">
+      <variable item="F3 controls output Dimmer" CV="37" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Dimmer</label>
       </variable>
-      <variable label="F4 controls output FX5" CV="38" mask="XXXXXXVX" item="F4 controls output 3" minOut="1" default="0">
+      <variable CV="38" mask="XXXXXXVX" item="F4 controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output FX5</label>
       </variable>
-      <variable label="F4 controls output FX6" CV="38" mask="XXXXXVXX" item="F4 controls output 4" minOut="2" default="0">
+      <variable CV="38" mask="XXXXXVXX" item="F4 controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output FX6</label>
       </variable>
-      <variable label="F4 controls output Dimmer" CV="38" mask="VXXXXXXX" default="0">
+      <variable item="F4 controls output Dimmer" CV="38" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Dimmer</label>
       </variable>
-      <variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1">
+      <variable CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output FX5</label>
       </variable>
-      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0">
+      <variable CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output FX6</label>
       </variable>
-      <variable label="F5 controls output Dimmer" CV="39" mask="VXXXXXXX" default="0">
+      <variable item="F5 controls output Dimmer" CV="39" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Dimmer</label>
       </variable>
-      <variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0">
+      <variable CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output FX5</label>
       </variable>
-      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1">
+      <variable CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output FX6</label>
       </variable>
-      <variable label="F6 controls output Dimmer" CV="40" mask="VXXXXXXX" default="0">
+      <variable item="F6 controls output Dimmer" CV="40" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Dimmer</label>
       </variable>
-      <variable label="F7 controls output Dimmer" CV="41" mask="XXXVXXXX" default="1">
+      <variable item="F7 controls output Dimmer" CV="41" mask="XXXVXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Dimmer</label>
       </variable>
-      <variable label="F7 controls output Brakes" CV="41" mask="VXXXXXXX" default="0">
+      <variable item="F7 controls output Brakes" CV="41" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output Brakes</label>
       </variable>
-      <variable label="F8 controls output Dimmer" CV="42" mask="XXXVXXXX" default="0">
+      <variable item="F8 controls output Dimmer" CV="42" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Dimmer</label>
       </variable>
-      <variable label="F8 controls output Brakes" CV="42" mask="VXXXXXXX" default="0">
+      <variable item="F8 controls output Brakes" CV="42" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output Brakes</label>
       </variable>
-      <variable label="F9 controls output Dimmer" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+      <variable item="F9 controls output Dimmer" CV="43" mask="XXXVXXXX" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Dimmer</label>
       </variable>
-      <variable label="F9 controls output Brakes" CV="43" mask="VXXXXXXX" default="0" minFn="9">
+      <variable item="F9 controls output Brakes" CV="43" mask="VXXXXXXX" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output Brakes</label>
       </variable>
-      <variable label="F10 controls output Dimmer" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+      <variable item="F10 controls output Dimmer" CV="44" mask="XXXXVXXX" default="0" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Dimmer</label>
       </variable>
-      <variable label="F10 controls output Brakes" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+      <variable item="F10 controls output Brakes" CV="44" mask="XVXXXXXX" default="0" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output Brakes</label>
       </variable>
-      <variable label="F11 controls output Dimmer" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+      <variable item="F11 controls output Dimmer" CV="45" mask="XXXXVXXX" default="0" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Dimmer</label>
       </variable>
-      <variable label="F11 controls output Brakes" CV="45" mask="XVXXXXXX" default="1" minFn="11">
+      <variable item="F11 controls output Brakes" CV="45" mask="XVXXXXXX" default="1" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output Brakes</label>
       </variable>
-      <variable label="F12 controls output Dimmer" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+      <variable item="F12 controls output Dimmer" CV="46" mask="XXXXVXXX" default="0" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Dimmer</label>
       </variable>
-      <variable label="F12 controls output Brakes" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+      <variable item="F12 controls output Brakes" CV="46" mask="XVXXXXXX" default="0" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output Brakes</label>
       </variable>
       <!-- Lighting Configuration follows -->
-      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
+      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -751,7 +751,7 @@
         </enumVal>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -762,7 +762,7 @@
         </enumVal>
         <label>Headlight F0(f) Phase Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -773,7 +773,7 @@
         </enumVal>
         <label>Headlight F0(f) Grade Crossing Logic</label>
       </variable>
-      <variable label="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Headlight mapping)">
             <choice>Disabled (Headlight mapping)</choice>
@@ -784,7 +784,7 @@
         </enumVal>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -795,7 +795,7 @@
         </enumVal>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the backup light">
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the backup light">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -848,7 +848,7 @@
         </enumVal>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -859,7 +859,7 @@
         </enumVal>
         <label>Backup Light F0(r) Phase Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -870,7 +870,7 @@
         </enumVal>
         <label>Backup Light F0(r) Grade Crossing Logic</label>
       </variable>
-      <variable label="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Backup Light mapping)">
             <choice>Disabled (Backup Light mapping)</choice>
@@ -881,7 +881,7 @@
         </enumVal>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -892,7 +892,7 @@
         </enumVal>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -945,7 +945,7 @@
         </enumVal>
         <label>FX5 Effect Selection</label>
       </variable>
-      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -956,7 +956,7 @@
         </enumVal>
         <label>FX5 Phase Selection</label>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -967,7 +967,7 @@
         </enumVal>
         <label>FX5 Grade Crossing Logic</label>
       </variable>
-      <variable label="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (FX5 mapping)">
             <choice>Disabled (FX5 mapping)</choice>
@@ -978,7 +978,7 @@
         </enumVal>
         <label>FX5 Rule 17 Mode</label>
       </variable>
-      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -990,7 +990,7 @@
         <label>FX5 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="15" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="15" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -1043,7 +1043,7 @@
         </enumVal>
         <label>FX6 Effect Selection</label>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -1054,7 +1054,7 @@
         </enumVal>
         <label>FX6 Phase Selection</label>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1065,7 +1065,7 @@
         </enumVal>
         <label>FX6 Grade Crossing Logic</label>
       </variable>
-      <variable label="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (FX6 mapping)">
             <choice>Disabled (FX6 mapping)</choice>
@@ -1076,7 +1076,7 @@
         </enumVal>
         <label>FX6 Rule 17 Mode</label>
       </variable>
-      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -1087,7 +1087,7 @@
         </enumVal>
         <label>FX6 Light Type</label>
       </variable>
-      <variable label="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="15" minOut="3" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX5 light output">
+      <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="15" minOut="3" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX5 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -1140,7 +1140,7 @@
         </enumVal>
         <label>FX5B Effect Selection</label>
       </variable>
-      <variable label="FX5B Phase Selection" CV="53" mask="XXXVXXXX" minOut="3" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX5B Phase Selection" CV="53" mask="XXXVXXXX" minOut="3" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -1151,7 +1151,7 @@
         </enumVal>
         <label>FX5B Phase Selection</label>
       </variable>
-      <variable label="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX" minOut="3" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX" minOut="3" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1162,7 +1162,7 @@
         </enumVal>
         <label>FX5B Grade Crossing Logic</label>
       </variable>
-      <variable label="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" minOut="3" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" minOut="3" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (FX5 mapping)">
             <choice>Disabled (FX5 mapping)</choice>
@@ -1173,7 +1173,7 @@
         </enumVal>
         <label>FX5B Rule 17 Mode</label>
       </variable>
-      <variable label="FX5B Light Type" CV="53" mask="VXXXXXXX" minOut="3" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" minOut="3" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -1184,7 +1184,7 @@
         </enumVal>
         <label>FX5B Light Type</label>
       </variable>
-      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="15" minOut="4" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX6 light output">
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="15" minOut="4" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX6 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -1237,7 +1237,7 @@
         </enumVal>
         <label>FX6B Effect Selection</label>
       </variable>
-      <variable label="FX6B Phase Selection" CV="54" mask="XXXVXXXX" minOut="4" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" minOut="4" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -1248,7 +1248,7 @@
         </enumVal>
         <label>FX6B Phase Selection</label>
       </variable>
-      <variable label="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" minOut="4" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" minOut="4" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1259,7 +1259,7 @@
         </enumVal>
         <label>FX6B Grade Crossing Logic</label>
       </variable>
-      <variable label="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" minOut="4" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable item="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" minOut="4" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (FX6 mapping)">
             <choice>Disabled (FX6 mapping)</choice>
@@ -1270,7 +1270,7 @@
         </enumVal>
         <label>FX6B Rule 17 Mode</label>
       </variable>
-      <variable label="FX6B Light Type" CV="54" mask="VXXXXXXX" minOut="4" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" minOut="4" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -1281,39 +1281,39 @@
         </enumVal>
         <label>FX6B Light Type</label>
       </variable>
-      <variable label="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Forward direction">
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Forward Directional Control</label>
       </variable>
-      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Reverse direction">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
-      <variable label="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5B function output in Forward direction">
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Forward Directional Control</label>
       </variable>
-      <variable label="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" include="852002,852003,852004" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Reverse direction">
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" include="852002,852003,852004" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5B Reverse Directional Control</label>
       </variable>
-      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Forward direction">
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
       </variable>
-      <variable label="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Reverse direction">
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
       </variable>
-      <variable label="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Forward direction">
+      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Forward Directional Control</label>
       </variable>
-      <variable label="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Reverse direction">
+      <variable item="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6B Reverse Directional Control</label>
       </variable>
-      <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+      <variable item="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
         <enumVal>
           <enumChoice choice="Normal FX5 operation">
             <choice>Normal FX5 operation</choice>
@@ -1324,7 +1324,7 @@
         </enumVal>
         <label>FX5 Lighting Overide</label>
       </variable>
-      <variable label="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+      <variable item="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
         <enumVal>
           <enumChoice choice="Normal FX6 operation">
             <choice>Normal FX6 operation</choice>
@@ -1335,23 +1335,23 @@
         </enumVal>
         <label>FX6 Lighting Overide</label>
       </variable>
-      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+      <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
+      <variable item="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
         <comment>0-15 seconds</comment>
       </variable>
       <!-- End Lighting Configuration -->
-      <variable label="F11 Braking Rate (0-127)" CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
+      <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
       </variable>
-      <variable label="F11 Braking Sign" CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
+      <variable CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <enumVal>
           <enumChoice choice="Add value to baseline (increases braking delay)">
             <choice>Add value to baseline (increases braking delay)</choice>
@@ -1362,56 +1362,56 @@
         </enumVal>
         <label>F11 Braking Sign</label>
       </variable>
-      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20" include="852002,852003,852004" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable CV="63" item="Radio Power Conversion" default="20" include="852002,852003,852004" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable label="Analog Mode Max Motor Voltage (0-255)" CV="64" item="Zero-1 Power Conversion" default="180" include="852002,852003,852004" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
+      <variable CV="64" item="Zero-1 Power Conversion" default="180" include="852002,852003,852004" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
       </variable>
-      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+      <variable CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+      <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable label="User Identifier #1 (0-255)" CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
+      <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #1 (0-255)</label>
       </variable>
-      <variable label="User Identifier #2 (0-255)" CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
+      <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #2 (0-255)</label>
       </variable>
       <!-- Advanced Motor Control Features follow -->
-      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="50" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+      <variable CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="50" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
-      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="8" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="8" tooltip="Specifies the time period in mS (milliseconds) between measurements">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
-      <variable label="Back EMF Motor Control Reference Voltage (0-255)" CV="216" mask="VVVVVVVV" item="Advanced Group 2 Option 6" default="160" tooltip="Sets the Full-Scale voltage reference for which the back EMF operates">
+      <variable CV="216" mask="VVVVVVVV" item="Advanced Group 2 Option 6" default="160" tooltip="Sets the Full-Scale voltage reference for which the back EMF operates">
         <decVal/>
         <label>MBack EMF Motor Control Reference Voltage (0-255)</label>
       </variable>

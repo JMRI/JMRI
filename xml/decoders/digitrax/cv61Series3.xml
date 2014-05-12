@@ -33,35 +33,35 @@
       <revremark>Initial release as separate file</revremark>
     </revision>
   </revhistory>
-     <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Digitrax Transponding</label>
-        <label xml:lang="it">Transponding Digitrax</label>
-      </variable>
-      <variable label="Split field motor" CV="61" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Normal DC motor">
-            <choice>Normal DC motor</choice>
-            <choice xml:lang="it">Motore Normale in DC</choice>
-          </enumChoice>
-          <enumChoice choice="Split field/AC motor">
-            <choice>Split field/AC motor</choice>
-            <choice xml:lang="it">Motore in AC</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Split field motor</label>
-        <label xml:lang="it">Motore in AC</label>
-      </variable>
-      <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Vstart/Vmid/Vfull in 128 step mode</label>
-        <label xml:lang="it">Vstart/Vmid/Vfull in modalità 28 step</label>
-      </variable>
-      <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-        <label>Short-circuit protection</label>
-        <label xml:lang="it">Protezione Corto-Circuito</label>
-        <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
-        <comment xml:lang="it">Funzionalità non documentata, talvolta richiesta dal supporto tecnico Digitrax</comment>
-      </variable>
+  <variable CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Digitrax Transponding</label>
+    <label xml:lang="it">Transponding Digitrax</label>
+  </variable>
+  <variable item="Split field motor" CV="61" mask="XXXXXVXX">
+    <enumVal>
+      <enumChoice choice="Normal DC motor">
+        <choice>Normal DC motor</choice>
+        <choice xml:lang="it">Motore Normale in DC</choice>
+      </enumChoice>
+      <enumChoice choice="Split field/AC motor">
+        <choice>Split field/AC motor</choice>
+        <choice xml:lang="it">Motore in AC</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Split field motor</label>
+    <label xml:lang="it">Motore in AC</label>
+  </variable>
+  <variable item="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Vstart/Vmid/Vfull in 128 step mode</label>
+    <label xml:lang="it">Vstart/Vmid/Vfull in modalità 28 step</label>
+  </variable>
+  <variable item="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Short-circuit protection</label>
+    <label xml:lang="it">Protezione Corto-Circuito</label>
+    <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+    <comment xml:lang="it">Funzionalità non documentata, talvolta richiesta dal supporto tecnico Digitrax</comment>
+  </variable>
 </variables>

@@ -12,16 +12,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new pane file for SoundTraxx Tsunami -->
-<pane name="ASC" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
-      <label label="AUTOMATIC SOUND CONTROL">
-        <label>AUTOMATIC SOUND CONTROL</label>
-	<label xml:lang="it">CONTROLLO AUTOMATICO SUONO</label>
+      <label>
+        <text>AUTOMATIC SOUND CONTROL</text>
+        <text xml:lang="it">CONTROLLO AUTOMATICO SUONO</text>
       </label>
     </row>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <row>
       <column>
@@ -29,13 +29,13 @@
         <display item="Automatic Horn Signal Enable" format="checkbox"/>
         <display item="Automatic Bell Enable" format="checkbox"/>
         <display item="Automatic Brake Squeal Enable" format="checkbox"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="          ">
-          <label>          </label>
+        <label>
+          <text>          </text>
         </label>
       </column>
       <column>
@@ -43,75 +43,75 @@
         <display item="Automatic Horn Signal Enable (Analog Mode)" format="checkbox"/>
         <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
         <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="These CVs allow the user to set the parameters">
-          <label>These CVs allow the user to set the parameters</label>
-	<label xml:lang="it">Queste CV permettono di impostare i parametri</label>
+        <label>
+          <text>These CVs allow the user to set the parameters</text>
+          <text xml:lang="it">Queste CV permettono di impostare i parametri</text>
         </label>
-        <label label="for the Automatic Sound Control features.">
-          <label>for the Automatic Sound Control features.</label>
-	<label xml:lang="it">per il controllo automatico dei suoni</label>
+        <label>
+          <text>for the Automatic Sound Control features.</text>
+          <text xml:lang="it">per il controllo automatico dei suoni</text>
         </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Bell-On Set Point" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Bell-On Set Point" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Bell-Off Set Point" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Bell-Off Set Point" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Grade Crossing Airhorn Sensitivity" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Grade Crossing Airhorn Sensitivity" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <display item="Brake Squeal Sensitivity" layout="above" label="">
             <label/>
           </display>
-          <label label=" ">
-            <label> </label>
+          <label>
+            <text> </text>
           </label>
           <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>

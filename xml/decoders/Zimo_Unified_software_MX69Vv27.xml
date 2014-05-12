@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
 <!-- $Id: Zimo_MX640_v26.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
@@ -53,19 +53,19 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version27.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable label="Decoder ID 1" CV="250" default="209" readOnly="yes">
+      <variable item="Decoder ID 1" CV="250" default="209" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
       </variable>
-      <variable label="Decoder ID 2" CV="251" readOnly="yes">
+      <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
       </variable>
-      <variable label="Decoder ID 3" CV="252" readOnly="yes">
+      <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
       </variable>
-      <variable label="Decoder ID 4" CV="253" readOnly="yes">
+      <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
       </variable>

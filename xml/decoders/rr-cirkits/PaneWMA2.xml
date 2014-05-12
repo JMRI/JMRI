@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
 <!--                                                                        -->
@@ -13,16 +13,20 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
 <!-- Panes to show I/O lines -->
-<pane name="BOD 5-8"  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>BOD 5-8</name>
   <column>
     <row>
       <column>
-        <label label="WatchMan Input Port Configuration settings. All numbers are entered as their actual">
-          </label>
-        <label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
-          </label>
-        <label label="only to the first line's event numbers. The second line's event numbers are ignored.">
-          </label>
+        <label>
+          <text>WatchMan Input Port Configuration settings. All numbers are entered as their actual</text>
+        </label>
+        <label>
+          <text>event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond</text>
+        </label>
+        <label>
+          <text>only to the first line's event numbers. The second line's event numbers are ignored.</text>
+        </label>
       </column>
     </row>
     <separator/>
@@ -122,7 +126,6 @@
           </display>
       </column>
     </row>
-
     <separator/>
     <row>
       <column>
@@ -219,7 +222,6 @@
           </display>
       </column>
     </row>
-
     <separator/>
     <row>
       <column>
@@ -316,7 +318,6 @@
           </display>
       </column>
     </row>
-
     <separator/>
     <row>
       <column>

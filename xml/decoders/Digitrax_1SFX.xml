@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!-- $Id: Digitrax_1SFX.xml 17977 2014-04-27 xx:x:xxZ xxx $ -->
@@ -13,14 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Alain Le Marchand" version="2" lastUpdated="20140427"/>
-    <version author="Steve Lowens" version="1" lastUpdated="20120703"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="20140427"/>
+  <version author="Steve Lowens" version="1" lastUpdated="20120703"/>
   <!--    Added Con-cor Zephyr & MP54 decoders                                    -->
   <!--    See Digitrax_0SFX.xml for other attribution                             -->
   <!--                                       Steve Lowens  07/03/2012             -->
   <!--                                                                            -->
   <!--    Version 2 (Alain Le Marchand) - fix decoders dimensions and definitions -->
-  <!--    Refactored with fragment files - creating new ones for Digitrax  --> 
+  <!--    Refactored with fragment files - creating new ones for Digitrax  -->
   <!--    Changed productIDs to Con-cor ref.                                      -->
   <!--    Added missing read-only variables CV121 to 128, CV160                   -->
   <!--               and created a new pane "Digitrax Sound Info" to display them -->
@@ -49,14 +49,14 @@
           <functionlabel num="3" lockable="true">Open Door/Close - Track Squeals</functionlabel>
           <functionlabel num="4" lockable="false">Crossing Horn seq.</functionlabel>
           <functionlabel num="5" lockable="true">Mute</functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-        </functionlabels>   
-      </model>      
+          <functionlabel num="6" lockable="true"/>
+          <functionlabel num="7" lockable="true"/>
+          <functionlabel num="8" lockable="true"/>
+          <functionlabel num="9" lockable="true"/>
+          <functionlabel num="10" lockable="true"/>
+          <functionlabel num="11" lockable="true"/>
+        </functionlabels>
+      </model>
       <model model="Con-cor Galloping Goose - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6008" comment="SDH164D Con-Cor #0001-006008">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
@@ -66,10 +66,11 @@
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
-            <functionlabel num="5" lockable="true"></functionlabel>    <!-- function disabled -->
-            <functionlabel num="11" lockable="false"></functionlabel>
-        </functionlabels>          
-      </model>      
+          <functionlabel num="5" lockable="true"/>
+          <!-- function disabled -->
+          <functionlabel num="11" lockable="false"/>
+        </functionlabels>
+      </model>
       <model model="Con-cor MP54" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6009" comment="SDH164D Con-Cor #0001-006009">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
@@ -82,13 +83,13 @@
           <functionlabel num="3" lockable="false">Track Squeals</functionlabel>
           <functionlabel num="4" lockable="false">Crossing Horn seq.</functionlabel>
           <functionlabel num="5" lockable="true">Mute</functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-        </functionlabels>   
+          <functionlabel num="6" lockable="true"/>
+          <functionlabel num="7" lockable="true"/>
+          <functionlabel num="8" lockable="true"/>
+          <functionlabel num="9" lockable="true"/>
+          <functionlabel num="10" lockable="true"/>
+          <functionlabel num="11" lockable="true"/>
+        </functionlabels>
       </model>
       <model model="Con-cor New Haven Comet - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6001" comment="SDH164D Con-Cor #0001-006001">
         <output name="1" label="White" connection="plug"/>
@@ -99,8 +100,9 @@
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
-            <functionlabel num="3" lockable="true"></functionlabel>    <!-- function disabled -->
-        </functionlabels>         
+          <functionlabel num="3" lockable="true"/>
+          <!-- function disabled -->
+        </functionlabels>
       </model>
       <model model="Con-cor UP M-10000 - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6003" comment="SDH164D Con-Cor #0001-006003">
         <output name="1" label="White" connection="plug"/>
@@ -111,9 +113,10 @@
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
-            <functionlabel num="3" lockable="true"></functionlabel>    <!-- function disabled -->
-        </functionlabels>         
-      </model>      
+          <functionlabel num="3" lockable="true"/>
+          <!-- function disabled -->
+        </functionlabels>
+      </model>
       <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6002" comment="SDH164D Con-Cor #0001-006002">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
@@ -123,8 +126,8 @@
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
-            <functionlabel num="3" lockable="true">Mars Light</functionlabel>
-        </functionlabels> 
+          <functionlabel num="3" lockable="true">Mars Light</functionlabel>
+        </functionlabels>
       </model>
       <model model="Con-cor Aero-Train - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6019" comment="SDN144PS Con-Cor #0001-006019">
         <output name="1" label="White" connection="plug"/>
@@ -133,13 +136,13 @@
         <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
       </model>
-       <model model="Con-cor UP M-10000 - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6011" comment="SDN144PS Con-Cor #0001-006011">
+      <model model="Con-cor UP M-10000 - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6011" comment="SDN144PS Con-Cor #0001-006011">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
-      </model>             
+      </model>
       <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6014" comment="SDN144PS Con-Cor #0001-006014">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
@@ -147,8 +150,8 @@
         <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
         <functionlabels>
-            <functionlabel num="3" lockable="true">Mars Light</functionlabel>
-        </functionlabels> 
+          <functionlabel num="3" lockable="true">Mars Light</functionlabel>
+        </functionlabels>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -163,25 +166,25 @@
         <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
         <functionlabel num="10" lockable="false">Xing Gate Airhorn seq.</functionlabel>
         <functionlabel num="11" lockable="false">Handbrake</functionlabel>
-      </functionlabels>      
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="16">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="16">
         <decVal/>
         <label>Version ID</label>
         <label xml:lang="it">ID Versione</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
-      <variable label="Sound Time Out" CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 5" default="6">
+      <variable CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 5" default="6">
         <enumVal>
           <enumChoice choice="Yes" value="0">
             <choice>Yes</choice>
@@ -200,63 +203,65 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>    
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>      
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
       <!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="6014">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="6014">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="6014">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="6014">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 3</label>
       </variable>
-      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="6014">
+      <variable item="Function 1 effect generated" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="6014">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
         <label xml:lang="it">Funzione 1 effetti generati</label>
       </variable>
-      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" default="2" minOut="3" include="6014">
+      <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" default="2" minOut="3" include="6014">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
         <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
       <!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-      <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="6002">
+      <variable item="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="6002">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>
         <label xml:lang="it">Effetti generati Funzione 3</label>
       </variable>
-      <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" default="2" minOut="5" include="6002">
+      <variable item="Function 3 behavior" CV="113" mask="VVVVXXXX" default="2" minOut="5" include="6002">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 3 behavior</label>
         <label xml:lang="it">Funzionamento Funzione 3</label>
       </variable>
-      <!-- End of Con-cor default values -->     
+      <!-- End of Con-cor default values -->
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <!-- Sound options -->
-      <variable label="Master Volume" CV="58" item="Sound Setting 1" default="9" tooltip="0-15, use about 4-8">
+      <variable CV="58" item="Sound Setting 1" default="9" tooltip="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
         <label xml:lang="it">Volume principale</label>
         <comment>0-15, use about 4-8</comment>
         <comment xml:lang="it">0-15, usabile circa da 4 a 8</comment>
       </variable>
-      <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="6014,6002,6019,6011,6001,6003,6004">
+      <variable CV="60" default="0" item="Sound Option 1" include="6014,6002,6019,6011,6001,6003,6004">
         <enumVal>
           <enumChoice choice="Diesel (CV60=0)"/>
           <enumChoice choice="Diesel (CV60=1)"/>
         </enumVal>
         <label>Locomotive Sound Option</label>
       </variable>
-      <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="6005">
+      <variable CV="60" default="0" item="Sound Option 1" include="6005">
         <enumVal>
           <enumChoice choice="ElectroLiner"/>
         </enumVal>
         <label>Locomotive Sound Option</label>
         <label xml:lang="it">Opzioni Suono</label>
       </variable>
-      <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="6009">
+      <variable CV="60" default="0" item="Sound Option 1" include="6009">
         <enumVal>
           <enumChoice choice="MP54"/>
         </enumVal>
@@ -267,198 +272,198 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
+        <label xml:lang="it">Tabella VelocitÃ </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
-      <variable label="User Private ID #1" CV="105" item="User Id #1" default="252" include="6009">
+      <variable CV="105" item="User Id #1" default="252" include="6009">
         <decVal/>
         <label>User Private ID #1</label>
         <label xml:lang="it">ID Utente privato</label>
       </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2" default="35" include="6009">
+      <variable CV="106" item="User Id #2" default="35" include="6009">
         <decVal/>
         <label>User Private ID #2</label>
         <label xml:lang="it">ID#2 Utente privato</label>
       </variable>
       <!-- Software information - Read-only -->
-      <variable label="Software Version" CV="121" readOnly="yes" default="3">
+      <variable item="Software Version" CV="121" readOnly="yes" default="3">
         <decVal/>
         <label>Software Version</label>
-      </variable>  
-      <variable label="Software Version" CV="121" readOnly="yes" default="5" include="6002,6014">
+      </variable>
+      <variable item="Software Version" CV="121" readOnly="yes" default="5" include="6002,6014">
         <decVal/>
         <label>Software Version</label>
-      </variable>      
-      <variable label="Product Type" CV="122" readOnly="yes" default="12" tooltip="12=Digitrax SFX sound decoder">
+      </variable>
+      <variable item="Product Type" CV="122" readOnly="yes" default="12" tooltip="12=Digitrax SFX sound decoder">
         <decVal/>
         <label>Product Type</label>
-      </variable>       
-      <variable label="Hardware Version" CV="123" readOnly="yes" default="17">
+      </variable>
+      <variable item="Hardware Version" CV="123" readOnly="yes" default="17">
         <decVal/>
         <label>Hardware Version</label>
       </variable>
-      <variable label="Hardware Version" CV="123" readOnly="yes" default="24" include="6014">
+      <variable item="Hardware Version" CV="123" readOnly="yes" default="24" include="6014">
         <decVal/>
         <label>Hardware Version</label>
       </variable>
-      <variable label="Flash Signature" CV="124" readOnly="yes" default="2">
+      <variable item="Flash Signature" CV="124" readOnly="yes" default="2">
         <decVal/>
         <label>Flash Signature</label>
-      </variable>         
-      <variable label="16KB free blocks" CV="125" readOnly="yes" default="0">
+      </variable>
+      <variable item="16KB free blocks" CV="125" readOnly="yes" default="0">
         <decVal/>
         <label>16KB free blocks</label>
       </variable>
-      <variable label="16KB free blocks" CV="125" readOnly="yes" default="17" include="6014">
+      <variable item="16KB free blocks" CV="125" readOnly="yes" default="17" include="6014">
         <decVal/>
         <label>16KB free blocks</label>
       </variable>
-      <variable label="FAT flags" CV="126" readOnly="yes" default="7">
+      <variable item="FAT flags" CV="126" readOnly="yes" default="7">
         <decVal/>
         <label>FAT flags</label>
       </variable>
-      <variable label="Internal Flags" CV="127" readOnly="yes" default="0">
+      <variable item="Internal Flags" CV="127" readOnly="yes" default="0">
         <decVal/>
         <label>Internal Flags</label>
       </variable>
-      <variable label="Internal Flags" CV="127" readOnly="yes" default="6" include="6014">
+      <variable item="Internal Flags" CV="127" readOnly="yes" default="6" include="6014">
         <decVal/>
         <label>Internal Flags</label>
       </variable>
-      <variable label="IPL counter" CV="128" readOnly="yes" default="0">
+      <variable item="IPL counter" CV="128" readOnly="yes" default="0">
         <decVal/>
         <label>IPL counter</label>
-      </variable>      
+      </variable>
       <!-- Sound options -->
-      <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="127">
+      <variable CV="132" item="Sound Setting 2" default="127">
         <decVal/>
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="64" include="6009,6005">
+      <variable CV="132" item="Sound Setting 2" default="64" include="6009,6005">
         <decVal/>
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable label="Volume When Muted" CV="135" item="Sound Setting 3">
+      <variable CV="135" item="Sound Setting 3">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable label="Prime Mover/Chuff Volume" CV="140" item="Sound Setting 4" default="60" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="140" item="Sound Setting 4" default="60" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
-      <variable label="Motor/Track Volume (1=Off)" CV="140" item="Sound Setting 4" default="64" tooltip="0=Remove all moving sounds" include="6009,6005">
+      <variable CV="140" item="Sound Setting 4" default="64" tooltip="0=Remove all moving sounds" include="6009,6005">
         <decVal max="64"/>
         <label>Motor/Track Volume</label>
         <label xml:lang="it">Volume motore/Rotaie</label>
       </variable>
-      <variable label="Bell Volume" CV="141" item="Sound Setting 5" default="25" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="141" item="Sound Setting 5" default="25" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable label="Horn/Whistle Volume (1=Off)" CV="141" item="Sound Setting 5" default="64" include="6009,6005">
+      <variable CV="141" item="Sound Setting 5" default="64" include="6009,6005">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Fischio</label>
       </variable>
-      <variable label="Horn/Whistle Volume" CV="142" item="Sound Setting 6" default="60" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="142" item="Sound Setting 6" default="60" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba/Fischio</label>
       </variable>
-      <variable label="Crossing Bell Volume (1=Off)" CV="142" item="Sound Setting 6" default="45" include="6005">
+      <variable CV="142" item="Sound Setting 6" default="45" include="6005">
         <decVal max="64"/>
         <label>Crossing Bell Volume</label>
         <label xml:lang="it">Volume Campana in Incrocio</label>
       </variable>
-      <variable label="Crossing Bell Volume (1=Off)" CV="142" item="Sound Setting 6" default="64" include="6009">
+      <variable CV="142" item="Sound Setting 6" default="64" include="6009">
         <decVal max="64"/>
         <label>Crossing Bell Volume</label>
         <label xml:lang="it">Volume Campana in Incrocio</label>
       </variable>
-      <variable label="Air Features Volume" CV="143" item="Sound Setting 7" default="30" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="143" item="Sound Setting 7" default="30" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Air Features Volume</label>
         <label xml:lang="it">Volume Aria Compressa</label>
       </variable>
-      <variable label="Compressor Volume (1=Off)" CV="143" item="Sound Setting 7" default="45" include="6009,6005">
+      <variable CV="143" item="Sound Setting 7" default="45" include="6009,6005">
         <decVal max="64"/>
         <label>Compressor Volume</label>
         <label xml:lang="it">Volume Compressore</label>
       </variable>
-      <variable label="Dynamic Brake Volume" CV="144" item="Sound Setting 8" default="55" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="144" item="Sound Setting 8" default="55" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
         <label xml:lang="it">Volume frenata dinamica</label>
       </variable>
-      <variable label="Door Sounds Volume (1=Off)" CV="144" item="Sound Setting 8" default="45" include="6005">
+      <variable CV="144" item="Sound Setting 8" default="45" include="6005">
         <decVal max="64"/>
         <label>Door Sounds Volume</label>
         <label xml:lang="it">Volume Door Sounds</label>
       </variable>
-      <variable label="Voice Alert Sounds Volume (1=Off)" CV="144" item="Sound Setting 8" default="64" include="6009">
+      <variable CV="144" item="Sound Setting 8" default="64" include="6009">
         <decVal max="64"/>
         <label>Voice Alert Sounds</label>
         <label xml:lang="it">Volume segnalazione a Voce</label>
       </variable>
-      <variable label="Misc Volumes (reserved)" CV="145" item="Sound Setting 9" default="40" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="145" item="Sound Setting 9" default="40" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Misc Volumes (reserved)</label>
         <label xml:lang="it">Volume vari (riservata)</label>
       </variable>
-      <variable label="Track Squeal Volume (1=Off)" CV="145" item="Sound Setting 9" default="45" include="6005">
+      <variable CV="145" item="Sound Setting 9" default="45" include="6005">
         <decVal max="64"/>
         <label>Track Squeal Volume</label>
         <label xml:lang="it">Volume Stridore Rotaie</label>
       </variable>
-      <variable label="Track Squeal Volume (1=Off)" CV="145" item="Sound Setting 9" default="64" include="6009">
+      <variable CV="145" item="Sound Setting 9" default="64" include="6009">
         <decVal max="64"/>
         <label>Track Squeal Volume</label>
         <label xml:lang="it">Volume Stridore Rotaie</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="146" item="Sound Setting 10" tooltip="24msec counts" default="7" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="146" item="Sound Setting 10" tooltip="24msec counts" default="7" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
-      <variable label="Time Between Cycles (60=2min)" CV="146" item="Sound Setting 10" tooltip="2 sec counts" default="60" include="6009,6005">
+      <variable CV="146" item="Sound Setting 10" tooltip="2 sec counts" default="60" include="6009,6005">
         <decVal max="64"/>
         <label>Time Between Cycles</label>
         <label xml:lang="it">Tempo tra i Cicli</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147" item="Sound Setting 11" default="2" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="147" item="Sound Setting 11" default="2" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable label="Compressor Running Time (10=20 Seconds)" CV="147" item="Sound Setting 11" default="10" include="6009,6005">
+      <variable CV="147" item="Sound Setting 11" default="10" include="6009,6005">
         <decVal max="64"/>
         <label>Compressor Running Time</label>
-        <label xml:lang="it">Tempo Attività Compressore</label>
+        <label xml:lang="it">Tempo AttivitÃ  Compressore</label>
       </variable>
-      <variable label="Compressor Run/Popoff Rate" CV="148" item="Sound Setting 12" default="30" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="148" item="Sound Setting 12" default="30" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
       </variable>
-      <variable label="Compressor On Time" CV="149" item="Sound Setting 13" default="20" include="6014,6002,6019,6011,6001,6003,6004,6008">
+      <variable CV="149" item="Sound Setting 13" default="20" include="6014,6002,6019,6011,6001,6003,6004,6008">
         <decVal/>
         <label>Compressor On Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
-      <variable label="Horn Selector" CV="150" item="Sound Option 2" include="6014,6002,6019,6011,6001,6003,6004">
+      <variable CV="150" item="Sound Option 2" include="6014,6002,6019,6011,6001,6003,6004">
         <enumVal>
           <enumChoice choice="Standard Horn">
             <choice>Standard Horn</choice>
@@ -476,7 +481,7 @@
         <label>Horn Selector</label>
         <label xml:lang="it">Selezione tromba</label>
       </variable>
-      <variable label="Horn Selector" CV="150" item="Sound Option 2" include="6008">
+      <variable CV="150" item="Sound Option 2" include="6008">
         <enumVal>
           <enumChoice choice="Goose Horn">
             <choice>Goose Horn</choice>
@@ -492,52 +497,52 @@
           <enumChoice choice="Alternate Horn 3">
             <choice>Alternate Horn 3</choice>
             <choice xml:lang="it">Tromba Alternativa 3</choice>
-          </enumChoice>         
+          </enumChoice>
         </enumVal>
         <label>Horn Selector</label>
         <label xml:lang="it">Selezione tromba</label>
-      </variable>      
-      <variable label="Peak Speed for Auto coupler/brake on dir change" CV="151" item="Sound Option 3" default="48" exclude="6009,6005">
+      </variable>
+      <variable CV="151" item="Sound Option 3" default="48" exclude="6009,6005">
         <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>
-        <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
+        <label xml:lang="it">VelocitÃ  picco per freni/aggancio automatico per cambio direzione</label>
       </variable>
-      <variable label="Sound Project Author ID" CV="152" readOnly="yes" default="221" include="6014,6002,6019,6011,6001,6003,6004,6008" tooltip="0xDD(221) = Digitrax">
+      <variable item="Sound Project Author ID" CV="152" readOnly="yes" default="221" include="6014,6002,6019,6011,6001,6003,6004,6008" tooltip="0xDD(221) = Digitrax">
         <decVal/>
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
-      <variable label="Sound Project Author ID" CV="152" readOnly="yes" default="252" include="6009,6005" tooltip="0xFC(252) = Fred's Carbarn">
+      <variable item="Sound Project Author ID" CV="152" readOnly="yes" default="252" include="6009,6005" tooltip="0xFC(252) = Fred's Carbarn">
         <decVal/>
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" readOnly="yes" default="5" include="6019,6011,6001,6003,6004">
+      <variable item="Sound Project ID" CV="153" readOnly="yes" default="5" include="6019,6011,6001,6003,6004">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" readOnly="yes" default="7" tooltip="7=ElectroLiner" include="6005">
+      <variable item="Sound Project ID" CV="153" readOnly="yes" default="7" tooltip="7=ElectroLiner" include="6005">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" readOnly="yes" default="8" include="6009">
+      <variable item="Sound Project ID" CV="153" readOnly="yes" default="8" include="6009">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" readOnly="yes" default="27" tooltip="27=Galloping Goose" include="6008">
+      <variable item="Sound Project ID" CV="153" readOnly="yes" default="27" tooltip="27=Galloping Goose" include="6008">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Sound Project ID" CV="153" readOnly="yes" default="40" include="6014,6002">
+      <variable item="Sound Project ID" CV="153" readOnly="yes" default="40" include="6014,6002">
         <decVal/>
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable label="Notching Mode" CV="155" item="Sound Option 4" tooltip="Not supported on early EVO" exclude="6009,6005">
+      <variable CV="155" item="Sound Option 4" tooltip="Not supported on early EVO" exclude="6009,6005">
         <enumVal>
           <enumChoice choice="Automatic">
             <choice>Automatic</choice>
@@ -553,34 +558,34 @@
           </enumChoice>
         </enumVal>
         <label>Notching Mode</label>
-        <label xml:lang="it">Modalità Notch</label>
+        <label xml:lang="it">ModalitÃ  Notch</label>
       </variable>
-      <variable label="Horn Delay Rate" CV="156" item="Sound Setting 17" default="10" include="6014,6002,6019,6011,6001,6003,6004">
+      <variable CV="156" item="Sound Setting 17" default="10" include="6014,6002,6019,6011,6001,6003,6004">
         <decVal/>
         <label>Horn Delay Rate</label>
         <label xml:lang="it">Tasso Ritardo Tromba</label>
       </variable>
       <!-- Read-only variables -->
-      <variable label="Variant ID" CV="160" readOnly="yes" default="4">
+      <variable item="Variant ID" CV="160" readOnly="yes" default="4">
         <decVal/>
         <label>Variant ID</label>
       </variable>
-      <variable label="Variant ID" CV="160" readOnly="yes" default="1" include="6014">
+      <variable item="Variant ID" CV="160" readOnly="yes" default="1" include="6014">
         <decVal/>
         <label>Variant ID</label>
-      </variable>      
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Ripristino di tutte le CV</label>
       </factReset>
       <factReset label="Reset All CVs except speed table" CV="8" default="9">
-                 <label>Reset All CVs except speed table</label>
-                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocitÃ </label>
       </factReset>
     </resets>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>  
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
 </decoder-config>

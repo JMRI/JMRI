@@ -2,10 +2,10 @@
 
 package jmri.jmrix.lenz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -17,9 +17,6 @@ import java.io.DataOutputStream;
  * @version			$Revision$
  */
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
-
-    private DataInputStream input;
-    private DataOutputStream output;
 
     public XNetStreamPortController(DataInputStream in,DataOutputStream out,String pname){
         super(in,out,pname);

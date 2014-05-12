@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
 <!-- $Id: MRC_sounder1666.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
@@ -29,29 +29,29 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable label="Acceleration" CV="120" item="Accel" default="0" tooltip="Note: Sets the acceleration rate (delay), range 0(default)-32" comment="Range 0-32">
+      <variable CV="120" item="Accel" default="0" tooltip="Note: Sets the acceleration rate (delay), range 0(default)-32" comment="Range 0-32">
         <decVal max="32"/>
         <label>Acceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Deceleration" CV="121" item="Decel" default="0" tooltip="Note: Sets the deceleration rate (delay), range 0(default)-32" comment="Range 0-32">
+      <variable CV="121" item="Decel" default="0" tooltip="Note: Sets the deceleration rate (delay), range 0(default)-32" comment="Range 0-32">
         <decVal max="32"/>
         <label>Deceleration</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable label="Manufacturer version number" CV="7" readOnly="yes" tooltip="=32 for all MRC Brilliance models, Read Only" item="Decoder Version" default="32">
+      <variable CV="7" readOnly="yes" tooltip="=32 for all MRC Brilliance models, Read Only" item="Decoder Version" default="32">
         <decVal/>
         <label>Manufacturer version number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="=143 for MRC, Read Only" item="Manufacturer" default="143">
+      <variable CV="8" readOnly="yes" tooltip="=143 for MRC, Read Only" item="Manufacturer" default="143">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Advanced consist address" CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="range 1-127">
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="range 1-127">
         <decVal/>
         <label>Advanced consist address</label>
       </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="Normal(default) or Reversed(address+128)">
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="Normal(default) or Reversed(address+128)">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -62,7 +62,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Functions Respond to Address" CV="21" mask="XXXXXXXV" tooltip="least bit Def=0">
+      <variable item="Functions Respond to Address" CV="21" mask="XXXXXXXV" tooltip="least bit Def=0">
         <enumVal>
           <enumChoice choice="Locomotive address only">
             <choice>Locomotive address only</choice>
@@ -73,7 +73,7 @@
         </enumVal>
         <label>Functions Respond to Address</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
+      <variable CV="29" tooltip="'1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -84,7 +84,7 @@
         </enumVal>
         <label>Normal direction of motion</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" tooltip="'2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -95,7 +95,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+      <variable CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -106,7 +106,7 @@
         </enumVal>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Horn type" CV="50" item="Sound Option 1" default="4" comment="Range 0-33">
+      <variable CV="50" item="Sound Option 1" default="4" comment="Range 0-33">
         <enumVal>
           <enumChoice choice="Horn 1">
             <choice>Horn 1</choice>
@@ -214,12 +214,12 @@
         <label>Horn type</label>
         <comment>Range 0-33</comment>
       </variable>
-      <variable label="Horn volume" CV="51" item="Sound Setting 1" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="51" item="Sound Setting 1" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Horn volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell type" CV="52" item="Sound Option 2" default="3" tooltip="Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-6">
+      <variable CV="52" item="Sound Option 2" default="3" tooltip="Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-6">
         <enumVal>
           <enumChoice choice="Bell 1">
             <choice>Bell 1</choice>
@@ -243,87 +243,87 @@
         <label>Bell type</label>
         <comment>Range 0-6</comment>
       </variable>
-      <variable label="Bell volume" CV="53" item="Sound Setting 2" default="3" tooltip="range 0-3 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-3">
+      <variable CV="53" item="Sound Setting 2" default="3" tooltip="range 0-3 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-3">
         <decVal max="3"/>
         <label>Bell volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Bell ring rate" CV="54" item="Sound Option 7" default="3" tooltip="range 0-50" comment="Range 0-50">
+      <variable CV="54" item="Sound Option 7" default="3" tooltip="range 0-50" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell ring rate</label>
         <comment>Range 0-50</comment>
       </variable>
-      <variable label="Diesel rumble volume" CV="55" item="Sound Setting 3" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="55" item="Sound Setting 3" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Diesel rumble volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake squeal volume" CV="56" item="Sound Setting 4" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="56" item="Sound Setting 4" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake squeal volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Dynamic brake volume" item="Sound Setting 5" CV="57" default="3" tooltip="range 0-3 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-3">
+      <variable item="Sound Setting 5" CV="57" default="3" tooltip="range 0-3 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-3">
         <decVal max="3"/>
         <label>Dynamic brake volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Air release volume" item="Sound Setting 6" CV="58" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable item="Sound Setting 6" CV="58" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air release volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Air pump volume" CV="59" item="Sound Setting 7" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="59" item="Sound Setting 7" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air pump volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Safety pop value volume" CV="60" item="Sound Setting 8" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="60" item="Sound Setting 8" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Safety pop value volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Engine cooling fan volume" CV="61" item="Sound Setting 9" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="61" item="Sound Setting 9" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Engine cooling fan volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Coupling volume" CV="62" item="Sound Setting 11" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="62" item="Sound Setting 11" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Random noise volume" CV="63" item="Sound Setting 12" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="63" item="Sound Setting 12" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Random noise volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Rail wheel clack" CV="64" item="Sound Option 8" default="3" tooltip="range 0-3 Note: Bell, Dynamic  Brake and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot play while loco is idle." comment="Range 0-3">
+      <variable CV="64" item="Sound Option 8" default="3" tooltip="range 0-3 Note: Bell, Dynamic  Brake and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot play while loco is idle." comment="Range 0-3">
         <decVal max="3"/>
         <label>Rail wheel clack</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="range 0-255" comment="Range 0-255">
+      <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #1</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="range 0-255" comment="Range 0-255">
+      <variable CV="106" item="User Id #2" default="0" tooltip="range 0-255" comment="Range 0-255">
         <decVal max="255"/>
         <label>User ID #2</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Coupling fire volume" CV="113" item="Sound Setting 13" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="113" item="Sound Setting 13" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling fire volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Brake release volume" CV="114" item="Sound Setting 14" default="3" tooltip="range 0-3" comment="Range 0-3">
+      <variable CV="114" item="Sound Setting 14" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake release volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable label="Auto Brake squeal" item="Sound Option 3" CV="115" default="1" tooltip="Off(0) or On(1)(default)">
+      <variable item="Sound Option 3" CV="115" default="1" tooltip="Off(0) or On(1)(default)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -334,7 +334,7 @@
         </enumVal>
         <label>Auto Brake squeal</label>
       </variable>
-      <variable label="Coupling Sound Type" item="Sound Option 4" CV="116" default="1" tooltip="Off(0) or Type1(1)(default) or Type2(2)">
+      <variable item="Sound Option 4" CV="116" default="1" tooltip="Off(0) or Type1(1)(default) or Type2(2)">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -348,7 +348,7 @@
         </enumVal>
         <label>Coupling Sound Type</label>
       </variable>
-      <variable label="Accessory Lighting Effects for solder pad 1" tooltip="Lighting type select" CV="118" default="0">
+      <variable item="Accessory Lighting Effects for solder pad 1" tooltip="Lighting type select" CV="118" default="0">
         <enumVal>
           <enumChoice choice="Ditch Light" value="0">
             <choice>Ditch Light</choice>
@@ -374,7 +374,7 @@
         </enumVal>
         <label>Accessory Lighting Effects for solder pad 1</label>
       </variable>
-      <variable label="Accessory Lighting Effects for solder pad 2" tooltip="Lighting type select" CV="119" default="0">
+      <variable item="Accessory Lighting Effects for solder pad 2" tooltip="Lighting type select" CV="119" default="0">
         <enumVal>
           <enumChoice choice="Ditch Light" value="0">
             <choice>Ditch Light</choice>
@@ -400,7 +400,7 @@
         </enumVal>
         <label>Accessory Lighting Effects for solder pad 2</label>
       </variable>
-      <variable label="Diesel notch mode" item="Sound Option 5" CV="122" default="0" tooltip="Auto(0)(default) or Manual(3)">
+      <variable item="Sound Option 5" CV="122" default="0" tooltip="Auto(0)(default) or Manual(3)">
         <enumVal>
           <enumChoice choice="Auto notch - RPM and notch synchro to speed" value="0">
             <choice>Auto notch - RPM and notch synchro to speed</choice>
@@ -411,7 +411,7 @@
         </enumVal>
         <label>Diesel notch mode</label>
       </variable>
-      <variable label="Prime mover sound" item="Sound Option 6" CV="123" default="1" tooltip="EMD SD60(0), EMD 567B(1 -default), ALCO 244(2) or EMD SD70(3)">
+      <variable item="Sound Option 6" CV="123" default="1" tooltip="EMD SD60(0), EMD 567B(1 -default), ALCO 244(2) or EMD SD70(3)">
         <enumVal>
           <enumChoice choice="EMD SD60" value="0">
             <choice>EMD SD60</choice>
@@ -433,70 +433,70 @@
       <factReset label="Reset All CVs" CV="125" default="1"/>
     </resets>
   </decoder>
-  <pane name="Lights">
+  <pane>
     <column>
-      <label label="LIGHT EFFECTS WIRING Controlled by F3*">
-        <label>LIGHT EFFECTS WIRING Controlled by F3*</label>
+      <label>
+        <text>LIGHT EFFECTS WIRING Controlled by F3*</text>
       </label>
-      <label label="If your locomotive has ditch lights, or any type of accessory lights, you can solder wires to the three solder tabs on the Sounder">
-        <label>If your locomotive has ditch lights, or any type of accessory lights, you can solder wires to the three solder tabs on the Sounder</label>
+      <label>
+        <text>If your locomotive has ditch lights, or any type of accessory lights, you can solder wires to the three solder tabs on the Sounder</text>
       </label>
-      <label label="The center tab is the common for the light effects.  You would then program CV's #118 and #119 to choose the desired light effect.">
-        <label>The center tab is the common for the light effects.  You would then program CV's #118 and #119 to choose the desired light effect.</label>
+      <label>
+        <text>The center tab is the common for the light effects.  You would then program CV's #118 and #119 to choose the desired light effect.</text>
       </label>
-      <label label="Both light effects are turned on and off by function 3 (F3).  There is no independent selection of either light effect.  If you program">
-        <label>Both light effects are turned on and off by function 3 (F3).  There is no independent selection of either light effect.  If you program</label>
+      <label>
+        <text>Both light effects are turned on and off by function 3 (F3).  There is no independent selection of either light effect.  If you program</text>
       </label>
-      <label label="the effect for ditch lights, F3 turns them steady on/off,  but activation of the horn function, F2,  makes them blink alternately.">
-        <label>the effect for ditch lights, F3 turns them steady on/off,  but activation of the horn function, F2,  makes them blink alternately.</label>
-      </label>
-      <separator/>
-      <label label="LIGHT EFFECTS PROGRAMMING CHART FOR CV118/CV119*">
-        <label>LIGHT EFFECTS PROGRAMMING CHART FOR CV118/CV119*</label>
-      </label>
-      <label label="You would program CV #118/119 to choose the desired light effect. CV118 for ACC1 and CV119 for ACC2. ">
-        <label>You would program CV #118/119 to choose the desired light effect. CV118 for ACC1 and CV119 for ACC2. </label>
-      </label>
-      <label label="For ditch lights both CV118 and CV119 must be set to 0.">
-        <label>For ditch lights both CV118 and CV119 must be set to 0.</label>
+      <label>
+        <text>the effect for ditch lights, F3 turns them steady on/off,  but activation of the horn function, F2,  makes them blink alternately.</text>
       </label>
       <separator/>
-      <label label="*Note - The light effects operate on the track output voltage supplied by your DCC system. Please contact the locomotive manufacturer as to the">
-        <label>*Note - The light effects operate on the track output voltage supplied by your DCC system. Please contact the locomotive manufacturer as to the</label>
+      <label>
+        <text>LIGHT EFFECTS PROGRAMMING CHART FOR CV118/CV119*</text>
       </label>
-      <label label="operational voltage of these extra lights, so you can then choose the proper current limiting resistor (1k to 3k) to add into the circuit to prevent">
-        <label>operational voltage of these extra lights, so you can then choose the proper current limiting resistor (1k to 3k) to add into the circuit to prevent</label>
+      <label>
+        <text>You would program CV #118/119 to choose the desired light effect. CV118 for ACC1 and CV119 for ACC2. </text>
       </label>
-      <label label="light bulb or LED failures. Also be careful not to short the tabs with solder or wire strands causing a short circuit and damaging the MRC Sounder.">
-        <label>light bulb or LED failures. Also be careful not to short the tabs with solder or wire strands causing a short circuit and damaging the MRC Sounder.</label>
+      <label>
+        <text>For ditch lights both CV118 and CV119 must be set to 0.</text>
       </label>
       <separator/>
-      <label label="">
-        <label/>
+      <label>
+        <text>*Note - The light effects operate on the track output voltage supplied by your DCC system. Please contact the locomotive manufacturer as to the</text>
+      </label>
+      <label>
+        <text>operational voltage of these extra lights, so you can then choose the proper current limiting resistor (1k to 3k) to add into the circuit to prevent</text>
+      </label>
+      <label>
+        <text>light bulb or LED failures. Also be careful not to short the tabs with solder or wire strands causing a short circuit and damaging the MRC Sounder.</text>
+      </label>
+      <separator/>
+      <label>
+        <text/>
       </label>
       <display item="Accessory Lighting Effects for solder pad 1"/>
       <display item="Accessory Lighting Effects for solder pad 2"/>
       <separator/>
-      <label label="These lighting functions are not designed for headlight use, only accessory type lighting.">
-        <label>These lighting functions are not designed for headlight use, only accessory type lighting.</label>
+      <label>
+        <text>These lighting functions are not designed for headlight use, only accessory type lighting.</text>
       </label>
     </column>
     <name>Lights</name>
   </pane>
-  <pane name="MRC">
+  <pane>
     <column>
-      <label label="MRC 1666 Diesel Sounder Decoder with 4 Prime Mover Sounds">
-        <label>MRC 1666 Diesel Sounder Decoder with 4 Prime Mover Sounds</label>
+      <label>
+        <text>MRC 1666 Diesel Sounder Decoder with 4 Prime Mover Sounds</text>
       </label>
-      <label label="Four types of synchronized diesel prime movers, ALCO 244/SD60/SD70/EMD567B">
-        <label>Four types of synchronized diesel prime movers, ALCO 244/SD60/SD70/EMD567B</label>
+      <label>
+        <text>Four types of synchronized diesel prime movers, ALCO 244/SD60/SD70/EMD567B</text>
       </label>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <separator/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Functions Respond to Address"/>
     </column>

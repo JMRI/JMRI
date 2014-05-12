@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<variables  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable label="Maximum volume of Turbocharger" CV="366" default="48">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Maximum volume of Turbocharger" CV="366" default="48">
     <decVal min="0" max="255"/>
     <label>Maximum volume of Turbocharger</label>
   </variable>
-  <variable label="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed">
+  <variable item="Turbocharger dependence on speed" CV="367" default="150" tooltip="Frequency is dependant on speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on speed</label>
   </variable>
-  <variable label="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed">
+  <variable item="Turbocharger dependence on acceleration" CV="368" default="100" tooltip="Frequency is dependant on the difference between selected speed step and the actual speed">
     <decVal min="0" max="255"/>
     <label>Turbocharger dependence on acceleration</label>
   </variable>
-  <variable label="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368">
+  <variable item="Minimum load on the Turbocharger" CV="369" default="30" tooltip="Threshold of audible sound of the turbocharger, the load is determined by CV367 and 368">
     <decVal min="0" max="255"/>
     <label>Minimum load on the Turbocharger</label>
   </variable>
-  <variable label="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger">
+  <variable item="Increase in frequency of the Turbocharger" CV="370" default="25" tooltip="The rate of change of an increase in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Increase in frequency of the Turbocharger</label>
   </variable>
-  <variable label="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger">
+  <variable item="Decrease in frequency of the Turbocharger" CV="371" default="15" tooltip="The rate of change of a decrease in the frequency of the turbocharger">
     <decVal min="0" max="255"/>
     <label>Decrease in frequency of the Turbocharger</label>
   </variable>

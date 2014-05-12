@@ -34,6 +34,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -58,8 +59,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	static final String NEW_LINE = "\n"; // NOI18N
 
-	TrainManager manager;
-	TrainManagerXml managerXml;
+	TrainManager trainManager;
+	TrainManagerXml trainManagerXml;
 	RouteManager routeManager;
 
 	Train _train = null;
@@ -150,8 +151,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train = train;
 
 		// load managers
-		manager = TrainManager.instance();
-		managerXml = TrainManagerXml.instance();
+		trainManager = TrainManager.instance();
+		trainManagerXml = TrainManagerXml.instance();
 		routeManager = RouteManager.instance();
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -410,7 +411,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveTrainButton) {
 			log.debug("train save button activated");
-			Train train = manager.getTrainByName(trainNameTextField.getText());
+			Train train = trainManager.getTrainByName(trainNameTextField.getText());
 			if (_train == null && train == null) {
 				saveNewTrain();
 			} else {
@@ -426,7 +427,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deleteTrainButton) {
 			log.debug("train delete button activated");
-			Train train = manager.getTrainByName(trainNameTextField.getText());
+			Train train = trainManager.getTrainByName(trainNameTextField.getText());
 			if (train == null)
 				return;
 			if (!_train.reset()) {
@@ -441,7 +442,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				return;
 			}
 			routeBox.setSelectedItem("");
-			manager.deregister(train);
+			trainManager.deregister(train);
 			for (int i = 0; i < children.size(); i++) {
 				Frame frame = children.get(i);
 				frame.dispose();
@@ -454,7 +455,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			OperationsXml.save();
 		}
 		if (ae.getSource() == addTrainButton) {
-			Train train = manager.getTrainByName(trainNameTextField.getText());
+			Train train = trainManager.getTrainByName(trainNameTextField.getText());
 			if (train != null) {
 				reportTrainExists(Bundle.getMessage("add"));
 				return;
@@ -492,7 +493,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private void saveNewTrain() {
 		if (!checkName(Bundle.getMessage("add")))
 			return;
-		Train train = manager.newTrain(trainNameTextField.getText());
+		Train train = trainManager.newTrain(trainNameTextField.getText());
 		_train = train;
 		if (_train != null)
 			_train.addPropertyChangeListener(this);
@@ -507,7 +508,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private void saveTrain() {
 		if (!checkName(Bundle.getMessage("save")))
 			return;
-		if (!checkModel())
+		if (!checkModel() || !checkEngineRoad())
 			return;
 		if (numEnginesBox.getSelectedItem().equals(Train.AUTO)
 				&& !_train.getNumberEngines().equals(Train.AUTO)) {
@@ -586,6 +587,23 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
 		}
 		return true;
+	}
+	
+	private boolean checkEngineRoad() {
+		String road = (String) roadEngineBox.getSelectedItem();
+		String model = (String) modelEngineBox.getSelectedItem();
+		if (numEnginesBox.getSelectedItem().equals("0") || road.equals("") || !model.equals(""))
+			return true;
+		for (RollingStock rs : EngineManager.instance().getList()) {
+			if (!_train.acceptsTypeName(rs.getTypeName()))
+				continue;
+			if (rs.getRoadName().equals(road))
+				return true;
+		}
+		JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("NoLocoRoad"),
+				new Object[] { road }), MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"),
+				new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
+		return false; // couldn't find a loco with the selected road
 	}
 
 	private boolean checkRoute() {
@@ -806,8 +824,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		roadEngineBox.removeAllItems();
 		roadEngineBox.addItem("");
 		List<String> roads = EngineManager.instance().getEngineRoadNames(engineModel);
-		for (int i = 0; i < roads.size(); i++) {
-			roadEngineBox.addItem(roads.get(i));
+		for (String roadName : roads) {
+			roadEngineBox.addItem(roadName);
 		}
 		if (_train != null) {
 			roadEngineBox.setSelectedItem(_train.getEngineRoad());

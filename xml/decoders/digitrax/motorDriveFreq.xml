@@ -39,7 +39,7 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
+  <variable CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
     <decVal/>
     <label>Motor Drive Frequency</label>
     <label xml:lang="it">Frequenza pilotaggio Motore</label>

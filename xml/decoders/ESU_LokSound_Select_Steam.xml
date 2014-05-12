@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!--                                                                        -->
@@ -21,7 +21,7 @@
   <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
   <!-- ver4 add new models -->
   <version author="Michael Mosher" version="4" lastUpdated="20121205"/>
-    <!-- ver5 fixed range and default values CVs 5 and 6 -->
+  <!-- ver5 fixed range and default values CVs 5 and 6 -->
   <version author="Dave Heap" version="5" lastUpdated="20121230"/>
   <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
   <version author="Dave Heap" version="6" lastUpdated="20121230"/>
@@ -125,24 +125,24 @@
       </soundlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
-        <capability>
-            <name>High Access via Double Index</name>
-            <parameter name="Max Regular CV address">256</parameter>
-            <parameter name="High Address CV">96</parameter>
-            <parameter name="Low Address CV">97</parameter>
-            <parameter name="Access Register CV">99</parameter>
-            <parameter name="Modulo">100</parameter>
-        </capability>
-         <capability>
-            <name>Indexed CV access</name>
-            <parameter name="PI">31</parameter>
-            <parameter name="SI">32</parameter>
-            <parameter name="cvFirst">false</parameter>
-        </capability>
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable label="Whistle" CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
+      <variable CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
         <enumVal>
           <enumChoice choice="CB&amp;Q 5 chime short bell">
             <choice>CB&amp;Q 5 chime short bell</choice>
@@ -195,7 +195,7 @@
         </enumVal>
         <label>Whistle</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="SP Cab Forward">
             <choice>SP Cab Forward</choice>
@@ -203,7 +203,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73413" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73413" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Mogul">
             <choice>Mogul</choice>
@@ -220,7 +220,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73414" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73414" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Mikado">
             <choice>Mikado</choice>
@@ -237,7 +237,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73415" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73415" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Shay">
             <choice>Shay</choice>
@@ -251,7 +251,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73416" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73416" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Big Boy 4-8-8-4">
             <choice>Big Boy 4-8-8-4</choice>
@@ -259,7 +259,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73417" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73417" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="4-8-4 Class J">
             <choice>4-8-4 Class J</choice>
@@ -276,7 +276,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Loco Type" CV="48" mask="XXVVXXXX" default="0" include="73457" item="Sound Select 2">
+      <variable CV="48" mask="XXVVXXXX" default="0" include="73457" item="Sound Select 2">
         <enumVal>
           <enumChoice choice="Y6B 2-8-8-2">
             <choice>Y6B 2-8-8-2</choice>
@@ -284,7 +284,7 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable label="Bell" CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
+      <variable CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
         <enumVal>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
@@ -295,7 +295,7 @@
         </enumVal>
         <label>Bell</label>
       </variable>
-      <variable label="Brake Squeal" CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
+      <variable CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
         <enumVal>
           <enumChoice choice="Squeal #1">
             <choice>Squeal #1</choice>
