@@ -195,9 +195,9 @@ public class RosterServlet extends HttpServlet {
         } else if (type.equals("icon")) {
             this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getIconPath())));
         } else if (type.equals("file")) {
-            ServletUtil.getHelper().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.APPLICATION_XML); // NOI18N
+            ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.APPLICATION_XML); // NOI18N
         } else if (type.equals("throttle")) {
-            ServletUtil.getHelper().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
+            ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.APPLICATION_XML); // NOI18N
         } else {
             // don't know what to do
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -218,7 +218,7 @@ public class RosterServlet extends HttpServlet {
      * @throws IOException
      */
     void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
-        ServletUtil.getHelper().setNonCachingHeaders(response);
+        ServletUtil.getInstance().setNonCachingHeaders(response);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         if (JSON.JSON.equals(request.getParameter("format"))) { // NOI18N
             response.setContentType(APPLICATION_JSON);
@@ -274,12 +274,12 @@ public class RosterServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getHelper().getRailroadName(false),
+                            ServletUtil.getInstance().getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "RosterTitle")
                     ),
-                    ServletUtil.getHelper().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletUtil.getHelper().getRailroadName(false),
-                    ServletUtil.getHelper().getFooter(request.getLocale(), request.getContextPath()),
+                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
+                    ServletUtil.getInstance().getRailroadName(false),
+                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
                     group
             ));
         }

@@ -67,7 +67,7 @@ public class ServletUtil {
         return navBar;
     }
 
-    public static ServletUtil getHelper() {
+    public static ServletUtil getInstance() {
         if (ServletUtil.instance == null) {
             ServletUtil.instance = new ServletUtil();
         }

@@ -19,10 +19,10 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html"); // NOI18N
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Home.html"))),
-                ServletUtil.getHelper().getRailroadName(false),
-                ServletUtil.getHelper().getNavBar(request.getLocale(), "/home"),
-                ServletUtil.getHelper().getRailroadName(false),
-                ServletUtil.getHelper().getFooter(request.getLocale(), "/home")
+                ServletUtil.getInstance().getRailroadName(false),
+                ServletUtil.getInstance().getNavBar(request.getLocale(), "/home"),
+                ServletUtil.getInstance().getRailroadName(false),
+                ServletUtil.getInstance().getFooter(request.getLocale(), "/home")
         ));
     }
 
