@@ -48,14 +48,17 @@
                             case jmri.UNKNOWN:
                                 $('#powerImg').prop('src', "/images/PowerGrey.png");
                                 $('#powerImg').prop('alt', "Unknown");
+                                $('#powerImg').prop('title', "Unknown");
                                 break;
                             case jmri.POWER_ON:
                                 $('#powerImg').prop('src', "/images/PowerGreen.png");
                                 $('#powerImg').prop('alt', "Powered On");
+                                $('#powerImg').prop('title', "Powered On");
                                 break;
                             case jmri.POWER_OFF:
                                 $('#powerImg').prop('src', "/images/PowerRed.png");
                                 $('#powerImg').prop('alt', "Powered Off");
+                                $('#powerImg').prop('title', "Powered Off");
                                 break;
                         }
                     }
@@ -66,6 +69,11 @@
                 // items on the JMRI server even if a WebSocket connection
                 // cannot be established
                 jmri.connect();
+                // make it possible to click on the power button to turn track
+                // power on or off without using a javascript URI
+                $('#powerImg').click(function(event) {
+                    jmri.setPower((power === jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
+                });
             });
         </script>
 
@@ -74,14 +82,12 @@
         <h1>JSON Set Power Demonstration</h1>
         <hr />
         <p>This sample page sends a request to change layout power when clicked.
-            This page will update the power button automatically as it the track
+            This page will update the power button automatically as the track
             power is changed elsewhere in JMRI.</p>
         <p>The button is grey if the power state is unknown, green if powered
             on, and red if powered off.</p>
-        <div id='power'>
-            <a href="javascript:jmri.setPower((power == jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);">
-                <img id="powerImg" alt="Unknown" src="/images/PowerGrey.png">
-            </a>
-        </div>
+        <a id="powerBtn" href="">
+            <img id="powerImg" alt="Unknown" src="/images/PowerGrey.png">
+        </a>
     </body>
 </html>
