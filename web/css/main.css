@@ -1,5 +1,6 @@
 /* Sticky footer styles
 -------------------------------------------------- */
+/* This ensures the footer is at or below the bottom of the browser window */
 
 html,
 body {
@@ -46,10 +47,14 @@ code {
 
 
 /* ==========================================================================
-   Author's custom styles
+   JMRI custom styles
    ========================================================================== */
 
-
+/* Ensure body content does not get hidden under menu */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
 
 
 

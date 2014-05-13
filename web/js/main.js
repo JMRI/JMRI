@@ -3,7 +3,7 @@
  */
 
 var minFontSize = parseInt(12);
-var maxFontSize = parseInt(20);
+var maxFontSize = parseInt(24);
 
 /*
  * Populate the panels menu with a list of open panels
