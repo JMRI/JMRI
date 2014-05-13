@@ -334,13 +334,14 @@ public class ImportCars extends ImportRollingStock {
 							// create track location if there's one
 						}
 						log.debug("Car (" + carRoad + " " + carNumber + ") has location (" + carLocation + ")");
+						// now get the track name
 						boolean foundDash = false;
 						for (int i = base + 9; i < inputLine.length; i++) {
 							if (inputLine[i].equals("-")) {
 								foundDash = true;
 								if (inputLine.length > i + 1)
 									carTrack = inputLine[++i];
-							} else if (foundDash)
+							} else if (foundDash && !comma)
 								carTrack = carTrack + " " + inputLine[i];
 						}
 						if (carTrack == null)
