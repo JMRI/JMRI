@@ -56,7 +56,14 @@ body {
     padding-bottom: 20px;
 }
 
+#navbar-power > button > span {
+    vertical-align: baseline;
+}
 
+/* for some reason, the modal background is getting a higher z-index than the model by default, so reset it */
+.modal {
+    z-index: 1500;
+}
 
 
 
