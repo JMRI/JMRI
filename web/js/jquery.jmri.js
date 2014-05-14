@@ -81,6 +81,10 @@
             };
             jmri.didReconnect = function() {
             };
+            jmri.ping = function() {
+            };
+            jmri.pong = function() {
+            };
             jmri.hello = function(data) {
             };
             jmri.goodbye = function(data) {
@@ -548,6 +552,7 @@
             // Heartbeat
             jmri.heartbeat = function() {
                 jmri.socket.send("ping");
+                jmri.ping();
             };
             jmri.heartbeatInterval = null;
             // WebSocket
@@ -647,6 +652,9 @@
                         },
                         turnout: function(e) {
                             jmri.turnout(e.data.name, e.data.state, e.data);
+                        },
+                        pong: function(e) {
+                            jmri.pong();
                         }
                     }
                 });
