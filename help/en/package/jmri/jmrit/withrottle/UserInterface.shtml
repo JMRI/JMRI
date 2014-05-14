@@ -25,9 +25,15 @@
 JMRI: WiFi Throttle
 </h1>
 
-<a href="http://withrottle.com">
-  <img src="images/WiT150x250.png" height="250" width="150" align="right">
+<a href="EngineDriverAndroidThrottle.shtml">
+  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right" 
+      style="margin:20px;" alt="EngineDriver for Android devices" title="EngineDriver for Android devices">
 </a>
+<a href="http://withrottle.com">
+  <img src="images/WiT150x250.png" height="250" width="150" align="right"
+   alt="WiThrottle for Apple devices" title="WiThrottle for Apple devices">
+</a>
+
 This window controls the connection between WiFi throttles, 
 e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
 
@@ -64,13 +70,13 @@ app on the iPhone or iPod Touch. The basic application is
 available for free download from the iTunes store.  
 
 <P>
-<a href="EngineDriverAndroidThrottle.shtml">
-  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right">
-</a>
-To use your Android phone with JMRI as a throttle, you
+To use your Android device with JMRI as a throttle, you
 run the 
-<a href="EngineDriverAndroidThrottle.shtml">Engine Driver</a>
-program on the Android phone.
+<a href="http://enginedriver.rrclubs.org">Engine Driver</a>
+program on the Android device.  This free app is available from the 
+<a href="https://play.google.com/store/apps/details?id=jmri.enginedriver">
+Google&nbsp;Play&nbsp;Store</a> or the 
+<a href="http://enginedriver.rrclubs.org">EngineDriver&nbsp;site</a>
 
 <p>
 The protocol is described on a 
