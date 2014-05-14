@@ -10,7 +10,7 @@ var power = 0;
 $(document).ready(function() {
     jmri = $.JMRI({
         railroad: function(string) {
-            $("#activity-alert").addClass("hidden").removeClass("show");
+            $("#alert-websocket-connecting").addClass("hidden").removeClass("show");
             jmri.getPower();
         },
         console: function(data) {
@@ -23,14 +23,13 @@ $(document).ready(function() {
                 }
                 console.scrollTop(console[0].scrollHeight - console.height());
             } else {
-                $(".panel-footer form .form-group").addClass("has-success");
-                var wait = window.setTimeout(function() {
-                    $(".panel-footer form .form-group").removeClass("has-success");
+                $("#sendCmd").addClass("btn-success").removeClass("btn-primary");
+                window.setTimeout(function() {
+                    $("#sendCmd").removeClass("btn-success").addClass("btn-primary");
                 },
-                        1000
-                        );
+                        1000);
                 if (window.console) {
-                    window.console.log(data);
+                    window.console.log("Heartbeat response received.");
                 }
             }
         },

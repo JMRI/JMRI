@@ -35,42 +35,35 @@
 
             <div class="container">
 
-                <div id="activity-alert" class="alert alert-info alert-dismissable">Connecting console...</div>
+                <div id="alert-websocket-connecting" class="alert alert-info alert-dismissable">Connecting console...</div>
                 <div id="error-alert" class="hidden alert alert-warning alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <div></div>
+                </div>
+                <div id="alert-websocket-closed" class="hidden alert alert-danger alert-dismissable">
+                    Connection closed.
                 </div>
                 <h1>JSON Console</h1>
                 <div class="row">
                     <div class="col-md-12" id="console"><pre></pre></div>
                 </div>
                 <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <input id='command' class="form-control" type='text'>
-                            </div>
-                            <div class="col-md-2">
-                                <input id='sendCmd' class='form-control btn btn-primary' type='submit' name='Send' value='Send'>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <input id='command' class="form-control" type='text' placeholder="JSON protocol command">
                         </div>
-                        <!--
-                        <div class="row">
-                            <div class="col-md-12">
-                        -->
-                                <div class="checkbox">
-                                    <label data-toggle="tooltip" title="Takes effect on next message and does not reformat existing messages.">
-                                        <input id="pretty-print" type="checkbox"> Formatted JSON output
-                                    </label>
-                                </div>
-                        <!--
-                            </div>
+                        <div class="col-md-1">
+                            <input id='sendCmd' class='form-control btn btn-primary' type='button' name='Send' value='Send'>
                         </div>
-                        -->
+                    </div>
+                    <div class="checkbox">
+                        <label data-toggle="tooltip" title="Takes effect on next message and does not reformat existing messages.">
+                            <input id="pretty-print" type="checkbox"> Formatted JSON output
+                        </label>
                     </div>
                 </form>
                 <p>This is a demonstration of the <a href="/help/en/html/web/JsonServlet.shtml" target="new">JSON WebSockets</a> service.</p>
-                <p>The console input field and buttons are outlined in green when the heartbeat response is received.</p>
+                <p>The send button flashes green when the heartbeat response is received.</p>
             </div> <!-- /container -->
         </div> <!-- /wrap -->
         <!-- Footer %4$s -->
