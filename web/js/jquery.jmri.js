@@ -74,7 +74,7 @@
             };
             jmri.willReconnect = function() {
                 if (window.console) {
-                    console.log("Reconnecting WebSocket (attempt " + jmri.reconnectAttempts + "/10)");
+                    console.log("Reconnecting WebSocket (attempt " + jmri.reconnectAttempts + "/20)");
                 }
                 $("#alert-websocket-connecting").addClass("show").removeClass("hidden");
                 $("#alert-websocket-closed").addClass("hidden").removeClass("show");
