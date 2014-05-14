@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import javax.servlet.AsyncContext;
@@ -92,6 +91,7 @@ import static jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PRO
 import static jmri.jmrit.operations.trains.Train.TRAIN_REQUIREMENTS_CHANGED_PROPERTY;
 import static jmri.jmrit.operations.trains.Train.TRAIN_ROUTE_CHANGED_PROPERTY;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
@@ -417,14 +417,19 @@ public class JsonServlet extends WebSocketServlet {
                 this.sendError(response, code, this.mapper.writeValueAsString(reply));
             }
         } else {
-            response.setContentType("text/html"); // NOI18N
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"), // NOI18N
-                    ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"), // NOI18N
-                    "JSON Console", // NOI18N
-                    JsonServlet.class.getSimpleName(),
-                    ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("HeadAdditions"))); // NOI18N
-            response.getWriter().println(ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("BodyContent")); // NOI18N
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("TailFormat"), "", "")); // NOI18N
+            response.setContentType(ServletUtil.TEXT_HTML); // NOI18N
+            response.getWriter().print(String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Json.html"))),
+                    String.format(request.getLocale(),
+                            Bundle.getMessage(request.getLocale(), "HtmlTitle"),
+                            ServletUtil.getInstance().getRailroadName(false),
+                            Bundle.getMessage(request.getLocale(), "JsonTitle")
+                    ),
+                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
+                    ServletUtil.getInstance().getRailroadName(false),
+                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath())
+            ));
+
         }
     }
 

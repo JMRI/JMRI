@@ -6,11 +6,11 @@
  */
 var jmri = null;
 var power = 0;
+
 $(document).ready(function() {
     jmri = $.JMRI({
         railroad: function(string) {
-            document.title = string + " JSON console";
-            $('h1 span:first-child').html(document.title);
+            $("#activity-alert").addClass("hidden").removeClass("show");
             jmri.getPower();
         },
         console: function(data) {
@@ -19,13 +19,20 @@ $(document).ready(function() {
                 console.append(data + '<br/>');
                 console.scrollTop(console[0].scrollHeight - console.height());
             } else {
-                $('#powerImg').addClass('animated pulse');
+                $(".panel-footer form .form-group").addClass("has-success");
                 var wait = window.setTimeout(function() {
-                    $('#powerImg').removeClass('animated pulse');
+                    $(".panel-footer form .form-group").removeClass("has-success");
                 },
-                        1300
+                        1000
                         );
+                if (window.console) {
+                    window.console.log(data);
+                }
             }
+        },
+        error: function(error) {
+            $("#error-alert div").text(error.message);
+            $("#error-alert").addClass("show").removeClass("hidden");
         },
         power: function(state) {
             power = state;
@@ -60,5 +67,12 @@ $(document).ready(function() {
             return false;
         }
     });
-    $('#footer-menu>li+li+li').before("<li><a href='/help/en/html/web/JsonServlet.shtml'>Json Servlet Help</a></li>");
+    $("power a").click(function() {
+        jmri.setPower((power == jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
+    });
+    $("#error-alert").on("close.bs.alert", function() {
+        $(this).addClass("hidden").removeClass("show");
+        return false; //don't remove error-alert from DOM
+    });
+    jmri.connect();
 });
