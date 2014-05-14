@@ -558,7 +558,6 @@
                 if (jmri.reconnectAttempts < 20) {
                     jmri.reconnectAttempts++;
                     jmri.willReconnect();
-                    // wait jmir.attemptReconnect milliseconds before attempting
                     setTimeout(
                             function() {
                                 jmri.reconnect();
