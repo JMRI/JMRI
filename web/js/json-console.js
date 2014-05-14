@@ -15,8 +15,12 @@ $(document).ready(function() {
         },
         console: function(data) {
             if (data !== '{"type":"pong"}') {
-                var console = $('#console');
-                console.append(data + '<br/>');
+                var console = $("#console pre");
+                if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true") {
+                    console.append(JSON.stringify(JSON.parse(data), null, 2) + "<br>");
+                } else {
+                    console.append(data + "<br>");
+                }
                 console.scrollTop(console[0].scrollHeight - console.height());
             } else {
                 $(".panel-footer form .form-group").addClass("has-success");
@@ -68,11 +72,19 @@ $(document).ready(function() {
         }
     });
     $("power a").click(function() {
-        jmri.setPower((power == jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
+        jmri.setPower((power === jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
     });
     $("#error-alert").on("close.bs.alert", function() {
         $(this).addClass("hidden").removeClass("show");
         return false; //don't remove error-alert from DOM
+    });
+    if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === null) {
+        window.localStorage.setItem("jmri.json-console.json.pretty-print", "true");
+    }
+    $("#pretty-print").parent().tooltip();
+    $("#pretty-print").prop("checked", (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true"));
+    $("#pretty-print").change(function() {
+        window.localStorage.setItem("jmri.json-console.json.pretty-print", $(this).prop("checked") ? "true" : "false");
     });
     jmri.connect();
 });

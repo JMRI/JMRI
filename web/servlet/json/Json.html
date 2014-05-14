@@ -41,20 +41,35 @@
                     <div></div>
                 </div>
                 <h1>JSON Console</h1>
-                <div class="panel panel-default">
-                    <div class="panel-body" id="console"></div>
-                    <div class="panel-footer">
-                        <form class="form-inline" role="form">
-                            <div class="form-group">
-                                <div class="col-sm-8">
-                                <input id='command' class="form-control" type='text' />
-                                </div>
-                                <input id='sendCmd' class='form-control btn btn-primary col-sm-2' type='submit' name='Send' value='Send' />
-                            </div>
-                        </form>
-                    </div>
+                <div class="row">
+                    <div class="col-md-12" id="console"><pre></pre></div>
                 </div>
-                <p>This is a demonstration of the JSON WebSockets service. The JSON protocol is <a href="/help/en/html/web/JsonServlet.shtml" target="new">documented</a>.</p>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input id='command' class="form-control" type='text'>
+                            </div>
+                            <div class="col-md-2">
+                                <input id='sendCmd' class='form-control btn btn-primary' type='submit' name='Send' value='Send'>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="row">
+                            <div class="col-md-12">
+                        -->
+                                <div class="checkbox">
+                                    <label data-toggle="tooltip" title="Takes effect on next message and does not reformat existing messages.">
+                                        <input id="pretty-print" type="checkbox"> Formatted JSON output
+                                    </label>
+                                </div>
+                        <!--
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                </form>
+                <p>This is a demonstration of the <a href="/help/en/html/web/JsonServlet.shtml" target="new">JSON WebSockets</a> service.</p>
                 <p>The console input field and buttons are outlined in green when the heartbeat response is received.</p>
             </div> <!-- /container -->
         </div> <!-- /wrap -->

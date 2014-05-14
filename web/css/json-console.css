@@ -1,13 +1,6 @@
 /* Styles for the JSON console */
 
-div#console {
-    min-width: 60em;
-    height: 30ex;
+div#console > pre {
+    height: 60ex;
     overflow: auto;
-}
-.panel-footer form div.form-group {
-    min-width: 60em;
-}
-input#command {
-    width: 100%;
 }
