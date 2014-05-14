@@ -22,15 +22,6 @@ $(document).ready(function() {
                     console.append(data + "<br>");
                 }
                 console.scrollTop(console[0].scrollHeight - console.height());
-            } else {
-                $("#sendCmd").addClass("btn-success").removeClass("btn-primary");
-                window.setTimeout(function() {
-                    $("#sendCmd").removeClass("btn-success").addClass("btn-primary");
-                },
-                        1000);
-                if (window.console) {
-                    window.console.log("Heartbeat response received.");
-                }
             }
         },
         error: function(error) {
@@ -49,6 +40,20 @@ $(document).ready(function() {
                 case jmri.POWER_OFF:
                     $('#powerImg').prop('src', "/images/PowerRed.png");
                     break;
+            }
+        },
+        ping: function() {
+            $("#sendCmd").addClass("btn-info").removeClass("btn-primary");
+        },
+        pong: function() {
+            $("#sendCmd").addClass("btn-success").removeClass("btn-info");
+            window.setTimeout(
+                    function() {
+                        $("#sendCmd").removeClass("btn-success").addClass("btn-primary");
+                    },
+                    1000);
+            if (window.console) {
+                window.console.log("Heartbeat response received.");
             }
         }
     });
