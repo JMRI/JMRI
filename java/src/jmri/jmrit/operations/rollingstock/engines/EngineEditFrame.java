@@ -4,9 +4,11 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -98,6 +100,18 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		// set tips
 		builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
 		rfidTextField.setToolTipText(Bundle.getMessage("TipRfid"));
+		editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Road").toLowerCase() }));
+		editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Type").toLowerCase() }));
+		editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Model").toLowerCase() }));
+		editLengthButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Length").toLowerCase() }));
+		editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Owner").toLowerCase() }));
+		editConsistButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Consist").toLowerCase() }));
 
 		// create panel
 		JPanel pPanel = new JPanel();

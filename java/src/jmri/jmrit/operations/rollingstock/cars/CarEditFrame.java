@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Frame for user edit of car
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
  * @version $Revision$
  */
 
@@ -92,7 +92,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JComboBox trackLocationBox = new JComboBox();
 	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
 	JComboBox kernelComboBox = carManager.getKernelComboBox();
-	
+
 	// panels
 	JPanel pBlocking = new JPanel();
 
@@ -127,6 +127,21 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
 		valueTextField.setToolTipText(Bundle.getMessage("TipValue"));
 		rfidTextField.setToolTipText(Bundle.getMessage("TipRfid"));
+
+		editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Road").toLowerCase() }));
+		editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Type").toLowerCase() }));
+		editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Color").toLowerCase() }));
+		editLengthButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Length").toLowerCase() }));
+		editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Load").toLowerCase() }));
+		editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Owner").toLowerCase() }));
+		editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+				new Object[] { Bundle.getMessage("Kernel").toLowerCase() }));
 
 		// default check box selections
 		autoCheckBox.setSelected(true);
@@ -168,7 +183,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		addItem(pType, fredCheckBox, 2, 1);
 		addItem(pType, utilityCheckBox, 3, 1);
 		pPanel.add(pType);
-		
+
 		// row 3a
 		pBlocking.setLayout(new GridBagLayout());
 		pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
@@ -212,8 +227,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		JPanel pOptional = new JPanel();
 		pOptional.setLayout(new BoxLayout(pOptional, BoxLayout.Y_AXIS));
 		JScrollPane optionPane = new JScrollPane(pOptional);
-		optionPane.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutOptional")));
+		optionPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
 
 		// row 12
 		JPanel pColor = new JPanel();
@@ -324,7 +338,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		// JMenu toolMenu = new JMenu("Tools");
 		// menuBar.add(toolMenu);
 		// setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true);	// NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
 
 		// get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -345,11 +359,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car = car;
 
 		if (!CarRoads.instance().containsName(car.getRoadName())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("roadNameNotExist"),
-							new Object[] { car.getRoadName() }), Bundle.getMessage("carAddRoad"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("roadNameNotExist"),
+					new Object[] { car.getRoadName() }), Bundle.getMessage("carAddRoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarRoads.instance().addName(car.getRoadName());
 			}
 		}
@@ -358,33 +369,24 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		roadNumberTextField.setText(car.getNumber());
 
 		if (!CarTypes.instance().containsName(car.getTypeName())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("typeNameNotExist"),
-							new Object[] { car.getTypeName() }), Bundle.getMessage("carAddType"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("typeNameNotExist"),
+					new Object[] { car.getTypeName() }), Bundle.getMessage("carAddType"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarTypes.instance().addName(car.getTypeName());
 			}
 		}
 		typeComboBox.setSelectedItem(car.getTypeName());
 
 		if (!CarLengths.instance().containsName(car.getLength())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("lengthNameNotExist"),
-							new Object[] { car.getLength() }), Bundle.getMessage("carAddLength"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("lengthNameNotExist"),
+					new Object[] { car.getLength() }), Bundle.getMessage("carAddLength"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarLengths.instance().addName(car.getLength());
 			}
 		}
 		lengthComboBox.setSelectedItem(car.getLength());
 
 		if (!CarColors.instance().containsName(car.getColor())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("colorNameNotExist"),
-							new Object[] { car.getColor() }), Bundle.getMessage("carAddColor"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("colorNameNotExist"),
+					new Object[] { car.getColor() }), Bundle.getMessage("carAddColor"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarColors.instance().addName(car.getColor());
 			}
 		}
@@ -397,7 +399,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		utilityCheckBox.setSelected(car.isUtility());
 		fredCheckBox.setSelected(car.hasFred());
 		hazardousCheckBox.setSelected(car.isHazardous());
-		
+
 		pBlocking.setVisible(passengerCheckBox.isSelected());
 
 		locationBox.setSelectedItem(car.getLocation());
@@ -406,22 +408,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		builtTextField.setText(car.getBuilt());
 
 		if (!CarOwners.instance().containsName(car.getOwner())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("ownerNameNotExist"),
-							new Object[] { car.getOwner() }), Bundle.getMessage("addOwner"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("ownerNameNotExist"),
+					new Object[] { car.getOwner() }), Bundle.getMessage("addOwner"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarOwners.instance().addName(car.getOwner());
 			}
 		}
 		ownerComboBox.setSelectedItem(car.getOwner());
 
 		if (!CarLoads.instance().containsName(car.getTypeName(), car.getLoadName())) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
-							new Object[] { car.getLoadName() }), Bundle.getMessage("addLoad"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
+					new Object[] { car.getLoadName() }), Bundle.getMessage("addLoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				CarLoads.instance().addName(car.getTypeName(), car.getLoadName());
 			}
 		}
@@ -436,7 +432,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		valueTextField.setText(car.getValue());
 		rfidTextField.setText(car.getRfid());
 		autoTrackCheckBox.setEnabled(true);
-		
+
 		blockingTextField.setText(Integer.toString(car.getBlocking()));
 	}
 
@@ -444,8 +440,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
 			log.debug("Type comboBox sees change, update car loads");
-			CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(),
-					loadComboBox);
+			CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
 			// turnout off auto for location tracks
 			autoTrackCheckBox.setSelected(false);
 			autoTrackCheckBox.setEnabled(false);
@@ -500,8 +495,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car != null
 					&& _car.getRoadName() != null
 					&& !_car.getRoadName().equals("")
-					&& (!_car.getRoadName().equals(roadComboBox.getSelectedItem().toString()) || !_car
-							.getNumber().equals(roadNumberTextField.getText()))) {
+					&& (!_car.getRoadName().equals(roadComboBox.getSelectedItem().toString()) || !_car.getNumber()
+							.equals(roadNumberTextField.getText()))) {
 				String road = roadComboBox.getSelectedItem().toString();
 				String number = roadNumberTextField.getText();
 				carManager.changeId(_car, road, number);
@@ -523,8 +518,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				// save car file
 				writeFiles();
 			} else {
-				Car car = carManager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
-						roadNumberTextField.getText());
+				Car car = carManager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField
+						.getText());
 				if (car != null) {
 					carManager.deregister(car);
 					// save car file
@@ -552,8 +547,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				lef.dispose();
 			lef = new CarLoadEditFrame();
 			lef.setLocationRelativeTo(this);
-			lef.initComponents((String) typeComboBox.getSelectedItem(),
-					(String) loadComboBox.getSelectedItem());
+			lef.initComponents((String) typeComboBox.getSelectedItem(), (String) loadComboBox.getSelectedItem());
 		}
 	}
 
@@ -568,26 +562,25 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	private boolean checkCar(Car c) {
 		String roadNum = roadNumberTextField.getText();
 		if (roadNum.length() > Control.max_len_string_road_number) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getMessage("carRoadNum"),
-					new Object[] { Control.max_len_string_road_number + 1 }), Bundle
-					.getMessage("carRoadLong"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carRoadNum"),
+					new Object[] { Control.max_len_string_road_number + 1 }), Bundle.getMessage("carRoadLong"),
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// check to see if car with road and number already exists
-		Car car = carManager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
-				roadNumberTextField.getText());
+		Car car = carManager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField
+				.getText());
 		if (car != null) {
 			// new car?
 			if (c == null) {
-				JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"),
-						Bundle.getMessage("carCanNotAdd"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
+						.getMessage("carCanNotAdd"), JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			// old car with new road or number?
 			if (!car.getId().equals(c.getId())) {
-				JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"),
-						Bundle.getMessage("carCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
+						.getMessage("carCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}
@@ -597,16 +590,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			Number number = nf.parse(weightTextField.getText());
 			log.debug("Car weight in oz: {}", number);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"),
-					Bundle.getMessage("carActualWeight"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormat"), Bundle
+					.getMessage("carActualWeight"), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// check car's weight in tons has proper format
 		try {
 			Integer.parseInt(weightTonsTextField.getText());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormatTon"),
-					Bundle.getMessage("carWeightTon"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("carWeightFormatTon"), Bundle
+					.getMessage("carWeightTon"), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -627,20 +620,18 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					tons = (int) (Double.parseDouble(length) * .9); // .9 tons/foot
 				weightTonsTextField.setText(Integer.toString(tons));
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, Bundle.getMessage("carLengthMustBe"),
-						Bundle.getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("carLengthMustBe"), Bundle
+						.getMessage("carWeigthCanNot"), JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 
 	private void saveCar(boolean isSave) {
-		if (roadComboBox.getSelectedItem() == null
-				|| roadComboBox.getSelectedItem().toString().equals(""))
+		if (roadComboBox.getSelectedItem() == null || roadComboBox.getSelectedItem().toString().equals(""))
 			return;
 		if (_car == null || !_car.getRoadName().equals(roadComboBox.getSelectedItem().toString())
 				|| !_car.getNumber().equals(roadNumberTextField.getText())) {
-			_car = carManager.newCar(roadComboBox.getSelectedItem().toString(),
-					roadNumberTextField.getText());
+			_car = carManager.newCar(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
 			_car.addPropertyChangeListener(this);
 		}
 		if (typeComboBox.getSelectedItem() != null)
@@ -654,11 +645,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 		// ask if all cars of this type should be passenger
 		if (isSave && _car.isPassenger() ^ passengerCheckBox.isSelected()) {
-			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					passengerCheckBox.isSelected() ? Bundle.getMessage("carModifyTypePassenger") : Bundle
-							.getMessage("carRemoveTypePassenger"), new Object[] { _car.getTypeName() }), MessageFormat
-					.format(Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(passengerCheckBox.isSelected() ? Bundle
+					.getMessage("carModifyTypePassenger") : Bundle.getMessage("carRemoveTypePassenger"),
+					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
 				List<RollingStock> cars = carManager.getList();
@@ -678,15 +668,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (blocking < 0 || blocking > 100)
 				blocking = 0;
 		} catch (Exception e) {
-			log.warn ("Blocking must be a number between 0 and 100");
+			log.warn("Blocking must be a number between 0 and 100");
 		}
 		if (isSave && passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
-			if (JOptionPane.showConfirmDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
-							new Object[] { blocking, _car.getTypeName() }),
-					MessageFormat.format(Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
+					new Object[] { blocking, _car.getTypeName() }), MessageFormat.format(Bundle
+					.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the passenger setting
 				// for all cars of this type
 				List<RollingStock> cars = carManager.getList();
@@ -701,12 +688,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setBlocking(blocking);
 		// ask if all cars of this type should be caboose
 		if (isSave && _car.isCaboose() ^ cabooseCheckBox.isSelected()) {
-			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					cabooseCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeCaboose")
-							: Bundle.getMessage("carRemoveTypeCaboose"), new Object[] { _car
-							.getTypeName() }), MessageFormat.format(
-					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(cabooseCheckBox.isSelected() ? Bundle
+					.getMessage("carModifyTypeCaboose") : Bundle.getMessage("carRemoveTypeCaboose"),
+					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the caboose setting for all cars of this type
 				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
@@ -719,12 +704,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setCaboose(cabooseCheckBox.isSelected());
 		// ask if all cars of this type should be utility
 		if (isSave && _car.isUtility() ^ utilityCheckBox.isSelected()) {
-			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					utilityCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeUtility")
-							: Bundle.getMessage("carRemoveTypeUtility"), new Object[] { _car
-							.getTypeName() }), MessageFormat.format(
-					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(utilityCheckBox.isSelected() ? Bundle
+					.getMessage("carModifyTypeUtility") : Bundle.getMessage("carRemoveTypeUtility"),
+					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the utility for all cars of this type
 				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
@@ -737,12 +720,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setUtility(utilityCheckBox.isSelected());
 		// ask if all cars of this type should be hazardous
 		if (isSave && _car.isHazardous() ^ hazardousCheckBox.isSelected()) {
-			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					hazardousCheckBox.isSelected() ? Bundle.getMessage("carModifyTypeHazardous")
-							: Bundle.getMessage("carRemoveTypeHazardous"), new Object[] { _car
-							.getTypeName() }), MessageFormat.format(
-					Bundle.getMessage("carModifyAllType"), new Object[] { _car.getTypeName() }),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(hazardousCheckBox.isSelected() ? Bundle
+					.getMessage("carModifyTypeHazardous") : Bundle.getMessage("carRemoveTypeHazardous"),
+					new Object[] { _car.getTypeName() }), MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+					new Object[] { _car.getTypeName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// go through the entire list and change the hazardous setting for all cars of this type
 				List<RollingStock> cars = carManager.getList();
 				for (int i = 0; i < cars.size(); i++) {
@@ -774,11 +755,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car.getKernel() != null) {
 				List<Car> cars = _car.getKernel().getCars();
 				if (cars.size() > 1) {
-					if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-							Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), MessageFormat
-							.format(Bundle.getMessage("carPartKernel"), new Object[] { _car.getKernelName() }),
-							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						// go through the entire list and change the loads for all cars					
+					if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carInKernel"),
+							new Object[] { _car.toString() }), MessageFormat.format(Bundle.getMessage("carPartKernel"),
+							new Object[] { _car.getKernelName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						// go through the entire list and change the loads for all cars
 						for (int i = 0; i < cars.size(); i++) {
 							Car car = cars.get(i);
 							if (CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName()))
@@ -793,16 +773,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setRfid(rfidTextField.getText());
 		autoTrackCheckBox.setEnabled(true);
 		if (locationBox.getSelectedItem() != null) {
-			if (!locationBox.getSelectedItem().equals("") && (trackLocationBox.getSelectedItem() == null
-					|| trackLocationBox.getSelectedItem().equals(""))) {
-				JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"),
-						Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
+			if (!locationBox.getSelectedItem().equals("")
+					&& (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(""))) {
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"), Bundle
+						.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 			} else {
 				// update location only if it has changed
-				if (_car.getLocation() == null
-						|| !_car.getLocation().equals(locationBox.getSelectedItem())
-						|| _car.getTrack() == null
-						|| !_car.getTrack().equals(trackLocationBox.getSelectedItem())) {
+				if (_car.getLocation() == null || !_car.getLocation().equals(locationBox.getSelectedItem())
+						|| _car.getTrack() == null || !_car.getTrack().equals(trackLocationBox.getSelectedItem())) {
 					setLocation(_car);
 					// is this car part of a kernel?
 					if (_car.getKernel() != null) {
@@ -810,8 +788,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 						if (cars.size() > 1) {
 							if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
 									.getMessage("carInKernel"), new Object[] { _car.toString() }), MessageFormat
-									.format(Bundle.getMessage("carPartKernel"), new Object[] { _car
-										.getKernelName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+									.format(Bundle.getMessage("carPartKernel"), new Object[] { _car.getKernelName() }),
+									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 								// go through the entire list and change the location for all cars
 								for (int i = 0; i < cars.size(); i++) {
 									Car car = cars.get(i);
@@ -825,23 +803,22 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			}
 		}
 	}
-	
+
 	private void setLocation(Car car) {
 		if (locationBox.getSelectedItem().equals("")) {
 			car.setLocation(null, null);
 		} else {
-			String status = car.setLocation((Location) locationBox.getSelectedItem(),
-					(Track) trackLocationBox.getSelectedItem());
+			String status = car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
+					.getSelectedItem());
 			if (!status.equals(Track.OKAY)) {
 				log.debug("Can't set car's location because of " + status);
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("rsCanNotLocMsg"),
 						new Object[] { car.toString(), status }), Bundle.getMessage("rsCanNotLoc"),
 						JOptionPane.ERROR_MESSAGE);
 				// does the user want to force the rolling stock to this track?
-				int results = JOptionPane.showOptionDialog(this, MessageFormat.format(Bundle
-						.getMessage("rsForce"), new Object[] { car.toString(),
-						(Track) trackLocationBox.getSelectedItem() }), MessageFormat.format(Bundle
-						.getMessage("rsOverride"), new Object[] { status }), JOptionPane.YES_NO_OPTION,
+				int results = JOptionPane.showOptionDialog(this, MessageFormat.format(Bundle.getMessage("rsForce"),
+						new Object[] { car.toString(), (Track) trackLocationBox.getSelectedItem() }), MessageFormat
+						.format(Bundle.getMessage("rsOverride"), new Object[] { status }), JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (results == JOptionPane.YES_OPTION) {
 					log.debug("Force rolling stock to track");
@@ -907,8 +884,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("CarEditFrame sees propertyChange " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
+			log.debug("CarEditFrame sees propertyChange " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
@@ -953,8 +930,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
 			if (_car != null) {
-				CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(),
-						loadComboBox);
+				CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
 				loadComboBox.setSelectedItem(_car.getLoadName());
 			}
 		}
@@ -963,6 +939,5 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(CarEditFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(CarEditFrame.class.getName());
 }
