@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20140509-0548-jake on Thu May 08 22:48:18 PDT 2014 $Id$-->
-  <decoderIndex version="372">
+  <!--Written by JMRI version 20140515-1056-heap on Thu May 15 20:56:47 EST 2014 $Id$-->
+  <decoderIndex version="380">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="106">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -2441,17 +2441,6 @@
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
         <model model="LokSound V4.0 NEM652" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
-        </model>
-        <model model="LokSound V4.0 Test" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="99999">
-          <size length="30.5" width="15.5" height="5.5" units="mm" />
-          <functionlabels>
-            <functionlabel num="7" lockable="true">Model Function Override 7 and 11</functionlabel>
-            <functionlabel num="11" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="25">Override 15 and 27</soundlabel>
-            <soundlabel num="27" />
-          </soundlabels>
         </model>
         <model model="LokSound V4.0 21MTC" numOuts="128" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
           <size length="30.5" width="15.5" height="5.5" units="mm" />

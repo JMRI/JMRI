@@ -3,7 +3,7 @@
   <name>Function Outputs</name>
   <column>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 1 effect generated"/>
       </griditem>
@@ -109,9 +109,20 @@
         <separator/>
         <display item="ESU V4 Function Output 1 Check 6" layout="above" format="checkbox"/>
       </griditem>
+<!-- 
+      <griditem gridx="1" gridy="1">
+        <label text="fred 1,1"/>
+      </griditem>
+      <griditem gridx="0" gridy="1">
+        <label text="jim                                                                                                                                                                                0,1"/>
+      </griditem>
+      <griditem gridx="1" gridy="0">
+        <label text="bill 1,0"/>
+      </griditem>
+ -->
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 2 effect generated"/>
       </griditem>
@@ -219,7 +230,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 3 effect generated"/>
       </griditem>
@@ -327,7 +338,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 4 effect generated"/>
       </griditem>
@@ -435,7 +446,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 5 effect generated"/>
       </griditem>
@@ -543,7 +554,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 6 effect generated"/>
       </griditem>
@@ -651,7 +662,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 7 effect generated"/>
       </griditem>
@@ -759,7 +770,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 8 effect generated"/>
       </griditem>
@@ -867,7 +878,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 9 effect generated"/>
       </griditem>
@@ -975,7 +986,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 10 effect generated"/>
       </griditem>
@@ -1083,7 +1094,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 11 effect generated"/>
       </griditem>
@@ -1191,7 +1202,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 12 effect generated"/>
       </griditem>
@@ -1299,7 +1310,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 13 effect generated"/>
       </griditem>
@@ -1407,7 +1418,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 14 effect generated"/>
       </griditem>
@@ -1515,7 +1526,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 15 effect generated"/>
       </griditem>
@@ -1623,7 +1634,7 @@
       </griditem>
     </grid>
     <separator/>
-    <grid gridx="0" gridy="RELATIVE" weightx="1" anchor="LINE_END">
+    <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
       <griditem insets="2,0,2,0">
         <display item="ESU V4 Function Output 16 effect generated"/>
       </griditem>

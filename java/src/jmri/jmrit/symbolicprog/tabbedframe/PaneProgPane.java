@@ -1536,13 +1536,16 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid from the JDOM  Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new grid
         JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         c.setLayout(g);
+        
+        int gridxCurrent = GridBagConstraints.RELATIVE;
+        int gridyCurrent = GridBagConstraints.RELATIVE;        
 
         // handle the xml definition
         // for all elements in the grid
@@ -1555,7 +1558,7 @@ public class PaneProgPane extends javax.swing.JPanel
             String name = e.getName();
             if (log.isDebugEnabled()) log.debug("newGrid processing "+name+" element");
             // decode the type
-            if (name.equals("griditem")) {
+            if (name.equals("griditem")) {                    
                 List<Attribute> itemAttList = e.getAttributes(); // get item-level attributes
                 List<Attribute> attList = new ArrayList<Attribute>(gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
@@ -1565,6 +1568,15 @@ public class PaneProgPane extends javax.swing.JPanel
                     String attribRawValue = attrib.getValue();
                     Field constraint = null;
                     String constraintType = null;
+                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("NEXT") ) {
+                        attribRawValue = "RELATIVE"; // NEXT is a synonym for Relative
+                    }
+                    if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(gridxCurrent);
+                    }
+                    if ( attribName.equals("gridy")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(gridyCurrent);
+                    }
                     try {
                         constraint = cs.getClass().getDeclaredField(attribName);
                         constraintType = constraint.getType().toString();
@@ -1573,7 +1585,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         log.error("Unrecognised attribute \""+attribName+"\", skipping");
                         continue;
                     }
-                    if ( constraintType.equals("int")) {
+                    if ( constraintType.equals("int") ) {
                         int attribValue;
                         try {
                             attribValue = Integer.valueOf(attribRawValue);
@@ -1592,7 +1604,7 @@ public class PaneProgPane extends javax.swing.JPanel
                             log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
                             }
                         }
-                    } else if ( constraintType.equals("double")) {
+                    } else if ( constraintType.equals("double") ) {
                         double attribValue;
                         try {
                             attribValue = Double.valueOf(attribRawValue);
@@ -1602,7 +1614,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         } catch (NumberFormatException ex) {
                             log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                         }
-                    } else if ( constraintType.equals("class java.awt.Insets")) {
+                    } else if ( constraintType.equals("class java.awt.Insets") ) {
                         try {
                             String[] insetStrings = attribRawValue.split(",");
                             if ( insetStrings.length == 4) {
@@ -1630,10 +1642,21 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                     cs.gridwidth = 1;
                 }
+                if ( cs.gridx == GridBagConstraints.RELATIVE ){
+                    gridxCurrent++;
+                } else {
+                    gridxCurrent = cs.gridx;
+                }
+                if ( cs.gridy == GridBagConstraints.RELATIVE ){
+                    gridyCurrent++;
+                } else {
+                gridyCurrent = cs.gridy;
+                }
             } else { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGrid");
             }
         }
+        
         // add glue to the bottom to allow resize
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
@@ -1842,6 +1865,7 @@ public class PaneProgPane extends javax.swing.JPanel
         catch (Exception ex) {log.error("error handling decoder's extFnsESU value");}        
         if (extFnsESU) {
             FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry);
+//             FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry, _cvModel);
             fnMapListESU.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
             g.setConstraints(l, cs);
