@@ -13,6 +13,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Lenz Function Map</name>
+  <name xml:lang="it">Mappatura Funzioni Lenz</name>
+  <name xml:lang="de">Lenz Function Map</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -39,8 +42,6 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  <name>Lenz Function Map</name>
-  <name xml:lang="it">Mappatura Funzioni Lenz</name>
   <column>
     <row>
       <column>
@@ -52,11 +53,11 @@
         </label>
         <label>
           <text>Select which function</text>
-          <text xml:lang="it">Seleziona quale Funzione</text>
+          <text xml:lang="de">Select which function</text>
         </label>
         <label>
           <text>disables momentum:</text>
-          <text xml:lang="it">Disabilita l'Inerzia:</text>
+          <text xml:lang="de">disables momentum:</text>
         </label>
         <label>
           <text> </text>
@@ -84,11 +85,11 @@
         </label>
         <label>
           <text>Select which function</text>
-          <text xml:lang="it">Seleziona quale Funzione</text>
+          <text xml:lang="de">Select which function</text>
         </label>
         <label>
           <text>enables switching gear:</text>
-          <text xml:lang="it">Abilita velocità da manovra:</text>
+          <text xml:lang="de">enables switching gear:</text>
         </label>
         <label>
           <text> </text>
@@ -116,11 +117,11 @@
         </label>
         <label>
           <text>Select which function enables</text>
-          <text xml:lang="it">Seleziona quale Funzione</text>
+          <text xml:lang="de">Select which function enables</text>
         </label>
         <label>
           <text>light dimming for A and B outputs:</text>
-          <text xml:lang="it">attenua le luci per uscite A e B:</text>
+          <text xml:lang="de">light dimming for A and B outputs:</text>
         </label>
         <label>
           <text> </text>
@@ -145,11 +146,11 @@
         </label>
         <label>
           <text>Select which function toggles</text>
-          <text xml:lang="it">Seleziona quale Funzione</text>
+          <text xml:lang="de">Select which function toggles</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs A and B:</text>
-          <text xml:lang="it">commuta on/off le uscite A e B:</text>
+          <text xml:lang="de">lighting effects on/off for outputs A and B:</text>
         </label>
         <label>
           <text> </text>
@@ -180,11 +181,11 @@
         </label>
         <label>
           <text>Select which function toggles</text>
-          <text xml:lang="it">Seleziona quale Funzione</text>
+          <text xml:lang="de">Select which function toggles</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs C and D:</text>
-          <text xml:lang="it">commuta on/off le uscite C e D:</text>
+          <text xml:lang="de">lighting effects on/off for outputs C and D:</text>
         </label>
         <label>
           <text> </text>

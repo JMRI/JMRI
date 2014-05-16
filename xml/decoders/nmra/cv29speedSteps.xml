@@ -49,9 +49,11 @@
     <enumVal>
       <enumChoice choice="14">
         <choice>14</choice>
+        <choice xml:lang="de">14</choice>
       </enumChoice>
       <enumChoice choice="28/128">
         <choice>28/128</choice>
+        <choice xml:lang="de">28/128</choice>
       </enumChoice>
     </enumVal>
     <label>Speed Steps</label>

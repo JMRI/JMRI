@@ -44,41 +44,50 @@
       <enumChoice choice="Okay">
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
+        <choice xml:lang="de">Okay</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
+        <choice xml:lang="de">Fault</choice>
       </enumChoice>
     </enumVal>
     <label>Light short-circuit</label>
     <label xml:lang="it">Luce per corto-circuito</label>
+    <label xml:lang="de">Light Short</label>
   </variable>
   <variable CV="30" mask="XXXXXXVX" item="Overheating" default="0">
     <enumVal>
       <enumChoice choice="Okay">
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
+        <choice xml:lang="de">Okay</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
+        <choice xml:lang="de">Fault</choice>
       </enumChoice>
     </enumVal>
     <label>Overheating</label>
     <label xml:lang="it">Sovratemperatura</label>
+    <label xml:lang="de">Overheating</label>
   </variable>
   <variable CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
     <enumVal>
       <enumChoice choice="Okay">
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
+        <choice xml:lang="de">Okay</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
+        <choice xml:lang="de">Fault</choice>
       </enumChoice>
     </enumVal>
     <label>Motor short-circuit</label>
     <label xml:lang="it">Corto circuito Motore</label>
+    <label xml:lang="de">Motor Short</label>
   </variable>
 </variables>

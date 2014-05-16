@@ -52,6 +52,7 @@
     <label xml:lang="fr">V démarr.</label>
     <label xml:lang="de">Anfahrspannung</label>
     <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
+    <comment xml:lang="de">A value of 255 corresponds to 100%</comment>
   </variable>
   <variable item="Vhigh" CV="5">
     <decVal/>

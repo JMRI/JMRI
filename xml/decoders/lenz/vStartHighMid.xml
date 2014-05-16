@@ -45,6 +45,8 @@
     <label xml:lang="it">Tensione di partenza (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Vstart</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
   <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
     <decVal min="0" max="255"/>
@@ -52,6 +54,8 @@
     <label xml:lang="it">Tensione massima (0-255)</label>
     <comment>Sets the maximum voltage at full throttle</comment>
     <comment xml:lang="it">Stabilisce la tensione alla velocità massima</comment>
+    <label xml:lang="de">Vhigh</label>
+    <comment xml:lang="de">Sets the maximum voltage at full throttle</comment>
   </variable>
   <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -59,5 +63,7 @@
     <label xml:lang="it">Tensione intermedia (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Vmid</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
 </variables>

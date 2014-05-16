@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Lenz</name>
+  <name xml:lang="de">Lenz</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -51,13 +53,12 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  <name>Lenz</name>
   <column>
     <row>
       <column>
         <label>
           <text>RailCom Configuration</text>
-          <text xml:lang="it">Configurazione RailCom</text>
+          <text xml:lang="de">RailCom Configuration</text>
         </label>
         <display item="RailCom Address"/>
         <display item="RailCom Data"/>
@@ -68,7 +69,7 @@
         </label>
         <label>
           <text>Fault Indication</text>
-          <text xml:lang="it">Indicazione Guasti</text>
+          <text xml:lang="de">Fault Indication</text>
         </label>
         <display item="Light Short"/>
         <display item="Overheating"/>
@@ -78,7 +79,7 @@
         </label>
         <label>
           <text>Motor Configuration</text>
-          <text xml:lang="it">Configurazione Motore</text>
+          <text xml:lang="de">Motor Configuration</text>
         </label>
         <display item="Motor type"/>
         <display item="EMF Switch"/>
@@ -99,7 +100,7 @@
       <column>
         <label>
           <text>Braking Configuration</text>
-          <text xml:lang="it">Configurazione Frenata</text>
+          <text xml:lang="de">Braking Configuration</text>
         </label>
         <display item="Constant Braking"/>
         <display item="ABC"/>
@@ -154,7 +155,7 @@
         </label>
         <label>
           <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
-          <text xml:lang="it">La Frenata Costante funziona solo se è abilitata l'inerzia, e quando non in velocità da manovra</text>
+          <text xml:lang="de">Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
         </label>
         <label>
           <text> </text>

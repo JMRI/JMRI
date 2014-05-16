@@ -45,6 +45,8 @@
     <label xml:lang="it">Inerzia Accellerazione</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Accel</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
   <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -52,5 +54,7 @@
     <label xml:lang="it">Inerzia Decellarazione (Frenata) 0-225</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Decel</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
 </variables>

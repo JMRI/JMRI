@@ -43,36 +43,44 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Automatic Braking Control</label>
     <label xml:lang="it">Controllo Automatico frenata</label>
+    <label xml:lang="de">ABC</label>
   </variable>
   <variable CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
     <enumVal>
       <enumChoice choice="Enabled">
         <choice>Enabled</choice>
         <choice xml:lang="it">Abilitato</choice>
+        <choice xml:lang="de">Enabled</choice>
       </enumChoice>
       <enumChoice choice="Disabled">
         <choice>Disabled</choice>
         <choice xml:lang="it">Disabilitato</choice>
+        <choice xml:lang="de">Disabled</choice>
       </enumChoice>
     </enumVal>
     <label>ABC direction dependancy</label>
     <label xml:lang="it">Dipendenza Controlla Frenata da direzione</label>
+    <label xml:lang="de">ABC Direction</label>
   </variable>
   <variable CV="51" mask="XXXXVXXX" item="Push-Pull w/o Stop" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Push-Pull without Stop</label>
     <label xml:lang="it">Push-Pull senza Stop</label>
+    <label xml:lang="de">Push-Pull w/o Stop</label>
   </variable>
   <variable CV="51" mask="XXXVXXXX" item="Push-Pull w Stop" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Push-Pull with Stop</label>
     <label xml:lang="it">Push-Pull con Stop</label>
+    <label xml:lang="de">Push-Pull w Stop</label>
   </variable>
   <variable CV="53" item="ABC Approach Speed" default="48" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Slow approach speed with ABC (0-255)</label>
     <label xml:lang="it">Avvicinamento lento con Controllo frenata</label>
     <comment>Range 0-255</comment>
+    <label xml:lang="de">ABC Approach Speed</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
   <variable CV="54" item="Push-Pull Stop Time" default="4" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -80,5 +88,7 @@
     <label xml:lang="it">Tempo di Stop Push-Pull (0-225 sec)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Push-Pull Stop Time</label>
+    <comment xml:lang="de">Range 0-255</comment>
   </variable>
 </variables>
