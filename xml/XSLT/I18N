@@ -24,3 +24,10 @@ These require that the decoder or programmer file be normal form first,
 so you must run the normalizeDecoder transform script before using them.
 
 To use them as a group, see the i18nDecoder transform script.
+
+Note that you _must_ edit _all_ those files to have the language at the 
+top:
+
+<!ENTITY target "de">
+
+
