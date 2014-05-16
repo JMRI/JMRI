@@ -1,0 +1,26 @@
+README for Internationalization (I18N) scripts
+
+For more information on JMRI I18N, see http://jmri.sourceforge.net/help/en/html/doc/Technical/I8N.shtml
+
+There are transforms that can create I18N'd XML elements in decoder and 
+programmer files:
+
+    decoderAddI18nLabel.xsl         Label elements in decoder variables
+    
+    decoderAddI18nComment.xsl       Comment elements
+    
+    decoderAddI18nChoice.xsl        Choice elements in enum variables
+    
+    decoderAddI18nTooltip.xsl       Tooltips on variables
+    
+    decoderPaneAddI18nName.xsl      Name elements on individual panes
+    
+    decoderAddI18nPaneLabel.xsl     Label elements within panes
+    
+    decoderAddI18nPaneTooltip.xsl   Tooltips on panes
+
+
+These require that the decoder or programmer file be normal form first,
+so you must run the normalizeDecoder transform script before using them.
+
+To use them as a group, see the i18nDecoder transform script.
