@@ -1138,7 +1138,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (selection!=null) {
                 selection.doMouseReleased(event);
             }
-            boolean circuitBuilder =_circuitBuilder.doMouseReleased(selection, event);
             // when dragging, don't change selection group
             if (_pastePending && _dragging) {
                 pasteItems();
@@ -1147,21 +1146,21 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (_shapeDrawer.doMouseReleased(selection, event)) {
                 	_selectRect = null;
                 }
-                if (selection!=null && !circuitBuilder) {
-                	if (!_dragging) {
-                    	modifySelectionGroup(selection, event);
+                if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
+                    if (selection!=null) {
+                    	if (!_dragging) {
+                        	modifySelectionGroup(selection, event);
+                        }
                     }
-                }
-                if (_selectRect!=null && !circuitBuilder) {
-                    makeSelectionGroup(event);
-                }
-                _currentSelection = selection;            	
-                if (!circuitBuilder) {
+                    if (_selectRect!=null) {
+                        makeSelectionGroup(event);
+                    }
                 	if (_currentSelection!=null && (_selectionGroup==null || _selectionGroup.size()==0)) {
                 		if (_selectionGroup==null) _selectionGroup = new ArrayList <Positionable>();
                 		_selectionGroup.add(_currentSelection);
                 	}        	
                 }
+                _currentSelection = selection;            	
             } else {
             	_selectionGroup = null;
             	_currentSelection = null;

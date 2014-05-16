@@ -35,10 +35,8 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private CircuitBuilder _parent;
     private OBlock _adjacentBlock;
 
-    private JList       _portalList;
-    private PortalListModel _portalListModel; 
+    private PortalList	_portalList;
     private String _currentPortalName;			// name of last portal Icon made
-    PortalIcon _movedIcon = null;
     
     private JTextField  _portalName = new JTextField();
     private JPanel _dndPanel;
@@ -102,7 +100,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
-            setSize(500,500);
+//            setSize(500,500);
             _firstInstance = false;
         } else {
             setLocation(_loc);
@@ -147,14 +145,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
 
-        _portalListModel =  new PortalListModel();
-        _portalList = new JList();
-        _portalList.setModel(_portalListModel);
-        _portalList.setCellRenderer(new PortalCellRenderer());
+        _portalList = new PortalList(_homeBlock);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
-        _portalList.setPreferredSize(new Dimension(300,120));
-        _portalList.setVisibleRowCount(5);
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
@@ -162,7 +155,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     clearListSelection();
                 }
         });
-        //clearButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
         panel = new JPanel();
         panel.add(clearButton);
         portalPanel.add(panel);
@@ -234,31 +226,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         return portalPanel;
     }
 
-    private static class PortalCellRenderer extends JLabel implements ListCellRenderer {
-     
-        public Component getListCellRendererComponent(
-           JList list,              // the list
-           Object value,            // value to display
-           int index,               // cell index
-           boolean isSelected,      // is the cell selected
-           boolean cellHasFocus)    // does the cell have focus
-        {
-             String s = ((Portal)value).getDescription();
-             setText(s);
-             if (isSelected) {
-                 setBackground(list.getSelectionBackground());
-                 setForeground(list.getSelectionForeground());
-             } else {
-                 setBackground(list.getBackground());
-                 setForeground(list.getForeground());
-             }
-             setEnabled(list.isEnabled());
-             setFont(list.getFont());
-             setOpaque(true);
-             return this;
-        }
-    }
-
     private void clearListSelection() {
         _portalList.clearSelection();
         _portalName.setText(null);
@@ -278,25 +245,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             _portalName.setText(null);
         }
     }
-    
-    protected void setSelection(Positionable pos) {
-    	if (pos instanceof PortalIcon) {
-            _portalName.setText(((PortalIcon)pos).getName());    		
-    	}
-    }
-
-    class PortalListModel extends AbstractListModel {
-        public int getSize() {
-            return _homeBlock.getPortals().size();
-        }
-        public Object getElementAt(int index) {
-            return _homeBlock.getPortals().get(index);
-        }
-        public void dataChange() {
-            fireContentsChanged(this, 0, 0);
-        }
-    }
-
     /************************* end setup **************************/
 
     private void changePortalName() {
@@ -314,7 +262,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         String msg = portal.setName(name);
         if (msg==null) {
             _parent.changePortalName(oldName, name);		// update maps
-            _portalListModel.dataChange();
+            _portalList.dataChange();
         } else {
             JOptionPane.showMessageDialog(this, msg, 
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
@@ -335,14 +283,13 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             if (result==JOptionPane.YES_OPTION) {
             	// removes portal and stubs all paths through it.
                 portal.dispose();
-                _portalListModel.dataChange();
+                _portalList.dataChange();
             }
         }
         PortalIcon icon = _parent.getPortalIconMap().get(name);
         if (icon!=null) {
         	deletePortalIcon(icon);
         }
-        _movedIcon = null;
         _currentPortalName = null;
     }
 
@@ -383,8 +330,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             	if (!checkPortal(icon)) {
             		return false;
             	}
-            	if (icon.equals(_movedIcon)) {
-                	checkPortalIconForUpdate(icon);            		
+            	if (!checkPortalIconForUpdate(icon, false)) {
+            		_parent._editor.highlight(icon);
+                	return false;            		
             	}
             }
         }
@@ -431,23 +379,23 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
     /**
     * Called after click on portal icon
+    * moved recheck block connections
     */
-    protected void checkPortalIconForUpdate(PortalIcon icon) {
+    protected boolean checkPortalIconForUpdate(PortalIcon icon, boolean moved) {
         Portal portal = icon.getPortal();
         if (portal==null) {
         	icon.remove();
         	log.error("Removed PortalIcon without Portal");
-        	return;
+        	return false;
         }
-        OBlock saveHome = _homeBlock;
         String name = portal.getDisplayName();
-        _parent._editor.highlight(icon);
         String msg = null;
         OBlock fromBlock = portal.getFromBlock();
         OBlock toBlock = portal.getToBlock();
         if (!_homeBlock.equals(fromBlock) && !_homeBlock.equals(toBlock)) {
         	msg = Bundle.getMessage("iconNotOnBlock", _homeBlock.getDisplayName(), 
             		portal.getDescription());
+        	_adjacentBlock = null;
         }
         if (msg==null) {
         	msg = iconIntersectsBlock(icon, _homeBlock);
@@ -461,26 +409,33 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         		_adjacentBlock = fromBlock;
         	}
         	if (_adjacentBlock==null) {	// maybe first time
-        		_adjacentBlock = findAdjacentBlock(icon, false);
+        		_adjacentBlock = findAdjacentBlock(icon);
             	if (_homeBlock.equals(fromBlock)) {
                     portal.setToBlock(_adjacentBlock, false);                    		
             	} else {
                     portal.setFromBlock(_adjacentBlock, false);                    		
             	}
-                _portalListModel.dataChange();
+                _portalList.dataChange();
         	}
-        	OBlock block = findAdjacentBlock(icon, false);
-            if (log.isDebugEnabled()) log.debug("Icon also on "+(block!=null ? block.getDisplayName():"null")+
-                    ", _adjacentBlock= "+(_adjacentBlock!=null ?_adjacentBlock.getDisplayName():"null"));
-        	if (block!= null && block.equals(_adjacentBlock)) {
-        		return;		// no change  in connection
+        	if (moved) {
+            	OBlock block = findAdjacentBlock(icon);
+                if (log.isDebugEnabled()) log.debug("Icon also on "+(block!=null ? block.getDisplayName():"null")+
+                        ", _adjacentBlock= "+(_adjacentBlock!=null ?_adjacentBlock.getDisplayName():"null"));
+            	if (block!= null && block.equals(_adjacentBlock)) {
+                	_portalList.setSelectedValue(portal, true);
+            		return true;		// no change  in connection
+            	}
         	}
         	if (_adjacentBlock!=null)  {
-            	msg = iconIntersectsBlock(icon, _adjacentBlock);        		
+            	msg = iconIntersectsBlock(icon, _adjacentBlock);
+            	if (msg==null) {
+                	_portalList.setSelectedValue(portal, true);
+            		return true;		// no change  in connection        		            		
+            	}
         	}
-        	if (_adjacentBlock==null || msg!=null) {
+        	if (_adjacentBlock==null) {
         		// icon not on Portal blocks Find a new _adjacentBlock
-        		_adjacentBlock = findAdjacentBlock(icon, false);
+        		_adjacentBlock = findAdjacentBlock(icon);
             	if (_adjacentBlock!=null) {
                     if (log.isDebugEnabled()) log.debug("Current position: _homeBlock= "+_homeBlock.getDisplayName()+
                             " and _adjacentBlock= "+_adjacentBlock.getDisplayName());
@@ -495,61 +450,37 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     	} else {
                             portal.setFromBlock(_adjacentBlock, true);                    		
                     	}
-                     }
+                    }
                     msg = null;
             	} else {
             		msg = Bundle.getMessage("iconNotOnAdjacent", icon.getNameString(), _homeBlock.getDisplayName());
             	}
         	}
-        } else {
-        	_homeBlock = findAdjacentBlock(icon, true);
-    		_adjacentBlock = findAdjacentBlock(icon, false);
-        	if (_homeBlock!=null && _adjacentBlock!=null) {
-                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("repositionPortal",
-                		name, _homeBlock.getDisplayName(), _adjacentBlock.getDisplayName()), 
-                		Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, 
-                                JOptionPane.QUESTION_MESSAGE);
-                if (result==JOptionPane.YES_OPTION) {
-                	// Change portal position to join different pair of blocks
-                	portal.setFromBlock(_homeBlock, true);                    		
-                	portal.setToBlock(_adjacentBlock, true);
-                	msg = null;
-                 }
-        	} else {
-            	msg = Bundle.getMessage("iconNotOnBlock", saveHome.getDisplayName(), 
-                		portal.getDescription());
-        	}
-        	_homeBlock = saveHome;
         }
-        _portalListModel.dataChange();
-/*        
-        _parent.getPortalIconMap().put(icon.getName(), icon);
-        clearListSelection();
-        _portalListModel.dataChange();
-        */
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg, 
                     Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);        	
+            clearListSelection();
+         	return false;
+        } else {
+        	_portalList.setSelectedValue(portal, true);
+            _portalList.dataChange();
+         	return true;
         }
-        _movedIcon = icon;
-     	return;
     }
     /*
      * If icon is on the home block, find another intersecting block
      */
-    private OBlock findAdjacentBlock(PortalIcon icon, boolean findHome) {
+    private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<OBlock>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int j = 0; j < sysNames.length; j++) {
             OBlock block = manager.getBySystemName(sysNames[j]);
-            if (!findHome && block.equals(_homeBlock)) {
+            if (block.equals(_homeBlock)) {
             	continue;
             }
     		if (iconIntersectsBlock(icon, block)==null) {
-    			if (findHome) {
-    				return block;
-    			}
                 neighbors.add(block);        			
     		}
         }
@@ -578,7 +509,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         	}        	
         }
         if (log.isDebugEnabled()) log.debug("findAdjacentBlock: neighbors.size()= "+neighbors.size()+
-        		"  findHome= "+findHome+" return "+(block==null ? "null" : block.getDisplayName()));
+        		" return "+(block==null ? "null" : block.getDisplayName()));
         return block;
  	}
     /**
@@ -663,7 +594,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     	portalMgr = InstanceManager.getDefault(PortalManager.class);
                     	portal = portalMgr.createNewPortal(null, name);
                         portal.setFromBlock(_homeBlock, false);
-                        _portalListModel.dataChange();
+                        _portalList.dataChange();
                     }
                 	pi = new PortalIcon(_parent._editor, portal);
                 	pi.setLevel(Editor.MARKERS);
