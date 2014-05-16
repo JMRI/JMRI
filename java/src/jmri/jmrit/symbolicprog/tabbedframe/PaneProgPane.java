@@ -1202,7 +1202,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1319,7 +1319,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newColumn");
             }
         }
@@ -1328,6 +1328,18 @@ public class PaneProgPane extends javax.swing.JPanel
             c.add(Box.createVerticalGlue());
         }
 
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 
@@ -1403,7 +1415,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1521,7 +1533,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newRow");
             }
         }
@@ -1529,6 +1541,18 @@ public class PaneProgPane extends javax.swing.JPanel
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
         }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 
@@ -1539,7 +1563,7 @@ public class PaneProgPane extends javax.swing.JPanel
     public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new grid
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         c.setLayout(g);
@@ -1652,7 +1676,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                 gridyCurrent = cs.gridy;
                 }
-            } else { // its a mistake
+            } else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGrid");
             }
         }
@@ -1661,6 +1685,18 @@ public class PaneProgPane extends javax.swing.JPanel
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
         }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 
@@ -1671,7 +1707,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new grid item
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1789,7 +1825,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGridItem");
             }
         }
@@ -1797,6 +1833,18 @@ public class PaneProgPane extends javax.swing.JPanel
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
         }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 

@@ -109,17 +109,6 @@
         <separator/>
         <display item="ESU V4 Function Output 1 Check 6" layout="above" format="checkbox"/>
       </griditem>
-<!-- 
-      <griditem gridx="1" gridy="1">
-        <label text="fred 1,1"/>
-      </griditem>
-      <griditem gridx="0" gridy="1">
-        <label text="jim                                                                                                                                                                                0,1"/>
-      </griditem>
-      <griditem gridx="1" gridy="0">
-        <label text="bill 1,0"/>
-      </griditem>
- -->
     </grid>
     <separator/>
     <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
