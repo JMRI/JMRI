@@ -67,19 +67,19 @@
   <variable item="Toggle effect (outputs A/B) with F4" CV="61" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F4</label>
-     <label xml:lang="it">Effetto Alternato (uscite A/B) con F4</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F4</label>
     <tooltip xml:lang="it">Alterna uscite A e B off con F4</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F5" CV="61" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F5</label>
-     <label xml:lang="it">Effetto Alternato (uscite A/B) con F5</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F5</label>
     <tooltip xml:lang="it">Alterna uscite A e B off con F5</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F6" CV="61" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F6</label>
-     <label xml:lang="it">Effetto Alternato (uscite A/B) con F6</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F6</label>
     <tooltip xml:lang="it">Alterna uscite A e B off con F6</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F7" CV="61" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F7">
@@ -89,15 +89,15 @@
   <variable item="Toggle effect (outputs A/B) with F8" CV="61" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F8</label>
-     <label xml:lang="it">Effetto Alternato (uscite A/B) con F8</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F8</label>
     <tooltip xml:lang="it">Alterna uscite A e B off con F8</tooltip>
   </variable>
   <variable CV="62" minOut="4" item="Lighting effects C/D" default="0" comment="Range 0-53">
     <decVal min="0" max="53"/>
     <label>Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) </label>
-     <label xml:lang="it">Valore corrispondente all'effetto Luce per uscite D/C (0-53)</label>
-     <comment>Range 0-53</comment>
-     <comment xml:lang="it">Valori da 0 a 53</comment>
+    <label xml:lang="it">Valore corrispondente all'effetto Luce per uscite D/C (0-53)</label>
+    <comment>Range 0-53</comment>
+    <comment xml:lang="it">Valori da 0 a 53</comment>
   </variable>
   <variable CV="63" minOut="4" tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))" item="Function 3 options" default="32" comment="Range 0-255">
     <decVal min="0" max="255"/>
