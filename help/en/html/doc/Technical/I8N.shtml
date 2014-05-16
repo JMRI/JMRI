@@ -210,7 +210,7 @@ There are XSLT transforms that can insert default language elements
 into the files.  They still have English content, but 
 it's perhaps easier to just translate English text than to 
 edit in new XML elements, make sure the structure is correct, etc.
-For more information, see the xml/XSLT/I18N file
+For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
 <a id="help"><h3>Translating help files</h3>
