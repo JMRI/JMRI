@@ -191,11 +191,11 @@ ask for help with this.
 
 <a id="xml"><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
-decoder definition directories.  Look for elements with a xml:lang="fr"
+decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
 <code><pre>
-      &lt;variable label="Vmid" CV="6" default="22" item="Vmid"&gt;
+      &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
@@ -204,6 +204,14 @@ specify the language used:
 <p>
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
+
+<p>
+There are XSLT transforms that can insert default language elements
+into the files.  They still have English content, but 
+it's perhaps easier to just translate English text than to 
+edit in new XML elements, make sure the structure is correct, etc.
+For more information, see the xml/XSLT/I18N file
+or ask on the jmri-developers list.
 
 <a id="help"><h3>Translating help files</h3>
 (This has only been done once, so these instructions may not be complete)
