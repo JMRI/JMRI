@@ -189,10 +189,6 @@
     <label xml:lang="it">F2 controlla uscita B</label>
     <label xml:lang="de">F2 controls output 2</label>
   </variable>
-  <variable item="">
-    <label/>
-    <label xml:lang="de"/>
-  </variable>
   <variable CV="36" mask="XXXXXVXX" item="F2 controls output 3" minOut="3" minFn="2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output C</label>
@@ -336,10 +332,6 @@
     <label>F5 controls output B</label>
     <label xml:lang="it">F5 controlla uscita B</label>
     <label xml:lang="de">F5 controls output 2</label>
-  </variable>
-  <variable item="">
-    <label/>
-    <label xml:lang="de"/>
   </variable>
   <variable CV="39" mask="XXXXXVXX" item="F5 controls output 3" minOut="3" minFn="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
