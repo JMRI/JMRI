@@ -51,7 +51,16 @@
 </xs:annotation>
 
   <xs:complexType name="PaneType">
-    <xs:sequence>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="name" minOccurs="0">
+        <xs:annotation><xs:documentation>
+        The name element is allowed to appear in two places, but the preferred one
+        is at the start of the panes element (this position).  name elements at the end of
+        the pane element are deprecated, and should not be
+        used in new definitions..
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
           <xs:annotation><xs:documentation>
           DocBook element(s) providing copyright information in standard form.
@@ -80,23 +89,12 @@
         </xs:documentation></xs:annotation>
       </xs:element>
 
-      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
-
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="1" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="1" maxOccurs="unbounded"/>
       </xs:choice>
             
-      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" >
-        <xs:annotation><xs:documentation>
-        The name element is allowed to appear in two places, but the preferred one
-        is at the start of the panes element.  name elements at the end of
-        the pane element (this position) are deprecated, and should not be
-        used in new definitions.
-        </xs:documentation></xs:annotation>
-      </xs:element>
-
-    </xs:sequence>
+    </xs:choice>
     <xs:attribute name="tooltip" type="xs:string"/>
     <xs:attribute name="nameFmt" type="labelItemType" default="label">
       <xs:annotation><xs:documentation>
