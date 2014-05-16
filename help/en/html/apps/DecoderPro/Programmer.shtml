@@ -192,7 +192,10 @@ Other attributes to control the format of the grid items are available and are d
         for an example of this usage to generate a simple single-column right-aligned grid.
         (However if you are not careful with use of this technique and/or the "RELATIVE" constant, results can be bizarre.)
   </li>
-  <li>Unfortunately "ipadx", "ipady" and "insets" allocate space even if the enclosed display variable(s) fail qualification.</li>
+  <li>
+    Unfortunately "ipadx", "ipady" and "insets" allocate space even if the enclosed display variable(s) fail qualification.
+    A workaround is to qualify the whole "griditem" enclosing the variable (if that is appropriate to the situation).
+    </li>
 </ul>
 </p>
 <p>
