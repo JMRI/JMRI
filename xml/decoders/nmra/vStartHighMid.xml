@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2014-05-17</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Updated German</revremark>
+    </revision>
+	<revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -52,7 +58,7 @@
     <label xml:lang="fr">V démarr.</label>
     <label xml:lang="de">Anfahrspannung</label>
     <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
-    <comment xml:lang="de">A value of 255 corresponds to 100%</comment>
+    <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
   </variable>
   <variable item="Vhigh" CV="5">
     <decVal/>
