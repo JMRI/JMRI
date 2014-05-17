@@ -14,10 +14,10 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="30-40mA incandescent bulb">
     <choice>30-40mA incandescent bulb</choice>
-    <choice xml:lang="it">30-40mA incandescent bulb</choice>
+    <choice xml:lang="it">Lampada incandescenza 30-40mA</choice>
   </enumChoice>
   <enumChoice choice="LED and limiting resistor">
     <choice>LED and limiting resistor</choice>
-    <choice xml:lang="it">LED and limiting resistor</choice>
+    <choice xml:lang="it">LED con Resistenza limitazione</choice>
   </enumChoice>
 </enumVal>
