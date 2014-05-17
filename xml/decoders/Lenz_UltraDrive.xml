@@ -41,291 +41,404 @@
         <decVal min="1" max="255"/>
         <label>Acceleration Momentum (1-255)</label>
         <comment>Range 1-255</comment>
+        <label xml:lang="de">Accel</label>
+        <comment xml:lang="de">Range 1-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="4" comment="Range 1-255">
         <decVal min="1" max="255"/>
         <label>Deceleration (Brake) Momentum (1-255)</label>
         <comment>Range 1-255</comment>
+        <label xml:lang="de">Decel</label>
+        <comment xml:lang="de">Range 1-255</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="10" comment="Sets the maximum voltage at full throttle (only active if Back EMF enabled)">
         <decVal min="2" max="10"/>
         <label>Max Volts (2-10)</label>
         <comment>Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
+        <label xml:lang="de">Vhigh</label>
+        <comment xml:lang="de">Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="1">
         <decVal/>
         <label>Decoder Version No: </label>
+        <label xml:lang="de">Decoder Version</label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="de">Manufacturer</label>
       </variable>
       <variable CV="8" item="Reset" comment="Writing a value of 33 using register mode will reset decoder to factory defaults">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 33 using register mode will reset decoder to factory defaults</comment>
+        <label xml:lang="de">Reset</label>
+        <comment xml:lang="de">Writing a value of 33 using register mode will reset decoder to factory defaults</comment>
       </variable>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal min="0" max="127"/>
         <label>Consist Address (0-127)</label>
         <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
+        <label xml:lang="de">Consist Address</label>
+        <comment xml:lang="de">Stores consist address. Range 0-127 (direction set in bit 7)</comment>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX" comment="A consist address over 127 will also set this bit">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
+            <choice xml:lang="de">Forward</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Consist Direction</label>
         <comment>A consist address over 127 will also set this bit</comment>
+        <label xml:lang="de">Consist Direction</label>
+        <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
+            <choice xml:lang="de">Normal</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Locomotive Direction in Forward</label>
+        <label xml:lang="de">Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
+            <choice xml:lang="de">14</choice>
           </enumChoice>
           <enumChoice choice="28/128">
             <choice>28/128</choice>
+            <choice xml:lang="de">28/128</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Steps (Headlight Mode)</label>
+        <label xml:lang="de">Speed Step Mode</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Loco can operate on conventional DC</label>
+        <label xml:lang="de">Analog (DC) Operation</label>
       </variable>
       <variable item="Precision Braking Control" CV="50" mask="XXXXXXVX" tooltip="Loco stops in a predetermined distance when speed is set to zero (Constant Braking Distance)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Precision Braking Control</label>
+        <label xml:lang="de">Precision Braking Control</label>
+        <tooltip xml:lang="de">Loco stops in a predetermined distance when speed is set to zero (Constant Braking Distance)</tooltip>
       </variable>
       <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum" tooltip="Only active if analog (conventional DC) operation is disabled" comment="Governs how loco reacts in DC track block (CV29.2 must be disabled)">
         <enumVal>
           <enumChoice choice="Loco continues under analog (DC) voltage control">
             <choice>Loco continues under analog (DC) voltage control</choice>
+            <choice xml:lang="de">Loco continues under analog (DC) voltage control</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>When loco enters DC track section: </label>
         <comment>Governs how loco reacts in DC track block (CV29.2 must be disabled)</comment>
+        <label xml:lang="de">DC Brake Momentum</label>
+        <comment xml:lang="de">Governs how loco reacts in DC track block (CV29.2 must be disabled)</comment>
+        <tooltip xml:lang="de">Only active if analog (conventional DC) operation is disabled</tooltip>
       </variable>
       <variable item="Directional Headlights" CV="51" mask="XXXXXXXV" tooltip="Enables Rule 17 for headlights (independent control)" comment="Outputs A and B">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F1-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F1-Rear)</choice>
+            <choice xml:lang="de">Headlights are independently controlled (F0-Front, F1-Rear)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
         <comment>Outputs A and B</comment>
+        <label xml:lang="de">Directional Headlights</label>
+        <comment xml:lang="de">Outputs A and B</comment>
+        <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
       </variable>
       <variable CV="51" mask="XXXXXXVX" item="Function F0F behavior" tooltip="Controls how front headlight dims (when dimming is enabled)" comment="CV 52 controls amount">
         <enumVal>
           <enumChoice choice="Front headlight is always dimmed">
             <choice>Front headlight is always dimmed</choice>
+            <choice xml:lang="de">Front headlight is always dimmed</choice>
           </enumChoice>
           <enumChoice choice="F1 or F4 controls headlight dimming">
             <choice>F1 or F4 controls headlight dimming</choice>
+            <choice xml:lang="de">F1 or F4 controls headlight dimming</choice>
           </enumChoice>
         </enumVal>
         <label>Dimming Control</label>
         <comment>CV 52 controls amount</comment>
+        <label xml:lang="de">Function F0F behavior</label>
+        <comment xml:lang="de">CV 52 controls amount</comment>
+        <tooltip xml:lang="de">Controls how front headlight dims (when dimming is enabled)</tooltip>
       </variable>
       <variable CV="51" mask="XXXXXVXX" item="Function F0F effect generated" tooltip="Enables front headlight dimming">
         <enumVal>
           <enumChoice choice="Front headlight never dim">
             <choice>Front headlight never dim</choice>
+            <choice xml:lang="de">Front headlight never dim</choice>
           </enumChoice>
           <enumChoice choice="Front headlight can dim">
             <choice>Front headlight can dim</choice>
+            <choice xml:lang="de">Front headlight can dim</choice>
           </enumChoice>
         </enumVal>
         <label>Front Headlight (Output A) Dimming</label>
+        <label xml:lang="de">Function F0F effect generated</label>
+        <tooltip xml:lang="de">Enables front headlight dimming</tooltip>
       </variable>
       <variable CV="51" mask="XXXXVXXX" item="Function F0R effect generated" tooltip="Enables rear headlight dimming">
         <enumVal>
           <enumChoice choice="Rear headlight never dim">
             <choice>Rear headlight never dim</choice>
+            <choice xml:lang="de">Rear headlight never dim</choice>
           </enumChoice>
           <enumChoice choice="Rear headlight can dim">
             <choice>Rear headlight can dim</choice>
+            <choice xml:lang="de">Rear headlight can dim</choice>
           </enumChoice>
         </enumVal>
         <label>Rear Headlight (Output B) Dimming</label>
+        <label xml:lang="de">Function F0R effect generated</label>
+        <tooltip xml:lang="de">Enables rear headlight dimming</tooltip>
       </variable>
       <variable CV="52" item="Global lighting option 1" default="64" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity (0-255)</label>
+        <label xml:lang="de">Global lighting option 1</label>
+        <tooltip xml:lang="de">Sets intensity of dimmed headlight (larger number = brighter light)</tooltip>
       </variable>
       <variable CV="53" item="EMF Dynamic Config" default="8" tooltip="Fine tune the back EMF control">
         <decVal min="1" max="255"/>
         <label>Back EMF Control Value (1-255)</label>
+        <label xml:lang="de">EMF Dynamic Config</label>
+        <tooltip xml:lang="de">Fine tune the back EMF control</tooltip>
       </variable>
       <variable CV="54" mask="XXXXXXXV" item="F1 controls output 3" default="1" minOut="3" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output C</label>
+        <label xml:lang="de">F1 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXXXVX" item="F2 controls output 3" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output C</label>
+        <label xml:lang="de">F2 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXXVXX" item="F3 controls output 3" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output C</label>
+        <label xml:lang="de">F3 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXVXXX" item="F4 controls output 3" minOut="3" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output C</label>
+        <label xml:lang="de">F4 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXVXXXX" item="F5 controls output 3" minOut="3" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output C</label>
+        <label xml:lang="de">F5 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXVXXXXX" item="F6 controls output 3" minOut="3" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output C</label>
+        <label xml:lang="de">F6 controls output 3</label>
       </variable>
       <variable CV="54" mask="XVXXXXXX" item="F7 controls output 3" minOut="3" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output C</label>
+        <label xml:lang="de">F7 controls output 3</label>
       </variable>
       <variable CV="54" mask="VXXXXXXX" item="F8 controls output 3" minOut="3" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output C</label>
+        <label xml:lang="de">F8 controls output 3</label>
       </variable>
       <variable CV="55" mask="XXXXXXXV" item="F1 controls output 4" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output D</label>
+        <label xml:lang="de">F1 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXXXVX" item="F2 controls output 4" default="1" minOut="4" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output D</label>
+        <label xml:lang="de">F2 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXXVXX" item="F3 controls output 4" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output D</label>
+        <label xml:lang="de">F3 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXVXXX" item="F4 controls output 4" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output D</label>
+        <label xml:lang="de">F4 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXVXXXX" item="F5 controls output 4" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output D</label>
+        <label xml:lang="de">F5 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXVXXXXX" item="F6 controls output 4" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output D</label>
+        <label xml:lang="de">F6 controls output 4</label>
       </variable>
       <variable CV="55" mask="XVXXXXXX" item="F7 controls output 4" minOut="4" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output D</label>
+        <label xml:lang="de">F7 controls output 4</label>
       </variable>
       <variable CV="55" mask="VXXXXXXX" item="F8 controls output 4" minOut="4" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output D</label>
+        <label xml:lang="de">F8 controls output 4</label>
       </variable>
       <variable item="Enable Low Speed Gear with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle low speed switching gear 'on' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F1</label>
+        <label xml:lang="de">Enable Low Speed Gear with F1</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F1</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle low speed switching gear 'on' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F2</label>
+        <label xml:lang="de">Enable Low Speed Gear with F2</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F2</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F3" CV="59" mask="XXXXXVXX" default="1" tooltip="Toggle low speed switching gear 'on' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F3</label>
+        <label xml:lang="de">Enable Low Speed Gear with F3</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F3</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F4" CV="59" mask="XXXXVXXX" tooltip="Toggle low speed switching gear 'on' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F4</label>
+        <label xml:lang="de">Enable Low Speed Gear with F4</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F4</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle low speed switching gear 'on' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F5</label>
+        <label xml:lang="de">Enable Low Speed Gear with F5</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F5</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle low speed switching gear 'on' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F6</label>
+        <label xml:lang="de">Enable Low Speed Gear with F6</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F6</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle low speed switching gear 'on' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F7</label>
+        <label xml:lang="de">Enable Low Speed Gear with F7</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F7</tooltip>
       </variable>
       <variable item="Enable Low Speed Gear with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle low speed switching gear 'on' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Low Speed Gear with F8</label>
+        <label xml:lang="de">Enable Low Speed Gear with F8</label>
+        <tooltip xml:lang="de">Toggle low speed switching gear 'on' using F8</tooltip>
       </variable>
       <variable item="Disable PBC with F1" CV="60" mask="XXXXXXXV" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F1</label>
+        <label xml:lang="de">Disable PBC with F1</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F1</tooltip>
       </variable>
       <variable item="Disable PBC with F2" CV="60" mask="XXXXXXVX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F2</label>
+        <label xml:lang="de">Disable PBC with F2</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F2</tooltip>
       </variable>
       <variable item="Disable PBC with F3" CV="60" mask="XXXXXVXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F3</label>
+        <label xml:lang="de">Disable PBC with F3</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F3</tooltip>
       </variable>
       <variable item="Disable PBC with F4" CV="60" mask="XXXXVXXX" default="1" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F4</label>
+        <label xml:lang="de">Disable PBC with F4</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F4</tooltip>
       </variable>
       <variable item="Disable PBC with F5" CV="60" mask="XXXVXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F5</label>
+        <label xml:lang="de">Disable PBC with F5</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F5</tooltip>
       </variable>
       <variable item="Disable PBC with F6" CV="60" mask="XXVXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F6</label>
+        <label xml:lang="de">Disable PBC with F6</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F6</tooltip>
       </variable>
       <variable item="Disable PBC with F7" CV="60" mask="XVXXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F7</label>
+        <label xml:lang="de">Disable PBC with F7</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F7</tooltip>
       </variable>
       <variable item="Disable PBC with F8" CV="60" mask="VXXXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Disable PBC with F8</label>
+        <label xml:lang="de">Disable PBC with F8</label>
+        <tooltip xml:lang="de">Toggle PBC (Constant Braking Distance) 'off' using F8</tooltip>
       </variable>
       <variable item="Braking Distance (0-255)" CV="61" default="100" tooltip="Sets the constant braking distance (larger number = longer distance)" comment="Range 0-255 (0 will disable)">
         <decVal min="0" max="255"/>
         <label>Braking Distance (0-255)</label>
         <comment>Range 0-255 (0 will disable)</comment>
+        <label xml:lang="de">Braking Distance (0-255)</label>
+        <comment xml:lang="de">Range 0-255 (0 will disable)</comment>
+        <tooltip xml:lang="de">Sets the constant braking distance (larger number = longer distance)</tooltip>
       </variable>
       <variable CV="62" item="SUSI CV Number Tens" default="0" include="LE1835" comment="For LE1835 only; Range 0-99" tooltip="CV holds the tens and units components of the SUSI CV Number">
         <decVal min="0" max="99"/>
         <label>SUSI CV Number (tens and units)</label>
+        <label xml:lang="de">SUSI CV Number Tens</label>
+        <comment xml:lang="de">For LE1835 only; Range 0-99</comment>
+        <tooltip xml:lang="de">CV holds the tens and units components of the SUSI CV Number</tooltip>
       </variable>
       <variable CV="63" item="SUSI CV Number Hundreds" default="0" include="LE1835" comment="For LE1835 only; Range 0-99" tooltip="CV holds the hundreds component of the SUSI CV Number">
         <decVal min="0" max="99"/>
         <label>SUSI CV Number (hundreds)</label>
+        <label xml:lang="de">SUSI CV Number Hundreds</label>
+        <comment xml:lang="de">For LE1835 only; Range 0-99</comment>
+        <tooltip xml:lang="de">CV holds the hundreds component of the SUSI CV Number</tooltip>
       </variable>
       <variable CV="64" item="SUSI CV Value" default="0" include="LE1835" comment="For LE1835 only; Range 0-255" tooltip="The value of the CV pointed to by CVs 63,62">
         <decVal min="0" max="255"/>
         <label>SUSI CV Value</label>
+        <label xml:lang="de">SUSI CV Value</label>
+        <comment xml:lang="de">For LE1835 only; Range 0-255</comment>
+        <tooltip xml:lang="de">The value of the CV pointed to by CVs 63,62</tooltip>
       </variable>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="05">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
+        <label xml:lang="de">Decoder Software Version</label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
@@ -336,6 +449,8 @@
     </resets>
   </decoder>
   <pane>
+    <name>Lenz</name>
+    <name xml:lang="de">Lenz</name>
     <column>
       <row>
         <column>
@@ -350,9 +465,11 @@
           </label>
           <label>
             <text>Determine which function will enable</text>
+            <text xml:lang="de">Determine which function will enable</text>
           </label>
           <label>
             <text>the Low Speed Gear for switching:</text>
+            <text xml:lang="de">the Low Speed Gear for switching:</text>
           </label>
           <label>
             <text> </text>
@@ -374,6 +491,7 @@
         <column>
           <label>
             <text>Precision Braking Control (aka Constant Braking Distance)</text>
+            <text xml:lang="de">Precision Braking Control (aka Constant Braking Distance)</text>
           </label>
           <label>
             <text> </text>
@@ -400,6 +518,7 @@
           </label>
           <label>
             <text>Tip: Low Speed Gear must be enabled for Precision Braking Control to function</text>
+            <text xml:lang="de">Tip: Low Speed Gear must be enabled for Precision Braking Control to function</text>
           </label>
           <label>
             <text> </text>
@@ -412,7 +531,6 @@
         </column>
       </row>
     </column>
-    <name>Lenz</name>
   </pane>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneSUSI.xml"/>
 </decoder-config>
