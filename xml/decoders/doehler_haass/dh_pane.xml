@@ -10,6 +10,7 @@
           <text>Dimming options</text>
           <text xml:lang="fr">Options d'intensité</text>
           <text xml:lang="de">Dimmer Optionen</text>
+          <text xml:lang="it">Opzioni Intensità luci</text>
         </label>
         <label>
           <text> </text>
@@ -74,6 +75,7 @@
           <text>Timer options</text>
           <text xml:lang="fr">Options de temporisation</text>
           <text xml:lang="de">Timer Optionen</text>
+          <text xml:lang="it">Opzioni Temporizzazioni</text>
         </label>
         <label>
           <text> </text>
@@ -139,6 +141,7 @@
           <text>'Preclusion' options</text>
           <text xml:lang="fr">Option de blocage des fonctions</text>
           <text xml:lang="de">Ausschaltfunktionen</text>
+          <text xml:lang="it">Opzioni di blocco Funzioni</text>
         </label>
         <label>
           <text> </text>
@@ -147,11 +150,13 @@
           <text>Blocks an output even if its main function is activated</text>
           <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
           <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
+          <text xml:lang="it">Blocca uscita anche se la sua funzione principale è attiva</text>
         </label>
         <label>
           <text>E.g. turn off front lights if the engine is pushing a train</text>
           <text xml:lang="fr">Par exemple, éteindre feux avant si la loco pousse un convoi</text>
           <text xml:lang="de">z.B.: Stirnbeleuchtung aus im Wendezugbetrieb</text>
+          <text xml:lang="it">Per esempio, spegni luci frontali se la loco spinge un treno</text>
         </label>
         <label>
           <text> </text>
@@ -169,6 +174,7 @@
               <text> F1 precludes  </text>
               <text xml:lang="fr"> F1 bloque  </text>
               <text xml:lang="de"> F1 schaltet aus  </text>
+              <text xml:lang="it"> F1 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -195,6 +201,7 @@
               <text> F2 precludes  </text>
               <text xml:lang="fr"> F2 bloque  </text>
               <text xml:lang="de"> F2 schaltet aus  </text>
+              <text xml:lang="it"> F2 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -221,6 +228,7 @@
               <text> F3 precludes  </text>
               <text xml:lang="fr"> F3 bloque  </text>
               <text xml:lang="de"> F3 schaltet aus  </text>
+              <text xml:lang="it"> F3 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -247,6 +255,7 @@
               <text> F4 precludes  </text>
               <text xml:lang="fr"> F4 bloque  </text>
               <text xml:lang="de"> F4 schaltet aus  </text>
+              <text xml:lang="it"> F4 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -280,6 +289,7 @@
               <text> F5 precludes  </text>
               <text xml:lang="fr"> F5 bloque  </text>
               <text xml:lang="de"> F5 schaltet aus  </text>
+              <text xml:lang="it"> F5 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -306,6 +316,7 @@
               <text> F6 precludes  </text>
               <text xml:lang="fr"> F6 bloque  </text>
               <text xml:lang="de"> F6 schaltet aus  </text>
+              <text xml:lang="it"> F6 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -332,6 +343,7 @@
               <text> F7 precludes  </text>
               <text xml:lang="fr"> F7 bloque  </text>
               <text xml:lang="de"> F7 schaltet aus  </text>
+              <text xml:lang="it"> F7 Blocca  </text>
             </label>
             <label>
               <text> </text>
@@ -358,6 +370,7 @@
               <text> F8 precludes  </text>
               <text xml:lang="fr"> F8 bloque  </text>
               <text xml:lang="de"> F8 schaltet aus  </text>
+              <text xml:lang="it"> F8 Blocca  </text>
             </label>
             <label>
               <text> </text>

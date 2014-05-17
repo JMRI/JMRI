@@ -31,17 +31,25 @@
       <authorinitials>PB</authorinitials>
       <revremark>Those new Railcom options are only available starting with firmware 3.03 from January 2014.</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2014-04-17</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>Italian translation 2014</revremark>
+    </revision>
   </revhistory>
   <variable item="Multiplicator for speed fedback" CV="135" tooltip="CV135 (0-255)">
     <decVal min="0" max="255"/>
     <label>Multiplicator for speed fedback</label>
     <label xml:lang="fr">Multiplicateur feedback de vitesse</label>
     <label xml:lang="de">Multiplikation Geschwindichkeitsrückmeldung</label>
+    <label xml:lang="it">Moltiplicatore per feedback Velocità</label>
   </variable>
   <variable item="Divider for speed fedback" CV="136" tooltip="CV136 (0-6)">
     <decVal min="0" max="6"/>
     <label>Divider for speed fedback</label>
     <label xml:lang="fr">Diviseur feedback de vitesse</label>
     <label xml:lang="de">Division Geschwindichkeitsrückmeldung</label>
+    <label xml:lang="it">Divisore per feedback Velocità</label>
   </variable>
 </variables>

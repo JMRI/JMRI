@@ -40,6 +40,7 @@
   <variable CV="112" default="0" item="DC Brake Momentum" tooltip="CV112 (0:none, 31:strong)">
     <decVal min="0" max="31"/>
     <label>Speed reduction in DC mode</label>
+    <label xml:lang="it">Riduzione velocità in analogico</label>
     <label xml:lang="fr">Réduction vitesse en analogique</label>
     <label xml:lang="de">Geschw.-minderung in Analog</label>
   </variable>

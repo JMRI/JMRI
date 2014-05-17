@@ -37,5 +37,6 @@
     <label>Use SUSI ZCLK and ZDAT as AUX 3 and AUX 4</label>
     <label xml:lang="fr">Utiliser SUSI ZCLK et ZDAT comme Aux 3 et Aux 4</label>
     <label xml:lang="de">AUX 3 und AUX 4 anstelle von ZCLK und ZDAT</label>
+    <label xml:lang="it">Usa SUSI ZCLK e ZDAT come AUX 3 e AUX 4</label>
   </variable>
 </variables>

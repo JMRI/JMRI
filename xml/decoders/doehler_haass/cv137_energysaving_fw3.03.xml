@@ -37,5 +37,6 @@
     <label>Deactivate energy saving mode</label>
     <label xml:lang="fr">Désactiver économie d'énergie</label>
     <label xml:lang="de">Energiesparmodus ausschlaten</label>
+    <label xml:lang="it">Disattiva modalità risparmio energetico</label>
   </variable>
 </variables>

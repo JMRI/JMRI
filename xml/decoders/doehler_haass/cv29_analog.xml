@@ -32,6 +32,12 @@
       <revremark>Based on nmra/cv29analog.xml - defaults for Doehler and Haass differ from 
 		NMRA template</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2014-05-17</date>
+      <authorinitials>EF</authorinitials>
+      <revremark>Italian translation 2014</revremark>
+    </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
     <enumVal>
@@ -44,7 +50,7 @@
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
-        <choice xml:lang="it">Converiosne Analogica Abilitata</choice>
+        <choice xml:lang="it">Conversione Analogica Abilitata</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
