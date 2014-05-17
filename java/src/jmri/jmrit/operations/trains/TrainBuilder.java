@@ -2821,11 +2821,11 @@ public class TrainBuilder extends TrainCommon {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCreateNewLoadForCar"),
 						new Object[] { car.toString(), si.getReceiveLoadName(), track.getLocation().getName(),
 								track.getName() }));
-				car.setScheduleId(track.getCurrentScheduleItem().getId());
+				car.setScheduleId(si.getId());
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
-				track.bumpSchedule();
+//				track.bumpSchedule();
 				return true; // done, car now has a custom load
 			}
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotRouteCar"), new Object[] {
