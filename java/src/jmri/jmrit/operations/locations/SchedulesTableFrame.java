@@ -4,11 +4,13 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -83,6 +85,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu("Tools");
 		toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
+		toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
 		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
 		menuBar.add(toolMenu);

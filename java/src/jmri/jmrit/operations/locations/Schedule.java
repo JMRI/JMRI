@@ -75,6 +75,12 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	public void dispose() {
 		setDirtyAndFirePropertyChange(DISPOSE, null, DISPOSE);
 	}
+	
+	public void resetHitCounts() {
+		for (ScheduleItem si : getItemsByIdList()) {
+			si.setHits(0);
+		}
+	}
 
 	/**
 	 * Adds a car type to the end of this schedule
@@ -202,8 +208,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		Enumeration<String> en = _scheduleHashTable.keys();
 		int i = 0;
 		while (en.hasMoreElements()) {
-			arr[i] = en.nextElement();
-			i++;
+			arr[i++] = en.nextElement();
 		}
 		jmri.util.StringUtil.sort(arr);
 		for (i = 0; i < arr.length; i++)

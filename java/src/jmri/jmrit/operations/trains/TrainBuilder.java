@@ -2941,8 +2941,10 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { track.getScheduleItemId(), track.getScheduleName(), track.getName(),
 								track.getLocation().getName() }));
 			si = checkScheduleItem(si, car, track);
-			if (si != null)
+			if (si != null) {
+				car.setScheduleId(si.getId());
 				return si;
+			}
 		}
 		return si;
 	}
@@ -3003,6 +3005,7 @@ public class TrainBuilder extends TrainCommon {
 
 			return null;
 		}
+		log.debug("Found a schedule item id ({}) for car ({})", si.getId(), car.toString());
 		return si;
 	}
 
@@ -3529,7 +3532,7 @@ public class TrainBuilder extends TrainCommon {
 							&& testTrack.getTrackType().equals(Track.SPUR)
 							&& car.getTrack().getTrackType().equals(Track.SPUR)) {
 						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoSpurToSpurMove"),
-								new Object[] { testTrack.getName() }));
+								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;
 					}
 					// No local moves from yard to yard
@@ -3537,7 +3540,7 @@ public class TrainBuilder extends TrainCommon {
 							&& testTrack.getTrackType().equals(Track.YARD)
 							&& car.getTrack().getTrackType().equals(Track.YARD)) {
 						addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoYardToYardMove"),
-								new Object[] { testTrack.getName() }));
+								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;
 					}
 					// No local moves from interchange to interchange
@@ -3546,7 +3549,7 @@ public class TrainBuilder extends TrainCommon {
 							&& car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
 						addLine(_buildReport, FIVE, MessageFormat.format(Bundle
 								.getMessage("buildNoInterchangeToInterchangeMove"),
-								new Object[] { testTrack.getName() }));
+								new Object[] { car.getTrackName(), testTrack.getName() }));
 						continue;
 					}
 
