@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Main_lightControl.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<TITLE>DecoderPro&reg; Tool Menu</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Tool Menu</h1>
+<h1>Light Control</h1>
+
+<div align=right>
+<p><a href="Main_Tool.shtml#Light">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><img src="images/Main_LightControl.png" alt="Light control" width="601" height="262" border="4"></p>
+<p>This tool is used to control Powerline Devices that are used to control your layout lighting.</p>
+<p>Enter the light system name for the light you wish to control in the <strong>Light: </strong>text box </p>
+<p>Click on either the <strong>On </strong>button to turn the light on or <strong>Off</strong> button to turn off the light.</p>
+<p><strong>Current State: </strong>Shows the current known state of the light.</p>
+<p><strong>&lt;Unknown&gt;</strong> Either no light selected or invalid light name.</p>
+<p><strong>&lt;Off&gt; </strong>Light is at minimum intensity, if variable intensity is supported, or off</p>
+<p><strong>&lt;On&gt;</strong> Light is at maximum intensity if variable intensity supported, or full on.</p>
+<p><strong>&lt;Intermediate&gt; </strong>Light intensity is between 0 and 100% and the current intensity is equal to the target intensity.</p>
+<p><strong>&lt;Transitioning Higher&gt;</strong> Target intensity is higher than the current intensity and light is adjusting every fast minute according to Transition Time value.</p>
+<p><strong>&lt;Transitioning Lower&gt; </strong>Target intensity is lower than the current intensity and light is adjusting every fast minute according to Transition Time value</p>
+<p><strong>.&lt;Transitioning to Full On&gt;</strong> Target intensity is higher than the current intensity, and equal or higher than maximum intensity and light is adjusting every fast minute according to Transition Time value.</p>
+<p><strong>&lt;Transitioning to Full Off&gt;</strong>Target intensity is lower than the current intensity, and equal or lower than minimum intensity and light is adjusting every fast minute according to Transition Time value.</p>
+<p>Configuration Options of Lights:</p>
+<p>
+  <input type="checkbox" name="checkbox" id="checkbox">
+  <strong> Enabled:</strong> The light will respond to its automatic control type.</p>
+<p>
+  <input type="checkbox" name="checkbox2" id="checkbox2"> 
+  <strong>Variable:</strong> Light may be commanded to values between 0% and 100%.</p>
+<p>
+  <input type="checkbox" name="checkbox3" id="checkbox3"> 
+  <strong>Transitional:</strong> Changes the intensity will use the transition time to step between current and target intensity.</p>
+<p><strong>On </strong>button turns on the light.</p>
+<p><strong>Off</strong> button turns off the light.</p>
+<hr>
+
+<div align=right>
+<p><a href="Main_Tool.shtml#Light">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

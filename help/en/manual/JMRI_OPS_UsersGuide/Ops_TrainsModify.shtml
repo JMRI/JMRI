@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_TrainsModify.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
+
+
+
+
+
+<title>Operations-Modify Trains</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Modify Trains by Car Type Window</h1>
+
+<div align="right">
+<p><a href="Ops_Trains_Menu.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>Opened from <strong>Trains</strong> window <strong>Tools</strong>
+menu Use this tool to quickly modify the type of cars your train will
+service. Very useful when adding a new car type to your roster.</p>
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td valign="top" width="44%"><img src="images/Ops_TrainsModify.png" alt="modify" height="356" width="300"></td>
+    <td valign="top" width="56%"><p>Menu Bar</p>
+      <ul>
+        <li><strong>Tools</strong>
+<ul>
+            <li><a name="PrintTop"></a><strong><a href="#Print">Print Train by Car Types</a></strong></li>
+            <li><a name="PreviewTop"></a><strong><a href="#Preview">Preview Train by Car Types</a></strong></li>
+          </ul>
+        </li>
+        <li><strong>Window</strong> - standard JMRI® menu</li>
+        <li><strong>Help</strong>- standard JMRI® menu</li>
+      </ul>
+      <p><strong>Type<br>
+        <select name="select" id="select"><option>Baggage</option></select>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input name="checkbox" id="checkbox" type="checkbox">
+        Copy</strong><br>
+Select car tpe you wish to use. The program will then show which Trains
+can service that car type. Check the Copy box to make a car behave like
+another. The car type will show to the right of the Copy checkbox.</p>
+      <p>
+        <input name="button" id="button" value="Save" type="button">
+        to have both car types serviced by the same trains<br>
+        <br>
+    </p></td>
+  </tr>
+</tbody></table>
+<hr>
+<h3><a name="Print"></a>Print Train by Car Types</h3>
+<p><img src="images/Ops_PrintTrainsbyCarTypes.png" alt="print" height="779" width="714"></p>
+<p><strong><a href="#PrintTop">Back</a><a href="#Print"></a></strong></p>
+
+<hr>
+
+<h3><a name="Preview"></a>Preveiw Train by Car Types</h3>
+<p><img src="images/Ops_PrintPreview.png" alt="preview" height="933" width="660"></p>
+<p><strong><a href="#PreviewTop">Back</a></strong></p>
+<hr>
+<p>&nbsp;</p>
+<div align="right">
+<p><a href="Ops_Trains_Menu.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>

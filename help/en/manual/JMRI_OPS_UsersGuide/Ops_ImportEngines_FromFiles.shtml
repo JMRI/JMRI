@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_ImportEngines.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+
+
+
+<title>Operations Importing Engines from File</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Import Locomotives from a File </h1>
+<div align="right">
+<p><a href="Ops_Engines_menu.shtml">Back </a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<hr>
+<h4>Import locomotives
+from a File&nbsp;</h4><h4 style="font-weight: normal;">The import from file function requires an ACSII text file, with one
+line for each locomotive. The import order is locomotive number,
+locomotive road name, locomotive model, and locomotive length. The
+following shows two examples of the correct format:
+</h4><p>236 UP RS4 40 <br>
+5578 SP SW1200 42</p>
+<p>Each line can start with a space and multiple spaces between
+fields
+is okay. Optionally you can include additional information in the
+following order, owner name, date built, and location. The location can
+have two fields, the location name followed by the location's siding or
+yard name separated by a hyphen. The following shows two examples of
+the correct format:</p>
+<br>
+236 UP RS4 40 AT 1930 Home Town USA - locomotive Terminal <br>
+5578 SP SW1200 42 DB 1934 York - York locomotive Yard
+<p>If you prefer to use comma delimiters instead of spaces, place
+the
+word "comma" at the start of your import file and use commas instead of
+spaces. The following are two examples of importing locomotives with
+comma deliminters.</p>
+<p>comma <br>
+236,UP,RS 4,40,AT,1930,Home Town USA,-,locomotive Terminal <br>
+5578,SP,SW 1200,42,DB,1934,Town of York,-,York locomotive Yard</p>
+<p>You need to be very careful with spaces when importing a comma
+delimitated file. The program will include leading and trailing spaces
+if they exist between the commas.</p>
+<p> Note that the program will only add locomotives that don't
+exist in
+the program's locomotive roster. If the locomotive already exists, it
+will be skipped by the program.</p>
+<p>After importing your locomotives, you must save them if you
+want to
+keep them as part of your roster then edit themto add missing attributes.</p><p><img style="width: 799px; height: 256px;" alt="engine roster" src="images/Ops_EngineRoster.png"> </p><p>These engines were imported from your file, so we will need
+to
+edit them to set&nbsp;missing attribute that are required: &nbsp;Length , Consist, Location as required.<br>&nbsp;<a href="Ops_EditEngines.shtml"><strong>Edit button</strong></a> in the Edit column will open the Edit Locomotives window &nbsp;and allow you to edit locomotive attributes..</p><p><a style="font-weight: bold;" href="Ops_SetEngines.shtml">Set button</a> in the Set&nbsp;column for each locomotive in the &nbsp;roster will allow you to set the location.</p><hr><p></p>
+<hr>
+<div align="right">
+<p><a href="Ops_Engines_menu.shtml">Back </a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<!--#include virtual="/Footer" -->
+</div>
+</body></html>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+
+
+
+<title>Operations-Edit Locations</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Operations Edit Location Menu Bar</h1>
+<div align="right">
+<p><a href="Ops_EditLocation.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<hr><div style="text-align: center;"><img style="width: 798px; height: 96px;" alt="menu bar" src="images/Ops_EditLocation_menubar.png"><br><div style="text-align: left;"><ul><li><span style="font-weight: bold;">Tools</span></li><ul><li><a href="Ops_Locations_byCar.shtml"><span style="font-weight: bold;">Modify Location by Car Type</span></a></li><li><a href="Ops_Cars.shtml"><span style="font-weight: bold;">Show Cars</span></a></li><li><span style="font-weight: bold;">Change Track Type<br></span></li></ul></ul><div style="text-align: left; margin-left: 120px;"><img style="width: 362px; height: 107px;" alt="change track type" src="images/Ops_EditLocation_changeTrack.png"></div></div></div><br><div align="right">
+<p><a href="Ops_EditLocation.shtml">Back<br>
+</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<!--#include virtual="/Footer" -->
+</div>
+</body></html>
