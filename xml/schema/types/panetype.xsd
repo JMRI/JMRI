@@ -92,6 +92,7 @@
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="1" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="grid" type="GridType" minOccurs="1" maxOccurs="unbounded"/>
       </xs:choice>
             
     </xs:choice>

@@ -1364,71 +1364,6 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create label from Element
-     */
-    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String text = LocaleSelector.getAttribute(e,"text");
-        if (text==null || text.equals("")) text = LocaleSelector.getAttribute(e,"label"); // label subelement deprecated 3.7.5
-        final JLabel l = new JLabel(text);
-        l.setAlignmentX(1.0f);
-        cs.fill = GridBagConstraints.BOTH;
-        if (log.isDebugEnabled()) {
-            log.debug("Add label: "+l.getText()+" cs: "
-                      +cs.gridwidth+" "+cs.fill+" "
-                      +cs.gridx+" "+cs.gridy);
-        }
-        g.setConstraints(l, cs);
-        c.add(l);
-        cs.fill = GridBagConstraints.NONE;
-        cs.gridwidth = 1;
-        cs.gridheight = 1;
-        
-        // handle qualification if any
-        QualifierAdder qa = new QualifierAdder() {
-            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-            }
-            protected void addListener(java.beans.PropertyChangeListener qc) {
-                l.addPropertyChangeListener(qc);
-            }
-        };
-        
-        qa.processModifierElements(e, _varModel);
-    }
-
-    /**
-     * Create sound label from Element
-     */
-    protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num")));
-        final JLabel l = new JLabel(labelText);
-        l.setAlignmentX(1.0f);
-        cs.fill = GridBagConstraints.BOTH;
-        if (log.isDebugEnabled()) {
-            log.debug("Add soundlabel: "+l.getText()+" cs: "
-                      +cs.gridwidth+" "+cs.fill+" "
-                      +cs.gridx+" "+cs.gridy);
-        }
-        g.setConstraints(l, cs);
-        c.add(l);
-        cs.fill = GridBagConstraints.NONE;
-        cs.gridwidth = 1;
-        cs.gridheight = 1;
-        
-        // handle qualification if any
-        QualifierAdder qa = new QualifierAdder() {
-            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-            }
-            protected void addListener(java.beans.PropertyChangeListener qc) {
-                l.addPropertyChangeListener(qc);
-            }
-        };
-        
-        qa.processModifierElements(e, _varModel);
-    }
-    
-    /**
      * Create a single row from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
@@ -1873,6 +1808,71 @@ public class PaneProgPane extends javax.swing.JPanel
         
         qa.processModifierElements(element, _varModel);
         return c;
+    }
+
+    /**
+     * Create label from Element
+     */
+    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        String text = LocaleSelector.getAttribute(e,"text");
+        if (text==null || text.equals("")) text = LocaleSelector.getAttribute(e,"label"); // label subelement deprecated 3.7.5
+        final JLabel l = new JLabel(text);
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add label: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
+    }
+
+    /**
+     * Create sound label from Element
+     */
+    protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num")));
+        final JLabel l = new JLabel(labelText);
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add soundlabel: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
     }
 
     void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
