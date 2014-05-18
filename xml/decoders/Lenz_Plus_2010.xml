@@ -109,28 +109,8 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
-      <variable CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version Number (CV7, read only)</label>
-        <label xml:lang="de">Decoder Version</label>
-      </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="de">Manufacturer</label>
-      </variable>
-      <variable CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
-        <decVal/>
-        <label>Manufacturer ID - Reset</label>
-        <label xml:lang="de">Reset</label>
-        <comment xml:lang="de">Writing a value of 8 or 33 will reset decoder to factory defaults</comment>
-      </variable>
-      <variable CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
-        <decVal min="0" max="63"/>
-        <label>Back EMF Repetition Rate (0-63)</label>
-        <label xml:lang="de">Total PWM Period</label>
-        <comment xml:lang="de">Range 0-63</comment>
-      </variable>
+	  <xi:include href="http://jmri.org/xml/decoders/lenz/mfgVersionId_cv7_8.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/lenz/bemfRep_cv9.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- this were moved earlier to fix a Xerces XInclude bug that would not -->
       <!-- allow you to next inclusion of parts/enum-disabledEnabled.xml if it -->
@@ -138,47 +118,10 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
-      <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction in Forward</label>
-        <label xml:lang="de">Locomotive Direction</label>
-      </variable>
-      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice xml:lang="de">14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128">
-            <choice xml:lang="de">28/128</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps (Headlight Mode)</label>
-        <label xml:lang="de">Speed Step Mode</label>
-      </variable>
-      <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Loco can operate on conventional DC</label>
-        <label xml:lang="de">Analog (DC) Operation</label>
-      </variable>
-      <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice xml:lang="de">Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use the Speed Table">
-            <choice xml:lang="de">Use the Speed Table</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Selection</label>
-        <label xml:lang="de">Speed Table Definition</label>
-      </variable>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap_plus.xml"/>
       <variable CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
