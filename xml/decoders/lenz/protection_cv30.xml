@@ -49,12 +49,12 @@
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
-        <choice xml:lang="de">Fault</choice>
+        <choice xml:lang="de">Fehler</choice>
       </enumChoice>
     </enumVal>
     <label>Light short-circuit</label>
     <label xml:lang="it">Luce per corto-circuito</label>
-    <label xml:lang="de">Light Short</label>
+    <label xml:lang="de">Lampen Kurzschluss</label>
   </variable>
   <variable CV="30" mask="XXXXXXVX" item="Overheating" default="0">
     <enumVal>
@@ -66,12 +66,12 @@
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
-        <choice xml:lang="de">Fault</choice>
+        <choice xml:lang="de">Fehler</choice>
       </enumChoice>
     </enumVal>
     <label>Overheating</label>
     <label xml:lang="it">Sovratemperatura</label>
-    <label xml:lang="de">Overheating</label>
+    <label xml:lang="de">Übertemperatur</label>
   </variable>
   <variable CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
     <enumVal>
@@ -83,11 +83,11 @@
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
-        <choice xml:lang="de">Fault</choice>
+        <choice xml:lang="de">Fehler</choice>
       </enumChoice>
     </enumVal>
     <label>Motor short-circuit</label>
     <label xml:lang="it">Corto circuito Motore</label>
-    <label xml:lang="de">Motor Short</label>
+    <label xml:lang="de">Motor Kurzschluss</label>
   </variable>
 </variables>

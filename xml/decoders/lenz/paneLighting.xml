@@ -15,7 +15,7 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Lenz Lighting</name>
   <name xml:lang="it">Effetti Luce Lenz</name>
-  <name xml:lang="de">Lenz Lighting</name>
+  <name xml:lang="de">Lenz Licht</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -50,11 +50,11 @@
         </label>
         <label>
           <text>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
-          <text xml:lang="de">The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</text>
+          <text xml:lang="de">Die Werte in den CV stellen die Lichteffekte für jeweils zwei Ausgänge ein.</text>
         </label>
         <label>
           <text>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
-          <text xml:lang="de">The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</text>
+          <text xml:lang="de">Der Zehnerwert bestimmt den Wert für den einen Ausgang der Einerwert für den anderen.</text>
         </label>
         <label>
           <text> </text>
@@ -65,7 +65,7 @@
         </label>
         <label>
           <text>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</text>
-          <text xml:lang="de">Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</text>
+          <text xml:lang="de">Beipiel:  Der Wert 23 unten ergibt Gyralight am Ausgang B und Strobe (Blitz) am Ausgang A.</text>
         </label>
         <label>
           <text> </text>
@@ -80,34 +80,34 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
-          <text xml:lang="de">The following lighting effects are</text>
+          <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for outputs A and B</text>
-          <text xml:lang="de">available for outputs A and B</text>
+          <text xml:lang="de">an den Ausgängen A und B verfügbar</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>No effect    </text>
-          <text xml:lang="de">No effect    </text>
+          <text xml:lang="de">Kein Effekt    </text>
         </label>
         <label>
           <text>Mars light   </text>
-          <text xml:lang="de">Mars light   </text>
+          <text xml:lang="de">Marslight   </text>
         </label>
         <label>
           <text>Gyra light   </text>
-          <text xml:lang="de">Gyra light   </text>
+          <text xml:lang="de">Gyralight   </text>
         </label>
         <label>
           <text>Strobe       </text>
-          <text xml:lang="de">Strobe       </text>
+          <text xml:lang="de">Strobe  (Blitz)     </text>
         </label>
         <label>
           <text>Double Strobe</text>
-          <text xml:lang="de">Double Strobe</text>
+          <text xml:lang="de">Doublestrobe (Doppelblitz)</text>
         </label>
         <label>
           <text> </text>
@@ -124,11 +124,11 @@
         </label>
         <label>
           <text>Output B</text>
-          <text xml:lang="de">Output B</text>
+          <text xml:lang="de">Ausgang B</text>
         </label>
         <label>
           <text> (Tens)</text>
-          <text xml:lang="de"> (Tens)</text>
+          <text xml:lang="de"> (Zehner)</text>
         </label>
         <label>
           <text> </text>
@@ -168,11 +168,11 @@
         </label>
         <label>
           <text>Output A</text>
-          <text xml:lang="de">Output A</text>
+          <text xml:lang="de">Ausgang A</text>
         </label>
         <label>
           <text> (Ones)</text>
-          <text xml:lang="de"> (Ones)</text>
+          <text xml:lang="de"> (Einer)</text>
         </label>
         <label>
           <text> </text>
@@ -223,11 +223,11 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
-          <text xml:lang="de">The following lighting effects are</text>
+          <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for output D</text>
-          <text xml:lang="de">available for output D</text>
+          <text xml:lang="de">am Ausgang D verfügbar</text>
         </label>
         <label>
           <text> </text>
@@ -238,23 +238,23 @@
         </label>
         <label>
           <text>Flashing with output C         </text>
-          <text xml:lang="de">Flashing with output C         </text>
+          <text xml:lang="de">Blinken im Gleichtakt zu Ausgang C         </text>
         </label>
         <label>
           <text>Flashing alternate to output C </text>
-          <text xml:lang="de">Flashing alternate to output C </text>
+          <text xml:lang="de">Blinken im Gegentakt zu Ausgang C </text>
         </label>
         <label>
           <text>Flickering type 2 (less smooth)</text>
-          <text xml:lang="de">Flickering type 2 (less smooth)</text>
+          <text xml:lang="de">Flackern Typ 2 (unruhiger)</text>
         </label>
         <label>
           <text>Flickering type 3 (excitedly)  </text>
-          <text xml:lang="de">Flickering type 3 (excitedly)  </text>
+          <text xml:lang="de">Flackern Typ 3 (hektisch)  </text>
         </label>
         <label>
           <text>Dimming enabled                </text>
-          <text xml:lang="de">Dimming enabled                </text>
+          <text xml:lang="de">Dimmen ein                </text>
         </label>
         <label>
           <text> </text>
@@ -271,11 +271,11 @@
         </label>
         <label>
           <text>Output D</text>
-          <text xml:lang="de">Output D</text>
+          <text xml:lang="de">Ausgang D</text>
         </label>
         <label>
           <text> (Tens)</text>
-          <text xml:lang="de"> (Tens)</text>
+          <text xml:lang="de"> (Zehner)</text>
         </label>
         <label>
           <text> </text>
@@ -319,11 +319,11 @@
         </label>
         <label>
           <text>Output C</text>
-          <text xml:lang="de">Output C</text>
+          <text xml:lang="de">Ausgang C</text>
         </label>
         <label>
           <text> (Ones)</text>
-          <text xml:lang="de"> (Ones)</text>
+          <text xml:lang="de"> (Einer)</text>
         </label>
         <label>
           <text> </text>
@@ -365,30 +365,30 @@
         </label>
         <label>
           <text>The following lighting effects are</text>
-          <text xml:lang="de">The following lighting effects are</text>
+          <text xml:lang="de">Folgende Lichteffekte sind</text>
         </label>
         <label>
           <text>available for output C</text>
-          <text xml:lang="de">available for output C</text>
+          <text xml:lang="de">am Ausgang C verfügbar</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>No effect                 </text>
-          <text xml:lang="de">No effect                 </text>
+          <text xml:lang="de">Kein Effekt                 </text>
         </label>
         <label>
           <text>Flashing                  </text>
-          <text xml:lang="de">Flashing                  </text>
+          <text xml:lang="de">Blinken                  </text>
         </label>
         <label>
           <text>Flickering type 1 (smooth)</text>
-          <text xml:lang="de">Flickering type 1 (smooth)</text>
+          <text xml:lang="de">Flackern Typ 1 (ruhig)</text>
         </label>
         <label>
           <text>Dimming enabled           </text>
-          <text xml:lang="de">Dimming enabled           </text>
+          <text xml:lang="de">Dimmen ein           </text>
         </label>
         <label>
           <text> </text>

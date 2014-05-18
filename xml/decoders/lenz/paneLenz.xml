@@ -58,7 +58,7 @@
       <column>
         <label>
           <text>RailCom Configuration</text>
-          <text xml:lang="de">RailCom Configuration</text>
+          <text xml:lang="de">RailCom Einstellungen</text>
         </label>
         <display item="RailCom Address"/>
         <display item="RailCom Data"/>
@@ -69,7 +69,7 @@
         </label>
         <label>
           <text>Fault Indication</text>
-          <text xml:lang="de">Fault Indication</text>
+          <text xml:lang="de">Fehleranzeige</text>
         </label>
         <display item="Light Short"/>
         <display item="Overheating"/>
@@ -79,7 +79,7 @@
         </label>
         <label>
           <text>Motor Configuration</text>
-          <text xml:lang="de">Motor Configuration</text>
+          <text xml:lang="de">Motor Einstellungen</text>
         </label>
         <display item="Motor type"/>
         <display item="EMF Switch"/>
@@ -100,7 +100,7 @@
       <column>
         <label>
           <text>Braking Configuration</text>
-          <text xml:lang="de">Braking Configuration</text>
+          <text xml:lang="de">Bremseinstellungen</text>
         </label>
         <display item="Constant Braking"/>
         <display item="ABC"/>
@@ -155,7 +155,7 @@
         </label>
         <label>
           <text>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
-          <text xml:lang="de">Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</text>
+          <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
         </label>
         <label>
           <text> </text>

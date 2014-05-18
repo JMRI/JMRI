@@ -57,7 +57,7 @@
     <label xml:lang="it">Distanza Frenata in modalità Costante (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
-    <label xml:lang="de">Brensweg bei konstantem Bremsweg</label>
+    <label xml:lang="de">Bremsweg bei konstantem Bremsweg</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
 </variables>
