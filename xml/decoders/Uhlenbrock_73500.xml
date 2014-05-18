@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: Uhlenbrock_73500.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id: Uhlenbrock_73500.xml xxxx 2014-05-11 xx:xx:xxZ xxxxx $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,9 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20140511"/>
   <version author="Simon Ginsburg" version="1" lastUpdated="20051018"/>
+  <!-- Version 2 - renamed family to match (new) other Uhlenbrock definitions  -->  
   <decoder>
-    <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8">
+    <family name="Mini Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" comment="Decoders not sorted (necessarily) in numerical order">
       <model model="73500"/>
       <model model="73510"/>
     </family>

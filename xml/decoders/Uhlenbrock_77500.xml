@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: Uhlenbrock_77500.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id: Uhlenbrock_77500.xml xxxx 2014-05-11 xx:xx:xxZ xxxxx $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="3" lastUpdated="20140511"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2.0" lastUpdated="20110820"/>
   <version author="Simon Ginsburg" version="1" lastUpdated="20051018"/>
   <!--
@@ -27,9 +28,10 @@
                           - added CVs 13, 54, 55, 96-99, 103, 104, 108-113, 115
                           - revised CV 51
 -->
+  <!-- Version 3 - renamed family to match (new) other Uhlenbrock definitions  -->
   <decoder>
-    <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik">
-      <model model="77500" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+    <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order">
+      <model model="77500" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="O" connector="other" comment="O,I,II,LGB-Scale, IntelliDrive Deluxe">
         <output name="1" label="Front light" maxcurrent="1 A" connection="other"/>
         <output name="2" label="Rear light " maxcurrent="1 A" connection="other"/>
         <output name="3" label="   A1      " maxcurrent="1 A" connection="other"/>

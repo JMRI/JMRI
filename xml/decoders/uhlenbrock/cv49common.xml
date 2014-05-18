@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!-- $Id: cv49common.xml xxxxx 2014-05-10 xx:xx:xxZ xxx $             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 49 - common bits -->
+  <!-- bits 0, 6 and 7 - others vary greatly depending on decoder type -->  
+  </revhistory>
+  <variable item="Load Control" CV="49" default="0" mask="XXXXXXXV">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+	<label>Main Motor Control - load regulation</label>
+	<label xml:lang="de">Motorregelung - Lastregelung</label>		
+  </variable>
+  <variable item="Directional Headlights" CV="49" default="0" mask="XVXXXXXX">
+	<enumVal>
+	  <enumChoice choice="normal">
+            <choice>normal</choice>
+            <choice xml:lang="de">nicht</choice>					
+	  </enumChoice>
+	  <enumChoice choice="reverse">
+            <choice>reverse</choice>
+            <choice xml:lang="de">vertauschen</choice>				
+	  </enumChoice>
+	</enumVal>
+	<label>Lights output swap</label>
+	<label xml:lang="de">Lichtanschlüsse tauschen</label>		
+  </variable>
+  <variable item="Braking condition" CV="49" default="0" mask="VXXXXXXX">
+	<enumVal>
+	  <enumChoice choice="Braking signal only">
+            <choice>Braking signal only</choice>
+            <choice xml:lang="de">Bremssignal</choice>				
+	  </enumChoice>
+	  <enumChoice choice="with analog voltage">
+            <choice>with analog voltage</choice>
+            <choice xml:lang="de">analoger Spannung</choice>				
+	  </enumChoice>
+	</enumVal>
+	<label>Braking condition</label>
+	<label xml:lang="de">Bremsen mit</label>			
+  </variable>
+</variables>
