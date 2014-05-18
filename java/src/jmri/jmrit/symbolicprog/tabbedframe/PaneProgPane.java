@@ -1216,6 +1216,211 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
+     * Create a new group from the JDOM group Element
+     */
+    @SuppressWarnings("unchecked")
+	protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
+
+        // create a panel to add as a new column or row
+        final JPanel c = new JPanel();
+        panelList.add(c);
+        GridBagLayout g = new GridBagLayout();
+        GridBagConstraints cs = new GridBagConstraints();
+        c.setLayout(g);
+
+        // handle the xml definition
+        // for all elements in the column or row
+        List<Element> elemList = element.getChildren();
+        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        for (int i=0; i<elemList.size(); i++) {
+
+            Element e = (elemList.get(i));
+            String name = e.getName();
+            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            // decode the type
+            if (name.equals("display")) { // its a variable
+                                // load the variable
+                newVariable( e, c, g, cs, showStdName);
+            }
+            else if (name.equals("separator")) { // its a separator
+                JSeparator j = new JSeparator(javax.swing.SwingConstants.HORIZONTAL);
+                cs.fill = GridBagConstraints.BOTH;
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(j, cs);
+                c.add(j);
+                cs.gridwidth = 1;
+            }
+            else if (name.equals("label")) {
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                makeLabel(e, c, g, cs);
+            }
+            else if (name.equals("soundlabel")) {
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                makeSoundLabel(e, c, g, cs);
+            }
+            else if (name.equals("cvtable")) {
+                makeCvTable(cs, g, c);
+            }
+            else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight()*14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" +_indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(Integer.valueOf(in));
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+            }
+            else if (name.equals("fnmapping")) {
+                pickFnMapPanel(c, g, cs, modelElem);
+            }
+            else if (name.equals("dccaddress")) {
+                JPanel l = addDccAddressPanel(e);
+                if (l.getComponentCount() > 0) {
+                    cs.gridwidth = GridBagConstraints.REMAINDER;
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("column")) {
+                // nested "column" elements ...
+                cs.gridheight = GridBagConstraints.REMAINDER;
+                JPanel l = newColumn(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridheight = 1;
+                }
+            }
+            else if (name.equals("row")) {
+                                // nested "row" elements ...
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                JPanel l = newRow(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("grid")) {
+                                // nested "grid" elements ...
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                JPanel l = newGrid(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
+                log.error("No code to handle element of type "+e.getName()+" in newColumn");
+            }
+        }
+        // add glue to the bottom to allow resize
+        if (c.getComponentCount() > 0) {
+            c.add(Box.createVerticalGlue());
+        }
+
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
+        return c;
+    }
+
+    /**
+     * Create a new grid group from the JDOM group Element
+     */
+    @SuppressWarnings("unchecked")
+	protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
+
+        // handle the xml definition
+        // for all elements in the column or row
+        List<Element> elemList = element.getChildren();
+        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        for (int i=0; i<elemList.size(); i++) {
+
+            Element e = (elemList.get(i));
+            String name = e.getName();
+            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            // decode the type
+            if (name.equals("griditem")) {                    
+                final JPanel l = newGridItem(e, showStdName, modelElem, globs);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, globs.gridConstraints);
+                    c.add(l);
+//                     globs.gridConstraints.gridwidth = 1;
+					// handle qualification if any
+					QualifierAdder qa = new QualifierAdder() {
+						protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+							return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+						}
+						protected void addListener(java.beans.PropertyChangeListener qc) {
+							l.addPropertyChangeListener(qc);
+						}
+					};
+		
+					qa.processModifierElements(e, _varModel);
+                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                newGridGroup(e, c, g, globs, showStdName, modelElem);
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
+                log.error("No code to handle element of type "+e.getName()+" in newColumn");
+            }
+        }
+        // add glue to the bottom to allow resize
+//         if (c.getComponentCount() > 0) {
+//             c.add(Box.createVerticalGlue());
+//         }
+
+        
+    }
+
+    /**
      * Create a single column from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
@@ -1338,6 +1543,15 @@ public class PaneProgPane extends javax.swing.JPanel
                     c.add(l);
                     cs.gridwidth = 1;
                 }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
             }
             else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newColumn");
@@ -1488,6 +1702,15 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
             else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newRow");
             }
@@ -1523,120 +1746,31 @@ public class PaneProgPane extends javax.swing.JPanel
         GridBagLayout g = new GridBagLayout();
         c.setLayout(g);
         
-        int gridxCurrent = GridBagConstraints.RELATIVE;
-        int gridyCurrent = GridBagConstraints.RELATIVE;        
+        GridGlobals globs = new GridGlobals();        
 
         // handle the xml definition
         // for all elements in the grid
         List<Element> elemList = element.getChildren();
-        List<Attribute> gridAttList = element.getAttributes(); // get grid-level attributes
+        globs.gridAttList = element.getAttributes(); // get grid-level attributes
         if (log.isDebugEnabled()) log.debug("newGrid starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
-            GridBagConstraints cs = new GridBagConstraints();
+            globs.gridConstraints = new GridBagConstraints();
             Element e = elemList.get(i);
             String name = e.getName();
             if (log.isDebugEnabled()) log.debug("newGrid processing "+name+" element");
             // decode the type
             if (name.equals("griditem")) {                    
-                List<Attribute> itemAttList = e.getAttributes(); // get item-level attributes
-                List<Attribute> attList = new ArrayList<Attribute>(gridAttList);
-                attList.addAll(itemAttList); // merge grid and item-level attributes
-                for (int j = 0; j < attList.size(); j++) {
-                    Attribute attrib = attList.get(j);
-                    String attribName = attrib.getName();
-                    String attribRawValue = attrib.getValue();
-                    Field constraint = null;
-                    String constraintType = null;
-                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("NEXT") ) {
-                        attribRawValue = "RELATIVE"; // NEXT is a synonym for Relative
-                    }
-                    if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
-                        attribRawValue = String.valueOf(gridxCurrent);
-                    }
-                    if ( attribName.equals("gridy")  && attribRawValue.equals("CURRENT") ) {
-                        attribRawValue = String.valueOf(gridyCurrent);
-                    }
-                    try {
-                        constraint = cs.getClass().getDeclaredField(attribName);
-                        constraintType = constraint.getType().toString();
-                        constraint.setAccessible(true);
-                        } catch (NoSuchFieldException ex) {
-                        log.error("Unrecognised attribute \""+attribName+"\", skipping");
-                        continue;
-                    }
-                    if ( constraintType.equals("int") ) {
-                        int attribValue;
-                        try {
-                            attribValue = Integer.valueOf(attribRawValue);
-                            constraint.set(cs,attribValue);
-                       } catch (IllegalAccessException ey) {
-                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
-                        } catch (NumberFormatException ex) {
-                            try {
-                                Field constant = cs.getClass().getDeclaredField(attribRawValue);
-                                constant.setAccessible(true);
-                                attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
-                                constraint.set(cs,attribValue);
-                            } catch (NoSuchFieldException ey) {
-                        log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
-                            } catch (IllegalAccessException ey) {
-                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
-                            }
-                        }
-                    }
-                    else if ( constraintType.equals("double") ) {
-                        double attribValue;
-                        try {
-                            attribValue = Double.valueOf(attribRawValue);
-                            constraint.set(cs,attribValue);
-                       } catch (IllegalAccessException ey) {
-                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
-                        } catch (NumberFormatException ex) {
-                            log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
-                        }
-                    }
-                    else if ( constraintType.equals("class java.awt.Insets") ) {
-                        try {
-                            String[] insetStrings = attribRawValue.split(",");
-                            if ( insetStrings.length == 4) {
-                                Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]),Integer.valueOf(insetStrings[1]),Integer.valueOf(insetStrings[2]),Integer.valueOf(insetStrings[3]));
-                                constraint.set(cs,attribValue);
-                            }
-                            else {
-                                log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
-                                log.error("Value should be four integers of the form \"top,left,bottom,right\"");
-                            }
-                       } catch (IllegalAccessException ey) {
-                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
-                        } catch (NumberFormatException ex) {
-                            log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
-                            log.error("Value should be four integers of the form \"top,left,bottom,right\"");
-                        }
-                    }
-                    else {
-                        log.error("Required \""+constraintType+"\" handler for attribute \""+attribName+"\" not defined in JMRI code");
-                        log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
-                    }
-                }
-                JPanel l = newGridItem(e, showStdName, modelElem);
+                JPanel l = newGridItem(e, showStdName, modelElem, globs);
                 if (l.getComponentCount() > 0) {
                     panelList.add(l);
-                    g.setConstraints(l, cs);
+                    g.setConstraints(l, globs.gridConstraints);
                     c.add(l);
-                    cs.gridwidth = 1;
+//                     globs.gridConstraints.gridwidth = 1;
                 }
-                if ( cs.gridx == GridBagConstraints.RELATIVE ){
-                    gridxCurrent++;
-                }
-                else {
-                    gridxCurrent = cs.gridx;
-                }
-                if ( cs.gridy == GridBagConstraints.RELATIVE ){
-                    gridyCurrent++;
-                }
-                else {
-                gridyCurrent = cs.gridy;
-                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                newGridGroup(e, c, g, globs, showStdName, modelElem);
             }
             else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGrid");
@@ -1662,11 +1796,100 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
+    class GridGlobals {
+    public int gridxCurrent = GridBagConstraints.RELATIVE;
+    public int gridyCurrent = GridBagConstraints.RELATIVE;
+    public List<Attribute> gridAttList;
+    public GridBagConstraints gridConstraints;
+    }
+
     /**
-     * Create a grid from the JDOM  Element
+     * Create a griditem from the JDOM  Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem) {
+	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
+
+                List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
+                List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
+                attList.addAll(itemAttList); // merge grid and item-level attributes
+                for (int j = 0; j < attList.size(); j++) {
+                    Attribute attrib = attList.get(j);
+                    String attribName = attrib.getName();
+                    String attribRawValue = attrib.getValue();
+                    Field constraint = null;
+                    String constraintType = null;
+                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("NEXT") ) {
+                        attribRawValue = "RELATIVE"; // NEXT is a synonym for Relative
+                    }
+                    if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(globs.gridxCurrent);
+                    }
+                    if ( attribName.equals("gridy")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(globs.gridyCurrent);
+                    }
+                    try {
+                        constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
+                        constraintType = constraint.getType().toString();
+                        constraint.setAccessible(true);
+                        } catch (NoSuchFieldException ex) {
+                        log.error("Unrecognised attribute \""+attribName+"\", skipping");
+                        continue;
+                    }
+                    if ( constraintType.equals("int") ) {
+                        int attribValue;
+                        try {
+                            attribValue = Integer.valueOf(attribRawValue);
+                            constraint.set(globs.gridConstraints,attribValue);
+                       } catch (IllegalAccessException ey) {
+                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
+                        } catch (NumberFormatException ex) {
+                            try {
+                                Field constant = globs.gridConstraints.getClass().getDeclaredField(attribRawValue);
+                                constant.setAccessible(true);
+                                attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
+                                constraint.set(globs.gridConstraints,attribValue);
+                            } catch (NoSuchFieldException ey) {
+                        log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
+                            } catch (IllegalAccessException ey) {
+                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
+                            }
+                        }
+                    }
+                    else if ( constraintType.equals("double") ) {
+                        double attribValue;
+                        try {
+                            attribValue = Double.valueOf(attribRawValue);
+                            constraint.set(globs.gridConstraints,attribValue);
+                       } catch (IllegalAccessException ey) {
+                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
+                        } catch (NumberFormatException ex) {
+                            log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
+                        }
+                    }
+                    else if ( constraintType.equals("class java.awt.Insets") ) {
+                        try {
+                            String[] insetStrings = attribRawValue.split(",");
+                            if ( insetStrings.length == 4) {
+                                Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]),Integer.valueOf(insetStrings[1]),Integer.valueOf(insetStrings[2]),Integer.valueOf(insetStrings[3]));
+                                constraint.set(globs.gridConstraints,attribValue);
+                            }
+                            else {
+                                log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
+                                log.error("Value should be four integers of the form \"top,left,bottom,right\"");
+                            }
+                       } catch (IllegalAccessException ey) {
+                            log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
+                        } catch (NumberFormatException ex) {
+                            log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
+                            log.error("Value should be four integers of the form \"top,left,bottom,right\"");
+                        }
+                    }
+                    else {
+                        log.error("Required \""+constraintType+"\" handler for attribute \""+attribName+"\" not defined in JMRI code");
+                        log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
+                    }
+                }
+
 
         // create a panel to add as a new grid item
         final JPanel c = new JPanel();
@@ -1787,10 +2010,33 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
             else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGridItem");
             }
         }
+
+                if ( globs.gridConstraints.gridx == GridBagConstraints.RELATIVE ){
+                    globs.gridxCurrent++;
+                }
+                else {
+                    globs.gridxCurrent = globs.gridConstraints.gridx;
+                }
+                if ( globs.gridConstraints.gridy == GridBagConstraints.RELATIVE ){
+                    globs.gridyCurrent++;
+                }
+                else {
+                globs.gridyCurrent = globs.gridConstraints.gridy;
+                }
+
         // add glue to the bottom to allow resize
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
