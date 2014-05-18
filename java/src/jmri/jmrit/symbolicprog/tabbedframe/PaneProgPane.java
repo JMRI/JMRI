@@ -184,7 +184,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         readPaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
                     if (container.isBusy()) {
@@ -203,7 +204,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         readPaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
                     if (container.isBusy()) {
@@ -224,7 +226,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         writePaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
                     if (container.isBusy()) {
@@ -245,7 +248,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         writePaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
                     if (container.isBusy()) {
@@ -270,7 +274,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         confirmPaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
                     if (container.isBusy()) {
@@ -289,7 +294,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         confirmPaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
                     if (container.isBusy()) {
@@ -332,7 +338,8 @@ public class PaneProgPane extends javax.swing.JPanel
             // set tooltip to explain why
             readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
             readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
-        } else {
+        }
+        else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
         }
@@ -354,7 +361,8 @@ public class PaneProgPane extends javax.swing.JPanel
             // set tooltip to explain why
             confirmChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
             confirmAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
-        } else {
+        }
+        else {
             confirmChangesButton.setEnabled(true);
             confirmAllButton.setEnabled(true);
         }
@@ -455,7 +463,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (stat) {
             enableReadButtons();
             enableConfirmButtons();
-        } else {
+        }
+        else {
             readChangesButton.setEnabled(stat);
             readAllButton.setEnabled(stat);
             confirmChangesButton.setEnabled(stat);
@@ -502,7 +511,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges == true) {
             readChangesButton.setEnabled(true);
             readChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             readAllButton.setSelected(true);
             readAllButton.setEnabled(true);
         }
@@ -666,7 +676,8 @@ public class PaneProgPane extends javax.swing.JPanel
         // and make the read request
         if (justChanges) {
             _programmingVar.readChanges();
-        } else {
+        }
+        else {
             _programmingVar.readAll();
         }
     }
@@ -682,7 +693,8 @@ public class PaneProgPane extends javax.swing.JPanel
         // and make the write request
         if (justChanges) {
             _programmingVar.writeChanges();
-        } else {
+        }
+        else {
             _programmingVar.writeAll();
         }
     }
@@ -884,7 +896,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges == true) {
             writeChangesButton.setEnabled(true);
             writeChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
@@ -996,7 +1009,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges) {
             confirmChangesButton.setEnabled(true);
             confirmChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             confirmAllButton.setSelected(true);
             confirmAllButton.setEnabled(true);
         }
@@ -1082,7 +1096,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_programmingVar == null && _programmingCV == null&& _programmingIndexedCV == null) {
             log.warn("unexpected propertChange: "+e);
             return;
-        } else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
+        }
+        else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
                                                    +" new value: "+e.getNewValue());
 
         // find the right way to handle this
@@ -1093,13 +1108,15 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
-                } else {
+                }
+                else {
                     retry = 0;
                 }
             }
             replyWhileProgrammingVar();
             return;
-        } else if (e.getSource() == _programmingCV &&
+        }
+        else if (e.getSource() == _programmingCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
                    
@@ -1117,20 +1134,23 @@ public class PaneProgPane extends javax.swing.JPanel
             
             replyWhileProgrammingCV();
             return;
-        } else if (e.getSource() == _programmingIndexedCV &&
+        }
+        else if (e.getSource() == _programmingIndexedCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
             if (_programmingIndexedCV.getState() == VariableValue.UNKNOWN) {
                 if (retry == 0) {
                     indexedCvListIndex--;
                     retry++;
-                } else {
+                }
+                else {
                     retry = 0;
                 }
             }
             replyWhileProgrammingIndxCV();
             return;
-        } else {
+        }
+        else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy"))
                 log.debug("ignoring change of Busy "+e.getNewValue()
                           +" "+( ((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
@@ -1628,7 +1648,8 @@ public class PaneProgPane extends javax.swing.JPanel
                             log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
                             }
                         }
-                    } else if ( constraintType.equals("double") ) {
+                    }
+                    else if ( constraintType.equals("double") ) {
                         double attribValue;
                         try {
                             attribValue = Double.valueOf(attribRawValue);
@@ -1638,13 +1659,15 @@ public class PaneProgPane extends javax.swing.JPanel
                         } catch (NumberFormatException ex) {
                             log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                         }
-                    } else if ( constraintType.equals("class java.awt.Insets") ) {
+                    }
+                    else if ( constraintType.equals("class java.awt.Insets") ) {
                         try {
                             String[] insetStrings = attribRawValue.split(",");
                             if ( insetStrings.length == 4) {
                                 Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]),Integer.valueOf(insetStrings[1]),Integer.valueOf(insetStrings[2]),Integer.valueOf(insetStrings[3]));
                                 constraint.set(cs,attribValue);
-                            } else {
+                            }
+                            else {
                                 log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                                 log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                             }
@@ -1654,7 +1677,8 @@ public class PaneProgPane extends javax.swing.JPanel
                             log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                             log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                         }
-                    } else {
+                    }
+                    else {
                         log.error("Required \""+constraintType+"\" handler for attribute \""+attribName+"\" not defined in JMRI code");
                         log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
                     }
@@ -1668,15 +1692,18 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
                 if ( cs.gridx == GridBagConstraints.RELATIVE ){
                     gridxCurrent++;
-                } else {
+                }
+                else {
                     gridxCurrent = cs.gridx;
                 }
                 if ( cs.gridy == GridBagConstraints.RELATIVE ){
                     gridyCurrent++;
-                } else {
+                }
+                else {
                 gridyCurrent = cs.gridy;
                 }
-            } else if (!name.equals("qualifier")) { // its a mistake
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGrid");
             }
         }
@@ -1919,7 +1946,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             c.add(l);
             cs.gridwidth = 1;
-        } else {
+        }
+        else {
             FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
             fnMapList.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
@@ -1981,7 +2009,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(rep, cs);
             col.add(rep);
 
-        } else if (layout.equals("right")) {
+        }
+        else if (layout.equals("right")) {
             cs.anchor= GridBagConstraints.EAST;
             g.setConstraints(rep, cs);
             col.add(rep);
@@ -1991,7 +2020,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             col.add(l);
 
-        } else if (layout.equals("below")) {
+        }
+        else if (layout.equals("below")) {
             // variable in center of upper line
             cs.anchor=GridBagConstraints.CENTER;
             g.setConstraints(rep, cs);
@@ -2003,7 +2033,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             col.add(l);
 
-        } else if (layout.equals("above")) {
+        }
+        else if (layout.equals("above")) {
             // label aligned like others
             cs.anchor= GridBagConstraints.WEST;
             g.setConstraints(l, cs);
@@ -2015,7 +2046,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(rep, cs);
             col.add(rep);
 
-        } else {
+        }
+        else {
             log.error("layout internally inconsistent: "+layout);
             return;
         }
@@ -2097,16 +2129,19 @@ public class PaneProgPane extends javax.swing.JPanel
             if ( mask.contains("V")) {
                 if ( mask.indexOf('V') == mask.lastIndexOf('V') ) {
                     descString = descString+" bit "+(lastBit-mask.indexOf('V'));
-                } else {
+                }
+                else {
                     descString = descString+" bits ";
                     for (int i = 0; i <= lastBit; i++) {
                         char descStringLastChar = descString.charAt(descString.length()-1);
                         if ( mask.charAt(lastBit-i) == 'V' ) {
                             if (descStringLastChar == ' ') {
                                 descString = descString+i;
-                            } else if (lastV == (i-1)) {
+                            }
+                            else if (lastV == (i-1)) {
                                 if (descStringLastChar != '-') descString = descString+"-";
-                            } else {
+                            }
+                            else {
                                 descString = descString+","+i;
                             }
                             lastV = i;
@@ -2117,7 +2152,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 descString = descString+" no bits";
             }
             log.debug(descString+" Mask:"+mask);
@@ -2128,10 +2164,12 @@ public class PaneProgPane extends javax.swing.JPanel
         if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
             if (toolTip == null) {
                 toolTip = descString;
-            } else {
+            }
+            else {
                 toolTip = toolTip+" ("+descString+")";
             }
-        } else {
+        }
+        else {
             if (toolTip == null)
                 toolTip = "";
         }
