@@ -14,7 +14,7 @@
   <!-- $Id$ -->
   <version author="sip@euronet.nl" version="1.0 beta" lastUpdated="20020810"/>
   <!-- Based on the contribution of many others -->
-  <programmer decoderFilePanes="yes">
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane>
       <name>Basic</name>
       <column>

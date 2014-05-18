@@ -16,7 +16,7 @@
   <!-- Based on the contribution of many others -->
   <!-- Version 1.4 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Notes -->
-  <programmer decoderFilePanes="yes">
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane>
       <name>Basic</name>
       <column>

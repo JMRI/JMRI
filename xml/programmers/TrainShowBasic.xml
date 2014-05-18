@@ -17,7 +17,7 @@
   <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
   <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
-  <programmer decoderFilePanes="yes">
+  <programmer decoderFilePanes="yes" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane>
       <name>Basic</name>
       <column>
