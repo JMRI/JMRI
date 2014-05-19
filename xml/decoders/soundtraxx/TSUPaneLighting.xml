@@ -11,7 +11,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami                       -->
+<!-- change 2014-05-18 (Alain LM) 
+       removed <label/> preventing display of the expected variable label   -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
@@ -113,11 +115,9 @@
         <label>
           <text> </text>
         </label>
-        <display item="Hyperlight Flash Rate (0-15)" label="Hyperlight Flash Rate (0-15)">
-          <label/>
+        <display item="Hyperlight Flash Rate (0-15)">
         </display>
-        <display item="Grade Crossing Hold Time (0-15)" label="Grade Crossing Hold Time (0-15)">
-          <label/>
+        <display item="Grade Crossing Hold Time (0-15)">
         </display>
         <label>
           <text> </text>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="(Disabled)">
-    <choice>Standard on off</choice>
-    <choice xml:lang="it">Standard On-Off</choice>
+    <choice>Disabled</choice>
+    <choice xml:lang="it">Disabile</choice>
   </enumChoice>
   <enumChoice choice="Dimmable headlight">
     <choice>Dimmable headlight</choice>

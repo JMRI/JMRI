@@ -1407,7 +1407,7 @@ public class CircuitBuilder  {
     	} else if (_editPortalFrame!=null) {
     		_editPortalFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
-            _editPortalFrame.setSelection(selection);
+//            _editPortalFrame.setSelection(selection);
     	} else if (_editDirectionFrame!=null) {
     		_editDirectionFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
@@ -1417,12 +1417,12 @@ public class CircuitBuilder  {
     	return true;
     }
    
-    public boolean doMouseReleased(Positionable selection, MouseEvent event) {
+    public boolean doMouseReleased(Positionable selection, boolean dragging) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || _editDirectionFrame!=null) {
         	return true;
         } else if (_editPortalFrame!=null) {
-        	if (selection instanceof PortalIcon) {
-            	_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);	
+        	if (dragging && selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
+            	_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection, true);	
         	}
         	return true;
         }
@@ -1512,11 +1512,12 @@ public class CircuitBuilder  {
     * No dragging when CircuitBuilder is in progress, except for PortalIcon
     */
     public boolean doMouseDragged(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null || _editDirectionFrame!=null) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null) {
             return true;     // no dragging when editing
         }
         if (_editPortalFrame!=null || _editDirectionFrame!=null) {
             if (selection instanceof PortalIcon) {
+            	_editor.highlight(selection);
                 return false;		// OK to drag portal icon
             } else {
             	return true;
@@ -1529,7 +1530,7 @@ public class CircuitBuilder  {
      * @return true if portal frame is open
      */
     public boolean dragPortal() {
-    	return (_editPortalFrame!=null);
+    	return (_editPortalFrame!=null || _editDirectionFrame!=null);
     }
 
     /*
@@ -1593,17 +1594,26 @@ public class CircuitBuilder  {
         } else if (_editPortalFrame!=null) {
             if (log.isDebugEnabled()) log.debug("selection= "+(selection==null?"null":
                                                             selection.getClass().getName()));
-            if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
-                //_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);
+            if (selection instanceof PortalIcon) {
+                if (_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection, false)) {
+                    _editor.highlight(selection);
+                }
                 //_editor.getSelectionGroup().add(selection);
-                _editor.highlight(getPortalIconMap().get(((PortalIcon)selection).getName()));
             }
             _editPortalFrame.toFront();
         } else if (_editDirectionFrame!=null) {
-            if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
-            	_editDirectionFrame.setPortalIcon((PortalIcon)selection);
+            if (selection instanceof PortalIcon) {
+            	PortalIcon icon = (PortalIcon)selection;
+            	if (_circuitIcons.contains(selection)) {
+                	_editDirectionFrame.setPortalIcon(icon, true);
+                } else {
+                	_editDirectionFrame.setPortalIcon(null, false);            	
+                    JOptionPane.showMessageDialog(_editDirectionFrame, Bundle.getMessage("iconNotOnBlock", 
+                    		_editDirectionFrame.getHomeBlock().getDisplayName(), icon.getPortal().getDescription()), 
+                            Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);        	
+                }
             } else {
-            	_editDirectionFrame.setPortalIcon(null);            	
+            	_editDirectionFrame.setPortalIcon(null, false);            	            	
             }
         	_editDirectionFrame.toFront();
         }

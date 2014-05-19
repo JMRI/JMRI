@@ -6,10 +6,10 @@
   <column>
     <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
       <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
-      <tooltip xml:lang="it">Determina se una locomotiva pu\u00F2 funzionare in DC</tooltip>
+      <tooltip xml:lang="it">Determina se una locomotiva può funzionare in DC</tooltip>
     </display>
     <display item="Analog (DC) Mode" tooltip="Determines whether loco can operate on conventional DC current">
-      <tooltip xml:lang="it">Determina se una locomotiva pu\u00F2 funzionare in DC convenzionale</tooltip>
+      <tooltip xml:lang="it">Determina se una locomotiva può funzionare in DC convenzionale</tooltip>
     </display>
     <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed">
       <tooltip xml:lang="it">Imposta il valore di tensione in Volt per muovere il motore alla velocità minima programmata</tooltip>
@@ -18,7 +18,7 @@
       <tooltip xml:lang="it">Imposta il valore di tensione analogico per muovere il motore alla velocità massima programmata</tooltip>
     </display>
     <display item="Analog (AC) Mode" tooltip="Determines whether loco can operate on conventional AC current">
-      <tooltip xml:lang="it">Determina se una locomotiva pu\u00F2 funzionare in AC convenzionale</tooltip>
+      <tooltip xml:lang="it">Determina se una locomotiva può funzionare in AC convenzionale</tooltip>
     </display>
     <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed">
       <tooltip xml:lang="it">Imposta il valore di tensione AC per muovere il motore alla velocità minima programmata</tooltip>
@@ -54,15 +54,15 @@
   <column>
     <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode">
       <tooltip xml:lang="ca">Estableix si funcionar‡ FL quan es condueixi en analÚgic</tooltip>
-      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali (FL) quando si opera in analogico</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali quando si opera in analogico</tooltip>
     </display>
     <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode">
       <tooltip xml:lang="ca">Estableix si funcionar‡ FL(f) quan es condueixi en analÚgic</tooltip>
-      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali in Avanti FL(f) quando si opera in analogico</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali in Avanti quando si opera in analogico</tooltip>
     </display>
     <display item="Analog Mode Function Status - FL(r)" format="checkbox" tooltip="Sets the status of function FL(r) when the unit is operating in analog power mode">
       <tooltip xml:lang="ca">Estableix si funcionar‡ FL(r) quan es condueixi en analÚgic</tooltip>
-      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali indietro FL(r) quando si opera in analogico</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione Luci Frontali indietro quando si opera in analogico</tooltip>
     </display>
     <display item="Analog Mode Function Status - F0" format="checkbox" tooltip="Sets the status of function F0 when the unit is operating in analog power mode">
       <tooltip xml:lang="ca">Estableix si funcionar‡ F0 quan es condueixi en analÚgic</tooltip>

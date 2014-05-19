@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
+
+
+
+
+
+<title>Operations-Add Train</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Manifest Print Preview<br>
+</h1>
+
+<div align="right">
+<p><a href="Ops_EditTrain.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<blockquote>
+  <p><img src="images/Ops_ManifestPreview.png" height="1425" width="900"></p>
+  <blockquote>
+    <p>&nbsp;</p>
+  </blockquote>
+</blockquote>
+<div align="right">
+  <p><a href="Ops_EditTrain.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>

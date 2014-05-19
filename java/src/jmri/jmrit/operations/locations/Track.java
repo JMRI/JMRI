@@ -1421,7 +1421,7 @@ public class Track {
 	}
 
 	public void setScheduleItemId(String id) {
-		log.debug("set schedule item id: " + id + " for track (" + getName() + ")");
+		log.debug("set schedule item id: {} for track ({})",  id, getName());
 		String old = _scheduleItemId;
 		_scheduleItemId = id;
 		setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, old, id);
@@ -1634,6 +1634,11 @@ public class Track {
 		if (debugFlag)
 			log.debug("Search match for car " + toString() + " type (" + car.getTypeName() + ") load (" + car.getLoadName()
 					+ ")");
+		if (!car.getScheduleId().equals("")) {
+			ScheduleItem si = getSchedule().getItemById(car.getScheduleId());
+			if (si != null && checkScheduleItem(si, car).equals(OKAY))
+				return OKAY;
+		}
 		for (int i = 0; i < getSchedule().getSize(); i++) {
 			ScheduleItem si = getNextScheduleItem();
 			if (debugFlag)
@@ -1708,7 +1713,7 @@ public class Track {
 		// a car has a schedule id if the schedule was in match mode
 		if (!car.getScheduleId().equals("")) {
 			String id = car.getScheduleId();
-			log.debug("Car ({}) has schedule id {}", car.toString(), car.getScheduleId());
+			log.debug("Car ({}) has schedule id ({})", car.toString(), car.getScheduleId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
 				ScheduleItem si = sch.getItemById(id);

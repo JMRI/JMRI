@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Main.shtml 18146 2011-08-09 11:51:16Z dat7719 $ --><title>DecodePro Main window</title><!-- Style -->
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro® Main Window</h1>
+<h1>Main Window Overview</h1>
+
+<div align="right">
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p align="left">When you start Decoder Pro, the DecoderPro window is
+displayed. All of the JMRI functions can be accessed via the menu bar
+on the DecoderPro® window, additional menus are added when functions
+are selected, example below with added operations menu(selected on
+operations setup window), which is also in the tools menu.</p>
+<p align="center"><img src="images/Splash_Screen.png" alt="splash" height="282" width="496"></p>
+<p align="left">After initial setup of preferences, you may have added
+buttons at the bottom of the screen to open various tools that you may
+want to use. These buttons will vary to match your preferences, I have
+setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> and <strong>Monitor Loconet</strong>.</p>
+<p align="center"><img style="width: 456px; height: 308px;" alt="splash" src="images/Splash_Screen01.png"><br></p>
+<p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
+<p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
+<p align="left">DecoderPro® icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
+<p align="left"><strong>
+  <input name="button" id="button" value="Service Mode (Programming Track) Programmer" type="button"> 
+</strong>Provides access to the decoder programming capability in <a href="Programmer_ServiceMode.shtml"><strong>Service Mode Programmer<br>
+</strong></a>
+<input name="button2" id="button2" value="Operations Mode (Main Track) Programmer" type="button">
+Provides access to the<a href="Programmer_OpsMode.shtml"> </a><a href="Basic_Programming.shtml#OpsMode"><strong><a href="Programmer_OpsMode.shtml">Operations Mode Programmer. 
+</a><br>
+<input name="button3" id="button3" value="Help" type="button">
+</strong></a>Opens the Help Window<br>
+<input name="button4" id="button4" value="Quit" type="button">
+Exits the program, with confirmation dialog.</p>
+<p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your <strong>preference </strong>to
+open each time you start DecoderPro®. The following are samples that
+could be set in your preferences. (Shown are for a Digitrax LocoNet
+system)
+</p><p><strong>
+  <input name="button5" id="button5" value="New Throttle..." type="button">
+</strong>Opens a throttle window which provides a tool to control your
+trains, you may open more than one throttle and position on the
+computer screen
+</p><p align="center"><img style="width: 512px; height: 538px;" alt="throttle" src="images/Main_02_Thottle.png"><br>
+</p><p><strong>
+    <input name="button6" id="button6" value="Monitor LocoNet" type="button">
+</strong>Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the LocoNet.
+</p><p align="center"><img src="images/Main_03_locoNet.png" alt="locoNet monitor" height="355" width="800">
+</p><p><strong>
+    <input name="button7" id="button7" value="Power Control" type="button"> 
+</strong>Opens Power Control window, which allows you to turn track power on or off during operations when supported by your system.
+</p><p align="center"><img src="images/Main_04_PwrCntr.png" alt="power control" height="114" width="207">
+</p><p align="left">These are just samples of the possible buttons that may be added at startup.  
+</p><hr>
+
+<div align="right">
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>

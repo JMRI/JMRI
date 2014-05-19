@@ -60,7 +60,7 @@
       <tooltip xml:lang="it">Imposta se comandi Funzioni seguono Indirizzo di Base o Indirizzo Consist</tooltip>
     </display>
     <display item="Consist Function Mode" tooltip="Lighting mode for consist">
-      <tooltip xml:lang="it">Modalit\u00E0 Luci per il Consist</tooltip>
+      <tooltip xml:lang="it">Modalità Luci per il Consist</tooltip>
     </display>
     <label>
       <text> </text>

@@ -13,7 +13,11 @@ function getTrains(group) {
         data: {},
         success: function(data) {
             if (data.length === 0) {
-                $("#warning-no-trains").removeClass("hidden").addClass("show");
+                if ($("html").data("roster-group")) {
+                    $("#warning-group-no-entries").removeClass("hidden").addClass("show");
+                } else {
+                    $("#warning-roster-no-entries").removeClass("hidden").addClass("show");
+                }
                 $("#roster").removeClass("show").addClass("hidden");
             } else {
                 $("#roster").removeClass("hidden").addClass("show");
@@ -30,7 +34,7 @@ function getTrains(group) {
                         window.open("/web/webThrottle.html?loconame=" + $(this).parent().data("id"), $(this).parent().data("address")).focus();
                     }
                 });
-                $(".roster-entry td").css("cursor","pointer");
+                $(".roster-entry td").css("cursor", "pointer");
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
             $("#trains-options").removeClass("hidden").addClass("show");

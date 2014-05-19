@@ -8,6 +8,7 @@
         <row>
           <label>
             <text>Notes on decoder models and firmware versions</text>
+            <text xml:lang="it">Note su modelli e versioni firmware</text>
             <text xml:lang="fr">Notes sur les modèles et versions de firmware </text>
             <text xml:lang="de">Hinweise: Modele und Firmware Versions</text>
           </label>
@@ -17,6 +18,7 @@
         </label>
         <label>
           <text>The decoder model cannot be read in DCC. You need use Selectrix (SX2) programming and read PAR 102.</text>
+          <text xml:lang="it">Il modello di decoder non può essere letto in DCC. Bisogna usare la programmazione Selectrix (SX2) e leggere PAR 102.</text>
           <text xml:lang="fr">Déterminer le modèle de décodeur est impossible en DCC, il faut lire le PAR 102 en programmation Selectrix (SX2).</text>
           <text xml:lang="de">Mit DCC Programmierung kann mann den Decoder nicht erkennen. Mit SX2 (Selectrix) Programmierung ist PAR 102 aber lesbar.</text>
         </label>
@@ -25,11 +27,13 @@
         </label>
         <label>
           <text>The firmware version cannot be read in DCC (except the main version in CV7).</text>
+          <text xml:lang="it">Il modello di decoder non può essere letto in DCC (solo la versione principale in CV7).</text>
           <text xml:lang="fr">La version du firmware n'est pas lisible en DCC (sauf la version principale dans le CV7).</text>
           <text xml:lang="de">Mit DCC Programmierung kann mann die Firmware Version nicht lesen (Ausnahme: Hauptversion in CV7).</text>
         </label>
         <label>
           <text>You need to use a Selectrix (SX2) command station, and read:</text>
+          <text xml:lang="it">Bisogna usare una centrale Selectrix (SX2) e leggere:</text>
           <text xml:lang="fr">Il faut utiliser une centrale Sélectrix (SX2) et lire:</text>
           <text xml:lang="de">Eine SX2 (Selectrix) Zentrale ist erforderlich, damit kann mann ablesen:</text>
         </label>
@@ -53,21 +57,25 @@
       <column>
         <label>
           <text>  Main Fw version number (e.g. 1 in 1.33)</text>
+          <text xml:lang="it">  Versione firmware principale (esempio: 1 di 1.33)</text>
           <text xml:lang="fr">  Version de firmware principale (exemple: 1 dans 1.33)</text>
           <text xml:lang="de">  Versionsnummer (z.B. 1 in 1.33)</text>
         </label>
         <label>
           <text>  Date (MMY)</text>
+          <text xml:lang="it">  Data (MMA)</text>
           <text xml:lang="fr">  Date (MMY)</text>
           <text xml:lang="de">  Datum (MMY)</text>
         </label>
         <label>
           <text>  Firmware revision number (e.g. 10 in 8.10)</text>
+          <text xml:lang="it">  Revisione Firmware (es. 10 di 8.10)</text>
           <text xml:lang="fr">  Révision de firmware (exemple: 10 dans 8.10)</text>
           <text xml:lang="de">  Revisionsnummer (z.B. 10 in 8.10)</text>
         </label>
         <label>
           <text>  Date (MMY)</text>
+          <text xml:lang="it">  Data (MMA)</text>
           <text xml:lang="fr">  Date (MMY)</text>
           <text xml:lang="de">  Datum (MMY)</text>
         </label>

@@ -51,7 +51,16 @@
 </xs:annotation>
 
   <xs:complexType name="PaneType">
-    <xs:sequence>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="name" minOccurs="0">
+        <xs:annotation><xs:documentation>
+        The name element is allowed to appear in two places, but the preferred one
+        is at the start of the panes element (this position).  name elements at the end of
+        the pane element are deprecated, and should not be
+        used in new definitions..
+        </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
           <xs:annotation><xs:documentation>
           DocBook element(s) providing copyright information in standard form.
@@ -80,23 +89,13 @@
         </xs:documentation></xs:annotation>
       </xs:element>
 
-      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
-
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="1" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="grid" type="GridType" minOccurs="1" maxOccurs="unbounded"/>
       </xs:choice>
             
-      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" >
-        <xs:annotation><xs:documentation>
-        The name element is allowed to appear in two places, but the preferred one
-        is at the start of the panes element.  name elements at the end of
-        the pane element (this position) are deprecated, and should not be
-        used in new definitions.
-        </xs:documentation></xs:annotation>
-      </xs:element>
-
-    </xs:sequence>
+    </xs:choice>
     <xs:attribute name="tooltip" type="xs:string"/>
     <xs:attribute name="nameFmt" type="labelItemType" default="label">
       <xs:annotation><xs:documentation>
@@ -145,7 +144,15 @@
 
   <xs:complexType name="PaneRowType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
@@ -160,7 +167,15 @@
   
   <xs:complexType name="PaneColumnType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
@@ -173,9 +188,52 @@
     </xs:sequence>
   </xs:complexType>
   
+  <xs:complexType name="PaneGroupType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="grid" type="GridType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaneGridGroupType">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGridGroupType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
   <xs:complexType name="GridType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
       <xs:element name="griditem" type="GridItemType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGridGroupType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="gridx" type="xs:string" />
     <xs:attribute name="gridy" type="xs:string" />
@@ -192,8 +250,15 @@
   
   <xs:complexType name="GridItemType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Qualifies whether this label will appear in the interface, depending
+          on the value in other pre-defined variables.
+          </xs:documentation></xs:annotation>
+        </xs:element>
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="group" type="PaneGroupType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="soundlabel" type="SoundLabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />

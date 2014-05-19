@@ -6,26 +6,27 @@
  */
 var jmri = null;
 var power = 0;
+
 $(document).ready(function() {
     jmri = $.JMRI({
         railroad: function(string) {
-            document.title = string + " JSON console";
-            $('h1 span:first-child').html(document.title);
+            $("#alert-websocket-connecting").addClass("hidden").removeClass("show");
             jmri.getPower();
         },
         console: function(data) {
             if (data !== '{"type":"pong"}') {
-                var console = $('#console');
-                console.append(data + '<br/>');
+                var console = $("#console pre");
+                if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true") {
+                    console.append(JSON.stringify(JSON.parse(data), null, 2) + "<br>");
+                } else {
+                    console.append(data + "<br>");
+                }
                 console.scrollTop(console[0].scrollHeight - console.height());
-            } else {
-                $('#powerImg').addClass('animated pulse');
-                var wait = window.setTimeout(function() {
-                    $('#powerImg').removeClass('animated pulse');
-                },
-                        1300
-                        );
             }
+        },
+        error: function(error) {
+            $("#error-alert div").text(error.message);
+            $("#error-alert").addClass("show").removeClass("hidden");
         },
         power: function(state) {
             power = state;
@@ -39,6 +40,20 @@ $(document).ready(function() {
                 case jmri.POWER_OFF:
                     $('#powerImg').prop('src', "/images/PowerRed.png");
                     break;
+            }
+        },
+        ping: function() {
+            $("#sendCmd").addClass("btn-info").removeClass("btn-primary");
+        },
+        pong: function() {
+            $("#sendCmd").addClass("btn-success").removeClass("btn-info");
+            window.setTimeout(
+                    function() {
+                        $("#sendCmd").removeClass("btn-success").addClass("btn-primary");
+                    },
+                    1000);
+            if (window.console) {
+                window.console.log("Heartbeat response received.");
             }
         }
     });
@@ -60,5 +75,20 @@ $(document).ready(function() {
             return false;
         }
     });
-    $('#footer-menu>li+li+li').before("<li><a href='/help/en/html/web/JsonServlet.shtml'>Json Servlet Help</a></li>");
+    $("power a").click(function() {
+        jmri.setPower((power === jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
+    });
+    $("#error-alert").on("close.bs.alert", function() {
+        $(this).addClass("hidden").removeClass("show");
+        return false; //don't remove error-alert from DOM
+    });
+    if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === null) {
+        window.localStorage.setItem("jmri.json-console.json.pretty-print", "true");
+    }
+    $("#pretty-print").parent().tooltip();
+    $("#pretty-print").prop("checked", (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true"));
+    $("#pretty-print").change(function() {
+        window.localStorage.setItem("jmri.json-console.json.pretty-print", $(this).prop("checked") ? "true" : "false");
+    });
+    jmri.connect();
 });

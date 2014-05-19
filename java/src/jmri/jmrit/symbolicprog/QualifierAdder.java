@@ -46,8 +46,10 @@ public abstract class QualifierAdder {
         // search for enclosing <variables> element
         Parent p = e;
         while ( (p = p.getParent()) != null && p instanceof Element) {
+            Element el = (Element)p;
+            if (el.getName().equals("pane")) break;  // stop when we get to an enclosing pane element
             @SuppressWarnings("unchecked")
-            List<Element> le2 = ((Element)p).getChildren("qualifier"); // we assign to this to allow us to suppress unchecked error
+            List<Element> le2 = el.getChildren("qualifier");  // we assign to this to allow us to suppress unchecked error
             processList(le2, lq, model);
         }
         

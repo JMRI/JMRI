@@ -14,7 +14,7 @@
   <!-- $Id$ -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the most important few CVs -->
-  <programmer decoderFilePanes="no">
+  <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane nameFmt="item">
       <name>Decoder Address</name>
       <column>

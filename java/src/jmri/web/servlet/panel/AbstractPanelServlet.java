@@ -95,7 +95,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType("application/json"); // NOI18N
-            ServletUtil.getHelper().setNonCachingHeaders(response);
+            ServletUtil.getInstance().setNonCachingHeaders(response);
             response.getWriter().print(JsonUtil.getPanels(request.getLocale(), JSON.XML));
         } else if (JSON.XML.equals(request.getParameter("format"))) {
             response.sendRedirect("/xmlio/list?type=panel");
@@ -105,12 +105,12 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Panel.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getHelper().getRailroadName(false),
+                            ServletUtil.getInstance().getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "PanelsTitle")
                     ),
-                    ServletUtil.getHelper().getNavBar(request.getLocale(), "/panel"),
-                    ServletUtil.getHelper().getRailroadName(false),
-                    ServletUtil.getHelper().getFooter(request.getLocale(), "/panel")
+                    ServletUtil.getInstance().getNavBar(request.getLocale(), "/panel"),
+                    ServletUtil.getInstance().getRailroadName(false),
+                    ServletUtil.getInstance().getFooter(request.getLocale(), "/panel")
             ));
         }
     }

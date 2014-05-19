@@ -36,6 +36,8 @@
         <label xml:lang="it">Soglia Iniziale (Vstart)</label>
         <comment>Range 0-31</comment>
         <comment xml:lang="it">Valori da  1 a 31</comment>
+        <label xml:lang="de">Vstart</label>
+        <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <variable CV="3" item="Accel" default="1" comment="Range 1-31">
         <decVal min="1" max="31"/>
@@ -43,6 +45,8 @@
         <label xml:lang="it">Inerzia Accellerazione (1-31)</label>
         <comment>Range 1-31</comment>
         <comment xml:lang="it">Valori da  1 a 31</comment>
+        <label xml:lang="de">Accel</label>
+        <comment xml:lang="de">Range 1-31</comment>
       </variable>
       <variable CV="4" item="Decel" default="1" comment="Range 1-31">
         <decVal min="1" max="31"/>
@@ -50,21 +54,26 @@
         <label xml:lang="it">Inerzia Decellerazione (1-31)</label>
         <comment>Range 1-31</comment>
         <comment xml:lang="it">Valori da  1 a 31</comment>
+        <label xml:lang="de">Decel</label>
+        <comment xml:lang="de">Range 1-31</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="60">
         <decVal/>
         <label>Decoder Version No: </label>
         <label xml:lang="it">N.Versione decoder:</label>
+        <label xml:lang="de">Decoder Version</label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID: </label>
         <label xml:lang="it">ID Costruttore:</label>
+        <label xml:lang="de">Manufacturer</label>
       </variable>
       <variable CV="8" item="Reset">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
         <label xml:lang="it">ID Costruttore-Reset</label>
+        <label xml:lang="de">Reset</label>
       </variable>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal min="0" max="127"/>
@@ -72,22 +81,28 @@
         <label xml:lang="it">Indirizzo Consist (0-127)</label>
         <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
         <comment xml:lang="it">Indirizzo Consist. Valori da 0 a 127 (direzione impostata in bit 7)</comment>
+        <label xml:lang="de">Consist Address</label>
+        <comment xml:lang="de">Stores consist address. Range 0-127 (direction set in bit 7)</comment>
       </variable>
       <variable CV="19" mask="VXXXXXXX" item="Consist Direction" comment="A consist address over 127 will also set this bit">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
             <choice xml:lang="it">Avanti</choice>
+            <choice xml:lang="de">Forward</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
             <choice xml:lang="it">Invertita</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Locomotive Direction in Consist</label>
         <label>Direzione Loco nel Consist</label>
         <comment>A consist address over 127 will also set this bit</comment>
         <comment xml:lang="it">Anche un Indirizzo Consist oltre il 127 setterà questo bit</comment>
+        <label xml:lang="de">Consist Direction</label>
+        <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
       </variable>
       <variable CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="127" comment="Additional Accel rate applied to CV3  (Range 0-127)">
         <decVal max="127"/>
@@ -95,179 +110,223 @@
         <label xml:lang="it">Grado di Accellerazione (0-127)</label>
         <comment>Additional Accel rate applied to CV3  (Range 0-127)</comment>
         <comment xml:lang="it">Grado di accellerazione addizionale applicato a CV3 (valori da 0 a 127)</comment>
+        <label xml:lang="de">Consist Acceleration Adjustment</label>
+        <comment xml:lang="de">Additional Accel rate applied to CV3  (Range 0-127)</comment>
       </variable>
       <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="1">
         <enumVal>
           <enumChoice choice="Add value to Acceleration Momentum">
             <choice>Add value to Acceleration Momentum</choice>
             <choice xml:lang="it">Somma valore a Inerzia Accellerazione</choice>
+            <choice xml:lang="de">Add value to Acceleration Momentum</choice>
           </enumChoice>
           <enumChoice choice="Subtract value from Acceleration Momentum">
             <choice>Subtract value from Acceleration Momentum</choice>
             <choice xml:lang="it">Sottrai valore da Inerzia Accellerazione</choice>
+            <choice xml:lang="de">Subtract value from Acceleration Momentum</choice>
           </enumChoice>
         </enumVal>
         <label>Acceleration Trim Sign</label>
         <label xml:lang="it">Segno Accellerazione addizionale</label>
+        <label xml:lang="de">Consist Acceleration Adjustment Sign</label>
       </variable>
       <variable CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="127" comment="Additional Decel rate applied to CV4  (Range 0-127)">
         <decVal max="127"/>
         <label>Deceleration Trim (0-127)</label>
         <comment>Additional Decel rate applied to CV4  (Range 0-127)</comment>
+        <label xml:lang="de">Consist Deceleration Adjustment</label>
+        <comment xml:lang="de">Additional Decel rate applied to CV4  (Range 0-127)</comment>
       </variable>
       <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="1">
         <enumVal>
           <enumChoice choice="Add value to Deceleration Momentum">
             <choice>Add value to Deceleration Momentum</choice>
             <choice xml:lang="it">Somma valore a Inerzia decellerazione</choice>
+            <choice xml:lang="de">Add value to Deceleration Momentum</choice>
           </enumChoice>
           <enumChoice choice="Subtract value from Deceleration Momentum">
             <choice>Subtract value from Deceleration Momentum</choice>
             <choice xml:lang="it">Sottrai valore a Inerzia decellerazione</choice>
+            <choice xml:lang="de">Subtract value from Deceleration Momentum</choice>
           </enumChoice>
         </enumVal>
         <label>Deceleration Trim Sign</label>
         <label xml:lang="it">Segno Decellarazione addizionale</label>
+        <label xml:lang="de">Consist Deceleration Adjustment Sign</label>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
             <choice xml:lang="it">Normale</choice>
+            <choice xml:lang="de">Normal</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
             <choice xml:lang="it">Invertita</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Locomotive Direction in Forward</label>
         <label xml:lang="it">Direzione Loco in Avanti</label>
+        <label xml:lang="de">Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
+            <choice xml:lang="de">14</choice>
           </enumChoice>
           <enumChoice choice="28/128 (recommended)">
             <choice>28/128 (recommended)</choice>
             <choice xml:lang="it">28/128 (raccomandata)</choice>
+            <choice xml:lang="de">28/128 (recommended)</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Steps</label>
         <label xml:lang="it">Step velocità</label>
+        <label xml:lang="de">Speed Step Mode</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Loco can operate on conventional DC</label>
         <label xml:lang="it">Loco può operare in Analogico</label>
+        <label xml:lang="de">Analog (DC) Operation</label>
       </variable>
       <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Factory Speed Curve">
             <choice>Use Factory Speed Curve</choice>
             <choice xml:lang="it">Usa Curva velocità di Fabbrica</choice>
+            <choice xml:lang="de">Use Factory Speed Curve</choice>
           </enumChoice>
           <enumChoice choice="Use Custom Speed Curve">
             <choice>Use Custom Speed Curve</choice>
             <choice xml:lang="it">Usa Curva velocità personalizzata</choice>
+            <choice xml:lang="de">Use Custom Speed Curve</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Table Definition</label>
         <label xml:lang="it">Definizione Tabella velocità</label>
+        <label xml:lang="de">Speed Table Definition</label>
       </variable>
       <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active" comment="Accel/Decel Off/On">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
+            <choice xml:lang="de">Off</choice>
           </enumChoice>
           <enumChoice choice="On">
             <choice>On</choice>
+            <choice xml:lang="de">On</choice>
           </enumChoice>
         </enumVal>
         <label>Enable Accel/Decel Trim</label>
         <label xml:lang="it">Abilita incremento Accell./Decell. </label>
         <comment>Accel/Decel Off/On</comment>
         <comment xml:lang="it">Accel/Decel Off/On</comment>
+        <label xml:lang="de">Consist Adjustments Active</label>
+        <comment xml:lang="de">Accel/Decel Off/On</comment>
       </variable>
       <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="it">Loco viaggia sotto controllo della tensione Analogica</choice>
+            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
             <choice xml:lang="it">Loco frena e si ferma usando Inerzia impostata in CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
         <label xml:lang="it">Inerzia Frenata in Analogico</label>
         <comment>Governs how loco acts in DC track block</comment>
         <comment xml:lang="it">determina comportamento Loco in tratta Analogica</comment>
+        <label xml:lang="de">DC Brake Momentum</label>
+        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
       </variable>
       <variable item="Directional Headlights" CV="51" mask="XXXXXXXV" comment="Output A">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
             <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+            <choice xml:lang="de">Headlights are directional and operate automatically</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independantly controlled (F0-Front, F1-Rear)">
             <choice>Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
             <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F1-Retro)</choice>
+            <choice xml:lang="de">Headlights are independantly controlled (F0-Front, F1-Rear)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
         <label xml:lang="it">Luci di testa direzionali</label>
         <comment>Output A</comment>
         <comment xml:lang="it">Uscita A</comment>
+        <label xml:lang="de">Directional Headlights</label>
+        <comment xml:lang="de">Output A</comment>
       </variable>
       <variable item="Dimming Control" CV="51" mask="XXXXXXVX" comment="Controls how headlight dims (CV 52 controls amount)">
         <enumVal>
           <enumChoice choice="Function dimming disabled">
             <choice>Function dimming disabled</choice>
             <choice xml:lang="it">Funzione Regolazione disabilitata</choice>
+            <choice xml:lang="de">Function dimming disabled</choice>
           </enumChoice>
           <enumChoice choice="Function dimming enabled">
             <choice>Function dimming enabled</choice>
             <choice xml:lang="it">Funzione Regolazione abilitata</choice>
+            <choice xml:lang="de">Function dimming enabled</choice>
           </enumChoice>
         </enumVal>
         <label>Dimming Control</label>
         <label xml:lang="it">Controllo Regolazione Luci</label>
         <comment>Controls how headlight dims (CV 52 controls amount)</comment>
         <comment xml:lang="it">Controlla come si attenuano le luci di testa (CV52 controlla il valore)</comment>
+        <label xml:lang="de">Dimming Control</label>
+        <comment xml:lang="de">Controls how headlight dims (CV 52 controls amount)</comment>
       </variable>
       <variable item="Front Headlight (Output A) Dimming" CV="51" mask="XXXXXVXX" comment="Controls how front headlights dim">
         <enumVal>
           <enumChoice choice="Front headlight never dim">
             <choice>Front headlight never dim</choice>
             <choice xml:lang="it">Luce Anteriore senza Attenuazione</choice>
+            <choice xml:lang="de">Front headlight never dim</choice>
           </enumChoice>
           <enumChoice choice="F1 or F4 controls front headlight dimming">
             <choice>F1 or F4 controls front headlight dimming</choice>
             <choice xml:lang="it">F1 o F4 controllano attenuazione Luci di testa</choice>
+            <choice xml:lang="de">F1 or F4 controls front headlight dimming</choice>
           </enumChoice>
         </enumVal>
         <label>Front Headlight (Output A) Dimming</label>
         <label xml:lang="it">Regolazione Luci di testa (Uscita A)</label>
         <comment>Controls how front headlights dim</comment>
         <comment xml:lang="it">Controlla come si regolano le luci di testa</comment>
+        <label xml:lang="de">Front Headlight (Output A) Dimming</label>
+        <comment xml:lang="de">Controls how front headlights dim</comment>
       </variable>
       <variable item="Rear Headlight (Output B) Dimming" CV="51" mask="XXXXVXXX" comment="Controls how rear headlights dim">
         <enumVal>
           <enumChoice choice="Rear headlight never dim">
             <choice>Rear headlight never dim</choice>
             <choice xml:lang="it">Luci di coda senza Attenuazione</choice>
+            <choice xml:lang="de">Rear headlight never dim</choice>
           </enumChoice>
           <enumChoice choice="F1 or F4 controls rear headlight dimming ">
             <choice>F1 or F4 controls rear headlight dimming </choice>
             <choice xml:lang="it">F1 o F4 controllano attenuazione Luci di coda</choice>
+            <choice xml:lang="de">F1 or F4 controls rear headlight dimming </choice>
           </enumChoice>
         </enumVal>
         <label>Rear Headlight (Output B) Dimming</label>
         <label xml:lang="it">Regolazione Luci di coda (Uscita B)</label>
         <comment>Controls how rear headlights dim</comment>
         <comment xml:lang="it">Controlla come si regolano le luci di coda</comment>
+        <label xml:lang="de">Rear Headlight (Output B) Dimming</label>
+        <comment xml:lang="de">Controls how rear headlights dim</comment>
       </variable>
       <variable CV="52" item="Dimming Intensity" default="64" comment="Controls how much headlights dim (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>
@@ -275,6 +334,8 @@
         <label xml:lang="it">Intensità Regolazione Luci (0-255)</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
         <comment xml:lang="it">Controlla quanto si attenuano le luci (0=spente - 255=massima luminosità)</comment>
+        <label xml:lang="de">Dimming Intensity</label>
+        <comment xml:lang="de">Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
       <variable item="Output C Blinks" CV="53" mask="XXXXXXXV" minOut="3" comment="Output C blinks with frequency set in CV56">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -282,6 +343,8 @@
         <label xml:lang="it">Uscita C Lampeggiante</label>
         <comment>Output C blinks with frequency set in CV56</comment>
         <comment xml:lang="it">Uscita C lampeggia con frequenza impostata in CV56</comment>
+        <label xml:lang="de">Output C Blinks</label>
+        <comment xml:lang="de">Output C blinks with frequency set in CV56</comment>
       </variable>
       <variable item="Output D Blinks" CV="53" mask="XXXXXXVX" minOut="4" comment="Output D blinks with frequency set in CV56">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -289,107 +352,129 @@
         <label xml:lang="it">Uscita D Lampeggiante</label>
         <comment>Output D blinks with frequency set in CV56</comment>
         <comment xml:lang="it">Uscita D lampeggia con frequenza impostata in CV56</comment>
+        <label xml:lang="de">Output D Blinks</label>
+        <comment xml:lang="de">Output D blinks with frequency set in CV56</comment>
       </variable>
       <variable item="Output C, D are Ditch Lights" CV="53" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output C, D are Ditch Lights</label>
         <label xml:lang="it">Uscita C e D sono Ditch Lights</label>
+        <label xml:lang="de">Output C, D are Ditch Lights</label>
       </variable>
       <variable CV="54" mask="XXXXXXXV" item="F1 controls output 3" default="1" minOut="3" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output C</label>
         <label xml:lang="it">F1 controlla Uscita C</label>
+        <label xml:lang="de">F1 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXXXVX" item="F2 controls output 3" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output C</label>
         <label xml:lang="it">F2 controlla Uscita C</label>
+        <label xml:lang="de">F2 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXXVXX" item="F3 controls output 3" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output C</label>
         <label xml:lang="it">F3 controlla Uscita C</label>
+        <label xml:lang="de">F3 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXXVXXX" item="F4 controls output 3" minOut="3" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output C</label>
         <label xml:lang="it">F4 controlla Uscita C</label>
+        <label xml:lang="de">F4 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXXVXXXX" item="F5 controls output 3" minOut="3" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output C</label>
         <label xml:lang="it">F5 controlla Uscita C</label>
+        <label xml:lang="de">F5 controls output 3</label>
       </variable>
       <variable CV="54" mask="XXVXXXXX" item="F6 controls output 3" minOut="3" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output C</label>
         <label xml:lang="it">F6 controlla Uscita C</label>
+        <label xml:lang="de">F6 controls output 3</label>
       </variable>
       <variable CV="54" mask="XVXXXXXX" item="F7 controls output 3" minOut="3" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output C</label>
         <label xml:lang="it">F7 controlla Uscita C</label>
+        <label xml:lang="de">F7 controls output 3</label>
       </variable>
       <variable CV="54" mask="VXXXXXXX" item="F8 controls output 3" minOut="3" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output C</label>
         <label xml:lang="it">F8 controlla Uscita C</label>
+        <label xml:lang="de">F8 controls output 3</label>
       </variable>
       <variable CV="55" mask="XXXXXXXV" item="F1 controls output 4" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output D</label>
         <label xml:lang="it">F1 controlla Uscita D</label>
+        <label xml:lang="de">F1 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXXXVX" item="F2 controls output 4" default="1" minOut="4" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output D</label>
         <label xml:lang="it">F2 controlla Uscita D</label>
+        <label xml:lang="de">F2 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXXVXX" item="F3 controls output 4" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output D</label>
         <label xml:lang="it">F3 controlla Uscita D</label>
+        <label xml:lang="de">F3 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXXVXXX" item="F4 controls output 4" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output D</label>
         <label xml:lang="it">F4 controlla Uscita D</label>
+        <label xml:lang="de">F4 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXXVXXXX" item="F5 controls output 4" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output D</label>
         <label xml:lang="it">F5 controlla Uscita D</label>
+        <label xml:lang="de">F5 controls output 4</label>
       </variable>
       <variable CV="55" mask="XXVXXXXX" item="F6 controls output 4" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output D</label>
         <label xml:lang="it">F6 controlla Uscita D</label>
+        <label xml:lang="de">F6 controls output 4</label>
       </variable>
       <variable CV="55" mask="XVXXXXXX" item="F7 controls output 4" minOut="4" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output D</label>
         <label xml:lang="it">F7 controlla Uscita D</label>
+        <label xml:lang="de">F7 controls output 4</label>
       </variable>
       <variable CV="55" mask="VXXXXXXX" item="F8 controls output 4" minOut="4" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output D</label>
         <label xml:lang="it">F8 controlla Uscita D</label>
+        <label xml:lang="de">F8 controls output 4</label>
       </variable>
       <variable CV="56" item="Output C, D Blink Rate" default="30" minOut="3">
         <decVal min="0" max="255"/>
         <label>Output C, D Blink Rate (0-255)</label>
         <label xml:lang="it">Frequenza Lampeggio Uscita C e D (0-255)</label>
+        <label xml:lang="de">Output C, D Blink Rate</label>
       </variable>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
         <label xml:lang="it">Tabella velocità</label>
+        <label xml:lang="de">Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="01">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
         <label xml:lang="it">Versione Software decoder (sola lettura)</label>
+        <label xml:lang="de">Decoder Software Version</label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
@@ -397,30 +482,49 @@
     </variables>
   </decoder>
   <pane>
+    <name>Lenz</name>
+    <name xml:lang="de">Lenz</name>
     <column>
-      <display item="Directional Headlights" tooltip="Enables Rule 17 for headlights (independent control)"/>
-      <display item="Dimming Control" tooltip="Enables headlight dimming"/>
-      <display item="Dimming Intensity" tooltip="Sets intensity of dimmed headlight"/>
+      <display item="Directional Headlights" tooltip="Enables Rule 17 for headlights (independent control)">
+        <tooltip xml:lang="de">Enables Rule 17 for headlights (independent control)</tooltip>
+      </display>
+      <display item="Dimming Control" tooltip="Enables headlight dimming">
+        <tooltip xml:lang="de">Enables headlight dimming</tooltip>
+      </display>
+      <display item="Dimming Intensity" tooltip="Sets intensity of dimmed headlight">
+        <tooltip xml:lang="de">Sets intensity of dimmed headlight</tooltip>
+      </display>
       <label>
         <text> </text>
       </label>
-      <display item="Front Headlight (Output A) Dimming" tooltip="Enables front headlight dimming (if Dimming Control is enabled)"/>
+      <display item="Front Headlight (Output A) Dimming" tooltip="Enables front headlight dimming (if Dimming Control is enabled)">
+        <tooltip xml:lang="de">Enables front headlight dimming (if Dimming Control is enabled)</tooltip>
+      </display>
       <label>
         <text> </text>
       </label>
-      <display item="Rear Headlight (Output B) Dimming" tooltip="Enables rear headlight dimming (if Dimming Control is enabled)"/>
+      <display item="Rear Headlight (Output B) Dimming" tooltip="Enables rear headlight dimming (if Dimming Control is enabled)">
+        <tooltip xml:lang="de">Enables rear headlight dimming (if Dimming Control is enabled)</tooltip>
+      </display>
       <label>
         <text> </text>
       </label>
-      <display item="Output C Blinks" tooltip="If ON, output C will blink"/>
-      <display item="Output D Blinks" tooltip="If ON, output D will blink"/>
-      <display item="Output C, D are Ditch Lights" tooltip="If ON, outputs C, D will blink alternately"/>
-      <display item="Output C, D Blink Rate" tooltip="Sets the blinking rate for outputs C, D"/>
+      <display item="Output C Blinks" tooltip="If ON, output C will blink">
+        <tooltip xml:lang="de">If ON, output C will blink</tooltip>
+      </display>
+      <display item="Output D Blinks" tooltip="If ON, output D will blink">
+        <tooltip xml:lang="de">If ON, output D will blink</tooltip>
+      </display>
+      <display item="Output C, D are Ditch Lights" tooltip="If ON, outputs C, D will blink alternately">
+        <tooltip xml:lang="de">If ON, outputs C, D will blink alternately</tooltip>
+      </display>
+      <display item="Output C, D Blink Rate" tooltip="Sets the blinking rate for outputs C, D">
+        <tooltip xml:lang="de">Sets the blinking rate for outputs C, D</tooltip>
+      </display>
       <label>
         <text> </text>
       </label>
       <display item="Decoder Software Version"/>
     </column>
-    <name>Lenz</name>
   </pane>
 </decoder-config>

@@ -13,6 +13,8 @@
 #
 # Known to work on Mac OS X, expected to work on Linux, Windows situation not clear.
 #
+# See also i18nDecoder for internationalization transform
+#
 #  Bob Jacobsen 3/2014
 # 
 mkdir tmp >& /dev/null
@@ -32,22 +34,3 @@ end
 
 # just formatting
 # cat $x | tr -d '\r' | xmllint -format - > tmp/$x:t
-
-# with translation
-#  cat $x |\
-#     xsltproc decoderLabelToItem.xsl - |\
-#     xsltproc decoderAddLabelElement.xsl - |\
-#     xsltproc decoderPaneAddNameElement.xsl - |\
-#     xsltproc decoderPaneLabelToText.xsl - |\
-#     xsltproc decoderAddPaneLabelTextElement.xsl - |\
-#     xsltproc decoderSuppressRedundantLabel.xsl - |\
-#     xsltproc decoderPaneSuppressLabelAttribute.xsl - |\
-#     xsltproc decoderPaneSuppressNameAttribute.xsl - |\
-#     xsltproc decoderAddI18nLabel.xsl - |\
-#     xsltproc decoderAddI18nComment.xsl - |\
-#     xsltproc decoderAddI18nChoice.xsl - |\
-#     xsltproc decoderAddI18nTooltip.xsl - |\
-#     xsltproc decoderPaneAddI18nName.xsl - |\
-#     xsltproc decoderAddI18nPaneLabel.xsl - |\
-#     xsltproc decoderAddI18nPaneTooltip.xsl - |\
-#     xmllint -format - > tmp/$x:t

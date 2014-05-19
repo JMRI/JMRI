@@ -42,80 +42,155 @@
   <variable CV="60" item="Lighting effects A/B" default="0" comment="Range 0-44">
     <decVal min="0" max="44"/>
     <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
+    <label xml:lang="it">Valore corrispondente all'effetto Luce per uscite B/A (0-44)</label>
     <comment>Range 0-44</comment>
+    <comment xml:lang="it">Valori da 0 a 44</comment>
+    <label xml:lang="de">Eingabe der entsprechenden Werte für die Lichteffekte an den Ausgängen A und B (0-44)</label>
+    <comment xml:lang="de">Wertebereich 0-44</comment>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F1" CV="61" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F1</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F1</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F1</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F1</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F1</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F2" CV="61" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F2</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F2</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F2</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F2</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F2</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F3" CV="61" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F3</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F3</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F3</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F3</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F3</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F4" CV="61" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F4</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F4</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F4</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F4</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F4</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F5" CV="61" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F5</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F5</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F5</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F5</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F5</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F6" CV="61" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F6</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F6</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F6</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F6</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F6</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F7" CV="61" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F7</label>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F7</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F7</tooltip>
   </variable>
   <variable item="Toggle effect (outputs A/B) with F8" CV="61" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs A/B) with F8</label>
+    <label xml:lang="it">Effetto Alternato (uscite A/B) con F8</label>
+    <tooltip xml:lang="it">Alterna uscite A e B off con F8</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F8</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen A und B ein/aus mit F8</tooltip>
   </variable>
   <variable CV="62" minOut="4" item="Lighting effects C/D" default="0" comment="Range 0-53">
     <decVal min="0" max="53"/>
     <label>Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) </label>
+    <label xml:lang="it">Valore corrispondente all'effetto Luce per uscite D/C (0-53)</label>
     <comment>Range 0-53</comment>
+    <comment xml:lang="it">Valori da 0 a 53</comment>
+    <label xml:lang="de">Eingabe der entsprechenden Werte für die Lichteffekte an den Ausgängen C und D (0-53)</label>
+    <comment xml:lang="de">Wertebereich 0-53</comment>
   </variable>
   <variable CV="63" minOut="4" tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))" item="Function 3 options" default="32" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
+    <label xml:lang="it">frequenza di lampeggio delle uscite C e D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
     <comment>Range 0-255</comment>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
+    <label xml:lang="de">Blinkfrequenz der Ausgänge C und D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
+    <tooltip xml:lang="de">Blinkfrequenz, Werkseinstellung = 1 sec, f= 1/(.03* 1 + Wert))</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F1</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F1</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F1</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F1</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F1</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F2" CV="64" mask="XXXXXXVX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F2</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F2</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F2</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F2</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F2</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F3" CV="64" mask="XXXXXVXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F3</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F3</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F3</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F3</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F3</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F4" CV="64" mask="XXXXVXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F4</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F4</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F4</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F4</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F4</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F5" CV="64" mask="XXXVXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F5</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F5</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F5</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F5</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F5</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F6" CV="64" mask="XXVXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F6</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F6</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F6</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F6</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F6</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F7" CV="64" mask="XVXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F7</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F7</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F7</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F7</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F7</tooltip>
   </variable>
   <variable item="Toggle effect (outputs C/D) with F8" CV="64" mask="VXXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Toggle effect (outputs C/D) with F8</label>
+    <label xml:lang="it">Effetto Alternato (uscite C/D) con F8</label>
+    <tooltip xml:lang="it">Alterna uscite C e D off con F8</tooltip>
+    <label xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F8</label>
+    <tooltip xml:lang="de">Lichteffekte an den Ausgängen C und D ein/aus mit F8</tooltip>
   </variable>
 </variables>

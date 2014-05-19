@@ -3,7 +3,8 @@
  */
 
 var minFontSize = parseInt(12);
-var maxFontSize = parseInt(20);
+var maxFontSize = parseInt(24);
+var nbJmri = null;
 
 /*
  * Populate the panels menu with a list of open panels
@@ -234,5 +235,56 @@ $(document).ready(function() {
     getNetworkServices(); // hide or show and network service specific elements
     getPanels(); // complete the panels menu
     getRosterGroups(); // list roster groups in menu
-    setFontSize(0);
+    setFontSize(0); // get the user's prefered font size
+    nbJmri = $.JMRI({
+        open: function() {
+            nbJmri.getPower();
+        },
+        power: function(state) {
+            $('#navbar-power').data('power', state);
+            disabled = ($('#navbar-power button').hasClass('disabled')) ? " - Setting power disabled" : "";
+            switch (state) {
+                case nbJmri.UNKNOWN:
+                    $('#navbar-power button').addClass('btn-warning').removeClass('btn-success').removeClass('btn-danger');
+                    $('#navbar-power button').prop('title', "Layout power unknown" + disabled);
+                    $('#navbar-power a').text("Layout Power Unknown");
+                    break;
+                case nbJmri.POWER_ON:
+                    $('#navbar-power button').addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
+                    $('#navbar-power button').prop('title', "Layout power on" + disabled);
+                    $('#navbar-power a').text("Layout Power On");
+                    break;
+                case nbJmri.POWER_OFF:
+                    $('#navbar-power button').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning');
+                    $('#navbar-power button').prop('title', "Layout power off" + disabled);
+                    $('#navbar-power a').text("Layout Power Off");
+                    break;
+            }
+            $('#navbar-power-modal-label').text($('#navbar-power a').text());
+        }
+    });
+    nbJmri.connect();
+    if ($('#navbar-power').data('power') === 'readwrite') {
+        $('#navbar-power').removeClass('disabled');
+        $('#navbar-power button').removeClass('disabled');
+        $('#navbar-power button').click(function(event) {
+            $('#navbar-power-modal').modal('show');
+        });
+        $('#navbar-power-modal-on').click(function(event) {
+            nbJmri.setPower(nbJmri.POWER_ON);
+            $('#navbar-power-modal').modal('hide');
+        });
+        $('#navbar-power-modal-off').click(function(event) {
+            nbJmri.setPower(nbJmri.POWER_OFF);
+            $('#navbar-power-modal').modal('hide');
+        });
+        $('#navbar-power a').click(function(event) {
+            $('#navbar-power-modal').modal('show');
+        });
+        $('#navbar-power-modal').on('show.bs.modal', function() {
+            $('#navbar-power-modal-label').text($('#navbar-power a').text());
+            $('.navbar-collapse').collapse('hide');
+            $('#navbar-power-modal').css("z-index", "1500");
+        });
+    }
 });

@@ -46,6 +46,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     JTextField port;
     JButton saveB;
     JButton cancelB;
+    JCheckBox readonlyPower;
     WebServerPreferences preferences;
     JFrame parentFrame = null;
     boolean enableSave;
@@ -77,6 +78,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
         add(portPanel());
+        add(powerPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
         add(delaysPanel());
         add(new JSeparator());
@@ -106,6 +108,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         disallowedFrames.getModel().addListDataListener(this);
         useAjaxCB.setSelected(preferences.useAjax());
         port.setText(Integer.toString(preferences.getPort()));
+        readonlyPower.setSelected(preferences.isReadonlyPower());
     }
 
     /**
@@ -150,6 +153,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         } else {
             preferences.setPort(portNum);
         }
+        preferences.setReadonlyPower(readonlyPower.isSelected());
         return didSet;
     }
 
@@ -161,7 +165,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
                 parentFrame.dispose();
             }
         }
-
 
     }
 
@@ -224,6 +227,22 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         port.setToolTipText(Bundle.getMessage("ToolTipPort"));
         panel.add(port);
         panel.add(new JLabel(Bundle.getMessage("LabelPort")));
+        return panel;
+    }
+
+    private JPanel powerPanel() {
+        JPanel panel = new JPanel();
+        readonlyPower = new JCheckBox(Bundle.getMessage("LabelReadonlyPower"), preferences.isReadonlyPower());
+        panel.add(readonlyPower);
+        ActionListener listener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                readonlyPower.setToolTipText(Bundle.getMessage(readonlyPower.isSelected() ? "ToolTipReadonlyPowerTrue" : "ToolTipReadonlyPowerFalse"));
+            }
+        };
+        readonlyPower.addActionListener(listener);
+        listener.actionPerformed(null);
         return panel;
     }
 

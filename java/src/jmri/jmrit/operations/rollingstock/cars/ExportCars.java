@@ -93,10 +93,11 @@ public class ExportCars extends XmlFile {
 		// assume delimiter in the value field
 		String value;
 		// create header
-		String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del + Bundle.getMessage("Type") +
-				del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del + Bundle.getMessage("Color") +
-				del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") +
-				del + "-" + del + Bundle.getMessage("Track") + del + Setup.getValueLabel();
+		String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del + Bundle.getMessage("Type")
+				+ del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del
+				+ Bundle.getMessage("Color") + del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built")
+				+ del + Bundle.getMessage("Location") + del + "-" + del + Bundle.getMessage("Track") + del
+				+ Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") + del + Setup.getValueLabel();
 		fileOut.println(header);
 
 		// store car number, road, type, length, weight, color, owner, built date, location and track
@@ -127,7 +128,8 @@ public class ExportCars extends XmlFile {
 			}
 			line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
 					+ car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-					+ carLocationName + ",-," + carTrackName + value; // NOI18N
+					+ carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
+					+ value; // NOI18N
 			fileOut.println(line);
 		}
 		fileOut.flush();

@@ -14,50 +14,66 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Standard on/off function output">
     <choice>Standard on/off function output</choice>
+    <choice xml:lang="it">Standard on/off function output</choice>
   </enumChoice>
   <enumChoice choice="Firebox flicker">
     <choice>Firebox flicker</choice>
+    <choice xml:lang="it">Scintille Caldaia</choice>
   </enumChoice>
   <enumChoice choice="Mars light">
     <choice>Mars light</choice>
+    <choice xml:lang="it">Luci Mars</choice>
   </enumChoice>
   <enumChoice choice="Rotary beacon">
     <choice>Rotary beacon</choice>
+    <choice xml:lang="it">Faro rotante</choice>
   </enumChoice>
   <enumChoice choice="Gyralight">
     <choice>Gyralight</choice>
+    <choice xml:lang="it">Faro Gyralight</choice>
   </enumChoice>
   <enumChoice choice="Double strobe">
     <choice>Double strobe</choice>
+    <choice xml:lang="it">Lampeggiante Doppio</choice>
   </enumChoice>
   <enumChoice choice="Strobe A">
     <choice>Strobe A</choice>
+    <choice xml:lang="it">Lampeggiante A</choice>
   </enumChoice>
   <enumChoice choice="Strobe B (alternates with strobe A)">
     <choice>Strobe B (alternates with strobe A)</choice>
+    <choice xml:lang="it">Lampeggiante B (alterna con Lamp.A)</choice>
   </enumChoice>
   <enumChoice choice="Dim when F0 and F4 on, otherwise bright">
     <choice>Dim when F0 and F4 on, otherwise bright</choice>
+    <choice xml:lang="it">Smorza per F0 ed F4 on, altrimenti Luminoso</choice>
   </enumChoice>
   <enumChoice choice="Dim when F0 and F8 on, otherwise bright">
     <choice>Dim when F0 and F8 on, otherwise bright</choice>
+    <choice xml:lang="it">Smorza per F0 ed F8 on, altrimenti Luminoso</choice>
   </enumChoice>
   <enumChoice choice="Dim in forward, bright in reverse">
     <choice>Dim in forward, bright in reverse</choice>
+    <choice xml:lang="it">Smorza in avanti, Luminoso in retro</choice>
   </enumChoice>
   <enumChoice choice="Dim in reverse, bright in forward">
     <choice>Dim in reverse, bright in forward</choice>
+    <choice xml:lang="it">Smorza in retro, Luminoso in avanti</choice>
   </enumChoice>
   <enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise">
     <choice>Type 2 right ditch light, effect on if F2 on, output off otherwise</choice>
+    <choice xml:lang="it">Luce Ditch tipo 2 destra, effetto on se F2 on, altrimenti off</choice>
   </enumChoice>
   <enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise">
     <choice>Type 2 left ditch light, effect on if F2 on, output off otherwise</choice>
+    <choice xml:lang="it">Luce Ditch tipo 2 sinistra, effetto on se F2 on, altrimenti off</choice>
   </enumChoice>
   <enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off">
     <choice>Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off</choice>
+    <choice xml:lang="it">Luce Ditch tipo 1 destra, effetto on se F0 ed F2 on, Luminosose F0 on ed F2 off, off se F0 off</choice>
   </enumChoice>
   <enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off">
     <choice>Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off</choice>
+    <choice xml:lang="it">Luce Ditch tipo 1 sinistra, effetto on se F0 ed F2 on, Luminosose F0 on ed F2 off, off se F0 off</choice>
   </enumChoice>
 </enumVal>

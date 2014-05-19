@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+	<author>
+      <personname>
+        <firstname>Bernd (Ba)</firstname>
+        <surname>Wisotzki</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2014-05-18</date>
+      <authorinitials>Ba</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2005-08-14</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Lenz_Gold.xml file</revremark>
+    </revision>
+  </revhistory>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+  <variable CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
+	<decVal/>
+	<label>Manufacturer ID - Reset</label>
+	<label xml:lang="it">ID Costruttore - Reset</label>
+	<comment>Writing a value of 8 or 33 will reset decoder to factory defaults</comment>
+	<comment xml:lang="it">Scrivendo un valore di 8 o 33 ripristina il decoder ai valori di fabbrica</comment>
+	<label xml:lang="de">Herstellerkennung - Reset</label>
+	<comment xml:lang="de">Schreiben eines Wertes von 8 oder 33 setzt den Dekoder auf die Werkseinstellungen zurück</comment>
+  </variable>
+</variables>

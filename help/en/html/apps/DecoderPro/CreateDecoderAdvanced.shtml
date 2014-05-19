@@ -349,10 +349,10 @@ Other available operators include "gt", "ge", "ne", "lt" and "le".
 If multiple qualifier elements are present, all must be true for the 
 pane to be active and displayed.
 
-<h5 name="labels">Qualifying Labels on Panes</h5>
+<h5 name="labels">Qualifying Elements on Panes</h5>
 
-A "qualifier" element on a label element allows you to enable or disable the 
-display of the label on a specific pane.
+A "qualifier" element on a "label", "soundlabel", "row", "column", "grid" or "griditem" element
+allows you to enable or disable the  display of that element on a specific pane.
 
 <p>The following example displays a warning label if a version-number
 variable has a too-low value:

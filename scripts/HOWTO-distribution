@@ -120,7 +120,7 @@ Second, we build the release branch:
     Then fix the version number in a couple of places:
         Description, 
         and then Source Code Management|Repository URL.
-
+    Start the first build manually, and make sure it went OK
 
 ( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:

@@ -28,11 +28,11 @@
       <tooltip xml:lang="ca">Estableix el sentit de circulaciÛ de la locomotora</tooltip>
     </display>
     <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
-      <tooltip xml:lang="it">Imposta la Modalit\u00E0 di Step Velocità per Comando Luci</tooltip>
+      <tooltip xml:lang="it">Imposta gli Step Velocità di default per Comando Luci</tooltip>
       <tooltip xml:lang="ca">Estableix els passos de velocitat per al control de llums</tooltip>
     </display>
     <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
-      <tooltip xml:lang="it">Determina se la Loco pu\u00F2 operare in DC (analogica)</tooltip>
+      <tooltip xml:lang="it">Determina se la Loco può operare in DC (analogica)</tooltip>
       <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analÚgic [CC] (ConversiÛ de Font de potËncia)</tooltip>
     </display>
   </column>

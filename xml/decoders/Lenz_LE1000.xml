@@ -28,137 +28,179 @@
         <decVal/>
         <label>Start Volts</label>
         <comment>Range 0-31</comment>
+        <label xml:lang="de">Vstart</label>
+        <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <variable item="Accel" CV="3" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Accel</label>
         <comment>Range 0-31</comment>
+        <label xml:lang="de">Accel</label>
+        <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <variable item="Decel" CV="4" default="1" comment="Range 0-31">
         <decVal max="31"/>
         <label>Decel</label>
         <comment>Range 0-31</comment>
+        <label xml:lang="de">Decel</label>
+        <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <!-- deleted max and mid voltage-->
       <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="de">Decoder Version</label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="de">Manufacturer</label>
       </variable>
       <variable CV="8" default="99" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 33 will reset decoder to factory defaults</comment>
+        <label xml:lang="de">Reset</label>
+        <comment xml:lang="de">Writing a value of 33 will reset decoder to factory defaults</comment>
       </variable>
       <!-- Deleted all CV 13 references-->
       <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
+        <label xml:lang="de">Consist Address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
+            <choice xml:lang="de">Normal</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Consist Direction</label>
+        <label xml:lang="de">Consist Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
+            <choice xml:lang="de">Forward</choice>
           </enumChoice>
           <enumChoice choice="Reverse">
             <choice>Reverse</choice>
+            <choice xml:lang="de">Reverse</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
+        <label xml:lang="de">Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
+            <choice xml:lang="de">14</choice>
           </enumChoice>
           <enumChoice choice="28/128 (recommended)">
             <choice>28/128 (recommended)</choice>
+            <choice xml:lang="de">28/128 (recommended)</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Steps</label>
+        <label xml:lang="de">Speed Step Mode</label>
       </variable>
       <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
+            <choice xml:lang="de">Off</choice>
           </enumChoice>
           <enumChoice choice="On">
             <choice>On</choice>
+            <choice xml:lang="de">On</choice>
           </enumChoice>
         </enumVal>
         <label>Analog conversion mode</label>
+        <label xml:lang="de">Analog (DC) Operation</label>
       </variable>
       <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
+            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
         <comment>Governs how loco acts in DC track block</comment>
+        <label xml:lang="de">DC Brake Momentum</label>
+        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
       </variable>
       <variable CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)">
         <enumVal>
           <enumChoice choice="Always Dim" value="00000000">
             <choice>Always Dim</choice>
+            <choice xml:lang="de">Always Dim</choice>
           </enumChoice>
           <enumChoice choice="F1" value="1">
             <choice>F1</choice>
+            <choice xml:lang="de">F1</choice>
           </enumChoice>
           <enumChoice choice="F2" value="2">
             <choice>F2</choice>
+            <choice xml:lang="de">F2</choice>
           </enumChoice>
           <enumChoice choice="F3" value="4">
             <choice>F3</choice>
+            <choice xml:lang="de">F3</choice>
           </enumChoice>
           <enumChoice choice="F4" value="8">
             <choice>F4</choice>
+            <choice xml:lang="de">F4</choice>
           </enumChoice>
           <enumChoice choice="F5" value="16">
             <choice>F5</choice>
+            <choice xml:lang="de">F5</choice>
           </enumChoice>
           <enumChoice choice="F6" value="32">
             <choice>F6</choice>
+            <choice xml:lang="de">F6</choice>
           </enumChoice>
           <enumChoice choice="F7" value="64">
             <choice>F7</choice>
+            <choice xml:lang="de">F7</choice>
           </enumChoice>
           <enumChoice choice="F8" value="128">
             <choice>F8</choice>
+            <choice xml:lang="de">F8</choice>
           </enumChoice>
         </enumVal>
         <label>Headlight Dimmed By</label>
         <comment>Controls which function dims headlight (CV 52 controls amount)</comment>
+        <label xml:lang="de">Function F0F options</label>
+        <comment xml:lang="de">Controls which function dims headlight (CV 52 controls amount)</comment>
       </variable>
       <variable CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior">
         <decVal min="0" max="255"/>
         <label>Headlight Dimming intensity</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
+        <label xml:lang="de">Function F0F behavior</label>
+        <comment xml:lang="de">Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
       <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
+        <label xml:lang="de">User Id #1</label>
       </variable>
       <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
+        <label xml:lang="de">User Id #2</label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
@@ -169,10 +211,11 @@
     </resets>
   </decoder>
   <pane>
+    <name>Lenz</name>
+    <name xml:lang="de">Lenz</name>
     <column>
       <display item="Function F0F behavior"/>
       <display item="Function F0F options"/>
     </column>
-    <name>Lenz</name>
   </pane>
 </decoder-config>

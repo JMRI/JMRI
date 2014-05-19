@@ -63,20 +63,27 @@
                 if (window.console) {
                     console.log("Opened WebSocket");
                 }
-                $("#reconnecting").addClass("hidden").removeClass("show");
+                $("#alert-websocket-connecting").addClass("hidden").removeClass("show");
+                $("#alert-websocket-closed").addClass("hidden").removeClass("show");
             };
             jmri.close = function() {
                 if (window.console) {
                     console.log("Closed WebSocket");
                 }
+                $("#alert-websocket-closed").addClass("show").removeClass("hidden");
             };
             jmri.willReconnect = function() {
                 if (window.console) {
-                    console.log("Reconnecting WebSocket");
+                    console.log("Reconnecting WebSocket (attempt " + jmri.reconnectAttempts + "/20)");
                 }
-                $("#reconnecting").addClass("show").removeClass("hidden");
+                $("#alert-websocket-connecting").addClass("show").removeClass("hidden");
+                $("#alert-websocket-closed").addClass("hidden").removeClass("show");
             };
             jmri.didReconnect = function() {
+            };
+            jmri.ping = function() {
+            };
+            jmri.pong = function() {
             };
             jmri.hello = function(data) {
             };
@@ -545,11 +552,37 @@
             // Heartbeat
             jmri.heartbeat = function() {
                 jmri.socket.send("ping");
+                jmri.ping();
             };
             jmri.heartbeatInterval = null;
             // WebSocket
-            jmri.attemptReconnect = 60000; // one minute in milliseconds
             jmri.reconnectAttempts = 0;
+            jmri.pendingReconnection = 0;
+            jmri.duplicateClose = false;
+            jmri.retryConnection = function(wait) {
+                if (jmri.reconnectAttempts < 20) {
+                    jmri.reconnectAttempts++;
+                    jmri.willReconnect();
+                    setTimeout(
+                            function() {
+                                jmri.reconnect();
+                                jmri.pendingReconnection++;
+                                // wait 10 seconds for connection to fail
+                                setTimeout(function() {
+                                    if (!jmri.socket || jmri.socket.readyState !== 1) {
+                                        if (window.console) {
+                                            window.console.log("Reconnection attempt " + jmri.reconnectAttempts + " failed.");
+                                            window.console.log("Will retry in " + jmri.reconnectAttempts + " minutes.");
+                                        }
+                                        jmri.retryConnection(wait * jmri.reconnectAttempts);
+                                    } else {
+                                        jmri.didReconnect();
+                                    }
+                                }, 10000);
+                            },
+                            wait);
+                }
+            };
             jmri.reconnect = function() {
                 jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
                     open: function() {
@@ -559,15 +592,8 @@
                     close: function() {
                         clearInterval(jmri.heartbeatInterval);
                         jmri.close();
-                        if (jmri.reconnectAttempts < 10) {
-                            jmri.willReconnect();
-                            jmri.reconnectAttempts++;
-                            setTimeout(
-                                    function() {
-                                        jmri.reconnect();
-                                        jmri.didReconnect();
-                                    },
-                                    jmri.attemptReconnect);
+                        if (jmri.reconnectAttempts === jmri.pendingReconnection) {
+                            jmri.retryConnection(15000); // one minute in milliseconds
                         }
                     },
                     message: function(e) {
@@ -579,13 +605,13 @@
                             jmri.error(e.data);
                         },
                         goodbye: function(e) {
-                            jmri.attemptReconnect = 0;
                             jmri.goodbye(e.data);
                             jmri.socket.close();
                         },
                         // handle the initial handshake response from the server
                         hello: function(e) {
                             jmri.reconnectAttempts = 0;
+                            jmri.pendingReconnection = 0;
                             jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
                             jmri.version(e.data.JMRI);
                             jmri.railroad(e.data.railroad);
@@ -626,6 +652,9 @@
                         },
                         turnout: function(e) {
                             jmri.turnout(e.data.name, e.data.state, e.data);
+                        },
+                        pong: function(e) {
+                            jmri.pong();
                         }
                     }
                 });

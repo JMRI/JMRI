@@ -3,7 +3,7 @@
 package jmri.jmrit;
 
 import org.apache.log4j.Logger;
-import java.io.File;
+import java.io.*;
 import jmri.util.FileUtil;
 
 import junit.framework.Assert;
@@ -11,9 +11,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.jdom.Element;
-import org.jdom.Document;
-import org.jdom.DocType;
+import org.jdom.*;
+import org.jdom.input.*;
 
 /**
  * Tests for the XmlFile class.
@@ -126,6 +125,37 @@ public class XmlFileTest extends TestCase {
         Element e = x.rootFromName("temp"+File.separator+"prefs"+File.separator+"test.xml");
         Assert.assertTrue("Element found", e!=null);
     }
+    
+    public void testProcessPI() throws org.jdom.JDOMException, java.io.IOException {
+        // Document from test file
+        Document doc;
+        FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"));
+        try {
+            SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
+            doc = builder.build(new BufferedInputStream(fs));
+        } finally {
+            fs.close();
+        }
+        
+        XmlFile x = new XmlFile() {};
+
+        Assert.assertTrue("Original Document found", doc!=null);
+        Element e = doc.getRootElement();
+        Assert.assertTrue("Original root element found", e!=null);
+        
+        Document d = x.processInstructions(doc);
+        Assert.assertNotNull(d);
+        
+        // test transform changes <contains> element to <content>
+        e = d.getRootElement();
+        Assert.assertTrue("Transformed root element found", e!=null);
+        Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
+        Assert.assertTrue("Old element gone", e.getChild("contains")==null);
+        Assert.assertTrue("New element there", e.getChild("content")!=null);
+        Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
+        
+    }
+    
     
     // from here down is testing infrastructure
     

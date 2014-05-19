@@ -70,9 +70,9 @@
 	
 	<!-- Basic configuration variables -->
 	<definitiongroup name="Basic">
-		<definition item="Short Address" CV="1" />
+		<definition item="Short Address" />
 
-		<definition item="Long Address" CV="17" />
+		<definition item="Long Address"/>
 						
 		<definition item="Advanced Ack" CV="29" mask="XXXXVXXXX" />
 		<definition item="Address Format" CV="29" mask="XXVXXXXX" />
@@ -106,9 +106,9 @@
 	<!-- Power conversion (analog) -->
 
 	<definitiongroup name="AnalogPowerConversion">
-		<definition item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
+		<definition item="Analog (DC) Operation"/>
 
-		<definition item="Packet Time-out Value" CV="11" />
+		<definition item="Packet Time-out Value"/>
 		<definition item="DC Brake Momentum" />
 
 		<definition item="Analog (DC) Mode" />
@@ -135,35 +135,35 @@
 		<definition item="Analog Mode Function Status - F0(f)" />
 		<definition item="Analog Mode Function Status - F0(r)" />
 		
-		<definition item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
+		<definition item="Analog Mode Function Status - F1" />
 		<definition item="Analog Mode Function Status - F1(f)" />
 		<definition item="Analog Mode Function Status - F1(r)" />
 		
-		<definition item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
+		<definition item="Analog Mode Function Status - F2"/>
 		<definition item="Analog Mode Function Status - F2(f)" />
 		<definition item="Analog Mode Function Status - F2(r)" />
 		
-		<definition item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
+		<definition item="Analog Mode Function Status - F3"/>
 		<definition item="Analog Mode Function Status - F3(f)" />
 		<definition item="Analog Mode Function Status - F3(r)" />
 		
-		<definition item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
+		<definition item="Analog Mode Function Status - F4"/>
 		<definition item="Analog Mode Function Status - F4(f)" />
 		<definition item="Analog Mode Function Status - F4(r)" />
 		
-		<definition item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
+		<definition item="Analog Mode Function Status - F5"/>
 		<definition item="Analog Mode Function Status - F5(f)" />
 		<definition item="Analog Mode Function Status - F5(r)" />
 		
-		<definition item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
+		<definition item="Analog Mode Function Status - F6"/>
 		<definition item="Analog Mode Function Status - F6(f)" />
 		<definition item="Analog Mode Function Status - F6(r)" />
 		
-		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
+		<definition item="Analog Mode Function Status - F7"/>
 		<definition item="Analog Mode Function Status - F7(f)" />
 		<definition item="Analog Mode Function Status - F7(r)" />
 		
-		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		<definition item="Analog Mode Function Status - F8"/>
 		<definition item="Analog Mode Function Status - F8(f)" />
 		<definition item="Analog Mode Function Status - F8(r)" />
 		
@@ -410,18 +410,54 @@
 		<definition item="Function 5 effect generated"/>
 		<definition item="Function 5 behavior"/>
 		<definition item="Function 5 options"/>
+		<definition item="Function 5 option 1"/>
+		<definition item="Function 5 option 2"/>
+		<definition item="Function 5 option 3"/>
+		<definition item="Function 5 option 4"/>
+		<definition item="Function 5 check 1"/>
+		<definition item="Function 5 check 2"/>
+		<definition item="Function 5 check 3"/>
+		<definition item="Function 5 check 4"/>
+		<definition item="Function 5 check 5"/>
 
 		<definition item="Function 6 effect generated"/>
 		<definition item="Function 6 behavior"/>
 		<definition item="Function 6 options"/>
+		<definition item="Function 6 option 1"/>
+		<definition item="Function 6 option 2"/>
+		<definition item="Function 6 option 3"/>
+		<definition item="Function 6 option 4"/>
+		<definition item="Function 6 check 1"/>
+		<definition item="Function 6 check 2"/>
+		<definition item="Function 6 check 3"/>
+		<definition item="Function 6 check 4"/>
+		<definition item="Function 6 check 5"/>
 
 		<definition item="Function 7 effect generated"/>
 		<definition item="Function 7 behavior"/>
 		<definition item="Function 7 options"/>
+		<definition item="Function 7 option 1"/>
+		<definition item="Function 7 option 2"/>
+		<definition item="Function 7 option 3"/>
+		<definition item="Function 7 option 4"/>
+		<definition item="Function 7 check 1"/>
+		<definition item="Function 7 check 2"/>
+		<definition item="Function 7 check 3"/>
+		<definition item="Function 7 check 4"/>
+		<definition item="Function 7 check 5"/>
 
 		<definition item="Function 8 effect generated"/>
 		<definition item="Function 8 behavior"/>
 		<definition item="Function 8 options"/>
+		<definition item="Function 8 option 1"/>
+		<definition item="Function 8 option 2"/>
+		<definition item="Function 8 option 3"/>
+		<definition item="Function 8 option 4"/>
+		<definition item="Function 8 check 1"/>
+		<definition item="Function 8 check 2"/>
+		<definition item="Function 8 check 3"/>
+		<definition item="Function 8 check 4"/>
+		<definition item="Function 8 check 5"/>
 
 		<definition item="Function 9 effect generated"/>
 		<definition item="Function 10 effect generated"/>

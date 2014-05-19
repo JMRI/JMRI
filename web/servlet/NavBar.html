@@ -45,6 +45,7 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs">Layout power unknown</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>
                 <li class="dropdown context-config">
                     <a href="/config" class="dropdown-toggle" data-toggle="dropdown">Preferences <b class="caret"></b></a>
                     <ul id="navbar-config" class="dropdown-menu">
@@ -69,5 +70,20 @@ should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(
 
             </ul>
         </div><!--/.navbar-collapse -->
+    </div>
+</div>
+<div class="modal fade" id="navbar-power-modal" tabindex="-1" role="dialog" aria-labelledby="navbar-power-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="navbar-power-modal-label">Layout Power</h4>
+            </div>
+            <div class="modal-body">
+                Turn power<br class="visible-xs">
+                <button type="button" class="btn btn-success btn-lg" id="navbar-power-modal-on">On</button>
+                <button type="button" class="btn btn-danger btn-lg" id="navbar-power-modal-off">Off</button>
+            </div>
+        </div>
     </div>
 </div>

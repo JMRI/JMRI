@@ -62,7 +62,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	public CarAttributeEditFrame() {
 	}
 
-	String _comboboxName; // track which combo box is being edited
+	String _comboboxName; // used to determine which combo box is being edited
 
 	public void initComponents(String comboboxName) {
 		initComponents(comboboxName, "");

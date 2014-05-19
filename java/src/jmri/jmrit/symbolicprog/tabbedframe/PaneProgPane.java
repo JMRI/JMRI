@@ -184,7 +184,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         readPaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
                     if (container.isBusy()) {
@@ -203,7 +204,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         readPaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
                     if (container.isBusy()) {
@@ -224,7 +226,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         writePaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
                     if (container.isBusy()) {
@@ -245,7 +248,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         writePaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
                     if (container.isBusy()) {
@@ -270,7 +274,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         confirmPaneChanges();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
                     if (container.isBusy()) {
@@ -289,7 +294,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         container.getBusyGlassPane().setVisible(true);
                         confirmPaneAll();
                     }
-                } else {
+                }
+                else {
                     stopProgramming();
                     confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
                     if (container.isBusy()) {
@@ -332,7 +338,8 @@ public class PaneProgPane extends javax.swing.JPanel
             // set tooltip to explain why
             readChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
             readAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
-        } else {
+        }
+        else {
             readChangesButton.setEnabled(true);
             readAllButton.setEnabled(true);
         }
@@ -354,7 +361,8 @@ public class PaneProgPane extends javax.swing.JPanel
             // set tooltip to explain why
             confirmChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
             confirmAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipNoRead"));
-        } else {
+        }
+        else {
             confirmChangesButton.setEnabled(true);
             confirmAllButton.setEnabled(true);
         }
@@ -455,7 +463,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (stat) {
             enableReadButtons();
             enableConfirmButtons();
-        } else {
+        }
+        else {
             readChangesButton.setEnabled(stat);
             readAllButton.setEnabled(stat);
             confirmChangesButton.setEnabled(stat);
@@ -502,7 +511,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges == true) {
             readChangesButton.setEnabled(true);
             readChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             readAllButton.setSelected(true);
             readAllButton.setEnabled(true);
         }
@@ -666,7 +676,8 @@ public class PaneProgPane extends javax.swing.JPanel
         // and make the read request
         if (justChanges) {
             _programmingVar.readChanges();
-        } else {
+        }
+        else {
             _programmingVar.readAll();
         }
     }
@@ -682,7 +693,8 @@ public class PaneProgPane extends javax.swing.JPanel
         // and make the write request
         if (justChanges) {
             _programmingVar.writeChanges();
-        } else {
+        }
+        else {
             _programmingVar.writeAll();
         }
     }
@@ -884,7 +896,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges == true) {
             writeChangesButton.setEnabled(true);
             writeChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
@@ -996,7 +1009,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (justChanges) {
             confirmChangesButton.setEnabled(true);
             confirmChangesButton.setSelected(true);
-        } else {
+        }
+        else {
             confirmAllButton.setSelected(true);
             confirmAllButton.setEnabled(true);
         }
@@ -1082,7 +1096,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_programmingVar == null && _programmingCV == null&& _programmingIndexedCV == null) {
             log.warn("unexpected propertChange: "+e);
             return;
-        } else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
+        }
+        else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
                                                    +" new value: "+e.getNewValue());
 
         // find the right way to handle this
@@ -1093,13 +1108,15 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
-                } else {
+                }
+                else {
                     retry = 0;
                 }
             }
             replyWhileProgrammingVar();
             return;
-        } else if (e.getSource() == _programmingCV &&
+        }
+        else if (e.getSource() == _programmingCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
                    
@@ -1117,20 +1134,23 @@ public class PaneProgPane extends javax.swing.JPanel
             
             replyWhileProgrammingCV();
             return;
-        } else if (e.getSource() == _programmingIndexedCV &&
+        }
+        else if (e.getSource() == _programmingIndexedCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
             if (_programmingIndexedCV.getState() == VariableValue.UNKNOWN) {
                 if (retry == 0) {
                     indexedCvListIndex--;
                     retry++;
-                } else {
+                }
+                else {
                     retry = 0;
                 }
             }
             replyWhileProgrammingIndxCV();
             return;
-        } else {
+        }
+        else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy"))
                 log.debug("ignoring change of Busy "+e.getNewValue()
                           +" "+( ((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
@@ -1196,13 +1216,218 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
+     * Create a new group from the JDOM group Element
+     */
+    @SuppressWarnings("unchecked")
+	protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
+
+        // create a panel to add as a new column or row
+        final JPanel c = new JPanel();
+        panelList.add(c);
+        GridBagLayout g = new GridBagLayout();
+        GridBagConstraints cs = new GridBagConstraints();
+        c.setLayout(g);
+
+        // handle the xml definition
+        // for all elements in the column or row
+        List<Element> elemList = element.getChildren();
+        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        for (int i=0; i<elemList.size(); i++) {
+
+            Element e = (elemList.get(i));
+            String name = e.getName();
+            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            // decode the type
+            if (name.equals("display")) { // its a variable
+                                // load the variable
+                newVariable( e, c, g, cs, showStdName);
+            }
+            else if (name.equals("separator")) { // its a separator
+                JSeparator j = new JSeparator(javax.swing.SwingConstants.HORIZONTAL);
+                cs.fill = GridBagConstraints.BOTH;
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(j, cs);
+                c.add(j);
+                cs.gridwidth = 1;
+            }
+            else if (name.equals("label")) {
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                makeLabel(e, c, g, cs);
+            }
+            else if (name.equals("soundlabel")) {
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                makeSoundLabel(e, c, g, cs);
+            }
+            else if (name.equals("cvtable")) {
+                makeCvTable(cs, g, c);
+            }
+            else if (name.equals("indxcvtable")) {
+                log.debug("starting to build IndexedCvTable pane");
+                JTable indxcvTable = new JTable(_indexedCvModel);
+                JScrollPane cvScroll = new JScrollPane(indxcvTable);
+                indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+                indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+                indxcvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+                indxcvTable.setDefaultEditor(JButton.class, new ValueEditor());
+                indxcvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+                indxcvTable.setPreferredScrollableViewportSize(new Dimension(700, indxcvTable.getRowHeight()*14));
+                cvScroll.setColumnHeaderView(indxcvTable.getTableHeader());
+                // don't want a horizontal scroll bar
+                // Need to see the whole row at one time
+//                indxcvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                g.setConstraints(cvScroll, cs);
+                c.add(cvScroll);
+                cs.gridwidth = 1;
+
+                // remember which indexed CVs to read/write
+                for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" +_indexedCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indexedCvList.add(Integer.valueOf(in));
+                }
+
+                _cvTable = true;
+                log.debug("end of building IndexedCvTable pane");
+            }
+            else if (name.equals("fnmapping")) {
+                pickFnMapPanel(c, g, cs, modelElem);
+            }
+            else if (name.equals("dccaddress")) {
+                JPanel l = addDccAddressPanel(e);
+                if (l.getComponentCount() > 0) {
+                    cs.gridwidth = GridBagConstraints.REMAINDER;
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("column")) {
+                // nested "column" elements ...
+                cs.gridheight = GridBagConstraints.REMAINDER;
+                JPanel l = newColumn(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridheight = 1;
+                }
+            }
+            else if (name.equals("row")) {
+                                // nested "row" elements ...
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                JPanel l = newRow(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("grid")) {
+                                // nested "grid" elements ...
+                cs.gridwidth = GridBagConstraints.REMAINDER;
+                JPanel l = newGrid(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+                    cs.gridwidth = 1;
+                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
+                log.error("No code to handle element of type "+e.getName()+" in newColumn");
+            }
+        }
+        // add glue to the bottom to allow resize
+        if (c.getComponentCount() > 0) {
+            c.add(Box.createVerticalGlue());
+        }
+
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
+        return c;
+    }
+
+    /**
+     * Create a new grid group from the JDOM group Element
+     */
+    @SuppressWarnings("unchecked")
+	protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
+
+        // handle the xml definition
+        // for all elements in the column or row
+        List<Element> elemList = element.getChildren();
+        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        for (int i=0; i<elemList.size(); i++) {
+
+            Element e = (elemList.get(i));
+            String name = e.getName();
+            if (log.isDebugEnabled()) log.debug("newGroup processing "+name+" element");
+            // decode the type
+            if (name.equals("griditem")) {                    
+                final JPanel l = newGridItem(e, showStdName, modelElem, globs);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, globs.gridConstraints);
+                    c.add(l);
+//                     globs.gridConstraints.gridwidth = 1;
+					// handle qualification if any
+					QualifierAdder qa = new QualifierAdder() {
+						protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+							return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+						}
+						protected void addListener(java.beans.PropertyChangeListener qc) {
+							l.addPropertyChangeListener(qc);
+						}
+					};
+		
+					qa.processModifierElements(e, _varModel);
+                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                newGridGroup(e, c, g, globs, showStdName, modelElem);
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
+                log.error("No code to handle element of type "+e.getName()+" in newColumn");
+            }
+        }
+        // add glue to the bottom to allow resize
+//         if (c.getComponentCount() > 0) {
+//             c.add(Box.createVerticalGlue());
+//         }
+
+        
+    }
+
+    /**
      * Create a single column from the JDOM column Element
      */
     @SuppressWarnings("unchecked")
 	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1319,7 +1544,16 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newColumn");
             }
         }
@@ -1328,74 +1562,21 @@ public class PaneProgPane extends javax.swing.JPanel
             c.add(Box.createVerticalGlue());
         }
 
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 
-    /**
-     * Create label from Element
-     */
-    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String text = LocaleSelector.getAttribute(e,"text");
-        if (text==null || text.equals("")) text = LocaleSelector.getAttribute(e,"label"); // label subelement deprecated 3.7.5
-        final JLabel l = new JLabel(text);
-        l.setAlignmentX(1.0f);
-        cs.fill = GridBagConstraints.BOTH;
-        if (log.isDebugEnabled()) {
-            log.debug("Add label: "+l.getText()+" cs: "
-                      +cs.gridwidth+" "+cs.fill+" "
-                      +cs.gridx+" "+cs.gridy);
-        }
-        g.setConstraints(l, cs);
-        c.add(l);
-        cs.fill = GridBagConstraints.NONE;
-        cs.gridwidth = 1;
-        cs.gridheight = 1;
-        
-        // handle qualification if any
-        QualifierAdder qa = new QualifierAdder() {
-            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-            }
-            protected void addListener(java.beans.PropertyChangeListener qc) {
-                l.addPropertyChangeListener(qc);
-            }
-        };
-        
-        qa.processModifierElements(e, _varModel);
-    }
-
-    /**
-     * Create sound label from Element
-     */
-    protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num")));
-        final JLabel l = new JLabel(labelText);
-        l.setAlignmentX(1.0f);
-        cs.fill = GridBagConstraints.BOTH;
-        if (log.isDebugEnabled()) {
-            log.debug("Add soundlabel: "+l.getText()+" cs: "
-                      +cs.gridwidth+" "+cs.fill+" "
-                      +cs.gridx+" "+cs.gridy);
-        }
-        g.setConstraints(l, cs);
-        c.add(l);
-        cs.fill = GridBagConstraints.NONE;
-        cs.gridwidth = 1;
-        cs.gridheight = 1;
-        
-        // handle qualification if any
-        QualifierAdder qa = new QualifierAdder() {
-            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
-            }
-            protected void addListener(java.beans.PropertyChangeListener qc) {
-                l.addPropertyChangeListener(qc);
-            }
-        };
-        
-        qa.processModifierElements(e, _varModel);
-    }
-    
     /**
      * Create a single row from the JDOM column Element
      */
@@ -1403,7 +1584,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new column or row
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1521,7 +1702,16 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newRow");
             }
         }
@@ -1529,6 +1719,18 @@ public class PaneProgPane extends javax.swing.JPanel
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
         }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
     }
 
@@ -1536,28 +1738,79 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid from the JDOM  Element
      */
     @SuppressWarnings("unchecked")
-	public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
+    public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new grid
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         c.setLayout(g);
+        
+        GridGlobals globs = new GridGlobals();        
 
         // handle the xml definition
         // for all elements in the grid
         List<Element> elemList = element.getChildren();
-        List<Attribute> gridAttList = element.getAttributes(); // get grid-level attributes
+        globs.gridAttList = element.getAttributes(); // get grid-level attributes
         if (log.isDebugEnabled()) log.debug("newGrid starting with "+elemList.size()+" elements");
         for (int i=0; i<elemList.size(); i++) {
-            GridBagConstraints cs = new GridBagConstraints();
+            globs.gridConstraints = new GridBagConstraints();
             Element e = elemList.get(i);
             String name = e.getName();
             if (log.isDebugEnabled()) log.debug("newGrid processing "+name+" element");
             // decode the type
-            if (name.equals("griditem")) {
-                List<Attribute> itemAttList = e.getAttributes(); // get item-level attributes
-                List<Attribute> attList = new ArrayList<Attribute>(gridAttList);
+            if (name.equals("griditem")) {                    
+                JPanel l = newGridItem(e, showStdName, modelElem, globs);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, globs.gridConstraints);
+                    c.add(l);
+//                     globs.gridConstraints.gridwidth = 1;
+                }
+            }
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                newGridGroup(e, c, g, globs, showStdName, modelElem);
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
+                log.error("No code to handle element of type "+e.getName()+" in newGrid");
+            }
+        }
+        
+        // add glue to the bottom to allow resize
+        if (c.getComponentCount() > 0) {
+            c.add(Box.createVerticalGlue());
+        }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
+        return c;
+    }
+
+    class GridGlobals {
+    public int gridxCurrent = GridBagConstraints.RELATIVE;
+    public int gridyCurrent = GridBagConstraints.RELATIVE;
+    public List<Attribute> gridAttList;
+    public GridBagConstraints gridConstraints;
+    }
+
+    /**
+     * Create a griditem from the JDOM  Element
+     */
+    @SuppressWarnings("unchecked")
+	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
+
+                List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
+                List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
                 attList.addAll(itemAttList); // merge grid and item-level attributes
                 for (int j = 0; j < attList.size(); j++) {
                     Attribute attrib = attList.get(j);
@@ -1565,50 +1818,62 @@ public class PaneProgPane extends javax.swing.JPanel
                     String attribRawValue = attrib.getValue();
                     Field constraint = null;
                     String constraintType = null;
+                    if ( ( attribName.equals("gridx") || attribName.equals("gridy") ) && attribRawValue.equals("NEXT") ) {
+                        attribRawValue = "RELATIVE"; // NEXT is a synonym for Relative
+                    }
+                    if ( attribName.equals("gridx")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(globs.gridxCurrent);
+                    }
+                    if ( attribName.equals("gridy")  && attribRawValue.equals("CURRENT") ) {
+                        attribRawValue = String.valueOf(globs.gridyCurrent);
+                    }
                     try {
-                        constraint = cs.getClass().getDeclaredField(attribName);
+                        constraint = globs.gridConstraints.getClass().getDeclaredField(attribName);
                         constraintType = constraint.getType().toString();
                         constraint.setAccessible(true);
                         } catch (NoSuchFieldException ex) {
                         log.error("Unrecognised attribute \""+attribName+"\", skipping");
                         continue;
                     }
-                    if ( constraintType.equals("int")) {
+                    if ( constraintType.equals("int") ) {
                         int attribValue;
                         try {
                             attribValue = Integer.valueOf(attribRawValue);
-                            constraint.set(cs,attribValue);
+                            constraint.set(globs.gridConstraints,attribValue);
                        } catch (IllegalAccessException ey) {
                             log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
                         } catch (NumberFormatException ex) {
                             try {
-                                Field constant = cs.getClass().getDeclaredField(attribRawValue);
+                                Field constant = globs.gridConstraints.getClass().getDeclaredField(attribRawValue);
                                 constant.setAccessible(true);
                                 attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
-                                constraint.set(cs,attribValue);
+                                constraint.set(globs.gridConstraints,attribValue);
                             } catch (NoSuchFieldException ey) {
                         log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                             } catch (IllegalAccessException ey) {
                             log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
                             }
                         }
-                    } else if ( constraintType.equals("double")) {
+                    }
+                    else if ( constraintType.equals("double") ) {
                         double attribValue;
                         try {
                             attribValue = Double.valueOf(attribRawValue);
-                            constraint.set(cs,attribValue);
+                            constraint.set(globs.gridConstraints,attribValue);
                        } catch (IllegalAccessException ey) {
                             log.error("Unable to set constraint \""+attribName+". IllegalAccessException error thrown.");
                         } catch (NumberFormatException ex) {
                             log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                         }
-                    } else if ( constraintType.equals("class java.awt.Insets")) {
+                    }
+                    else if ( constraintType.equals("class java.awt.Insets") ) {
                         try {
                             String[] insetStrings = attribRawValue.split(",");
                             if ( insetStrings.length == 4) {
                                 Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]),Integer.valueOf(insetStrings[1]),Integer.valueOf(insetStrings[2]),Integer.valueOf(insetStrings[3]));
-                                constraint.set(cs,attribValue);
-                            } else {
+                                constraint.set(globs.gridConstraints,attribValue);
+                            }
+                            else {
                                 log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                                 log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                             }
@@ -1618,37 +1883,16 @@ public class PaneProgPane extends javax.swing.JPanel
                             log.error("Invalid value \""+attribRawValue+"\" for attribute \""+attribName+"\"");
                             log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                         }
-                    } else {
+                    }
+                    else {
                         log.error("Required \""+constraintType+"\" handler for attribute \""+attribName+"\" not defined in JMRI code");
                         log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
                     }
                 }
-                JPanel l = newGridItem(e, showStdName, modelElem);
-                if (l.getComponentCount() > 0) {
-                    panelList.add(l);
-                    g.setConstraints(l, cs);
-                    c.add(l);
-                    cs.gridwidth = 1;
-                }
-            } else { // its a mistake
-                log.error("No code to handle element of type "+e.getName()+" in newGrid");
-            }
-        }
-        // add glue to the bottom to allow resize
-        if (c.getComponentCount() > 0) {
-            c.add(Box.createVerticalGlue());
-        }
-        return c;
-    }
 
-    /**
-     * Create a grid from the JDOM  Element
-     */
-    @SuppressWarnings("unchecked")
-	public JPanel newGridItem(Element element, boolean showStdName, Element modelElem) {
 
         // create a panel to add as a new grid item
-        JPanel c = new JPanel();
+        final JPanel c = new JPanel();
         panelList.add(c);
         GridBagLayout g = new GridBagLayout();
         GridBagConstraints cs = new GridBagConstraints();
@@ -1766,15 +2010,115 @@ public class PaneProgPane extends javax.swing.JPanel
                     cs.gridwidth = 1;
                 }
             }
-            else { // its a mistake
+            else if (name.equals("group")) {
+                                // nested "group" elements ...
+                JPanel l = newGroup(e, showStdName, modelElem);
+                if (l.getComponentCount() > 0) {
+                    panelList.add(l);
+                    g.setConstraints(l, cs);
+                    c.add(l);
+            }
+            }
+            else if (!name.equals("qualifier")) { // its a mistake
                 log.error("No code to handle element of type "+e.getName()+" in newGridItem");
             }
         }
+
+                if ( globs.gridConstraints.gridx == GridBagConstraints.RELATIVE ){
+                    globs.gridxCurrent++;
+                }
+                else {
+                    globs.gridxCurrent = globs.gridConstraints.gridx;
+                }
+                if ( globs.gridConstraints.gridy == GridBagConstraints.RELATIVE ){
+                    globs.gridyCurrent++;
+                }
+                else {
+                globs.gridyCurrent = globs.gridConstraints.gridy;
+                }
+
         // add glue to the bottom to allow resize
         if (c.getComponentCount() > 0) {
             c.add(Box.createVerticalGlue());
         }
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                c.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(element, _varModel);
         return c;
+    }
+
+    /**
+     * Create label from Element
+     */
+    protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        String text = LocaleSelector.getAttribute(e,"text");
+        if (text==null || text.equals("")) text = LocaleSelector.getAttribute(e,"label"); // label subelement deprecated 3.7.5
+        final JLabel l = new JLabel(text);
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add label: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
+    }
+
+    /**
+     * Create sound label from Element
+     */
+    protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
+        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e,"num")));
+        final JLabel l = new JLabel(labelText);
+        l.setAlignmentX(1.0f);
+        cs.fill = GridBagConstraints.BOTH;
+        if (log.isDebugEnabled()) {
+            log.debug("Add soundlabel: "+l.getText()+" cs: "
+                      +cs.gridwidth+" "+cs.fill+" "
+                      +cs.gridx+" "+cs.gridy);
+        }
+        g.setConstraints(l, cs);
+        c.add(l);
+        cs.fill = GridBagConstraints.NONE;
+        cs.gridwidth = 1;
+        cs.gridheight = 1;
+        
+        // handle qualification if any
+        QualifierAdder qa = new QualifierAdder() {
+            protected Qualifier createQualifier(VariableValue var, String relation, String value) {
+                return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
+            }
+            protected void addListener(java.beans.PropertyChangeListener qc) {
+                l.addPropertyChangeListener(qc);
+            }
+        };
+        
+        qa.processModifierElements(e, _varModel);
     }
 
     void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
@@ -1842,12 +2186,14 @@ public class PaneProgPane extends javax.swing.JPanel
         catch (Exception ex) {log.error("error handling decoder's extFnsESU value");}        
         if (extFnsESU) {
             FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry);
+//             FnMapPanelESU l = new FnMapPanelESU(_varModel, varList, modelElem, rosterEntry, _cvModel);
             fnMapListESU.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
             g.setConstraints(l, cs);
             c.add(l);
             cs.gridwidth = 1;
-        } else {
+        }
+        else {
             FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
             fnMapList.add(l); // remember for deletion
             cs.gridwidth = GridBagConstraints.REMAINDER;
@@ -1909,7 +2255,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(rep, cs);
             col.add(rep);
 
-        } else if (layout.equals("right")) {
+        }
+        else if (layout.equals("right")) {
             cs.anchor= GridBagConstraints.EAST;
             g.setConstraints(rep, cs);
             col.add(rep);
@@ -1919,7 +2266,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             col.add(l);
 
-        } else if (layout.equals("below")) {
+        }
+        else if (layout.equals("below")) {
             // variable in center of upper line
             cs.anchor=GridBagConstraints.CENTER;
             g.setConstraints(rep, cs);
@@ -1931,7 +2279,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(l, cs);
             col.add(l);
 
-        } else if (layout.equals("above")) {
+        }
+        else if (layout.equals("above")) {
             // label aligned like others
             cs.anchor= GridBagConstraints.WEST;
             g.setConstraints(l, cs);
@@ -1943,7 +2292,8 @@ public class PaneProgPane extends javax.swing.JPanel
             g.setConstraints(rep, cs);
             col.add(rep);
 
-        } else {
+        }
+        else {
             log.error("layout internally inconsistent: "+layout);
             return;
         }
@@ -2025,16 +2375,19 @@ public class PaneProgPane extends javax.swing.JPanel
             if ( mask.contains("V")) {
                 if ( mask.indexOf('V') == mask.lastIndexOf('V') ) {
                     descString = descString+" bit "+(lastBit-mask.indexOf('V'));
-                } else {
+                }
+                else {
                     descString = descString+" bits ";
                     for (int i = 0; i <= lastBit; i++) {
                         char descStringLastChar = descString.charAt(descString.length()-1);
                         if ( mask.charAt(lastBit-i) == 'V' ) {
                             if (descStringLastChar == ' ') {
                                 descString = descString+i;
-                            } else if (lastV == (i-1)) {
+                            }
+                            else if (lastV == (i-1)) {
                                 if (descStringLastChar != '-') descString = descString+"-";
-                            } else {
+                            }
+                            else {
                                 descString = descString+","+i;
                             }
                             lastV = i;
@@ -2045,7 +2398,8 @@ public class PaneProgPane extends javax.swing.JPanel
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 descString = descString+" no bits";
             }
             log.debug(descString+" Mask:"+mask);
@@ -2056,10 +2410,12 @@ public class PaneProgPane extends javax.swing.JPanel
         if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
             if (toolTip == null) {
                 toolTip = descString;
-            } else {
+            }
+            else {
                 toolTip = toolTip+" ("+descString+")";
             }
-        } else {
+        }
+        else {
             if (toolTip == null)
                 toolTip = "";
         }

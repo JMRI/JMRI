@@ -36,640 +36,872 @@
       <variable CV="7" readOnly="yes" item="Decoder Version" default="80">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="de">Decoder Version</label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="de">Manufacturer</label>
       </variable>
       <variable item="Manufacturer ID - Reset" CV="8">
         <decVal/>
         <label>Manufacturer ID - Reset</label>
+        <label xml:lang="de">Manufacturer ID - Reset</label>
       </variable>
       <variable CV="19" mask="XVVVVVVV" item="Consist Address">
         <decVal/>
         <label>Consist Address</label>
+        <label xml:lang="de">Consist Address</label>
       </variable>
       <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
+            <choice xml:lang="de">Normal</choice>
           </enumChoice>
           <enumChoice choice="Reversed">
             <choice>Reversed</choice>
+            <choice xml:lang="de">Reversed</choice>
           </enumChoice>
         </enumVal>
         <label>Consist Direction</label>
+        <label xml:lang="de">Consist Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
+            <choice xml:lang="de">Forward</choice>
           </enumChoice>
           <enumChoice choice="Reverse">
             <choice>Reverse</choice>
+            <choice xml:lang="de">Reverse</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
+        <label xml:lang="de">Locomotive Direction</label>
       </variable>
       <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
+            <choice xml:lang="de">14</choice>
           </enumChoice>
           <enumChoice choice="28/128 (recommended)">
             <choice>28/128 (recommended)</choice>
+            <choice xml:lang="de">28/128 (recommended)</choice>
           </enumChoice>
         </enumVal>
         <label>Speed Steps</label>
+        <label xml:lang="de">Speed Step Mode</label>
       </variable>
       <variable CV="33" mask="XXXXVXXX" item="FL(f) controls output 1" default="1" minOut="1" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output A</label>
+        <label xml:lang="de">FL(f) controls output 1</label>
       </variable>
       <variable CV="34" mask="XXXXVXXX" item="FL(r) controls output 1" minOut="1" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output A</label>
+        <label xml:lang="de">FL(r) controls output 1</label>
       </variable>
       <variable CV="35" mask="XXXXVXXX" item="F1 controls output 1" minOut="1" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output A</label>
+        <label xml:lang="de">F1 controls output 1</label>
       </variable>
       <variable CV="36" mask="XXXXVXXX" item="F2 controls output 1" minOut="1" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output A</label>
+        <label xml:lang="de">F2 controls output 1</label>
       </variable>
       <variable CV="37" mask="XXXXVXXX" item="F3 controls output 1" minOut="1" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output A</label>
+        <label xml:lang="de">F3 controls output 1</label>
       </variable>
       <variable CV="38" mask="XXXXXXXV" item="F4 controls output 1" minOut="1" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output A</label>
+        <label xml:lang="de">F4 controls output 1</label>
       </variable>
       <variable CV="39" mask="XXXXXXXV" item="F5 controls output 1" minOut="1" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output A</label>
+        <label xml:lang="de">F5 controls output 1</label>
       </variable>
       <variable CV="40" mask="XXXXXXXV" item="F6 controls output 1" minOut="1" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output A</label>
+        <label xml:lang="de">F6 controls output 1</label>
       </variable>
       <variable CV="41" mask="XXXXXXXV" item="F7 controls output 1" minOut="1" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output A</label>
+        <label xml:lang="de">F7 controls output 1</label>
       </variable>
       <variable CV="42" mask="XXXXXXXV" item="F8 controls output 1" minOut="1" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output A</label>
+        <label xml:lang="de">F8 controls output 1</label>
       </variable>
       <variable CV="33" mask="XXXVXXXX" item="FL(f) controls output 2" minOut="2" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output B</label>
+        <label xml:lang="de">FL(f) controls output 2</label>
       </variable>
       <variable CV="34" mask="XXXVXXXX" item="FL(r) controls output 2" default="1" minOut="2" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output B</label>
+        <label xml:lang="de">FL(r) controls output 2</label>
       </variable>
       <variable CV="35" mask="XXXVXXXX" item="F1 controls output 2" minOut="2" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output B</label>
+        <label xml:lang="de">F1 controls output 2</label>
       </variable>
       <variable CV="36" mask="XXXVXXXX" item="F2 controls output 2" minOut="2" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output B</label>
+        <label xml:lang="de">F2 controls output 2</label>
       </variable>
       <variable CV="37" mask="XXXVXXXX" item="F3 controls output 2" minOut="2" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output B</label>
+        <label xml:lang="de">F3 controls output 2</label>
       </variable>
       <variable CV="38" mask="XXXXXXVX" item="F4 controls output 2" minOut="2" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output B</label>
+        <label xml:lang="de">F4 controls output 2</label>
       </variable>
       <variable CV="39" mask="XXXXXXVX" item="F5 controls output 2" minOut="2" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output B</label>
+        <label xml:lang="de">F5 controls output 2</label>
       </variable>
       <variable CV="40" mask="XXXXXXVX" item="F6 controls output 2" minOut="2" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output B</label>
+        <label xml:lang="de">F6 controls output 2</label>
       </variable>
       <variable CV="41" mask="XXXXXXVX" item="F7 controls output 2" minOut="2" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output B</label>
+        <label xml:lang="de">F7 controls output 2</label>
       </variable>
       <variable CV="42" mask="XXXXXXVX" item="F8 controls output 2" minOut="2" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output B</label>
+        <label xml:lang="de">F8 controls output 2</label>
       </variable>
       <variable CV="33" mask="XXVXXXXX" item="FL(f) controls output 3" minOut="3" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output C</label>
+        <label xml:lang="de">FL(f) controls output 3</label>
       </variable>
       <variable CV="34" mask="XXVXXXXX" item="FL(r) controls output 3" minOut="3" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output C</label>
+        <label xml:lang="de">FL(r) controls output 3</label>
       </variable>
       <variable CV="35" mask="XXVXXXXX" item="F1 controls output 3" default="1" minOut="3" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output C</label>
+        <label xml:lang="de">F1 controls output 3</label>
       </variable>
       <variable CV="36" mask="XXVXXXXX" item="F2 controls output 3" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output C</label>
+        <label xml:lang="de">F2 controls output 3</label>
       </variable>
       <variable CV="37" mask="XXVXXXXX" item="F3 controls output 3" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output C</label>
+        <label xml:lang="de">F3 controls output 3</label>
       </variable>
       <variable CV="38" mask="XXXXXVXX" item="F4 controls output 3" minOut="3" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output C</label>
+        <label xml:lang="de">F4 controls output 3</label>
       </variable>
       <variable CV="39" mask="XXXXXVXX" item="F5 controls output 3" minOut="3" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output C</label>
+        <label xml:lang="de">F5 controls output 3</label>
       </variable>
       <variable CV="40" mask="XXXXXVXX" item="F6 controls output 3" minOut="3" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output C</label>
+        <label xml:lang="de">F6 controls output 3</label>
       </variable>
       <variable CV="41" mask="XXXXXVXX" item="F7 controls output 3" minOut="3" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output C</label>
+        <label xml:lang="de">F7 controls output 3</label>
       </variable>
       <variable CV="42" mask="XXXXXVXX" item="F8 controls output 3" minOut="3" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output C</label>
+        <label xml:lang="de">F8 controls output 3</label>
       </variable>
       <variable CV="33" mask="XVXXXXXX" item="FL(f) controls output 4" minOut="4" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output D</label>
+        <label xml:lang="de">FL(f) controls output 4</label>
       </variable>
       <variable CV="34" mask="XVXXXXXX" item="FL(r) controls output 4" minOut="4" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output D</label>
+        <label xml:lang="de">FL(r) controls output 4</label>
       </variable>
       <variable CV="35" mask="XVXXXXXX" item="F1 controls output 4" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output D</label>
+        <label xml:lang="de">F1 controls output 4</label>
       </variable>
       <variable CV="36" mask="XVXXXXXX" item="F2 controls output 4" default="1" minOut="4" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output D</label>
+        <label xml:lang="de">F2 controls output 4</label>
       </variable>
       <variable CV="37" mask="XVXXXXXX" item="F3 controls output 4" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output D</label>
+        <label xml:lang="de">F3 controls output 4</label>
       </variable>
       <variable CV="38" mask="XXXXVXXX" item="F4 controls output 4" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output D</label>
+        <label xml:lang="de">F4 controls output 4</label>
       </variable>
       <variable CV="39" mask="XXXXVXXX" item="F5 controls output 4" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output D</label>
+        <label xml:lang="de">F5 controls output 4</label>
       </variable>
       <variable CV="40" mask="XXXXVXXX" item="F6 controls output 4" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output D</label>
+        <label xml:lang="de">F6 controls output 4</label>
       </variable>
       <variable CV="41" mask="XXXXVXXX" item="F7 controls output 4" minOut="4" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output D</label>
+        <label xml:lang="de">F7 controls output 4</label>
       </variable>
       <variable CV="42" mask="XXXXVXXX" item="F8 controls output 4" minOut="4" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output D</label>
+        <label xml:lang="de">F8 controls output 4</label>
       </variable>
       <variable CV="43" mask="XXXXXXXV" item="F9 controls output 4" minOut="4" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output D</label>
+        <label xml:lang="de">F9 controls output 4</label>
       </variable>
       <variable CV="44" mask="XXXXXXXV" item="F10 controls output 4" minOut="4" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output D</label>
+        <label xml:lang="de">F10 controls output 4</label>
       </variable>
       <variable CV="45" mask="XXXXXXXV" item="F11 controls output 4" minOut="4" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output D</label>
+        <label xml:lang="de">F11 controls output 4</label>
       </variable>
       <variable CV="46" mask="XXXXXXXV" item="F12 controls output 4" minOut="4" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output D</label>
+        <label xml:lang="de">F12 controls output 4</label>
       </variable>
       <variable CV="33" mask="VXXXXXXX" item="FL(f) controls output 5" minOut="5" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(f) controls output E</label>
+        <label xml:lang="de">FL(f) controls output 5</label>
       </variable>
       <variable CV="34" mask="VXXXXXXX" item="FL(r) controls output 5" minOut="5" minFn="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F0(r) controls output E</label>
+        <label xml:lang="de">FL(r) controls output 5</label>
       </variable>
       <variable CV="35" mask="VXXXXXXX" item="F1 controls output 5" minOut="5" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output E</label>
+        <label xml:lang="de">F1 controls output 5</label>
       </variable>
       <variable CV="36" mask="VXXXXXXX" item="F2 controls output 5" minOut="5" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output E</label>
+        <label xml:lang="de">F2 controls output 5</label>
       </variable>
       <variable CV="37" mask="VXXXXXXX" item="F3 controls output 5" minOut="5" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output E</label>
+        <label xml:lang="de">F3 controls output 5</label>
       </variable>
       <variable CV="38" mask="XXXVXXXX" item="F4 controls output 5" minOut="5" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output E</label>
+        <label xml:lang="de">F4 controls output 5</label>
       </variable>
       <variable CV="39" mask="XXXVXXXX" item="F5 controls output 5" minOut="5" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output E</label>
+        <label xml:lang="de">F5 controls output 5</label>
       </variable>
       <variable CV="40" mask="XXXVXXXX" item="F6 controls output 5" minOut="5" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output E</label>
+        <label xml:lang="de">F6 controls output 5</label>
       </variable>
       <variable CV="41" mask="XXXVXXXX" item="F7 controls output 5" minOut="5" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output E</label>
+        <label xml:lang="de">F7 controls output 5</label>
       </variable>
       <variable CV="42" mask="XXXVXXXX" item="F8 controls output 5" minOut="5" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output E</label>
+        <label xml:lang="de">F8 controls output 5</label>
       </variable>
       <variable CV="43" mask="XXXXXXVX" item="F9 controls output 5" minOut="5" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output E</label>
+        <label xml:lang="de">F9 controls output 5</label>
       </variable>
       <variable CV="44" mask="XXXXXXVX" item="F10 controls output 5" minOut="5" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output E</label>
+        <label xml:lang="de">F10 controls output 5</label>
       </variable>
       <variable CV="45" mask="XXXXXXVX" item="F11 controls output 5" minOut="5" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output E</label>
+        <label xml:lang="de">F11 controls output 5</label>
       </variable>
       <variable CV="46" mask="XXXXXXVX" item="F12 controls output 5" minOut="5" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output E</label>
+        <label xml:lang="de">F12 controls output 5</label>
       </variable>
       <variable CV="38" mask="XXVXXXXX" item="F4 controls output 6" minOut="6" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output F</label>
+        <label xml:lang="de">F4 controls output 6</label>
       </variable>
       <variable CV="39" mask="XXVXXXXX" item="F5 controls output 6" minOut="6" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output F</label>
+        <label xml:lang="de">F5 controls output 6</label>
       </variable>
       <variable CV="40" mask="XXVXXXXX" item="F6 controls output 6" minOut="6" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output F</label>
+        <label xml:lang="de">F6 controls output 6</label>
       </variable>
       <variable CV="41" mask="XXVXXXXX" item="F7 controls output 6" minOut="6" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output F</label>
+        <label xml:lang="de">F7 controls output 6</label>
       </variable>
       <variable CV="42" mask="XXVXXXXX" item="F8 controls output 6" minOut="6" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output F</label>
+        <label xml:lang="de">F8 controls output 6</label>
       </variable>
       <variable CV="43" mask="XXXXXVXX" item="F9 controls output 6" minOut="6" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output F</label>
+        <label xml:lang="de">F9 controls output 6</label>
       </variable>
       <variable CV="44" mask="XXXXXVXX" item="F10 controls output 6" minOut="6" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F10 controls output F</label>
+        <label xml:lang="de">F10 controls output 6</label>
       </variable>
       <variable CV="45" mask="XXXXXVXX" item="F11 controls output 6" minOut="6" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F11 controls output F</label>
+        <label xml:lang="de">F11 controls output 6</label>
       </variable>
       <variable CV="46" mask="XXXXXVXX" item="F12 controls output 6" minOut="6" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output F</label>
+        <label xml:lang="de">F12 controls output 6</label>
       </variable>
       <variable CV="49" item="Directional headlights" comment="output A" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-YesNo.xml"/>
         <label>Headlights reverse polarity with direction</label>
         <comment>output A</comment>
+        <label xml:lang="de">Directional headlights</label>
+        <comment xml:lang="de">output A</comment>
       </variable>
       <variable item="Output A dim intensity" CV="50" default="255" comment="Controls how much Output B dims (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>
         <label>Output A dim intensity</label>
         <comment>Controls how much Output B dims (0-dark to 255-max bright)</comment>
+        <label xml:lang="de">Output A dim intensity</label>
+        <comment xml:lang="de">Controls how much Output B dims (0-dark to 255-max bright)</comment>
       </variable>
       <variable item="Output B dim intensity" CV="51" default="255" comment="Controls how much Output C dims (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>
         <label>Output B dim intensity</label>
         <comment>Controls how much Output C dims (0-dark to 255-max bright)</comment>
+        <label xml:lang="de">Output B dim intensity</label>
+        <comment xml:lang="de">Controls how much Output C dims (0-dark to 255-max bright)</comment>
       </variable>
       <variable item="Output C dim intensity" CV="52" default="255" comment="Controls how much Output D dims (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>
         <label>Output C dim intensity</label>
         <comment>Controls how much Output D dims (0-dark to 255-max bright)</comment>
+        <label xml:lang="de">Output C dim intensity</label>
+        <comment xml:lang="de">Controls how much Output D dims (0-dark to 255-max bright)</comment>
       </variable>
       <variable item="Output D dim intensity" CV="53" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)">
         <decVal min="0" max="255"/>
         <label>Output D dim intensity</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
+        <label xml:lang="de">Output D dim intensity</label>
+        <comment xml:lang="de">Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
       <variable item="Enable output A dimming with F1" CV="54" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F1</label>
+        <label xml:lang="de">Enable output A dimming with F1</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F1</tooltip>
       </variable>
       <variable item="Enable output A dimming with F2" CV="54" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F2</label>
+        <label xml:lang="de">Enable output A dimming with F2</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F2</tooltip>
       </variable>
       <variable item="Enable output A dimming with F3" CV="54" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F3</label>
+        <label xml:lang="de">Enable output A dimming with F3</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F3</tooltip>
       </variable>
       <variable item="Enable output A dimming with F4" CV="54" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F4</label>
+        <label xml:lang="de">Enable output A dimming with F4</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F4</tooltip>
       </variable>
       <variable item="Enable output A dimming with F5" CV="54" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F5</label>
+        <label xml:lang="de">Enable output A dimming with F5</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F5</tooltip>
       </variable>
       <variable item="Enable output A dimming with F6" CV="54" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F6</label>
+        <label xml:lang="de">Enable output A dimming with F6</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F6</tooltip>
       </variable>
       <variable item="Enable output A dimming with F7" CV="54" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F7</label>
+        <label xml:lang="de">Enable output A dimming with F7</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F7</tooltip>
       </variable>
       <variable item="Enable output A dimming with F8" CV="54" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output A dimming with F8</label>
+        <label xml:lang="de">Enable output A dimming with F8</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F8</tooltip>
       </variable>
       <variable item="Enable output B dimming with F1" CV="55" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F1</label>
+        <label xml:lang="de">Enable output B dimming with F1</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F1</tooltip>
       </variable>
       <variable item="Enable output B dimming with F2" CV="55" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F2</label>
+        <label xml:lang="de">Enable output B dimming with F2</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F2</tooltip>
       </variable>
       <variable item="Enable output B dimming with F3" CV="55" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F3</label>
+        <label xml:lang="de">Enable output B dimming with F3</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F3</tooltip>
       </variable>
       <variable item="Enable output B dimming with F4" CV="55" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F4</label>
+        <label xml:lang="de">Enable output B dimming with F4</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F4</tooltip>
       </variable>
       <variable item="Enable output B dimming with F5" CV="55" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F5</label>
+        <label xml:lang="de">Enable output B dimming with F5</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F5</tooltip>
       </variable>
       <variable item="Enable output B dimming with F6" CV="55" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F6</label>
+        <label xml:lang="de">Enable output B dimming with F6</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F6</tooltip>
       </variable>
       <variable item="Enable output B dimming with F7" CV="55" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F7</label>
+        <label xml:lang="de">Enable output B dimming with F7</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F7</tooltip>
       </variable>
       <variable item="Enable output B dimming with F8" CV="55" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output B dimming with F8</label>
+        <label xml:lang="de">Enable output B dimming with F8</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F8</tooltip>
       </variable>
       <variable item="Enable output C dimming with F1" CV="56" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F1</label>
+        <label xml:lang="de">Enable output C dimming with F1</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F1</tooltip>
       </variable>
       <variable item="Enable output C dimming with F2" CV="56" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F2</label>
+        <label xml:lang="de">Enable output C dimming with F2</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F2</tooltip>
       </variable>
       <variable item="Enable output C dimming with F3" CV="56" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F3</label>
+        <label xml:lang="de">Enable output C dimming with F3</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F3</tooltip>
       </variable>
       <variable item="Enable output C dimming with F4" CV="56" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F4</label>
+        <label xml:lang="de">Enable output C dimming with F4</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F4</tooltip>
       </variable>
       <variable item="Enable output C dimming with F5" CV="56" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F5</label>
+        <label xml:lang="de">Enable output C dimming with F5</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F5</tooltip>
       </variable>
       <variable item="Enable output C dimming with F6" CV="56" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F6</label>
+        <label xml:lang="de">Enable output C dimming with F6</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F6</tooltip>
       </variable>
       <variable item="Enable output C dimming with F7" CV="56" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F7</label>
+        <label xml:lang="de">Enable output C dimming with F7</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F7</tooltip>
       </variable>
       <variable item="Enable output C dimming with F8" CV="56" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output C dimming with F8</label>
+        <label xml:lang="de">Enable output C dimming with F8</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F8</tooltip>
       </variable>
       <variable item="Enable output D dimming with F1" CV="57" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F1</label>
+        <label xml:lang="de">Enable output D dimming with F1</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F1</tooltip>
       </variable>
       <variable item="Enable output D dimming with F2" CV="57" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F2</label>
+        <label xml:lang="de">Enable output D dimming with F2</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F2</tooltip>
       </variable>
       <variable item="Enable output D dimming with F3" CV="57" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F3</label>
+        <label xml:lang="de">Enable output D dimming with F3</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F3</tooltip>
       </variable>
       <variable item="Enable output D dimming with F4" CV="57" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F4</label>
+        <label xml:lang="de">Enable output D dimming with F4</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F4</tooltip>
       </variable>
       <variable item="Enable output D dimming with F5" CV="57" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F5</label>
+        <label xml:lang="de">Enable output D dimming with F5</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F5</tooltip>
       </variable>
       <variable item="Enable output D dimming with F6" CV="57" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F6</label>
+        <label xml:lang="de">Enable output D dimming with F6</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F6</tooltip>
       </variable>
       <variable item="Enable output D dimming with F7" CV="57" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F7</label>
+        <label xml:lang="de">Enable output D dimming with F7</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F7</tooltip>
       </variable>
       <variable item="Enable output D dimming with F8" CV="57" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable output D dimming with F8</label>
+        <label xml:lang="de">Enable output D dimming with F8</label>
+        <tooltip xml:lang="de">Toggle light dimming 'on' using F8</tooltip>
       </variable>
       <variable CV="58" item="Lighting effects A/B" default="0" comment="Range 0-44">
         <decVal min="0" max="44"/>
         <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
         <comment>Range 0-44</comment>
+        <label xml:lang="de">Lighting effects A/B</label>
+        <comment xml:lang="de">Range 0-44</comment>
       </variable>
       <variable CV="59" minOut="4" item="Lighting effects C/D" default="0" comment="Range 0-42">
         <decVal min="0" max="42"/>
         <label>Enter the value corresponding to the desired lighting effect for D/C outputs (0-42) </label>
         <comment>Range 0-42</comment>
+        <label xml:lang="de">Lighting effects C/D</label>
+        <comment xml:lang="de">Range 0-42</comment>
       </variable>
       <variable item="Toggle effect (output A) with F1" CV="60" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for output A 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F1</label>
+        <label xml:lang="de">Toggle effect (output A) with F1</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F1</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F2" CV="60" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for output A 'off' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F2</label>
+        <label xml:lang="de">Toggle effect (output A) with F2</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F2</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F3" CV="60" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for output A 'off' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F3</label>
+        <label xml:lang="de">Toggle effect (output A) with F3</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F3</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F4" CV="60" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for output A 'off' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F4</label>
+        <label xml:lang="de">Toggle effect (output A) with F4</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F4</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F5" CV="60" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for output A 'off' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F5</label>
+        <label xml:lang="de">Toggle effect (output A) with F5</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F5</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F6" CV="60" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for output A 'off' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F6</label>
+        <label xml:lang="de">Toggle effect (output A) with F6</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F6</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F7" CV="60" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for output A 'off' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F7</label>
+        <label xml:lang="de">Toggle effect (output A) with F7</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F7</tooltip>
       </variable>
       <variable item="Toggle effect (output A) with F8" CV="60" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for output A 'off' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output A) with F8</label>
+        <label xml:lang="de">Toggle effect (output A) with F8</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output A 'off' using F8</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F1" CV="61" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for output B 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F1</label>
+        <label xml:lang="de">Toggle effect (output B) with F1</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F1</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F2" CV="61" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for output B 'off' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F2</label>
+        <label xml:lang="de">Toggle effect (output B) with F2</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F2</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F3" CV="61" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for output B 'off' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F3</label>
+        <label xml:lang="de">Toggle effect (output B) with F3</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F3</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F4" CV="61" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for output B 'off' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F4</label>
+        <label xml:lang="de">Toggle effect (output B) with F4</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F4</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F5" CV="61" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for output B 'off' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F5</label>
+        <label xml:lang="de">Toggle effect (output B) with F5</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F5</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F6" CV="61" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for output B 'off' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F6</label>
+        <label xml:lang="de">Toggle effect (output B) with F6</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F6</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F7" CV="61" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for output B 'off' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F7</label>
+        <label xml:lang="de">Toggle effect (output B) with F7</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F7</tooltip>
       </variable>
       <variable item="Toggle effect (output B) with F8" CV="61" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for output B 'off' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output B) with F8</label>
+        <label xml:lang="de">Toggle effect (output B) with F8</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output B 'off' using F8</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F1" CV="62" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for output C 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F1</label>
+        <label xml:lang="de">Toggle effect (output C) with F1</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F1</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F2" CV="62" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for output C 'off' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F2</label>
+        <label xml:lang="de">Toggle effect (output C) with F2</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F2</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F3" CV="62" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for output C 'off' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F3</label>
+        <label xml:lang="de">Toggle effect (output C) with F3</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F3</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F4" CV="62" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for output C 'off' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F4</label>
+        <label xml:lang="de">Toggle effect (output C) with F4</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F4</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F5" CV="62" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for output C 'off' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F5</label>
+        <label xml:lang="de">Toggle effect (output C) with F5</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F5</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F6" CV="62" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for output C 'off' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F6</label>
+        <label xml:lang="de">Toggle effect (output C) with F6</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F6</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F7" CV="62" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for output C 'off' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F7</label>
+        <label xml:lang="de">Toggle effect (output C) with F7</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F7</tooltip>
       </variable>
       <variable item="Toggle effect (output C) with F8" CV="62" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for output C 'off' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output C) with F8</label>
+        <label xml:lang="de">Toggle effect (output C) with F8</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output C 'off' using F8</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F1" CV="63" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for output D 'off' using F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F1</label>
+        <label xml:lang="de">Toggle effect (output D) with F1</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F1</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F2" CV="63" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for output D 'off' using F2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F2</label>
+        <label xml:lang="de">Toggle effect (output D) with F2</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F2</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F3" CV="63" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for output D 'off' using F3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F3</label>
+        <label xml:lang="de">Toggle effect (output D) with F3</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F3</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F4" CV="63" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for output D 'off' using F4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F4</label>
+        <label xml:lang="de">Toggle effect (output D) with F4</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F4</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F5" CV="63" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for output D 'off' using F5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F5</label>
+        <label xml:lang="de">Toggle effect (output D) with F5</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F5</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F6" CV="63" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for output D 'off' using F6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F6</label>
+        <label xml:lang="de">Toggle effect (output D) with F6</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F6</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F7" CV="63" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for output D 'off' using F7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F7</label>
+        <label xml:lang="de">Toggle effect (output D) with F7</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F7</tooltip>
       </variable>
       <variable item="Toggle effect (output D) with F8" CV="63" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for output D 'off' using F8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle effect (output D) with F8</label>
+        <label xml:lang="de">Toggle effect (output D) with F8</label>
+        <tooltip xml:lang="de">Toggle Lighting Effect for output D 'off' using F8</tooltip>
       </variable>
       <variable CV="64" minOut="4" tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))" item="Function 3 options" default="32" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
         <comment>Range 0-255</comment>
+        <label xml:lang="de">Function 3 options</label>
+        <comment xml:lang="de">Range 0-255</comment>
+        <tooltip xml:lang="de">Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))</tooltip>
       </variable>
       <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>
+        <label xml:lang="de">User Id #1</label>
       </variable>
       <variable CV="106" item="User Id #2">
         <decVal/>
         <label>User Private ID #2</label>
+        <label xml:lang="de">User Id #2</label>
       </variable>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="1">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
+        <label xml:lang="de">Decoder Software Version</label>
       </variable>
     </variables>
   </decoder>
   <pane>
+    <name>Lenz</name>
+    <name xml:lang="de">Lenz</name>
     <column>
       <label>
         <text> </text>
       </label>
       <label>
         <text>Select which function enables</text>
+        <text xml:lang="de">Select which function enables</text>
       </label>
       <label>
         <text>light dimming for outputs A-D:</text>
+        <text xml:lang="de">light dimming for outputs A-D:</text>
       </label>
       <label>
         <text> </text>
@@ -678,6 +910,7 @@
         <column>
           <label>
             <text>                        A</text>
+            <text xml:lang="de">                        A</text>
           </label>
           <display item="Enable output A dimming with F1" format="checkbox" label="Function 1 ">
             <label>Function 1 </label>
@@ -707,6 +940,7 @@
         <column>
           <label>
             <text>       B</text>
+            <text xml:lang="de">       B</text>
           </label>
           <display item="Enable output B dimming with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -736,6 +970,7 @@
         <column>
           <label>
             <text>       C</text>
+            <text xml:lang="de">       C</text>
           </label>
           <display item="Enable output C dimming with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -765,6 +1000,7 @@
         <column>
           <label>
             <text>       D</text>
+            <text xml:lang="de">       D</text>
           </label>
           <display item="Enable output D dimming with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -815,9 +1051,11 @@
       </label>
       <label>
         <text>Select which function enables</text>
+        <text xml:lang="de">Select which function enables</text>
       </label>
       <label>
         <text>toggling of effects for outputs A-D:</text>
+        <text xml:lang="de">toggling of effects for outputs A-D:</text>
       </label>
       <label>
         <text> </text>
@@ -826,6 +1064,7 @@
         <column>
           <label>
             <text>                        A</text>
+            <text xml:lang="de">                        A</text>
           </label>
           <display item="Toggle effect (output A) with F1" format="checkbox" label="Function 1 ">
             <label>Function 1 </label>
@@ -855,6 +1094,7 @@
         <column>
           <label>
             <text>       B</text>
+            <text xml:lang="de">       B</text>
           </label>
           <display item="Toggle effect (output B) with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -884,6 +1124,7 @@
         <column>
           <label>
             <text>       C</text>
+            <text xml:lang="de">       C</text>
           </label>
           <display item="Toggle effect (output C) with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -913,6 +1154,7 @@
         <column>
           <label>
             <text>       D</text>
+            <text xml:lang="de">       D</text>
           </label>
           <display item="Toggle effect (output D) with F1" format="checkbox" label="   ">
             <label>   </label>
@@ -961,7 +1203,6 @@
         </column>
       </row>
     </column>
-    <name>Lenz</name>
   </pane>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
 </decoder-config>

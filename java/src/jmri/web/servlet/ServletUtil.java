@@ -58,16 +58,19 @@ public class ServletUtil {
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(context, "active"); // NOI18N
         if (WebServerManager.getWebServerPreferences().allowRemoteConfig()) {
-            navBar = navBar.replace("config-enabled-only", "show");
-            navBar = navBar.replace("config-disabled-only", "hidden");
+            navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
+            navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
         } else {
-            navBar = navBar.replace("config-enabled-only", "hidden");
-            navBar = navBar.replace("config-disabled-only", "show");
+            navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
+            navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
+        }
+        if (!WebServerManager.getWebServerPreferences().isReadonlyPower()) {
+            navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;
     }
 
-    public static ServletUtil getHelper() {
+    public static ServletUtil getInstance() {
         if (ServletUtil.instance == null) {
             ServletUtil.instance = new ServletUtil();
         }

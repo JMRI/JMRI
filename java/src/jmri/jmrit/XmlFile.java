@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
@@ -21,10 +22,12 @@ import jmri.util.NoArchiveFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jdom.Comment;
+import org.jdom.Content;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.ProcessingInstruction;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -160,6 +163,7 @@ public abstract class XmlFile {
         }
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream));
+        doc = processInstructions(doc);  // handle any process instructions
         // find root
         return doc.getRootElement();
     }
@@ -177,6 +181,7 @@ public abstract class XmlFile {
         }
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedReader(reader));
+        doc = processInstructions(doc);  // handle any process instructions
         // find root
         return doc.getRootElement();
     }
@@ -444,7 +449,45 @@ public abstract class XmlFile {
         String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
         return date;
     }
-
+    
+    /**
+     * Execute the Processing Instructions in the file.
+     *
+     * JMRI only knows about certain ones; the others will be ignored.
+     *
+     * @return the Document that results from the processing
+     */
+    Document processInstructions(Document doc) {
+        // this iterates over top level
+        for (Object c : doc.getContent()) { // type Content
+            if (c instanceof ProcessingInstruction) {
+                try {
+                    doc = processOneInstruction((ProcessingInstruction)c, doc);
+                } catch (org.jdom.transform.XSLTransformException ex) {
+                    log.error("error while transforming with "+(ProcessingInstruction)c+", ignoring transform", ex);
+                }
+            }
+        }
+        
+        return doc ;
+    }
+    
+    Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom.transform.XSLTransformException {
+        log.debug("handling ",p);
+        
+        // check target
+        String target = p.getTarget();
+        if (!target.equals("transform-xslt")) return doc;
+        
+        String href = p.getPseudoAttributeValue("href");
+        // we expect this to start with http://jmri.org/ and refer to the JMRI file tree
+        if (! href.startsWith("http://jmri.org/")) return doc;
+        href = href.substring(16);
+        
+        org.jdom.transform.XSLTransformer transformer = new org.jdom.transform.XSLTransformer(href);
+        return transformer.transform(doc);
+    }
+    
     /**
      * Create the Document object to store a particular root Element.
      *

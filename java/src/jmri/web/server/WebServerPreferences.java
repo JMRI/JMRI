@@ -31,8 +31,9 @@ public class WebServerPreferences extends Bean {
     public static final String Simple = "simple"; // NOI18N
     public static final String RailRoadName = "railRoadName"; // NOI18N
     public static final String AllowRemoteConfig = "allowRemoteConfig"; // NOI18N
+    public static final String ReadonlyPower = "readonlyPower"; // NOI18N
 
-    //  Flag that prefs have not been saved:
+    // Flag that prefs have not been saved:
     private boolean isDirty = false;
     // initial defaults if prefs not found
     private int clickDelay = 1;
@@ -42,6 +43,7 @@ public class WebServerPreferences extends Bean {
     private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
+    protected boolean readonlyPower = true;
     private int port = 12080;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
@@ -77,6 +79,9 @@ public class WebServerPreferences extends Bean {
         if ((a = child.getAttribute(AllowRemoteConfig)) != null) {
             setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
         }
+        if ((a = child.getAttribute(ReadonlyPower)) != null) {
+            setReadonlyPower(Boolean.parseBoolean(a.getValue()));
+        }
         if ((a = child.getAttribute(Port)) != null) {
             try {
                 setPort(a.getIntValue());
@@ -110,6 +115,9 @@ public class WebServerPreferences extends Bean {
         if (this.allowRemoteConfig() != prefs.allowRemoteConfig()) {
             return true;
         }
+        if (this.isReadonlyPower() != prefs.isReadonlyPower()) {
+            return true;
+        }
         if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) {
             return true;
         }
@@ -124,6 +132,7 @@ public class WebServerPreferences extends Bean {
         setRefreshDelay(prefs.getRefreshDelay());
         setUseAjax(prefs.useAjax());
         this.setAllowRemoteConfig(prefs.allowRemoteConfig());
+        this.setReadonlyPower(prefs.isReadonlyPower());
         setDisallowedFrames((ArrayList<String>) prefs.getDisallowedFrames());
         setPort(prefs.getPort());
         setRailRoadName(prefs.getRailRoadName());
@@ -136,6 +145,7 @@ public class WebServerPreferences extends Bean {
         prefs.setAttribute(UseAjax, "" + useAjax());
         prefs.setAttribute(Simple, "" + isPlain());
         prefs.setAttribute(AllowRemoteConfig, "" + this.allowRemoteConfig());
+        prefs.setAttribute(ReadonlyPower, "" + this.isReadonlyPower());
         prefs.setAttribute(DisallowedFrames, "" + getDisallowedFrames());
         prefs.setAttribute(Port, "" + getPort());
         prefs.setAttribute(RailRoadName, getRailRoadName());
@@ -254,6 +264,20 @@ public class WebServerPreferences extends Bean {
 
     public void setAllowRemoteConfig(boolean value) {
         this.allowRemoteConfig = value;
+    }
+
+    /**
+     * @return the readonlyPower
+     */
+    public boolean isReadonlyPower() {
+        return readonlyPower;
+    }
+
+    /**
+     * @param readonlyPower the readonlyPower to set
+     */
+    public void setReadonlyPower(boolean readonlyPower) {
+        this.readonlyPower = readonlyPower;
     }
 
     public void setDisallowedFrames(ArrayList<String> value) {

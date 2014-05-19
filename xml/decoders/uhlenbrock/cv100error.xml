@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!-- $Id: cv100error.xml xxxxx 2014-05-10 xx:xx:xxZ xxx $             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 100 - error register -->
+  </revhistory>
+  <variable item="Error register" CV="100" default="0" readOnly="yes" mask="XXXXXXVV">
+	<enumVal>
+	  <enumChoice choice="No error" value="0">
+            <choice>No error</choice>
+            <choice xml:lang="de">kein Fehler</choice>
+	  </enumChoice>
+	  <enumChoice choice="Motor short circuit">
+            <choice>Motor short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Motor</choice>			
+	  </enumChoice>
+	  <enumChoice choice="Light short circuit">
+            <choice>Light short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Licht</choice>			
+	  </enumChoice>
+	  <enumChoice choice="Motor+Light short circuit">
+            <choice>Motor+Light short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Motor+Licht</choice>			
+	  </enumChoice>	  
+	</enumVal>
+	<label>Error register</label>
+	<label xml:lang="de">Fehlerspeicher</label>
+	<tooltip>0 = No error (reset error register)</tooltip>
+	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>		
+  </variable>
+</variables>

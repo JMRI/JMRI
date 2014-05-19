@@ -15,7 +15,7 @@
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the variables that -->
   <!-- register-mode decoders have. -->
-  <programmer decoderFilePanes="no">
+  <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane nameFmt="item">
       <name>Basic</name>
       <column>
